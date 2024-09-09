@@ -1,1 +1,15 @@
-
+#include <stdio.h>
+int main() {
+    int num_problems;
+    int problems_solved = 0;
+    scanf("%d", &num_problems);
+    for (int i = 0; i < num_problems; i++) {
+        int petya_confident, vasya_confident, tonya_confident;
+        scanf("%d %d %d", &petya_confident, &vasya_confident, &tonya_confident);
+        if (petya_confident + vasya_confident + tonya_confident >= 2) {
+            problems_solved++;
+        }
+    }
+    printf("%d\n", problems_solved);
+    return 0;
+}

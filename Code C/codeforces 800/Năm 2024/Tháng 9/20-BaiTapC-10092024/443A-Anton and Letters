@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_LETTERS 26
+
+int main() {
+    char input[1001];
+    int letter_present[MAX_LETTERS] = {0};
+    int distinct_count = 0;
+
+    fgets(input, sizeof(input), stdin);
+
+    int len = strlen(input);
+
+    char *start = input + 1;
+    char *end = input + len - 2;
+
+    if (start > end) {
+        printf("0\n");
+        return 0;
+    }
+
+    for (char *p = start; p <= end; ++p) {
+        if (isalpha(*p)) {
+            letter_present[*p - 'a'] = 1;
+        }
+    }
+
+    for (int i = 0; i < MAX_LETTERS; ++i) {
+        if (letter_present[i]) {
+            ++distinct_count;
+        }
+    }
+
+    printf("%d\n", distinct_count);
+
+    return 0;
+}
 

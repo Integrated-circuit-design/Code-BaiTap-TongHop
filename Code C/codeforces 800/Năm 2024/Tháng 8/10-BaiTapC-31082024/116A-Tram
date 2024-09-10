@@ -1,1 +1,23 @@
-
+#include <stdio.h>
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int a, b;
+    int current_passengers = 0;
+    int max_passengers = 0;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &a, &b);
+        
+        current_passengers -= a;
+        current_passengers += b;
+        
+        if (current_passengers > max_passengers) {
+            max_passengers = current_passengers;
+        }
+    }
+    
+    printf("%d\n", max_passengers);
+    return 0;
+}

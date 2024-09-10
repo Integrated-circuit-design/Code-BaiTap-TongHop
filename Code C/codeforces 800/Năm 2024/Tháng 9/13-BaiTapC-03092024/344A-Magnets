@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char current_magnet[3];
+    char previous_magnet[3];
+    int groups = 1;
+
+    scanf("%s", previous_magnet);
+
+    for (int i = 1; i < n; i++) {
+        scanf("%s", current_magnet);
+
+        if (current_magnet[0] != previous_magnet[0]) {
+            groups++;
+        }
+
+        previous_magnet[0] = current_magnet[0];
+        previous_magnet[1] = current_magnet[1];
+    }
+
+    printf("%d\n", groups);
+
+    return 0;
+}
 

@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+long long tinh_f(long long n) {
+    if (n % 2 == 0) {
+        return n / 2;
+    } 
+    else {
+        return -(n / 2 + 1);
+    }
+}
+
+int main() {
+    long long n;
+    
+    printf("Nhap vao gia tri n: ");
+    scanf("%lld", &n);
+    
+    printf("Gia tri cua f(%lld) la: %lld\n", n, tinh_f(n));
+    
+    return 0;
+}
 

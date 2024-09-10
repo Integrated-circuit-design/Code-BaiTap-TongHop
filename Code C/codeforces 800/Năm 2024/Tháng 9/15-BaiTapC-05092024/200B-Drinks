@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    double sum = 0;
+
+    printf("Nhap so luong do uong: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        int p;
+        printf("Nhap phan tram nuoc cam cua do uong thu %d: ", i + 1);
+        scanf("%d", &p);
+
+        sum += p;
+    }
+
+    double average = sum / n;
+
+    printf("Phan tram nuoc cam trong cocktail: %.12f\n", average);
+
+    return 0;
+}
 

@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int M, N;
+    
+    // Input the dimensions of the board
+    scanf("%d %d", &M, &N);
+    
+    // Calculate the maximum number of dominoes
+    int max_dominoes = (M * N) / 2;
+    
+    // Output the result
+    printf("%d\n", max_dominoes);
+    
+    return 0;
+}
 

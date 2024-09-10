@@ -1,1 +1,18 @@
-
+#include <stdio.h>
+int main() {
+    int k;
+    int n;
+    int w;
+    scanf("%d %d %d", &k, &n, &w);
+    int total_cost = 0;
+    for (int i = 1; i <= w; i++) {
+        total_cost += i * k;
+    }
+    int borrowed_amount = total_cost - n;
+    if (borrowed_amount > 0) {
+        printf("%d\n", borrowed_amount);
+    } else {
+        printf("0\n");
+    }
+    return 0;
+}

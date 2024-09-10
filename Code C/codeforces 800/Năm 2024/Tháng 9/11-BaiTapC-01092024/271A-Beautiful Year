@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <stdbool.h>
 
+bool hasDistinctDigits(int year) {
+    int digits[10] = {0};
+    while (year > 0) {
+        int digit = year % 10;
+        if (digits[digit]) {
+            return false;
+        }
+        digits[digit] = 1;
+        year /= 10;
+    }
+    return true;
+}
+
+int findBeautifulYear(int year) {
+    year++;
+    while (!hasDistinctDigits(year)) {
+        year++;
+    }
+    return year;
+}
+
+int main() {
+    int year;
+    printf("Nhap nam: ");
+    scanf("%d", &year);
+    int beautifulYear = findBeautifulYear(year);
+    printf("Nam co cac chu so khac nhau nho nhat la: %d\n", beautifulYear);
+    return 0;
+}

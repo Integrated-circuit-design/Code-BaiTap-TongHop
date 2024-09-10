@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int limakWeight, bobWeight;
+    int years = 0;  // Số năm cần thiết để Limak nặng hơn Bob
+
+    // Nhập trọng lượng ban đầu của Limak và Bob
+    scanf("%d %d", &limakWeight, &bobWeight);
+
+    // Vòng lặp tiếp tục cho đến khi Limak nặng hơn Bob
+    while (limakWeight <= bobWeight) {
+        // Limak nặng lên gấp 3 lần mỗi năm
+        limakWeight = limakWeight * 3;
+
+        // Bob nặng lên gấp 2 lần mỗi năm
+        bobWeight = bobWeight * 2;
+
+        // Tăng số năm sau mỗi vòng lặp
+        years++;
+    }
+
+    // In ra số năm cần thiết để Limak nặng hơn Bob
+    printf("%d\n", years);
+
+    return 0;
+}
 

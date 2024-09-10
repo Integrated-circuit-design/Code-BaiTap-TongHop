@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int can_pass[101] = {0};
+
+    int p;
+    scanf("%d", &p);
+    for (int i = 0; i < p; i++) {
+        int level;
+        scanf("%d", &level);
+        can_pass[level] = 1;
+    }
+
+    int q;
+    scanf("%d", &q);
+    for (int i = 0; i < q; i++) {
+        int level;
+        scanf("%d", &level);
+        can_pass[level] = 1;
+    }
+
+    int all_passable = 1;
+    for (int i = 1; i <= n; i++) {
+        if (can_pass[i] == 0) {
+            all_passable = 0;
+            break;
+        }
+    }
+
+    if (all_passable) {
+        printf("I become the guy.\n");
+    } else {
+        printf("Oh, my keyboard!\n");
+    }
+
+    return 0;
+}
 

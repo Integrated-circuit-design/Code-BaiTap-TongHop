@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+void ve_ran(int n, int m) {
+    for (int hang = 1; hang <= n; hang++) {
+        if (hang % 2 == 1) {
+            for (int i = 0; i < m; i++) {
+                printf("#");
+            }
+        } else if (hang % 4 == 0) {
+            printf("#");
+            for (int i = 1; i < m; i++) {
+                printf(".");
+            }
+        } else {
+            for (int i = 0; i < m - 1; i++) {
+                printf(".");
+            }
+            printf("#");
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    ve_ran(n, m);
+    return 0;
+}
 

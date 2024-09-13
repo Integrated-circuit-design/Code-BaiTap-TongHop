@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void timSoTron(int n) {
+    int soTron[5];
+    int soLuong = 0;
+    int viTri = 1;
+
+    while (n > 0) {
+        int chuSo = n % 10;
+        if (chuSo != 0) {
+            soTron[soLuong] = chuSo * viTri;
+            soLuong++;
+        }
+        n /= 10;
+        viTri *= 10;
+    }
+
+    printf("%d\n", soLuong);
+    for (int i = 0; i < soLuong; i++) {
+        printf("%d ", soTron[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        int n;
+        scanf("%d", &n);
+        timSoTron(n);
+    }
+
+    return 0;
+}
 

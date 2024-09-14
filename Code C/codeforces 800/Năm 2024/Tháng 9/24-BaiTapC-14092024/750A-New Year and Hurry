@@ -1,1 +1,30 @@
+#include <stdio.h> 
+
+int main() {
+    int n, k;
+    
+    scanf("%d %d", &n, &k);
+    
+    int total_time = 240;
+    int remaining_time = total_time - k;
+    
+    int time_spent = 0;
+    int problems_solved = 0;
+    
+    for (int i = 1; i <= n; i++) {
+        int time_to_solve = 5 * i;
+        
+        time_spent += time_to_solve;
+        
+        if (time_spent > remaining_time) {
+            break;
+        }
+        
+        problems_solved++;
+    }
+    
+    printf("%d\n", problems_solved);
+    
+    return 0;
+}
 

@@ -1,1 +1,29 @@
+#include <stdio.h> 
+#include <stdlib.h>
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sortThree(int *x1, int *x2, int *x3) {
+    if (*x1 > *x2) swap(x1, x2);
+    if (*x2 > *x3) swap(x2, x3);
+    if (*x1 > *x2) swap(x1, x2);
+}
+
+int main() {
+    int x1, x2, x3;
+
+    scanf("%d %d %d", &x1, &x2, &x3);
+
+    sortThree(&x1, &x2, &x3);
+
+    int total_distance = abs(x1 - x2) + abs(x3 - x2);
+
+    printf("Tong khoang cach di chuyen la: %d\n", total_distance);
+
+    return 0;
+}
 

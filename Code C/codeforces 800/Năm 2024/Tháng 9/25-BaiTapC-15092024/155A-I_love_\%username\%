@@ -1,1 +1,36 @@
+#include <stdio.h> 
+
+int main() {
+    int n;
+    int i;
+    int amazing_count = 0;
+    int max_score, min_score;
+    
+    printf("Nhap so luong cuoc thi: ");
+    scanf("%d", &n);
+    
+    int points[n];
+    
+    printf("Nhap diem cac cuoc thi: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &points[i]);
+    }
+    
+    max_score = points[0];
+    min_score = points[0];
+    
+    for (i = 1; i < n; i++) {
+        if (points[i] > max_score) {
+            amazing_count++;
+            max_score = points[i];
+        } else if (points[i] < min_score) {
+            amazing_count++;
+            min_score = points[i];
+        }
+    }
+    
+    printf("So lan pha ky luc: %d\n", amazing_count);
+    
+    return 0;
+}
 

@@ -1,1 +1,18 @@
+#include <stdio.h> 
+
+int main() {
+    int k, r;
+    scanf("%d %d", &k, &r);
+
+    for (int n = 1; n <= 10; n++) {
+        int total_cost = n * k;
+
+        if (total_cost % 10 == 0 || total_cost % 10 == r) {
+            printf("%d\n", n);
+            break;
+        }
+    }
+
+    return 0;
+}
 

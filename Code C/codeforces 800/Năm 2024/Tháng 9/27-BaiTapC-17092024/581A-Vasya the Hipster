@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    
+    int fashionable_days;
+    if (a < b) {
+        fashionable_days = a;
+    } else {
+        fashionable_days = b;
+    }
+    
+    int remaining_socks;
+    if (a > b) {
+        remaining_socks = a - b;
+    } else {
+        remaining_socks = b - a;
+    }
+    
+    int same_color_days = remaining_socks / 2;
+    
+    printf("%d %d\n", fashionable_days, same_color_days);
+    
+    return 0;
+}
 

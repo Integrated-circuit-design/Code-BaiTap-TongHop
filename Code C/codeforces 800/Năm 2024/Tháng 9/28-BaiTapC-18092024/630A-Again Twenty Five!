@@ -1,1 +1,13 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    
+    printf("Nhap gia tri n: ");
+    scanf("%lld", &n);
+    
+    printf("Ket qua: 25\n");
+    
+    return 0;
+}
 

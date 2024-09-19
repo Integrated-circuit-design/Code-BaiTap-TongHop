@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int so_sanh(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int co_the_rut_gon(int arr[], int n) {
+    qsort(arr, n, sizeof(int), so_sanh);
+    
+    for (int i = 1; i < n; i++) {
+        if (arr[i] - arr[i - 1] > 1) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    
+    scanf("%d", &t);
+    
+    for (int test = 0; test < t; test++) {
+        int n;
+        scanf("%d", &n);
+        
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+        
+        if (co_the_rut_gon(arr, n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

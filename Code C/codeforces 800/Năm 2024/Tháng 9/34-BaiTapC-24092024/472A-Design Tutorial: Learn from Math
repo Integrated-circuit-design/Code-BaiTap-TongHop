@@ -1,1 +1,39 @@
+#include <stdio.h>
 
+int la_so_hop(int so) {
+    if (so <= 3) {
+        return 0;
+    }
+    
+    for (int i = 2; i < so; i++) {
+        if (so % i == 0) {
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
+void tim_tong_so_hop(int n) {
+    for (int so1 = 4; so1 <= n/2; so1++) {
+        int so2 = n - so1;
+        if (la_so_hop(so1) && la_so_hop(so2)) {
+            printf("%d %d\n", so1, so2);
+            return;
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("Nhap so n (12 <= n <= 1000000): ");
+    scanf("%d", &n);
+    
+    if (n < 12 || n > 1000000) {
+        printf("So nhap vao khong hop le!\n");
+        return 1;
+    }
+    
+    tim_tong_so_hop(n);
+    return 0;
+}

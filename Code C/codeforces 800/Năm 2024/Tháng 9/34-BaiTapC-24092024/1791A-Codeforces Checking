@@ -1,1 +1,34 @@
+#include <stdio.h>
 
+int kiemTraKyTu(char kyTu) {
+    char chuoiCanKiemTra[] = "codeforces";
+    int i;
+    
+    for (i = 0; chuoiCanKiemTra[i] != '\0'; i++) {
+        if (chuoiCanKiemTra[i] == kyTu) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main() {
+    int soTestCase;
+    char kyTu;
+    
+    scanf("%d", &soTestCase);
+    
+    while (soTestCase > 0) {
+        scanf(" %c", &kyTu);
+        
+        if (kiemTraKyTu(kyTu)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+        
+        soTestCase--;
+    }
+    
+    return 0;
+}

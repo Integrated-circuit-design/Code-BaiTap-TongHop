@@ -37,3 +37,35 @@ int main() {
     tim_tong_so_hop(n);
     return 0;
 }
+
+==================================================================================================
+
+#include <stdio.h> 
+#include <stdbool.h>
+
+bool laSoHop(int so) {
+    if (so <= 3) {
+        return false;
+    }
+    for (int i = 2; i * i <= so; i++) {
+        if (so % i == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int n;
+    printf("Nhập số n: ");
+    scanf("%d", &n);
+
+    for (int x = 4; x <= n / 2; x++) {
+        if (laSoHop(x) && laSoHop(n - x)) {
+            printf("%d + %d = %d\n", x, n - x, n);
+            break;
+        }
+    }
+
+    return 0;
+}

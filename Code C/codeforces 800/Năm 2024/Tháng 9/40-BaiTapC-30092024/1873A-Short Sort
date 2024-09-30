@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    char chuoi[4];
+
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        scanf("%s", chuoi);
+        
+        if (chuoi[0] == 'a' && chuoi[1] == 'b' && chuoi[2] == 'c') {
+            printf("YES\n");
+        } else if ((chuoi[0] == 'a' && chuoi[1] == 'c' && chuoi[2] == 'b') ||
+                   (chuoi[0] == 'b' && chuoi[1] == 'a' && chuoi[2] == 'c') ||
+                   (chuoi[0] == 'b' && chuoi[1] == 'c' && chuoi[2] == 'a') ||
+                   (chuoi[0] == 'c' && chuoi[1] == 'a' && chuoi[2] == 'b') ||
+                   (chuoi[0] == 'c' && chuoi[1] == 'b' && chuoi[2] == 'a')) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

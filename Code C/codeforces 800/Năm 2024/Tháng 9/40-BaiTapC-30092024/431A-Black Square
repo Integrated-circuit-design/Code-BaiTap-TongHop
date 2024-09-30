@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int calorieCost[4];
+    char gameSequence[100001];
+    int totalCalories = 0;
+
+    printf("Nhập lượng calo cho các dải (a1, a2, a3, a4):\n");
+    for (int index = 0; index < 4; index++) {
+        scanf("%d", &calorieCost[index]);
+    }
+
+    printf("Nhập chuỗi dải xuất hiện:\n");
+    scanf("%s", gameSequence);
+
+    for (int i = 0; gameSequence[i] != '\0'; i++) {
+        totalCalories += calorieCost[gameSequence[i] - '1']; 
+    }
+
+    printf("Tổng số calo tiêu tốn: %d\n", totalCalories);
+
+    return 0;
+}
 

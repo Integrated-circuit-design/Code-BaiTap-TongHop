@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int length;
+        scanf("%d", &length);
+
+        int arr[length];
+        for (int index = 0; index < length; index++) {
+            scanf("%d", &arr[index]);
+        }
+
+        int odd_at_even = 0;
+        int even_at_odd = 0;
+
+        for (int index = 0; index < length; index++) {
+            if (index % 2 == 0 && arr[index] % 2 != 0) {
+                odd_at_even++;
+            } else if (index % 2 != 0 && arr[index] % 2 == 0) {
+                even_at_odd++;
+            }
+        }
+
+        if (odd_at_even == even_at_odd) {
+            printf("%d\n", odd_at_even);
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool kiem_tra_nguyen_to(int num) {
+    if (num < 2) return false;
+    for (int i = 2; i <= num / 2; i++) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int tim_nguyen_to_tiep_theo(int num) {
+    num++;
+    while (!kiem_tra_nguyen_to(num)) {
+        num++;
+    }
+    return num;
+}
+
+int main() {
+    int n, m;
+    printf("Nhap hai so nguyen (n, m): ");
+    scanf("%d %d", &n, &m);
+
+    int nguyen_to_tiep = tim_nguyen_to_tiep_theo(n);
+
+    if (nguyen_to_tiep == m) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

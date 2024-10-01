@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    int valueN;
+
+    printf("Nhập số lượng bộ test: ");
+    scanf("%d", &testCases);
+
+    for (int index = 0; index < testCases; index++) {
+        printf("Nhập giá trị n cho bộ test %d: ", index + 1);
+        scanf("%d", &valueN);
+
+        int maxGCDValue = valueN / 2;
+
+        printf("Kết quả GCD lớn nhất cho n = %d là: %d\n", valueN, maxGCDValue);
+    }
+
+    return 0;
+}
 

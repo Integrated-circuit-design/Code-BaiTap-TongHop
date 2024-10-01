@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char congViec[51];
+        int daGiai[26] = {0};
+        char congViecHienTai = '\0';
+
+        scanf("%d", &n);
+        scanf("%s", congViec);
+
+        int nghiNgo = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (congViec[i] != congViecHienTai) {
+                if (daGiai[congViec[i] - 'A'] == 1) {
+                    nghiNgo = 1;
+                    break;
+                }
+                if (congViecHienTai != '\0') {
+                    daGiai[congViecHienTai - 'A'] = 1;
+                }
+                congViecHienTai = congViec[i];
+            }
+        }
+
+        if (nghiNgo) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+        }
+    }
+
+    return 0;
+}
 

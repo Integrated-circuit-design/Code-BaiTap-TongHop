@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int apartment_number;
+        scanf("%d", &apartment_number);
+
+        int repeated_digit = apartment_number % 10;
+        int total_keypresses = 0;
+
+        total_keypresses += (repeated_digit - 1) * 10;
+
+        for (int i = 1; i <= apartment_number; i *= 10) {
+            total_keypresses += (i == 1) ? 1 : (i / 10) * (i / 10 + 1) / 2;
+        }
+
+        printf("%d\n", total_keypresses);
+    }
+
+    return 0;
+}
 

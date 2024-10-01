@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int la_chuoi_vuong(char *s) {
+    int n = strlen(s);
+    if (n % 2 != 0) {
+        return 0;
+    }
+
+    int bat_dau_nua_sau = n / 2;
+
+    for (int i = 0; i < bat_dau_nua_sau; i++) {
+        if (s[i] != s[i + bat_dau_nua_sau]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int so_test;
+    scanf("%d", &so_test);
+
+    for (int i = 0; i < so_test; i++) {
+        char chuoi[101];
+        scanf("%s", chuoi);
+        
+        if (la_chuoi_vuong(chuoi)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

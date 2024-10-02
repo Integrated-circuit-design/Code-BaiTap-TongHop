@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+void swapFirstCharacters(char a[], char b[]) {
+    char firstA = a[0];
+    char firstB = b[0];
+
+    a[0] = firstB;
+    b[0] = firstA;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        char a[4], b[4];
+        scanf("%s %s", a, b);
+
+        swapFirstCharacters(a, b);
+
+        printf("%s %s\n", a, b);
+    }
+
+    return 0;
+}
 

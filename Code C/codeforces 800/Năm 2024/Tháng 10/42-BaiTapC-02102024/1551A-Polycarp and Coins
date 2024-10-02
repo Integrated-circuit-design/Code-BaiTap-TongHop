@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int total;
+        scanf("%d", &total);
+
+        int coinsTwo = total / 3;
+        int coinsOne = total - 2 * coinsTwo;
+
+        if (total % 3 == 1) {
+            coinsOne++;
+        } else if (total % 3 == 2) {
+            coinsTwo++;
+        }
+
+        printf("%d %d\n", coinsOne, coinsTwo);
+    }
+
+    return 0;
+}
 

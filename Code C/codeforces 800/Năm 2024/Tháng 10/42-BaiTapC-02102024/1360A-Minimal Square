@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int tinh_dien_tich_hinh_vuong(int a, int b) {
+    int canh_h1 = (a + a > b) ? (a + a) : b;
+    int canh_h2 = (b + b > a) ? (b + b) : a;
+    int canh_h3 = (a > b) ? (2 * a) : (2 * b);
+    int canh_min = canh_h1 > canh_h2 ? (canh_h1 > canh_h3 ? canh_h1 : canh_h3) : (canh_h2 > canh_h3 ? canh_h2 : canh_h3);
+    return canh_min * canh_min;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        printf("%d\n", tinh_dien_tich_hinh_vuong(a, b));
+    }
+
+    return 0;
+}
 

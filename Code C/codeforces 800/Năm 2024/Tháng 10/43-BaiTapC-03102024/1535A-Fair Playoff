@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int find_winner(int player1, int player2) {
+    return (player1 > player2) ? player1 : player2;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int s[4];
+        for (int i = 0; i < 4; i++) {
+            scanf("%d", &s[i]);
+        }
+
+        int winner1 = find_winner(s[0], s[1]);
+        int winner2 = find_winner(s[2], s[3]);
+
+        int highest = (winner1 > winner2) ? winner1 : winner2;
+        int second_highest = (winner1 < winner2) ? winner1 : winner2;
+
+        if ((s[0] == highest || s[1] == highest) && (s[2] == second_highest || s[3] == second_highest)) {
+            printf("YES\n");
+        } else if ((s[2] == highest || s[3] == highest) && (s[0] == second_highest || s[1] == second_highest)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

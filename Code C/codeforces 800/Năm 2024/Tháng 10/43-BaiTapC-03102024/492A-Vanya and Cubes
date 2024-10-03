@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Nhập số khối lập phương: ");
+    scanf("%d", &n);
+
+    int chieuCao = 0;
+    int soKhoi = 0;
+
+    for (int i = 1; soKhoi + (i * (i + 1)) / 2 <= n; i++) {
+        soKhoi += (i * (i + 1)) / 2;
+        chieuCao++;
+    }
+
+    printf("Chiều cao tối đa của kim tự tháp là: %d\n", chieuCao);
+    return 0;
+}
 

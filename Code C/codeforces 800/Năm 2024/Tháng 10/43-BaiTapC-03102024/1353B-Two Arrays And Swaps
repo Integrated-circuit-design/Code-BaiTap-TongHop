@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int sort_asc(const void *x, const void *y) {
+    return (*(int*)x - *(int*)y);
+}
+
+int sort_desc(const void *x, const void *y) {
+    return (*(int*)y - *(int*)x);
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int t = 0; t < test_cases; t++) {
+        int size, max_swaps;
+        scanf("%d %d", &size, &max_swaps);
+
+        int array_a[size], array_b[size];
+
+        for (int i = 0; i < size; i++) {
+            scanf("%d", &array_a[i]);
+        }
+
+        for (int i = 0; i < size; i++) {
+            scanf("%d", &array_b[i]);
+        }
+
+        qsort(array_a, size, sizeof(int), sort_asc);
+        qsort(array_b, size, sizeof(int), sort_desc);
+
+        for (int i = 0; i < max_swaps && i < size; i++) {
+            if (array_a[i] < array_b[i]) {
+                int temp_value = array_a[i];
+                array_a[i] = array_b[i];
+                array_b[i] = temp_value;
+            }
+        }
+
+        int total_sum = 0;
+        for (int i = 0; i < size; i++) {
+            total_sum += array_a[i];
+        }
+
+        printf("%d\n", total_sum);
+    }
+
+    return 0;
+}
 

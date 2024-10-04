@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    printf("Nhập số lượng test case: ");
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        printf("Nhập độ dài của chuỗi: ");
+        scanf("%d", &n);
+        
+        char s[51];
+        printf("Nhập chuỗi các bài toán đã được giải: ");
+        scanf("%s", s);
+
+        int so_bong_bay = 0;
+        int da_giai[26] = {0};
+        
+        for (int i = 0; i < n; i++) {
+            int chi_so_bai_toan = s[i] - 'A';
+            
+            if (da_giai[chi_so_bai_toan] == 0) {
+                so_bong_bay += 2;
+                da_giai[chi_so_bai_toan] = 1;
+            } else {
+                so_bong_bay += 1;
+            }
+        }
+        
+        printf("Tổng số bóng bay nhận được: %d\n", so_bong_bay);
+    }
+
+    return 0;
+}
 

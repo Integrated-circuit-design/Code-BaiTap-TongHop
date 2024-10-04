@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        int min_kẹo = 10000001;
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            if (a[i] < min_kẹo) {
+                min_kẹo = a[i];
+            }
+        }
+        
+        long long tổng_kẹo_ăn = 0;
+        
+        for (int i = 0; i < n; i++) {
+            tổng_kẹo_ăn += a[i] - min_kẹo;
+        }
+        
+        printf("%lld\n", tổng_kẹo_ăn);
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[10];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        long long max_product = 0;
+        long long original_product = 1;
+
+        for (int i = 0; i < n; i++) {
+            original_product *= a[i];
+        }
+
+        for (int i = 0; i < n; i++) {
+            long long new_product = original_product / a[i] * (a[i] + 1);
+            if (new_product > max_product) {
+                max_product = new_product;
+            }
+        }
+
+        printf("%lld\n", max_product);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    printf("Nhập số lượng test case: ");
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        int a, b;
+        char operator;
+        
+        printf("Nhập biểu thức (a+b): ");
+        scanf("%1d%c%1d", &a, &operator, &b);
+        
+        if (operator == '+') {
+            int result = a + b;
+            printf("Kết quả: %d\n", result);
+        } else {
+            printf("Toán tử không hợp lệ.\n");
+        }
+    }
+
+    return 0;
+}
 

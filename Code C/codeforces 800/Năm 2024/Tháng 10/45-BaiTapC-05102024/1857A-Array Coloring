@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[50];
+        int chan = 0;
+        int le = 0;
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            if (a[i] % 2 == 0) {
+                chan++;
+            } else {
+                le++;
+            }
+        }
+        
+        if (chan > 0 && le > 0) {
+            printf("CÓ\n");
+        } else {
+            printf("KHÔNG\n");
+        }
+    }
+    
+    return 0;
+}
 

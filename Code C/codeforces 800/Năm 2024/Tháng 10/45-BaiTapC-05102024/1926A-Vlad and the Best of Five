@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    printf("Nhập số lượng test case: ");
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        char s[6];
+        printf("Nhập chuỗi thứ %d: ", i + 1);
+        scanf("%s", s);
+
+        int countA = 0;
+        int countB = 0;
+
+        for (int j = 0; j < 5; j++) {
+            if (s[j] == 'A') {
+                countA++;
+            } else if (s[j] == 'B') {
+                countB++;
+            }
+        }
+
+        if (countA > countB) {
+            printf("Ký tự xuất hiện nhiều hơn: A\n");
+        } else {
+            printf("Ký tự xuất hiện nhiều hơn: B\n");
+        }
+    }
+
+    return 0;
+}
 

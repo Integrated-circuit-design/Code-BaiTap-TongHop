@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        int a, b, c, n;
+        scanf("%d %d %d %d", &a, &b, &c, &n);
+        
+        int max_coins = a;
+        if (b > max_coins) {
+            max_coins = b;
+        }
+        if (c > max_coins) {
+            max_coins = c;
+        }
+        
+        int coins_needed = (max_coins - a) + (max_coins - b) + (max_coins - c);
+        
+        if (n >= coins_needed && (n - coins_needed) % 3 == 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

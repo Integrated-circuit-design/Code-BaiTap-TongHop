@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int so_sanh(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int s[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &s[i]);
+        }
+        
+        qsort(s, n, sizeof(int), so_sanh);
+        
+        int khoang_cach_toi_thieu = 1000;
+        
+        for (int i = 1; i < n; i++) {
+            int khoang_cach = s[i] - s[i - 1];
+            if (khoang_cach < khoang_cach_toi_thieu) {
+                khoang_cach_toi_thieu = khoang_cach;
+            }
+        }
+        
+        printf("%d\n", khoang_cach_toi_thieu);
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int idx = 0; idx < test_cases; idx++) {
+        int number;
+        scanf("%d", &number);
+
+        if (number % 3 == 0) {
+            puts("First");
+        } else {
+            puts("First");
+        }
+    }
+
+    return 0;
+}
 

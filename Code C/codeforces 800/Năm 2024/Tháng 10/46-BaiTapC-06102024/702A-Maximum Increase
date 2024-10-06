@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int size;
+    printf("Nhập số lượng phần tử: ");
+    scanf("%d", &size);
+
+    int arr[size];
+    printf("Nhập các phần tử: ");
+    for (int index = 0; index < size; index++) {
+        scanf("%d", &arr[index]);
+    }
+
+    int maxLength = 1;
+    int currentLength = 1;
+
+    for (int index = 1; index < size; index++) {
+        if (arr[index] > arr[index - 1]) {
+            currentLength++;
+        } else {
+            currentLength = 1;
+        }
+
+        if (currentLength > maxLength) {
+            maxLength = currentLength;
+        }
+    }
+
+    printf("Chiều dài lớn nhất của dãy con tăng dần: %d\n", maxLength);
+    return 0;
+}
 

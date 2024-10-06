@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int giaTriXToiUu(int soNguyen) {
+    if (soNguyen == 3) {
+        return soNguyen;
+    }
+    return 2;
+}
+
+int main() {
+    int soTest;
+    scanf("%d", &soTest);
+
+    for (int j = 0; j < soTest; j++) {
+        int n;
+        scanf("%d", &n);
+        printf("%d\n", giaTriXToiUu(n));
+    }
+
+    return 0;
+}
 

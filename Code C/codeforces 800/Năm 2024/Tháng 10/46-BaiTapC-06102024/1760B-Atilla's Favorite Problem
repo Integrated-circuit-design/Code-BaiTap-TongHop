@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int num_tests;
+    printf("Nhập số lượng test cases: ");
+    scanf("%d", &num_tests);
+
+    while (num_tests--) {
+        int length;
+        printf("Nhập chiều dài của chuỗi: ");
+        scanf("%d", &length);
+
+        char str[101];
+        printf("Nhập chuỗi: ");
+        scanf("%s", str);
+
+        int letter_present[26] = {0};
+
+        for (int i = 0; i < length; i++) {
+            int index = str[i] - 'a';
+            letter_present[index] = 1;
+        }
+
+        int distinct_count = 0;
+        for (int i = 0; i < 26; i++) {
+            distinct_count += letter_present[i];
+        }
+
+        printf("Kích thước bảng chữ cái tối thiểu cần thiết: %d\n", distinct_count); 
+    }
+
+    return 0;
+}
 

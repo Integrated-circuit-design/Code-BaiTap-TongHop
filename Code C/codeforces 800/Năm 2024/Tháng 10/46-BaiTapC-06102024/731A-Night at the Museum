@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <math.h>
+
+int tinh_vong_quay(char bat_dau, char ket_thuc) {
+    int khoang_cach = abs(ket_thuc - bat_dau);
+    int khoang_cach_nguoc = 26 - khoang_cach;
+    return khoang_cach < khoang_cach_nguoc ? khoang_cach : khoang_cach_nguoc;
+}
+
+int main() {
+    char ten_vat_pham[101];
+    scanf("%s", ten_vat_pham);
+
+    char ky_tu_hien_tai = 'a';
+    int tong_so_vong_quay = 0;
+
+    for (int i = 0; ten_vat_pham[i] != '\0'; i++) {
+        tong_so_vong_quay += tinh_vong_quay(ky_tu_hien_tai, ten_vat_pham[i]);
+        ky_tu_hien_tai = ten_vat_pham[i];
+    }
+
+    printf("%d\n", tong_so_vong_quay);
+    return 0;
+}
 

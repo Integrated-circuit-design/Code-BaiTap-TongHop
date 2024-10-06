@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    printf("Nhập số lượng test cases: ");
+    scanf("%d", &testCases);
+
+    for (int idx = 0; idx < testCases; idx++) {
+        int lowerBound, upperBound;
+        printf("Nhập hai số nguyên a và b (a <= b): ");
+        scanf("%d %d", &lowerBound, &upperBound);
+
+        int result = upperBound - lowerBound;
+        printf("Kết quả cho test case %d là: %d\n", idx + 1, result);
+    }
+
+    return 0;
+}
 

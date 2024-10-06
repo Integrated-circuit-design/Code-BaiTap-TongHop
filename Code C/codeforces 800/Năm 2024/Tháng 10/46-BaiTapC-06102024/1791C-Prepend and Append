@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    
+    for (int i = 0; i < testCases; i++) {
+        int length;
+        scanf("%d", &length);
+        char binaryString[2001];
+        scanf("%s", binaryString);
+
+        int start = 0;
+        while (start < length && binaryString[start] == '0') {
+            start++;
+        }
+
+        int end = length - 1;
+        while (end >= 0 && binaryString[end] == '1') {
+            end--;
+        }
+
+        int originalLength = (end >= start) ? (end - start + 1) : 0;
+
+        printf("%d\n", originalLength);
+    }
+
+    return 0;
+}
 

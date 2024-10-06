@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int timDoDaiChuoiKhong(int mang[], int doDai) {
+    int maxLength = 0;
+    int currentLength = 0;
+
+    for (int i = 0; i < doDai; i++) {
+        if (mang[i] == 0) {
+            currentLength++;
+            if (currentLength > maxLength) {
+                maxLength = currentLength;
+            }
+        } else {
+            currentLength = 0;
+        }
+    }
+
+    return maxLength;
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int doDaiMang;
+        scanf("%d", &doDaiMang);
+
+        int mang[doDaiMang];
+        for (int i = 0; i < doDaiMang; i++) {
+            scanf("%d", &mang[i]);
+        }
+
+        int ketQua = timDoDaiChuoiKhong(mang, doDaiMang);
+        printf("%d\n", ketQua);
+    }
+
+    return 0;
+}
 

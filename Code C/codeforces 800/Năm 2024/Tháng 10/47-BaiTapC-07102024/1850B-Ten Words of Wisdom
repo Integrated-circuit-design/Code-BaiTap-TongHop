@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int case_number = 0; case_number < test_cases; case_number++) {
+        int num_responses;
+        scanf("%d", &num_responses);
+
+        int best_quality = 0;
+        int best_index = 0;
+
+        for (int index = 1; index <= num_responses; index++) {
+            int word_count, quality;
+            scanf("%d %d", &word_count, &quality);
+
+            if (word_count <= 10) {
+                if (quality > best_quality) {
+                    best_quality = quality;
+                    best_index = index;
+                }
+            }
+        }
+
+        printf("%d\n", best_index);
+    }
+
+    return 0;
+}
 

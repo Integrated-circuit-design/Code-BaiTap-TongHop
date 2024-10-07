@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char grid[8][9];
+        for (int i = 0; i < 8; i++) {
+            scanf("%s", grid[i]);
+        }
+
+        char foundWord[9] = {0};
+        int wordIndex = 0;
+
+        for (int col = 0; col < 8; col++) {
+            for (int row = 0; row < 8; row++) {
+                if (grid[row][col] >= 'a' && grid[row][col] <= 'z') {
+                    foundWord[wordIndex++] = grid[row][col];
+                }
+            }
+            if (wordIndex > 0) {
+                foundWord[wordIndex] = '\0';
+                printf("%s\n", foundWord);
+                break;
+            }
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    
+    for (int t = 0; t < testCases; t++) {
+        int length;
+        scanf("%d", &length);
+        
+        char moves[51];
+        scanf("%s", moves);
+        
+        int posX = 0, posY = 0;
+        int foundCandy = 0;
+
+        for (int i = 0; i < length; i++) {
+            switch (moves[i]) {
+                case 'L': posX--; break;
+                case 'R': posX++; break;
+                case 'U': posY++; break;
+                case 'D': posY--; break;
+            }
+
+            if (posX == 1 && posY == 1) {
+                foundCandy = 1;
+                break;
+            }
+        }
+
+        if (foundCandy) {
+            printf("CÓ\n");
+        } else {
+            printf("KHÔNG\n");
+        }
+    }
+
+    return 0;
+}
 

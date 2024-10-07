@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int stripLength;
+        scanf("%d", &stripLength);
+        char strip[stripLength + 1];
+        scanf("%s", strip);
+
+        int firstBlack = -1, lastBlack = -1;
+
+        for (int index = 0; index < stripLength; index++) {
+            if (strip[index] == 'B') {
+                if (firstBlack == -1) {
+                    firstBlack = index;
+                }
+                lastBlack = index;
+            }
+        }
+
+        int segmentLength = lastBlack - firstBlack + 1;
+        printf("%d\n", segmentLength);
+    }
+
+    return 0;
+}
 

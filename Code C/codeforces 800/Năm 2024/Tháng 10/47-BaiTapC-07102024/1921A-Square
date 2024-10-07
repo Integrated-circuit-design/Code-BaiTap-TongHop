@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int timMax(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int timMin(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+int main() {
+    int soTest;
+    scanf("%d", &soTest);
+
+    for (int i = 0; i < soTest; i++) {
+        int x[4], y[4];
+
+        for (int j = 0; j < 4; j++) {
+            scanf("%d %d", &x[j], &y[j]);
+        }
+
+        int maxX = timMax(timMax(x[0], x[1]), timMax(x[2], x[3]));
+        int minX = timMin(timMin(x[0], x[1]), timMin(x[2], x[3]));
+        
+        int maxY = timMax(timMax(y[0], y[1]), timMax(y[2], y[3]));
+        int minY = timMin(timMin(y[0], y[1]), timMin(y[2], y[3]));
+
+        int doDaiCanh = timMax(maxX - minX, maxY - minY);
+        int dienTich = doDaiCanh * doDaiCanh;
+
+        printf("%d\n", dienTich);
+    }
+
+    return 0;
+}
 

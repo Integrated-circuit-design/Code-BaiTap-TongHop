@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int num_cases;
+    scanf("%d", &num_cases);
+
+    for (int case_index = 0; case_index < num_cases; case_index++) {
+        int length;
+        scanf("%d", &length);
+
+        int sequence[length];
+
+        for (int i = 0; i < length; i++) {
+            scanf("%d", &sequence[i]);
+        }
+
+        int start = 0;
+        int end = length - 1;
+
+        while (start <= end) {
+            printf("%d ", sequence[start]);
+            start++;
+
+            if (start <= end) {
+                printf("%d ", sequence[end]);
+                end--;
+            }
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
 

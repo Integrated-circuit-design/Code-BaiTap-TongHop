@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int t = 0; t < test_cases; t++) {
+        int size;
+        scanf("%d", &size);
+
+        int array[size];
+        int total_sum = 0;
+        int odd_count = 0;
+        int even_count = 0;
+
+        for (int i = 0; i < size; i++) {
+            scanf("%d", &array[i]);
+            total_sum += array[i];
+
+            if (array[i] % 2 == 0) {
+                even_count++;
+            } else {
+                odd_count++;
+            }
+        }
+
+        if (total_sum % 2 == 1) {
+            printf("YES\n");
+        } else {
+            if (odd_count > 0 && even_count > 0) {
+                printf("YES\n");
+            } else {
+                printf("NO\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

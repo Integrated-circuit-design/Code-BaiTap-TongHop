@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int width, height, friends;
+        scanf("%d %d %d", &width, &height, &friends);
+
+        long long totalPieces = 1;
+
+        while (width % 2 == 0) {
+            width /= 2;
+            totalPieces *= 2;
+        }
+
+        while (height % 2 == 0) {
+            height /= 2;
+            totalPieces *= 2;
+        }
+
+        if (totalPieces >= friends) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

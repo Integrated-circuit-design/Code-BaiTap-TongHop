@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <math.h>
 
+int kiemTraChinhPhuong(long long tong) {
+    long long can_bac_hai = (long long)sqrt(tong);
+    return can_bac_hai * can_bac_hai == tong;
+}
+
+int main() {
+    int so_truong_hop;
+    scanf("%d", &so_truong_hop);
+
+    while (so_truong_hop--) {
+        int so_thung;
+        scanf("%d", &so_thung);
+
+        long long tong_hinh_vuong = 0;
+        for (int i = 0; i < so_thung; i++) {
+            long long so_hinh_vuong;
+            scanf("%lld", &so_hinh_vuong);
+            tong_hinh_vuong += so_hinh_vuong;
+        }
+
+        if (kiemTraChinhPhuong(tong_hinh_vuong)) {
+            printf("CÓ\n");
+        } else {
+            printf("KHÔNG\n");
+        }
+    }
+
+    return 0;
+}

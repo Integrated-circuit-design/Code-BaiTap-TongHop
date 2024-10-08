@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+char get_missing_char(char grid[3][3], int row) {
+    int appeared[3] = {0, 0, 0};
+
+    for (int j = 0; j < 3; j++) {
+        if (grid[row][j] == 'A') appeared[0] = 1;
+        else if (grid[row][j] == 'B') appeared[1] = 1;
+        else if (grid[row][j] == 'C') appeared[2] = 1;
+    }
+
+    if (appeared[0] == 0) return 'A';
+    if (appeared[1] == 0) return 'B';
+    if (appeared[2] == 0) return 'C';
+
+    return '?';
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        char grid[3][3];
+        int question_row = -1, question_col = -1;
+
+        for (int i = 0; i < 3; i++) {
+            scanf("%s", grid[i]);
+            for (int j = 0; j < 3; j++) {
+                if (grid[i][j] == '?') {
+                    question_row = i;
+                    question_col = j;
+                }
+            }
+        }
+
+        if (question_row != -1) {
+            grid[question_row][question_col] = get_missing_char(grid, question_row);
+        }
+
+        printf("%c\n", grid[question_row][question_col]);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+
+    while (numTestCases--) {
+        int numCoinsLeft, numCoinsRight, maxSum;
+        scanf("%d %d %d", &numCoinsLeft, &numCoinsRight, &maxSum);
+
+        int coinsLeft[numCoinsLeft];
+        int coinsRight[numCoinsRight];
+        
+        for (int i = 0; i < numCoinsLeft; i++) {
+            scanf("%d", &coinsLeft[i]);
+        }
+        
+        for (int i = 0; i < numCoinsRight; i++) {
+            scanf("%d", &coinsRight[i]);
+        }
+        
+        int validPairsCount = 0;
+        
+        for (int i = 0; i < numCoinsLeft; i++) {
+            for (int j = 0; j < numCoinsRight; j++) {
+                if (coinsLeft[i] + coinsRight[j] <= maxSum) {
+                    validPairsCount++;
+                }
+            }
+        }
+        
+        printf("%d\n", validPairsCount);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define TOTAL_DIFFICULTIES 7
+
+int calculateMissingProblems(int availableCounts[], int requiredCount, int totalDifficulties) {
+    int missingCount = 0;
+
+    for (int i = 0; i < totalDifficulties; i++) {
+        if (availableCounts[i] < requiredCount) {
+            missingCount += (requiredCount - availableCounts[i]);
+        }
+    }
+    
+    return missingCount;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        char problems[51];
+        scanf("%s", problems);
+        
+        int availableCounts[TOTAL_DIFFICULTIES] = {0};
+        
+        for (int i = 0; i < n; i++) {
+            int difficultyIndex = problems[i] - 'A';
+            availableCounts[difficultyIndex]++;
+        }
+        
+        int missingProblems = calculateMissingProblems(availableCounts, m, TOTAL_DIFFICULTIES);
+        
+        printf("%d\n", missingProblems);
+    }
+    
+    return 0;
+}
 

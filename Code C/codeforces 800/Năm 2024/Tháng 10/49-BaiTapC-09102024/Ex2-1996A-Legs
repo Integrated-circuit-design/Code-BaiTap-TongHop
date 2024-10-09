@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    for (int j = 0; j < testCases; j++) {
+        int totalLegs;
+        scanf("%d", &totalLegs);
+
+        int cows = totalLegs / 4;
+        int remainder = totalLegs % 4;
+
+        if (remainder == 2) {
+            cows++;
+        }
+
+        printf("%d\n", cows);
+    }
+
+    return 0;
+}
 

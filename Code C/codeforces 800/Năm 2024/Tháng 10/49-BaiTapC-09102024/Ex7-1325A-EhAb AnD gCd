@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int numTestCases;
+    printf("Nhập số lượng test cases: ");
+    scanf("%d", &numTestCases);
+
+    for (int index = 0; index < numTestCases; index++) {
+        int value;
+        printf("Nhập giá trị x cho test case %d: ", index + 1);
+        scanf("%d", &value);
+
+        int firstNumber = 1;
+        int secondNumber = value - 1;
+
+        printf("Cặp số cho test case %d: %d %d\n", index + 1, firstNumber, secondNumber);
+    }
+
+    return 0;
+}
 

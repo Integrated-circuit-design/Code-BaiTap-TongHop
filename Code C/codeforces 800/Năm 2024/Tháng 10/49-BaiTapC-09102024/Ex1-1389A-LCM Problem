@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int num_tests;
+    scanf("%d", &num_tests);
+
+    for (int i = 0; i < num_tests; i++) {
+        int left, right;
+        scanf("%d %d", &left, &right);
+
+        if (2 * left <= right) {
+            printf("%d %d\n", left, 2 * left);
+        } else {
+            printf("-1 -1\n");
+        }
+    }
+
+    return 0;
+}
 

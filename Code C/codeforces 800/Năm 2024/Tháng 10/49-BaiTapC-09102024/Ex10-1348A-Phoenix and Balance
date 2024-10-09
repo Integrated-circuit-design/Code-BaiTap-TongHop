@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int calculateSum(int n) {
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += 1 << i;
+    }
+    return sum;
+}
+
+int main() {
+    int t;
+    printf("Nhập số lượng test case: ");
+    scanf("%d", &t);  
+
+    while (t--) {
+        int n;
+        printf("Nhập số lượng đồng tiền (n): ");
+        scanf("%d", &n);
+
+        int totalWeight = calculateSum(n);
+
+        int sumPile1 = (1 << n) + (1 << 1) + (1 << 2);
+        int sumPile2 = totalWeight - sumPile1;
+
+        int difference = sumPile1 - sumPile2;  
+        if (difference < 0) difference = -difference;
+
+        printf("Hiệu giữa hai chồng là: %d\n", difference);
+    }
+
+    return 0;
+}
 

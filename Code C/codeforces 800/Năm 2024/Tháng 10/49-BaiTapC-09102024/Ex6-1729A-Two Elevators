@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void thang_may_nhanh_nhat(int thang_may1, int thang_may2, int diem_den) {
+    int thoi_gian_thang_may_1 = abs(thang_may1 - 1);
+    int thoi_gian_thang_may_2 = abs(thang_may2 - diem_den) + abs(diem_den - 1);
+    
+    if (thoi_gian_thang_may_1 < thoi_gian_thang_may_2) {
+        printf("1\n");
+    } else if (thoi_gian_thang_may_1 > thoi_gian_thang_may_2) {
+        printf("2\n");
+    } else {
+        printf("3\n");
+    }
+}
+
+int main() {
+    int so_test_case;
+    scanf("%d", &so_test_case);
+
+    for (int i = 0; i < so_test_case; i++) {
+        int thang_may1, thang_may2, diem_den;
+        scanf("%d %d %d", &thang_may1, &thang_may2, &diem_den);
+        thang_may_nhanh_nhat(thang_may1, thang_may2, diem_den);
+    }
+
+    return 0;
+}
 

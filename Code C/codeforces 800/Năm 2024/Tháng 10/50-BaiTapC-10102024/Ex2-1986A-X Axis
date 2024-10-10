@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int tinhKhoangCach(int a, int x1, int x2, int x3) {
+    return abs(a - x1) + abs(a - x2) + abs(a - x3);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int x1, x2, x3;
+        scanf("%d %d %d", &x1, &x2, &x3);
+        
+        int khoangCachNhoNhat = 100;
+
+        for (int a = 1; a <= 10; a++) {
+            int khoangCachHienTai = tinhKhoangCach(a, x1, x2, x3);
+            
+            if (khoangCachHienTai < khoangCachNhoNhat) {
+                khoangCachNhoNhat = khoangCachHienTai;
+            }
+        }
+
+        printf("%d\n", khoangCachNhoNhat);
+    }
+
+    return 0;
+}
 

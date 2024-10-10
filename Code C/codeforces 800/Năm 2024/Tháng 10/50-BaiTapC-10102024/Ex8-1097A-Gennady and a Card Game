@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    char card_on_table[3];
+    char player_cards[5][3];
+    int playable = 0;
+
+    printf("Nhập thẻ bài trên bàn (ví dụ: AS): ");
+    scanf("%s", card_on_table);
+
+    printf("Nhập 5 thẻ bài trong tay (ví dụ: 2H 4C TH JH AD):\n");
+    for (int i = 0; i < 5; i++) {
+        scanf("%s", player_cards[i]);
+    }
+
+    for (int i = 0; i < 5; i++) {
+        if (player_cards[i][0] == card_on_table[0] || player_cards[i][1] == card_on_table[1]) {
+            playable = 1;
+            break;
+        }
+    }
+
+    if (playable) {
+        printf("CÓ\n");
+    } else {
+        printf("KHÔNG\n");
+    }
+
+    return 0;
+}
 

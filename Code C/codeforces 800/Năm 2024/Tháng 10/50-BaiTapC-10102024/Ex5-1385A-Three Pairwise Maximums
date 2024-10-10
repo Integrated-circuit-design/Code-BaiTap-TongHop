@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int num_tests;
+    scanf("%d", &num_tests);
+
+    for (int i = 0; i < num_tests; i++) {
+        int x, y, z;
+        scanf("%d %d %d", &x, &y, &z);
+        
+        int max_value = x;
+        if (y > max_value) max_value = y;
+        if (z > max_value) max_value = z;
+
+        int max_count = 0;
+        if (x == max_value) max_count++;
+        if (y == max_value) max_count++;
+        if (z == max_value) max_count++;
+
+        if (max_count >= 2) {
+            printf("YES\n");
+            int min_value = 1;
+            if (x == max_value) {
+                min_value = (y < z) ? y : z;
+            } else if (y == max_value) {
+                min_value = (x < z) ? x : z;
+            } else {
+                min_value = (x < y) ? x : y;
+            }
+            printf("%d %d %d\n", max_value, min_value, min_value);
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

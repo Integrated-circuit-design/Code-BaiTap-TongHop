@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    printf("Nhập số lượng test case: ");
+    scanf("%d", &test_cases);
+    
+    while (test_cases > 0) {
+        long long anna_buttons, katie_buttons, shared_buttons;
+        printf("Nhập a, b, c (số nút của Anna, Katie và nút chung): ");
+        scanf("%lld %lld %lld", &anna_buttons, &katie_buttons, &shared_buttons);
+        
+        long long total_buttons = anna_buttons + katie_buttons + shared_buttons;
+
+        if (total_buttons % 2 != 0) {
+            printf("Anna thắng\n");
+        } else {
+            printf("Katie thắng\n");
+        }
+
+        test_cases--;
+    }
+    
+    return 0;
+}
 

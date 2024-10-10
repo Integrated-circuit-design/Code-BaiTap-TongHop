@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases > 0) {
+        int water_a, water_b, cup_capacity;
+        scanf("%d %d %d", &water_a, &water_b, &cup_capacity);
+
+        int difference = water_a > water_b ? (water_a - water_b) : (water_b - water_a);
+        int moves_needed = difference / (2 * cup_capacity);
+        if (difference % (2 * cup_capacity) != 0) {
+            moves_needed += 1;
+        }
+
+        printf("%d\n", moves_needed);
+        test_cases--;
+    }
+
+    return 0;
+}
 

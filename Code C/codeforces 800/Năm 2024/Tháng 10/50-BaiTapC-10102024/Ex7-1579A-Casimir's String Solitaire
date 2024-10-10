@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int numberOfTests;
+    scanf("%d", &numberOfTests);
+
+    for (int test = 0; test < numberOfTests; test++) {
+        char str[51];
+        scanf("%s", str);
+
+        int countA = 0, countB = 0, countC = 0;
+
+        for (int index = 0; index < strlen(str); index++) {
+            if (str[index] == 'A') {
+                countA++;
+            } else if (str[index] == 'B') {
+                countB++;
+            } else if (str[index] == 'C') {
+                countC++;
+            }
+        }
+
+        if (countB == countA + countC) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

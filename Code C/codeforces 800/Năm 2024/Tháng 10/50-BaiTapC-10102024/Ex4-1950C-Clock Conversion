@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    int gio, phut;
+
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        scanf("%d:%d", &gio, &phut);
+
+        char meridian[3];
+        int gio12;
+
+        if (gio == 0) {
+            gio12 = 12;
+            strcpy(meridian, "AM");
+        } else if (gio < 12) {
+            gio12 = gio;
+            strcpy(meridian, "AM");
+        } else if (gio == 12) {
+            gio12 = 12;
+            strcpy(meridian, "PM");
+        } else {
+            gio12 = gio - 12;
+            strcpy(meridian, "PM");
+        }
+
+        printf("%02d:%02d %s\n", gio12, phut, meridian);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int numRows;
+        scanf("%d", &numRows);
+        
+        char map[500][5];
+
+        for (int i = 0; i < numRows; i++) {
+            scanf("%s", map[i]);
+        }
+
+        for (int i = numRows - 1; i >= 0; i--) {
+            for (int j = 0; j < 4; j++) {
+                if (map[i][j] == '#') {
+                    printf("%d ", j + 1);
+                    break;
+                }
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

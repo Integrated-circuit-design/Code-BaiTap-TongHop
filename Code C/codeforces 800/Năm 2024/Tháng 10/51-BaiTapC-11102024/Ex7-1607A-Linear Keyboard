@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+
+    for (int test = 0; test < numTestCases; test++) {
+        char keyboard[27];
+        char word[51];
+
+        scanf("%s", keyboard);
+        scanf("%s", word);
+
+        int keyPosition[26];
+        for (int i = 0; i < 26; i++) {
+            keyPosition[keyboard[i] - 'a'] = i;
+        }
+
+        int totalDistance = 0;
+
+        for (int j = 1; j < strlen(word); j++) {
+            int currentKey = keyPosition[word[j] - 'a'];
+            int previousKey = keyPosition[word[j - 1] - 'a'];
+            totalDistance += abs(currentKey - previousKey);
+        }
+
+        printf("%d\n", totalDistance);
+    }
+
+    return 0;
+}
 

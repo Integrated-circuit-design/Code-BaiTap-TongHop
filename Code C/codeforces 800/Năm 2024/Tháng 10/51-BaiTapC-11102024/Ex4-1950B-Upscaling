@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+void drawCheckerboard(int size) {
+    for (int row = 0; row < size; row++) {
+        for (int col = 0; col < size; col++) {
+            if ((row / 2 + col / 2) % 2 == 0) {
+                putchar('#');
+            } else {
+                putchar('.');
+            }
+        }
+        putchar('\n');
+    }
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int n;
+        scanf("%d", &n);
+        drawCheckerboard(2 * n);
+    }
+
+    return 0;
+}
 

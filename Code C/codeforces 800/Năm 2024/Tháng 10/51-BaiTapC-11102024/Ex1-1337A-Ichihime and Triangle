@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    for (int i = 0; i < testCases; i++) {
+        int minA, maxB, minC, maxD;
+        scanf("%d %d %d %d", &minA, &maxB, &minC, &maxD);
+        
+        int side1 = maxB;
+        int side2 = minC;
+        int side3 = minC;
+
+        printf("%d %d %d\n", side1, side2, side3);
+    }
+    
+    return 0;
+}
 

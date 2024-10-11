@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int so_nguoi, so_but, so_vo;
+
+    printf("Nhập số lượng người tham gia: ");
+    scanf("%d", &so_nguoi);
+    printf("Nhập số bút có: ");
+    scanf("%d", &so_but);
+    printf("Nhập số vở có: ");
+    scanf("%d", &so_vo);
+
+    if (so_but >= so_nguoi && so_vo >= so_nguoi) {
+        printf("Có\n");
+    } else {
+        printf("Không\n");
+    }
+
+    return 0;
+}
 

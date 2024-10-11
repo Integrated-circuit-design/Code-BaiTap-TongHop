@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int num_people;
+    long long initial_ice_cream;
+    scanf("%d %lld", &num_people, &initial_ice_cream);
+    
+    int distressed_children = 0;
+    char action;
+    long long amount;
+
+    for (int index = 0; index < num_people; index++) {
+        scanf(" %c %lld", &action, &amount);
+        
+        if (action == '+') {
+            initial_ice_cream += amount;
+        } else if (action == '-') {
+            if (initial_ice_cream >= amount) {
+                initial_ice_cream -= amount;
+            } else {
+                distressed_children++;
+            }
+        }
+    }
+
+    printf("%lld %d\n", initial_ice_cream, distressed_children);
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int s[n];
+        int max_strength = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &s[i]);
+            if (s[i] > max_strength) {
+                max_strength = s[i];
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            int other_max = -1;
+            
+            for (int j = 0; j < n; j++) {
+                if (i != j && s[j] > other_max) {
+                    other_max = s[j];
+                }
+            }
+            
+            printf("%d ", s[i] - other_max);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

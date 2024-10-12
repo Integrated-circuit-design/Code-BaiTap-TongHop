@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int getVotesNeeded(int votesCandidate, int votesOpponent1, int votesOpponent2) {
+    int neededVotes = (votesOpponent1 > votesOpponent2 ? votesOpponent1 : votesOpponent2) - votesCandidate + 1;
+    return (neededVotes < 0) ? 0 : neededVotes;
+}
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+
+    for (int i = 0; i < numTestCases; i++) {
+        int votesA, votesB, votesC;
+        scanf("%d %d %d", &votesA, &votesB, &votesC);
+
+        int votesNeededA = getVotesNeeded(votesA, votesB, votesC);
+        int votesNeededB = getVotesNeeded(votesB, votesA, votesC);
+        int votesNeededC = getVotesNeeded(votesC, votesA, votesB);
+
+        printf("%d %d %d\n", votesNeededA, votesNeededB, votesNeededC);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+int tat_ca_giong(char *s) {
+    for (int i = 1; i < strlen(s); i++) {
+        if (s[i] != s[0]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void sap_xep(char *s) {
+    char temp;
+    int len = strlen(s);
+    for (int i = 0; i < len - 1; i++) {
+        for (int j = 0; j < len - i - 1; j++) {
+            if (s[j] > s[j + 1]) {
+                temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[11];
+        scanf("%s", s);
+
+        if (tat_ca_giong(s)) {
+            printf("KHÔNG\n");
+        } else {
+            printf("CÓ\n");
+            sap_xep(s);
+            printf("%s\n", s);
+        }
+    }
+
+    return 0;
+}
 

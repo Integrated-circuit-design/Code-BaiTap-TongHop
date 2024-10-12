@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+void print_smallest_string(int n) {
+    for (int first = 1; first <= 26; first++) {
+        for (int second = first; second <= 26; second++) {
+            int third = n - (first + second);
+            if (third >= second && third <= 26) {
+                printf("%c%c%c\n", 'a' + first - 1, 'a' + second - 1, 'a' + third - 1);
+                return;
+            }
+        }
+    }
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    while (test_cases--) {
+        int encoded_value;
+        scanf("%d", &encoded_value);
+        print_smallest_string(encoded_value);
+    }
+    return 0;
+}
 

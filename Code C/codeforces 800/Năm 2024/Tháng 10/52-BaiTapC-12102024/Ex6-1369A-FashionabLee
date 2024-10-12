@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int i = 0; i < test_cases; i++) {
+        int sides;
+        scanf("%d", &sides);
+
+        if (sides % 4 == 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

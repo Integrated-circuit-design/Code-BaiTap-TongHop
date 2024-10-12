@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int test_cases;
+    const char *pi_digits = "314159265358979323846264338327";
+    
+    scanf("%d", &test_cases);
+    
+    for (int i = 0; i < test_cases; i++) {
+        char polycarp_memory[31];
+        scanf("%s", polycarp_memory);
+
+        int count_correct = 0;
+        for (int j = 0; j < strlen(polycarp_memory); j++) {
+            if (polycarp_memory[j] == pi_digits[j]) {
+                count_correct++;
+            } else {
+                break;
+            }
+        }
+
+        printf("%d\n", count_correct);
+    }
+    
+    return 0;
+}
 

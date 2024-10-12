@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    char stones[51];
+    char commands[51];
+
+    scanf("%s %s", stones, commands);
+
+    int currentPosition = 0;
+
+    for (int j = 0; commands[j] != '\0'; j++) {
+        if (commands[j] == stones[currentPosition]) {
+            currentPosition++;
+        }
+    }
+
+    printf("%d\n", currentPosition + 1);
+
+    return 0;
+}
 

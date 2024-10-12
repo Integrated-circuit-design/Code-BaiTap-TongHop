@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int stones[n];
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &stones[j]);
+        }
+
+        int minIdx = 0, maxIdx = 0;
+
+        for (int j = 1; j < n; j++) {
+            if (stones[j] < stones[minIdx]) {
+                minIdx = j;
+            }
+            if (stones[j] > stones[maxIdx]) {
+                maxIdx = j;
+            }
+        }
+
+        int leftStepsMin = minIdx + 1;
+        int leftStepsMax = maxIdx + 1;
+        int rightStepsMin = n - minIdx;
+        int rightStepsMax = n - maxIdx;
+
+        int option1 = (leftStepsMin > leftStepsMax) ? leftStepsMin : leftStepsMax;
+        int option2 = (rightStepsMin > rightStepsMax) ? rightStepsMin : rightStepsMax;
+        int option3 = leftStepsMin + rightStepsMax;
+        int option4 = leftStepsMax + rightStepsMin;
+
+        int minMoves = option1 < option2 ? option1 : option2;
+        minMoves = minMoves < option3 ? minMoves : option3;
+        minMoves = minMoves < option4 ? minMoves : option4;
+
+        printf("%d\n", minMoves);
+    }
+
+    return 0;
+}
 

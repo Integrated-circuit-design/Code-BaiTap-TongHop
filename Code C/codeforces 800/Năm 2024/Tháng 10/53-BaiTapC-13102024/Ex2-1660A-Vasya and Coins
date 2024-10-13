@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+    
+    while (numTestCases--) {
+        int oneBurleCoins, twoBurleCoins;
+        scanf("%d %d", &oneBurleCoins, &twoBurleCoins);
+        
+        if (oneBurleCoins == 0) {
+            printf("1\n");
+        } else {
+            int minUnpayableAmount = oneBurleCoins + 2 * twoBurleCoins + 1;
+            printf("%d\n", minUnpayableAmount);
+        }
+    }
+    
+    return 0;
+}
 

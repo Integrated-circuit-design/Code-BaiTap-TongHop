@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        int length;
+        scanf("%d", &length);
+        
+        int numbers[50];
+        for (int j = 0; j < length; j++) {
+            scanf("%d", &numbers[j]);
+        }
+        
+        int odd_index_parity = numbers[0] % 2;
+        int even_index_parity = numbers[1] % 2;
+        
+        int is_possible = 1;
+        
+        for (int j = 0; j < length; j += 2) {
+            if (numbers[j] % 2 != odd_index_parity) {
+                is_possible = 0;
+                break;
+            }
+        }
+        
+        for (int j = 1; j < length && is_possible; j += 2) {
+            if (numbers[j] % 2 != even_index_parity) {
+                is_possible = 0;
+                break;
+            }
+        }
+        
+        if (is_possible) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

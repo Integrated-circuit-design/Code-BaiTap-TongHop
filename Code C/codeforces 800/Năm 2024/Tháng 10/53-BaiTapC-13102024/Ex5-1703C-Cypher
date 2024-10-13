@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int num_cases;
+    scanf("%d", &num_cases);
+    
+    while (num_cases--) {
+        int num_wheels;
+        scanf("%d", &num_wheels);
+        
+        int final_values[100];
+        
+        for (int idx = 0; idx < num_wheels; idx++) {
+            scanf("%d", &final_values[idx]);
+        }
+        
+        for (int idx = 0; idx < num_wheels; idx++) {
+            int move_count;
+            char operations[11];
+            
+            scanf("%d %s", &move_count, operations);
+            
+            int initial_value = final_values[idx];
+            
+            for (int op_idx = 0; op_idx < move_count; op_idx++) {
+                if (operations[op_idx] == 'U') {
+                    initial_value--;
+                    if (initial_value < 0) initial_value = 9;
+                } else if (operations[op_idx] == 'D') {
+                    initial_value++;
+                    if (initial_value > 9) initial_value = 0;
+                }
+            }
+            
+            printf("%d ", initial_value);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

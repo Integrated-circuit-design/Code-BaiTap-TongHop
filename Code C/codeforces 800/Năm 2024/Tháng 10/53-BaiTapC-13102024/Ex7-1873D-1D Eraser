@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int calculate_min_operations(char *paper, int length, int size) {
+    int total_operations = length;
+    int count_black = 0;
+
+    for (int idx = 0; idx < size; idx++) {
+        if (paper[idx] == 'B') {
+            count_black++;
+        }
+    }
+
+    total_operations = count_black;
+
+    for (int idx = size; idx < length; idx++) {
+        if (paper[idx - size] == 'B') {
+            count_black--;
+        }
+        if (paper[idx] == 'B') {
+            count_black++;
+        }
+        if (count_black < total_operations) {
+            total_operations = count_black;
+        }
+    }
+
+    return total_operations;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int length, size;
+        scanf("%d %d", &length, &size);
+        
+        char paper[length + 1];
+        scanf("%s", paper);
+        
+        printf("%d\n", calculate_min_operations(paper, length, size));
+    }
+
+    return 0;
+}
 

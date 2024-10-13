@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int numberOfTests;
+    scanf("%d", &numberOfTests);
+    
+    for (int i = 0; i < numberOfTests; i++) {
+        long long price;
+        scanf("%lld", &price);
+
+        long long roundedPrice = 1;
+        
+        while (roundedPrice * 10 <= price) {
+            roundedPrice *= 10;
+        }
+
+        long long decreaseAmount = price - roundedPrice;
+        
+        printf("%lld\n", decreaseAmount);
+    }
+    
+    return 0;
+}
 

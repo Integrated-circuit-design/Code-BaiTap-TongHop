@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    while (test_cases--) {
+        int a, b, c;
+        scanf("%d %d %d", &a, &b, &c);
+
+        int n = 2 * (b - a);
+
+        if ((a + b) % 2 != 0 || c > n || a > n || b > n) {
+            printf("-1\n");
+        } else {
+            int opposite = (c + n / 2) % n;  
+            if (opposite == 0) {
+                opposite = n;  
+            }
+            printf("%d\n", opposite);
+        }
+    }
+    return 0;
+}
 

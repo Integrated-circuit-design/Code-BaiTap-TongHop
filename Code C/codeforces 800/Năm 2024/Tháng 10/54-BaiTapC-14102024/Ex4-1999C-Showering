@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int num_tasks, shower_time, total_minutes;
+        scanf("%d %d %d", &num_tasks, &shower_time, &total_minutes);
+
+        int end_time = 0;
+        int can_take_shower = 0;
+
+        for (int j = 0; j < num_tasks; j++) {
+            int start, finish;
+            scanf("%d %d", &start, &finish);
+
+            if (start - end_time >= shower_time) {
+                can_take_shower = 1;
+            }
+            end_time = finish;
+        }
+
+        if (total_minutes - end_time >= shower_time) {
+            can_take_shower = 1;
+        }
+
+        if (can_take_shower) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char s[n + 1], f[n + 1];
+        scanf("%s", s);
+        scanf("%s", f);
+
+        int removals = 0;
+        int additions = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] != f[i]) {
+                if (s[i] == '1') {
+                    removals++;
+                } else {
+                    additions++;
+                }
+            }
+        }
+
+        printf("%d\n", removals + additions);
+    }
+
+    return 0;
+}
 

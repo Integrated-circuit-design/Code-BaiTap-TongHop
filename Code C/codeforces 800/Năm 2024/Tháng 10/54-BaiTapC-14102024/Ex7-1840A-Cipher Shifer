@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+void giaiMa(int doDai, char chuoi[]) {
+    for (int j = 0; j < doDai; j += 2) {
+        putchar(chuoi[j]);
+    }
+    putchar('\n');
+}
+
+int main() {
+    int testCase;
+    scanf("%d", &testCase);
+
+    while (testCase--) {
+        int doDaiChuoi;
+        char chuoiMaHoa[101];
+
+        scanf("%d", &doDaiChuoi);
+        scanf("%s", chuoiMaHoa);
+
+        giaiMa(doDaiChuoi, chuoiMaHoa);
+    }
+
+    return 0;
+}
 

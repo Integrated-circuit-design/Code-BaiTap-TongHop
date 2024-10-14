@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[101];
+    int q_count = 0;
+    int count = 0;
+    
+    printf("Nhập chuỗi: ");
+    scanf("%s", str);
+    
+    int length = strlen(str);
+    
+    for (int i = 0; i < length; i++) {
+        if (str[i] == 'Q') {
+            q_count++;
+        }
+    }
+
+    for (int i = 0; i < length; i++) {
+        if (str[i] == 'A') {
+            int q_before = 0; 
+            int q_after = 0; 
+
+            for (int j = 0; j < i; j++) {
+                if (str[j] == 'Q') {
+                    q_before++;
+                }
+            }
+
+            for (int k = i + 1; k < length; k++) {
+                if (str[k] == 'Q') {
+                    q_after++;
+                }
+            }
+
+            count += q_before * q_after;
+        }
+    }
+    
+    printf("Số lượng chuỗi con 'QAQ': %d\n", count);
+    
+    return 0;
+}
 

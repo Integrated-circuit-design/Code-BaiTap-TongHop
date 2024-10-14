@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        char chessboard[8][9];
+        for (int row = 0; row < 8; row++) {
+            scanf("%s", chessboard[row]);
+        }
+
+        int bishopRow = 0, bishopCol = 0;
+
+        for (int i = 1; i < 7; i++) {
+            for (int j = 1; j < 7; j++) {
+                if (chessboard[i][j] == '#') {
+                    if (chessboard[i - 1][j - 1] == '#' &&
+                        chessboard[i - 1][j + 1] == '#' &&
+                        chessboard[i + 1][j - 1] == '#' &&
+                        chessboard[i + 1][j + 1] == '#') {
+                        bishopRow = i + 1;
+                        bishopCol = j + 1;
+                    }
+                }
+            }
+        }
+
+        printf("%d %d\n", bishopRow, bishopCol);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int numberOfTestCases;
+    scanf("%d", &numberOfTestCases);
+
+    for (int i = 0; i < numberOfTestCases; i++) {
+        long long vertex;
+        scanf("%lld", &vertex);
+
+        long long totalSum = 0;
+
+        while (vertex > 0) {
+            totalSum += vertex;
+            vertex /= 2;
+        }
+
+        printf("%lld\n", totalSum); 
+    }
+
+    return 0;
+}
 

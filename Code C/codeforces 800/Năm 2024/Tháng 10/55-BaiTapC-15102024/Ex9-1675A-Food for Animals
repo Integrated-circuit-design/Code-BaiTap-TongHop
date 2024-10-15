@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int soTest;
+    scanf("%d", &soTest);
+    
+    for (int i = 0; i < soTest; i++) {
+        int goiThucAnCho, goiThucAnMeo, goiThucAnDaNang, soCho, soMeo;
+        
+        scanf("%d %d %d %d %d", &goiThucAnCho, &goiThucAnMeo, &goiThucAnDaNang, &soCho, &soMeo);
+        
+        int thucAnCanThemCho = (soCho > goiThucAnCho) ? (soCho - goiThucAnCho) : 0;
+        int thucAnCanThemMeo = (soMeo > goiThucAnMeo) ? (soMeo - goiThucAnMeo) : 0;
+        
+        if (thucAnCanThemCho + thucAnCanThemMeo <= goiThucAnDaNang) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        long long total_length;
+        int num_pieces;
+        scanf("%lld %d", &total_length, &num_pieces);
+
+        long long piece_lengths[num_pieces];
+        long long count_of_ones = 0;
+
+        for (int i = 0; i < num_pieces; i++) {
+            scanf("%lld", &piece_lengths[i]);
+            if (piece_lengths[i] == 1) {
+                count_of_ones++;
+            }
+        }
+
+        long long needed_ones = total_length - num_pieces;
+
+        if (count_of_ones >= needed_ones) {
+            printf("%lld\n", (num_pieces - 1));
+        } else {
+            long long additional_ones_needed = needed_ones - count_of_ones;
+            long long split_operations = additional_ones_needed;
+            long long merge_operations = (num_pieces - 1) + additional_ones_needed;
+            
+            printf("%lld\n", split_operations + merge_operations);
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+int countDifferentDigits(int a, int b) {
+    int count = 0;
+    while (a > 0 || b > 0) {
+        if (a % 10 != b % 10) {
+            count++;
+        }
+        a /= 10;
+        b /= 10;
+    }
+    return count;
+}
+
+int findClosestDivisibleBy7(int n) {
+    if (n % 7 == 0) {
+        return n;
+    }
+
+    int closest = -1;
+    int minChanges = 4;
+
+    for (int i = 10; i < 1000; i++) {
+        if (i % 7 == 0) {
+            int changes = countDifferentDigits(n, i);
+            if (changes < minChanges) {
+                minChanges = changes;
+                closest = i;
+            }
+        }
+    }
+
+    return closest;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int result = findClosestDivisibleBy7(n);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

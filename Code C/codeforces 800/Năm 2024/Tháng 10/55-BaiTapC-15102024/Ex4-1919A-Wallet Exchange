@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    printf("Nhập số lượng trường hợp kiểm tra: ");
+    scanf("%d", &numTests);
+
+    for (int i = 0; i < numTests; i++) {
+        int coinsAlice, coinsBob;
+        printf("Nhập số tiền của Alice và Bob: ");
+        scanf("%d %d", &coinsAlice, &coinsBob);
+
+        if (coinsAlice == coinsBob) {
+            printf("Bob thắng\n");
+        } else {
+            printf("Alice thắng\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+long long tinhGiaiThua(int so) {
+    long long ketQua = 1;
+    int j;
+
+    for (j = 1; j <= so; j++) {
+        ketQua *= j;
+    }
+    return ketQua;
+}
+
+int main() {
+    int A, B;
+
+    printf("Nhap hai so nguyen A va B (1 ≤ A, B ≤ 10^9): ");
+    scanf("%d %d", &A, &B);
+
+    int soNhoNhat = (A < B) ? A : B;
+
+    long long giaiThua = tinhGiaiThua(soNhoNhat);
+
+    printf("GCD(A!, B!) = %lld\n", giaiThua);
+
+    return 0;
+}
 

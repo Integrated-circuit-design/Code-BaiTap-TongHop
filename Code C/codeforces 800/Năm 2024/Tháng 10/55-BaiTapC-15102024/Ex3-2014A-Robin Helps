@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int num_people, threshold;
+        scanf("%d %d", &num_people, &threshold);
+
+        int gold_amount[num_people];
+        int gold_robin = 0;
+        int total_given = 0;
+
+        for (int j = 0; j < num_people; j++) {
+            scanf("%d", &gold_amount[j]);
+        }
+
+        for (int j = 0; j < num_people; j++) {
+            if (gold_amount[j] >= threshold) {
+                gold_robin += gold_amount[j];
+            } else if (gold_amount[j] == 0 && gold_robin > 0) {
+                total_given++;
+                gold_robin--;
+            }
+        }
+
+        printf("%d\n", total_given);
+    }
+
+    return 0;
+}
 

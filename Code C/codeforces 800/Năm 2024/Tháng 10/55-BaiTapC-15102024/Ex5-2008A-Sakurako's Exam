@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t > 0) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+
+        int sum = a + 2 * b;
+
+        if (sum % 2 == 0) {
+            if (a > 0 || (b % 2 == 0)) {
+                printf("YES\n");
+            } else {
+                printf("NO\n");
+            }
+        } else {
+            printf("NO\n");
+        }
+
+        t--;
+    }
+
+    return 0;
+}
 

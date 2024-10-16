@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char melody[51];
+        scanf("%d", &n);
+        scanf("%s", melody);
+
+        int melody_count = 0;
+        int pairs[7][7] = {0};
+
+        for (int i = 0; i < n - 1; i++) {
+            int first_note = melody[i] - 'a';
+            int second_note = melody[i + 1] - 'a';
+
+            if (pairs[first_note][second_note] == 0) {
+                pairs[first_note][second_note] = 1;
+                melody_count++;
+            }
+        }
+
+        printf("%d\n", melody_count);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,15 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+
+    for (int i = 0; i < numTests; i++) {
+        int primeP;
+        scanf("%d", &primeP);
+        printf("%d %d\n", 2, primeP - 1);
+    }
+
+    return 0;
+}
 

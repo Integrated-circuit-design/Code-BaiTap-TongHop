@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int numDisks;
+    scanf("%d", &numDisks);
+    
+    char initialState[numDisks + 1];
+    char targetState[numDisks + 1];
+    
+    scanf("%s", initialState);
+    scanf("%s", targetState);
+    
+    int totalMoves = 0;
+    
+    for (int index = 0; index < numDisks; index++) {
+        int startDigit = initialState[index] - '0';
+        int endDigit = targetState[index] - '0';
+        
+        int moveForward = (endDigit - startDigit + 10) % 10;
+        int moveBackward = (startDigit - endDigit + 10) % 10;
+        
+        if (moveForward < moveBackward) {
+            totalMoves += moveForward;
+        } else {
+            totalMoves += moveBackward;
+        }
+    }
+    
+    printf("%d\n", totalMoves);
+    
+    return 0;
+}
 

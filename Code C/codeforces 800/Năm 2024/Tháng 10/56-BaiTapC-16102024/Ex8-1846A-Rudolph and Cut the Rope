@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int so_test_case;
+    scanf("%d", &so_test_case);
+
+    for (int j = 0; j < so_test_case; j++) {
+        int so_dinh;
+        scanf("%d", &so_dinh);
+
+        int count_cut = 0;
+
+        for (int k = 0; k < so_dinh; k++) {
+            int chieu_cao, do_dai_day;
+            scanf("%d %d", &chieu_cao, &do_dai_day);
+            
+            if (chieu_cao > do_dai_day) {
+                count_cut++;
+            }
+        }
+
+        printf("%d\n", count_cut);
+    }
+
+    return 0;
+}
 

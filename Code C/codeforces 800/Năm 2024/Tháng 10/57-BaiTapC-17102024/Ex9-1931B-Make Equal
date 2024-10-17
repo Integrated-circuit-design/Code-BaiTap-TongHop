@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        int num_containers;
+        scanf("%d", &num_containers);
+        
+        long long total_water = 0;
+        int containers[num_containers];
+        
+        for (int j = 0; j < num_containers; j++) {
+            scanf("%d", &containers[j]);
+            total_water += containers[j];
+        }
+        
+        if (total_water % num_containers == 0) {
+            long long target_amount = total_water / num_containers;
+            int can_balance = 1;
+            
+            for (int j = 0; j < num_containers; j++) {
+                if (containers[j] > target_amount) {
+                    can_balance = 0;
+                    break;
+                }
+            }
+            
+            if (can_balance) {
+                printf("YES\n");
+            } else {
+                printf("NO\n");
+            }
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

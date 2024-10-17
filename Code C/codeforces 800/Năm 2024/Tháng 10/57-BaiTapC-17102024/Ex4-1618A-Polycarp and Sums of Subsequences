@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int sums[7];
+
+        for (int index = 0; index < 7; ++index) {
+            scanf("%d", &sums[index]);
+        }
+
+        int first = sums[0];
+        int second = sums[1];
+        int third = sums[6] - first - second;
+
+        printf("%d %d %d\n", first, second, third);
+    }
+
+    return 0;
+}
 

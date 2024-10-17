@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int b[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+        
+        int m = n * 2;
+        int a[m];
+        int index = 0;
+        
+        a[index++] = b[0];
+        
+        for (int i = 1; i < n; i++) {
+            a[index++] = b[i];
+            
+            if (b[i] < b[i - 1]) {
+                a[index++] = b[i];
+            }
+        }
+        
+        printf("%d\n", index);
+        for (int i = 0; i < index; i++) {
+            printf("%d ", a[i]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

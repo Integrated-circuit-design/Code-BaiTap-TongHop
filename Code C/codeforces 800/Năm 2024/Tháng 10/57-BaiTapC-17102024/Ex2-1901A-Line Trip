@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int numStations, destination;
+        scanf("%d %d", &numStations, &destination);
+        
+        int stations[50];
+        for (int i = 0; i < numStations; i++) {
+            scanf("%d", &stations[i]);
+        }
+
+        int maxDistance = stations[0];
+        
+        for (int i = 1; i < numStations; i++) {
+            int currentDistance = stations[i] - stations[i - 1];
+            if (currentDistance > maxDistance) {
+                maxDistance = currentDistance;
+            }
+        }
+
+        int lastDistance = destination - stations[numStations - 1];
+        if (lastDistance > maxDistance) {
+            maxDistance = lastDistance;
+        }
+
+        printf("%d\n", maxDistance);
+    }
+
+    return 0;
+}
 

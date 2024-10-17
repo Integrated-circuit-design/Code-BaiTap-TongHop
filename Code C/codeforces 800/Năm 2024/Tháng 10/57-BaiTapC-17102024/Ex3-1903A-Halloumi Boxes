@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool isArraySorted(int arr[], int size) {
+    for (int idx = 1; idx < size; idx++) {
+        if (arr[idx] < arr[idx - 1]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+    int testCaseCount;
+    scanf("%d", &testCaseCount);
+    
+    while (testCaseCount--) {
+        int boxCount, maxReverseLength;
+        scanf("%d %d", &boxCount, &maxReverseLength);
+        
+        int halloumiBoxes[boxCount];
+        for (int i = 0; i < boxCount; i++) {
+            scanf("%d", &halloumiBoxes[i]);
+        }
+        
+        if (isArraySorted(halloumiBoxes, boxCount)) {
+            printf("YES\n");
+            continue;
+        }
+        
+        if (maxReverseLength >= boxCount) {
+            printf("YES\n");
+            continue;
+        }
+        
+        if (maxReverseLength >= 2) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

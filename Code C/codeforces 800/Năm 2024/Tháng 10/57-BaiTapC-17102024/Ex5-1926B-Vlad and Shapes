@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool check_square(int size, char matrix[][10]) {
+    int leftmost = size, rightmost = 0, topmost = size, bottommost = 0;
+
+    for (int row = 0; row < size; row++) {
+        for (int col = 0; col < size; col++) {
+            if (matrix[row][col] == '1') {
+                if (row < topmost) topmost = row;
+                if (row > bottommost) bottommost = row;
+                if (col < leftmost) leftmost = col;
+                if (col > rightmost) rightmost = col;
+            }
+        }
+    }
+
+    if ((bottommost - topmost) == (rightmost - leftmost)) {
+        for (int i = topmost; i <= bottommost; i++) {
+            for (int j = leftmost; j <= rightmost; j++) {
+                if (matrix[i][j] != '1') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int n;
+        scanf("%d", &n);
+        char grid[10][10];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%s", grid[i]);
+        }
+
+        if (check_square(n, grid)) {
+            printf("SQUARE\n");
+        } else {
+            printf("TRIANGLE\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    
+    for (int caseIndex = 0; caseIndex < testCases; caseIndex++) {
+        char number[11];
+        scanf("%s", number);
+        
+        int len = strlen(number);
+        int lastDigit = number[len - 1] - '0';
+
+        if (lastDigit % 2 == 0) {
+            printf("0\n");
+        } else if ((number[0] - '0') % 2 == 0) {
+            printf("1\n");
+        } else {
+            int foundEvenDigit = 0;
+            for (int i = 1; i < len; i++) {
+                if ((number[i] - '0') % 2 == 0) {
+                    foundEvenDigit = 1;
+                    break;
+                }
+            }
+            if (foundEvenDigit) {
+                printf("2\n");
+            } else {
+                printf("-1\n");
+            }
+        }
+    }
+    
+    return 0;
+}
 

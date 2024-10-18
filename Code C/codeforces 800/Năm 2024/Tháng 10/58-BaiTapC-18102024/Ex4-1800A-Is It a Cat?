@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int is_meowing_sound(const char *sound) {
+    int len = strlen(sound);
+    int stage = 0;
+
+    for (int i = 0; i < len; i++) {
+        char ch = tolower(sound[i]);
+
+        if (stage == 0 && ch == 'm') {
+            continue;
+        } else if (stage == 0 && ch == 'e') {
+            stage = 1;
+        } else if (stage == 1 && ch == 'e') {
+            continue;
+        } else if (stage == 1 && ch == 'o') {
+            stage = 2;
+        } else if (stage == 2 && ch == 'o') {
+            continue;
+        } else if (stage == 2 && ch == 'w') {
+            stage = 3;
+        } else if (stage == 3 && ch == 'w') {
+            continue;
+        } else {
+            return 0;
+        }
+    }
+
+    return stage == 3;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        char sound[51];
+        scanf("%s", sound);
+        
+        if (is_meowing_sound(sound)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

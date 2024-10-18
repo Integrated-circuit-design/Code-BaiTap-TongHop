@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+void chenhSo() {
+    int n, d;
+    char so[200005];
+
+    scanf("%d %d", &n, &d);
+    scanf("%s", so);
+    
+    char ketQua[200006];
+    int j = 0;
+    int chuaChen = 1;
+
+    for (int i = 0; i < n; i++) {
+        if (chuaChen && (so[i] - '0') < d) {
+            ketQua[j++] = d + '0';
+            chuaChen = 0;
+        }
+        ketQua[j++] = so[i];
+    }
+
+    if (chuaChen) {
+        ketQua[j++] = d + '0';
+    }
+
+    ketQua[j] = '\0';
+    printf("%s\n", ketQua);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        chenhSo();
+    }
+
+    return 0;
+}
 

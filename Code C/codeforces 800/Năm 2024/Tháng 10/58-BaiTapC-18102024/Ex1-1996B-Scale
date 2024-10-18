@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+
+    while (numTests--) {
+        int size, factor;
+        scanf("%d %d", &size, &factor);
+
+        char matrix[size][size];
+        for (int row = 0; row < size; row++) {
+            scanf("%s", matrix[row]);
+        }
+
+        for (int row = 0; row < size; row += factor) {
+            for (int col = 0; col < size; col += factor) {
+                printf("%c", matrix[row][col]);
+            }
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

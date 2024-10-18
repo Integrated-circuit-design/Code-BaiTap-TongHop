@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int num_cases;
+    scanf("%d", &num_cases);
+    
+    while (num_cases--) {
+        int num_friends;
+        scanf("%d", &num_friends);
+        
+        int candies[num_friends];
+        int total_candies = 0;
+        
+        for (int j = 0; j < num_friends; j++) {
+            scanf("%d", &candies[j]);
+            total_candies += candies[j];
+        }
+        
+        if (total_candies % num_friends != 0) {
+            printf("-1\n");
+        } else {
+            int target_candies = total_candies / num_friends;
+            int count_excess = 0;
+            
+            for (int j = 0; j < num_friends; j++) {
+                if (candies[j] > target_candies) {
+                    count_excess++;
+                }
+            }
+            
+            printf("%d\n", count_excess);
+        }
+    }
+    
+    return 0;
+}
 

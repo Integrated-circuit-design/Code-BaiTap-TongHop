@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_WORDS 1000
+#define MAX_LEN 4
+
+typedef struct {
+    char word[MAX_LEN];
+    int count;
+} WordEntry;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        WordEntry allWords[3 * MAX_WORDS];
+        int totalWords = 0;
+        int points[3] = {0, 0, 0};
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < n; j++) {
+                char temp[MAX_LEN];
+                scanf("%s", temp);
+
+                int found = 0;
+                for (int k = 0; k < totalWords; k++) {
+                    if (strcmp(allWords[k].word, temp) == 0) {
+                        allWords[k].count++;
+                        found = 1;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    strcpy(allWords[totalWords].word, temp);
+                    allWords[totalWords].count = 1;
+                    totalWords++;
+                }
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < n; j++) {
+                char temp[MAX_LEN];
+                scanf("%s", temp);
+
+                for (int k = 0; k < totalWords; k++) {
+                    if (strcmp(allWords[k].word, temp) == 0) {
+                        if (allWords[k].count == 1) {
+                            points[i] += 3;
+                        } else if (allWords[k].count == 2) {
+                            points[i] += 1;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        printf("%d %d %d\n", points[0], points[1], points[2]);
+    }
+
+    return 0;
+}
 

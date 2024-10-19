@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+void tim_so_toi_thieu(int s) {
+    int chu_so[10] = {0};
+    int so_toi_thieu[10];
+    int dem = 0;
+
+    for (int i = 1; i <= 9; ++i) {
+        if (s >= i) {
+            chu_so[i] = 1;
+            so_toi_thieu[dem++] = i;
+            s -= i;
+        }
+    }
+
+    if (s > 0) {
+        printf("Khong co so khac nhau voi tong %d\n", s);
+        return;
+    }
+
+    for (int i = 0; i < dem; ++i) {
+        printf("%d", so_toi_thieu[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    int s;
+
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &s);
+        tim_so_toi_thieu(s);
+    }
+
+    return 0;
+}
 

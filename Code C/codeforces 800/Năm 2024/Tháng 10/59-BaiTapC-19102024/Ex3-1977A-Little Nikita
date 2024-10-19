@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    printf("Nhập số lượng bài kiểm tra: ");
+    scanf("%d", &test_cases);
+    
+    for (int j = 0; j < test_cases; j++) {
+        int moves, cubes;
+        printf("Nhập số bước và số khối lập phương (moves cubes): ");
+        scanf("%d %d", &moves, &cubes);
+        
+        if (cubes > moves) {
+            printf("Không\n");
+        } else {
+            if ((moves % 2) == (cubes % 2)) {
+                printf("Có\n");
+            } else {
+                printf("Không\n");
+            }
+        }
+    }
+    
+    return 0;
+}
 

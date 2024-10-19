@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int countPolycarpLikes(long long n) {
+    int count = 0;
+    int square = 1;
+    int cube = 1;
+    int isLiked[1000001] = {0};
+
+    while (square * square <= n) {
+        isLiked[square * square] = 1;
+        square++;
+    }
+
+    while (cube * cube * cube <= n) {
+        isLiked[cube * cube * cube] = 1;
+        cube++;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (isLiked[i]) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        
+        int result = countPolycarpLikes(n);
+        printf("%d\n", result);
+    }
+    
+    return 0;
+}
 

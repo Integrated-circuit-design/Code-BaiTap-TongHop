@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int i = 0; i < test_cases; i++) {
+        int rows, cols, budget;
+        scanf("%d %d %d", &rows, &cols, &budget);
+        int min_cost = (rows - 1) + (cols - 1);
+
+        if (min_cost == budget) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

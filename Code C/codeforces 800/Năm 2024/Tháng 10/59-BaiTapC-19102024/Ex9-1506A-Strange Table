@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+
+    for (int i = 0; i < numTests; i++) {
+        long long rows, cols, cellNumber;
+        scanf("%lld %lld %lld", &rows, &cols, &cellNumber);
+
+        long long rowPosition = (cellNumber - 1) % rows + 1;
+        long long colPosition = (cellNumber - 1) / rows + 1;
+
+        long long resultPosition = (rowPosition - 1) * cols + colPosition;
+
+        printf("%lld\n", resultPosition);
+    }
+
+    return 0;
+}
 

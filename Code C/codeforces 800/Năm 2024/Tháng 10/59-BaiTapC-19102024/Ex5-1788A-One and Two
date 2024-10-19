@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int total_sum = 0;
+        for (int i = 0; i < n; i++) {
+            total_sum += a[i];
+        }
+        
+        int left_sum = 0;
+        int found = -1;
+
+        for (int k = 0; k < n - 1; k++) {
+            left_sum += a[k];
+            int right_sum = total_sum - left_sum;
+            
+            if (left_sum == right_sum) {
+                found = k + 1;
+                break;
+            }
+        }
+        
+        printf("%d\n", found);
+    }
+    
+    return 0;
+}
 

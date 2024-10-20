@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+
+    for (int i = 0; i < numTests; i++) {
+        int height, width;
+        scanf("%d %d", &height, &width);
+
+        int maxStability = (height * width) / 2;
+
+        printf("%d\n", maxStability);
+    }
+
+    return 0;
+}
 

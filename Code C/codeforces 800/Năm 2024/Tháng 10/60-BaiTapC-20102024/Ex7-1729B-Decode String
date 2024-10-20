@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+void giai_ma(const char* ma_hoa, int do_dai) {
+    char chuoi_giai_ma[51];
+    int vi_tri = 0;
+
+    for (int i = 0; i < do_dai; ) {
+        if (ma_hoa[i] == '0') {
+            int so = (ma_hoa[i - 2] - '0') * 10 + (ma_hoa[i - 1] - '0');
+            chuoi_giai_ma[vi_tri++] = 'a' + so - 1;
+            i++;
+        } else {
+            int so = ma_hoa[i] - '0';
+            chuoi_giai_ma[vi_tri++] = 'a' + so - 1;
+            i++;
+        }
+    }
+
+    chuoi_giai_ma[vi_tri] = '\0';
+    printf("%s\n", chuoi_giai_ma);
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int do_dai_ma;
+        char ma_hoa[51];
+
+        scanf("%d", &do_dai_ma);
+        scanf("%s", ma_hoa);
+
+        giai_ma(ma_hoa, do_dai_ma);
+    }
+
+    return 0;
+}
 

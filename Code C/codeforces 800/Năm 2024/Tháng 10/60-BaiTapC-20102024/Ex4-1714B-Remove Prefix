@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int *a = (int *)malloc(n * sizeof(int));
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int *count = (int *)calloc(n + 1, sizeof(int));
+        int unique_count = 0;
+        int prefix_removal = 0;
+
+        for (int i = 0; i < n; i++) {
+            count[a[i]]++;
+
+            if (count[a[i]] == 1) {
+                unique_count++;
+            } else {
+                prefix_removal++;
+            }
+        }
+
+        printf("%d\n", prefix_removal);
+
+        free(a);
+        free(count);
+    }
+
+    return 0;
+}
 

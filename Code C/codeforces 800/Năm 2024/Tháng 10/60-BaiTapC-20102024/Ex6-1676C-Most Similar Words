@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_N 50
+#define MAX_M 8
+
+int doKhacBiet(char *word1, char *word2, int length) {
+    int totalDifference = 0;
+    for (int idx = 0; idx < length; idx++) {
+        totalDifference += abs(word1[idx] - word2[idx]);
+    }
+    return totalDifference;
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    
+    while (testCases--) {
+        int numWords, wordLength;
+        scanf("%d %d", &numWords, &wordLength);
+        char words[MAX_N][MAX_M + 1];
+        
+        for (int i = 0; i < numWords; i++) {
+            scanf("%s", words[i]);
+        }
+        
+        int minDifference = 1000000000;
+        
+        for (int i = 0; i < numWords; i++) {
+            for (int j = i + 1; j < numWords; j++) {
+                int currentDifference = doKhacBiet(words[i], words[j], wordLength);
+                if (currentDifference < minDifference) {
+                    minDifference = currentDifference;
+                }
+            }
+        }
+        
+        printf("%d\n", minDifference);
+    }
+    
+    return 0;
+}
 

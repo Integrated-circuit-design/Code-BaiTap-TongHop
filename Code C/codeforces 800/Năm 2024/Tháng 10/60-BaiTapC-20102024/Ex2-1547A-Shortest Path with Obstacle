@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int manhattan_distance(int x1, int y1, int x2, int y2) {
+    return abs(x1 - x2) + abs(y1 - y2);
+}
+
+int is_obstacle_between(int xA, int yA, int xB, int yB, int xF, int yF) {
+    if (yA == yB && xF == xA && xF == xB) {
+        return (xF > min(xA, xB) && xF < max(xA, xB));
+    }
+    if (xA == xB && yF == yA && yF == yB) {
+        return (yF > min(yA, yB) && yF < max(yA, yB));
+    }
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int xA, yA, xB, yB, xF, yF;
+        
+        scanf("%d %d", &xA, &yA);
+        scanf("%d %d", &xB, &yB);
+        scanf("%d %d", &xF, &yF);
+        
+        int distance = manhattan_distance(xA, yA, xB, yB);
+        
+        if (is_obstacle_between(xA, yA, xB, yB, xF, yF)) {
+            distance += 2;
+        }
+        
+        printf("%d\n", distance);
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+void printOrder(int n, int k) {
+    int order[51];
+    int idx = 0;
+
+    for (int i = 1; i <= n - k; i++) {
+        order[idx++] = i;
+    }
+    
+    for (int i = n; i > n - k; i--) {
+        order[idx++] = i;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", order[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        printOrder(n, k);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+
+    while (numTestCases--) {
+        int width;
+        scanf("%d", &width);
+        
+        char row[width + 1];
+        scanf("%s", row);
+
+        char otherRow[width + 1];
+
+        for (int i = 0; i < width; i++) {
+            switch (row[i]) {
+                case 'U':
+                    otherRow[i] = 'D';
+                    break;
+                case 'D':
+                    otherRow[i] = 'U';
+                    break;
+                default:
+                    otherRow[i] = row[i];
+                    break;
+            }
+        }
+
+        otherRow[width] = '\0';
+        printf("%s\n", otherRow);
+    }
+    return 0;
+}
 

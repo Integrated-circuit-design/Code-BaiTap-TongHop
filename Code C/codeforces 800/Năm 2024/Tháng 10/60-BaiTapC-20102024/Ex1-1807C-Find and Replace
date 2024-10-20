@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int length;
+        char str[2001];
+        
+        scanf("%d", &length);      
+        scanf("%s", str);
+
+        int charCount[26] = {0};
+        
+        for (int i = 0; i < length; i++) {
+            charCount[str[i] - 'a']++;
+        }
+
+        int canForm = 1; 
+
+        for (int i = 0; i < 26; i++) {
+            if (charCount[i] > 1) {
+                if (length == charCount[i]) {
+                    canForm = 0;
+                    break;
+                }
+            }
+        }
+
+        if (canForm) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

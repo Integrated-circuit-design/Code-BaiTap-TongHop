@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    for (int i = 0; i < test_cases; i++) {
+        long long programmers, mathematicians;
+        scanf("%lld %lld", &programmers, &mathematicians);
+        
+        long long total_students = programmers + mathematicians;
+        long long teams_by_students = total_students / 4;
+        long long teams_by_type = programmers < mathematicians ? programmers : mathematicians;
+        
+        long long max_teams = teams_by_students < teams_by_type ? teams_by_students : teams_by_type;
+        
+        printf("%lld\n", max_teams);
+    }
+    
+    return 0;
+}
 

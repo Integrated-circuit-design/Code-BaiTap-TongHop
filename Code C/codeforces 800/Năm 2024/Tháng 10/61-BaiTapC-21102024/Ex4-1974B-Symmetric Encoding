@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void createDistinctSortedString(const char *input, char *distinct) {
+    int seen[26] = {0};
+    int index = 0;
+
+    for (int i = 0; input[i]; ++i) {
+        if (!seen[input[i] - 'a']) {
+            distinct[index++] = input[i];
+            seen[input[i] - 'a'] = 1;
+        }
+    }
+    distinct[index] = '\0';
+
+    for (int i = 0; i < index; i++) {
+        for (int j = i + 1; j < index; j++) {
+            if (distinct[i] > distinct[j]) {
+                char temp = distinct[i];
+                distinct[i] = distinct[j];
+                distinct[j] = temp;
+            }
+        }
+    }
+}
+
+void decodeString(int testCases) {
+    while (testCases--) {
+        int length;
+        scanf("%d", &length);
+
+        char encoded[length + 1];
+        char distinctChars[27];
+        scanf("%s", encoded);
+
+        createDistinctSortedString(encoded, distinctChars);
+
+        int distinctLength = strlen(distinctChars);
+        char reverseMapping[26] = {0};
+
+        for (int i = 0; i < distinctLength; i++) {
+            reverseMapping[distinctChars[i] - 'a'] = distinctChars[distinctLength - 1 - i];
+        }
+
+        for (int i = 0; i < length; i++) {
+            putchar(reverseMapping[encoded[i] - 'a']);
+        }
+        putchar('\n');
+    }
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    decodeString(testCases);
+    return 0;
+}
 

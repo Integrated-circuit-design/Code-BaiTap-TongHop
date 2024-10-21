@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int keyInHand;
+        int doors[3];
+        scanf("%d", &keyInHand);
+        scanf("%d %d %d", &doors[0], &doors[1], &doors[2]);
+
+        int canOpenDoors = 0;
+
+        if (keyInHand == 1 || doors[0] == keyInHand) {
+            canOpenDoors++;
+            keyInHand = doors[0] == 0 ? keyInHand : doors[0];
+        }
+
+        if (keyInHand == 2 || doors[1] == keyInHand) {
+            canOpenDoors++;
+            keyInHand = doors[1] == 0 ? keyInHand : doors[1];
+        }
+
+        if (keyInHand == 3 || doors[2] == keyInHand) {
+            canOpenDoors++;
+            keyInHand = doors[2] == 0 ? keyInHand : doors[2];
+        }
+
+        if (canOpenDoors == 3) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int tinh_hinh_phat(char *s, int n) {
+    int tong_hinh_phat = 0;
+    int tong_hien_tai = 0;
+    int do_dai_mang_con = 0;
+
+    for (int i = 0; i < n; i++) {
+        int gia_tri = (s[i] == '+') ? 1 : -1;
+        tong_hien_tai += gia_tri;
+        do_dai_mang_con++;
+
+        if (tong_hien_tai == 0) {
+            tong_hinh_phat += 0;
+            do_dai_mang_con = 0;
+        } else if (i == n - 1 || (s[i] != s[i + 1])) {
+            tong_hinh_phat += abs(tong_hien_tai) * do_dai_mang_con;
+            tong_hien_tai = 0;
+            do_dai_mang_con = 0;
+        }
+    }
+    return tong_hinh_phat;
+}
+
+int main() {
+    int so_test;
+    scanf("%d", &so_test);
+
+    for (int i = 0; i < so_test; i++) {
+        int n;
+        char s[5001];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        int ket_qua = tinh_hinh_phat(s, n);
+        printf("%d\n", ket_qua);
+    }
+
+    return 0;
+}
 

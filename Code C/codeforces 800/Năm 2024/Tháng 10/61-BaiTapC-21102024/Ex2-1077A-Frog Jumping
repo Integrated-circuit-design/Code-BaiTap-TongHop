@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int numberOfQueries;
+    scanf("%d", &numberOfQueries);
+
+    for (int queryIndex = 0; queryIndex < numberOfQueries; queryIndex++) {
+        long long jumpRight, jumpLeft, totalJumps;
+        scanf("%lld %lld %lld", &jumpRight, &jumpLeft, &totalJumps);
+
+        long long countRightJumps = totalJumps / 2;
+        long long countLeftJumps = totalJumps / 2;
+
+        if (totalJumps % 2 != 0) {
+            countRightJumps++;
+        }
+
+        long long finalPosition = countRightJumps * jumpRight - countLeftJumps * jumpLeft;
+        printf("%lld\n", finalPosition);
+    }
+
+    return 0;
+}
 

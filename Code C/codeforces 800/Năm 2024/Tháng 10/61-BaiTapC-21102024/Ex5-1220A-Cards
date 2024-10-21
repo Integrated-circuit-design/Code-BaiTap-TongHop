@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+int main() {
+    int length;
+    scanf("%d", &length);
+    
+    char cards[105];
+    scanf("%s", cards);
+
+    int countO = 0;
+    int countN = 0;
+    int countE = 0;
+    int countZ = 0;
+    int countR = 0;
+    
+    for (int idx = 0; idx < length; idx++) {
+        switch (cards[idx]) {
+            case 'o':
+                countO++;
+                break;
+            case 'n':
+                countN++;
+                break;
+            case 'e':
+                countE++;
+                break;
+            case 'z':
+                countZ++;
+                break;
+            case 'r':
+                countR++;
+                break;
+        }
+    }
+
+    int totalOnes = countN;
+    int totalZeros = countZ;
+    
+    for (int i = 0; i < totalOnes; i++) {
+        printf("1 ");
+    }
+    
+    for (int i = 0; i < totalZeros; i++) {
+        printf("0 ");
+    }
+    
+    printf("\n");
+
+    return 0;
+}
 

@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+int isSubstringOfRepeatedYes(const char* s) {
+    char repeatedYes[200] = "";
+    for (int i = 0; i < 13; i++) {
+        strcat(repeatedYes, "Yes");
+    }
+    return strstr(repeatedYes, s) != NULL;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[51];
+        scanf("%s", s);
+        if (isSubstringOfRepeatedYes(s)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int heights[100];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &heights[i]);
+    }
+
+    int minDifference = 1001;
+    int soldier1 = 0, soldier2 = 0;
+
+    for (int i = 0; i < n; i++) {
+        int nextIndex = (i + 1) % n;
+        int difference = abs(heights[i] - heights[nextIndex]);
+
+        if (difference < minDifference) {
+            minDifference = difference;
+            soldier1 = i + 1;
+            soldier2 = nextIndex + 1;
+        }
+    }
+
+    printf("%d %d\n", soldier1, soldier2);
+
+    return 0;
+}
 

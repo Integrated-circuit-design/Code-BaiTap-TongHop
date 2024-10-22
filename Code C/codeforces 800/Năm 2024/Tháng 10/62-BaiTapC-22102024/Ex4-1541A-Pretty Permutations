@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+void generatePermutation(int n) {
+    int cats[n];
+
+    for (int i = 0; i < n; i++) {
+        cats[i] = i + 1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", cats[(i + 1) % n]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        generatePermutation(n);
+    }
+    return 0;
+}
 

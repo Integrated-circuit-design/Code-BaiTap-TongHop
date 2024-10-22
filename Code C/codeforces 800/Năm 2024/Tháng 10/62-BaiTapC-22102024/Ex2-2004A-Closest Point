@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    for (int t = 0; t < test_cases; t++) {
+        int num_points;
+        scanf("%d", &num_points);
+        
+        int points[num_points];
+        
+        for (int i = 0; i < num_points; i++) {
+            scanf("%d", &points[i]);
+        }
+        
+        int max_distance = 0;
+        
+        for (int i = 1; i < num_points; i++) {
+            int distance = points[i] - points[i - 1];
+            
+            if (distance > max_distance) {
+                max_distance = distance;
+            }
+        }
+        
+        if (max_distance > 2) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int max_coins_collected(char path[], int length) {
+    int coins = 0;
+    int pos = 0;
+
+    while (pos < length) {
+        if (path[pos] == '@') {
+            coins++;
+        }
+
+        if (pos + 2 < length && path[pos + 2] != '*') {
+            pos += 2;
+        } else if (pos + 1 < length && path[pos + 1] != '*') {
+            pos += 1;
+        } else {
+            break;
+        }
+    }
+
+    return coins;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int i = 0; i < test_cases; i++) {
+        int n;
+        scanf("%d", &n);
+        char path[51];
+        scanf("%s", path);
+
+        printf("%d\n", max_coins_collected(path, n));
+    }
+
+    return 0;
+}
 

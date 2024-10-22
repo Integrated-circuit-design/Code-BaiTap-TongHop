@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int soLuong2, soLuong3, soLuong5, soLuong6;
+    
+    printf("Nhập số lượng chữ số 2, 3, 5, 6: ");
+    scanf("%d %d %d %d", &soLuong2, &soLuong3, &soLuong5, &soLuong6);
+
+    int so256 = soLuong2;
+    if (soLuong5 < so256) {
+        so256 = soLuong5;
+    }
+    if (soLuong6 < so256) {
+        so256 = soLuong6;
+    }
+
+    soLuong2 -= so256;
+
+    int so32 = soLuong2;
+    if (soLuong3 < so32) {
+        so32 = soLuong3;
+    }
+
+    int tongGiaTri = so256 * 256 + so32 * 32;
+
+    printf("Tổng giá trị tối đa có thể tạo thành: %d\n", tongGiaTri);
+
+    return 0;
+}
 

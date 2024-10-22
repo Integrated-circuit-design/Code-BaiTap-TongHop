@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <string.h>
 
+int main() {
+    int num_cases;
+    scanf("%d", &num_cases);
+
+    while (num_cases--) {
+        char input_string[51];
+        scanf("%s", input_string);
+
+        int count[26] = {0};
+        int len = strlen(input_string);
+
+        for (int j = 0; j < len; j++) {
+            count[input_string[j] - 'a']++;
+        }
+
+        int single_chars = 0;
+        int multi_chars = 0;
+
+        for (int j = 0; j < 26; j++) {
+            if (count[j] == 1) {
+                single_chars++;
+            } else if (count[j] >= 2) {
+                multi_chars++;
+            }
+        }
+
+        int k = multi_chars + single_chars / 2;
+        printf("%d\n", k);
+    }
+
+    return 0;
+}

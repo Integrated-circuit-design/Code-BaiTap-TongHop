@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int numCases;
+    printf("Nhập số lượng bài kiểm tra: ");
+    scanf("%d", &numCases);
+
+    while (numCases--) {
+        int length;
+        printf("Nhập độ dài của chuỗi nhị phân: ");
+        scanf("%d", &length);
+        
+        char binaryStr[101];
+        printf("Nhập chuỗi nhị phân: ");
+        scanf("%s", binaryStr);
+        
+        int zeros = 0;
+        int ones = 0;
+
+        for (int j = 0; j < length; j++) {
+            if (binaryStr[j] == '0') {
+                zeros++;
+            } else {
+                ones++;
+            }
+        }
+
+        if (zeros == length || ones == length) {
+            printf("Kết quả: NO\n");
+        } else {
+            printf("Kết quả: YES\n");
+        }
+    }
+
+    return 0;
+}
 

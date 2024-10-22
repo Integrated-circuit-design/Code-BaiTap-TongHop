@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int kiem_tra_sap_xep(int mang[], int n) {
+    for (int i = 1; i < n; i++) {
+        if (mang[i] < mang[i - 1]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int do_dai;
+        scanf("%d", &do_dai);
+        int a[do_dai];
+        int mang_chan[do_dai], mang_le[do_dai];
+        int count_chan = 0, count_le = 0;
+
+        for (int i = 0; i < do_dai; i++) {
+            scanf("%d", &a[i]);
+            if (a[i] % 2 == 0) {
+                mang_chan[count_chan++] = a[i];
+            } else {
+                mang_le[count_le++] = a[i];
+            }
+        }
+
+        if (kiem_tra_sap_xep(mang_chan, count_chan) && kiem_tra_sap_xep(mang_le, count_le)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

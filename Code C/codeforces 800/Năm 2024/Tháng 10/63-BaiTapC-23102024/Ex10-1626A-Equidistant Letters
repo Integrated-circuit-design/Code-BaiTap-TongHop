@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
 
+void xayDungChuoi(char s[]) {
+    int tanso[26] = {0};
+    int len = strlen(s);
+    
+    for (int i = 0; i < len; i++) {
+        tanso[s[i] - 'a']++;
+    }
+    char ketQua[53];
+    int index = 0;
+    
+    for (int i = 0; i < 26; i++) {
+        if (tanso[i] == 2) {
+            ketQua[index++] = i + 'a';
+        }
+    }
+    
+    for (int i = 0; i < 26; i++) {
+        if (tanso[i] == 1) {
+            ketQua[index++] = i + 'a';
+        }
+    }
+    
+    for (int i = 0; i < 26; i++) {
+        if (tanso[i] == 2) {
+            ketQua[index++] = i + 'a';
+        }
+    }
+    ketQua[index] = '\0';
+    printf("%s\n", ketQua);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    char s[53];
+    while (t--) {
+        scanf("%s", s);
+        xayDungChuoi(s);
+    }
+    
+    return 0;
+}

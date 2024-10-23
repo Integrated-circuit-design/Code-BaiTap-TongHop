@@ -1,1 +1,29 @@
+#include <stdio.h>
 
+int timXLonNhat(int k) {
+    unsigned long long giaiThuaX = 1;
+    unsigned long long giaiThuaXTru1 = 1;
+    
+    for (int x = k - 1; x >= 1; --x) {
+        if (x > 1) {
+            giaiThuaXTru1 = giaiThuaX;
+            giaiThuaX *= x;
+        }
+        if ((giaiThuaX + giaiThuaXTru1) % k == 0) {
+            return x;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int k;
+        scanf("%d", &k);
+        int ketQua = timXLonNhat(k);
+        printf("%d\n", ketQua);
+    }
+    return 0;
+}

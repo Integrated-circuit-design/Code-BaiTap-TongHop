@@ -1,1 +1,27 @@
+#include <stdio.h>
+void generate_string(int n, int k) {
+    char result[100];
+    int index = 0;
+    
+    for (int i = 0; i < n; i++) {
+        result[index++] = 'a' + (i % k);
+    }
+    
+    result[index] = '\0';
+    
+    printf("%s\n", result);
+}
 
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        
+        generate_string(n, k);
+    }
+    
+    return 0;
+}

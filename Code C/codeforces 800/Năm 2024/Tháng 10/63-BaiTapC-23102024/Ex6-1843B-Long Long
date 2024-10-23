@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
 
+void tinhTongVaPhépToán(int n, int a[], long long *tong, int *soKhốiAm) {
+    *tong = 0;
+    *soKhốiAm = 0;
+    int trongKhốiAm = 0;
+    
+    for (int i = 0; i < n; i++) {
+        *tong += abs(a[i]);
+        if (a[i] < 0) {
+            if (!trongKhốiAm) {
+                (*soKhốiAm)++;
+                trongKhốiAm = 1;
+            }
+        } else {
+            trongKhốiAm = 0;
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        long long tong;
+        int soKhốiAm;
+        
+        tinhTongVaPhépToán(n, a, &tong, &soKhốiAm);
+        
+        printf("%lld %d\n", tong, soKhốiAm);
+    }
+    
+    return 0;
+}

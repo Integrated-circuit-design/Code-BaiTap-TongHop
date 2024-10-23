@@ -1,1 +1,24 @@
-
+#include <stdio.h>
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        long long red, blue, diff;
+        scanf("%lld %lld %lld", &red, &blue, &diff);
+        
+        if (red < blue) {
+            long long temp = red;
+            red = blue;
+            blue = temp;
+        }
+        
+        if (blue * (diff + 1) >= red) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}

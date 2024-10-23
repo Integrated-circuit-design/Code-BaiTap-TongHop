@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    long long t;
+    scanf("%lld", &t);
+
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+
+        if (n >= k) {
+            if ((n - k) % 2 == 0) {
+                printf("CÓ\n");
+            } else {
+                printf("KHÔNG\n");
+            }
+        } else {
+            if (n % 2 == 0) {
+                printf("CÓ\n");
+            } else {
+                printf("KHÔNG\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

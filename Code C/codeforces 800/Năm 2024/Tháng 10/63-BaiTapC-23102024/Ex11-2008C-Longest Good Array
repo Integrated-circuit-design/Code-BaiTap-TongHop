@@ -1,1 +1,21 @@
-
+#include <stdio.h>
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+    while (numTests--) {
+        long long lowerBound, upperBound;
+        scanf("%lld %lld", &lowerBound, &upperBound);
+        long long count = 0;
+        long long currentValue = lowerBound;
+        while (1) {
+            long long nextValue = currentValue + count;
+            if (nextValue > upperBound) {
+                break;
+            }
+            count++;
+            currentValue = nextValue;
+        }
+        printf("%lld\n", count);
+    }
+    return 0;
+}

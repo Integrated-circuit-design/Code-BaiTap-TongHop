@@ -1,1 +1,42 @@
+#include <stdio.h>
 
+typedef struct {
+    int requiredRAM;
+    int addedRAM;    
+} Software;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        Software software[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &software[i].requiredRAM);
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &software[i].addedRAM);
+        }
+        
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (software[j].requiredRAM > software[j + 1].requiredRAM) {
+                    Software temp = software[j];
+                    software[j] = software[j + 1];
+                    software[j + 1] = temp;
+                }
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            if (k >= software[i].requiredRAM) {
+                k += software[i].addedRAM;
+            }
+        }
+        
+        printf("%d\n", k);
+    }
+    return 0;
+}

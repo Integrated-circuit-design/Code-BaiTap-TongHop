@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int distanceToShop1, distanceToShop2, distanceBetweenShops;
+    
+    printf("Nhập khoảng cách d1 (đến cửa hàng 1), d2 (đến cửa hàng 2), d3 (giữa hai cửa hàng): ");
+    scanf("%d %d %d", &distanceToShop1, &distanceToShop2, &distanceBetweenShops);
+    
+    int totalDistance1 = distanceToShop1 + distanceToShop2 + distanceBetweenShops;
+    int totalDistance2 = 2 * (distanceToShop1 + distanceToShop2);
+    int totalDistance3 = 2 * distanceToShop1 + distanceBetweenShops;
+    int totalDistance4 = 2 * distanceToShop2 + distanceBetweenShops;
+
+    int minDistance = totalDistance1;
+    
+    if (totalDistance2 < minDistance) {
+        minDistance = totalDistance2;
+    }
+    if (totalDistance3 < minDistance) {
+        minDistance = totalDistance3;
+    }
+    if (totalDistance4 < minDistance) {
+        minDistance = totalDistance4;
+    }
+    
+    printf("Khoảng cách tối thiểu mà Patrick cần đi là: %d\n", minDistance);
+    
+    return 0;
+}
 

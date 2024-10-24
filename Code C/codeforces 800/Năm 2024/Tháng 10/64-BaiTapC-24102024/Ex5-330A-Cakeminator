@@ -1,1 +1,69 @@
+#include <stdio.h>
+
+int main() {
+    int rows, cols;
+    scanf("%d %d", &rows, &cols);
+    
+    char cake[10][10];
+    int canEatRow[10] = {0};
+    int canEatCol[10] = {0};
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            scanf(" %c", &cake[i][j]);
+        }
+    }
+    
+    for (int i = 0; i < rows; i++) {
+        int hasStrawberry = 0;
+        for (int j = 0; j < cols; j++) {
+            if (cake[i][j] == 'S') {
+                hasStrawberry = 1;
+                break;
+            }
+        }
+        if (!hasStrawberry) {
+            canEatRow[i] = 1;
+        }
+    }
+    
+    for (int j = 0; j < cols; j++) {
+        int hasStrawberry = 0;
+        for (int i = 0; i < rows; i++) {
+            if (cake[i][j] == 'S') {
+                hasStrawberry = 1;
+                break;
+            }
+        }
+        if (!hasStrawberry) {
+            canEatCol[j] = 1;
+        }
+    }
+    
+    int totalEaten = 0;
+    
+    for (int i = 0; i < rows; i++) {
+        if (canEatRow[i]) {
+            for (int j = 0; j < cols; j++) {
+                if (cake[i][j] == '.') {
+                    totalEaten++;
+                }
+            }
+        }
+    }
+    
+    for (int j = 0; j < cols; j++) {
+        if (canEatCol[j]) {
+            for (int i = 0; i < rows; i++) {
+                if (cake[i][j] == '.') {
+                    totalEaten++;
+                }
+            }
+        }
+    }
+    
+    printf("%d\n", totalEaten);
+    
+    return 0;
+}
 

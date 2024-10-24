@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int totalChest = 0;
+    int totalBiceps = 0;
+    int totalBack = 0;
+
+    for (int index = 0; index < n; index++) {
+        int repetitions;
+        scanf("%d", &repetitions);
+        
+        switch (index % 3) {
+            case 0:
+                totalChest += repetitions;
+                break;
+            case 1:
+                totalBiceps += repetitions;
+                break;
+            case 2:
+                totalBack += repetitions;
+                break;
+        }
+    }
+
+    if (totalChest > totalBiceps && totalChest > totalBack) {
+        printf("nguc\n");
+    } else if (totalBiceps > totalChest && totalBiceps > totalBack) {
+        printf("biceps\n");
+    } else {
+        printf("lung\n");
+    }
+
+    return 0;
+}
 

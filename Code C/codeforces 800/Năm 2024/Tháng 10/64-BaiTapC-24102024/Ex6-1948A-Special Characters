@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+void generateString(int n) {
+    if (n == 1) {
+        printf("NO\n");
+        return;
+    }
+    
+    printf("YES\n");
+    
+    char result[201];
+    int index = 0;
+
+    while (index < n) {
+        result[index++] = 'A';
+        result[index++] = 'A';
+        
+        if (index < n) {
+            result[index++] = 'B';
+        }
+    }
+    
+    result[index] = '\0';
+    
+    printf("%s\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        generateString(n);
+    }
+
+    return 0;
+}
 

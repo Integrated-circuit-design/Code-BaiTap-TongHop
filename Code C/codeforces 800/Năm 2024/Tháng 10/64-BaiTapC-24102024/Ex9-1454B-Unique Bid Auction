@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+#define MAX_N 200005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[MAX_N];
+        int count[MAX_N] = {0};
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &a[i]);
+            count[a[i]]++;
+        }
+        
+        int winner_index = -1;
+        int min_value = MAX_N;
+
+        for (int i = 1; i <= n; i++) {
+            if (count[a[i]] == 1) {
+                if (a[i] < min_value) {
+                    min_value = a[i];
+                    winner_index = i;
+                }
+            }
+        }
+        
+        printf("%d\n", winner_index);
+    }
+    
+    return 0;
+}
 

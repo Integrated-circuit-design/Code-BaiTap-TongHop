@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+#define ALPHABET_SIZE 26
+
+int canMakeEqualStrings(int n, int freq[]) {
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        if (freq[i] % n != 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int freq[ALPHABET_SIZE] = {0};
+
+        for (int i = 0; i < n; i++) {
+            char s[1001];
+            scanf("%s", s);
+            for (int j = 0; s[j] != '\0'; j++) {
+                freq[s[j] - 'a']++;
+            }
+        }
+
+        if (canMakeEqualStrings(n, freq)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <limits.h>
+
+typedef struct {
+    int time;
+    int skill1;
+    int skill2;
+} Book;
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        Book books[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &books[i].time);
+            char skills[3];
+            scanf("%s", skills);
+            books[i].skill1 = skills[0] - '0';
+            books[i].skill2 = skills[1] - '0';
+        }
+
+        int min_time_skill1 = INT_MAX;
+        int min_time_skill2 = INT_MAX;
+        int min_time_both = INT_MAX;
+
+        for (int i = 0; i < n; i++) {
+            if (books[i].skill1 == 1 && books[i].skill2 == 1) {
+                min_time_both = min(min_time_both, books[i].time);
+            } else if (books[i].skill1 == 1) {
+                min_time_skill1 = min(min_time_skill1, books[i].time);
+            } else if (books[i].skill2 == 1) {
+                min_time_skill2 = min(min_time_skill2, books[i].time);
+            }
+        }
+
+        int result = INT_MAX;
+        if (min_time_both != INT_MAX) {
+            result = min(result, min_time_both);
+        }
+        if (min_time_skill1 != INT_MAX && min_time_skill2 != INT_MAX) {
+            result = min(result, min_time_skill1 + min_time_skill2);
+        }
+
+        if (result == INT_MAX) {
+            printf("-1\n");
+        } else {
+            printf("%d\n", result);
+        }
+    }
+
+    return 0;
+}
 

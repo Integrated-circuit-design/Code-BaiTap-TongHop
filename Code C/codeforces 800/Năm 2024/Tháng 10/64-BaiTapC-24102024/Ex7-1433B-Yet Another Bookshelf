@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        int shelf_size;
+        scanf("%d", &shelf_size);
+        
+        int shelf[50];
+        for (int idx = 0; idx < shelf_size; idx++) {
+            scanf("%d", &shelf[idx]);
+        }
+        
+        int start_idx = -1;
+        int end_idx = -1;
+        
+        for (int idx = 0; idx < shelf_size; idx++) {
+            if (shelf[idx] == 1) {
+                if (start_idx == -1) {
+                    start_idx = idx;
+                }
+                end_idx = idx;
+            }
+        }
+        
+        int move_count = 0;
+        for (int idx = start_idx; idx <= end_idx; idx++) {
+            if (shelf[idx] == 0) {
+                move_count++;
+            }
+        }
+        
+        printf("%d\n", move_count);
+    }
+    
+    return 0;
+}
 

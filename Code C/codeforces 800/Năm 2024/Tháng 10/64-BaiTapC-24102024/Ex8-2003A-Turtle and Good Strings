@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char s[101];
+        scanf("%s", s);
+
+        int foundDifferent = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (s[i] != s[j]) {
+                    foundDifferent = 1;
+                    break;
+                }
+            }
+            if (foundDifferent) {
+                break;
+            }
+        }
+
+        if (foundDifferent) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

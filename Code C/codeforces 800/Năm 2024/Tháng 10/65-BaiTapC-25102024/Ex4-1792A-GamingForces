@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int monster_count;
+        scanf("%d", &monster_count);
+        int health[monster_count];
+
+        for (int i = 0; i < monster_count; i++) {
+            scanf("%d", &health[i]);
+        }
+
+        int total_moves = 0;
+
+        while (1) {
+            for (int i = 0; i < monster_count - 1; i++) {
+                for (int j = 0; j < monster_count - i - 1; j++) {
+                    if (health[j] < health[j + 1]) {
+                        int temp = health[j];
+                        health[j] = health[j + 1];
+                        health[j + 1] = temp;
+                    }
+                }
+            }
+
+            if (health[0] == 0) break;
+
+            if (monster_count > 1) {
+                health[0]--;
+                health[1]--;
+                total_moves++;
+            } else {
+                health[0] = 0;
+                total_moves++;
+            }
+        }
+
+        printf("%d\n", total_moves);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int s;
+        scanf("%d", &s);
+        
+        int size = 0;
+        int sum = 0;
+        
+        for (int i = 1; sum < s; i++) {
+            sum += i;
+            size++;
+        }
+        
+        if (sum > s) {
+            size--;
+        }
+
+        printf("%d\n", size); 
+    }
+
+    return 0;
+}
 

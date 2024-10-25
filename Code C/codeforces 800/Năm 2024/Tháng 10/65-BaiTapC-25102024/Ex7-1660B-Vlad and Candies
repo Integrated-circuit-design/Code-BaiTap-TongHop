@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+
+    while (numTests--) {
+        int candyTypes;
+        scanf("%d", &candyTypes);
+
+        long long candyCount[candyTypes];
+        long long totalCandies = 0;
+        long long maxCandy = 0;
+
+        for (int j = 0; j < candyTypes; ++j) {
+            scanf("%lld", &candyCount[j]);
+            totalCandies += candyCount[j];
+            if (candyCount[j] > maxCandy) {
+                maxCandy = candyCount[j];
+            }
+        }
+
+        if (maxCandy > (totalCandies + 1) / 2) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+        }
+    }
+
+    return 0;
+}
 

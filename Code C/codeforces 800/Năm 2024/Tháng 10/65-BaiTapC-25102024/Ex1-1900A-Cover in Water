@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int count_min_actions(char *cells, int n) {
+    int actions = 0;
+    bool last_was_water = false;
+
+    for (int i = 0; i < n; i++) {
+        if (cells[i] == '.') {
+            if (!last_was_water) {
+                actions++;
+                last_was_water = true;
+            }
+        } else {
+            last_was_water = false;
+        }
+    }
+    
+    return actions;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char cells[101];
+        scanf("%s", cells);
+
+        int result = count_min_actions(cells, n);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

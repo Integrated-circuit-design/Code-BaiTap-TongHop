@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int tinh_so_lan_doi(int n, int ghese[]) {
+    int sai_chỗ = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (ghese[i] != i + 1) {
+            sai_chỗ++;
+        }
+    }
+
+    if (sai_chỗ == 0) {
+        return 0;
+    }
+
+    int so_lan_doi = (sai_chỗ + 1) / 2;
+
+    if (sai_chỗ % 2 == 1) {
+        return so_lan_doi + 1;
+    }
+
+    return so_lan_doi;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int i = 0; i < test_cases; i++) {
+        int n;
+        scanf("%d", &n);
+        int ghese[n];
+
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &ghese[j]);
+        }
+
+        printf("%d\n", tinh_so_lan_doi(n, ghese));
+    }
+    
+    return 0;
+}
 

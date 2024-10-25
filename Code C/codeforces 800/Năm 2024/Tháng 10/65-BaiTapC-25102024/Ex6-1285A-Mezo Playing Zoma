@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int command_count;
+    scanf("%d", &command_count);
+
+    char commands[command_count + 1];
+    scanf("%s", commands);
+
+    int left_moves = 0;
+    int right_moves = 0;
+
+    for (int index = 0; index < command_count; index++) {
+        if (commands[index] == 'L') {
+            left_moves++;
+        } else if (commands[index] == 'R') {
+            right_moves++;
+        }
+    }
+
+    int total_positions = left_moves + right_moves + 1;
+
+    printf("%d\n", total_positions);
+
+    return 0;
+}
 

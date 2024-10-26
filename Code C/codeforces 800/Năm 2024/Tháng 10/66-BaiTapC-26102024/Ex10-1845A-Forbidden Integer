@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+void processTestCases() {
+    int numTests;
+    scanf("%d", &numTests);
+
+    while (numTests--) {
+        int targetSum, maxValue, forbiddenValue;
+        scanf("%d %d %d", &targetSum, &maxValue, &forbiddenValue);
+
+        if (maxValue == 1 && forbiddenValue == 1) {
+            printf("NO\n");
+            continue;
+        }
+
+        if (targetSum == forbiddenValue) {
+            if (maxValue == 1) {
+                printf("NO\n");
+            } else {
+                printf("YES\n1\n%d\n", targetSum);
+            }
+            continue;
+        }
+
+        int currentSum = 0; 
+        int chosenCount = 0; 
+        int chosenNumbers[100];
+
+        for (int currentValue = 1; currentValue <= maxValue; currentValue++) {
+            if (currentValue == forbiddenValue) continue;
+            while (currentSum + currentValue <= targetSum) {
+                chosenNumbers[chosenCount++] = currentValue;
+                currentSum += currentValue;
+            }
+            if (currentSum == targetSum) break; 
+        }
+
+        if (currentSum == targetSum) {
+            printf("YES\n%d\n", chosenCount);
+            for (int i = 0; i < chosenCount; i++) {
+                printf("%d ", chosenNumbers[i]);
+            }
+            printf("\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    processTestCases();
+    return 0;
+}
 

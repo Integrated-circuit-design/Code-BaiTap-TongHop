@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int commandCount;
+    printf("Nhập số lượng lệnh: ");
+    scanf("%d", &commandCount);
+    
+    char commandString[commandCount + 1];
+    printf("Nhập chuỗi lệnh (L hoặc R): ");
+    scanf("%s", commandString);
+    
+    int leftCount = 0;
+    int rightCount = 0;
+    
+    for (int index = 0; index < commandCount; index++) {
+        if (commandString[index] == 'L') {
+            leftCount++;
+        } else if (commandString[index] == 'R') {
+            rightCount++;
+        }
+    }
+    
+    int possiblePositions = leftCount + rightCount + 1;
+    
+    printf("Số vị trí khác nhau mà Zoma có thể đạt được: %d\n", possiblePositions);
+    
+    return 0;
+}
 

@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    printf("Nhập số lượng bài kiểm tra: ");
+    scanf("%d", &testCases);
+
+    for (int j = 0; j < testCases; j++) {
+        int bread, cheese, ham;
+        printf("Nhập số miếng bánh mì, số lát phô mai và số lát giăm bông: ");
+        scanf("%d %d %d", &bread, &cheese, &ham);
+
+        int maxFillings = (bread - 1 < cheese + ham) ? (bread - 1) : (cheese + ham);
+        int totalLayers = 2 * maxFillings + 1;
+
+        printf("Số lớp tối đa của sandwich là: %d\n", totalLayers);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int s;
+        scanf("%d", &s);
+        
+        int count = 0;
+        int sum = 0;
+        int number = 1;
+
+        while (sum < s) {
+            sum += number;
+            count++;
+            number++;
+            if (number > 2) {
+                number++;
+            }
+        }
+        
+        printf("%d\n", count);
+    }
+    
+    return 0;
+}
 

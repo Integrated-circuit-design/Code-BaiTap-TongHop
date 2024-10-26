@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        long long keo[n];
+        long long tong_keo = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &keo[i]);
+            tong_keo += keo[i];
+        }
+
+        long long max_keo = 0;
+        for (int i = 0; i < n; i++) {
+            if (keo[i] > max_keo) {
+                max_keo = keo[i];
+            }
+        }
+
+        if (max_keo > (tong_keo + 1) / 2) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+        }
+    }
+
+    return 0;
+}
 

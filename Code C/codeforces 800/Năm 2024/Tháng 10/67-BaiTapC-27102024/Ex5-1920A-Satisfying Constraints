@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int num_constraints;
+        scanf("%d", &num_constraints);
+        
+        int min_k = 1;
+        int max_k = 1000000000;
+        int forbidden_values[100];
+        int forbidden_count = 0;
+
+        for (int j = 0; j < num_constraints; j++) {
+            int constraint_type, value;
+            scanf("%d %d", &constraint_type, &value);
+
+            if (constraint_type == 1) {
+                if (value > min_k) {
+                    min_k = value;
+                }
+            } else if (constraint_type == 2) {
+                if (value < max_k) {
+                    max_k = value;
+                }
+            } else if (constraint_type == 3) {
+                forbidden_values[forbidden_count++] = value;
+            }
+        }
+
+        if (min_k > max_k) {
+            printf("0\n");
+            continue;
+        }
+
+        int valid_count = max_k - min_k + 1;
+
+        for (int k = 0; k < forbidden_count; k++) {
+            if (forbidden_values[k] >= min_k && forbidden_values[k] <= max_k) {
+                valid_count--;
+            }
+        }
+
+        printf("%d\n", valid_count);
+    }
+
+    return 0;
+}
 

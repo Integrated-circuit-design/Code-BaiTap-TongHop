@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int calculateDays(char *input) {
+    int totalDays = 1;
+    int charCount[26] = {0};
+    int uniqueLetters = 0;
+
+    for (int i = 0; input[i] != '\0'; i++) {
+        int index = input[i] - 'a';
+        
+        if (charCount[index] == 0) {
+            charCount[index]++;
+            uniqueLetters++;
+            
+            if (uniqueLetters > 3) {
+                totalDays++;
+                uniqueLetters = 1;
+                memset(charCount, 0, sizeof(charCount));
+                charCount[index]++;
+            }
+        }
+    }
+    return totalDays;
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        char str[200005];
+        scanf("%s", str);
+        printf("%d\n", calculateDays(str));
+    }
+    
+    return 0;
+}
 

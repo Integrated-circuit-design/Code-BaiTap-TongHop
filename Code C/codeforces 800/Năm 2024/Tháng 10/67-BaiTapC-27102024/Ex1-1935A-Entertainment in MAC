@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+void reverseString(char *str) {
+    int length = strlen(str);
+    for (int i = 0; i < length / 2; ++i) {
+        char temp = str[i];
+        str[i] = str[length - 1 - i];
+        str[length - 1 - i] = temp;
+    }
+}
+
+void findLexicographicallySmallest(int operations, char *str) {
+    char reversed[101];
+    strcpy(reversed, str);
+    reverseString(reversed);
+
+    if (operations % 2 == 0) {
+        char palindrome[201];
+        strcpy(palindrome, str);
+        strcat(palindrome, reversed);
+        printf("%s\n", palindrome);
+    } else {
+        if (strcmp(str, reversed) < 0) {
+            printf("%s\n", str);
+        } else {
+            printf("%s\n", reversed);
+        }
+    }
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    for (int i = 0; i < testCases; i++) {
+        int n;
+        char s[101];
+
+        scanf("%d %s", &n, s);
+        findLexicographicallySmallest(n, s);
+    }
+
+    return 0;
+}
 

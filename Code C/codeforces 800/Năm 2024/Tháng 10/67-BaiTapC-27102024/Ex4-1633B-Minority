@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        char binaryString[200001];
+        scanf("%s", binaryString);
+
+        int zeroCount = 0;
+        int oneCount = 0;
+
+        for (int index = 0; binaryString[index] != '\0'; index++) {
+            if (binaryString[index] == '0') {
+                zeroCount++;
+            } else {
+                oneCount++;
+            }
+        }
+
+        int result;
+        if (zeroCount < oneCount) {
+            result = zeroCount;
+        } else if (oneCount < zeroCount) {
+            result = oneCount;
+        } else {
+            result = 0;
+        }
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        long long a, b, c;
+        scanf("%lld %lld %lld", &a, &b, &c);
+
+        long long total = a + b + c;
+        long long max_per_person = total / 2;
+
+        long long largest_pile = a > b ? (a > c ? a : c) : (b > c ? b : c);
+        long long second_largest_pile = (a + b + c) - largest_pile - (a < b ? (a < c ? a : c) : (b < c ? b : c));
+
+        long long result = (max_per_person < (second_largest_pile + largest_pile)) ? max_per_person : (second_largest_pile + largest_pile);
+        
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

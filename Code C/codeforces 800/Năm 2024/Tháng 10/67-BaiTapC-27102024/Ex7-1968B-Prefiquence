@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int lenA, lenB;
+        scanf("%d %d", &lenA, &lenB);
+
+        char strA[lenA + 1], strB[lenB + 1];
+        scanf("%s %s", strA, strB);
+
+        int indexA = 0, indexB = 0, matchedLength = 0;
+
+        while (indexA < lenA && indexB < lenB) {
+            if (strA[indexA] == strB[indexB]) {
+                matchedLength++;
+                indexA++;
+            }
+            indexB++;
+        }
+
+        printf("%d\n", matchedLength);
+    }
+
+    return 0;
+}
 

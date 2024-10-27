@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int queryCount;
+    scanf("%d", &queryCount);
+    
+    for (int q = 0; q < queryCount; q++) {
+        int itemCount;
+        scanf("%d", &itemCount);
+        
+        long long totalPrice = 0;
+
+        for (int j = 0; j < itemCount; j++) {
+            int price;
+            scanf("%d", &price);
+            totalPrice += price;
+        }
+        
+        int minimumPrice = (totalPrice + itemCount - 1) / itemCount; 
+
+        printf("%d\n", minimumPrice); 
+    }
+    
+    return 0;
+}
 

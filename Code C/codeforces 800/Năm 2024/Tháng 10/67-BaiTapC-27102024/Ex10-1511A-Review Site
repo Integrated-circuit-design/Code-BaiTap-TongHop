@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int t = 0; t < test_cases; t++) {
+        int reviewer_count;
+        scanf("%d", &reviewer_count);
+
+        int upvote_count = 0;
+        int neutral_count = 0;
+
+        for (int j = 0; j < reviewer_count; j++) {
+            int type;
+            scanf("%d", &type);
+
+            if (type == 1) {
+                upvote_count++;
+            } else if (type == 3) {
+                neutral_count++;
+            }
+        }
+
+        int total_upvotes = upvote_count + neutral_count;
+        printf("%d\n", total_upvotes);
+    }
+
+    return 0;
+}
 

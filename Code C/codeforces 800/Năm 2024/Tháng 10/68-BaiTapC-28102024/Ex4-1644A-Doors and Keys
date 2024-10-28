@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+
+    while (numTests--) {
+        char map[7];
+        int hasRedKey = 0, hasGreenKey = 0, hasBlueKey = 0;
+        int canOpenAllDoors = 1;
+
+        scanf("%s", map);
+
+        for (int i = 0; i < 6; i++) {
+            switch (map[i]) {
+                case 'r':
+                    hasRedKey = 1;
+                    break;
+                case 'g':
+                    hasGreenKey = 1;
+                    break;
+                case 'b':
+                    hasBlueKey = 1;
+                    break;
+                case 'R':
+                    if (!hasRedKey) canOpenAllDoors = 0;
+                    break;
+                case 'G':
+                    if (!hasGreenKey) canOpenAllDoors = 0;
+                    break;
+                case 'B':
+                    if (!hasBlueKey) canOpenAllDoors = 0;
+                    break;
+            }
+            if (!canOpenAllDoors) break;
+        }
+
+        if (canOpenAllDoors) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int calculateGCD(int x, int y) {
+    while (y != 0) {
+        int temp = y;
+        y = x % y;
+        x = temp;
+    }
+    return x;
+}
+
+int main() {
+    int simon, antisimon, stones;
+    printf("Nhập vào số của Simon, Antisimon và số đá (a b n): ");
+    scanf("%d %d %d", &simon, &antisimon, &stones);
+    
+    int currentPlayer = 0;
+    while (1) {
+        int stonesNeeded = calculateGCD(currentPlayer == 0 ? simon : antisimon, stones);
+        
+        if (stonesNeeded > stones) {
+            printf("Người thắng: %d\n", 1 - currentPlayer);
+            break;
+        }
+        
+        stones -= stonesNeeded;
+        currentPlayer = 1 - currentPlayer;
+    }
+    
+    return 0;
+}
 

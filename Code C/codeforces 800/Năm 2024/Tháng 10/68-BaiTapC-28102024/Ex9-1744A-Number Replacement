@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 50
+
+bool kiemTraChuyenDoi(int size, int arr[], char str[]) {
+    char mapping[51] = {0};
+
+    for (int i = 0; i < size; i++) {
+        int num = arr[i];
+        char character = str[i];
+
+        if (mapping[num] == 0) {
+            mapping[num] = character;
+        } else if (mapping[num] != character) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    
+    while (testCases--) {
+        int size;
+        scanf("%d", &size);
+        
+        int numbers[MAX_SIZE];
+        for (int i = 0; i < size; i++) {
+            scanf("%d", &numbers[i]);
+        }
+        
+        char word[MAX_SIZE + 1];
+        scanf("%s", word);
+        
+        if (kiemTraChuyenDoi(size, numbers, word)) {
+            printf("CÓ\n");
+        } else {
+            printf("KHÔNG\n");
+        }
+    }
+    
+    return 0;
+}
 

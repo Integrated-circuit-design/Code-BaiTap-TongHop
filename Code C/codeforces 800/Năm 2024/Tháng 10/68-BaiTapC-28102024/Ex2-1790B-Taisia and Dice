@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+void xu_ly_bai_toan() {
+    int so_test_case;
+    scanf("%d", &so_test_case);
+
+    while (so_test_case--) {
+        int so_xuc_xac, tong_tat_ca, tong_con_lai;
+        scanf("%d %d %d", &so_xuc_xac, &tong_tat_ca, &tong_con_lai);
+
+        int gia_tri_max = tong_tat_ca - tong_con_lai;
+        int ket_qua[so_xuc_xac];
+
+        for (int i = 0; i < so_xuc_xac - 1; i++) {
+            ket_qua[i] = 1;
+        }
+
+        int gia_tri_con_lai = tong_con_lai - (so_xuc_xac - 1);
+
+        for (int i = 0; i < so_xuc_xac - 1 && gia_tri_con_lai > 0; i++) {
+            int them_gia_tri = (gia_tri_con_lai < 5) ? gia_tri_con_lai : 5;
+            ket_qua[i] += them_gia_tri;
+            gia_tri_con_lai -= them_gia_tri;
+        }
+
+        ket_qua[so_xuc_xac - 1] = gia_tri_max;
+
+        for (int i = 0; i < so_xuc_xac; i++) {
+            printf("%d ", ket_qua[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    xu_ly_bai_toan();
+    return 0;
+}
 

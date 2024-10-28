@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int rows, cols;
+        scanf("%d %d", &rows, &cols);
+
+        char grid[100][100];
+        for (int i = 0; i < rows; i++) {
+            scanf("%s", grid[i]);
+        }
+
+        int changes_needed = 0;
+
+        for (int j = 0; j < cols - 1; j++) {
+            if (grid[rows - 1][j] == 'R') {
+                changes_needed++;
+            }
+        }
+
+        for (int i = 0; i < rows - 1; i++) {
+            if (grid[i][cols - 1] == 'D') {
+                changes_needed++;
+            }
+        }
+
+        printf("%d\n", changes_needed);
+    }
+
+    return 0;
+}
 

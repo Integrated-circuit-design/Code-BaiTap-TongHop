@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+#define SIZE 3
+
+char kiem_tra_thang(char bang[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        if (bang[i][0] != '.' && bang[i][0] == bang[i][1] && bang[i][1] == bang[i][2]) {
+            return bang[i][0];
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++) {
+        if (bang[0][i] != '.' && bang[0][i] == bang[1][i] && bang[1][i] == bang[2][i]) {
+            return bang[0][i];
+        }
+    }
+
+    if (bang[0][0] != '.' && bang[0][0] == bang[1][1] && bang[1][1] == bang[2][2]) {
+        return bang[0][0];
+    }
+
+    if (bang[0][2] != '.' && bang[0][2] == bang[1][1] && bang[1][1] == bang[2][0]) {
+        return bang[0][2];
+    }
+
+    return 'D';
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char bang[SIZE][SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            scanf("%s", bang[i]);
+        }
+        
+        char ket_qua = kiem_tra_thang(bang);
+        if (ket_qua == 'D') {
+            printf("DRAW\n");
+        } else {
+            printf("%c\n", ket_qua);
+        }
+    }
+    return 0;
+}
 

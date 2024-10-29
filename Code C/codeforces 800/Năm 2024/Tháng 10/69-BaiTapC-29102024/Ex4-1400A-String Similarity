@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+    
+    while (numTests--) {
+        int length;
+        char binaryString[101];
+        
+        scanf("%d", &length);
+        scanf("%s", binaryString);
+        
+        for (int j = 0; j < length; j++) {
+            putchar(binaryString[j]);
+        }
+        putchar('\n');
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int calculateMoves(char pixel1, char pixel2, char pixel3, char pixel4) {
+    if (pixel1 == pixel2 && pixel2 == pixel3 && pixel3 == pixel4) {
+        return 0;
+    }
+    
+    if ((pixel1 == pixel2 && pixel2 == pixel3) || 
+        (pixel1 == pixel2 && pixel2 == pixel4) || 
+        (pixel1 == pixel3 && pixel3 == pixel4) || 
+        (pixel2 == pixel3 && pixel3 == pixel4)) {
+        return 1;
+    }
+    
+    if ((pixel1 == pixel2 && pixel3 == pixel4) || 
+        (pixel1 == pixel3 && pixel2 == pixel4) || 
+        (pixel1 == pixel4 && pixel2 == pixel3)) {
+        return 2;
+    }
+    
+    return 3;
+}
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+    
+    while (numTests--) {
+        char firstRow[3], secondRow[3];
+        scanf("%s %s", firstRow, secondRow);
+        
+        int result = calculateMoves(firstRow[0], firstRow[1], secondRow[0], secondRow[1]);
+        
+        printf("%d\n", result);
+    }
+    
+    return 0;
+}
 

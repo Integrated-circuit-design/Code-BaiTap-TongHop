@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <math.h>
+
+void timViTri(long long k) {
+    long long n = (long long)sqrt(k);
+    if (n * n < k) {
+        n++;
+    }
+
+    long long viTriCuoi = n * n;
+    long long viTriDau = (n - 1) * (n - 1) + 1;
+    
+    long long hang, cot;
+
+    if (k < viTriDau + n) {
+        hang = k - viTriDau + 1;
+        cot = n;
+    } else {
+        hang = n;
+        cot = viTriCuoi - k + 1;
+    }
+
+    printf("%lld %lld\n", hang, cot);
+}
+
+int main() {
+    int soTruongHop;
+    scanf("%d", &soTruongHop);
+    while (soTruongHop--) {
+        long long k;
+        scanf("%lld", &k);
+        timViTri(k);
+    }
+    return 0;
+}
 

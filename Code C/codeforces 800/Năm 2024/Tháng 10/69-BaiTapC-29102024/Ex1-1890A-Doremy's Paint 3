@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int soSanh(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void giaiQuyet() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        qsort(a, n, sizeof(int), soSanh);
+        
+        int tongMin = a[0] + a[n - 1];
+        int laTot = 1;
+
+        for (int i = 0; i < n - 1; i++) {
+            if (a[i] + a[i + 1] != tongMin) {
+                laTot = 0;
+                break;
+            }
+        }
+
+        if (laTot) {
+            printf("Có\n");
+        } else {
+            printf("Không\n");
+        }
+    }
+}
+
+int main() {
+    giaiQuyet();
+    return 0;
+}
 

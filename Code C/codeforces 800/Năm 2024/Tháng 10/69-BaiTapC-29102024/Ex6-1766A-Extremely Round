@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int count_extremely_round(int n) {
+    int count = 0;
+
+    for (int i = 1; i <= n; i++) {
+        int num = i;
+        int non_zero_count = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            if (digit != 0) {
+                non_zero_count++;
+            }
+            num /= 10;
+        }
+
+        if (non_zero_count == 1) {
+            count++;
+        }
+    }
+    
+    return count;
+}
+
+int main() {
+    int t, n;
+
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        printf("%d\n", count_extremely_round(n));
+    }
+
+    return 0;
+}
 

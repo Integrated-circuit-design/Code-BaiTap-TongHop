@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int t; 
+    scanf("%d", &t); 
+
+    while (t--) { 
+        long long x, y; 
+        scanf("%lld %lld", &x, &y); 
+
+        if (x == y) {
+            printf("1 1\n"); 
+            continue; 
+        }
+
+        if (y < x || y % x != 0) {
+            printf("0 0\n"); 
+            continue; 
+        }
+
+        long long b = y / x;
+        long long a = 0; 
+
+        while (b > 1) {
+            a++; 
+            b = b / (a + 1); 
+        }
+
+        if (a > 0) {
+            printf("%lld %lld\n", a + 1, y / (x * (a + 1))); 
+        } else {
+            printf("0 0\n");
+        }
+    }
+
+    return 0; 
+}
 

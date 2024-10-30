@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int num_cases;
+    scanf("%d", &num_cases);
+
+    for (int i = 0; i < num_cases; i++) {
+        long long total_fruits, max_blend, max_input;
+        scanf("%lld %lld %lld", &total_fruits, &max_blend, &max_input);
+
+        long long seconds = 0;
+
+        while (total_fruits > 0) {
+            long long fruits_to_add = (total_fruits < max_input) ? total_fruits : max_input;
+            total_fruits -= fruits_to_add;
+            
+            long long fruits_blended = (fruits_to_add < max_blend) ? fruits_to_add : max_blend;
+            total_fruits -= fruits_blended;
+            
+            seconds++;
+        }
+
+        printf("%lld\n", seconds);
+    }
+
+    return 0;
+}
 

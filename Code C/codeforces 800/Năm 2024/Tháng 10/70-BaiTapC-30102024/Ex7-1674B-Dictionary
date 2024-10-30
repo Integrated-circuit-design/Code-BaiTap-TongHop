@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int tinhChiSo(char *tu) {
+    int viTriChucai1 = tu[0] - 'a';  
+    int viTriChucai2 = tu[1] - 'a';  
+    int chiSoTu = viTriChucai1 * 25;
+    int viTriTrongNhom = (viTriChucai2 < viTriChucai1) ? viTriChucai2 : viTriChucai2 - 1;
+    return chiSoTu + viTriTrongNhom + 1;
+}
+
+int main() {
+    int soTestCase; 
+    scanf("%d", &soTestCase); 
+
+    for (int i = 0; i < soTestCase; i++) {
+        char tu[3]; 
+        scanf("%s", tu); 
+        printf("%d\n", tinhChiSo(tu));
+    }
+
+    return 0;
+}
 

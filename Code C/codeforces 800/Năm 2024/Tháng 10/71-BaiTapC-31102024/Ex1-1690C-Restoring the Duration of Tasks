@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n; 
+        scanf("%d", &n);
+
+        long long start[n], end[n], duration[n];
+        long long currentTime = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &start[i]);
+        }
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &end[i]);
+        }
+        
+        for (int i = 0; i < n; i++) {
+            if (currentTime < start[i]) {
+                currentTime = start[i];
+            }
+            duration[i] = end[i] - currentTime;
+            currentTime = end[i];
+        }
+        
+        for (int i = 0; i < n; i++) {
+            printf("%lld ", duration[i]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

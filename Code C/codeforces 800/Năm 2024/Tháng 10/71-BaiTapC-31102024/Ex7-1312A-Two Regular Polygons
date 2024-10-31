@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int numTests;
+    scanf("%d", &numTests);
+    
+    while (numTests--) {
+        int verticesN, verticesM;
+        scanf("%d %d", &verticesN, &verticesM);
+        
+        if (verticesN % verticesM == 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

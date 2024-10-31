@@ -1,1 +1,26 @@
+#include <stdio.h>
+#include <string.h>
+
+void xuLyChuoi(char *chuoi) {
+    int doDai = strlen(chuoi);
+    for (int viTri = 0; viTri < doDai; viTri++) {
+        if (viTri % 2 == 0) {
+            chuoi[viTri] = (chuoi[viTri] == 'a') ? 'b' : 'a';
+        } else {
+            chuoi[viTri] = (chuoi[viTri] == 'z') ? 'y' : 'z';
+        }
+    }
+    printf("%s\n", chuoi);
+}
+
+int main() {
+    int soTest;
+    scanf("%d", &soTest);
+    while (soTest--) {
+        char chuoi[51];
+        scanf("%s", chuoi);
+        xuLyChuoi(chuoi);
+    }
+    return 0;
+}
 

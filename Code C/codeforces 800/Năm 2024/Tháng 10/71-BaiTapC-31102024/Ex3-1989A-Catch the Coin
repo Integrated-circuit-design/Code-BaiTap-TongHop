@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Nhập số lượng đồng xu: ");
+    scanf("%d", &n);
+
+    int x[n], y[n];
+
+    for (int i = 0; i < n; i++) {
+        printf("Nhập tọa độ đồng xu thứ %d (x y): ", i + 1);
+        scanf("%d %d", &x[i], &y[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        if ((x[i] % 2 == y[i] % 2)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

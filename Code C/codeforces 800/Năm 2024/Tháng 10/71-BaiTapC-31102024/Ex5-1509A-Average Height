@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+void arrangeHeights(int n, int heights[]) {
+    int i, j;
+    int evenCount = 0, oddCount = 0;
+
+    for (i = 0; i < n; i++) {
+        if (heights[i] % 2 == 0) {
+            evenCount++;
+        } else {
+            oddCount++;
+        }
+    }
+
+    int evens[evenCount], odds[oddCount];
+    evenCount = 0;
+    oddCount = 0;
+
+    for (i = 0; i < n; i++) {
+        if (heights[i] % 2 == 0) {
+            evens[evenCount++] = heights[i];
+        } else {
+            odds[oddCount++] = heights[i];
+        }
+    }
+
+    for (i = 0; i < evenCount; i++) {
+        printf("%d ", evens[i]);
+    }
+
+    for (i = 0; i < oddCount; i++) {
+        printf("%d ", odds[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int heights[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &heights[i]);
+        }
+
+        arrangeHeights(n, heights);
+    }
+
+    return 0;
+}
 

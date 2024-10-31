@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void sapXep(int *arr, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (arr[i] > arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        sapXep(a, n);
+        
+        int median_pos = (n - 1) / 2;
+        int median_value = a[median_pos];
+        
+        int operations = 0;
+        
+        for (int i = median_pos; i < n; i++) {
+            if (a[i] < median_value + 1) {
+                operations += (median_value + 1 - a[i]);
+            }
+        }
+        
+        printf("%d\n", operations);
+    }
+    
+    return 0;
+}
 

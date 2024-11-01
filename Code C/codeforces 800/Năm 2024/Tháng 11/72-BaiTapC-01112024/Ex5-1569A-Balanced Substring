@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        char s[51];
+        scanf("%s", s);
+
+        int found = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int countA = 0, countB = 0;
+                for (int k = i; k <= j; k++) {
+                    if (s[k] == 'a') {
+                        countA++;
+                    } else {
+                        countB++;
+                    }
+                }
+                if (countA == countB) {
+                    printf("%d %d\n", i + 1, j + 1);
+                    found = 1;
+                    break;
+                }
+            }
+            if (found) break;
+        }
+
+        if (!found) {
+            printf("-1 -1\n");
+        }
+    }
+
+    return 0;
+}
 

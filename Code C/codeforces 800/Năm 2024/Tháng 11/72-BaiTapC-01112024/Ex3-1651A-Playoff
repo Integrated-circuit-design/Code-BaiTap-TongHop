@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int find_winner(int rounds) {
+    int total_athletes = 1 << rounds;
+    int competitors[total_athletes];
+
+    for (int i = 0; i < total_athletes; i++) {
+        competitors[i] = i + 1;
+    }
+
+    while (total_athletes > 1) {
+        int next_round_count = 0;
+
+        for (int i = 0; i < total_athletes; i += 2) {
+            int athlete1 = competitors[i];
+            int athlete2 = competitors[i + 1];
+
+            if ((athlete1 + athlete2) % 2 == 0) {
+                competitors[next_round_count++] = (athlete1 > athlete2) ? athlete1 : athlete2;
+            } else {
+                competitors[next_round_count++] = (athlete1 < athlete2) ? athlete1 : athlete2;
+            }
+        }
+        
+        total_athletes = next_round_count;
+    }
+    
+    return competitors[0];
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int i = 0; i < test_cases; i++) {
+        int n;
+        scanf("%d", &n);
+        int winner_index = find_winner(n);
+        printf("%d\n", winner_index);
+    }
+
+    return 0;
+}
 

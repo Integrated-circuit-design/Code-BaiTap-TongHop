@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int array[n];
+        int operationCount = 0;
+        int firstNonZeroIndex = -1;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &array[i]);
+            if (array[i] != 0 && firstNonZeroIndex == -1) {
+                firstNonZeroIndex = i;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (array[i] == 0) {
+                printf("0\n");
+                break;
+            }
+        }
+
+        if (firstNonZeroIndex != -1) {
+            operationCount = 1;
+            printf("1\n");
+            printf("%d 0\n", firstNonZeroIndex + 1);
+        }
+    }
+    return 0;
+}
 

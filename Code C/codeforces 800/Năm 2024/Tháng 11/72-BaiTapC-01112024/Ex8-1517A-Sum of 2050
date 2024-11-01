@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        long long number;
+        scanf("%lld", &number);
+
+        if (number % 2050 != 0) {
+            printf("-1\n");
+            continue;
+        }
+
+        number /= 2050;
+        int count_of_digits = 0;
+
+        while (number > 0) {
+            count_of_digits += number % 10;
+            number /= 10;
+        }
+
+        printf("%d\n", count_of_digits);
+    }
+
+    return 0;
+}
 

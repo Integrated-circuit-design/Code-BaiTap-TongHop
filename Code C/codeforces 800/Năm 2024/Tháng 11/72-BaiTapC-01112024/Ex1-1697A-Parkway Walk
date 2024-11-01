@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int num_cases;
+    scanf("%d", &num_cases);
+    
+    while (num_cases--) {
+        int num_benches, initial_energy;
+        scanf("%d %d", &num_benches, &initial_energy);
+
+        int total_distance = 0;
+        int distance;
+
+        for (int j = 0; j < num_benches; j++) {
+            scanf("%d", &distance);
+            total_distance += distance;
+        }
+
+        int energy_needed = total_distance - initial_energy;
+        if (energy_needed < 0) {
+            energy_needed = 0;  
+        }
+
+        printf("%d\n", energy_needed);
+    }
+    
+    return 0;
+}
 

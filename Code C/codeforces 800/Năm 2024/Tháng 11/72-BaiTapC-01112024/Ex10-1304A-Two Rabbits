@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int num_cases;
+    scanf("%d", &num_cases);
+
+    while (num_cases--) {
+        long long pos1, pos2, hop1, hop2;
+        scanf("%lld %lld %lld %lld", &pos1, &pos2, &hop1, &hop2);
+
+        long long gap = pos2 - pos1;
+        long long total_hops = hop1 + hop2;
+
+        if (gap % total_hops == 0) {
+            printf("%lld\n", gap / total_hops);
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

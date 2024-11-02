@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long tongGiaTriTuyetDoi(int n, long long arr[]) {
+    long long tong = 0;
+    for (int i = 0; i < n; i++) {
+        tong += abs(arr[i]);
+    }
+    return tong;
+}
+
+long long tongMang(int n, long long arr[]) {
+    long long tong = 0;
+    for (int i = 0; i < n; i++) {
+        tong += arr[i];
+    }
+    return tong;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        long long arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &arr[i]);
+        }
+
+        long long tongTuyetDoi = tongGiaTriTuyetDoi(n, arr);
+        long long tong = tongMang(n, arr);
+
+        long long maxHieuSo = tong >= 0 ? tongTuyetDoi - tong : tongTuyetDoi + (-tong);
+        
+        printf("%lld\n", maxHieuSo);
+    }
+    return 0;
+}
 

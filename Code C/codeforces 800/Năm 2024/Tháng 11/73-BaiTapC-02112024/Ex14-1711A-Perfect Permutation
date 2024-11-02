@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+void generatePermutation(int size) {
+    if (size % 2 == 0) {
+        for (int index = 1; index <= size; index += 2) {
+            printf("%d %d ", index + 1, index);
+        }
+    } else {
+        for (int index = 1; index <= size; index++) {
+            printf("%d ", index);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    while (testCases--) {
+        int n;
+        scanf("%d", &n);
+        generatePermutation(n);
+    }
+    return 0;
+}
 

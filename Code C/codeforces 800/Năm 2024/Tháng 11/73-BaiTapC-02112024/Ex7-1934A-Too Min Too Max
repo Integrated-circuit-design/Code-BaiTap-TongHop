@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int case_num = 0; case_num < test_cases; case_num++) {
+        int size;
+        scanf("%d", &size);
+
+        int array[size];
+        int minimum = 1000001;
+        int maximum = -1000001;
+
+        for (int index = 0; index < size; index++) {
+            scanf("%d", &array[index]);
+            if (array[index] < minimum) {
+                minimum = array[index];
+            }
+            if (array[index] > maximum) {
+                maximum = array[index];
+            }
+        }
+
+        int max_value = 4 * (maximum - minimum);
+        printf("%d\n", max_value);
+    }
+
+    return 0;
+}
 

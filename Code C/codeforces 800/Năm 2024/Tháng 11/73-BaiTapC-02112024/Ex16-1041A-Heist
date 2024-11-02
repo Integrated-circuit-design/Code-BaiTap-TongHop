@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void sortArray(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("Nhập số lượng bàn phím còn lại: ");
+    scanf("%d", &n);
+    
+    int keyboards[n];
+    
+    printf("Nhập các chỉ số bàn phím: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &keyboards[i]);
+    }
+    
+    sortArray(keyboards, n);
+    
+    int stolenCount = 0;
+    
+    for (int i = 1; i < n; i++) {
+        int gap = keyboards[i] - keyboards[i - 1];
+        if (gap > 1) {
+            stolenCount += (gap - 1);
+        }
+    }
+    
+    printf("Số bàn phím tối thiểu bị đánh cắp là: %d\n", stolenCount);
+    return 0;
+}
 

@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int calculate_cells(int n) {
+    return n * n + (n - 1) * (n - 1);
+}
+
+int main() {
+    int order;
+    printf("Nhập bậc của hình thoi: ");
+    scanf("%d", &order);
+
+    int result = calculate_cells(order);
+    
+    printf("Số ô trong hình thoi bậc %d là: %d\n", order, result);
+    
+    return 0;
+}
 

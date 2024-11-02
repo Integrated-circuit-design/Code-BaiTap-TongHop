@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+
+    for (int caseIndex = 0; caseIndex < numTestCases; caseIndex++) {
+        int uploadGB, timeWindow;
+        scanf("%d %d", &uploadGB, &timeWindow);
+
+        int totalSeconds = uploadGB + (uploadGB - 1) / timeWindow;
+
+        printf("%d\n", totalSeconds);
+    }
+
+    return 0;
+}
 

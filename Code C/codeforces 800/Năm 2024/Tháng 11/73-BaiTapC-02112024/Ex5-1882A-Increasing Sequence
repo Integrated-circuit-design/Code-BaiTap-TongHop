@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+    
+    while (numTestCases--) {
+        int length;
+        scanf("%d", &length);
+        
+        int arrayA[length];
+        for (int i = 0; i < length; i++) {
+            scanf("%d", &arrayA[i]);
+        }
+        
+        qsort(arrayA, length, sizeof(int), compare);
+        
+        int bValue = 1;
+        for (int i = 0; i < length; i++) {
+            if (bValue == arrayA[i]) {
+                bValue++;
+            }
+        }
+        
+        printf("%d\n", bValue);
+    }
+    
+    return 0;
+}
 

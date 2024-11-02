@@ -30,36 +30,3 @@ int main() {
     
     return 0;
 }
-#include <stdio.h>
-#include <stdlib.h>
-
-const char* kiemTraKhongBang(int score1_A, int score1_B, int score2_A, int score2_B) {
-    int hieuTruoc = abs(score1_A - score1_B);
-    int hieuSau = abs(score2_A - score2_B);
-
-    if (hieuSau >= hieuTruoc) {
-        return "YES";
-    } else {
-        return "NO";
-    }
-}
-
-int main() {
-    int soTest;
-    printf("Nhập số lượng test case: ");
-    scanf("%d", &soTest);
-
-    for (int j = 0; j < soTest; j++) {
-        int t1_A, t1_B, t2_A, t2_B;
-        printf("Nhập tỉ số trước khi Dima bị phân tâm (A B): ");
-        scanf("%d %d", &t1_A, &t1_B);
-
-        printf("Nhập tỉ số sau khi Dima trở lại (C D): ");
-        scanf("%d %d", &t2_A, &t2_B);
-
-        printf("%s\n", kiemTraKhongBang(t1_A, t1_B, t2_A, t2_B));
-    }
-    
-    return 0;
-}
-

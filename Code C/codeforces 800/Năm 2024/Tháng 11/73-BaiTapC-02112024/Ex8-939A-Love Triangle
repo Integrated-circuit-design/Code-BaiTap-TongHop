@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int numberOfPlanes;
+    scanf("%d", &numberOfPlanes);
+    
+    int likes[numberOfPlanes + 1];
+    for (int i = 1; i <= numberOfPlanes; i++) {
+        scanf("%d", &likes[i]);
+    }
+    
+    for (int planeA = 1; planeA <= numberOfPlanes; planeA++) {
+        int planeB = likes[planeA];
+        int planeC = likes[planeB];
+        
+        if (likes[planeC] == planeA) {
+            printf("YES\n");
+            return 0;
+        }
+    }
+    
+    printf("NO\n");
+    return 0;
+}
 

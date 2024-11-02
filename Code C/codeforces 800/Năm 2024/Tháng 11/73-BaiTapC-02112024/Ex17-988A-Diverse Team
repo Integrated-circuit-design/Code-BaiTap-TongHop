@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int ratings[101] = {0};
+    int indices[n];
+    int uniqueCount = 0;
+
+    for (int i = 0; i < n; i++) {
+        int rating;
+        scanf("%d", &rating);
+        if (ratings[rating] == 0) {
+            ratings[rating] = 1;
+            indices[uniqueCount] = i + 1;
+            uniqueCount++;
+        }
+    }
+
+    if (uniqueCount < k) {
+        printf("NO\n");
+    } else {
+        printf("YES\n");
+        for (int i = 0; i < k; i++) {
+            printf("%d ", indices[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

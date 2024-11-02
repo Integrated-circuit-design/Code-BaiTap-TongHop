@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void sap_xep(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (arr[i] > arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+        
+        int chieu_cao[2 * n];
+        for (int i = 0; i < 2 * n; i++) {
+            scanf("%d", &chieu_cao[i]);
+        }
+        
+        sap_xep(chieu_cao, 2 * n);
+        
+        int co_the = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (chieu_cao[n + i] - chieu_cao[i] < x) {
+                co_the = 0;
+                break;
+            }
+        }
+
+        if (co_the) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

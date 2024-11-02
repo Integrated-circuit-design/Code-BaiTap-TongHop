@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+void xuLyBaiToan() {
+    int kichThuoc;
+    scanf("%d", &kichThuoc);
+    char maTran[400][400];
+    
+    int viTri[2][2];
+    int demDau = 0;
+    
+    for (int hang = 0; hang < kichThuoc; hang++) {
+        scanf("%s", maTran[hang]);
+        for (int cot = 0; cot < kichThuoc; cot++) {
+            if (maTran[hang][cot] == '*') {
+                viTri[demDau][0] = hang;
+                viTri[demDau][1] = cot;
+                demDau++;
+            }
+        }
+    }
+    
+    int hang1 = viTri[0][0], cot1 = viTri[0][1];
+    int hang2 = viTri[1][0], cot2 = viTri[1][1];
+    
+    if (hang1 == hang2) {
+        int hangThem = (hang1 + 1) % kichThuoc;
+        maTran[hangThem][cot1] = '*';
+        maTran[hangThem][cot2] = '*';
+    } else if (cot1 == cot2) {
+        int cotThem = (cot1 + 1) % kichThuoc;
+        maTran[hang1][cotThem] = '*';
+        maTran[hang2][cotThem] = '*';
+    } else {
+        maTran[hang1][cot2] = '*';
+        maTran[hang2][cot1] = '*';
+    }
+    
+    for (int i = 0; i < kichThuoc; i++) {
+        printf("%s\n", maTran[i]);
+    }
+}
+
+int main() {
+    int soTestCases;
+    scanf("%d", &soTestCases);
+    while (soTestCases--) {
+        xuLyBaiToan();
+    }
+    return 0;
+}
 

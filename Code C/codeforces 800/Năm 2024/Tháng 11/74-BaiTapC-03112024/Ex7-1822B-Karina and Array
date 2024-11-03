@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+long long findMax(long long x, long long y) {
+    return (x > y) ? x : y;
+}
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+
+    while (numTestCases--) {
+        int arraySize;
+        scanf("%d", &arraySize);
+
+        long long elements[arraySize];
+
+        for (int idx = 0; idx < arraySize; idx++) {
+            scanf("%lld", &elements[idx]);
+        }
+
+        long long firstMax = -1000000001;
+        long long secondMax = -1000000001;
+        long long firstMin = 1000000001;
+        long long secondMin = 1000000001;
+
+        for (int idx = 0; idx < arraySize; idx++) {
+            if (elements[idx] > firstMax) {
+                secondMax = firstMax;
+                firstMax = elements[idx];
+            } else if (elements[idx] > secondMax) {
+                secondMax = elements[idx];
+            }
+
+            if (elements[idx] < firstMin) {
+                secondMin = firstMin;
+                firstMin = elements[idx];
+            } else if (elements[idx] < secondMin) {
+                secondMin = elements[idx];
+            }
+        }
+
+        long long maxBeauty = findMax(firstMax * secondMax, firstMin * secondMin);
+
+        printf("%lld\n", maxBeauty);
+    }
+
+    return 0;
+}
 

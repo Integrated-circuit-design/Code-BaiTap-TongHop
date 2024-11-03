@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        int length;
+        scanf("%d", &length);
+        
+        int arr[length];
+        for (int index = 0; index < length; index++) {
+            scanf("%d", &arr[index]);
+        }
+        
+        int finalValue;
+        
+        if (length % 2 == 1) {
+            finalValue = arr[0];
+            for (int index = 1; index < length; index++) {
+                if (arr[index] > finalValue) {
+                    finalValue = arr[index];
+                }
+            }
+        } else {
+            finalValue = arr[0];
+            for (int index = 1; index < length; index++) {
+                if (arr[index] < finalValue) {
+                    finalValue = arr[index];
+                }
+            }
+        }
+        
+        printf("%d\n", finalValue);
+    }
+    
+    return 0;
+}
 

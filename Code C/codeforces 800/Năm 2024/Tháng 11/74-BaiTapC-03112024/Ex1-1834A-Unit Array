@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    
+    while (testCases--) {
+        int size;
+        scanf("%d", &size);
+        
+        int array[size];
+        int negativeCount = 0;
+        int totalSum = 0;
+        
+        for (int index = 0; index < size; index++) {
+            scanf("%d", &array[index]);
+            if (array[index] == -1) {
+                negativeCount++;
+            }
+            totalSum += array[index];
+        }
+        
+        int changesRequired = 0;
+        
+        if (negativeCount % 2 != 0) {
+            negativeCount--;
+            totalSum += 2;
+            changesRequired++;
+        }
+        
+        if (totalSum < 0) {
+            changesRequired++;
+        }
+        
+        printf("%d\n", changesRequired);
+    }
+    
+    return 0;
+}
 

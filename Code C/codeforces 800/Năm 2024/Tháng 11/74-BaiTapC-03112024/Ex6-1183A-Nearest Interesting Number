@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int laSoHapDan(int num) {
+    int tong = 0;
+    while (num > 0) {
+        tong += num % 10;
+        num /= 10;
+    }
+    return (tong % 4 == 0);
+}
+
+int main() {
+    int a;
+    printf("Nhap so nguyen duong a: ");
+    scanf("%d", &a);
+    
+    for (int n = a; ; n++) {
+        if (laSoHapDan(n)) {
+            printf("So hap dan gan nhat la: %d\n", n);
+            break;
+        }
+    }
+    
+    return 0;
+}
 

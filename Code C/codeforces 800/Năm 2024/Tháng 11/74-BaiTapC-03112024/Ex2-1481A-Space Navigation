@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        int target_x, target_y;
+        scanf("%d %d", &target_x, &target_y);
+        
+        char commands[100005];
+        scanf("%s", commands);
+        
+        int move_up = 0, move_down = 0, move_left = 0, move_right = 0;
+
+        for (int j = 0; j < strlen(commands); j++) {
+            if (commands[j] == 'U') move_up++;
+            else if (commands[j] == 'D') move_down++;
+            else if (commands[j] == 'L') move_left++;
+            else if (commands[j] == 'R') move_right++;
+        }
+        
+        int reachable = 1;
+
+        if (target_x > 0 && move_right < target_x) reachable = 0;
+        if (target_x < 0 && move_left < -target_x) reachable = 0;
+        if (target_y > 0 && move_up < target_y) reachable = 0;
+        if (target_y < 0 && move_down < -target_y) reachable = 0;
+        
+        if (reachable) 
+            printf("YES\n");
+        else 
+            printf("NO\n");
+    }
+    
+    return 0;
+}
 

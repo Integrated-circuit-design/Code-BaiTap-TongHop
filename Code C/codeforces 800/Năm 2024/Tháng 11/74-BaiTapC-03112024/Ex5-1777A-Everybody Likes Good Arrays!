@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int is_even(int x) {
+    return x % 2 == 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int array[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &array[i]);
+        }
+
+        int operations_count = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (is_even(array[i]) == is_even(array[i + 1])) {
+                operations_count++;
+                i++;
+            }
+        }
+
+        printf("%d\n", operations_count);
+    }
+
+    return 0;
+}
 

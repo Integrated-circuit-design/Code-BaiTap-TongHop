@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int x, y, k;
+        scanf("%d %d %d", &x, &y, &k);
+
+        int distanceToChest = x;
+        int distanceToKey = y;
+        int distanceBetweenChestAndKey = abs(x - y);
+
+        int time;
+
+        if (distanceBetweenChestAndKey > k) {
+            time = distanceToChest + distanceToKey + (distanceBetweenChestAndKey - k) * 2;
+        } else {
+            time = distanceToChest + distanceBetweenChestAndKey;
+        }
+
+        printf("%d\n", time);
+    }
+
+    return 0;
+}
 

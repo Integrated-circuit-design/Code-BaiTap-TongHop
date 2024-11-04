@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int calculate_min_moves(int n, int cells[]) {
+    int first_chip_index = 0;
+    int last_chip_index = n - 1;
+    int moves_needed = 0;
+
+    while (first_chip_index < n && cells[first_chip_index] == 0) {
+        first_chip_index++;
+    }
+    
+    while (last_chip_index >= 0 && cells[last_chip_index] == 0) {
+        last_chip_index--;
+    }
+
+    for (int i = first_chip_index; i <= last_chip_index; i++) {
+        if (cells[i] == 0) {
+            moves_needed++;
+        }
+    }
+
+    return moves_needed;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int case_index = 0; case_index < test_cases; case_index++) {
+        int num_cells;
+        scanf("%d", &num_cells);
+
+        int cells[num_cells];
+        for (int j = 0; j < num_cells; j++) {
+            scanf("%d", &cells[j]);
+        }
+
+        printf("%d\n", calculate_min_moves(num_cells, cells));
+    }
+
+    return 0;
+}
 

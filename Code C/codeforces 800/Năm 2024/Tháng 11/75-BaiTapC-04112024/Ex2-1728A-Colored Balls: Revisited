@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int num_colors;
+        scanf("%d", &num_colors);
+
+        int balls_count[21];
+        int total_balls = 0;
+
+        for (int j = 1; j <= num_colors; j++) {
+            scanf("%d", &balls_count[j]);
+            total_balls += balls_count[j];
+        }
+
+        int remaining_color = 1;
+
+        for (int j = 1; j <= num_colors; j++) {
+            if (balls_count[j] > total_balls / 2) {
+                remaining_color = j;
+                break;
+            }
+        }
+
+        printf("%d\n", remaining_color);
+    }
+
+    return 0;
+}
 

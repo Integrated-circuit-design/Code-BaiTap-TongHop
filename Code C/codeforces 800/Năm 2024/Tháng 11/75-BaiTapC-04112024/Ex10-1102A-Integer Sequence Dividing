@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    long long total_sum = n * (n + 1) / 2;
+
+    if (total_sum % 2 == 0) {
+        printf("0\n");
+    } else {
+        printf("1\n");
+    }
+
+    return 0;
+}
 

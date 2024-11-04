@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+int countPawnsReachable(int size, char enemyRow[], char gregorRow[]) {
+    int count = 0;
+    int used[size];
+
+    for (int i = 0; i < size; i++) {
+        used[i] = 0;
+    }
+
+    for (int i = 0; i < size; i++) {
+        if (gregorRow[i] == '1') {
+            if (enemyRow[i] == '0' && used[i] == 0) {
+                count++;
+                used[i] = 1;
+            } else {
+                if (i > 0 && enemyRow[i - 1] == '1' && used[i - 1] == 0) {
+                    count++;
+                    used[i - 1] = 1;
+                } else if (i < size - 1 && enemyRow[i + 1] == '1' && used[i + 1] == 0) {
+                    count++;
+                    used[i + 1] = 1;
+                }
+            }
+        }
+    }
+
+    return count;
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    
+    while (testCases--) {
+        int n;
+        scanf("%d", &n);
+
+        char enemyRow[n + 1], gregorRow[n + 1];
+        scanf("%s", enemyRow);
+        scanf("%s", gregorRow);
+
+        int result = countPawnsReachable(n, enemyRow, gregorRow);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

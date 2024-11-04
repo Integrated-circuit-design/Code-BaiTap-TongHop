@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int aliceScore(char *s) {
+    int score = 0;
+    int n = strlen(s);
+    int i = 0;
+
+    while (i < n) {
+        if (s[i] == '1') {
+            int count = 0;
+            while (i < n && s[i] == '1') {
+                count++;
+                i++;
+            }
+            score += count;
+        } else {
+            i++;
+        }
+    }
+
+    return score;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        char s[101];
+        scanf("%s", s);
+        printf("%d\n", aliceScore(s));
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int length, queries;
+    scanf("%d %d", &length, &queries);
+
+    char song[length + 1];
+    scanf("%s", song);
+
+    int totalValue[length + 1];
+    totalValue[0] = 0;
+
+    for (int i = 0; i < length; i++) {
+        int charValue = song[i] - 'a' + 1;
+        totalValue[i + 1] = totalValue[i] + charValue;
+    }
+
+    for (int j = 0; j < queries; j++) {
+        int start, end;
+        scanf("%d %d", &start, &end);
+        int lengthOfSubstring = totalValue[end] - totalValue[start - 1];
+        printf("%d\n", lengthOfSubstring);
+    }
+
+    return 0;
+}
 

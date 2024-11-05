@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int so_luong_test;
+    scanf("%d", &so_luong_test);
+
+    while (so_luong_test--) {
+        int so_video, thoi_gian_toi_da;
+        scanf("%d %d", &so_video, &thoi_gian_toi_da);
+
+        int thoi_gian_video[50];
+        int gia_tri_giai_tri[50];
+
+        for (int j = 0; j < so_video; j++) {
+            scanf("%d", &thoi_gian_video[j]);
+        }
+
+        for (int j = 0; j < so_video; j++) {
+            scanf("%d", &gia_tri_giai_tri[j]);
+        }
+
+        int chi_so_toi_uu = -1;
+        int gia_tri_max = 0;
+
+        for (int j = 0; j < so_video; j++) {
+            int thoi_gian_can = j + thoi_gian_video[j];
+
+            if (thoi_gian_can <= thoi_gian_toi_da) {
+                if (gia_tri_giai_tri[j] > gia_tri_max) {
+                    gia_tri_max = gia_tri_giai_tri[j];
+                    chi_so_toi_uu = j + 1;
+                }
+            }
+        }
+
+        printf("%d\n", chi_so_toi_uu);
+    }
+
+    return 0;
+}
 

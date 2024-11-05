@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int numTestCases;
+    scanf("%d", &numTestCases);
+
+    for (int i = 0; i < numTestCases; i++) {
+        int rows, columns;
+        scanf("%d %d", &rows, &columns);
+
+        long long totalPieces = (long long)rows * columns;
+
+        if (totalPieces % 2 == 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

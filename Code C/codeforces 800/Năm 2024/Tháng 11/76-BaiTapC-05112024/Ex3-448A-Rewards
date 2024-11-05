@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int cup_hang_1, cup_hang_2, cup_hang_3;
+    int huy_chuong_hang_1, huy_chuong_hang_2, huy_chuong_hang_3;
+    int so_ke;
+
+    printf("Nhập số lượng cúp hạng nhất, hạng nhì, hạng ba: ");
+    scanf("%d %d %d", &cup_hang_1, &cup_hang_2, &cup_hang_3);
+
+    printf("Nhập số lượng huy chương hạng nhất, hạng nhì, hạng ba: ");
+    scanf("%d %d %d", &huy_chuong_hang_1, &huy_chuong_hang_2, &huy_chuong_hang_3);
+
+    printf("Nhập số lượng kệ: ");
+    scanf("%d", &so_ke);
+
+    int tong_cup = cup_hang_1 + cup_hang_2 + cup_hang_3;
+    int tong_huy_chuong = huy_chuong_hang_1 + huy_chuong_hang_2 + huy_chuong_hang_3;
+
+    int kệ_cup = (tong_cup + 4) / 5;
+    int kệ_huy_chuong = (tong_huy_chuong + 9) / 10;
+
+    if (kệ_cup + kệ_huy_chuong <= so_ke) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

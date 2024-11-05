@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    long long test_cases;
+    scanf("%lld", &test_cases);
+
+    for (long long i = 0; i < test_cases; i++) {
+        long long n_value, sum;
+        scanf("%lld %lld", &n_value, &sum);
+
+        long long square_n = n_value * n_value;
+        long long num_elements_n_squared = sum / square_n;
+
+        printf("%lld\n", num_elements_n_squared);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int total_efficiency = 0;
+        int efficiency;
+        
+        for (int i = 0; i < n - 1; i++) {
+            scanf("%d", &efficiency);
+            total_efficiency += efficiency;
+        }
+        
+        int missing_efficiency = -total_efficiency;
+        
+        printf("%d\n", missing_efficiency);
+    }
+    
+    return 0;
+}
 

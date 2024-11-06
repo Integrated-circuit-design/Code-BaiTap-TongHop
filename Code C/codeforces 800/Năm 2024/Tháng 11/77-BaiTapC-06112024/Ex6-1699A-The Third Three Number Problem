@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        if (n % 2 == 0) {
+            int a = 0, b = n / 2, c = n / 2;
+            printf("%d %d %d\n", a, b, c);
+        } else {
+            printf("-1\n");
+        }
+    }
+    return 0;
+}
 

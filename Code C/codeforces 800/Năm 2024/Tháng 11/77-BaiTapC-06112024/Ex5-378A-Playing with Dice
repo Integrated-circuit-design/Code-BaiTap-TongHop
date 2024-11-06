@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    
+    int winPlayer1 = 0, drawGame = 0, winPlayer2 = 0;
+
+    for (int diceResult = 1; diceResult <= 6; diceResult++) {
+        int diffPlayer1 = abs(a - diceResult);
+        int diffPlayer2 = abs(b - diceResult);
+
+        if (diffPlayer1 < diffPlayer2) {
+            winPlayer1++;
+        } else if (diffPlayer1 > diffPlayer2) {
+            winPlayer2++;
+        } else {
+            drawGame++;
+        }
+    }
+
+    printf("%d %d %d\n", winPlayer1, drawGame, winPlayer2);
+
+    return 0;
+}
 

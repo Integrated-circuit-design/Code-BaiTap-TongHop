@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int xc, yc, k;
+        scanf("%d %d %d", &xc, &yc, &k);
+
+        for (int i = 1; i <= k; i++) {
+            int xi = xc + 2 * i;
+            int yi = yc - 2 * i;
+            printf("%d %d\n", xi, yi);
+        }
+    }
+
+    return 0;
+}
 

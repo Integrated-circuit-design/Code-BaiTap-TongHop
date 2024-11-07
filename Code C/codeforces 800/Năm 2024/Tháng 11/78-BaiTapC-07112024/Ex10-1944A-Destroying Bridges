@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        if (k == 0) {
+            printf("%d\n", n);
+        }
+        else {
+            int max_possible_destroyed = (n * (n - 1)) / 2;
+            
+            if (k >= max_possible_destroyed) {
+                printf("1\n");
+            }
+            else {
+                int reachable_islands = n - (k / (n - 1));
+                printf("%d\n", reachable_islands);
+            }
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+void generate_permutation(int n) {
+    if (n == 1) {
+        printf("1\n");
+        return;
+    }
+    
+    if (n == 2) {
+        printf("-1\n");
+        return;
+    }
+
+    for (int i = 2; i <= n; i++) {
+        printf("%d ", i);
+    }
+    printf("1\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        generate_permutation(n);
+    }
+
+    return 0;
+}
 

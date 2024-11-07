@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+void reverse_string(char* s, int n) {
+    int i = 0;
+    int j = n - 1;
+    while (i < j) {
+        char temp = s[i];
+        s[i] = s[j];
+        s[j] = temp;
+        i++;
+        j--;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        char s[101];
+
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+
+        if (k == 0) {
+            printf("1\n");
+            continue;
+        }
+
+        char original[101];
+        strcpy(original, s);
+
+        char rev[101];
+        strcpy(rev, s);
+        reverse_string(rev, n);
+
+        int is_palindrome = 1;
+        for (int i = 0; i < n / 2; i++) {
+            if (s[i] != s[n - i - 1]) {
+                is_palindrome = 0;
+                break;
+            }
+        }
+
+        if (is_palindrome) {
+            printf("1\n");
+        } else {
+            printf("2\n");
+        }
+    }
+
+    return 0;
+}
 

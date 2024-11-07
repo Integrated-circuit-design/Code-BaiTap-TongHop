@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+void solve(char *ab) {
+    int len = strlen(ab);
+
+    for (int i = 1; i < len; i++) {
+        char *a_str = ab;
+        char *b_str = ab + i;
+
+        long long a = 0, b = 0;
+        
+        for (int j = 0; j < i; j++) {
+            a = a * 10 + (a_str[j] - '0');
+        }
+
+        for (int j = i; j < len; j++) {
+            b = b * 10 + (b_str[j] - '0');
+        }
+
+        if (a > 0 && b > 0 && b > a && ab[i] != '0' && ab[0] != '0') {
+            printf("%lld %lld\n", a, b);
+            return;
+        }
+    }
+
+    printf("-1\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        char ab[9];
+        scanf("%s", ab);
+        solve(ab);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        char s[41];
+        scanf("%s", s);
+        
+        char sorted_s[41];
+        strcpy(sorted_s, s);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (sorted_s[i] > sorted_s[j]) {
+                    char temp = sorted_s[i];
+                    sorted_s[i] = sorted_s[j];
+                    sorted_s[j] = temp;
+                }
+            }
+        }
+
+        int k = 0;
+        for (int i = 0; i < n; i++) {
+            if (s[i] != sorted_s[i]) {
+                k++;
+            }
+        }
+
+        printf("%d\n", k);
+    }
+    
+    return 0;
+}
 

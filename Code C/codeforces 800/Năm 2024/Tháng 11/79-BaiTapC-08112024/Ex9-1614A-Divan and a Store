@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, l, r, k;
+        scanf("%d %d %d %d", &n, &l, &r, &k);
+
+        int chocolates[n];
+        int affordableCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &chocolates[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (chocolates[i] >= l && chocolates[i] <= r) {
+                if (k >= chocolates[i]) {
+                    k -= chocolates[i];
+                    affordableCount++;
+                }
+            }
+        }
+
+        printf("%d\n", affordableCount);
+    }
+
+    return 0;
+}
 

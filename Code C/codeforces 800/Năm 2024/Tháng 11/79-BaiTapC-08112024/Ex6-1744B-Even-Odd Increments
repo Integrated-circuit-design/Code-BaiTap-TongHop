@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+
+        long long a[n], sum = 0;
+        int even = 0, odd = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+            sum += a[i];
+            if (a[i] % 2 == 0) {
+                even++;
+            } else {
+                odd++;
+            }
+        }
+
+        while (q--) {
+            int type, x;
+            scanf("%d %d", &type, &x);
+
+            if (type == 0) {
+                sum += even * (long long) x;
+                if (x % 2 != 0) {
+                    even = 0;
+                    odd += n;
+                }
+            } else {
+                sum += odd * (long long) x;
+                if (x % 2 != 0) {
+                    odd = 0;
+                    even += n;
+                }
+            }
+
+            printf("%lld\n", sum);
+        }
+    }
+
+    return 0;
+}
 

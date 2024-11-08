@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        char s[21], t[21];
+
+        scanf("%d %d", &n, &m);
+        scanf("%s", s);
+        scanf("%s", t);
+        
+        if (s[n-1] != t[m-1]) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {  
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        if (n == 1 && m == 1) {
+            printf("0\n");
+        } else {
+            int energy = (n - 1) + (m - 1) + (n < m ? n : m);
+            printf("%d\n", energy);
+        }
+    }
+    
+    return 0;
+}
 

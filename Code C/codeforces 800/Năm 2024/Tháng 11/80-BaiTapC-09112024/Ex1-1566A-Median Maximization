@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, s;
+        scanf("%lld %lld", &n, &s);
+
+        long long k = (n + 1) / 2;
+
+        long long result = s / k;
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

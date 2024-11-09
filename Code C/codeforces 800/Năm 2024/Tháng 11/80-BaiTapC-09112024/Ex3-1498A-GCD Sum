@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int sum_of_digits(long long x) {
+    int sum = 0;
+    while (x > 0) {
+        sum += x % 10;
+        x /= 10;
+    }
+    return sum;
+}
+
+long long find_min_number(long long n) {
+    long long result = n;
+    while (1) {
+        int digit_sum = sum_of_digits(result);
+        if (gcd(result, digit_sum) > 1) {
+            return result;
+        }
+        result++;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        printf("%lld\n", find_min_number(n));
+    }
+    return 0;
+}
 

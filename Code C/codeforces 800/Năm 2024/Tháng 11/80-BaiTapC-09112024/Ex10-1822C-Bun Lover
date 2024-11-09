@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+long long calculate_chocolate_length(long long n) {
+    return (n * n) - (n - 1);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        
+        long long chocolate_length = calculate_chocolate_length(n);
+        printf("%lld\n", chocolate_length);
+    }
+
+    return 0;
+}
 

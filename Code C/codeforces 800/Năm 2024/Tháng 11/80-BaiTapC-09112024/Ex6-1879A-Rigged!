@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int s1, e1;
+        scanf("%d %d", &s1, &e1);
+
+        int can_polycarp_win = 1;
+        int max_other_strength = 0;
+
+        for (int i = 1; i < n; i++) {
+            int s, e;
+            scanf("%d %d", &s, &e);
+
+            if (s <= s1 && e >= e1) {
+                can_polycarp_win = 0;
+            }
+
+            if (s > max_other_strength) {
+                max_other_strength = s;
+            }
+        }
+
+        if (can_polycarp_win && s1 > max_other_strength) {
+            printf("%d\n", max_other_strength + 1);
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

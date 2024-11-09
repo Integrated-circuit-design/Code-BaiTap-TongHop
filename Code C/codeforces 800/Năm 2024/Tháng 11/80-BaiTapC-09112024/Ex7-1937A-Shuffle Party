@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int largest_power_of_2(int n) {
+    int result = 1;
+    
+    while (result * 2 <= n) {
+        result *= 2;
+    }
+    
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        printf("%d\n", largest_power_of_2(n));
+    }
+    
+    return 0;
+}
 

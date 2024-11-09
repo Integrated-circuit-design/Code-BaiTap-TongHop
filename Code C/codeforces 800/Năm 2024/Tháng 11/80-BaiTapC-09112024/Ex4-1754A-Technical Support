@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        char messages[101];
+        scanf("%s", messages);
+        
+        int countQ = 0;
+        int countA = 0;
+
+        int isValid = 1;
+        for (int i = 0; i < n; i++) {
+            if (messages[i] == 'Q') {
+                countQ++;
+            } else if (messages[i] == 'A') {
+                if (countQ > countA) {
+                    countA++;
+                } else {
+                    isValid = 0;
+                    break;
+                }
+            }
+        }
+
+        if (countQ != countA) {
+            isValid = 0;
+        }
+
+        if (isValid) {
+            printf("Yes\n");
+        } else {
+            printf("No\n");
+        }
+    }
+    
+    return 0;
+}
 

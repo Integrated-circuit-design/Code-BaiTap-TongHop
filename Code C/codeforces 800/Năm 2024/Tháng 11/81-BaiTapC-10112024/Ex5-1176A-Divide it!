@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+long long calculate_steps(long long n) {
+    long long steps = 0;
+
+    while (n % 2 == 0) {
+        n /= 2;
+        steps++;
+    }
+    while (n % 3 == 0) {
+        n /= 3;
+        steps++;
+    }
+    while (n % 5 == 0) {
+        n /= 5;
+        steps++;
+    }
+
+    if (n != 1) {
+        return -1;
+    }
+
+    long long count_2 = 0, count_3 = 0, count_5 = 0;
+
+    while (n % 2 == 0) {
+        count_2++;
+        n /= 2;
+    }
+    while (n % 3 == 0) {
+        count_3++;
+        n /= 3;
+    }
+    while (n % 5 == 0) {
+        count_5++;
+        n /= 5;
+    }
+
+    if (count_2 > count_3 || count_3 > count_5) {
+        return -1;
+    }
+
+    return (count_3 - count_2) + (count_5 - count_3) + count_3;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        long long n;
+        scanf("%lld", &n);
+
+        long long result = calculate_steps(n);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

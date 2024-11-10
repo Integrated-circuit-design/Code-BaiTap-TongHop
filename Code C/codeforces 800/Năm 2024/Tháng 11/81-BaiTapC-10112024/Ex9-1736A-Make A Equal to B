@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n], b[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        int change_0_to_1 = 0, change_1_to_0 = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] == 0 && b[i] == 1) {
+                change_0_to_1++;
+            }
+            else if (a[i] == 1 && b[i] == 0) {
+                change_1_to_0++;
+            }
+        }
+
+        int result = (change_0_to_1 > change_1_to_0) ? change_0_to_1 : change_1_to_0;
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

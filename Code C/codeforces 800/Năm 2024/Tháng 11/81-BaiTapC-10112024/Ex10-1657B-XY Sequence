@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, B, x, y;
+        scanf("%lld %lld %lld %lld", &n, &B, &x, &y);
+
+        long long total_sum = 0;
+        long long current_value = 0;
+
+        for (long long i = 0; i <= n; i++) {
+            total_sum += current_value;
+            
+            if (current_value + x <= B) {
+                current_value += x;
+            } else {
+                current_value -= y;
+            }
+        }
+
+        printf("%lld\n", total_sum);
+    }
+
+    return 0;
+}
 

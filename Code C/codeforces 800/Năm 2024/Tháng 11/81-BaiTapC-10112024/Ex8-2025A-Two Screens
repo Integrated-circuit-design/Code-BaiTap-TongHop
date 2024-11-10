@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        char s[101], t[101];
+        scanf("%s %s", s, t);
+
+        int len_s = strlen(s);
+        int len_t = strlen(t);
+
+        int common_len = 0;
+
+        for (int i = 1; i <= len_s && i <= len_t; i++) {
+            if (s[len_s - i] == t[len_t - i]) {
+                common_len++;
+            } else {
+                break;
+            }
+        }
+
+        int total_time = (len_s - common_len) + (len_t - common_len) + 1;
+
+        printf("%d\n", total_time);
+    }
+
+    return 0;
+}
 

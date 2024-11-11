@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+long long calculate_wait_time(long long p, long long cycle_time) {
+    long long remainder = p % cycle_time;
+    if (remainder == 0) {
+        return 0;
+    }
+    return cycle_time - remainder;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long p, a, b, c;
+        scanf("%lld %lld %lld %lld", &p, &a, &b, &c);
+        
+        long long wait_time_a = calculate_wait_time(p, a);
+        long long wait_time_b = calculate_wait_time(p, b);
+        long long wait_time_c = calculate_wait_time(p, c);
+        
+        long long min_wait_time = wait_time_a;
+        if (wait_time_b < min_wait_time) {
+            min_wait_time = wait_time_b;
+        }
+        if (wait_time_c < min_wait_time) {
+            min_wait_time = wait_time_c;
+        }
+        
+        printf("%lld\n", min_wait_time);
+    }
+    
+    return 0;
+}
 

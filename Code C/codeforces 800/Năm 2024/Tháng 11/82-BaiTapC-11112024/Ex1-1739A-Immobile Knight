@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        if (n == 1 || m == 1) {
+            printf("1 1\n");
+        }
+        else if (n == 3 && m == 3) {
+            printf("2 2\n");
+        } 
+        else {
+            printf("1 1\n");
+        }
+    }
+
+    return 0;
+}
 

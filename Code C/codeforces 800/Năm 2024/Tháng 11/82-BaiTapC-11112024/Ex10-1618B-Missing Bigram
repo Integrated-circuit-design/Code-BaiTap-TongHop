@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        char bigrams[n - 1][3];
+        for (int i = 0; i < n - 2; i++) {
+            scanf("%s", bigrams[i]);
+        }
+        
+        char result[n + 1];
+        
+        result[0] = bigrams[0][0];
+        result[1] = bigrams[0][1];
+        
+        for (int i = 1; i < n - 2; i++) {
+            result[i + 1] = bigrams[i][1];
+        }
+        
+        result[n] = '\0';
+        
+        printf("%s\n", result);
+    }
+
+    return 0;
+}
 

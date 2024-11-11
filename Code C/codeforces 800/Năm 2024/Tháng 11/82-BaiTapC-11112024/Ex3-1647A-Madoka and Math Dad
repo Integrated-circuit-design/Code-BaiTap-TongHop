@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    int digits[1000];
+    int digit_count = 0;
+
+    int current_digit = 9;
+    while (n > 0) {
+        if (n >= current_digit) {
+            digits[digit_count++] = current_digit;
+            n -= current_digit;
+        } else {
+            digits[digit_count++] = n;
+            n = 0;
+        }
+
+        if (current_digit == 9) {
+            current_digit = 8;
+        } else if (current_digit == 8) {
+            current_digit = 7;
+        } else if (current_digit == 7) {
+            current_digit = 6;
+        } else if (current_digit == 6) {
+            current_digit = 5;
+        } else if (current_digit == 5) {
+            current_digit = 4;
+        } else if (current_digit == 4) {
+            current_digit = 3;
+        } else if (current_digit == 3) {
+            current_digit = 2;
+        } else if (current_digit == 2) {
+            current_digit = 1;
+        } else {
+            current_digit = 9;
+        }
+    }
+
+    for (int i = 0; i < digit_count; i++) {
+        printf("%d", digits[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

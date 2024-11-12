@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 50
+
+int calculate_area(int x1, int x2) {
+    return abs(x1 - x2);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int x[MAX_N];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &x[i]);
+        }
+
+        int area_set[MAX_N * (MAX_N - 1) / 2] = {0};
+        int area_count = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int area = calculate_area(x[i], x[j]);
+
+                int is_new_area = 1;
+                for (int k = 0; k < area_count; k++) {
+                    if (area_set[k] == area) {
+                        is_new_area = 0;
+                        break;
+                    }
+                }
+
+                if (is_new_area) {
+                    area_set[area_count++] = area;
+                }
+            }
+        }
+
+        printf("%d\n", area_count);
+    }
+
+    return 0;
+}
 

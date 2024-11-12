@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int max_operations(int l, int r) {
+    int count = r - l + 1;
+    return count / 3;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+
+        int result = max_operations(l, r);
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

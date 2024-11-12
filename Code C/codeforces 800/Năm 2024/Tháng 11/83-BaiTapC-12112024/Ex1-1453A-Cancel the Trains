@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        int bottom[101] = {0};
+        int left[101] = {0};
+        int i, trainNumber;
+
+        for (i = 0; i < n; i++) {
+            scanf("%d", &trainNumber);
+            bottom[trainNumber] = 1;
+        }
+
+        for (i = 0; i < m; i++) {
+            scanf("%d", &trainNumber);
+            left[trainNumber] = 1;
+        }
+
+        int cancelCount = 0;
+        for (i = 1; i <= 100; i++) {
+            if (bottom[i] && left[i]) {
+                cancelCount++;
+            }
+        }
+
+        printf("%d\n", cancelCount);
+    }
+
+    return 0;
+}
 

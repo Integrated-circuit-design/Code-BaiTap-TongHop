@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    int min = 101;
+    int secondMin = 101;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] < min) {
+            secondMin = min;
+            min = arr[i];
+        } else if (arr[i] < secondMin && arr[i] > min) {
+            secondMin = arr[i];
+        }
+    }
+
+    if (secondMin == 101) {
+        printf("NO\n");
+    } else {
+        printf("%d\n", secondMin);
+    }
+
+    return 0;
+}
 

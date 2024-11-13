@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+int can_form_permutation(int m, int s, int b[]) {
+    int used[51] = {0};
+    int total_sum = 0;
+
+    for (int i = 0; i < m; i++) {
+        used[b[i]] = 1;
+        total_sum += b[i];
+    }
+
+    int remaining_sum = s + total_sum;
+    int max_possible_number = 50;
+    int max_possible_sum = (max_possible_number * (max_possible_number + 1)) / 2;
+
+    if (remaining_sum > max_possible_sum) {
+        return 0;
+    }
+
+    int remaining_needed = s;
+
+    for (int i = 1; i <= max_possible_number; i++) {
+        if (used[i] == 0) {
+            if (remaining_needed >= i) {
+                remaining_needed -= i;
+            }
+        }
+
+        if (remaining_needed == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int m, s;
+        scanf("%d %d", &m, &s);
+
+        int b[50];
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        if (can_form_permutation(m, s, b)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

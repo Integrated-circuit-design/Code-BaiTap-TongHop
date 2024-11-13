@@ -1,1 +1,73 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        int isSorted = 1;
+        for (int i = 1; i < n; i++) {
+            if (arr[i-1] > arr[i]) {
+                isSorted = 0;
+                break;
+            }
+        }
+
+        if (isSorted) {
+            printf("NO\n");
+        } else {
+            int possible = 0;
+            for (int len = 1; len < n; len++) {
+                for (int i = 0; i < len-1; i++) {
+                    for (int j = i+1; j < len; j++) {
+                        if (arr[i] > arr[j]) {
+                            int temp = arr[i];
+                            arr[i] = arr[j];
+                            arr[j] = temp;
+                        }
+                    }
+                }
+
+                for (int i = len; i < n-1; i++) {
+                    for (int j = i+1; j < n; j++) {
+                        if (arr[i] > arr[j]) {
+                            int temp = arr[i];
+                            arr[i] = arr[j];
+                            arr[j] = temp;
+                        }
+                    }
+                }
+
+                int sorted = 1;
+                for (int i = 1; i < n; i++) {
+                    if (arr[i-1] > arr[i]) {
+                        sorted = 0;
+                        break;
+                    }
+                }
+
+                if (sorted) {
+                    possible = 1;
+                    break;
+                }
+            }
+            
+            if (possible) {
+                printf("NO\n");
+            } else {
+                printf("YES\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

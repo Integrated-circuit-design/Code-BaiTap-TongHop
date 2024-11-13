@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int numWords, maxDelay;
+    scanf("%d %d", &numWords, &maxDelay);
+    
+    int timeStamps[numWords];
+    
+    for (int i = 0; i < numWords; i++) {
+        scanf("%d", &timeStamps[i]);
+    }
+
+    int remainingWords = 1;
+    
+    for (int i = 1; i < numWords; i++) {
+        if (timeStamps[i] - timeStamps[i - 1] <= maxDelay) {
+            remainingWords++;
+        } else {
+            remainingWords = 1;
+        }
+    }
+
+    printf("%d\n", remainingWords);
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+        int skills[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &skills[i]);
+        }
+
+        int need_two_teams = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (abs(skills[i] - skills[j]) == 1) {
+                    need_two_teams = 1;
+                    break;
+                }
+            }
+            if (need_two_teams) break;
+        }
+
+        if (need_two_teams) {
+            printf("2\n");
+        } else {
+            printf("1\n");
+        }
+    }
+
+    return 0;
+}
 

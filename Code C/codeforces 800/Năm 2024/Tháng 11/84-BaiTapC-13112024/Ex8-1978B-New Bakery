@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+long long calculate_profit(long long n, long long a, long long b, long long k) {
+    long long total_profit = 0;
+
+    for (long long i = 0; i < k; i++) {
+        total_profit += b - i;
+    }
+
+    total_profit += (n - k) * a;
+
+    return total_profit;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, a, b;
+        scanf("%lld %lld %lld", &n, &a, &b);
+
+        long long profit = n * a;
+
+        long long k = (n < b) ? n : b;
+        
+        long long profit_with_discount = calculate_profit(n, a, b, k);
+
+        long long max_profit = (profit > profit_with_discount) ? profit : profit_with_discount;
+
+        printf("%lld\n", max_profit);
+    }
+
+    return 0;
+}
 

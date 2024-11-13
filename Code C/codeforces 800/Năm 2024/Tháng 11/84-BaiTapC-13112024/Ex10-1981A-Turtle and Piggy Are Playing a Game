@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int calculate_max_score(int l, int r) {
+    int score = 0;
+    
+    while (r % 2 == 0) {
+        r /= 2;
+        score++;
+    }
+    
+    return score;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        printf("%d\n", calculate_max_score(l, r));
+    }
+
+    return 0;
+}
 

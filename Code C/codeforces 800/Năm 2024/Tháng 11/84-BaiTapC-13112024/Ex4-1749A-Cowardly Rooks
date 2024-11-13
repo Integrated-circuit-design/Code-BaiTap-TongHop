@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int rows[n+1], cols[n+1];
+        
+        for (int i = 0; i <= n; i++) {
+            rows[i] = 0;
+            cols[i] = 0;
+        }
+
+        for (int i = 0; i < m; i++) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            rows[x] = 1;
+            cols[y] = 1;
+        }
+
+        int freeRows = 0, freeCols = 0;
+        for (int i = 1; i <= n; i++) {
+            if (rows[i] == 0) freeRows++;
+            if (cols[i] == 0) freeCols++;
+        }
+
+        if (freeRows > 0 && freeCols > 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

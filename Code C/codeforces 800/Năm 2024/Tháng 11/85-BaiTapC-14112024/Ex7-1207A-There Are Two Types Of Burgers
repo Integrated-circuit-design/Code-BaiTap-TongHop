@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int b, p, f;
+        int h, c;
+        
+        scanf("%d %d %d", &b, &p, &f);
+        scanf("%d %d", &h, &c);
+        
+        int maxProfit = 0;
+        
+        if (h > c) {
+            int maxHamburgers = b / 2;
+            if (maxHamburgers > p) maxHamburgers = p;
+            
+            maxProfit += maxHamburgers * h;
+            
+            b -= maxHamburgers * 2;
+            
+            int maxChickenBurgers = b / 2;
+            if (maxChickenBurgers > f) maxChickenBurgers = f;
+            
+            maxProfit += maxChickenBurgers * c;
+        } else {
+            int maxChickenBurgers = b / 2;
+            if (maxChickenBurgers > f) maxChickenBurgers = f;
+            
+            maxProfit += maxChickenBurgers * c;
+            
+            b -= maxChickenBurgers * 2;
+            
+            int maxHamburgers = b / 2;
+            if (maxHamburgers > p) maxHamburgers = p;
+            
+            maxProfit += maxHamburgers * h;
+        }
+        
+        printf("%d\n", maxProfit);
+    }
+    
+    return 0;
+}
 

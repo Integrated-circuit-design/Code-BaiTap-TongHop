@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int abs(int x) {
+    return x < 0 ? -x : x;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int left_most = 0, right_most = 0, top_most = 0, bottom_most = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            
+            if (y == 0) {
+                if (x < 0) {
+                    if (x < left_most) left_most = x;
+                } else {
+                    if (x > right_most) right_most = x;
+                }
+            } 
+            else {
+                if (y < 0) {
+                    if (y < bottom_most) bottom_most = y;
+                } else {
+                    if (y > top_most) top_most = y;
+                }
+            }
+        }
+        
+        int moves = 0;
+        
+        if (left_most < 0 && right_most > 0) {
+            moves += abs(left_most) + abs(right_most);
+        } else {
+            moves += abs(left_most) + abs(right_most);  
+        }
+        
+        if (top_most > 0 && bottom_most < 0) {
+            moves += abs(top_most) + abs(bottom_most);
+        } else {
+            moves += abs(top_most) + abs(bottom_most);  
+        }
+        
+        printf("%d\n", moves);
+    }
+    
+    return 0;
+}
 

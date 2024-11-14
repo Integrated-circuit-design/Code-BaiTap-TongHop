@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long S;
+
+    scanf("%d %lld", &n, &S);
+
+    int min_coins = S / n;
+
+    if (S % n != 0) {
+        min_coins += 1;
+    }
+
+    printf("%d\n", min_coins);
+
+    return 0;
+}
 

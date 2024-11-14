@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool has_unique_digits(int n) {
+    char str[10];
+    int i = 0;
+
+    while (n > 0) {
+        str[i] = (n % 10) + '0';
+        n /= 10;
+        i++;
+    }
+
+    for (int j = 0; j < i; j++) {
+        for (int k = j + 1; k < i; k++) {
+            if (str[j] == str[k]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+int main() {
+    int l, r;
+    scanf("%d %d", &l, &r);
+
+    for (int x = l; x <= r; x++) {
+        if (has_unique_digits(x)) {
+            printf("%d\n", x);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

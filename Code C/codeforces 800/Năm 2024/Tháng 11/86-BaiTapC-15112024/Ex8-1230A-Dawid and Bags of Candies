@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int a[4];
+    int total, half;
+
+    for (int i = 0; i < 4; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    total = a[0] + a[1] + a[2] + a[3];
+
+    if (total % 2 == 0) {
+        half = total / 2;
+
+        if ((a[0] + a[1] == half) || (a[0] + a[2] == half) || (a[0] + a[3] == half) || 
+            (a[1] + a[2] == half) || (a[1] + a[3] == half) || (a[2] + a[3] == half) ||
+            (a[0] + a[1] + a[2] == total) || (a[0] + a[1] + a[3] == total) || 
+            (a[0] + a[2] + a[3] == total) || (a[1] + a[2] + a[3] == total)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

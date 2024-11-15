@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int find_minimum_operations(int n, int k) {
+    int operations = 0;
+    
+    if (k == 1) {
+        return n;
+    }
+
+    while (n > 0) {
+        if (n < k) {
+            operations += n;
+            break;
+        }
+        
+        if (n % k == 0) {
+            n /= k;
+            operations++;
+        } else {
+            int remainder = n % k;
+            n -= remainder;
+            operations += remainder;
+        }
+    }
+
+    return operations;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        printf("%d\n", find_minimum_operations(n, k));
+    }
+    return 0;
+}
 

@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int min_matches_needed(long long n) {
+    if (n % 3 == 0) {
+        return 0;
+    } else if (n % 3 == 1) {
+        return 2;
+    } else {
+        return 1;
+    }
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    
+    while (q--) {
+        long long n;
+        scanf("%lld", &n);
+        printf("%d\n", min_matches_needed(n));
+    }
+    
+    return 0;
+}
 

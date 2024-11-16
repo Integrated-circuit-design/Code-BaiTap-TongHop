@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+int checkConsistency(char *s, int n) {
+    int isAllEqual = 1;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'N') {
+            isAllEqual = 0;
+            break;
+        }
+    }
+
+    if (isAllEqual) {
+        return 1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'N' && s[(i + 1) % n] == 'E') {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[51];
+        scanf("%s", s);
+
+        int n = strlen(s);
+        if (checkConsistency(s, n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        long long int a[n];
+        long long int sum = 0;
+        long long int max_value = -1000000000;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+            sum += a[i];
+            if (a[i] > max_value) {
+                max_value = a[i];
+            }
+        }
+
+        long long int initial_value = sum - max_value;
+
+        printf("%lld\n", initial_value);
+    }
+
+    return 0;
+}
 

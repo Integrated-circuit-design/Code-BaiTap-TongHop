@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int p[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+        }
+
+        int best[n];
+        for (int i = 0; i < n; i++) {
+            best[i] = p[i];
+        }
+
+        for (int l = 0; l < n; l++) {
+            for (int r = l; r < n; r++) {
+                int temp[n];
+                for (int i = 0; i < n; i++) {
+                    temp[i] = p[i];
+                }
+
+                int left = l, right = r;
+                while (left < right) {
+                    int temp_val = temp[left];
+                    temp[left] = temp[right];
+                    temp[right] = temp_val;
+                    left++;
+                    right--;
+                }
+
+                int is_smaller = 0;
+                for (int i = 0; i < n; i++) {
+                    if (temp[i] < best[i]) {
+                        is_smaller = 1;
+                        break;
+                    } else if (temp[i] > best[i]) {
+                        is_smaller = 0;
+                        break;
+                    }
+                }
+
+                if (is_smaller) {
+                    for (int i = 0; i < n; i++) {
+                        best[i] = temp[i];
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", best[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

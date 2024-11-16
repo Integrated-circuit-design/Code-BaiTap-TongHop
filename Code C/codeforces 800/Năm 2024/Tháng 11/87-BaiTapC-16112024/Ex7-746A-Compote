@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c;
+    scanf("%d %d %d", &a, &b, &c);
+    
+    int max_lemon_sets = a; 
+    int max_apple_sets = b / 2; 
+    int max_pear_sets = c / 4; 
+    
+    int max_sets = max_lemon_sets;
+    if (max_apple_sets < max_sets) {
+        max_sets = max_apple_sets;
+    }
+    if (max_pear_sets < max_sets) {
+        max_sets = max_pear_sets;
+    }
+    
+    int total_fruits = max_sets * (1 + 2 + 4);
+    
+    printf("%d\n", total_fruits);
+    
+    return 0;
+}
 

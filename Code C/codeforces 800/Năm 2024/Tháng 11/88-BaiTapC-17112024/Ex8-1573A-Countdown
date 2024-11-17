@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char s[101];
+        scanf("%s", s);
+
+        int total_decrease = 0;
+        int swaps = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (s[i] != '0') {
+                total_decrease += s[i] - '0';
+                if (i != n - 1) {
+                    swaps++;
+                }
+            }
+        }
+
+        printf("%d\n", swaps + total_decrease);
+    }
+
+    return 0;
+}
 

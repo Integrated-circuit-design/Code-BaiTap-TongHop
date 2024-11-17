@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void generate_permutation_chain(int n) {
+    printf("%d\n", n);
+    int permutation[n];
+    for (int i = 0; i < n; i++) {
+        permutation[i] = i + 1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", permutation[i]);
+    }
+    printf("\n");
+
+    for (int i = n - 1; i > 0; i--) {
+        swap(&permutation[0], &permutation[i]);
+        for (int j = 0; j < n; j++) {
+            printf("%d ", permutation[j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        generate_permutation_chain(n);
+    }
+
+    return 0;
+}
 

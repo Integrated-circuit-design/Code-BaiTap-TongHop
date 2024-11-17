@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int calculate_cost(int a, int b, int c) {
+    int max_length = (a > b) ? (a > c ? a : c) : (b > c ? b : c);
+    return (max_length - a) + (max_length - b) + (max_length - c);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int sticks[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &sticks[i]);
+        }
+
+        int min_cost = 1000000000;
+
+        for (int i = 0; i < n - 2; i++) {
+            for (int j = i + 1; j < n - 1; j++) {
+                for (int k = j + 1; k < n; k++) {
+                    int cost = calculate_cost(sticks[i], sticks[j], sticks[k]);
+                    if (cost < min_cost) {
+                        min_cost = cost;
+                    }
+                }
+            }
+        }
+
+        printf("%d\n", min_cost);
+    }
+
+    return 0;
+}
 

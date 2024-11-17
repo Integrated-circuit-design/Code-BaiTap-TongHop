@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, k1, k2, w, b;
+        scanf("%d %d %d", &n, &k1, &k2);
+        scanf("%d %d", &w, &b);
+
+        int white_cells = k1 + k2;
+        int black_cells = (2 * n) - white_cells;
+
+        int max_white_dominoes = white_cells / 2;
+        int max_black_dominoes = black_cells / 2;
+
+        if (w <= max_white_dominoes && b <= max_black_dominoes) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

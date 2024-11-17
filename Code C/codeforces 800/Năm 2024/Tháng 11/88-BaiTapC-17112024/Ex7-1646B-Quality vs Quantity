@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)b - *(int*)a);
+}
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        long long sum_all = 0;
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            sum_all += a[i];
+        }
+        
+        qsort(a, n, sizeof(int), compare);
+        
+        long long sum_red = 0;
+        long long sum_blue = sum_all;
+        int count_red = 0;
+        int count_blue = n;
+        
+        int found = 0;
+        
+        for (int i = 0; i < n - 1; i++) {
+            sum_red += a[i];
+            sum_blue -= a[i];
+            count_red++;
+            count_blue--;
+            
+            if (sum_red > sum_blue && count_red < count_blue) {
+                found = 1;
+                break;
+            }
+        }
+        
+        if (found) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

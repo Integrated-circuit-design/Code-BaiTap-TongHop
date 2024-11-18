@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b, c;
+        scanf("%lld %lld %lld", &a, &b, &c);
+
+        long long x = b + a;
+        long long y = x + b;
+        long long z = y + c;
+
+        printf("%lld %lld %lld\n", x, y, z);
+    }
+
+    return 0;
+}
 

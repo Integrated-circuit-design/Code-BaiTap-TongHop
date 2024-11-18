@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int number_of_test_cases;
+    scanf("%d", &number_of_test_cases);
+    
+    for (int i = 0; i < number_of_test_cases; i++) {
+        long a, b, c;
+        scanf("%ld %ld %ld", &a, &b, &c);
+        
+        long fourth_side = a + b + c - 1;
+
+        printf("%ld\n", fourth_side);
+    }
+    
+    return 0;
+}
 

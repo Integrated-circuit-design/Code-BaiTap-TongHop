@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d", &n);
+        int alice[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &alice[i]);
+        }
+
+        scanf("%d", &m);
+        int bob[m];
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &bob[i]);
+        }
+
+        int max_alice = alice[0];
+        for (int i = 1; i < n; i++) {
+            if (alice[i] > max_alice) {
+                max_alice = alice[i];
+            }
+        }
+
+        int max_bob = bob[0];
+        for (int i = 1; i < m; i++) {
+            if (bob[i] > max_bob) {
+                max_bob = bob[i];
+            }
+        }
+
+        if (max_alice >= max_bob) {
+            printf("Alice\n");
+        } else {
+            printf("Bob\n");
+        }
+
+        if (max_bob >= max_alice) {
+            printf("Bob\n");
+        } else {
+            printf("Alice\n");
+        }
+    }
+
+    return 0;
+}
 

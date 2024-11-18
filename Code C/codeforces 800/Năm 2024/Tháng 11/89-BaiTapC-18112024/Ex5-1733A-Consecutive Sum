@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    return (*(int *)b - *(int *)a);
+}
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int groups[k][n];
+        int group_size[k];
+        for (int i = 0; i < k; i++) {
+            group_size[i] = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            int mod = i % k;
+            groups[mod][group_size[mod]++] = a[i];
+        }
+
+        for (int i = 0; i < k; i++) {
+            qsort(groups[i], group_size[i], sizeof(int), cmp);
+        }
+
+        int result = 0;
+
+        for (int i = 0; i < k; i++) {
+            for (int j = 0; j < group_size[i]; j++) {
+                result += groups[i][j];
+            }
+        }
+
+        printf("%d\n", result);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

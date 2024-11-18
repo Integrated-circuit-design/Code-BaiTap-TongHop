@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_BOTTLES 200005
+
+void process_test_case(int n, int k) {
+    int max_cost[MAX_BOTTLES] = {0};
+
+    for (int i = 0; i < k; i++) {
+        int brand, cost;
+        scanf("%d %d", &brand, &cost);
+        if (cost > max_cost[brand]) {
+            max_cost[brand] = cost;
+        }
+    }
+
+    int costs[MAX_BOTTLES];
+    int count = 0;
+    
+    for (int i = 1; i <= k; i++) {
+        if (max_cost[i] > 0) {
+            costs[count++] = max_cost[i];
+        }
+    }
+
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = i + 1; j < count; j++) {
+            if (costs[i] < costs[j]) {
+                int temp = costs[i];
+                costs[i] = costs[j];
+                costs[j] = temp;
+            }
+        }
+    }
+
+    int max_earnings = 0;
+    for (int i = 0; i < n && i < count; i++) {
+        max_earnings += costs[i];
+    }
+
+    printf("%d\n", max_earnings);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        process_test_case(n, k);
+    }
+
+    return 0;
+}
 

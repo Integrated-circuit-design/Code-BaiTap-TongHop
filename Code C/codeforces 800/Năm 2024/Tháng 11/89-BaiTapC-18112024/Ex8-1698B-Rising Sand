@@ -1,1 +1,69 @@
+#include <stdio.h>
+
+void solveTestCase(int n, int k, int a[]) {
+    int tooTall[n];
+    for (int i = 0; i < n; i++) {
+        tooTall[i] = 0;
+    }
+
+    for (int i = 1; i < n - 1; i++) {
+        if (a[i] > a[i - 1] + a[i + 1]) {
+            tooTall[i] = 1;
+        }
+    }
+
+    if (k == 1) {
+        int result = 0;
+        for (int i = 1; i < n - 1; i++) {
+            if (tooTall[i] == 1) {
+                result++;
+            }
+        }
+        printf("%d\n", result);
+        return;
+    }
+
+    int maxTooTall = 0;
+    for (int i = 1; i < n - k; i++) {
+        for (int j = i; j < i + k; j++) {
+            a[j]++;
+        }
+        
+        int currentTooTall = 0;
+        for (int j = 1; j < n - 1; j++) {
+            if (a[j] > a[j - 1] + a[j + 1]) {
+                currentTooTall++;
+            }
+        }
+
+        if (currentTooTall > maxTooTall) {
+            maxTooTall = currentTooTall;
+        }
+
+        for (int j = i; j < i + k; j++) {
+            a[j]--;
+        }
+    }
+
+    printf("%d\n", maxTooTall);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        solveTestCase(n, k, a);
+    }
+
+    return 0;
+}
 

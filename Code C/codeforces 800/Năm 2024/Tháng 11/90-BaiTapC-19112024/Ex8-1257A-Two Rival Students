@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x, a, b;
+        scanf("%d %d %d %d", &n, &x, &a, &b);
+
+        if (a > b) {
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+
+        int initial_distance = b - a;
+        int max_distance = initial_distance + x;
+
+        if (max_distance > n - 1) {
+            max_distance = n - 1;
+        }
+
+        printf("%d\n", max_distance);
+    }
+
+    return 0;
+}
 

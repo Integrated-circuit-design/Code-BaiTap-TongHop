@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int total_scores[n];
+
+    for (int i = 0; i < n; i++) {
+        int a, b, c, d;
+        scanf("%d %d %d %d", &a, &b, &c, &d);
+        total_scores[i] = a + b + c + d;
+    }
+
+    int thomas_score = total_scores[0];
+    int rank = 1;
+
+    for (int i = 1; i < n; i++) {
+        if (total_scores[i] > thomas_score) {
+            rank++;
+        } else if (total_scores[i] == thomas_score && i < 1) {
+            rank++;
+        }
+    }
+
+    printf("%d\n", rank);
+    return 0;
+}
 

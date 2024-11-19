@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_valid_string(const char *s) {
+    int n = strlen(s);
+    int i = 0;
+
+    while (i < n) {
+        if (s[i] == 'a') {
+            int count = 0;
+            while (i < n && s[i] == 'a') {
+                count++;
+                i++;
+            }
+            if (count != 2 && count != 3) {
+                return 0;
+            }
+        }
+        else if (s[i] == 'b') {
+            int count = 0;
+            while (i < n && s[i] == 'b') {
+                count++;
+                i++;
+            }
+            if (count != 2 && count != 3) {
+                return 0;
+            }
+        }
+        else {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[51];
+        scanf("%s", s);
+
+        if (is_valid_string(s)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int found = 0;
+        
+        int a;
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &a);
+            
+            if (a == i) {
+                found = 1;
+            }
+        }
+        
+        if (found) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

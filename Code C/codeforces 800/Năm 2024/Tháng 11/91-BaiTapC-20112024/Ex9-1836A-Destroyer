@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        int possible = 1;
+        int counts[100] = {0};
+
+        for (int i = 0; i < n; i++) {
+            counts[arr[i]]++;
+        }
+
+        for (int i = 1; i < 100; i++) {
+            if (counts[i] > counts[i - 1]) {
+                possible = 0;
+                break;
+            }
+        }
+
+        if (possible) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

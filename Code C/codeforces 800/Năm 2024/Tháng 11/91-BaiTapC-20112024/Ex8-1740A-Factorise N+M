@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 200000
+
+void sieve(bool primes[]) {
+    for (int i = 2; i <= MAX; i++) {
+        primes[i] = true;
+    }
+    
+    for (int i = 2; i * i <= MAX; i++) {
+        if (primes[i]) {
+            for (int j = i * i; j <= MAX; j += i) {
+                primes[j] = false;
+            }
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    bool primes[MAX + 1] = {false};
+    sieve(primes);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        if (!primes[n + 2]) {
+            printf("2\n");
+        } else {
+            printf("3\n");
+        }
+    }
+    
+    return 0;
+}
 

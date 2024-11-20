@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int arr[2*n];
+        
+        for (int i = 0; i < 2 * n; i++) {
+            scanf("%d", &arr[i]);
+        }
+        
+        qsort(arr, 2 * n, sizeof(int), compare);
+        
+        int total_distance = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int x = arr[i];
+            int y = arr[2 * n - 1 - i];
+            total_distance += abs(x - y);
+            printf("%d %d\n", x, y);
+        }
+        
+        printf("%d\n", total_distance);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+void solve_test_case() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+
+    int weights[n];
+    int total_sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &weights[i]);
+        total_sum += weights[i];
+    }
+
+    if (total_sum == x) {
+        printf("NO\n");
+        return;
+    }
+
+    printf("YES\n");
+
+    for (int i = n - 1; i >= 0; i--) {
+        printf("%d ", weights[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve_test_case();
+    }
+
+    return 0;
+}
 

@@ -1,30 +1,26 @@
 #include <stdio.h>
 
-// Hàm để in hoán vị tối ưu
-void printOptimalPermutation(int n) {
-    // Đặt phần đầu hoán vị là các số từ 1 đến n-3
-    for (int i = 1; i <= n - 3; i++) {
-        printf("%d ", i);
-    }
-    
-    // Sau đó, in các số 1, 2, 3 ở cuối
-    printf("%d %d %d\n", n - 2, n - 1, n);
-}
-
 int main() {
-    int t, n;
-    // Đọc số lượng test case
-    scanf("%d", &t);
+    int q;
+    scanf("%d", &q);
 
-    // Duyệt qua từng test case
-    while (t--) {
-        // Đọc giá trị n cho mỗi test case
-        scanf("%d", &n);
-        
-        // In hoán vị tối ưu cho mỗi n
-        printOptimalPermutation(n);
+    while (q--) {
+        long long n, a, b;
+        scanf("%lld %lld %lld", &n, &a, &b);
+
+        long long cost = 0;
+
+        long long two_liter_bottles = n / 2;
+        long long remaining_liters = n % 2;
+
+        cost += two_liter_bottles * b;
+
+        if (remaining_liters == 1) {
+            cost += a;
+        }
+
+        printf("%lld\n", cost);
     }
-    
+
     return 0;
 }
-

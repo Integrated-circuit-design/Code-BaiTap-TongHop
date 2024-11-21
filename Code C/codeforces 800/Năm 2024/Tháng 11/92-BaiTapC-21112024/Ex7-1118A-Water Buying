@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+// Hàm để in hoán vị tối ưu
+void printOptimalPermutation(int n) {
+    // Đặt phần đầu hoán vị là các số từ 1 đến n-3
+    for (int i = 1; i <= n - 3; i++) {
+        printf("%d ", i);
+    }
+    
+    // Sau đó, in các số 1, 2, 3 ở cuối
+    printf("%d %d %d\n", n - 2, n - 1, n);
+}
+
+int main() {
+    int t, n;
+    // Đọc số lượng test case
+    scanf("%d", &t);
+
+    // Duyệt qua từng test case
+    while (t--) {
+        // Đọc giá trị n cho mỗi test case
+        scanf("%d", &n);
+        
+        // In hoán vị tối ưu cho mỗi n
+        printOptimalPermutation(n);
+    }
+    
+    return 0;
+}
 

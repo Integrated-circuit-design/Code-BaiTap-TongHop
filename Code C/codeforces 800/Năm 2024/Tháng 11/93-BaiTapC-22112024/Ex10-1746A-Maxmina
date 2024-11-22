@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int can_become_one(int n, int k, int a[]) {
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        if (can_become_one(n, k, a)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

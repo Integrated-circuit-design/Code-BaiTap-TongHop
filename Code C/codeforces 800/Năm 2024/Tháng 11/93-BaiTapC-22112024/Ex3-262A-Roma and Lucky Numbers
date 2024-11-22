@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int luckyDigitCount(int num) {
+    int luckyDigit = 0;
+    while (num > 0) {
+        int digit = num % 10;
+        if (digit == 4 || digit == 7) {
+            luckyDigit++;
+        }
+        num /= 10;
+    }
+    return luckyDigit;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int numbers[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &numbers[i]);
+    }
+
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        int luckyCount = luckyDigitCount(numbers[i]);
+        if (luckyCount <= k) {
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+    return 0;
+}
 

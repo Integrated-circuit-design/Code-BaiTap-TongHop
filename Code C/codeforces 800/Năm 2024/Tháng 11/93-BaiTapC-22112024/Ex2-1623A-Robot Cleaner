@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, rb, cb, rd, cd;
+        scanf("%d %d %d %d %d %d", &n, &m, &rb, &cb, &rd, &cd);
+
+        int vertical_time = abs(rd - rb);
+        int horizontal_time = abs(cd - cb);
+
+        if (vertical_time > n / 2) {
+            vertical_time = n - vertical_time;
+        }
+
+        if (horizontal_time > m / 2) {
+            horizontal_time = m - horizontal_time;
+        }
+
+        int total_time = vertical_time + horizontal_time;
+
+        printf("%d\n", total_time);
+    }
+
+    return 0;
+}
 

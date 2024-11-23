@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        int max_tsondu = 0, max_tenzing = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int ai;
+            scanf("%d", &ai);
+            if (ai > max_tsondu) {
+                max_tsondu = ai;
+            }
+        }
+        
+        for (int i = 0; i < m; i++) {
+            int bi;
+            scanf("%d", &bi);
+            if (bi > max_tenzing) {
+                max_tenzing = bi;
+            }
+        }
+        
+        if (max_tsondu > max_tenzing) {
+            printf("Tsondu\n");
+        } else if (max_tsondu < max_tenzing) {
+            printf("Tenzing\n");
+        } else {
+            printf("Draw\n");
+        }
+    }
+    
+    return 0;
+}
 

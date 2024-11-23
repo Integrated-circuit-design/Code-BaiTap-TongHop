@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        int found = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] % 2 == 0) {
+                printf("1\n%d\n", i + 1);
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found) {
+            int odd_count = 0;
+            int indices[2];
+
+            for (int i = 0; i < n; i++) {
+                if (a[i] % 2 != 0) {
+                    indices[odd_count++] = i + 1;
+                    if (odd_count == 2) {
+                        break;
+                    }
+                }
+            }
+
+            if (odd_count == 2) {
+                printf("2\n%d %d\n", indices[0], indices[1]);
+            } else {
+                printf("-1\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

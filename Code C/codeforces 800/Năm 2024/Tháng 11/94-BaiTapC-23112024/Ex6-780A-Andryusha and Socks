@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+#define MAX_N 100000
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int socks[2 * n];
+    for (int i = 0; i < 2 * n; i++) {
+        scanf("%d", &socks[i]);
+    }
+
+    int count[2 * n + 1] = {0};
+    int max_socks_on_table = 0;
+    int current_socks_on_table = 0;
+
+    for (int i = 0; i < 2 * n; i++) {
+        int sock = socks[i];
+        count[sock]++;
+
+        if (count[sock] == 1) {
+            current_socks_on_table++;
+        } else {
+            current_socks_on_table--;
+        }
+
+        if (current_socks_on_table > max_socks_on_table) {
+            max_socks_on_table = current_socks_on_table;
+        }
+    }
+
+    printf("%d\n", max_socks_on_table);
+    return 0;
+}
 

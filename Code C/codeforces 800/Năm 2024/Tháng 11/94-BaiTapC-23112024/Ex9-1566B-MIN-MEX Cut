@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[100005];
+        scanf("%s", s);
+
+        int mex = 2;
+
+        for (int i = 0; s[i] != '\0'; i++) {
+            if (s[i] == '0') {
+                mex = (mex == 2) ? 1 : mex;
+            }
+            if (s[i] == '1') {
+                mex = (mex == 2) ? 0 : mex;
+            }
+        }
+
+        printf("%d\n", mex);
+    }
+
+    return 0;
+}
 

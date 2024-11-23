@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int check_lexicographical_order(char* a, char* b, char* c) {
+    if ((strcmp(a, b) <= 0 && strcmp(c, b) <= 0) || (strcmp(b, a) <= 0 && strcmp(b, c) <= 0)) {
+        return 1;
+    }
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[101];
+        scanf("%s", s);
+
+        int n = strlen(s);
+        int found = 0;
+
+        for (int i = 1; i < n && !found; i++) {
+            for (int j = i + 1; j < n && !found; j++) {
+                char a[101], b[101], c[101];
+                strncpy(a, s, i); a[i] = '\0';
+                strncpy(b, s + i, j - i); b[j - i] = '\0';
+                strcpy(c, s + j);
+
+                if (check_lexicographical_order(a, b, c)) {
+                    printf("%s %s %s\n", a, b, c);
+                    found = 1;
+                }
+            }
+        }
+
+        if (!found) {
+            printf(":(");
+        }
+    }
+
+    return 0;
+}
 

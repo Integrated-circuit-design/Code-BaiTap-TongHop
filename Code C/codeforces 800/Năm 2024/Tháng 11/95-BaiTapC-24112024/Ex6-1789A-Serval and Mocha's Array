@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int isBeautifulArray(int *arr, int n) {
+    for (int len = 2; len <= n; len++) {
+        int prefixGCD = arr[0];
+        for (int i = 1; i < len; i++) {
+            prefixGCD = gcd(prefixGCD, arr[i]);
+        }
+        if (prefixGCD > len) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        if (isBeautifulArray(arr, n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

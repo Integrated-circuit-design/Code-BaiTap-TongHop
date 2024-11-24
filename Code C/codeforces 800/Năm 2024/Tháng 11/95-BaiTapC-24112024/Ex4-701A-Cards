@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return *((int*)a) - *((int*)b);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int cards[n];
+    int index[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &cards[i]);
+        index[i] = i + 1;
+    }
+
+    qsort(cards, n, sizeof(int), compare);
+
+    for (int i = 0; i < n / 2; i++) {
+        printf("%d %d\n", index[i], index[n - i - 1]);
+    }
+
+    return 0;
+}
 

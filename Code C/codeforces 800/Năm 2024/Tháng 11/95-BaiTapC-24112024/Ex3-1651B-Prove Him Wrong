@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+void processTestCases() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int n;
+        scanf("%d", &n);
+
+        if (n % 2 == 0) {
+            printf("YES\n");
+            for (int i = 0; i < n; i++) {
+                printf("1 ");
+            }
+            printf("\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    processTestCases();
+    return 0;
+}
 

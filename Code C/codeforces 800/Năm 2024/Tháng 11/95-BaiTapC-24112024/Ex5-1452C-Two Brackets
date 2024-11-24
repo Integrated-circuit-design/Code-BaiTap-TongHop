@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[200005];
+        scanf("%s", s);
+
+        int moves = 0;
+        int stack1 = 0, stack2 = 0;
+
+        for (int i = 0; s[i] != '\0'; i++) {
+            if (s[i] == '(') {
+                stack1++;
+            }
+            else if (s[i] == ')') {
+                if (stack1 > 0) {
+                    moves++;
+                    stack1--;
+                }
+            }
+            else if (s[i] == '[') {
+                stack2++;
+            }
+            else if (s[i] == ']') {
+                if (stack2 > 0) {
+                    moves++;
+                    stack2--;
+                }
+            }
+        }
+
+        printf("%d\n", moves);
+    }
+
+    return 0;
+}
 

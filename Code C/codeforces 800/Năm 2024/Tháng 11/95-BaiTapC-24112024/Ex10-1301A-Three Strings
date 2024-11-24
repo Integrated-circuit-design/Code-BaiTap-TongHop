@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char a[101], b[101], c[101];
+        scanf("%s %s %s", a, b, c);
+
+        int n = strlen(a);
+        int can_be_equal = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] != b[i]) {
+                if (!(c[i] == a[i] || c[i] == b[i])) {
+                    can_be_equal = 0;
+                    break;
+                }
+            }
+        }
+
+        if (can_be_equal) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

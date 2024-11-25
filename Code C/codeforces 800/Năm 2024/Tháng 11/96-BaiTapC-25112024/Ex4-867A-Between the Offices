@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    char route[101];
+    scanf("%d", &n);
+    scanf("%s", route);
+
+    int flight_count = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        if (route[i] == 'S' && route[i + 1] == 'F') {
+            flight_count++;
+        }
+    }
+
+    if (flight_count * 2 > n - 1) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

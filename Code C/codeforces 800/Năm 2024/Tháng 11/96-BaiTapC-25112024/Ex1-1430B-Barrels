@@ -1,21 +1,40 @@
 #include <stdio.h>
-
-int calculate_colors(int rows, int cols, int distance) {
-    int row_groups = (rows + distance - 1) / distance;
-    int col_groups = (cols + distance - 1) / distance;
-    return row_groups * col_groups;
-}
+#include <stdlib.h>
 
 int main() {
-    int test_cases;
-    scanf("%d", &test_cases);
+    int t;
+    scanf("%d", &t);
 
-    while (test_cases--) {
-        int n, m, k;
-        scanf("%d %d %d", &n, &m, &k);
-        printf("%d\n", calculate_colors(n, m, k));
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int barrels[n];
+        long long total = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &barrels[i]);
+            total += barrels[i];
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (barrels[i] < barrels[j]) {
+                    int temp = barrels[i];
+                    barrels[i] = barrels[j];
+                    barrels[j] = temp;
+                }
+            }
+        }
+
+        long long max_water = barrels[0];
+        for (int i = 1; i <= k; i++) {
+            max_water += barrels[i];
+        }
+
+        long long min_water = barrels[k];
+        printf("%lld\n", max_water - min_water);
     }
 
     return 0;
 }
-

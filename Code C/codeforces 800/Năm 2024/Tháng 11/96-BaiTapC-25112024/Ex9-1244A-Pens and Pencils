@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, c, d, k;
+        scanf("%d %d %d %d %d", &a, &b, &c, &d, &k);
+
+        int pens_needed = (a + c - 1) / c;
+        int pencils_needed = (b + d - 1) / d;
+
+        if (pens_needed + pencils_needed <= k) {
+            printf("%d %d\n", pens_needed, pencils_needed);
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

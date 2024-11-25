@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int calculate_colors(int rows, int cols, int distance) {
+    int row_groups = (rows + distance - 1) / distance;
+    int col_groups = (cols + distance - 1) / distance;
+    return row_groups * col_groups;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+        printf("%d\n", calculate_colors(n, m, k));
+    }
+
+    return 0;
+}
 

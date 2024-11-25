@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_palindrome_after_removal(char* s, int n, int i) {
+    int left = 0, right = n - 1;
+    
+    while (left < right) {
+        if (left == i) {
+            left++;
+        }
+        if (right == i) {
+            right--;
+        }
+        
+        if (s[left] != s[right]) {
+            return 0;
+        }
+        
+        left++;
+        right--;
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[100005];
+
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        int count = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (is_palindrome_after_removal(s, n, i)) {
+                count++;
+            }
+        }
+
+        printf("%d\n", count);
+    }
+
+    return 0;
+}
 

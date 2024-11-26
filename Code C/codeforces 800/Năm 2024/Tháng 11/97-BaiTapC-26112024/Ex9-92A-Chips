@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int total_chips = m;
+    int current_chip = 1;
+    int i = 1;
+
+    while (total_chips >= current_chip) {
+        total_chips -= current_chip;
+        current_chip++;
+
+        if (i == n) {
+            i = 1;
+        } else {
+            i++;
+        }
+    }
+
+    printf("%d\n", total_chips);
+
+    return 0;
+}
 

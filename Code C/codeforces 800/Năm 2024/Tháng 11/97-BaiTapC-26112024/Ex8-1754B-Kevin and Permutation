@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+void solveTestCase(int n) {
+    int i;
+    int result[n];
+
+    int left = 1, right = n;
+
+    for (i = 0; i < n; i++) {
+        if (i % 2 == 0) {
+            result[i] = left++;
+        } else {
+            result[i] = right--;
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t, n;
+
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+
+        solveTestCase(n);
+    }
+
+    return 0;
+}
 

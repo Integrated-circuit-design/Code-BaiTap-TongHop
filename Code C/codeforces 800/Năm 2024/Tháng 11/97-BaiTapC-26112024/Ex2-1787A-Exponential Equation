@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+
+        int found = 0;
+
+        for (int x = 1; x * x <= n && !found; ++x) {
+            for (int y = 1; y * y <= n; ++y) {
+                long long term1 = 1, term2 = 1;
+                for (int i = 0; i < y; i++) term1 *= x;
+                for (int i = 0; i < x; i++) term2 *= y;
+
+                if (term1 + term2 == n) {
+                    printf("%d %d\n", x, y);
+                    found = 1;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            printf("-1\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

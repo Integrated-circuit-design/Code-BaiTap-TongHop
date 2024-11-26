@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)b - *(int*)a);
+}
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+
+        int a[n], b[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        qsort(b, n, sizeof(int), compare);
+
+        int possible = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] + b[i] > x) {
+                possible = 0;
+                break;
+            }
+        }
+
+        if (possible) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

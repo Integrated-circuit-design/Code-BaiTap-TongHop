@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        char s[101], a[101], b[101];
+        scanf("%s", s);
+        
+        int len = strlen(s);
+        int count[26] = {0};
+        
+        for (int i = 0; i < len; i++) {
+            count[s[i] - 'a']++;
+        }
+        
+        int a_index = 0, b_index = 0;
+        
+        for (int i = 0; i < 26; i++) {
+            while (count[i] > 0) {
+                if (a_index == 0) {
+                    a[a_index++] = 'a' + i;
+                } else {
+                    b[b_index++] = 'a' + i;
+                }
+                count[i]--;
+            }
+        }
+        
+        a[a_index] = '\0';
+        b[b_index] = '\0';
+        
+        printf("%s %s\n", a, b);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

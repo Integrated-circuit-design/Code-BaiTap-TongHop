@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LENGTH 100005
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        char s[MAX_LENGTH];
+        
+        scanf("%d", &n);
+        scanf("%s", s);
+        
+        int best_index = 0;
+        
+        for (int i = 1; i < n; i++) {
+            if (s[i] < s[best_index]) {
+                best_index = i;
+            }
+        }
+
+        printf("%c", s[best_index]);
+
+        for (int i = 0; i < n; i++) {
+            if (i != best_index) {
+                printf("%c", s[i]);
+            }
+        }
+        
+        printf("\n");
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

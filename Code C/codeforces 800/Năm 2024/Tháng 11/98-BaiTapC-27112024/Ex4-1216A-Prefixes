@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int n, i, changes = 0;
+    scanf("%d", &n);
+    char s[n + 1];
+    scanf("%s", s);
+
+    for (i = 1; i < n; i += 2) {
+        if (s[i - 1] == s[i]) {
+            changes++;
+            s[i] = (s[i] == 'a') ? 'b' : 'a';
+        }
+    }
+
+    printf("%d\n", changes);
+    printf("%s\n", s);
+
+    return 0;
+}
 

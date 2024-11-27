@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+
+        if (a >= b) {
+            printf("%lld\n", a);
+        } else {
+            long long x = (b - a + 1) / 2;
+
+            if (a - 2 * x >= b) {
+                printf("%lld\n", a - 2 * x);
+            } else {
+                printf("0\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

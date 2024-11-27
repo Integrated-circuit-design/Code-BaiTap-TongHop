@@ -1,1 +1,35 @@
+#include <stdio.h>
+#define MOD 998244353
+#define MAXN 1000
+
+long long factorial[MAXN + 1];
+
+long long mod_factorial(int n) {
+    long long result = 1;
+    for (int i = 1; i <= n; i++) {
+        result = (result * i) % MOD;
+    }
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        if (n % 2 == 1) {
+            printf("0\n");
+        } else {
+            int half = n / 2;
+            long long result = mod_factorial(half);
+            result = (result * result) % MOD;
+            printf("%lld\n", result);
+        }
+    }
+
+    return 0;
+}
 

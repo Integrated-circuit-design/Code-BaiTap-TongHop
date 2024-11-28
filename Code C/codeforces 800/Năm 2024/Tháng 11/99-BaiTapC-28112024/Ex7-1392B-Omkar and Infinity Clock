@@ -1,1 +1,75 @@
+#include <stdio.h>
+
+void processTestCase() {
+    int n;
+    long long k;
+    scanf("%d %lld", &n, &k);
+
+    long long a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    if (k == 0) {
+        for (int i = 0; i < n; i++) {
+            printf("%lld ", a[i]);
+        }
+        printf("\n");
+        return;
+    }
+
+    long long d = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] > d) {
+            d = a[i];
+        }
+    }
+
+    long long b[n];
+    for (int i = 0; i < n; i++) {
+        b[i] = d - a[i];
+    }
+
+    if (k == 1) {
+        for (int i = 0; i < n; i++) {
+            printf("%lld ", b[i]);
+        }
+        printf("\n");
+        return;
+    }
+
+    long long max_b = b[0];
+    for (int i = 1; i < n; i++) {
+        if (b[i] > max_b) {
+            max_b = b[i];
+        }
+    }
+
+    long long c[n];
+    for (int i = 0; i < n; i++) {
+        c[i] = max_b - b[i];
+    }
+
+    if (k % 2 == 0) {
+        for (int i = 0; i < n; i++) {
+            printf("%lld ", c[i]);
+        }
+    } else {
+        for (int i = 0; i < n; i++) {
+            printf("%lld ", b[i]);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        processTestCase();
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b, c;
+        scanf("%lld %lld %lld", &a, &b, &c);
+
+        long long total_time = a + 2 * b + 3 * c;
+
+        if (total_time % 2 == 0) {
+            printf("0\n");
+        } else {
+            printf("1\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+int get_char_value(char c) {
+    return c - 'a' + 1;
+}
+
+void process_game(int t, char rounds[][200001]) {
+    for (int i = 0; i < t; i++) {
+        char *s = rounds[i];
+        int n = strlen(s);
+        int alice_score = 0, bob_score = 0;
+        
+        int values[n];
+        for (int j = 0; j < n; j++) {
+            values[j] = get_char_value(s[j]);
+        }
+
+        int left = 0, right = n - 1;
+        
+        while (left <= right) {
+            if ((left + right) % 2 == 0) {
+                alice_score += values[left++];
+                if (left <= right) alice_score += values[right--];
+            } else {
+                bob_score += values[left++];
+                if (left <= right) bob_score += values[right--];
+            }
+        }
+
+        if (alice_score > bob_score) {
+            printf("Alice %d\n", alice_score - bob_score);
+        } else {
+            printf("Bob %d\n", bob_score - alice_score);
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    char rounds[t][200001];
+    for (int i = 0; i < t; i++) {
+        scanf("%s", rounds[i]);
+    }
+
+    process_game(t, rounds);
+
+    return 0;
+}
 

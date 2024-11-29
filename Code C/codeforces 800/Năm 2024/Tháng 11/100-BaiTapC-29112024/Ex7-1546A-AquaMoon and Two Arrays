@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n], b[n];
+        int sumA = 0, sumB = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            sumA += a[i];
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+            sumB += b[i];
+        }
+
+        if (sumA != sumB) {
+            printf("-1\n");
+            continue;
+        }
+
+        int operations[100][2];
+        int opCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            while (a[i] > b[i]) {
+                for (int j = i + 1; j < n; j++) {
+                    if (a[j] < b[j]) {
+                        a[i]--;
+                        a[j]++;
+                        operations[opCount][0] = i + 1;
+                        operations[opCount][1] = j + 1;
+                        opCount++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        printf("%d\n", opCount);
+        for (int i = 0; i < opCount; i++) {
+            printf("%d %d\n", operations[i][0], operations[i][1]);
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

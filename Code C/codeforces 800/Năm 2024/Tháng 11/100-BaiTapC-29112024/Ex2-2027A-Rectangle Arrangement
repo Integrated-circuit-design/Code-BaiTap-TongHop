@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int width[n], height[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &width[i], &height[i]);
+        }
+
+        int total_width = 0, total_height = 0;
+        int max_width = 0, max_height = 0;
+
+        for (int i = 0; i < n; i++) {
+            total_width += width[i];
+            total_height += height[i];
+            if (width[i] > max_width) max_width = width[i];
+            if (height[i] > max_height) max_height = height[i];
+        }
+
+        int vertical_perimeter = 2 * (max_width + total_height);
+        int horizontal_perimeter = 2 * (total_width + max_height);
+
+        if (vertical_perimeter < horizontal_perimeter) {
+            printf("%d\n", vertical_perimeter);
+        } else {
+            printf("%d\n", horizontal_perimeter);
+        }
+    }
+
+    return 0;
+}
 

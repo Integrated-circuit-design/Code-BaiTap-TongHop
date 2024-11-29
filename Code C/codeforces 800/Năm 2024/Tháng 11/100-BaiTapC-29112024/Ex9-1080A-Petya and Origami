@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+
+    long long total_red = 2 * n;
+    long long total_green = 5 * n;
+    long long total_blue = 8 * n;
+
+    long long red_notebooks = total_red / k + (total_red % k != 0);
+    long long green_notebooks = total_green / k + (total_green % k != 0);
+    long long blue_notebooks = total_blue / k + (total_blue % k != 0);
+
+    long long total_notebooks = red_notebooks + green_notebooks + blue_notebooks;
+
+    printf("%lld\n", total_notebooks);
+
+    return 0;
+}
 

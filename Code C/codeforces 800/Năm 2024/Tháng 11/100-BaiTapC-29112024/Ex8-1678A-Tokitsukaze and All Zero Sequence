@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[n];
+        bool visited[101] = {0};
+        int min_value = 101;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+            if (arr[i] < min_value) {
+                min_value = arr[i];
+            }
+            visited[arr[i]] = 1;
+        }
+
+        int operations = 0;
+
+        if (visited[0] == 1) {
+            for (int i = 0; i <= 100; i++) {
+                if (visited[i] == 1) {
+                    operations++;
+                }
+            }
+        } else {
+            for (int i = 0; i <= 100; i++) {
+                if (visited[i] == 1) {
+                    operations++;
+                }
+            }
+            operations++;
+        }
+
+        printf("%d\n", operations);
+    }
+
+    return 0;
+}
 

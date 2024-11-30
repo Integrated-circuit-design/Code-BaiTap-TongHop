@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long n, m, x1, y1, x2, y2;
+        scanf("%lld %lld", &n, &m);
+        scanf("%lld %lld %lld %lld", &x1, &y1, &x2, &y2);
+
+        int obstacles = 4;
+
+        if (x1 != x2 && y1 != y2) {
+            obstacles = 3;
+        }
+        
+        if (x1 == x2 || y1 == y2) {
+            obstacles = 2;
+        }
+        
+        printf("%d\n", obstacles);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

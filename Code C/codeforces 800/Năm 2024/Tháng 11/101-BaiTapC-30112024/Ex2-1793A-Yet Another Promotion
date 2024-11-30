@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b, n, m;
+        scanf("%lld %lld", &a, &b);
+        scanf("%lld %lld", &n, &m);
+
+        long long total_cost_day1 = 0;
+
+        if (n <= m) {
+            total_cost_day1 = n * a;
+        } else {
+            long long full_sets = n / (m + 1);
+            long long remaining = n % (m + 1);
+            total_cost_day1 = full_sets * m * a + remaining * a;
+        }
+
+        long long total_cost_day2 = n * b;
+
+        printf("%lld\n", (total_cost_day1 < total_cost_day2) ? total_cost_day1 : total_cost_day2);
+    }
+
+    return 0;
+}
 

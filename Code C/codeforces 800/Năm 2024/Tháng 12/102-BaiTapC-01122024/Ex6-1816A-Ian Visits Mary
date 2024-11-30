@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+
+        if (a == 0 || b == 0 || a == b) {
+            printf("1\n");
+            printf("%d %d\n", a, b);
+        } else {
+            printf("2\n");
+            printf("%d %d\n", a, 0);
+            printf("%d %d\n", a, b);
+        }
+    }
+
+    return 0;
+}
 

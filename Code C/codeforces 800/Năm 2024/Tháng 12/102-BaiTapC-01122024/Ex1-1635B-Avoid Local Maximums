@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    int a[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    int operations = 0;
+    for (int i = 1; i < n - 1; i++) {
+        if (a[i] > a[i - 1] && a[i] > a[i + 1]) {
+            a[i] = a[i - 1] < a[i + 1] ? a[i - 1] : a[i + 1];
+            operations++;
+        }
+    }
+    
+    printf("%d\n", operations);
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        solve();
+    }
+    
+    return 0;
+}
 

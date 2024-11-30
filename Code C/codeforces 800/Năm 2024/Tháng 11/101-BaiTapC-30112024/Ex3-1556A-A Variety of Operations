@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <math.h>
+
+int find_min_operations(long long c, long long d) {
+    if (abs(c - d) % 2 != 0) {
+        return -1;
+    }
+    
+    if (c == 0 && d == 0) {
+        return 0;
+    }
+    
+    if (c == d) {
+        return 1;
+    }
+    
+    return 2;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long c, d;
+        scanf("%lld %lld", &c, &d);
+
+        printf("%d\n", find_min_operations(c, d));
+    }
+
+    return 0;
+}
 

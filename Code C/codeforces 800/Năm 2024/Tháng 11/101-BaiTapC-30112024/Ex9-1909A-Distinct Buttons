@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int can_visit_all_points(int n, int points[][2]) {
+    int has_left = 0, has_right = 0, has_up = 0, has_down = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (points[i][0] < 0) has_left = 1;
+        if (points[i][0] > 0) has_right = 1;
+        if (points[i][1] < 0) has_down = 1;
+        if (points[i][1] > 0) has_up = 1;
+    }
+
+    if (has_left && has_right && has_up && has_down) {
+        return 0;
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int points[n][2];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &points[i][0], &points[i][1]);
+        }
+
+        if (can_visit_all_points(n, points)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

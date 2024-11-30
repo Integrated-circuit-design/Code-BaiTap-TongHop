@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int x;
+        scanf("%d", &x);
+        
+        int rolls = (x - 2) / 6 + 1;
+        
+        printf("%d\n", rolls);
+    }
+    
+    return 0;
+}
 

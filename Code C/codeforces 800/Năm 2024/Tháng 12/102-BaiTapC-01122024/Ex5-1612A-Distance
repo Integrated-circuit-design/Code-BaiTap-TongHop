@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        
+        int totalDistance = abs(x) + abs(y);
+        
+        if (totalDistance % 2 != 0) {
+            printf("-1 -1\n");
+        } else {
+            int halfDistance = totalDistance / 2;
+            
+            if (halfDistance <= x) {
+                printf("%d %d\n", halfDistance, y);
+            } else if (halfDistance <= y) {
+                printf("%d %d\n", x, halfDistance);
+            } else {
+                printf("-1 -1\n");
+            }
+        }
+    }
+    return 0;
+}
 

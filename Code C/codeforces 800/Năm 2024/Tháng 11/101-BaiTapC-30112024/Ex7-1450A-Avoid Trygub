@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char a[n + 1];
+        scanf("%s", a);
+
+        int count[26] = {0};
+
+        for (int i = 0; i < n; i++) {
+            count[a[i] - 'a']++;
+        }
+
+        char result[n + 1];
+        int index = 0;
+
+        char skip[] = "trygub";
+        for (int i = 0; i < 26; i++) {
+            if (strchr(skip, 'a' + i) == NULL) {
+                while (count[i] > 0) {
+                    result[index++] = 'a' + i;
+                    count[i]--;
+                }
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            char c = skip[i];
+            while (count[c - 'a'] > 0) {
+                result[index++] = c;
+                count[c - 'a']--;
+            }
+        }
+
+        result[index] = '\0';
+
+        printf("%s\n", result);
+    }
+
+    return 0;
+}
 

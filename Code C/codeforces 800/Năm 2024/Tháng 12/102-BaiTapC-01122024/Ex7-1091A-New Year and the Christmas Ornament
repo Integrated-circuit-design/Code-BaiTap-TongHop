@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int y, b, r;
+    scanf("%d %d %d", &y, &b, &r);
+
+    int maxYellow = (b - 1 < y) ? (b - 1) : y;
+    maxYellow = (r - 2 < maxYellow) ? (r - 2) : maxYellow;
+
+    int maxBlue = maxYellow + 1;
+    int maxRed = maxBlue + 1;
+
+    int totalOrnaments = maxYellow + maxBlue + maxRed;
+
+    printf("%d\n", totalOrnaments);
+
+    return 0;
+}
 

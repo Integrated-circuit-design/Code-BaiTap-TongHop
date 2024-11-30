@@ -1,1 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    char cau[1001];
+    
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%s", cau);
+
+        if (strstr(cau, "po") == (cau + strlen(cau) - 2)) {
+            printf("FILIPINO\n");
+        } else if (strstr(cau, "desu") == (cau + strlen(cau) - 4) || strstr(cau, "masu") == (cau + strlen(cau) - 4)) {
+            printf("JAPANESE\n");
+        } else if (strstr(cau, "mnida") == (cau + strlen(cau) - 5)) {
+            printf("KOREAN\n");
+        }
+    }
+
+    return 0;
+}
 

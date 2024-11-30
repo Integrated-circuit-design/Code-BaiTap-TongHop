@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int counts[101] = {0};
+
+        for (int i = 0; i < n; i++) {
+            int card;
+            scanf("%d", &card);
+            counts[card]++;
+        }
+
+        int minCardsLeft = 0;
+
+        for (int i = 1; i <= 100; i++) {
+            if (counts[i] > 0) {
+                int fullGroups = counts[i] / k;
+                int leftover = counts[i] % k;
+
+                minCardsLeft += leftover;
+                
+                if (fullGroups > 0) {
+                    minCardsLeft += fullGroups;
+                }
+            }
+        }
+
+        printf("%d\n", minCardsLeft);
+    }
+
+    return 0;
+}
 

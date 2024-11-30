@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+#define MAX_LEN 11
+#define MAX_N 20
+#define MAX_M 20
+
+int main() {
+    int n, m, q;
+    char s[MAX_N][MAX_LEN], t[MAX_M][MAX_LEN];
+
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", s[i]);
+    }
+
+    for (int i = 0; i < m; i++) {
+        scanf("%s", t[i]);
+    }
+
+    scanf("%d", &q);
+
+    while (q--) {
+        int y;
+        scanf("%d", &y);
+
+        int pos_s = (y - 1) % n;
+        int pos_t = (y - 1) % m;
+
+        printf("%s%s\n", s[pos_s], t[pos_t]);
+    }
+
+    return 0;
+}
 

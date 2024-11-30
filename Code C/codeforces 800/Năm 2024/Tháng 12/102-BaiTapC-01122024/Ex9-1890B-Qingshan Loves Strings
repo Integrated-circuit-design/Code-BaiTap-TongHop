@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int can_be_good(const char *s) {
+    for (int i = 0; i < strlen(s) - 1; i++) {
+        if (s[i] == s[i + 1]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    
+    while (T--) {
+        int n, m;
+        char s[51], t[51];
+        
+        scanf("%d %d", &n, &m);
+        
+        scanf("%s", s);
+        scanf("%s", t);
+        
+        if (can_be_good(t)) {
+            if (can_be_good(s)) {
+                printf("YES\n");
+            } else {
+                if (strchr(s, '0') && strchr(s, '1')) {
+                    printf("YES\n");
+                } else {
+                    printf("NO\n");
+                }
+            }
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

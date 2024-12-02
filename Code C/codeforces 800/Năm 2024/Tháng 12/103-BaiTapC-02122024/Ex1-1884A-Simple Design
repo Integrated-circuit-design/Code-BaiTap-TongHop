@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int get_digit_sum(int num) {
+    int sum = 0;
+    while (num > 0) {
+        sum += num % 10;
+        num /= 10;
+    }
+    return sum;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int x, k;
+        scanf("%d %d", &x, &k);
+        
+        int current = x;
+        while (1) {
+            if (get_digit_sum(current) % k == 0) {
+                printf("%d\n", current);
+                break;
+            }
+            current++;
+        }
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <math.h>
+
+int tinh_so_buoc(int a, int b) {
+    int chenh_lech = abs(a - b);
+    int dem_buoc = 0;
+
+    dem_buoc += chenh_lech / 5;
+    chenh_lech %= 5;
+
+    dem_buoc += chenh_lech / 2;
+    chenh_lech %= 2;
+
+    dem_buoc += chenh_lech;
+
+    return dem_buoc;
+}
+
+int main() {
+    int so_test;
+    scanf("%d", &so_test);
+
+    while (so_test--) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        printf("%d\n", tinh_so_buoc(a, b));
+    }
+
+    return 0;
+}
 

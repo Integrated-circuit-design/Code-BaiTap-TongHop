@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int bulbs[m + 1];
+    
+    for (int i = 1; i <= m; i++) {
+        bulbs[i] = 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int xi;
+        scanf("%d", &xi);
+        
+        for (int j = 0; j < xi; j++) {
+            int bulb;
+            scanf("%d", &bulb);
+            bulbs[bulb] = 1;
+        }
+    }
+
+    int allOn = 1;
+    for (int i = 1; i <= m; i++) {
+        if (bulbs[i] == 0) {
+            allOn = 0;
+            break;
+        }
+    }
+
+    if (allOn) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

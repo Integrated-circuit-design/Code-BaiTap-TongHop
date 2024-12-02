@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_palindrome(char *s, int length) {
+    for (int i = 0; i < length / 2; i++) {
+        if (s[i] != s[length - i - 1]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int total_strings = 2 * n - 2;
+        char strings[total_strings][21];
+
+        for (int i = 0; i < total_strings; i++) {
+            scanf("%s", strings[i]);
+        }
+
+        char *candidate1 = NULL, *candidate2 = NULL;
+        for (int i = 0; i < total_strings; i++) {
+            if (strlen(strings[i]) == n - 1) {
+                if (candidate1 == NULL) {
+                    candidate1 = strings[i];
+                } else {
+                    candidate2 = strings[i];
+                }
+            }
+        }
+
+        if (candidate1 != NULL && candidate2 != NULL) {
+            int len1 = strlen(candidate1);
+            int len2 = strlen(candidate2);
+
+            if (len1 == n - 1 && len2 == n - 1) {
+                int is_palindrome_check = 0;
+                char s[n+1];
+                s[n] = '\0';
+
+                for (int i = 0; i < n - 1; i++) {
+                    s[i] = candidate1[i];
+                    s[n - i - 2] = candidate2[i];
+                }
+
+                if (is_palindrome(s, n)) {
+                    is_palindrome_check = 1;
+                }
+
+                if (is_palindrome_check) {
+                    printf("YES\n");
+                } else {
+                    printf("NO\n");
+                }
+            } else {
+                printf("NO\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

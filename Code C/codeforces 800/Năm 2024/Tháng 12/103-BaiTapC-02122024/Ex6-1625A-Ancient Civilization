@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int calculateHammingDistance(int num1, int num2) {
+    int diff = num1 ^ num2;
+    int bitCount = 0;
+    
+    while (diff > 0) {
+        bitCount += (diff & 1);
+        diff >>= 1;
+    }
+    return bitCount;
+}
+
+int main() {
+    int testCount;
+    scanf("%d", &testCount);
+
+    while (testCount--) {
+        int wordCount, wordLength;
+        scanf("%d %d", &wordCount, &wordLength);
+
+        int words[wordCount];
+        for (int i = 0; i < wordCount; i++) {
+            scanf("%d", &words[i]);
+        }
+
+        int minTotalDistance = 1e9;
+        int initialWord = 0;
+
+        for (int i = 0; i < wordCount; i++) {
+            int candidate = words[i];
+            int totalDistance = 0;
+
+            for (int j = 0; j < wordCount; j++) {
+                totalDistance += calculateHammingDistance(candidate, words[j]);
+            }
+
+            if (totalDistance < minTotalDistance) {
+                minTotalDistance = totalDistance;
+                initialWord = candidate;
+            }
+        }
+
+        printf("%d\n", initialWord);
+    }
+
+    return 0;
+}
 

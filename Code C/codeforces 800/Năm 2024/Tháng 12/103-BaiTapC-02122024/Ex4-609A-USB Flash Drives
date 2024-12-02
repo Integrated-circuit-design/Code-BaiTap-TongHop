@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int drives[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &drives[i]);
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (drives[i] < drives[j]) {
+                int temp = drives[i];
+                drives[i] = drives[j];
+                drives[j] = temp;
+            }
+        }
+    }
+
+    int total_capacity = 0;
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        total_capacity += drives[i];
+        count++;
+
+        if (total_capacity >= m) {
+            break;
+        }
+    }
+
+    printf("%d\n", count);
+
+    return 0;
+}
 

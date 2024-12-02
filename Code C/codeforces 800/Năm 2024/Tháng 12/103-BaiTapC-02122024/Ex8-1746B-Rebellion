@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int count_zeros = 0, count_ops = 0;
+        int prev = -1;
+
+        for (int i = 0; i < n; i++) {
+            int current;
+            scanf("%d", &current);
+
+            if (current == 0 && prev == 1) {
+                count_ops++;
+            }
+
+            prev = current;
+        }
+
+        printf("%d\n", count_ops);
+    }
+
+    return 0;
+}
 

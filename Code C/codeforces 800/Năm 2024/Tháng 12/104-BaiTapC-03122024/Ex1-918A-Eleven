@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int fib[1000]; 
+    fib[0] = 1;
+    fib[1] = 1;
+    int count = 2;
+
+    while (fib[count - 1] <= n) {
+        fib[count] = fib[count - 2] + fib[count - 1];
+        if (fib[count] > n) break;
+        count++;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        int isFib = 0;
+        for (int j = 0; j < count; j++) {
+            if (fib[j] == i) {
+                isFib = 1;
+                break;
+            }
+        }
+        
+        if (isFib) {
+            printf("O");
+        } else {
+            printf("o");
+        }
+    }
+
+    printf("\n");
+
+    return 0;
+}
 

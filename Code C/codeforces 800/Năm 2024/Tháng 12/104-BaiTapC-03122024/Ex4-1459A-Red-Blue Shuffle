@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        char redDigits[n], blueDigits[n];
+        
+        scanf("%s", redDigits);
+        scanf("%s", blueDigits);
+
+        int redWinCount = 0, blueWinCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (redDigits[i] > blueDigits[i]) {
+                redWinCount++;
+            } else if (redDigits[i] < blueDigits[i]) {
+                blueWinCount++;
+            }
+        }
+
+        if (redWinCount > blueWinCount) {
+            printf("RED\n");
+        } else if (blueWinCount > redWinCount) {
+            printf("BLUE\n");
+        } else {
+            printf("EQUAL\n");
+        }
+    }
+
+    return 0;
+}
 

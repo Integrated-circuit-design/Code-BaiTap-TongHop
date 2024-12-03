@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+
+        char a[101], b[101];
+        scanf("%s %s", a, b);
+
+        int i = 0, j = 0;
+        int count_a = 0, count_b = 0;
+        char result[201];
+
+        int idx = 0;
+        while (i < n || j < m) {
+            if (i < n && (count_a < k) && (a[i] <= b[j] || j >= m)) {
+                result[idx++] = a[i++];
+                count_a++;
+                count_b = 0;
+            } else if (j < m && (count_b < k) && (b[j] < a[i] || i >= n)) {
+                result[idx++] = b[j++];
+                count_b++;
+                count_a = 0;
+            }
+
+            if (count_a == k) {
+                count_a = 0;
+            }
+            if (count_b == k) {
+                count_b = 0;
+            }
+        }
+
+        result[idx] = '\0';
+        printf("%s\n", result);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

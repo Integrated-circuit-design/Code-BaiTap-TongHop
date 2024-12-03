@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int min_operations(char *s) {
+    int n = strlen(s);
+    int changes = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '_') {
+            if (i + 1 < n && s[i + 1] == '^') {
+                changes++;
+                i++;
+            } else {
+                changes++;
+            }
+        } else if (s[i] == '^') {
+            if (i + 1 < n && s[i + 1] == '^') {
+                i++;
+            } else if (i + 2 < n && s[i + 1] == '_' && s[i + 2] == '^') {
+                i += 2;
+            } else {
+                changes++;
+            }
+        }
+    }
+
+    return changes;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[101];
+        scanf("%s", s);
+
+        printf("%d\n", min_operations(s));
+    }
+
+    return 0;
+}
 

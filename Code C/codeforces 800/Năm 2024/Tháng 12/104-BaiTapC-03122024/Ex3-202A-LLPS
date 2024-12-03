@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char input[11];
+    scanf("%s", input);
+
+    int freq[26] = {0};
+
+    for (int i = 0; input[i] != '\0'; i++) {
+        freq[input[i] - 'a']++;
+    }
+
+    char largest_char = 'a';
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > 0 && (i + 'a') > largest_char) {
+            largest_char = i + 'a';
+        }
+    }
+
+    for (int i = 0; i < freq[largest_char - 'a']; i++) {
+        printf("%c", largest_char);
+    }
+
+    return 0;
+}
 

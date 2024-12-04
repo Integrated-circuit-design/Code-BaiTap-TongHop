@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    for (int t = 0; t < T; t++) {
+        long long n, x;
+        scanf("%lld %lld", &n, &x);
+
+        long long result = x;
+
+        while (result * 2 <= n) {
+            result *= 2;
+        }
+
+        printf("%lld\n", result * 2);
+    }
+
+    return 0;
+}
 

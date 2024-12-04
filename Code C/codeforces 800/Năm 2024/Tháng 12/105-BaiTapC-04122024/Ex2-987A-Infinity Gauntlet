@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    bool gems[6] = {false, false, false, false, false, false};
+    const char *gem_names[] = {"Power", "Time", "Space", "Soul", "Reality", "Mind"};
+    const char *gem_colors[] = {"purple", "green", "blue", "orange", "red", "yellow"};
+    
+    int n;
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        char color[10];
+        scanf("%s", color);
+        
+        for (int j = 0; j < 6; j++) {
+            if (strcmp(color, gem_colors[j]) == 0) {
+                gems[j] = true;
+                break;
+            }
+        }
+    }
+    
+    int absent_count = 0;
+    for (int i = 0; i < 6; i++) {
+        if (!gems[i]) {
+            absent_count++;
+        }
+    }
+    
+    printf("%d\n", absent_count);
+    
+    for (int i = 0; i < 6; i++) {
+        if (!gems[i]) {
+            printf("%s\n", gem_names[i]);
+        }
+    }
+    
+    return 0;
+}
 

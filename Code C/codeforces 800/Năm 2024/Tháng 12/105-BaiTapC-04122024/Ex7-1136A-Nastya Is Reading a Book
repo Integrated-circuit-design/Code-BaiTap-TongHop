@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d", &n);
+
+    int start[n], end[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &start[i], &end[i]);
+    }
+
+    scanf("%d", &k);
+
+    int unread_chapters = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (k <= end[i]) {
+            unread_chapters++;
+        }
+    }
+
+    printf("%d\n", unread_chapters);
+
+    return 0;
+}
 

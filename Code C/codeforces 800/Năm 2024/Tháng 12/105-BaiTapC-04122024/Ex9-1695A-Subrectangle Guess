@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define INF 1000000000
+
+int find_minimum_area(int n, int m, int grid[n][m]) {
+    int global_max = grid[0][0];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] > global_max) {
+                global_max = grid[i][j];
+            }
+        }
+    }
+
+    int min_area = INF;
+
+    for (int h = 1; h <= n; h++) {
+        for (int w = 1; w <= m; w++) {
+            for (int i = 0; i <= n - h; i++) {
+                for (int j = 0; j <= m - w; j++) {
+                    int max_in_subrectangle = grid[i][j];
+
+                    for (int x = i; x < i + h; x++) {
+                        for (int y = j; y < j + w; y++) {
+                            if (grid[x][y] > max_in_subrectangle) {
+                                max_in_subrectangle = grid[x][y];
+                            }
+                        }
+                    }
+
+                    if (max_in_subrectangle == global_max) {
+                        int area = h * w;
+                        if (area < min_area) {
+                            min_area = area;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return min_area;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int case_num = 0; case_num < t; case_num++) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int grid[n][m];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                scanf("%d", &grid[i][j]);
+            }
+        }
+
+        int result = find_minimum_area(n, m, grid);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

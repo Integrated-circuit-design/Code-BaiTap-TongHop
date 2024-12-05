@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        char s[n + 1];
+        scanf("%s", s);
+
+        int z0 = 0, z1 = 0;
+        int max_run_zeros = 0, max_run_ones = 0;
+        int current_run_zeros = 0, current_run_ones = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '0') {
+                z0++;
+                current_run_zeros++;
+                max_run_zeros = (current_run_zeros > max_run_zeros) ? current_run_zeros : max_run_zeros;
+                current_run_ones = 0;
+            } else {
+                z1++;
+                current_run_ones++;
+                max_run_ones = (current_run_ones > max_run_ones) ? current_run_ones : max_run_ones;
+                current_run_zeros = 0;
+            }
+        }
+
+        int max_cost = (z0 * z1 > max_run_zeros * max_run_zeros && z0 * z1 > max_run_ones * max_run_ones) ? z0 * z1 : max_run_zeros * max_run_zeros;
+        max_cost = (max_cost > max_run_ones * max_run_ones) ? max_cost : max_run_ones * max_run_ones;
+
+        printf("%d\n", max_cost);
+    }
+
+    return 0;
+}
 

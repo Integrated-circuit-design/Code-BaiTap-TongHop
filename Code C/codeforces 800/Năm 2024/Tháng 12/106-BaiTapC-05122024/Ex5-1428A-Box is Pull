@@ -1,1 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int x1, y1, x2, y2;
+        scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+        
+        int horizontal_distance = abs(x2 - x1);
+        int vertical_distance = abs(y2 - y1);
+        
+        int time_taken = horizontal_distance + vertical_distance;
+        
+        if (horizontal_distance > 0 && vertical_distance > 0) {
+            time_taken += 2;
+        }
+        
+        printf("%d\n", time_taken);
+    }
+    
+    return 0;
+}
 

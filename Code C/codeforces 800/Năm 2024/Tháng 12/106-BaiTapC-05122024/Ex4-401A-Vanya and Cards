@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+    
+    int sum = 0;
+    
+    for (int i = 0; i < n; i++) {
+        int card;
+        scanf("%d", &card);
+        sum += card;
+    }
+    
+    int abs_sum = sum < 0 ? -sum : sum;
+    
+    int cards_needed = abs_sum / x;
+    if (abs_sum % x != 0) {
+        cards_needed++;
+    }
+    
+    printf("%d\n", cards_needed);
+    
+    return 0;
+}
 

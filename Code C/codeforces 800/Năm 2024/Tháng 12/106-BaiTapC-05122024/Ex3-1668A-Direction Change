@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int calculate_min_moves(int n, int m) {
+    if (n == 1 && m == 1) {
+        return 0;
+    }
+    
+    if ((n == 1 && m > 2) || (m == 1 && n > 2)) {
+        return -1;
+    }
+    
+    if (n == 1 && m == 2) {
+        return 1;
+    }
+
+    if (m == 1 && n == 2) {
+        return 1;
+    }
+
+    int vertical_moves = n - 1;
+    int horizontal_moves = m - 1;
+    
+    return 2 * vertical_moves + horizontal_moves;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        printf("%d\n", calculate_min_moves(n, m));
+    }
+
+    return 0;
+}
 

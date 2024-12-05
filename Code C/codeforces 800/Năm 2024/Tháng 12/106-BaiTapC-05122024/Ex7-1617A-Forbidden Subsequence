@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+void swap(char *a, char *b) {
+    char temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void process_string(char *S, char *T) {
+    int count[26] = {0};
+    
+    for (int i = 0; S[i] != '\0'; i++) {
+        count[S[i] - 'a']++;
+    }
+
+    if (strcmp(T, "abc") == 0) {
+        if (count['a' - 'a'] > 0 && count['b' - 'a'] > 0 && count['c' - 'a'] > 0) {
+            for (int i = 0; i < count['a' - 'a']; i++) printf("a");
+            for (int i = 0; i < count['c' - 'a']; i++) printf("c");
+            for (int i = 0; i < count['b' - 'a']; i++) printf("b");
+        }
+        else {
+            for (int i = 0; i < 26; i++) {
+                for (int j = 0; j < count[i]; j++) {
+                    printf("%c", i + 'a');
+                }
+            }
+        }
+    } else {
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < count[i]; j++) {
+                printf("%c", i + 'a');
+            }
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        char S[101], T[4];
+        scanf("%s %s", S, T);
+        process_string(S, T);
+    }
+    return 0;
+}
 

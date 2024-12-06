@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int x, y, z;
+    scanf("%d %d %d", &x, &y, &z);
+
+    int upvotes = x + z;
+    int downvotes = y + z;
+
+    if (upvotes > downvotes) {
+        printf("+\n");
+    } else if (downvotes > upvotes) {
+        printf("-\n");
+    } else {
+        if (x + z < y || y + z < x) {
+            printf("?\n");
+        } else if (x == y) {
+            printf("0\n");
+        } else {
+            printf("0\n");
+        }
+    }
+
+    return 0;
+}
 

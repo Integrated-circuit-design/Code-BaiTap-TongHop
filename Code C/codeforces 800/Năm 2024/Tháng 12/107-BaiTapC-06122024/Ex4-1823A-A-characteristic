@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        
+        int max_pairs = (n * (n - 1)) / 2;
+
+        if (k > max_pairs) {
+            printf("NO\n");
+            continue;
+        }
+        
+        int x = 0;
+        while (x <= n) {
+            int y = n - x;
+            int pair_count = (x * (x - 1)) / 2 + (y * (y - 1)) / 2;
+            
+            if (pair_count == k) {
+                printf("YES\n");
+                for (int i = 0; i < x; i++) {
+                    printf("1 ");
+                }
+                for (int i = 0; i < y; i++) {
+                    printf("-1 ");
+                }
+                printf("\n");
+                break;
+            }
+            x++;
+        }
+
+        if (x > n) {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

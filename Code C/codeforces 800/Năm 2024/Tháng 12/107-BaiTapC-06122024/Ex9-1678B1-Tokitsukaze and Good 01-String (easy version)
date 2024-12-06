@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        char s[n + 1];
+        scanf("%s", s);
+
+        int operations = 0;
+        int i = 0;
+
+        while (i < n) {
+            int segment_length = 1;
+            while (i + 1 < n && s[i] == s[i + 1]) {
+                segment_length++;
+                i++;
+            }
+
+            if (segment_length % 2 != 0) {
+                operations++;
+            }
+
+            i++;
+        }
+
+        printf("%d\n", operations);
+    }
+
+    return 0;
+}
 

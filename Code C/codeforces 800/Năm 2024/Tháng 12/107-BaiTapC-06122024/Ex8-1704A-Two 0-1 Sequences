@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        char a[51], b[51];
+        
+        scanf("%d %d", &n, &m);
+        scanf("%s", a);
+        scanf("%s", b);
+        
+        int found_one_in_a = 0, found_one_in_b = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (a[i] == '1') found_one_in_a = 1;
+        }
+        for (int i = 0; i < m; i++) {
+            if (b[i] == '1') found_one_in_b = 1;
+        }
+
+        if (found_one_in_a && found_one_in_b) {
+            printf("YES\n");
+        } else {
+            int found_zero_in_a = 0, found_zero_in_b = 0;
+            for (int i = 0; i < n; i++) {
+                if (a[i] == '0') found_zero_in_a = 1;
+            }
+            for (int i = 0; i < m; i++) {
+                if (b[i] == '0') found_zero_in_b = 1;
+            }
+
+            if (found_zero_in_a && found_zero_in_b) {
+                printf("YES\n");
+            } else {
+                printf("NO\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

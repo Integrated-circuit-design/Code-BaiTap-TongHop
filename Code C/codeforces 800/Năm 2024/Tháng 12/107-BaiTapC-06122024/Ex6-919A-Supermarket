@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    double min_cost = 1.0 / 0.0;
+
+    for (int i = 0; i < n; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+
+        double cost_per_kilo = (double)a / (double)b;
+
+        double total_cost = cost_per_kilo * m;
+
+        if (total_cost < min_cost) {
+            min_cost = total_cost;
+        }
+    }
+
+    printf("%.8f\n", min_cost);
+
+    return 0;
+}
 

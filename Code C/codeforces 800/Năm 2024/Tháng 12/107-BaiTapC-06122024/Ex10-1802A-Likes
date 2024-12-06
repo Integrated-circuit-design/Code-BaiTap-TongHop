@@ -1,1 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100
+
+void process_likes(int b[], int n) {
+    int max_likes[n], min_likes[n];
+    int current_likes_max = 0, current_likes_min = 0;
+
+    int liked[MAX_N] = {0};
+    int liked_min[MAX_N] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        if (b[i] > 0) {
+            if (!liked[b[i] - 1]) {
+                current_likes_max++;
+                liked[b[i] - 1] = 1;
+            }
+        } else {
+            if (liked[-b[i] - 1]) {
+                current_likes_max--;
+                liked[-b[i] - 1] = 0;
+            }
+        }
+        max_likes[i] = current_likes_max;
+    }
+    
+    for (int i = 0; i < n; i++) {
+        if (b[i] > 0) {
+            if (!liked_min[b[i] - 1]) {
+                current_likes_min++;
+                liked_min[b[i] - 1] = 1;
+            }
+        } else {
+            if (liked_min[-b[i] - 1]) {
+                current_likes_min--;
+                liked_min[-b[i] - 1] = 0;
+            }
+        }
+        min_likes[i] = current_likes_min;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", max_likes[i]);
+    }
+    printf("\n");
+    
+    for (int i = 0; i < n; i++) {
+        printf("%d ", min_likes[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int b[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+        
+        process_likes(b, n);
+    }
+    
+    return 0;
+}
 

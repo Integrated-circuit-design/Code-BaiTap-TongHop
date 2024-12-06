@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int total_moves = 0;
+        int log_length;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &log_length);
+
+            if (log_length > 1) {
+                total_moves += log_length - 1;
+            }
+        }
+
+        if (total_moves % 2 == 0) {
+            printf("maomao90\n");
+        } else {
+            printf("errorgorn\n");
+        }
+    }
+
+    return 0;
+}
 

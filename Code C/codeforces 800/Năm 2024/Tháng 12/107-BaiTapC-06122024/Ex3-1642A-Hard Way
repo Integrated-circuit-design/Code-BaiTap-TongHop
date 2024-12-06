@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <math.h>
+
+double calculate_distance(int x1, int y1, int x2, int y2) {
+    return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
+int is_safe(int x1, int y1, int x2, int y2) {
+    if (y1 == 0 && y2 == 0) {
+        return 1;
+    }
+    if ((y1 == 0 && y2 > 0) || (y2 == 0 && y1 > 0)) {
+        return 1;
+    }
+    return 0;
+}
+
+double calculate_unsafe_length(int x1, int y1, int x2, int y2) {
+    if (is_safe(x1, y1, x2, y2)) {
+        return 0.0;
+    }
+    return calculate_distance(x1, y1, x2, y2);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        int x1, y1, x2, y2, x3, y3;
+        
+        scanf("%d %d", &x1, &y1);
+        scanf("%d %d", &x2, &y2);
+        scanf("%d %d", &x3, &y3);
+        
+        int edges[3][4] = {
+            {x1, y1, x2, y2},
+            {x2, y2, x3, y3},
+            {x3, y3, x1, y1}
+        };
+        
+        double total_unsafe_length = 0.0;
+        
+        for (int j = 0; j < 3; j++) {
+            total_unsafe_length += calculate_unsafe_length(edges[j][0], edges[j][1], edges[j][2], edges[j][3]);
+        }
+        
+        printf("%.9f\n", total_unsafe_length);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        char s[n + 1];
+        scanf("%s", s);
+
+        int current_b_count = 0;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'B') {
+                current_b_count++;
+            }
+        }
+
+        if (current_b_count == k) {
+            printf("0\n");
+            continue;
+        }
+
+        int operations = 0;
+
+        if (current_b_count > k) {
+            int excess = current_b_count - k;
+            for (int i = 0; i < n; i++) {
+                if (s[i] == 'B') {
+                    printf("1 %d A\n", i + 1);
+                    for (int j = 0; j <= i; j++) {
+                        s[j] = 'A';
+                    }
+                    excess--;
+                    operations++;
+                    if (excess == 0) break;
+                }
+            }
+        }
+        
+        if (current_b_count < k) {
+            int deficit = k - current_b_count;
+            for (int i = 0; i < n; i++) {
+                if (s[i] == 'A') {
+                    printf("1 %d B\n", i + 1);
+                    for (int j = 0; j <= i; j++) {
+                        s[j] = 'B';
+                    }
+                    deficit--;
+                    operations++;
+                    if (deficit == 0) break;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
 

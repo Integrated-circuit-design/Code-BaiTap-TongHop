@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_BITS 10
+
+int maximize_difference(int n, int arr[]) {
+    int max_value = 0;
+    int min_value = 1023;
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int ai = arr[i];
+            int aj = arr[j];
+            
+            for (int bit = 0; bit < MAX_BITS; bit++) {
+                int mask = (1 << bit);
+                int bit_i = ai & mask;
+                int bit_j = aj & mask;
+                
+                ai ^= bit_i ^ bit_j;
+                aj ^= bit_i ^ bit_j;
+            }
+            
+            if (ai > max_value) max_value = ai;
+            if (ai < min_value) min_value = ai;
+            if (aj > max_value) max_value = aj;
+            if (aj < min_value) min_value = aj;
+        }
+    }
+    
+    return max_value - min_value;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int arr[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+        
+        int result = maximize_difference(n, arr);
+        printf("%d\n", result);
+    }
+    
+    return 0;
+}
 

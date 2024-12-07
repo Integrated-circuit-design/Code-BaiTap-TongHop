@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+int can_transform(char* s2) {
+    int i = 0;
+    int length = strlen(s2);
+    
+    while (i < length) {
+        if (s2[i] == 'B') {
+            if (i == 0 || s2[i-1] != 'A') {
+                return 0;
+            }
+            i++;
+        }
+        else if (s2[i] == 'A') {
+            while (i < length && s2[i] == 'A') {
+                i++;
+            }
+        }
+    }
+
+    if (s2[length - 1] == 'A') {
+        return 0;
+    }
+    
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        char s2[200001];
+        scanf("%s", s2);
+        
+        if (can_transform(s2)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int k;
+    scanf("%d", &k);
+
+    while (k--) {
+        int n;
+        scanf("%d", &n);
+        int planks[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &planks[i]);
+        }
+        
+        int count[n + 1];
+        for (int i = 0; i <= n; i++) {
+            count[i] = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            count[planks[i]]++;
+        }
+
+        int max_square = 0;
+        int current_planks = 0;
+        
+        for (int i = n; i >= 1; i--) {
+            current_planks += count[i];
+            if (current_planks >= i) {
+                max_square = i;
+                break;
+            }
+        }
+
+        printf("%d\n", max_square);
+    }
+
+    return 0;
+}
 

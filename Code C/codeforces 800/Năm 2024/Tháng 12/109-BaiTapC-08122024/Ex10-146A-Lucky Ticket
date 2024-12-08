@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    char ticket[51];
+
+    scanf("%d", &n);
+    scanf("%s", ticket);
+
+    int leftSum = 0, rightSum = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (ticket[i] != '4' && ticket[i] != '7') {
+            printf("NO\n");
+            return 0;
+        }
+
+        if (i < n / 2) {
+            leftSum += ticket[i] - '0';
+        } else {
+            rightSum += ticket[i] - '0';
+        }
+    }
+
+    if (leftSum == rightSum) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

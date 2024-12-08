@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    
+    scanf("%d %d", &n, &m);
+    
+    int odd_chests = 0, even_chests = 0;
+    int odd_keys = 0, even_keys = 0;
+    
+    for (int i = 0; i < n; i++) {
+        int chest;
+        scanf("%d", &chest);
+        
+        if (chest % 2 == 0) {
+            even_chests++;
+        } else {
+            odd_chests++;
+        }
+    }
+    
+    for (int i = 0; i < m; i++) {
+        int key;
+        scanf("%d", &key);
+        
+        if (key % 2 == 0) {
+            even_keys++;
+        } else {
+            odd_keys++;
+        }
+    }
+    
+    int max_pairs = 0;
+    
+    if (odd_chests < even_keys) {
+        max_pairs += odd_chests;
+    } else {
+        max_pairs += even_keys;
+    }
+    
+    if (even_chests < odd_keys) {
+        max_pairs += even_chests;
+    } else {
+        max_pairs += odd_keys;
+    }
+    
+    printf("%d\n", max_pairs);
+    
+    return 0;
+}
 

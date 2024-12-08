@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int l, r, a;
+    
+    scanf("%d %d %d", &l, &r, &a);
+    
+    int min_side = (l < r) ? l : r;
+    int max_side = (l > r) ? l : r;
+    
+    if (a >= (max_side - min_side)) {
+        a -= (max_side - min_side);
+        l = r = min_side + (max_side - min_side);
+    } else {
+        if (l < r) {
+            l += a;
+        } else {
+            r += a;
+        }
+        a = 0;
+    }
+    
+    int team_size = 2 * ((l < r) ? l : r);
+    
+    printf("%d\n", team_size);
+    
+    return 0;
+}
 

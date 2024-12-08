@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    
+    scanf("%d", &n);
+    
+    int scores[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &scores[i]);
+    }
+    
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (scores[j] > scores[j + 1]) {
+                int temp = scores[j];
+                scores[j] = scores[j + 1];
+                scores[j + 1] = temp;
+            }
+        }
+    }
+    
+    int count = 0;
+    int last_score = -1;
+
+    for (int i = 0; i < n; i++) {
+        if (scores[i] > 0 && scores[i] != last_score) {
+            count++;
+            last_score = scores[i];
+        }
+    }
+    
+    printf("%d\n", count);
+    
+    return 0;
+}
 

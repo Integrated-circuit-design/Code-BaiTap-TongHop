@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long n, m, r, c;
+        scanf("%lld %lld %lld %lld", &n, &m, &r, &c);
+        
+        long long distTopLeft = (r - 1) + (c - 1);
+        long long distTopRight = (r - 1) + (m - c);
+        long long distBottomLeft = (n - r) + (c - 1);
+        long long distBottomRight = (n - r) + (m - c);
+
+        long long maxDist = distTopLeft;
+        
+        if (distTopRight > maxDist) maxDist = distTopRight;
+        if (distBottomLeft > maxDist) maxDist = distBottomLeft;
+        if (distBottomRight > maxDist) maxDist = distBottomRight;
+        
+        printf("%lld\n", maxDist);
+    }
+    
+    return 0;
+}
 

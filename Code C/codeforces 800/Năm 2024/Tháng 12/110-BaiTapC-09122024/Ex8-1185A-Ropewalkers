@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c, d;
+    scanf("%d %d %d %d", &a, &b, &c, &d);
+
+    int min = a, mid = b, max = c;
+    if (min > mid) { int tmp = min; min = mid; mid = tmp; }
+    if (mid > max) { int tmp = mid; mid = max; max = tmp; }
+    if (min > mid) { int tmp = min; min = mid; mid = tmp; }
+
+    int gap1 = mid - min;
+    int gap2 = max - mid;
+
+    int moves = 0;
+
+    if (gap1 < d) {
+        moves += d - gap1;
+    }
+
+    if (gap2 < d) {
+        moves += d - gap2;
+    }
+
+    printf("%d\n", moves);
+
+    return 0;
+}
 

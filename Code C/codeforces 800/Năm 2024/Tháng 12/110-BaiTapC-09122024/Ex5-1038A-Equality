@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, k;
+    char s[100005];
+    int count[26] = {0};
+
+    scanf("%d %d", &n, &k);
+    scanf("%s", s);
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] >= 'A' && s[i] < 'A' + k) {
+            count[s[i] - 'A']++;
+        }
+    }
+
+    int min_count = count[0];
+    for (int i = 1; i < k; i++) {
+        if (count[i] < min_count) {
+            min_count = count[i];
+        }
+    }
+
+    if (min_count == 0) {
+        printf("0\n");
+    } else {
+        printf("%d\n", min_count * k);
+    }
+
+    return 0;
+}
 

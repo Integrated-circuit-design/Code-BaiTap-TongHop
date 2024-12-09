@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int min(int x, int y, int z, int w, int v) {
+    int m = x < y ? x : y;
+    m = m < z ? m : z;
+    m = m < w ? m : w;
+    m = m < v ? m : v;
+    return m;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int w, d, h;
+        scanf("%d %d %d", &w, &d, &h);
+
+        int a, b, f, g;
+        scanf("%d %d %d %d", &a, &b, &f, &g);
+
+        int path1 = abs(a - f) + abs(b - g) + h;
+        int path2 = b + g + h + abs(a - f);
+        int path3 = (d - b) + (d - g) + h + abs(a - f);
+        int path4 = a + f + h + abs(b - g);
+        int path5 = (w - a) + (w - f) + h + abs(b - g);
+
+        int minLength = min(path1, path2, path3, path4, path5);
+
+        printf("%d\n", minLength);
+    }
+
+    return 0;
+}
 

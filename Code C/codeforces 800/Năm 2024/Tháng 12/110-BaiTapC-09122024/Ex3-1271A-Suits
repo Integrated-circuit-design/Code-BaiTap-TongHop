@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c, d, e, f;
+    
+    scanf("%d", &a);
+    scanf("%d", &b);
+    scanf("%d", &c);
+    scanf("%d", &d);
+    scanf("%d", &e);
+    scanf("%d", &f);
+    
+    int max_cost = 0;
+
+    int type1_suits_first = (a < d) ? a : d;
+    int remaining_jackets_after_type1 = d - type1_suits_first;
+    int type2_suits_after_type1 = (b < c && b < remaining_jackets_after_type1) ? b : (c < remaining_jackets_after_type1 ? c : remaining_jackets_after_type1);
+
+    int cost_first = type1_suits_first * e + type2_suits_after_type1 * f;
+
+    int type2_suits_first = (b < c && b < d) ? b : (c < d ? c : d);
+    int remaining_jackets_after_type2 = d - type2_suits_first;
+    int type1_suits_after_type2 = (a < remaining_jackets_after_type2) ? a : remaining_jackets_after_type2;
+
+    int cost_second = type2_suits_first * f + type1_suits_after_type2 * e;
+
+    max_cost = (cost_first > cost_second) ? cost_first : cost_second;
+
+    printf("%d\n", max_cost);
+    
+    return 0;
+}
 

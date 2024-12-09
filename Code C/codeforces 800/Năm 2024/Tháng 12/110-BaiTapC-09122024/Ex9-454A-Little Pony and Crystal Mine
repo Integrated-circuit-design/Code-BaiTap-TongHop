@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+void draw_crystal(int n) {
+    for (int i = 0; i < n; i++) {
+        int stars_before = abs(i - n / 2);
+        int ds_count = n - 2 * stars_before;
+
+        for (int j = 0; j < stars_before; j++) {
+            printf("*");
+        }
+
+        for (int j = 0; j < ds_count; j++) {
+            printf("D");
+        }
+
+        for (int j = 0; j < stars_before; j++) {
+            printf("*");
+        }
+
+        printf("\n");
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    draw_crystal(n);
+    return 0;
+}
 

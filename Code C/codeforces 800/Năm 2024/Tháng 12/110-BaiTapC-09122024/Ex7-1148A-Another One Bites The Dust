@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+long long calculate_max_good_string(long long a, long long b, long long c) {
+    long long max_ab_used = (a < b) ? (a < c ? a : c) : (b < c ? b : c);
+    long long remaining_a = a - max_ab_used;
+    long long remaining_b = b - max_ab_used;
+    long long additional_length = 2 * ((remaining_a < remaining_b) ? remaining_a : remaining_b);
+    long long total_length = 2 * max_ab_used + additional_length;
+    
+    if (remaining_a > 0 || remaining_b > 0) {
+        total_length += 1;
+    }
+    
+    return total_length;
+}
+
+int main() {
+    long long a, b, c;
+    scanf("%lld %lld %lld", &a, &b, &c);
+    printf("%lld\n", calculate_max_good_string(a, b, c));
+    return 0;
+}
 

@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long calculate_manhattan_distance(int n, int m, int r, int c) {
+    int departing_index = (r - 1) * m + c;
+    long long total_distance = 0;
+    total_distance += (long long)(m * (m - 1)) / 2 * (n - 1);
+    total_distance += (long long)(n * (n - 1)) / 2 * m;
+    return total_distance;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        int n, m, r, c;
+        scanf("%d %d %d %d", &n, &m, &r, &c);
+        long long result = calculate_manhattan_distance(n, m, r, c);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

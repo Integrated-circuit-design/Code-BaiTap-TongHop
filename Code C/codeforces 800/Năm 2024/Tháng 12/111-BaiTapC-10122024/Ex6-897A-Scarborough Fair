@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int len, num_operations;
+    char str[101];
+    
+    scanf("%d %d", &len, &num_operations);
+    
+    scanf("%s", str);
+    
+    for (int i = 0; i < num_operations; i++) {
+        int start, end;
+        char old_char, new_char;
+        
+        scanf("%d %d %c %c", &start, &end, &old_char, &new_char);
+        
+        for (int j = start - 1; j < end; j++) {
+            if (str[j] == old_char) {
+                str[j] = new_char;
+            }
+        }
+    }
+    
+    printf("%s\n", str);
+    
+    return 0;
+}
 

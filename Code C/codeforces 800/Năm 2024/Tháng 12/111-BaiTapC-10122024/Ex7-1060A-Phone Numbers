@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char digits[n + 1];
+    scanf("%s", digits);
+
+    int count = 0;
+    int i = 0;
+
+    while (i < n) {
+        if (digits[i] == '8') {
+            if (n - i >= 11) {
+                count++;
+                i += 11;
+            } else {
+                break;
+            }
+        } else {
+            i++;
+        }
+    }
+
+    printf("%d\n", count);
+    return 0;
+}
 

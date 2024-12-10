@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int alice = 0, bob = 0;
+        int step = 1;
+        int turn = 1;
+        
+        while (n > 0) {
+            if (n >= step) {
+                if (turn == 1) {
+                    alice += step;
+                } else {
+                    bob += step;
+                }
+                n -= step;
+            } else {
+                if (turn == 1) {
+                    alice += n;
+                } else {
+                    bob += n;
+                }
+                break;
+            }
+            
+            step++;
+            
+            if (step % 2 == 1) {
+                turn = 1 - turn;
+            }
+        }
+        
+        printf("%d %d\n", alice, bob);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

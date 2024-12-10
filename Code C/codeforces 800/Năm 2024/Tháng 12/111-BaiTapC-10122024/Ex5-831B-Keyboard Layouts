@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    char layout1[27], layout2[27], text[1001];
+
+    scanf("%s", layout1);
+    scanf("%s", layout2);
+    scanf("%s", text);
+
+    char mapLower[26], mapUpper[26];
+    for (int i = 0; i < 26; i++) {
+        mapLower[layout1[i] - 'a'] = layout2[i];
+        mapUpper[layout1[i] - 'a'] = toupper(layout2[i]);
+    }
+
+    for (int i = 0; text[i] != '\0'; i++) {
+        char ch = text[i];
+
+        if (islower(ch)) {
+            text[i] = mapLower[ch - 'a'];
+        } else if (isupper(ch)) {
+            text[i] = mapUpper[ch - 'a'];
+        }
+    }
+
+    printf("%s\n", text);
+
+    return 0;
+}
 

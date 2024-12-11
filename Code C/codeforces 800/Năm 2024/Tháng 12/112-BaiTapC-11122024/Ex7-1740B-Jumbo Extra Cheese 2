@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+typedef long long ll;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        ll totalWidth = 0;
+        ll maxHeight = 0;
+
+        for (int i = 0; i < n; i++) {
+            ll a, b;
+            scanf("%lld %lld", &a, &b);
+
+            totalWidth += (a > b) ? a : b;
+
+            if (a < b) {
+                if (a > maxHeight) maxHeight = a;
+            } else {
+                if (b > maxHeight) maxHeight = b;
+            }
+        }
+
+        ll perimeter = 2 * (totalWidth + maxHeight);
+        printf("%lld\n", perimeter);
+    }
+
+    return 0;
+}
 

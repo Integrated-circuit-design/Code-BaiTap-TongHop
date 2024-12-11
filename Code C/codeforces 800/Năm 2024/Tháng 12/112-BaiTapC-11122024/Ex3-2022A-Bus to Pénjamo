@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, r;
+        scanf("%d %d", &n, &r);
+
+        int a[n];
+        int total_people = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            total_people += a[i];
+        }
+
+        int happy_people = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] >= 2) {
+                happy_people += (a[i] / 2) * 2;
+                a[i] = a[i] % 2;
+            }
+        }
+
+        int remaining_single_people = 0;
+        for (int i = 0; i < n; i++) {
+            remaining_single_people += a[i];
+        }
+
+        int available_rows_for_singles = r - (total_people / 2);
+        happy_people += (remaining_single_people <= available_rows_for_singles) ? remaining_single_people : available_rows_for_singles;
+
+        printf("%d\n", happy_people);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

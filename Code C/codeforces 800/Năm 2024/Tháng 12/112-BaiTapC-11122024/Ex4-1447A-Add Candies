@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        printf("%d\n", n - 1);
+
+        for (int i = 1; i < n; i++) {
+            printf("%d ", i);
+        }
+
+        printf("\n");
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, d;
+    scanf("%d %d", &n, &d);
+
+    char schedule[d][n + 1];
+    for (int i = 0; i < d; i++) {
+        scanf("%s", schedule[i]);
+    }
+
+    int max_consecutive = 0, current_consecutive = 0;
+
+    for (int i = 0; i < d; i++) {
+        int all_present = 1;
+
+        for (int j = 0; j < n; j++) {
+            if (schedule[i][j] == '0') {
+                all_present = 0;
+                break;
+            }
+        }
+
+        if (!all_present) {
+            current_consecutive++;
+            if (current_consecutive > max_consecutive) {
+                max_consecutive = current_consecutive;
+            }
+        } else {
+            current_consecutive = 0;
+        }
+    }
+
+    printf("%d\n", max_consecutive);
+
+    return 0;
+}
 

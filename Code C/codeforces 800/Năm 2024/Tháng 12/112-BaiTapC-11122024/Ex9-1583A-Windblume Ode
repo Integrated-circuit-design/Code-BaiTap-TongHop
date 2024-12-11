@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool is_composite(int x) {
+    if (x <= 1) return false;
+    for (int i = 2; i * i <= x; ++i) {
+        if (x % i == 0) return true;
+    }
+    return false;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        int total_sum = 0;
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &a[i]);
+            total_sum += a[i];
+        }
+
+        if (is_composite(total_sum)) {
+            printf("%d\n", n);
+            for (int i = 0; i < n; ++i) {
+                printf("%d ", i + 1);
+            }
+            printf("\n");
+            continue;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            int subset_sum = total_sum - a[i];
+            if (is_composite(subset_sum)) {
+                printf("%d\n", n - 1);
+                for (int j = 0; j < n; ++j) {
+                    if (j != i) {
+                        printf("%d ", j + 1);
+                    }
+                }
+                printf("\n");
+                break;
+            }
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    long long yellow_crystals, blue_crystals;
+    long long yellow_balls, green_balls, blue_balls;
+
+    scanf("%lld %lld", &yellow_crystals, &blue_crystals);
+    scanf("%lld %lld %lld", &yellow_balls, &green_balls, &blue_balls);
+
+    long long total_yellow_needed = 2 * yellow_balls + green_balls;
+    long long total_blue_needed = green_balls + 3 * blue_balls;
+
+    long long missing_yellow = total_yellow_needed > yellow_crystals ? total_yellow_needed - yellow_crystals : 0;
+    long long missing_blue = total_blue_needed > blue_crystals ? total_blue_needed - blue_crystals : 0;
+
+    printf("%lld\n", missing_yellow + missing_blue);
+
+    return 0;
+}
 

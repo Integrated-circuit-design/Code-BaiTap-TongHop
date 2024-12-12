@@ -1,1 +1,50 @@
+#include <stdio.h>
+#define MOD 1000000007
+
+long long factorial(long long n) {
+    long long result = 1;
+    for (long long i = 1; i <= n; i++) {
+        result = (result * i) % MOD;
+    }
+    return result;
+}
+
+long long comb(long long n, long long k) {
+    if (k > n) return 0;
+    long long num = 1;
+    long long denom = 1;
+    for (long long i = 0; i < k; i++) {
+        num = (num * (n - i)) % MOD;
+        denom = (denom * (i + 1)) % MOD;
+    }
+    long long inverse_denom = 1;
+    long long power = MOD - 2;
+    while (power > 0) {
+        if (power % 2 == 1) {
+            inverse_denom = (inverse_denom * denom) % MOD;
+        }
+        denom = (denom * denom) % MOD;
+        power /= 2;
+    }
+    return (num * inverse_denom) % MOD;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        long long result = comb(2 * n, n);
+        long long n_fact = factorial(n);
+        result = (result * n_fact) % MOD;
+        result = (result * n_fact) % MOD;
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

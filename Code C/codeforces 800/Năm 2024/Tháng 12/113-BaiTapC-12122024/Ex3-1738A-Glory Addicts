@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int *)b - *(int *)a);
+}
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int fire[100000], frost[100000];
+        int fire_count = 0, frost_count = 0;
+
+        int a[n], b[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+            if (a[i] == 0) {
+                fire[fire_count++] = b[i];
+            } else {
+                frost[frost_count++] = b[i];
+            }
+        }
+
+        qsort(fire, fire_count, sizeof(int), compare);
+        qsort(frost, frost_count, sizeof(int), compare);
+
+        long long total_damage = 0;
+        int i = 0, j = 0;
+
+        while (i < fire_count && j < frost_count) {
+            total_damage += 2 * fire[i] + 2 * frost[j];
+            i++;
+            j++;
+        }
+
+        while (i < fire_count) {
+            total_damage += fire[i++];
+        }
+
+        while (j < frost_count) {
+            total_damage += frost[j++];
+        }
+
+        printf("%lld\n", total_damage);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

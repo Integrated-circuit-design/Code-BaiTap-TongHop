@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int is_vowel(char c) {
+    c = tolower(c);
+    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y';
+}
+
+int main() {
+    char question[101];
+    fgets(question, sizeof(question), stdin);
+
+    int length = strlen(question);
+
+    char last_letter = '\0';
+    for (int i = length - 1; i >= 0; i--) {
+        if (isalpha(question[i])) {
+            last_letter = question[i];
+            break;
+        }
+    }
+
+    if (last_letter != '\0' && is_vowel(last_letter)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

@@ -3,45 +3,48 @@
 
 #define MAX_N 10004
 
-void evolve(char *state, int n, int m) {
-    char next[MAX_N];
-    int iterations = 0;
+void xuLyTienHoa(char *mang, int soLuongO, int soLanLap) {
+    char mangMoi[MAX_N];
 
-    while (m-- > 0) {
-        int stable = 1;
-        strcpy(next, state);
+    while (soLanLap-- > 0) {
+        int thayDoi = 0;
+        for (int i = 0; i < soLuongO; i++) {
+            int benTrai = (i > 0) ? mang[i - 1] - '0' : 0;
+            int benPhai = (i < soLuongO - 1) ? mang[i + 1] - '0' : 0;
 
-        for (int i = 0; i < n; i++) {
-            int left = (i > 0) ? state[i - 1] - '0' : 0;
-            int right = (i < n - 1) ? state[i + 1] - '0' : 0;
-
-            if (state[i] == '0' && left + right == 1) {
-                next[i] = '1';
-                stable = 0;
+            if (mang[i] == '0' && benTrai + benPhai == 1) {
+                mangMoi[i] = '1';
+                thayDoi = 1;
+            } else {
+                mangMoi[i] = mang[i];
             }
         }
 
-        strcpy(state, next);
-        iterations++;
-        if (stable) break;
+        for (int i = 0; i < soLuongO; i++) {
+            mang[i] = mangMoi[i];
+        }
+
+        if (!thayDoi) {
+            break;
+        }
     }
 }
 
 int main() {
-    int t;
-    scanf("%d", &t);
+    int soTestCase;
+    scanf("%d", &soTestCase);
 
-    while (t--) {
+    while (soTestCase--) {
         int n, m;
-        char state[MAX_N];
+        char mangTrangThai[MAX_N];
 
         scanf("%d %d", &n, &m);
-        scanf("%s", state);
+        scanf("%s", mangTrangThai);
 
-        evolve(state, n, m);
-        printf("%s\n", state);
+        xuLyTienHoa(mangTrangThai, n, m);
+
+        printf("%s\n", mangTrangThai);
     }
 
     return 0;
 }
-

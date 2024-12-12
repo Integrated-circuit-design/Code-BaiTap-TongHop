@@ -5,35 +5,35 @@ int main() {
     scanf("%d", &n);
 
     char cake[n][n];
+    int row_count[n];
+    int col_count[n];
 
     for (int i = 0; i < n; i++) {
-        scanf("%s", cake[i]);
+        row_count[i] = 0;
+        col_count[i] = 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf(" %c", &cake[i][j]);
+            if (cake[i][j] == 'C') {
+                row_count[i]++;
+                col_count[j]++;
+            }
+        }
     }
 
     int happiness = 0;
 
     for (int i = 0; i < n; i++) {
-        int count = 0;
-        for (int j = 0; j < n; j++) {
-            if (cake[i][j] == 'C') {
-                count++;
-            }
-        }
-        happiness += (count * (count - 1)) / 2;
+        happiness += (row_count[i] * (row_count[i] - 1)) / 2;
     }
 
     for (int j = 0; j < n; j++) {
-        int count = 0;
-        for (int i = 0; i < n; i++) {
-            if (cake[i][j] == 'C') {
-                count++;
-            }
-        }
-        happiness += (count * (count - 1)) / 2;
+        happiness += (col_count[j] * (col_count[j] - 1)) / 2;
     }
 
     printf("%d\n", happiness);
 
     return 0;
 }
-

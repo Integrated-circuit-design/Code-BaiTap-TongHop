@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int max_a = 0, max_b = 1;
+
+    for (int b = n / 2 + 1; b < n; b++) {
+        int a = n - b;
+        if (a < b && gcd(a, b) == 1) {
+            max_a = a;
+            max_b = b;
+            break;
+        }
+    }
+
+    printf("%d %d\n", max_a, max_b);
+
+    return 0;
+}
 

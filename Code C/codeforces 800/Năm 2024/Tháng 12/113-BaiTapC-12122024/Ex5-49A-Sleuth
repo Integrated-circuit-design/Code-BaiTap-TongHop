@@ -2,26 +2,30 @@
 #include <ctype.h>
 #include <string.h>
 
-int is_vowel(char c) {
-    c = tolower(c);
-    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y';
+int la_nguyen_am(char ky_tu) {
+    char nguyen_am[] = "aeiouyAEIOUY";
+    for (int i = 0; i < strlen(nguyen_am); i++) {
+        if (ky_tu == nguyen_am[i]) {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 int main() {
-    char question[101];
-    fgets(question, sizeof(question), stdin);
+    char cau_hoi[101];
 
-    int length = strlen(question);
+    fgets(cau_hoi, sizeof(cau_hoi), stdin);
 
-    char last_letter = '\0';
-    for (int i = length - 1; i >= 0; i--) {
-        if (isalpha(question[i])) {
-            last_letter = question[i];
+    char chu_cai_cuoi = '\0';
+    for (int i = strlen(cau_hoi) - 1; i >= 0; i--) {
+        if (isalpha(cau_hoi[i])) {
+            chu_cai_cuoi = cau_hoi[i];
             break;
         }
     }
 
-    if (last_letter != '\0' && is_vowel(last_letter)) {
+    if (chu_cai_cuoi != '\0' && la_nguyen_am(chu_cai_cuoi)) {
         printf("YES\n");
     } else {
         printf("NO\n");
@@ -29,4 +33,3 @@ int main() {
 
     return 0;
 }
-

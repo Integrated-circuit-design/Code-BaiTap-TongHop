@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+
+    long long x = n + 1;
+
+    while (x % k != 0) {
+        x++;
+    }
+
+    printf("%lld\n", x);
+
+    return 0;
+}
 

@@ -1,1 +1,90 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100
+#define MAX_K 100
+
+int simulate(int n, int k, char opinions[n][k+1], int selected[]) {
+    int remaining = 0;
+    
+    for (int j = 0; j < k; j++) {
+        int Y = 0, N = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (selected[i]) {
+                if (opinions[i][j] == '+') {
+                    Y++;
+                } else {
+                    N++;
+                }
+            }
+        }
+
+        if (Y > N) {
+            for (int i = 0; i < n; i++) {
+                if (selected[i] && opinions[i][j] == '-') {
+                    selected[i] = 0;
+                }
+            }
+        } else if (Y < N) {
+            for (int i = 0; i < n; i++) {
+                if (selected[i] && opinions[i][j] == '+') {
+                    selected[i] = 0;
+                }
+            }
+        } else {
+            for (int i = 0; i < n; i++) {
+                selected[i] = 0;
+            }
+            break;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (selected[i]) {
+            remaining++;
+        }
+    }
+
+    return remaining;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        
+        char opinions[n][k+1];
+        for (int i = 0; i < n; i++) {
+            scanf("%s", opinions[i]);
+        }
+
+        int max_members = 1;
+
+        for (int i = 0; i < (1 << n); i++) {
+            int selected[n];
+            memset(selected, 0, sizeof(selected));
+            
+            for (int j = 0; j < n; j++) {
+                if (i & (1 << j)) {
+                    selected[j] = 1;
+                }
+            }
+            
+            if (!selected[0]) continue;
+            
+            int remaining = simulate(n, k, opinions, selected);
+            if (remaining > max_members) {
+                max_members = remaining;
+            }
+        }
+
+        printf("%d\n", max_members);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int houses[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &houses[i]);
+    }
+
+    int min_distance = INT_MAX;
+
+    for (int i = 0; i < n; i++) {
+        if (houses[i] != 0 && houses[i] <= k) {
+            int distance = abs(i + 1 - m) * 10;
+            if (distance < min_distance) {
+                min_distance = distance;
+            }
+        }
+    }
+
+    printf("%d\n", min_distance);
+
+    return 0;
+}
 

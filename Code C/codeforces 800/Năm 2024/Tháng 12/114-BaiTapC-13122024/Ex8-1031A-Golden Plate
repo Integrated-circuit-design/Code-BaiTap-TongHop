@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int w, h, k;
+    scanf("%d %d %d", &w, &h, &k);
+
+    int total_cells = 0;
+
+    while (k > 0 && w > 0 && h > 0) {
+        total_cells += 2 * (w + h - 2);
+        w -= 4;
+        h -= 4;
+        k--;
+    }
+
+    printf("%d\n", total_cells);
+
+    return 0;
+}
 

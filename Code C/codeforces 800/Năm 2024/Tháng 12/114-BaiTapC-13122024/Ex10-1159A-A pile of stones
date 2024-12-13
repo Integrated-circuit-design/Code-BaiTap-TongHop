@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    char s[101];
+
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    int stones = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '+') {
+            stones++;
+        } else if (s[i] == '-') {
+            if (stones > 0) {
+                stones--;
+            }
+        }
+    }
+
+    printf("%d\n", stones);
+
+    return 0;
+}
 

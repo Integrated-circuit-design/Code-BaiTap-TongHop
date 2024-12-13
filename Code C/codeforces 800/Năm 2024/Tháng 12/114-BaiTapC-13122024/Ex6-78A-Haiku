@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int count_vowels(const char *phrase) {
+    int count = 0;
+    for (int i = 0; phrase[i] != '\0'; i++) {
+        char ch = tolower(phrase[i]);
+        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+            count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    char phrase1[101], phrase2[101], phrase3[101];
+
+    fgets(phrase1, sizeof(phrase1), stdin);
+    fgets(phrase2, sizeof(phrase2), stdin);
+    fgets(phrase3, sizeof(phrase3), stdin);
+
+    phrase1[strcspn(phrase1, "\n")] = '\0';
+    phrase2[strcspn(phrase2, "\n")] = '\0';
+    phrase3[strcspn(phrase3, "\n")] = '\0';
+
+    int vowels1 = count_vowels(phrase1);
+    int vowels2 = count_vowels(phrase2);
+    int vowels3 = count_vowels(phrase3);
+
+    if (vowels1 == 5 && vowels2 == 7 && vowels3 == 5) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

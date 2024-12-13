@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int w, h, u1, d1, u2, d2;
+
+    scanf("%d %d", &w, &h);
+    scanf("%d %d", &u1, &d1);
+    scanf("%d %d", &u2, &d2);
+
+    int stoneWeight[101] = {0};
+
+    stoneWeight[d1] = u1;
+    stoneWeight[d2] = u2;
+
+    for (int i = h; i >= 1; i--) {
+        w += i;
+
+        if (stoneWeight[i] > 0) {
+            w -= stoneWeight[i];
+            if (w < 0) w = 0;
+        }
+    }
+
+    printf("%d\n", w);
+
+    return 0;
+}
 

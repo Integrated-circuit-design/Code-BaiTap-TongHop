@@ -1,1 +1,84 @@
+#include <stdio.h>
+
+#define MAX 50
+
+int check_and_fill(int n, int m, char grid[MAX][MAX + 1], char result[MAX][MAX + 1], char color) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] != '.') {
+                if ((i + j) % 2 == 0 && grid[i][j] != color) {
+                    return 0;
+                }
+                if ((i + j) % 2 == 1 && grid[i][j] == color) {
+                    return 0;
+                }
+            } else {
+                if ((i + j) % 2 == 0) {
+                    result[i][j] = color;
+                } else {
+                    result[i][j] = (color == 'R') ? 'W' : 'R';
+                }
+            }
+        }
+    }
+    return 1;
+}
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        char grid[MAX][MAX + 1];
+        char result[MAX][MAX + 1];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%s", grid[i]);
+        }
+        
+        int isPossible = 0;
+        
+        if (check_and_fill(n, m, grid, result, 'R')) {
+            isPossible = 1;
+            printf("YES\n");
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (grid[i][j] == '.') {
+                        printf("%c", result[i][j]);
+                    } else {
+                        printf("%c", grid[i][j]);
+                    }
+                }
+                printf("\n");
+            }
+        }
+        
+        if (!isPossible && check_and_fill(n, m, grid, result, 'W')) {
+            isPossible = 1;
+            printf("YES\n");
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (grid[i][j] == '.') {
+                        printf("%c", result[i][j]);
+                    } else {
+                        printf("%c", grid[i][j]);
+                    }
+                }
+                printf("\n");
+            }
+        }
+        
+        if (!isPossible) {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

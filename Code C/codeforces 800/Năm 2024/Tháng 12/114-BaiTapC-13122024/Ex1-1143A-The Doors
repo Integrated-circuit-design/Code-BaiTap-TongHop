@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int doors[n];
+    int left_doors = 0, right_doors = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &doors[i]);
+        if (doors[i] == 0) {
+            left_doors++;
+        } else {
+            right_doors++;
+        }
+    }
+
+    int left_closed = left_doors;
+    int right_closed = right_doors;
+
+    for (int i = 0; i < n; i++) {
+        if (doors[i] == 0) {
+            left_closed--;
+        } else {
+            right_closed--;
+        }
+
+        if (left_closed == 0 || right_closed == 0) {
+            printf("%d\n", i + 1);
+            break;
+        }
+    }
+
+    return 0;
+}
 

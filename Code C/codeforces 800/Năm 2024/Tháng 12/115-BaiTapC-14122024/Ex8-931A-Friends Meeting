@@ -1,1 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int tiredness(int steps) {
+    return (steps * (steps + 1)) / 2;
+}
+
+int main() {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    
+    int distance = abs(a - b);
+    
+    int steps1 = distance / 2;
+    int steps2 = distance - steps1;
+    
+    int total_tiredness = tiredness(steps1) + tiredness(steps2);
+    
+    printf("%d\n", total_tiredness);
+    
+    return 0;
+}
 

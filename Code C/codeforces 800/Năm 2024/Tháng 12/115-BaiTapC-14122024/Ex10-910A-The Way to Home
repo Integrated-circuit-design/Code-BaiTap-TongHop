@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+
+int main() {
+    int n, d;
+    scanf("%d %d", &n, &d);
+
+    char s[n + 1];
+    scanf("%s", s);
+
+    int jumps = 0;
+    int current_position = 0;
+
+    while (current_position < n - 1) {
+        int next_position = -1;
+
+        for (int i = 1; i <= d && current_position + i < n; i++) {
+            if (s[current_position + i] == '1') {
+                next_position = current_position + i;
+            }
+        }
+
+        if (next_position == -1) {
+            printf("-1\n");
+            return 0;
+        }
+
+        current_position = next_position;
+        jumps++;
+    }
+
+    printf("%d\n", jumps);
+    return 0;
+}
 

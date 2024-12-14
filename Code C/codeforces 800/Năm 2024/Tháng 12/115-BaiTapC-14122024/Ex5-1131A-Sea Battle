@@ -1,1 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    long long w1, h1, w2, h2;
+    scanf("%lld %lld %lld %lld", &w1, &h1, &w2, &h2);
+
+    long long marked_cells = 2 * (h1 + h2 + 2) + (w1 + 2) + (w2 + 2) + w1 - w2;
+
+    printf("%lld\n", marked_cells);
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 51
+
+int main() {
+    char t[MAX_LEN];
+    scanf("%s", t);
+
+    int n = strlen(t);
+    char s[MAX_LEN];
+
+    int left = 0, right = 0;
+
+    if (n % 2 == 0) {
+        left = n / 2 - 1;
+        right = n / 2;
+    } else {
+        left = n / 2;
+        right = left;
+    }
+
+    s[left] = t[0];
+
+    for (int i = 1; i < n; i++) {
+        if (i % 2 == 1) {
+            s[++right] = t[i];
+        } else {
+            s[--left] = t[i];
+        }
+    }
+
+    s[n] = '\0';
+
+    printf("%s\n", s);
+
+    return 0;
+}
 

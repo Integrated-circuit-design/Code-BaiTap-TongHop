@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    char line[n + 1];
+    scanf("%s", line);
+
+    int grasshopper_pos = -1, target_pos = -1;
+
+    for (int i = 0; i < n; i++) {
+        if (line[i] == 'G') {
+            grasshopper_pos = i;
+        } else if (line[i] == 'T') {
+            target_pos = i;
+        }
+    }
+
+    if (grasshopper_pos > target_pos) {
+        int temp = grasshopper_pos;
+        grasshopper_pos = target_pos;
+        target_pos = temp;
+    }
+
+    for (int i = grasshopper_pos; i <= target_pos; i += k) {
+        if (line[i] == '#') {
+            printf("NO\n");
+            return 0;
+        }
+        if (i == target_pos) {
+            printf("YES\n");
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

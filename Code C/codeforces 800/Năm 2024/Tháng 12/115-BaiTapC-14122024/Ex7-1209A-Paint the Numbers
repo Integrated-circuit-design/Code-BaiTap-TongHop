@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+int main() {
+    int n;
+    int a[MAX];
+    bool visited[MAX] = {false};
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    qsort(a, n, sizeof(int), compare);
+
+    int colors = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            colors++;
+            int base = a[i];
+
+            for (int j = i; j < n; j++) {
+                if (!visited[j] && a[j] % base == 0) {
+                    visited[j] = true;
+                }
+            }
+        }
+    }
+
+    printf("%d\n", colors);
+
+    return 0;
+}
 

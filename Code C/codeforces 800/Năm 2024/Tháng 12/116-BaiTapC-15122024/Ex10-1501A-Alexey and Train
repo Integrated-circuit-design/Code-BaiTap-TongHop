@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <math.h>
+
+int ceil_div(int a, int b) {
+    return (a + b - 1) / b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n], b[n], tm[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &a[i], &b[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &tm[i]);
+        }
+
+        int current_time = 0;
+
+        for (int i = 0; i < n; i++) {
+            current_time += (i == 0 ? a[i] : a[i] - b[i - 1]) + tm[i];
+
+            int min_stay = ceil_div(b[i] - a[i], 2);
+
+            if (i < n - 1) {
+                current_time = fmax(current_time + min_stay, b[i]);
+            }
+        }
+
+        printf("%d\n", current_time);
+    }
+
+    return 0;
+}
 

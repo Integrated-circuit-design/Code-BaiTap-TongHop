@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, r;
+    scanf("%d %d %d", &n, &m, &r);
+
+    int min_buy_price = 1001;
+    int max_sell_price = 0;
+
+    int s;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &s);
+        if (s < min_buy_price) {
+            min_buy_price = s;
+        }
+    }
+
+    int b;
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &b);
+        if (b > max_sell_price) {
+            max_sell_price = b;
+        }
+    }
+
+    if (max_sell_price > min_buy_price) {
+        int shares = r / min_buy_price;
+        int remaining_bourles = r % min_buy_price;
+
+        int total_bourles = (shares * max_sell_price) + remaining_bourles;
+
+        printf("%d\n", total_bourles);
+    } else {
+        printf("%d\n", r);
+    }
+
+    return 0;
+}
 

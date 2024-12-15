@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    long long a, b;
+    scanf("%lld %lld", &a, &b);
+
+    int turn = 1;
+
+    while (1) {
+        if (turn % 2 != 0) {
+            if (a < turn) {
+                printf("Vladik\n");
+                break;
+            } else {
+                a -= turn;
+            }
+        } else {
+            if (b < turn) {
+                printf("Valera\n");
+                break;
+            } else {
+                b -= turn;
+            }
+        }
+        turn++;
+    }
+
+    return 0;
+}
 

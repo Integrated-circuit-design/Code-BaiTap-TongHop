@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int a, b, x, y;
+        scanf("%d %d %d %d", &a, &b, &x, &y);
+
+        int width1 = x * b;
+        int width2 = (a - x - 1) * b;
+        int height1 = y * a;
+        int height2 = (b - y - 1) * a;
+
+        int max_area = width1;
+        if (width2 > max_area) max_area = width2;
+        if (height1 > max_area) max_area = height1;
+        if (height2 > max_area) max_area = height2;
+        
+        printf("%d\n", max_area);
+    }
+
+    return 0;
+}
 

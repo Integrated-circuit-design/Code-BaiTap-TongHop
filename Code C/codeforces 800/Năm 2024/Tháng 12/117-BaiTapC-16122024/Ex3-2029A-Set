@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+long long count_operations(long long l, long long r, long long k) {
+    long long operations = 0;
+
+    for (long long x = 1; x <= r; x++) {
+        long long first_multiple = (l + x - 1) / x * x;
+        if (first_multiple > r) continue;
+
+        long long count = (r - first_multiple) / x + 1;
+        if (count >= k) {
+            operations++;
+        }
+    }
+
+    return operations;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long l, r, k;
+        scanf("%lld %lld %lld", &l, &r, &k);
+        
+        printf("%lld\n", count_operations(l, r, k));
+    }
+
+    return 0;
+}
 

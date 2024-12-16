@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int x[n], y[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &y[i]);
+    }
+
+    int totalInitial = 0, totalFinal = 0;
+
+    for (int i = 0; i < n; i++) {
+        totalInitial += x[i];
+        totalFinal += y[i];
+    }
+
+    if (totalFinal > totalInitial) {
+        printf("No\n");
+        return 0;
+    }
+
+    int stonesAdded = 0, stonesTaken = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (y[i] > x[i]) {
+            stonesAdded += y[i] - x[i];
+        } else if (y[i] < x[i]) {
+            stonesTaken += x[i] - y[i];
+        }
+    }
+
+    if (stonesAdded <= stonesTaken) {
+        printf("Yes\n");
+    } else {
+        printf("No\n");
+    }
+
+    return 0;
+}
 

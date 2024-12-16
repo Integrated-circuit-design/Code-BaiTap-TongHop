@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int total_pieces = 0;
+        int happy_days = 0;
+        int required_pieces = 1;
+        int next_layer = 2;
+
+        for (int i = 0; i < n; i++) {
+            total_pieces += a[i];
+
+            while (total_pieces >= required_pieces) {
+                happy_days++;
+                required_pieces += next_layer * 4 - 4;
+                next_layer++;
+            }
+        }
+
+        printf("%d\n", happy_days);
+    }
+
+    return 0;
+}
 

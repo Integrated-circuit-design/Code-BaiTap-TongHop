@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int alice_white = 0, alice_black = 0;
+        int bob_white = 0, bob_black = 0;
+
+        int remaining = n;
+        int dealt_cards = 1;
+        int is_alice_turn = 1;
+
+        while (remaining > 0) {
+            int current_cards = (remaining >= dealt_cards) ? dealt_cards : remaining;
+            int white_count = 0, black_count = 0;
+            
+            for (int i = 0; i < current_cards; i++) {
+                if ((n - remaining + i) % 2 == 0) {
+                    white_count++;
+                } else {
+                    black_count++;
+                }
+            }
+
+            if (is_alice_turn) {
+                alice_white += white_count;
+                alice_black += black_count;
+            } else {
+                bob_white += white_count;
+                bob_black += black_count;
+            }
+
+            remaining -= current_cards;
+            dealt_cards++;
+            is_alice_turn = (dealt_cards % 2 == 1);
+        }
+
+        printf("%d %d %d %d\n", alice_white, alice_black, bob_white, bob_black);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

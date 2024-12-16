@@ -1,38 +1,107 @@
-def solve_recent_actions():
-    import sys
-    input = sys.stdin.read
-    data = input().split()
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-    t = int(data[0])
-    index = 1
-    results = []
+#define MAXN 50000
+#define MAXM 50000
 
-    for _ in range(t):
-        n, m = map(int, data[index:index+2])
-        index += 2
-        actions = list(map(int, data[index:index+m]))
-        index += m
+typedef struct Node {
+    int post;
+    struct Node *next;
+} Node;
 
-        field = list(range(1, n + 1))
-        removal_time = [-1] * n
+Node *head = NULL;
+int removal_time[MAXN];
+bool in_recent[MAXN + MAXM];
 
-        seen = set(field)
+void insert_at_head(int post) {
+    Node *new_node = (Node *)malloc(sizeof(Node));
+    new_node->post = post;
+    new_node->next = head;
+    head = new_node;
+}
 
-        for time, post in enumerate(actions, start=1):
-            if post in seen:
-                field.remove(post)
-                field.insert(0, post)
-            else:
-                removed = field.pop()
-                seen.remove(removed)
-                
-                if 1 <= removed <= n and removal_time[removed - 1] == -1:
-                    removal_time[removed - 1] = time
+void remove_last_and_insert(int post, int time, int n) {
+    Node *current = head, *prev = NULL;
 
-                field.insert(0, post)
-                seen.add(post)
+    while (current->next != NULL) {
+        prev = current;
+        current = current->next;
+    }
 
-        results.append(" ".join(map(str, removal_time)))
+    if (current->post <= n && removal_time[current->post - 1] == -1) {
+        removal_time[current->post - 1] = time;
+    }
 
-    sys.stdout.write("\n".join(results) + "\n")
+    in_recent[current->post] = false;
 
+    if (prev) {
+        prev->next = NULL;
+    } else {
+        head = NULL;
+    }
+
+    free(current);
+
+    insert_at_head(post);
+    in_recent[post] = true;
+}
+
+void solve_recent_actions() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        head = NULL;
+        for (int i = 0; i < n; i++) {
+            insert_at_head(n - i);
+            removal_time[i] = -1;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            in_recent[i] = true;
+        }
+
+        for (int i = 0; i < m; i++) {
+            int post;
+            scanf("%d", &post);
+
+            if (in_recent[post]) {
+                Node *current = head, *prev = NULL;
+
+                while (current != NULL && current->post != post) {
+                    prev = current;
+                    current = current->next;
+                }
+
+                if (prev && current) {
+                    prev->next = current->next;
+                    current->next = head;
+                    head = current;
+                }
+            } else {
+                remove_last_and_insert(post, i + 1, n);
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (i > 0) printf(" ");
+            printf("%d", removal_time[i]);
+        }
+        printf("\n");
+
+        while (head) {
+            Node *temp = head;
+            head = head->next;
+            free(temp);
+        }
+    }
+}
+
+int main() {
+    solve_recent_actions();
+    return 0;
+}

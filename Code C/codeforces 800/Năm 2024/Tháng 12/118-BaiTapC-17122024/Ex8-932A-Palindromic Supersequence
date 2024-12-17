@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 10000
+
+void create_palindrome(char* A, char* B) {
+    int len = strlen(A);
+    int index = 0;
+
+    for (int i = 0; i < len; i++) {
+        B[index++] = A[i];
+    }
+
+    for (int i = len - 1; i >= 0; i--) {
+        B[index++] = A[i];
+    }
+
+    B[index] = '\0';
+}
+
+int main() {
+    char A[1001], B[MAX_LEN + 1];
+    
+    scanf("%s", A);
+    
+    create_palindrome(A, B);
+    
+    if (strlen(B) <= MAX_LEN) {
+        printf("%s\n", B);
+    } else {
+        B[MAX_LEN] = '\0';
+        printf("%s\n", B);
+    }
+    
+    return 0;
+}
 

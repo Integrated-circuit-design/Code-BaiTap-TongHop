@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    char moves[101];
+    char result[101];
+
+    scanf("%d", &n);
+    scanf("%s", moves);
+
+    int result_len = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (i < n - 1 && ((moves[i] == 'R' && moves[i + 1] == 'U') || (moves[i] == 'U' && moves[i + 1] == 'R'))) {
+            result[result_len++] = 'D';
+            i++;
+        } else {
+            result[result_len++] = moves[i];
+        }
+    }
+
+    printf("%d\n", result_len);
+
+    return 0;
+}
 

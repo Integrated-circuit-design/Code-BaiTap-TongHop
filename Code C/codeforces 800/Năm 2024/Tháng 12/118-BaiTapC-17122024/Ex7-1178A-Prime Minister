@@ -1,1 +1,54 @@
+#include <stdio.h>
 
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+    int total_seats = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        total_seats += a[i];
+    }
+
+    int alice_seats = a[0];
+    int majority_threshold = total_seats / 2 + 1;
+
+    if (alice_seats >= majority_threshold) {
+        printf("1\n1\n");
+        return 0;
+    }
+
+    int invited_parties[n];
+    int invite_count = 0;
+
+    for (int i = 1; i < n; i++) {
+        if (alice_seats >= 2 * a[i]) {
+            invited_parties[invite_count++] = i + 1;
+        }
+    }
+
+    int coalition_seats = alice_seats;
+    int coalition[n];
+    coalition[0] = 1;
+    int coalition_size = 1;
+
+    for (int i = 0; i < invite_count; i++) {
+        int party_index = invited_parties[i] - 1;
+        coalition[coalition_size++] = invited_parties[i];
+        coalition_seats += a[party_index];
+
+        if (coalition_seats >= majority_threshold) {
+            printf("%d\n", coalition_size);
+            for (int j = 0; j < coalition_size; j++) {
+                printf("%d ", coalition[j]);
+            }
+            printf("\n");
+            return 0;
+        }
+    }
+
+    printf("0\n");
+    return 0;
+}

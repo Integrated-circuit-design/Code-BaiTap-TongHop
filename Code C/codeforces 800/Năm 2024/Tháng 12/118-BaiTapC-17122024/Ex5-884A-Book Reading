@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int n, t;
+    scanf("%d %d", &n, &t);
+
+    int workTime;
+    long totalReadingTime = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &workTime);
+        int freeTime = 86400 - workTime;
+        totalReadingTime += freeTime;
+
+        if (totalReadingTime >= t) {
+            printf("%d\n", i + 1);
+            return 0;
+        }
+    }
+
+    return 0;
+}
 

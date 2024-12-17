@@ -1,1 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    int width, distance, speed1, speed2;
+    scanf("%d %d %d %d", &width, &distance, &speed1, &speed2);
+
+    double maxTime = (double)(distance - width) / (speed1 + speed2);
+    printf("%.12f\n", maxTime);
+
+    return 0;
+}
 

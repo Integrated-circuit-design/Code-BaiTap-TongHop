@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    char grid[n][m];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", grid[i]);
+    }
+
+    int minRow = n, maxRow = -1, minCol = m, maxCol = -1;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == '*') {
+                if (i < minRow) minRow = i;
+                if (i > maxRow) maxRow = i;
+                if (j < minCol) minCol = j;
+                if (j > maxCol) maxCol = j;
+            }
+        }
+    }
+
+    for (int i = minRow; i <= maxRow; i++) {
+        for (int j = minCol; j <= maxCol; j++) {
+            printf("%c", grid[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

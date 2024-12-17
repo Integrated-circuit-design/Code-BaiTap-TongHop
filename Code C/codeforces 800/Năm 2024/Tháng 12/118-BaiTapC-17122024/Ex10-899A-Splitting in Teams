@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int ones = 0, twos = 0;
+
+    for (int i = 0; i < n; i++) {
+        int group;
+        scanf("%d", &group);
+        if (group == 1) {
+            ones++;
+        } else {
+            twos++;
+        }
+    }
+
+    int max_teams = 0;
+
+    int teams_from_pairs = (ones < twos) ? ones : twos;
+    max_teams += teams_from_pairs;
+
+    ones -= teams_from_pairs;
+    twos -= teams_from_pairs;
+
+    int teams_from_ones = ones / 3;
+    max_teams += teams_from_ones;
+
+    printf("%d\n", max_teams);
+
+    return 0;
+}
 

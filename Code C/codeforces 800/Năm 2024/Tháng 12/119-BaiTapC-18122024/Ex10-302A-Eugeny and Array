@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int a[n];
+    int ones = 0, neg_ones = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        ones += (a[i] == 1);
+        neg_ones += (a[i] == -1);
+    }
+
+    while (m--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+
+        int length = r - l + 1;
+
+        if (length % 2 != 0) {
+            printf("0\n");
+        } else {
+            if (ones >= length / 2 && neg_ones >= length / 2) {
+                printf("1\n");
+            } else {
+                printf("0\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

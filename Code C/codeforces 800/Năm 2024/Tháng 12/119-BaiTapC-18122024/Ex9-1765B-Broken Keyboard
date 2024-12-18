@@ -1,32 +1,36 @@
-def can_type_on_broken_keyboard(t, test_cases):
-    results = []
-    for case in test_cases:
-        n, s = case
+#include <stdio.h>
+#include <stdbool.h>
 
-        i = 0
-        valid = True
+bool isPrintable(int n, char s[]) {
+    int i = 0;
+    while (i < n) {
+        char currentChar = s[i];
+        while (i < n && s[i] == currentChar) {
+            i++;
+        }
+        if (i < n && s[i] == currentChar) {
+            return false;
+        }
+    }
+    return true;
+}
 
-        while i < n:
-            char = s[i]
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
 
-            while i < n and s[i] == char:
-                i += 1
+    for (int t = 0; t < testCases; t++) {
+        int length;
+        char word[101];
+        scanf("%d", &length);
+        scanf("%s", word);
 
-            if i < n and s[i] == char:
-                valid = False
-                break
+        if (isPrintable(length, word)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
 
-        results.append("YES" if valid else "NO")
-    
-    return results
-
-t = int(input())
-test_cases = []
-for _ in range(t):
-    n = int(input())
-    s = input()
-    test_cases.append((n, s))
-
-results = can_type_on_broken_keyboard(t, test_cases)
-print("\n".join(results))
-
+    return 0;
+}

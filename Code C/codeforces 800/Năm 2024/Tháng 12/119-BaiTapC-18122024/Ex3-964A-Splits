@@ -1,1 +1,23 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    int count = 0;
+    long long sqrt_n = (long long)sqrt(n);
+
+    for (long long w = 1; w <= sqrt_n; w++) {
+        count++;
+    }
+
+    for (long long k = n / (sqrt_n + 1); k >= 1; k--) {
+        long long w = n / k;
+        count++;
+    }
+
+    printf("%d\n", count);
+    return 0;
+}
 

@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int n, s;
+    scanf("%d %d", &n, &s);
+    
+    int mugs[n];
+    int sum_of_volumes = 0;
+    int largest_mug = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &mugs[i]);
+        sum_of_volumes += mugs[i];
+        
+        if (mugs[i] > largest_mug) {
+            largest_mug = mugs[i];
+        }
+    }
+
+    if (sum_of_volumes - largest_mug <= s) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

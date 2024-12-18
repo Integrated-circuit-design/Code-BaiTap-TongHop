@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int num_people, planes_per_person, planes_per_sheet, sheets_per_pack;
+
+    scanf("%d %d %d %d", &num_people, &planes_per_person, &planes_per_sheet, &sheets_per_pack);
+
+    int required_sheets_per_person = (planes_per_person + planes_per_sheet - 1) / planes_per_sheet;
+
+    int total_required_sheets = num_people * required_sheets_per_person;
+
+    int total_packs = (total_required_sheets + sheets_per_pack - 1) / sheets_per_pack;
+
+    printf("%d\n", total_packs);
+
+    return 0;
+}
 

@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n, i, start_time = 1, end_time = 90, last_interesting, watched_minutes = 0;
+    
+    scanf("%d", &n);
+    
+    int t[n];
+    
+    for (i = 0; i < n; i++) {
+        scanf("%d", &t[i]);
+    }
+
+    if (t[0] > start_time + 14) {
+        watched_minutes = start_time + 14;
+        printf("%d\n", watched_minutes);
+        return 0;
+    }
+
+    last_interesting = start_time;
+    for (i = 0; i < n; i++) {
+        if (t[i] - last_interesting > 15) {
+            watched_minutes += 15;
+            printf("%d\n", watched_minutes);
+            return 0;
+        }
+        watched_minutes = t[i];
+        last_interesting = t[i];
+    }
+
+    if (end_time - last_interesting >= 15) {
+        watched_minutes += 15;
+    } else {
+        watched_minutes = end_time;
+    }
+
+    printf("%d\n", watched_minutes);
+    
+    return 0;
+}
 

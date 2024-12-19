@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int success_a = 0, packets_a = 0;
+    int success_b = 0, packets_b = 0;
+
+    for (int i = 0; i < n; i++) {
+        int t, x, y;
+        scanf("%d %d %d", &t, &x, &y);
+
+        if (t == 1) {
+            success_a += x;
+            packets_a += 10;
+        } else {
+            success_b += x;
+            packets_b += 10;
+        }
+    }
+
+    if (success_a >= packets_a / 2) {
+        printf("LIVE\n");
+    } else {
+        printf("DEAD\n");
+    }
+
+    if (success_b >= packets_b / 2) {
+        printf("LIVE\n");
+    } else {
+        printf("DEAD\n");
+    }
+
+    return 0;
+}
 

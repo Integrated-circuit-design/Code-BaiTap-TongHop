@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int total_places_in_lane = 2 * m;
+    int lane = (k - 1) / total_places_in_lane + 1;
+    int local_position = k - (lane - 1) * total_places_in_lane;
+    int desk = (local_position + 1) / 2;
+    char side = (local_position % 2 == 1) ? 'L' : 'R';
+
+    printf("%d %d %c\n", lane, desk, side);
+
+    return 0;
+}
 

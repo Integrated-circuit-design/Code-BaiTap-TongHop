@@ -1,1 +1,20 @@
+# Function to determine if Masha should take the elevator or the stairs
+def should_take_elevator(x, y, z, t1, t2, t3):
+    # Calculate time to use the stairs
+    stairs_time = abs(x - y) * t1
+
+    # Calculate time to use the elevator
+    elevator_to_masha = abs(z - x) * t2  # Time for the elevator to reach Masha
+    elevator_to_egor = abs(x - y) * t2   # Time for the elevator to reach Egor's floor
+    doors_time = 2 * t3                  # Time for doors to open and close twice
+    elevator_time = elevator_to_masha + doors_time + elevator_to_egor + t3  # Total elevator time
+
+    # Compare times and return the result
+    return "YES" if elevator_time <= stairs_time else "NO"
+
+# Read input values
+x, y, z, t1, t2, t3 = map(int, input().split())
+
+# Output the result
+print(should_take_elevator(x, y, z, t1, t2, t3))
 

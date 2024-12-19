@@ -1,20 +1,25 @@
-# Function to determine if Masha should take the elevator or the stairs
-def should_take_elevator(x, y, z, t1, t2, t3):
-    # Calculate time to use the stairs
-    stairs_time = abs(x - y) * t1
+#include <stdio.h>
+#include <stdlib.h>
 
-    # Calculate time to use the elevator
-    elevator_to_masha = abs(z - x) * t2  # Time for the elevator to reach Masha
-    elevator_to_egor = abs(x - y) * t2   # Time for the elevator to reach Egor's floor
-    doors_time = 2 * t3                  # Time for doors to open and close twice
-    elevator_time = elevator_to_masha + doors_time + elevator_to_egor + t3  # Total elevator time
+int tinh_thoi_gian(int tang_bat_dau, int tang_ket_thuc, int tg_moi_tang) {
+    return abs(tang_bat_dau - tang_ket_thuc) * tg_moi_tang;
+}
 
-    # Compare times and return the result
-    return "YES" if elevator_time <= stairs_time else "NO"
+const char* lua_chon_tot_nhat(int tang_masha, int tang_egor, int tang_thang_may, int tg_cau_thang, int tg_thang_may, int tg_cua) {
+    int tg_di_cau_thang = tinh_thoi_gian(tang_masha, tang_egor, tg_cau_thang);
+    int tg_thang_may_toi_masha = tinh_thoi_gian(tang_thang_may, tang_masha, tg_thang_may);
+    int tg_thang_may_toi_egor = tinh_thoi_gian(tang_masha, tang_egor, tg_thang_may);
+    int tg_di_thang_may = tg_thang_may_toi_masha + tg_thang_may_toi_egor + 2 * tg_cua + tg_cua;
+    if (tg_di_thang_may <= tg_di_cau_thang) {
+        return "YES";
+    } else {
+        return "NO";
+    }
+}
 
-# Read input values
-x, y, z, t1, t2, t3 = map(int, input().split())
-
-# Output the result
-print(should_take_elevator(x, y, z, t1, t2, t3))
-
+int main() {
+    int tang_masha, tang_egor, tang_thang_may, tg_cau_thang, tg_thang_may, tg_cua;
+    scanf("%d %d %d %d %d %d", &tang_masha, &tang_egor, &tang_thang_may, &tg_cau_thang, &tg_thang_may, &tg_cua);
+    printf("%s\n", lua_chon_tot_nhat(tang_masha, tang_egor, tang_thang_may, tg_cau_thang, tg_thang_may, tg_cua));
+    return 0;
+}

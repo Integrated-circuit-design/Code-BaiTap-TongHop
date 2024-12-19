@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    long long n, x, y;
+    scanf("%lld", &n);
+    scanf("%lld %lld", &x, &y);
+
+    long long whiteKingDistance = (x - 1) > 0 ? (x - 1) : (1 - x);
+    long long blackKingDistance = (x - n) > 0 ? (x - n) : (n - x);
+    long long whiteKingVertical = (y - 1) > 0 ? (y - 1) : (1 - y);
+    long long blackKingVertical = (y - n) > 0 ? (y - n) : (n - y);
+
+    whiteKingDistance += whiteKingVertical;
+    blackKingDistance += blackKingVertical;
+    
+    if (whiteKingDistance <= blackKingDistance) {
+        printf("White\n");
+    } else {
+        printf("Black\n");
+    }
+
+    return 0;
+}
 

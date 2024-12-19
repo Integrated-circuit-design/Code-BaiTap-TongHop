@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int n, h, m;
+    scanf("%d %d %d", &n, &h, &m);
+    
+    int height[51];
+    
+    for (int i = 1; i <= n; i++) {
+        height[i] = h;
+    }
+    
+    for (int i = 0; i < m; i++) {
+        int l, r, x;
+        scanf("%d %d %d", &l, &r, &x);
+        
+        for (int j = l; j <= r; j++) {
+            if (height[j] > x) {
+                height[j] = x;
+            }
+        }
+    }
+    
+    long long profit = 0;
+    for (int i = 1; i <= n; i++) {
+        profit += (long long) height[i] * height[i];
+    }
+    
+    printf("%lld\n", profit);
+    
+    return 0;
+}
 

@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int K;
+    scanf("%d", &K);
+    
+    int ranks[25] = {0};
+
+    for (int i = 0; i < K; i++) {
+        int rank;
+        scanf("%d", &rank);
+        if (rank <= 25) {
+            ranks[rank - 1] = 1;
+        }
+    }
+    
+    int declined_count = 0;
+    
+    for (int i = 0; i < 25; i++) {
+        if (ranks[i] == 0) {
+            declined_count++;
+        }
+    }
+
+    printf("%d\n", declined_count);
+
+    return 0;
+}
 

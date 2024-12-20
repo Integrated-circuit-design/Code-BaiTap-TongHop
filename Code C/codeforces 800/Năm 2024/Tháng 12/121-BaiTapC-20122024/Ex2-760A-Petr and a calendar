@@ -1,17 +1,15 @@
 #include <stdio.h>
 
 int main() {
-    int m, d;
-    scanf("%d %d", &m, &d);
+    int month, start_day;
+    scanf("%d %d", &month, &start_day);
 
-    int days_in_month[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int days_per_month[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int days_in_month = days_per_month[month];
+    int empty_days = start_day - 1;
+    int total_columns = (days_in_month + empty_days + 6) / 7;
 
-    int total_days = days_in_month[m];
-
-    int offset = d - 1;
-    int columns = (total_days + offset + 6) / 7;
-
-    printf("%d\n", columns);
+    printf("So cot cua lich: %d\n", total_columns);
 
     return 0;
 }

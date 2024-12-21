@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    char s[1001];
+    int i, j = 0;
+    char target[] = "heidi";
+
+    scanf("%s", s);
+
+    for (i = 0; s[i] != '\0'; i++) {
+        if (s[i] == target[j]) {
+            j++;
+        }
+
+        if (j == 5) {
+            printf("YES\n");
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

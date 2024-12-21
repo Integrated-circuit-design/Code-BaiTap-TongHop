@@ -1,1 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    long long total_students, ratio;
+    scanf("%lld %lld", &total_students, &ratio);
+    long long diplomas = total_students / (2 * (1 + ratio));
+    long long certificates = ratio * diplomas;
+    long long non_winners = total_students - (diplomas + certificates);
+    printf("%lld %lld %lld\n", diplomas, certificates, non_winners);
+    return 0;
+}
 

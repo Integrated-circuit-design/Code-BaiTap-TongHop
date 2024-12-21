@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int times[n + 2];
+        
+        times[0] = 0;
+        
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &times[i]);
+        }
+        
+        times[n + 1] = 1440;
+
+        int walk_count = 0;
+
+        for (int i = 0; i <= n; i++) {
+            int duration = times[i + 1] - times[i];
+            
+            if (duration >= 120) {
+                walk_count += (duration / 120); 
+            }
+        }
+
+        if (walk_count >= 2) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c, n, validCount = 0;
+    
+    scanf("%d %d %d", &a, &b, &c);
+    
+    scanf("%d", &n);
+    
+    int banknotes[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &banknotes[i]);
+    }
+    
+    for (int i = 0; i < n; i++) {
+        if (banknotes[i] > b && banknotes[i] < c) {
+            validCount++;
+        }
+    }
+    
+    printf("%d\n", validCount);
+
+    return 0;
+}
 

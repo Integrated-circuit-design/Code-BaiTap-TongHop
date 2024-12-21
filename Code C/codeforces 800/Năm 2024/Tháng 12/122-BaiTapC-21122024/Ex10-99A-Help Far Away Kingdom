@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+void round_number(char *number) {
+    int i = 0, length = strlen(number);
+    // Find the position of the dot (.)
+    while (i < length && number[i] != '.') {
+        i++;
+    }
+
+    if (i == length) {
+        // No dot, no fractional part, print the number as is
+        printf("%s\n", number);
+        return;
+    }
+
+    // Process integer part
+    char integer_part[1001];
+    strncpy(integer_part, number, i); // Copy integer part
+    integer_part[i] = '\0';  // Null-terminate the string
+
+    // Check if the last digit of the integer part is '9'
+    if (integer_part[i - 1] == '9') {
+        printf("GOTO Vasilisa.\n");
+        return;
+    }
+
+    // Process fractional part (after the dot)
+    int fractional_start = i + 1;
+    int round_up = 0;
+    if (fractional_start < length && number[fractional_start] >= '5') {
+        round_up = 1;  // Round up if the first digit of fractional part >= 5
+    }
+
+    if (round_up) {
+        // Convert integer part to number, increase by 1
+        int integer_value = atoi(integer_part);
+        printf("%d\n", integer_value + 1);
+    } else {
+        // Print the integer part as is if no rounding needed
+        printf("%s\n", integer_part);
+    }
+}
+
+int main() {
+    char number[1001];
+    // Read the number from the input
+    scanf("%s", number);
+
+    // Call the rounding function
+    round_number(number);
+
+    return 0;
+}
 

@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int n, a, b;
+    scanf("%d %d %d", &n, &a, &b);
+    
+    int apples[n+1];
+
+    for (int i = 1; i <= n; i++) {
+        apples[i] = 0;
+    }
+    
+    for (int i = 0; i < a; i++) {
+        int apple;
+        scanf("%d", &apple);
+        apples[apple] = 1;
+    }
+    
+    for (int i = 0; i < b; i++) {
+        int apple;
+        scanf("%d", &apple);
+        if (apples[apple] == 0) {
+            apples[apple] = 2;
+        }
+    }
+    
+    for (int i = 1; i <= n; i++) {
+        printf("%d ", apples[i]);
+    }
+    
+    return 0;
+}
 

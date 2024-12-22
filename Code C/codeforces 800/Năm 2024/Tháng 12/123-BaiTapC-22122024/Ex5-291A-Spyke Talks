@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int *calls = (int *)malloc(n * sizeof(int));
+    int *count = (int *)calloc(1000000000 + 1, sizeof(int));
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &calls[i]);
+        if (calls[i] != 0) {
+            count[calls[i]]++;
+        }
+    }
+
+    int pairs = 0;
+    int valid = 1;
+
+    for (int i = 0; i <= 1000000000; i++) {
+        if (count[i] > 2) {
+            valid = 0;
+            break;
+        } else if (count[i] == 2) {
+            pairs++;
+        }
+    }
+
+    if (valid) {
+        printf("%d\n", pairs);
+    } else {
+        printf("-1\n");
+    }
+
+    free(calls);
+    free(count);
+
+    return 0;
+}
 

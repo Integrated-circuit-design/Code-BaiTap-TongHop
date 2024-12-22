@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int num_events;
+    scanf("%d", &num_events);
+
+    int people_waiting = 0;
+    char event;
+    int count;
+
+    for (int i = 0; i < num_events; i++) {
+        scanf(" %c %d", &event, &count);
+
+        if (event == 'P') {
+            people_waiting += count;
+        } else if (event == 'B') {
+            if (people_waiting <= count) {
+                printf("YES\n");
+                people_waiting = 0;
+            } else {
+                printf("NO\n");
+                people_waiting -= count;
+            }
+        }
+    }
+
+    return 0;
+}
 

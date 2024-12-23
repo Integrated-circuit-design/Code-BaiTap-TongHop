@@ -1,1 +1,14 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char p[101];
+    fgets(p, sizeof(p), stdin);
+    if (strchr(p, 'H') != NULL || strchr(p, 'Q') != NULL || strchr(p, '9') != NULL) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    return 0;
+}
 

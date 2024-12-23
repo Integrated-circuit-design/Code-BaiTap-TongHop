@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+
+void print_binary(int num, int N) {
+    for (int i = N - 1; i >= 0; i--) {
+        int bit = (num >> i) & 1;
+        printf("%d", bit);
+    }
+}
+
+void generate_superposition(int N) {
+    int numStates = (1 << N);
+    printf("Siêu vị của %d qubit (tất cả trạng thái cơ sở):\n", N);
+    double amplitude = 1.0 / sqrt(numStates);
+
+    for (int i = 0; i < numStates; i++) {
+        printf("Trạng thái |");
+        print_binary(i, N);
+        printf("> : %.6f\n", amplitude);
+    }
+}
+
+int main() {
+    int N;
+    printf("Nhập số lượng qubit (1 <= N <= 8): ");
+    scanf("%d", &N);
+    
+    if (N < 1 || N > 8) {
+        printf("Số lượng qubit không hợp lệ. Vui lòng nhập giá trị từ 1 đến 8.\n");
+        return 1;
+    }
+
+    generate_superposition(N);
+    
+    return 0;
+}
 

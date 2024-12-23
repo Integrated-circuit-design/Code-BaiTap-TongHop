@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        long long a[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+        
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (a[j] > a[j + 1]) {
+                    long long temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+            }
+        }
+        
+        long long max_earnings = 0;
+        
+        for (int i = 0; i < n; i++) {
+            long long price = a[i];
+            int count = n - i;
+            long long earnings = price * count;
+            
+            if (earnings > max_earnings) {
+                max_earnings = earnings;
+            }
+        }
+        
+        printf("%lld\n", max_earnings);
+    }
+    
+    return 0;
+}
 

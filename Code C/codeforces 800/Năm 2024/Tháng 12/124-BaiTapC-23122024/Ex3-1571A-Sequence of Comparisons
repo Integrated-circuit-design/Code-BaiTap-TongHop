@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+void processTestCase(char* s) {
+    int n = strlen(s);
+    int left = 0, right = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '<') left = 1;
+        if (s[i] == '>') right = 1;
+    }
+
+    if (left && right) {
+        printf("?\n");
+    } else if (left) {
+        printf("<\n");
+    } else if (right) {
+        printf(">\n");
+    } else {
+        printf("=\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[101];
+        scanf("%s", s);
+
+        processTestCase(s);
+    }
+
+    return 0;
+}
 

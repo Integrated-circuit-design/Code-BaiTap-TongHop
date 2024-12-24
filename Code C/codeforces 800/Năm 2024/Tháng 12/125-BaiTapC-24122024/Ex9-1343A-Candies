@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        for (int k = 2; ; ++k) {
+            int sum = 1;
+            int power_of_two = 1;
+            
+            for (int i = 1; i < k; ++i) {
+                power_of_two *= 2;
+                sum += power_of_two;
+            }
+            
+            if (n % sum == 0) {
+                printf("%d\n", n / sum);
+                break;
+            }
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

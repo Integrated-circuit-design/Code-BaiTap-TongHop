@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    if (n >= 0) {
+        printf("%lld\n", n);
+    } else {
+        long long abs_n = -n;
+        long long last_digit = abs_n % 10;
+        long long second_last_digit = (abs_n / 10) % 10;
+
+        long long option1 = abs_n / 10;
+        long long option2 = (abs_n / 100) * 10 + last_digit;
+
+        long long result = option1 < option2 ? option1 : option2;
+
+        printf("-%lld\n", result);
+    }
+
+    return 0;
+}
 

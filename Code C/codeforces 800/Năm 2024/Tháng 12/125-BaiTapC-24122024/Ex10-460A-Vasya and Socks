@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int totalDays = 0;
+    int socks = n;
+
+    while (socks > 0) {
+        totalDays++;
+        socks--;
+
+        if (totalDays % m == 0) {
+            socks++;
+        }
+    }
+
+    printf("%d\n", totalDays);
+    return 0;
+}
 

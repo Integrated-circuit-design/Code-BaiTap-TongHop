@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+void selectionSort(int arr[], int n) {
+    int i, j, minIndex, temp;
+    for (i = 0; i < n - 1; i++) {
+        minIndex = i;
+        for (j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        temp = arr[minIndex];
+        arr[minIndex] = arr[i];
+        arr[i] = temp;
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int puzzles[m];
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &puzzles[i]);
+    }
+
+    selectionSort(puzzles, m);
+
+    int min_diff = 1001;
+    for (int i = 0; i <= m - n; i++) {
+        int diff = puzzles[i + n - 1] - puzzles[i];
+        if (diff < min_diff) {
+            min_diff = diff;
+        }
+    }
+
+    printf("%d\n", min_diff);
+
+    return 0;
+}
 

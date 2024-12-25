@@ -1,17 +1,30 @@
-def is_magic_number(n):
-    num_str = str(n)
-    i = 0
-    while i < len(num_str):
-        if num_str[i:i+3] == '144':
-            i += 3
-        elif num_str[i:i+2] == '14':
-            i += 2
-        elif num_str[i] == '1':
-            i += 1
-        else:
-            return "NO"
-    return "YES"
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 
-n = int(input())
-print(is_magic_number(n))
+bool is_magic_number(const char *num_str) {
+    int i = 0;
+    while (num_str[i] != '\0') {
+        if (num_str[i] == '1' && num_str[i + 1] == '4' && num_str[i + 2] == '4') {
+            i += 3;
+        } else if (num_str[i] == '1' && num_str[i + 1] == '4') {
+            i += 2;
+        } else if (num_str[i] == '1') {
+            i += 1;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
 
+int main() {
+    char num_str[11];
+    scanf("%s", num_str);
+    if (is_magic_number(num_str)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    return 0;
+}

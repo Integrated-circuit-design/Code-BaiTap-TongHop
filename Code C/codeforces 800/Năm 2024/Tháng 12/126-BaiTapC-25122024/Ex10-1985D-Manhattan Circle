@@ -1,1 +1,49 @@
+def find_manhattan_circle_center(t, test_cases):
+    results = []
+
+    for case in test_cases:
+        n, m, grid = case['n'], case['m'], case['grid']
+
+        points = []
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] == '#':
+                    points.append((i + 1, j + 1))
+
+        min_row = min(p[0] for p in points)
+        max_row = max(p[0] for p in points)
+        min_col = min(p[1] for p in points)
+        max_col = max(p[1] for p in points)
+
+        center_row = (min_row + max_row) // 2
+        center_col = (min_col + max_col) // 2
+
+        results.append((center_row, center_col))
+
+    return results
+
+import sys
+input = sys.stdin.read
+
+data = input().split()
+
+t = int(data[0])
+index = 1
+
+test_cases = []
+for _ in range(t):
+    n, m = map(int, data[index:index + 2])
+    index += 2
+
+    grid = []
+    for _ in range(n):
+        grid.append(data[index])
+        index += 1
+
+    test_cases.append({'n': n, 'm': m, 'grid': grid})
+
+results = find_manhattan_circle_center(t, test_cases)
+
+for result in results:
+    print(result[0], result[1])
 

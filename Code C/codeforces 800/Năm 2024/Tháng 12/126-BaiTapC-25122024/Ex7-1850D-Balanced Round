@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int* a = (int*)malloc(n * sizeof(int));
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        insertionSort(a, n);
+
+        int maxSubsetSize = 0;
+        int start = 0;
+
+        for (int end = 0; end < n; end++) {
+            while (a[end] - a[start] > k) {
+                start++;
+            }
+            int currentSubsetSize = end - start + 1;
+            if (currentSubsetSize > maxSubsetSize) {
+                maxSubsetSize = currentSubsetSize;
+            }
+        }
+
+        int result = n - maxSubsetSize;
+        printf("%d\n", result);
+        free(a);
+    }
+
+    return 0;
+}
 

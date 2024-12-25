@@ -1,1 +1,17 @@
+def is_magic_number(n):
+    num_str = str(n)
+    i = 0
+    while i < len(num_str):
+        if num_str[i:i+3] == '144':
+            i += 3
+        elif num_str[i:i+2] == '14':
+            i += 2
+        elif num_str[i] == '1':
+            i += 1
+        else:
+            return "NO"
+    return "YES"
+
+n = int(input())
+print(is_magic_number(n))
 

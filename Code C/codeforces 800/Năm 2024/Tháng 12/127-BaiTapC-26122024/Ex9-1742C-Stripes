@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char grid[8][8];
+
+        getchar(); 
+
+        for (int i = 0; i < 8; i++) {
+            fgets(grid[i], 9, stdin);
+        }
+
+        char lastStripe = 'R';
+
+        int foundRed = 0;
+        for (int i = 0; i < 8; i++) {
+            int isRedRow = 1;
+            for (int j = 0; j < 8; j++) {
+                if (grid[i][j] != 'R') {
+                    isRedRow = 0;
+                    break;
+                }
+            }
+            if (isRedRow) {
+                foundRed = 1;
+                break;
+            }
+        }
+
+        if (!foundRed) {
+            int foundBlue = 0;
+            for (int j = 0; j < 8; j++) {
+                int isBlueCol = 1;
+                for (int i = 0; i < 8; i++) {
+                    if (grid[i][j] != 'B') {
+                        isBlueCol = 0;
+                        break;
+                    }
+                }
+                if (isBlueCol) {
+                    foundBlue = 1;
+                    break;
+                }
+            }
+
+            if (foundBlue) {
+                lastStripe = 'B';
+            }
+        }
+
+        printf("%c\n", lastStripe);
+    }
+
+    return 0;
+}
 

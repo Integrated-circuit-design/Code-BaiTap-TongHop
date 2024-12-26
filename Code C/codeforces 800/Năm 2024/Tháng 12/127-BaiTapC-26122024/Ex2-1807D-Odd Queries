@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAX_N 200000
+#define MAX_Q 200000
+
+long long prefix[MAX_N + 1];
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+        
+        long long a[n + 1];
+        long long sum_a = 0;
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%lld", &a[i]);
+            sum_a += a[i];
+            prefix[i] = prefix[i - 1] + a[i];
+        }
+
+        while (q--) {
+            int l, r, k;
+            scanf("%d %d %d", &l, &r, &k);
+            
+            long long range_sum = prefix[r] - prefix[l - 1];
+            int len_range = r - l + 1;
+            
+            long long new_sum = sum_a - range_sum + len_range * k;
+            if (new_sum % 2 == 1) {
+                printf("YES\n");
+            } else {
+                printf("NO\n");
+            }
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

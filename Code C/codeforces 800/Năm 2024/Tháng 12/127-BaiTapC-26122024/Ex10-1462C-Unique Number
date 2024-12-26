@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+void findSmallestUniqueNumber(int x) {
+    if (x > 45) {
+        printf("-1\n");
+        return;
+    }
+
+    int sum = 0;
+    int number = 0;
+
+    for (int i = 9; i >= 1; i--) {
+        if (sum + i <= x) {
+            sum += i;
+            number = number * 10 + i;
+        }
+    }
+
+    if (sum != x) {
+        printf("-1\n");
+    } else {
+        int result = 0;
+        while (number > 0) {
+            result = result * 10 + (number % 10);
+            number /= 10;
+        }
+        printf("%d\n", result);
+    }
+}
+
+int main() {
+    int t, x;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &x);
+        findSmallestUniqueNumber(x);
+    }
+
+    return 0;
+}
 

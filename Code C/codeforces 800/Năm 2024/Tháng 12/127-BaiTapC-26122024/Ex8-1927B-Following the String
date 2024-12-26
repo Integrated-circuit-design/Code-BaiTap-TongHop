@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 200005
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[MAX_N];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        char result[MAX_N];
+        char used_chars[26] = {0};
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] == 0) {
+                for (char c = 'a'; c <= 'z'; c++) {
+                    if (!used_chars[c - 'a']) {
+                        result[i] = c;
+                        used_chars[c - 'a'] = 1;
+                        break;
+                    }
+                }
+            } else {
+                result[i] = result[a[i] - 1];
+            }
+        }
+
+        result[n] = '\0';
+        printf("%s\n", result);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

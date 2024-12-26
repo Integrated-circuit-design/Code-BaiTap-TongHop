@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_CHAR 26
+
+int is_palindrome_possible(int n, int k, char* s) {
+    int freq[MAX_CHAR];
+    memset(freq, 0, sizeof(freq));
+
+    for (int i = 0; i < n; i++) {
+        freq[s[i] - 'a']++;
+    }
+
+    int odd_count = 0;
+    for (int i = 0; i < MAX_CHAR; i++) {
+        if (freq[i] % 2 != 0) {
+            odd_count++;
+        }
+    }
+
+    int remaining_length = n - k;
+
+    if (remaining_length % 2 == 0) {
+        return odd_count == 0 || odd_count <= remaining_length;
+    } else {
+        return odd_count <= remaining_length;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        char s[100001];
+
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+
+        if (is_palindrome_possible(n, k, s)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

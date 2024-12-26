@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 1000000
+
+int containsSubstring(char *s, int n, const char *substring) {
+    int m = strlen(substring);
+    for (int i = 0; i <= n - m; i++) {
+        if (strncmp(&s[i], substring, m) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int solveTestCase(char *s, int n) {
+    int minDeletions = 0;
+
+    while (containsSubstring(s, n, "pie") || containsSubstring(s, n, "map")) {
+        for (int i = 0; i < n; i++) {
+            if (i + 2 < n && (strncmp(&s[i], "pie", 3) == 0 || strncmp(&s[i], "map", 3) == 0)) {
+                for (int j = i + 1; j < n - 1; j++) {
+                    s[j] = s[j + 1];
+                }
+                n--;
+                minDeletions++;
+                break;
+            }
+        }
+    }
+
+    return minDeletions;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[MAX_N + 1];
+
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        printf("%d\n", solveTestCase(s, n));
+    }
+
+    return 0;
+}
 

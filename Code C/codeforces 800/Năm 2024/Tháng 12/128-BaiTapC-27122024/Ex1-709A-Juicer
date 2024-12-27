@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n, b, d;
+    scanf("%d %d %d", &n, &b, &d);
+
+    int totalWaste = 0, numResets = 0;
+
+    for (int i = 0; i < n; i++) {
+        int currentOrange;
+        scanf("%d", &currentOrange);
+
+        if (currentOrange <= b) {
+            totalWaste += currentOrange;
+
+            if (totalWaste > d) {
+                numResets++;
+                totalWaste = 0;
+            }
+        }
+    }
+
+    printf("%d\n", numResets);
+
+    return 0;
+}
 

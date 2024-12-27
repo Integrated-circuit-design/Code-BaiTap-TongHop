@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 200005
+
+void process_word(int n, char *word) {
+    int index = 0;
+
+    while (index < n) {
+        if (index + 1 < n && (word[index] == 'b' || word[index] == 'c' || word[index] == 'd') && (word[index + 1] == 'a' || word[index + 1] == 'e')) {
+            printf("%c%c", word[index], word[index + 1]);
+            index += 2;
+        } else if (index + 2 < n && (word[index] == 'b' || word[index] == 'c' || word[index] == 'd') && (word[index + 1] == 'a' || word[index + 1] == 'e') && (word[index + 2] == 'b' || word[index + 2] == 'c' || word[index + 2] == 'd')) {
+            printf("%c%c%c", word[index], word[index + 1], word[index + 2]);
+            index += 3;
+        }
+        if (index < n) {
+            printf(".");
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int length;
+        char word[MAX_LEN];
+
+        scanf("%d", &length);
+        scanf("%s", word);
+
+        process_word(length, word);
+    }
+
+    return 0;
+}
 

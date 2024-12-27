@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int min_cost(int n, char* s) {
+    int cost = 1;
+    int increasing = 0;
+    int decreasing = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '<') {
+            increasing++;
+            if (decreasing > 0) {
+                cost++;
+                decreasing = 0;
+            }
+        } else if (s[i] == '>') {
+            decreasing++;
+            if (increasing > 0) {
+                cost++;
+                increasing = 0;
+            }
+        }
+    }
+    return cost;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char s[n + 1];
+        scanf("%s", s);
+
+        printf("%d\n", min_cost(n, s));
+    }
+
+    return 0;
+}
 

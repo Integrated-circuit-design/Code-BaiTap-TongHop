@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+long long min_baking_time(long long n) {
+    long long time = 0;
+
+    long long large_pizzas = n / 10;
+    n = n % 10;
+    time += large_pizzas * 25;
+
+    long long medium_pizzas = n / 8;
+    n = n % 8;
+    time += medium_pizzas * 20;
+
+    if (n > 0) {
+        time += 15;
+    }
+
+    return time;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+
+        printf("%lld\n", min_baking_time(n));
+    }
+
+    return 0;
+}
 

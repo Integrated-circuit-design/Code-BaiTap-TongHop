@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long s;
+        scanf("%lld", &s);
+
+        long long totalSpent = s;
+
+        while (s >= 10) {
+            long long cashback = s / 10;
+            totalSpent += cashback;
+            s = (s % 10) + cashback;
+        }
+
+        printf("%lld\n", totalSpent);
+    }
+
+    return 0;
+}
 

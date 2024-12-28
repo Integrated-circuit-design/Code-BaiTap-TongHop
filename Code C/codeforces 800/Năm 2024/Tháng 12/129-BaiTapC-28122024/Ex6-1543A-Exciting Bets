@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+        
+        if (a == b) {
+            printf("0 0\n");
+        } else {
+            long long g = abs(a - b);
+            long long remainder_a = a % g;
+            long long remainder_b = b % g;
+            
+            long long moves_a = g - remainder_a;
+            long long moves_b = g - remainder_b;
+
+            printf("%lld %lld\n", g, remainder_a < remainder_b ? remainder_a : remainder_b);
+        }
+    }
+    
+    return 0;
+}
 

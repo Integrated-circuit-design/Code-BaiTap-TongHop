@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int solveTestCase(int n, int arr[]) {
+    int totalOperations = 0;
+
+    for (int i = n - 1; i > 0; i--) {
+        while (arr[i] >= arr[i - 1]) {
+            if (arr[i] == 0) {
+                return -1;
+            }
+            arr[i] /= 2;
+            totalOperations++;
+        }
+    }
+
+    return totalOperations;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        int result = solveTestCase(n, arr);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

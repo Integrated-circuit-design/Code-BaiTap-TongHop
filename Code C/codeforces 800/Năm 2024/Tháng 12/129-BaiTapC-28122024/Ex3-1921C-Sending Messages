@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+int can_send_messages(int n, long long f, long long a, long long b, long long m[]) {
+    long long current_charge = f;
+    long long prev_time = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long delta_t = m[i] - prev_time;
+
+        long long consumption_on = delta_t * a;
+        
+        long long consumption_off_on = b;
+
+        if (consumption_on <= consumption_off_on) {
+            current_charge -= consumption_on;
+        } else {
+            current_charge -= consumption_off_on;
+        }
+
+        if (current_charge <= 0) {
+            return 0;
+        }
+
+        prev_time = m[i];
+    }
+    
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        int n;
+        long long f, a, b;
+        scanf("%d %lld %lld %lld", &n, &f, &a, &b);
+
+        long long m[n];
+        for (int j = 0; j < n; j++) {
+            scanf("%lld", &m[j]);
+        }
+
+        if (can_send_messages(n, f, a, b, m)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

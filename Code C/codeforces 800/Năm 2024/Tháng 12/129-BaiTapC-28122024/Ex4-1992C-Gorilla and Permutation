@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+
+        int first_part[k - m], second_part[n - (k - m) - m];
+        int idx = 0;
+
+        for (int i = k; i <= n; i++) {
+            first_part[idx++] = i;
+        }
+
+        idx = 0;
+        for (int i = m + 1; i < k; i++) {
+            second_part[idx++] = i;
+        }
+
+        for (int i = 0; i < (k - m); i++) {
+            printf("%d ", first_part[i]);
+        }
+
+        for (int i = 0; i < (n - (k - m) - m); i++) {
+            printf("%d ", second_part[i]);
+        }
+
+        for (int i = 1; i <= m; i++) {
+            printf("%d ", i);
+        }
+
+        printf("\n");
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

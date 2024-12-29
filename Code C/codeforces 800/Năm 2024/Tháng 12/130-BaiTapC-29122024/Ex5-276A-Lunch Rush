@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long k, fi, ti, joy, max_joy = -1e18;
+
+    scanf("%d %lld", &n, &k);
+
+    while (n--) {
+        scanf("%lld %lld", &fi, &ti);
+
+        if (ti > k) {
+            joy = fi - (ti - k);
+        } else {
+            joy = fi;
+        }
+
+        if (joy > max_joy) {
+            max_joy = joy;
+        }
+    }
+
+    printf("%lld\n", max_joy);
+
+    return 0;
+}
 

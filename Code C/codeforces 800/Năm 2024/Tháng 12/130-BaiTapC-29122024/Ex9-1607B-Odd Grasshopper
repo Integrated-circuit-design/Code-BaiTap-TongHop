@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+long long calculate_position(long long x0, long long n) {
+    long long current_position = x0;
+    for (long long i = 1; i <= n; i++) {
+        if (current_position % 2 == 0) {
+            current_position -= i;
+        } else {
+            current_position += i;
+        }
+    }
+    return current_position;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long x0, n;
+        scanf("%lld %lld", &x0, &n);
+        printf("%lld\n", calculate_position(x0, n));
+    }
+
+    return 0;
+}
 

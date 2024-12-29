@@ -1,1 +1,37 @@
+def find_dominant_piranha(test_cases):
+    results = []
+    
+    for n, a in test_cases:
+        max_size = max(a)
+        candidate_index = -1
+
+        for i in range(n):
+            if a[i] == max_size:
+                if (i > 0 and a[i - 1] < a[i]) or (i < n - 1 and a[i + 1] < a[i]):
+                    candidate_index = i + 1
+                    break
+
+        results.append(candidate_index if candidate_index != -1 else -1)
+
+    return results
+
+import sys
+input = sys.stdin.read
+
+data = input().split()
+
+t = int(data[0])
+index = 1
+
+test_cases = []
+for _ in range(t):
+    n = int(data[index])
+    index += 1
+    a = list(map(int, data[index:index + n]))
+    index += n
+    test_cases.append((n, a))
+
+answers = find_dominant_piranha(test_cases)
+
+sys.stdout.write("\n".join(map(str, answers)) + "\n")
 

@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long findMaxDivisorInterval(long long n) {
+    long long divisors[1000];
+    int count = 0;
+
+    for (long long i = 1; i * i <= n; ++i) {
+        if (n % i == 0) {
+            divisors[count++] = i;
+            if (i != n / i) {
+                divisors[count++] = n / i;
+            }
+        }
+    }
+
+    qsort(divisors, count, sizeof(long long), (int (*)(const void*, const void*))compare);
+
+    long long maxSize = 1;
+    for (int i = 1; i < count; ++i) {
+        if (divisors[i] == divisors[i-1] + 1) {
+            long long currentSize = divisors[i] - divisors[i-1] + 1;
+            if (currentSize > maxSize) {
+                maxSize = currentSize;
+            }
+        }
+    }
+
+    return maxSize;
+}
+
+int compare(const void *a, const void *b) {
+    return (*(long long*)a - *(long long*)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        printf("%lld\n", findMaxDivisorInterval(n));
+    }
+
+    return 0;
+}
 

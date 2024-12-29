@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+long long f_a(long long x, long long a) {
+    return (x / a) + (x % a);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long l, r, a;
+        scanf("%lld %lld %lld", &l, &r, &a);
+
+        long long result = f_a(r, a);
+
+        long long k = r / a;
+        long long critical_x = k * a - 1;
+
+        if (critical_x >= l) {
+            long long critical_result = f_a(critical_x, a);
+            if (critical_result > result) {
+                result = critical_result;
+            }
+        }
+
+        long long left_result = f_a(l, a);
+        if (left_result > result) {
+            result = left_result;
+        }
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

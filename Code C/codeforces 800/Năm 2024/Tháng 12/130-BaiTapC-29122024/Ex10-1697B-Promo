@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200000
+
+int compare(const void *a, const void *b) {
+    return (*(int *)b - *(int *)a);
+}
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    int prices[MAX_N];
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &prices[i]);
+    }
+
+    qsort(prices, n, sizeof(int), compare);
+
+    while (q--) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+
+        int sum = 0;
+        for (int i = 0; i < y; ++i) {
+            sum += prices[i];
+        }
+
+        printf("%d\n", sum);
+    }
+
+    return 0;
+}
 

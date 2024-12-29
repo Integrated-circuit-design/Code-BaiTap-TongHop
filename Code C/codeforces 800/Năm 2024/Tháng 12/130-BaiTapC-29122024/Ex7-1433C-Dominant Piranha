@@ -1,37 +1,41 @@
-def find_dominant_piranha(test_cases):
-    results = []
-    
-    for n, a in test_cases:
-        max_size = max(a)
-        candidate_index = -1
+#include <stdio.h>
 
-        for i in range(n):
-            if a[i] == max_size:
-                if (i > 0 and a[i - 1] < a[i]) or (i < n - 1 and a[i + 1] < a[i]):
-                    candidate_index = i + 1
-                    break
+int find_dominant(int n, int a[]) {
+    int max_value = 0;
 
-        results.append(candidate_index if candidate_index != -1 else -1)
+    for (int i = 0; i < n; i++) {
+        if (a[i] > max_value) {
+            max_value = a[i];
+        }
+    }
 
-    return results
+    for (int i = 0; i < n; i++) {
+        if (a[i] == max_value) {
+            if ((i > 0 && a[i - 1] < a[i]) || (i < n - 1 && a[i + 1] < a[i])) {
+                return i + 1;
+            }
+        }
+    }
 
-import sys
-input = sys.stdin.read
+    return -1;
+}
 
-data = input().split()
+int main() {
+    int t;
+    scanf("%d", &t);
 
-t = int(data[0])
-index = 1
+    while (t--) {
+        int n;
+        scanf("%d", &n);
 
-test_cases = []
-for _ in range(t):
-    n = int(data[index])
-    index += 1
-    a = list(map(int, data[index:index + n]))
-    index += n
-    test_cases.append((n, a))
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
 
-answers = find_dominant_piranha(test_cases)
+        int result = find_dominant(n, a);
+        printf("%d\n", result);
+    }
 
-sys.stdout.write("\n".join(map(str, answers)) + "\n")
-
+    return 0;
+}

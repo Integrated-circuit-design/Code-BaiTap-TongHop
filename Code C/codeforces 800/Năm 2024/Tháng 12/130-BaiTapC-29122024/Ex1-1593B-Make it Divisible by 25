@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int min_steps_to_make_divisible_by_25(char *n) {
+    int length = strlen(n);
+    int min_steps = length;
+
+    char *pairs[] = {"00", "25", "50", "75"};
+    for (int p = 0; p < 4; ++p) {
+        int pair_index = 1;
+        for (int i = length - 1; i >= 0; --i) {
+            if (n[i] == pairs[p][pair_index]) {
+                --pair_index;
+                if (pair_index < 0) {
+                    min_steps = (length - 1 - i) - 1;
+                    break;
+                }
+            }
+        }
+    }
+
+    return min_steps;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char n[20];
+        scanf("%s", n);
+
+        printf("%d\n", min_steps_to_make_divisible_by_25(n));
+    }
+
+    return 0;
+}
 

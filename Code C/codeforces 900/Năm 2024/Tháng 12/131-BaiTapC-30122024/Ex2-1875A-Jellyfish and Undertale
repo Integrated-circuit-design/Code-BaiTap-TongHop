@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, n;
+        scanf("%d %d %d", &a, &b, &n);
+
+        int tools[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &tools[i]);
+        }
+
+        int timer = b;
+        int total_time = 0;
+
+        int used[n];
+        for (int i = 0; i < n; i++) {
+            used[i] = 0;
+        }
+
+        while (timer > 0) {
+            total_time++;
+
+            int max_increase = 0;
+            for (int i = 0; i < n; i++) {
+                if (!used[i] && tools[i] + timer <= a) {
+                    if (tools[i] > max_increase) {
+                        max_increase = tools[i];
+                    }
+                }
+            }
+
+            if (max_increase > 0) {
+                for (int i = 0; i < n; i++) {
+                    if (tools[i] == max_increase && !used[i]) {
+                        used[i] = 1;
+                        break;
+                    }
+                }
+                timer = (timer + max_increase > a) ? a : (timer + max_increase);
+            }
+
+            timer--;
+        }
+
+        printf("%d\n", total_time);
+    }
+
+    return 0;
+}
 

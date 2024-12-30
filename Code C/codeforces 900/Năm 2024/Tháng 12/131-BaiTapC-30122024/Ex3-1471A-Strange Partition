@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <math.h>
+
+long long ceil_div(long long a, long long b) {
+    return (a + b - 1) / b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        long long x;
+        scanf("%d %lld", &n, &x);
+
+        long long sum = 0, max_beauty = 0;
+
+        for (int i = 0; i < n; i++) {
+            long long a;
+            scanf("%lld", &a);
+            sum += a;
+            max_beauty += ceil_div(a, x);
+        }
+
+        long long min_beauty = ceil_div(sum, x);
+
+        printf("%lld %lld\n", min_beauty, max_beauty);
+    }
+
+    return 0;
+}
 

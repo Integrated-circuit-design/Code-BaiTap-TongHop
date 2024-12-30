@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        long long h[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &h[i]);
+        }
+
+        long long carry = 0;
+        int possible = 1;
+
+        for (int i = 0; i < n; i++) {
+            carry += h[i] - i;
+            if (carry < 0) {
+                possible = 0;
+                break;
+            }
+        }
+
+        if (possible) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+long long calculate_sum(long long n) {
+    return (n * (n + 1)) / 2;
+}
+
+long long sum_of_powers_of_two(long long n) {
+    long long sum = 0;
+    long long current_power = 1;
+
+    while (current_power <= n) {
+        sum += current_power;
+        current_power *= 2;
+    }
+
+    return sum;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+
+        long long total_sum = calculate_sum(n);
+        long long power_sum = sum_of_powers_of_two(n);
+        long long result = total_sum - 2 * power_sum;
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int p1, p2, p3;
+        scanf("%d %d %d", &p1, &p2, &p3);
+        
+        int total = p1 + p2 + p3;
+        if (total % 2 != 0) {
+            printf("-1\n");
+            continue;
+        }
+
+        if (p3 > total / 2) {
+            printf("-1\n");
+            continue;
+        }
+
+        int possible_draws = (total / 2) - p3;
+
+        if (possible_draws > p1) {
+            possible_draws = p1;
+        }
+
+        printf("%d\n", possible_draws);
+    }
+    
+    return 0;
+}
 

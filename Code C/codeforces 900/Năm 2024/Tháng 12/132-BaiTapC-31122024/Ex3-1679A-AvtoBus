@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+void processTestCase(long long n) {
+    if (n % 2 != 0 || n < 4) {
+        printf("-1\n");
+        return;
+    }
+
+    long long max_buses = n / 4;
+
+    if (n % 6 == 0) {
+        printf("%lld %lld\n", n / 6, max_buses);
+    } else {
+        long long min_buses = (n / 6);
+        long long remainder = n - (min_buses * 6);
+
+        if (remainder % 4 == 0) {
+            printf("%lld %lld\n", min_buses + (remainder / 4), max_buses);
+        } else {
+            printf("-1\n");
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        
+        processTestCase(n);
+    }
+
+    return 0;
+}
 

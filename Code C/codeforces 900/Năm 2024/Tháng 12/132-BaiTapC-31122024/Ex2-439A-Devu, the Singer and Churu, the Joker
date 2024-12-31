@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n, d;
+    scanf("%d %d", &n, &d);
+
+    int songs[n], total_time = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &songs[i]);
+        total_time += songs[i];
+    }
+
+    int required_time = total_time + 10 * (n - 1);
+
+    if (required_time > d) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int remaining_time = d - required_time;
+    int max_jokes = 2 * (n - 1) + remaining_time / 5;
+
+    printf("%d\n", max_jokes);
+
+    return 0;
+}
 

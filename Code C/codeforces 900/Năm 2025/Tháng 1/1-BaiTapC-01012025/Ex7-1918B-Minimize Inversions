@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n], b[n], temp_a[n], temp_b[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            temp_a[i] = a[i];
+        }
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+            temp_b[i] = b[i];
+        }
+        
+        qsort(temp_a, n, sizeof(int), compare);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (a[j] == temp_a[i]) {
+                    b[i] = b[j];
+                    break;
+                }
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            printf("%d ", temp_a[i]);
+        }
+        printf("\n");
+        
+        for (int i = 0; i < n; i++) {
+            printf("%d ", b[i]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+
+        if (m == 1 || k >= n) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+        }
+    }
+
+    return 0;
+}
 

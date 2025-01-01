@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+char compareNumbers(int x1, int p1, int x2, int p2) {
+    int len1 = p1 + (int)log10(x1) + 1;
+    int len2 = p2 + (int)log10(x2) + 1;
+
+    if (len1 > len2) return '>';
+    if (len1 < len2) return '<';
+
+    while (p1 > p2) {
+        x2 *= 10;
+        p2++;
+    }
+
+    while (p2 > p1) {
+        x1 *= 10;
+        p1++;
+    }
+
+    if (x1 > x2) return '>';
+    if (x1 < x2) return '<';
+    return '=';
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int x1, p1, x2, p2;
+        scanf("%d %d", &x1, &p1);
+        scanf("%d %d", &x2, &p2);
+
+        char result = compareNumbers(x1, p1, x2, p2);
+        printf("%c\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        int contains_one = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            if (a[i] == 1) {
+                contains_one = 1;
+            }
+        }
+
+        if (contains_one) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+        }
+    }
+
+    return 0;
+}
 

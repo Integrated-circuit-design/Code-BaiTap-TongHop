@@ -1,1 +1,34 @@
+def min_operations_to_split_multiset(test_cases):
+    results = []
+    for n, k in test_cases:
+        operations = 0
+        while n > 1:
+            if n <= k:
+                operations += 1
+                break
+            else:
+                operations += 1
+                n = (n + k - 1) // k
+        results.append(operations)
+    return results
+
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().splitlines()
+
+    t = int(data[0])
+    test_cases = []
+
+    for i in range(1, t + 1):
+        n, k = map(int, data[i].split())
+        test_cases.append((n, k))
+
+    results = min_operations_to_split_multiset(test_cases)
+
+    for res in results:
+        print(res)
+
+if __name__ == "__main__":
+    main()
 

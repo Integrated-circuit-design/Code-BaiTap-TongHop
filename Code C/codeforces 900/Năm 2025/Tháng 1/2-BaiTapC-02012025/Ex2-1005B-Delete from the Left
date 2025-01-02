@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int longest_common_suffix(char *s, char *t) {
+    int i = strlen(s) - 1;
+    int j = strlen(t) - 1;
+    int count = 0;
+
+    while (i >= 0 && j >= 0 && s[i] == t[j]) {
+        count++;
+        i--;
+        j--;
+    }
+
+    return count;
+}
+
+int main() {
+    char s[200001], t[200001];
+
+    scanf("%s", s);
+    scanf("%s", t);
+
+    int common_length = longest_common_suffix(s, t);
+
+    int moves = (strlen(s) - common_length) + (strlen(t) - common_length);
+
+    printf("%d\n", moves);
+
+    return 0;
+}
 

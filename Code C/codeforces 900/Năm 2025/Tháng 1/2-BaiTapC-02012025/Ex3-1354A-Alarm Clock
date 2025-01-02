@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b, c, d;
+        scanf("%lld %lld %lld %lld", &a, &b, &c, &d);
+
+        if (b >= a) {
+            printf("%lld\n", b);
+            continue;
+        }
+
+        if (d >= c) {
+            printf("-1\n");
+            continue;
+        }
+
+        long long remaining_sleep = a - b;
+        long long effective_sleep_per_cycle = c - d;
+        long long cycles_needed = remaining_sleep / effective_sleep_per_cycle;
+        if (remaining_sleep % effective_sleep_per_cycle != 0) {
+            cycles_needed++;
+        }
+
+        long long total_time = b + cycles_needed * c;
+        printf("%lld\n", total_time);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

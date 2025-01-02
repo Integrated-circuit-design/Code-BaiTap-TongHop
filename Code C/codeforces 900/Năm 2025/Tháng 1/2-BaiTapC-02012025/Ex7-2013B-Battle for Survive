@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int ratings[n];
+        int max_rating = 0;
+        long long total_sum = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &ratings[i]);
+            total_sum += ratings[i];
+            if (ratings[i] > max_rating) {
+                max_rating = ratings[i];
+            }
+        }
+
+        long long result = max_rating - (total_sum - max_rating);
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

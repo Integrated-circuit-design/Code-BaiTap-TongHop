@@ -1,1 +1,30 @@
+def solve():
+    import sys
+    input = sys.stdin.read
+    data = input().split()
+
+    t = int(data[0])
+    index = 1
+    results = []
+
+    for _ in range(t):
+        n = int(data[index])
+        index += 1
+        a = list(map(int, data[index:index + n]))
+        index += n
+
+        min_a = min(a)
+        max_a = max(a)
+
+        count_min = a.count(min_a)
+        count_max = a.count(max_a)
+
+        if min_a == max_a:
+            results.append(n * (n - 1))
+        else:
+            results.append(2 * count_min * count_max)
+
+    sys.stdout.write("\n".join(map(str, results)) + "\n")
+
+solve()
 

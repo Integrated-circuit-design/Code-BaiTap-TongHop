@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+long long gcd(long long a, long long b) {
+    while (b != 0) {
+        long long temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+long long lcm(long long a, long long b) {
+    return (a * b) / gcd(a, b);
+}
+
+long long max_fireworks(long long a, long long b, long long m) {
+    long long l = lcm(a, b);
+    long long count_a = l / a;
+    long long count_b = l / b;
+    return count_a + count_b - 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long a, b, m;
+        scanf("%lld %lld %lld", &a, &b, &m);
+        printf("%lld\n", max_fireworks(a, b, m));
+    }
+    
+    return 0;
+}
 

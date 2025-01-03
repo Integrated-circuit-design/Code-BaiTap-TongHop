@@ -1,32 +1,49 @@
-def alice_has_winning_strategy(t, test_cases):
-    results = []
+#include <stdio.h>
 
-    for case in test_cases:
-        n, a = case
-        a.sort(reverse=True)
+int max_element(int a[], int n) {
+    int max = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] > max) {
+            max = a[i];
+        }
+    }
+    return max;
+}
 
-        total_sum = sum(a)
+int sum_elements(int a[], int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+    }
+    return sum;
+}
 
-        alice_first_pick = a[0]
+void process_test_case(int n, int a[]) {
+    int max_val = max_element(a, n);
+    int total_sum = sum_elements(a, n);
 
-        if alice_first_pick > total_sum - alice_first_pick:
-            results.append("YES")
-        else:
-            results.append("NO")
+    if (max_val > total_sum - max_val) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
 
-    return results
+int main() {
+    int t;
+    scanf("%d", &t);
 
-if __name__ == "__main__":
-    t = int(input())
-    test_cases = []
+    while (t--) {
+        int n;
+        scanf("%d", &n);
 
-    for _ in range(t):
-        n = int(input())
-        a = list(map(int, input().split()))
-        test_cases.append((n, a))
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
 
-    results = alice_has_winning_strategy(t, test_cases)
-    
-    for result in results:
-        print(result)
+        process_test_case(n, a);
+    }
 
+    return 0;
+}

@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long tinh_phiendotai(int n, int *a) {
+    qsort(a, n, sizeof(int), compare);
+    
+    long long phiendotai = 0;
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            phiendotai += abs(a[i] - a[j]);
+        }
+    }
+
+    return phiendotai;
+}
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        long long ketqua = tinh_phiendotai(n, a);
+        printf("%lld\n", ketqua);
+    }
+    
+    return 0;
+}
 

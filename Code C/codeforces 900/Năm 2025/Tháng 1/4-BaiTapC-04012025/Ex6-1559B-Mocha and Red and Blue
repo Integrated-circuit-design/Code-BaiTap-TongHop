@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[105];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '?') {
+                if (i > 0 && s[i - 1] == 'B') {
+                    s[i] = 'R';
+                } else if (i > 0 && s[i - 1] == 'R') {
+                    s[i] = 'B';
+                }
+            }
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (s[i] == '?') {
+                if (i < n - 1 && s[i + 1] == 'B') {
+                    s[i] = 'R';
+                } else if (i < n - 1 && s[i + 1] == 'R') {
+                    s[i] = 'B';
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '?') {
+                s[i] = (i % 2 == 0) ? 'B' : 'R';
+            }
+        }
+
+        printf("%s\n", s);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

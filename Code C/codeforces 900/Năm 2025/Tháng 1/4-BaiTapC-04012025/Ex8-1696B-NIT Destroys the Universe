@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        int has_zero = 0;
+        int max_value = -1;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            if (a[i] == 0) {
+                has_zero = 1;
+            }
+            if (a[i] > max_value) {
+                max_value = a[i];
+            }
+        }
+
+        if (has_zero) {
+            int all_zero = 1;
+            for (int i = 0; i < n; i++) {
+                if (a[i] != 0) {
+                    all_zero = 0;
+                    break;
+                }
+            }
+
+            if (all_zero) {
+                printf("0\n");
+            } else {
+                printf("1\n");
+            }
+        } else {
+            printf("2\n");
+        }
+    }
+
+    return 0;
+}
 

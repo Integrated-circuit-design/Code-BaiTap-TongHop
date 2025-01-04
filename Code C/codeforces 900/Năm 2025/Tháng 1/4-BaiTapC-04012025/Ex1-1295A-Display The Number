@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char result[100000];
+        int idx = 0;
+
+        if (n % 2 == 1) {
+            result[idx++] = '7';
+            n -= 3;
+        }
+
+        while (n >= 2) {
+            result[idx++] = '1';
+            n -= 2;
+        }
+
+        result[idx] = '\0';
+
+        printf("%s\n", result);
+    }
+
+    return 0;
+}
 

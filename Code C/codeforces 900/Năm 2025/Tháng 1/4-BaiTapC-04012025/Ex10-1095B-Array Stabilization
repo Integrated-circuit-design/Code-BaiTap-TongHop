@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    int min_value = arr[0];
+    int max_value = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < min_value) {
+            min_value = arr[i];
+        }
+        if (arr[i] > max_value) {
+            max_value = arr[i];
+        }
+    }
+
+    int second_min = 100001;
+    int second_max = -1;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] != min_value && arr[i] < second_min) {
+            second_min = arr[i];
+        }
+        if (arr[i] != max_value && arr[i] > second_max) {
+            second_max = arr[i];
+        }
+    }
+
+    int instability_remove_min = max_value - second_min;
+    int instability_remove_max = second_max - min_value;
+
+    int result = instability_remove_min < instability_remove_max ? instability_remove_min : instability_remove_max;
+    
+    printf("%d\n", result);
+
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c, d;
+
+    scanf("%d %d %d %d", &a, &b, &c, &d);
+
+    int misha_points = (3 * a) / 10;
+    int misha_score = a - (a * c) / 250;
+    if (misha_score > misha_points) {
+        misha_points = misha_score;
+    }
+
+    int vasya_points = (3 * b) / 10;
+    int vasya_score = b - (b * d) / 250;
+    if (vasya_score > vasya_points) {
+        vasya_points = vasya_score;
+    }
+
+    if (misha_points > vasya_points) {
+        printf("Misha\n");
+    } else if (misha_points < vasya_points) {
+        printf("Vasya\n");
+    } else {
+        printf("Tie\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        long long total_candies, num_kids;
+        scanf("%lld %lld", &total_candies, &num_kids);
+        
+        long long candies_per_kid = total_candies / num_kids;
+        long long remainder = total_candies % num_kids;
+        
+        long long max_candies = total_candies - (remainder > (num_kids / 2) ? remainder - (num_kids / 2) : 0);
+        
+        printf("%lld\n", max_candies);
+    }
+    
+    return 0;
+}
 

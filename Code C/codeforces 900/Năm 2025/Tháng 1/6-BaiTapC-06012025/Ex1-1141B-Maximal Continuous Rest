@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    int max_rest = 0;
+    int current_rest = 0;
+
+    for (int i = 0; i < 2 * n; i++) {
+        if (a[i % n] == 1) {
+            current_rest++;
+        } else {
+            current_rest = 0;
+        }
+
+        if (current_rest > max_rest) {
+            max_rest = current_rest;
+        }
+    }
+
+    printf("%d\n", max_rest);
+    
+    return 0;
+}
 

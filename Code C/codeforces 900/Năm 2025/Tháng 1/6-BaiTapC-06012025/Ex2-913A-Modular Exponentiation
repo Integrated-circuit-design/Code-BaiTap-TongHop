@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d", &n);
+    scanf("%d", &m);
+
+    if (n > 30) {
+        printf("%d\n", m);
+    } else {
+        int power_of_two = 1 << n;
+        int result = m & (power_of_two - 1);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

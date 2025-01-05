@@ -1,1 +1,82 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+bool is_valid_bracket_sequence(char *seq, int n) {
+    int balance = 0;
+    for (int i = 0; i < n; i++) {
+        if (seq[i] == '(') {
+            balance++;
+        } else if (seq[i] == ')') {
+            balance--;
+        }
+        if (balance < 0) {
+            return false;
+        }
+    }
+    return balance == 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char a[51];
+        scanf("%s", a);
+        int n = strlen(a);
+
+        int countA = 0, countB = 0, countC = 0;
+        for (int i = 0; i < n; i++) {
+            if (a[i] == 'A') countA++;
+            else if (a[i] == 'B') countB++;
+            else if (a[i] == 'C') countC++;
+        }
+
+        if (countA % 2 != 0 || countB % 2 != 0 || countC % 2 != 0) {
+            printf("NO\n");
+            continue;
+        }
+
+        char b[51];
+        int openCount = 0, closeCount = 0;
+        bool possible = true;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] == 'A') {
+                if (openCount < countA / 2) {
+                    b[i] = '(';
+                    openCount++;
+                } else {
+                    b[i] = ')';
+                    closeCount++;
+                }
+            } else if (a[i] == 'B') {
+                if (openCount < countA + countB / 2) {
+                    b[i] = '(';
+                    openCount++;
+                } else {
+                    b[i] = ')';
+                    closeCount++;
+                }
+            } else if (a[i] == 'C') {
+                if (openCount < countA + countB + countC / 2) {
+                    b[i] = '(';
+                    openCount++;
+                } else {
+                    b[i] = ')';
+                    closeCount++;
+                }
+            }
+        }
+
+        if (is_valid_bracket_sequence(b, n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int found = 0;
+
+        for (int z = 0; z <= n / 7; z++) {
+            int remaining_after_z = n - 7 * z;
+
+            for (int y = 0; y <= remaining_after_z / 5; y++) {
+                int remaining_after_y = remaining_after_z - 5 * y;
+
+                if (remaining_after_y % 3 == 0) {
+                    int x = remaining_after_y / 3;
+
+                    printf("%d %d %d\n", x, y, z);
+                    found = 1;
+                    break;
+                }
+            }
+
+            if (found) {
+                break;
+            }
+        }
+
+        if (!found) {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

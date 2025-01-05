@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, xK, yK, xQ, yQ;
+        scanf("%d %d", &a, &b);
+        scanf("%d %d", &xK, &yK);
+        scanf("%d %d", &xQ, &yQ);
+
+        int count = 0;
+
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                if (abs(dx) + abs(dy) == 3) {
+                    int nx = xK + a * dx;
+                    int ny = yK + b * dy;
+                    if ((abs(nx - xQ) == a && abs(ny - yQ) == b) ||
+                        (abs(nx - xQ) == b && abs(ny - yQ) == a)) {
+                        count++;
+                    }
+                }
+            }
+        }
+
+        printf("%d\n", count);
+    }
+
+    return 0;
+}
 

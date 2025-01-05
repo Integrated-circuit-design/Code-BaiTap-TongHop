@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int xA, yA, xB, yB, xC, yC;
+        scanf("%d %d", &xA, &yA);
+        scanf("%d %d", &xB, &yB);
+        scanf("%d %d", &xC, &yC);
+
+        int dxBob = abs(xA - xB);
+        int dyBob = abs(yA - yB);
+        int dxCarol = abs(xA - xC);
+        int dyCarol = abs(yA - yC);
+
+        int overlapX = (dxBob < dxCarol) ? dxBob : dxCarol;
+        int overlapY = (dyBob < dyCarol) ? dyBob : dyCarol;
+
+        int result = overlapX + overlapY + 1;
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_N 100000
+
+int minimal_operations(int n, int *arr) {
+    int frequency[2000001] = {0};
+    int maxFreq = 0;
+    
+    for (int i = 0; i < n; i++) {
+        frequency[arr[i] + 1000000]++;
+    }
+    
+    for (int i = 0; i < 2000001; i++) {
+        if (frequency[i] > maxFreq) {
+            maxFreq = frequency[i];
+        }
+    }
+
+    if (maxFreq == n) {
+        return 0;
+    }
+
+    int operations = 0;
+    int current_max = maxFreq;
+
+    while (current_max < n) {
+        operations++;
+        current_max *= 2;
+    }
+
+    operations += (n - maxFreq);
+
+    return operations;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        printf("%d\n", minimal_operations(n, arr));
+    }
+
+    return 0;
+}
 

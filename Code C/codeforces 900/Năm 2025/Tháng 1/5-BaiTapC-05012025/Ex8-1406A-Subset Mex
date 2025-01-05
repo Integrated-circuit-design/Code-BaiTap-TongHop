@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MAX_VAL 101
+
+void processTestCase() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n];
+    int count[MAX_VAL] = {0};
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        count[a[i]]++;
+    }
+
+    int mexA = 0, mexB = 0;
+
+    for (int i = 0; i < MAX_VAL; i++) {
+        if (count[i] > 0) {
+            mexA++;
+            count[i]--;
+        } else {
+            break;
+        }
+    }
+
+    for (int i = 0; i < MAX_VAL; i++) {
+        if (count[i] > 0) {
+            mexB++;
+            count[i]--;
+        } else {
+            break;
+        }
+    }
+
+    printf("%d\n", mexA + mexB);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        processTestCase();
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        char s[101];
+        
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+
+        if (2 * k >= n) {
+            printf("NO\n");
+            continue;
+        }
+
+        int valid = 1;
+        for (int i = 0; i < k; i++) {
+            if (s[i] != s[n - k + i]) {
+                valid = 0;
+                break;
+            }
+        }
+
+        if (valid) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

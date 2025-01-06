@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n], creamStack[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int creamBalance = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            creamBalance += a[i];
+
+            if (creamBalance > 0) {
+                creamStack[i] = 1;
+            } else {
+                creamStack[i] = 0;
+            }
+
+            creamBalance--; 
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", creamStack[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

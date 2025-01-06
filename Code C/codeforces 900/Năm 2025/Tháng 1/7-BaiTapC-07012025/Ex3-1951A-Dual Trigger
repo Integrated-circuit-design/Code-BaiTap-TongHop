@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[51];
+        
+        scanf("%d", &n);
+        scanf("%s", s);
+        
+        int possible = 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '1') {
+                if ((i > 0 && s[i - 1] == '1') || (i < n - 1 && s[i + 1] == '1')) {
+                    continue;
+                }
+                if ((i > 1 && s[i - 2] == '1') || (i < n - 2 && s[i + 2] == '1')) {
+                    continue;
+                }
+                possible = 0;
+                break;
+            }
+        }
+
+        if (possible) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

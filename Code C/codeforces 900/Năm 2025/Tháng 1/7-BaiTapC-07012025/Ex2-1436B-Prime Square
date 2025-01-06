@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_VAL 100000
+
+bool is_prime[MAX_VAL + 1];
+
+void sieve() {
+    for (int i = 0; i <= MAX_VAL; i++) {
+        is_prime[i] = true;
+    }
+    is_prime[0] = is_prime[1] = false;
+    for (int i = 2; i * i <= MAX_VAL; i++) {
+        if (is_prime[i]) {
+            for (int j = i * i; j <= MAX_VAL; j += i) {
+                is_prime[j] = false;
+            }
+        }
+    }
+}
+
+int next_prime(int x) {
+    while (!is_prime[x]) {
+        x++;
+    }
+    return x;
+}
+
+int main() {
+    sieve();
+    
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int square[n][n];
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                square[i][j] = 6;
+            }
+        }
+        
+        int last_row_sum = 0;
+        int last_col_sum = 0;
+        
+        for (int i = 0; i < n - 1; i++) {
+            last_row_sum += square[n-1][i];
+            last_col_sum += square[i][n-1];
+        }
+        
+        int last_elem = next_prime(last_row_sum + last_col_sum + 2);
+        
+        square[n-1][n-1] = last_elem;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                printf("%d ", square[i][j]);
+            }
+            printf("\n");
+        }
+    }
+    
+    return 0;
+}
 

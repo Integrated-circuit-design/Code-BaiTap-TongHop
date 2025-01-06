@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        int arr[n * k];
+
+        for (int i = 0; i < n * k; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        long long sum_medians = 0;
+        
+        int median_position = n / 2;
+        int index = n * k - median_position - 1;
+
+        for (int i = 0; i < k; i++) {
+            sum_medians += arr[index];
+            index -= (n - 1);
+        }
+
+        printf("%lld\n", sum_medians);
+    }
+
+    return 0;
+}
 

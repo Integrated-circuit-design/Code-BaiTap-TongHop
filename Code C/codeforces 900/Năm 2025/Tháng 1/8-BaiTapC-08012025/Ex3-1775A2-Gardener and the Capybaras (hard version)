@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        char s[200005];
+        scanf("%s", s);
+        int n = strlen(s);
+        
+        int found = 0;
+        
+        for (int i = 1; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                char a[i + 1], b[j - i + 1], c[n - j + 1];
+                
+                strncpy(a, s, i);
+                a[i] = '\0';
+                strncpy(b, s + i, j - i);
+                b[j - i] = '\0';
+                strncpy(c, s + j, n - j);
+                c[n - j] = '\0';
+
+                if ((strcmp(a, b) <= 0 && strcmp(b, c) <= 0) || (strcmp(b, a) <= 0 && strcmp(b, c) <= 0)) {
+                    printf("%s %s %s\n", a, b, c);
+                    found = 1;
+                    break;
+                }
+            }
+            if (found) {
+                break;
+            }
+        }
+
+        if (!found) {
+            printf(":(");
+        }
+    }
+
+    return 0;
+}
 

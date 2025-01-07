@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+int get_piece_weight(char piece) {
+    switch (piece) {
+        case 'Q': return 9;
+        case 'R': return 5;
+        case 'B': return 3;
+        case 'N': return 3;
+        case 'P': return 1;
+        case 'q': return 9;
+        case 'r': return 5;
+        case 'b': return 3;
+        case 'n': return 3;
+        case 'p': return 1;
+        default: return 0;
+    }
+}
+
+int main() {
+    int white_score = 0, black_score = 0;
+    char board[8][8];
+
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            scanf(" %c", &board[i][j]);
+        }
+    }
+
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            char piece = board[i][j];
+            int weight = get_piece_weight(piece);
+            if (piece >= 'A' && piece <= 'Z') {
+                white_score += weight;
+            } else if (piece >= 'a' && piece <= 'z') {
+                black_score += weight;
+            }
+        }
+    }
+
+    if (white_score > black_score) {
+        printf("White\n");
+    } else if (black_score > white_score) {
+        printf("Black\n");
+    } else {
+        printf("Draw\n");
+    }
+
+    return 0;
+}
 

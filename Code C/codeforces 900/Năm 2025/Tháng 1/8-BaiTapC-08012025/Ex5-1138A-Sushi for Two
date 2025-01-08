@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int t[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &t[i]);
+    }
+
+    int maxLength = 0;
+    
+    for (int i = 0; i < n - 1; i++) {
+        if (t[i] != t[i + 1]) {
+            int length = 2;
+            int left = i - 1;
+            int right = i + 2;
+
+            while (left >= 0 && right < n && t[left] == t[i] && t[right] == t[i + 1]) {
+                length += 2;
+                left--;
+                right++;
+            }
+
+            if (length > maxLength) {
+                maxLength = length;
+            }
+        }
+    }
+
+    printf("%d\n", maxLength);
+
+    return 0;
+}
 

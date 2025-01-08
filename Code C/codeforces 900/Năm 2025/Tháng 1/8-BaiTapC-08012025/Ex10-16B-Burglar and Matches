@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int numBoxes;
+    int matchesPerBox;
+} MatchContainer;
+
+int compareContainers(const void *a, const void *b) {
+    MatchContainer *containerA = (MatchContainer *)a;
+    MatchContainer *containerB = (MatchContainer *)b;
+    return containerB->matchesPerBox - containerA->matchesPerBox;
+}
+
+int main() {
+    int maxBoxes, numContainers;
+    scanf("%d %d", &maxBoxes, &numContainers);
+
+    MatchContainer containers[numContainers];
+    
+    for (int i = 0; i < numContainers; i++) {
+        scanf("%d %d", &containers[i].numBoxes, &containers[i].matchesPerBox);
+    }
+
+    qsort(containers, numContainers, sizeof(MatchContainer), compareContainers);
+
+    int totalMatches = 0;
+    for (int i = 0; i < numContainers && maxBoxes > 0; i++) {
+        int boxesToSteal = (containers[i].numBoxes < maxBoxes) ? containers[i].numBoxes : maxBoxes;
+        totalMatches += boxesToSteal * containers[i].matchesPerBox;
+        maxBoxes -= boxesToSteal;
+    }
+
+    printf("%d\n", totalMatches);
+    
+    return 0;
+}
 

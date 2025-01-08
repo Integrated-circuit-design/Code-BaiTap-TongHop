@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+void reverseSubstring(char *str, int i, int j) {
+    while (i < j) {
+        char temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+        i++;
+        j--;
+    }
+}
+
+int main() {
+    int length;
+    char encryptedString[101];
+
+    scanf("%d", &length);
+    scanf("%s", encryptedString);
+
+    for (int divisor = 1; divisor <= length; divisor++) {
+        if (length % divisor == 0) {
+            reverseSubstring(encryptedString, 0, divisor - 1);
+        }
+    }
+
+    printf("%s\n", encryptedString);
+
+    return 0;
+}
 

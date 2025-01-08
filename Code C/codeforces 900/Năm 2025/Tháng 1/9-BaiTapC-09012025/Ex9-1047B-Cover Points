@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int max_x = 0, max_y = 0;
+
+    while (n--) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+
+        if (x > max_x) {
+            max_x = x;
+        }
+        if (y > max_y) {
+            max_y = y;
+        }
+    }
+
+    int side_length = (max_x > max_y) ? max_x : max_y;
+
+    printf("%d\n", side_length);
+
+    return 0;
+}
 

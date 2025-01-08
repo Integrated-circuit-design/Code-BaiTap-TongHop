@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+void mystic_permutation(int t) {
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int p[n], q[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+        }
+
+        if (n == 1) {
+            printf("-1\n");
+            continue;
+        }
+
+        for (int i = 0; i < n; i++) {
+            q[i] = i + 1;
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (q[i] == p[i]) {
+                if (i < n - 1) {
+                    int temp = q[i];
+                    q[i] = q[i + 1];
+                    q[i + 1] = temp;
+                } else {
+                    int temp = q[i];
+                    q[i] = q[i - 1];
+                    q[i - 1] = temp;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", q[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    mystic_permutation(t);
+    return 0;
+}
 

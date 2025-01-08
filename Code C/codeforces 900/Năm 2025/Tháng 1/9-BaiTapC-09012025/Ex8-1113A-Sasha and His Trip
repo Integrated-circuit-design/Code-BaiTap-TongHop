@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n, v;
+    scanf("%d %d", &n, &v);
+
+    int total_cost = 0;
+    int fuel_in_tank = 0;
+
+    if (v >= n - 1) {
+        for (int i = 1; i < n; i++) {
+            total_cost += i;
+        }
+        printf("%d\n", total_cost);
+        return 0;
+    }
+
+    total_cost = v;
+    fuel_in_tank = v;
+
+    for (int i = 2; i < n; i++) {
+        if (fuel_in_tank < 1) {
+            total_cost += (1 - fuel_in_tank) * i;
+            fuel_in_tank = 1;
+        } else {
+            fuel_in_tank--;
+        }
+
+        if (fuel_in_tank < v) {
+            int fuel_needed = v - fuel_in_tank;
+            total_cost += fuel_needed * i;
+            fuel_in_tank = v;
+        }
+    }
+
+    printf("%d\n", total_cost);
+    return 0;
+}
 

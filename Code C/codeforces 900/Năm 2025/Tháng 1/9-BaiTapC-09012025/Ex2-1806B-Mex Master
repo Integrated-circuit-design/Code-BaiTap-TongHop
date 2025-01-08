@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        bool freq[200001] = {0};
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            freq[a[i]] = 1;
+        }
+
+        int mex = 0;
+        while (freq[mex]) {
+            mex++;
+        }
+
+        printf("%d\n", mex);
+    }
+
+    return 0;
+}
 

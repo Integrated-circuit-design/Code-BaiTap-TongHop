@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, c;
+        scanf("%d %d %d", &a, &b, &c);
+
+        int result[3] = {0, 0, 0};
+
+        if (b + c <= a) {
+            result[0] = 1;
+        }
+
+        if (a + c <= b) {
+            result[1] = 1;
+        }
+
+        if (a + b <= c) {
+            result[2] = 1;
+        }
+
+        printf("%d %d %d\n", result[0], result[1], result[2]);
+    }
+
+    return 0;
+}
 

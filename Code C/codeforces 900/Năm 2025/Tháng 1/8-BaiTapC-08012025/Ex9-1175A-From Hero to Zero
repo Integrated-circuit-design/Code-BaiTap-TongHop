@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+long long calculate_steps(long long n, long long k) {
+    long long steps = 0;
+
+    while (n > 0) {
+        if (n < k) {
+            steps += n;
+            break;
+        }
+
+        if (n % k == 0) {
+            n /= k;
+            steps++;
+        } else {
+            long long remainder = n % k;
+            steps += remainder;
+            n -= remainder;
+        }
+    }
+
+    return steps;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+
+        printf("%lld\n", calculate_steps(n, k));
+    }
+
+    return 0;
+}
 

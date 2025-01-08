@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n, l, r;
+    scanf("%d %d %d", &n, &l, &r);
+
+    int min_sum = 0;
+    int remaining = n;
+
+    for (int i = 0; i < l; i++) {
+        min_sum += (1 << i);
+        remaining--;
+    }
+
+    min_sum += remaining;
+
+    int max_sum = 0;
+    remaining = n;
+
+    for (int i = 0; i < r; i++) {
+        max_sum += (1 << i);
+        remaining--;
+    }
+
+    max_sum += (remaining * (1 << (r - 1)));
+
+    printf("%d %d\n", min_sum, max_sum);
+
+    return 0;
+}
 

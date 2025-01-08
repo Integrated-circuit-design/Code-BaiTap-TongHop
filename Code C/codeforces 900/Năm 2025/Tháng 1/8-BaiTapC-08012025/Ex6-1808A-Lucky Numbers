@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int calculateLuckiness(int number) {
+    int highest = -1, lowest = 10;
+    
+    while (number > 0) {
+        int digit = number % 10;
+        if (digit > highest) {
+            highest = digit;
+        }
+        if (digit < lowest) {
+            lowest = digit;
+        }
+        number /= 10;
+    }
+    
+    return highest - lowest;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        
+        int maxLuckiness = -1;
+        int luckiestNumber = l;
+        
+        for (int num = l; num <= r; num++) {
+            int luckiness = calculateLuckiness(num);
+            if (luckiness > maxLuckiness) {
+                maxLuckiness = luckiness;
+                luckiestNumber = num;
+            }
+        }
+        
+        printf("%d\n", luckiestNumber);
+    }
+    
+    return 0;
+}
 

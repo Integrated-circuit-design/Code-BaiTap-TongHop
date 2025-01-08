@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    
+    while (q--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        
+        int min_price = 1000000000;
+        int max_price = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int price;
+            scanf("%d", &price);
+            
+            if (price < min_price) {
+                min_price = price;
+            }
+            
+            if (price > max_price) {
+                max_price = price;
+            }
+        }
+        
+        int low_bound = min_price + k;
+        int high_bound = max_price - k;
+        
+        if (low_bound <= high_bound) {
+            printf("%d\n", high_bound);
+        } else {
+            printf("-1\n");
+        }
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 1000
+#define MAX_M 1000
+#define MAX_NAME_LENGTH 10
+#define MAX_IP_LENGTH 16
+
+const char* get_server_name_by_ip(const char ip[], char servers[][MAX_IP_LENGTH], const char names[][MAX_NAME_LENGTH], int n) {
+    for (int i = 0; i < n; i++) {
+        if (strcmp(servers[i], ip) == 0) {
+            return names[i];
+        }
+    }
+    return NULL;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    char servers[n][MAX_IP_LENGTH];
+    char names[n][MAX_NAME_LENGTH];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s %s", names[i], servers[i]);
+    }
+    
+    for (int i = 0; i < m; i++) {
+        char command[MAX_NAME_LENGTH + 1];
+        char ip[MAX_IP_LENGTH + 1];
+        scanf("%s %s", command, ip);
+        ip[strlen(ip) - 1] = '\0';
+        const char* server_name = get_server_name_by_ip(ip, servers, names, n);
+        printf("%s %s; #%s\n", command, ip, server_name);
+    }
+    
+    return 0;
+}
 

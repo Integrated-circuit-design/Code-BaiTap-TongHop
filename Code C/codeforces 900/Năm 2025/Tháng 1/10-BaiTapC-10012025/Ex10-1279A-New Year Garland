@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int r, g, b;
+        scanf("%d %d %d", &r, &g, &b);
+        
+        if (r > g) {
+            int temp = r;
+            r = g;
+            g = temp;
+        }
+        if (g > b) {
+            int temp = g;
+            g = b;
+            b = temp;
+        }
+        if (r > g) {
+            int temp = r;
+            r = g;
+            g = temp;
+        }
+        
+        if (b <= r + g + 1) {
+            printf("Yes\n");
+        } else {
+            printf("No\n");
+        }
+    }
+    
+    return 0;
+}
 

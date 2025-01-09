@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int A, B, n;
+        scanf("%d %d %d", &A, &B, &n);
+
+        int total_damage = 0;
+        int max_monster_attack = 0;
+
+        int *monster_attack = (int *)malloc(n * sizeof(int));
+        int *monster_health = (int *)malloc(n * sizeof(int));
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &monster_attack[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &monster_health[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            int rounds = (monster_health[i] + A - 1) / A;
+            total_damage += rounds * monster_attack[i];
+
+            if (monster_attack[i] > max_monster_attack) {
+                max_monster_attack = monster_attack[i];
+            }
+        }
+
+        if (B > (total_damage - max_monster_attack)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+
+        free(monster_attack);
+        free(monster_health);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int fullWeeks = n / 7;
+    int remainingDays = n - fullWeeks * 7;
+
+    int minDaysOff = fullWeeks * 2;
+
+    int maxDaysOff;
+    if (remainingDays >= 5) {
+        maxDaysOff = minDaysOff + 2;
+    } else {
+        maxDaysOff = minDaysOff + remainingDays;
+    }
+
+    printf("%d %d\n", minDaysOff, maxDaysOff);
+
+    return 0;
+}
 

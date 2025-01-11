@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int da, db;
+    scanf("%d %d", &da, &db);
+
+    if (db == da + 1) {
+        for (int i = 0; i <= 9; i++) {
+            int a = da * 10 + i;
+            int b = a + 1;
+
+            if (b / 10 == db) {
+                printf("%d %d\n", a, b);
+                return 0;
+            }
+        }
+    }
+    else if (db == da) {
+        for (int i = 0; i <= 9; i++) {
+            int a = da * 10 + i;
+            int b = a + 1;
+
+            if (b / 10 == db) {
+                printf("%d %d\n", a, b);
+                return 0;
+            }
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

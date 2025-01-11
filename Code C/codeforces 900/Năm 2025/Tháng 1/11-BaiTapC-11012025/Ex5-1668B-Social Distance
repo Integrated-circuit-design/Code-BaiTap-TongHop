@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        int a[n];
+        long long total_required_space = 0;
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            total_required_space += (2 * a[i] + 1);
+        }
+        
+        if (n > m) {
+            printf("NO\n");
+            continue;
+        }
+        
+        if (total_required_space > m) {
+            printf("NO\n");
+            continue;
+        }
+        
+        printf("YES\n");
+    }
+    
+    return 0;
+}
 

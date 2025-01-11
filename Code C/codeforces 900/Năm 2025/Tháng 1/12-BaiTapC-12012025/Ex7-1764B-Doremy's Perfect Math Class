@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int maxSetSize(int arr[], int n) {
+    int size = n;
+    int *new_arr = malloc(sizeof(int) * (n + 100));
+    int current_size = n;
+
+    for (int i = 0; i < n; i++) {
+        new_arr[i] = arr[i];
+    }
+
+    int added = 1;
+    while (added) {
+        added = 0;
+        for (int i = current_size - 1; i >= 0; i--) {
+            for (int j = i - 1; j >= 0; j--) {
+                int diff = new_arr[i] - new_arr[j];
+                int found = 0;
+                for (int k = 0; k < current_size; k++) {
+                    if (new_arr[k] == diff) {
+                        found = 1;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    new_arr[current_size++] = diff;
+                    added = 1;
+                }
+            }
+        }
+    }
+
+    free(new_arr);
+    return current_size;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int arr[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        qsort(arr, n, sizeof(int), compare);
+
+        printf("%d\n", maxSetSize(arr, n));
+    }
+
+    return 0;
+}
 

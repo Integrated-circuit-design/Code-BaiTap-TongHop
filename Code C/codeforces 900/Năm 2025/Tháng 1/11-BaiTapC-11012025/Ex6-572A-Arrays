@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int nA, nB, k, m;
+    
+    scanf("%d %d", &nA, &nB);
+    
+    scanf("%d %d", &k, &m);
+    
+    int A[nA], B[nB];
+    
+    for (int i = 0; i < nA; i++) {
+        scanf("%d", &A[i]);
+    }
+    
+    for (int i = 0; i < nB; i++) {
+        scanf("%d", &B[i]);
+    }
+    
+    if (A[k - 1] < B[nB - m]) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

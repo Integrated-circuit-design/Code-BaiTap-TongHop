@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int can_sort_with_k(int n, int k, int p[]) {
+    int sorted_p[n];
+    for (int i = 0; i < n; i++) {
+        sorted_p[i] = p[i];
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (sorted_p[i] > sorted_p[j]) {
+                int temp = sorted_p[i];
+                sorted_p[i] = sorted_p[j];
+                sorted_p[j] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (p[i] != sorted_p[i]) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int can_sort_with_one_swap(int n, int k, int p[]) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int temp = p[i];
+            p[i] = p[j];
+            p[j] = temp;
+
+            if (can_sort_with_k(n, k, p) == 0) {
+                return 1;
+            }
+
+            temp = p[i];
+            p[i] = p[j];
+            p[j] = temp;
+        }
+    }
+
+    return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int _ = 0; _ < t; _++) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        int p[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+        }
+
+        if (can_sort_with_k(n, k, p) == 0) {
+            printf("0\n");
+        } else {
+            int result = can_sort_with_one_swap(n, k, p);
+            printf("%d\n", result);
+        }
+    }
+
+    return 0;
+}
 

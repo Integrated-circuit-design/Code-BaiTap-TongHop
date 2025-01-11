@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <string.h>
+
+void rearrangeString(char s[]) {
+    int len = strlen(s);
+    int count[26] = {0};
+    for (int i = 0; i < len; ++i) {
+        count[s[i] - 'a']++;
+    }
+
+    int oddCount = 0;
+    for (int i = 0; i < 26; ++i) {
+        if (count[i] % 2 != 0) {
+            oddCount++;
+        }
+    }
+
+    if (oddCount > 1) {
+        printf("-1\n");
+    } else {
+        char result[len + 1];
+        int index = 0;
+
+        for (int i = 0; i < 26; ++i) {
+            for (int j = 0; j < count[i] / 2; ++j) {
+                result[index++] = 'a' + i;
+            }
+        }
+
+        for (int i = 0; i < 26; ++i) {
+            if (count[i] % 2 != 0) {
+                result[index++] = 'a' + i;
+                break;
+            }
+        }
+
+        for (int i = 25; i >= 0; --i) {
+            for (int j = 0; j < count[i] / 2; ++j) {
+                result[index++] = 'a' + i;
+            }
+        }
+
+        result[index] = '\0';
+        printf("%s\n", result);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[1001];
+        scanf("%s", s);
+        rearrangeString(s);
+    }
+
+    return 0;
+}
 

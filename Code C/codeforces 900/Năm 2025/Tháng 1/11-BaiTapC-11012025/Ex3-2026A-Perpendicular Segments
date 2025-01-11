@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int X, Y, K;
+        scanf("%d %d %d", &X, &Y, &K);
+        
+        int Ax = 0, Ay = 0, Bx = K, By = 0;
+        int Cx = K, Cy = 0, Dx = K, Dy = K;
+        
+        printf("%d %d %d %d\n", Ax, Ay, Bx, By);
+        printf("%d %d %d %d\n", Cx, Cy, Dx, Dy);
+    }
+    
+    return 0;
+}
 

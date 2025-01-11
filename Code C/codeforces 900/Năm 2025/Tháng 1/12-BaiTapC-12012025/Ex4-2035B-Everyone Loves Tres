@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+
+int check_valid(char *num, int len) {
+    for (int i = 0; i < len; i++) {
+        if (num[i] != '3' && num[i] != '6') {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void find_smallest_number(int n) {
+    for (int i = 1; i <= n / 2; i++) {
+        int j = n - i;
+
+        char num[n + 1];
+        for (int k = 0; k < i; k++) {
+            num[k] = '3';
+        }
+        for (int k = i; k < n; k++) {
+            num[k] = '6';
+        }
+        num[n] = '\0';
+
+        if (check_valid(num, n)) {
+            int num_value = 0;
+            for (int k = 0; k < n; k++) {
+                num_value = num_value * 10 + (num[k] - '0');
+            }
+
+            if (num_value % 33 == 0 && num_value % 66 == 0) {
+                printf("%s\n", num);
+                return;
+            }
+        }
+    }
+
+    printf("-1\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        if (n == 1) {
+            printf("-1\n");
+        } else {
+            find_smallest_number(n);
+        }
+    }
+
+    return 0;
+}
 

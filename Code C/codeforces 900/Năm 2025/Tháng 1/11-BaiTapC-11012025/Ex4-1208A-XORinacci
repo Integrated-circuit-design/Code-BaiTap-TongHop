@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        unsigned int a, b, n;
+        scanf("%u %u %u", &a, &b, &n);
+
+        unsigned int result;
+        
+        switch (n % 3) {
+            case 0:
+                result = a;
+                break;
+            case 1:
+                result = b;
+                break;
+            case 2:
+                result = a ^ b;
+                break;
+        }
+
+        printf("%u\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int valera_kills = n;
+    int arcady_kills = n / 2;
+    int valera_second_kills = n / 2;
+    
+    int total_kills = valera_kills + arcady_kills + valera_second_kills;
+    
+    printf("%d\n", total_kills);
+    
+    return 0;
+}
 

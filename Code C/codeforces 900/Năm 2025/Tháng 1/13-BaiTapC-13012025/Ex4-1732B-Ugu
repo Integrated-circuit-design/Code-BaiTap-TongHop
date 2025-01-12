@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100000
+
+int min_operations(int n, char *s) {
+    int count_ones = 0;
+    int count_zeros = 0;
+    int min_operations = n;
+
+    for (int i = n - 1; i >= 0; i--) {
+        if (s[i] == '0') {
+            count_zeros++;
+        } else {
+            count_ones++;
+        }
+
+        int current_operations = count_zeros + count_ones;
+        if (current_operations < min_operations) {
+            min_operations = current_operations;
+        }
+    }
+    
+    return min_operations;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char s[MAX_N + 1];
+        scanf("%s", s);
+
+        int result = min_operations(n, s);
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

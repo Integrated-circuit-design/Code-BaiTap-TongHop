@@ -1,1 +1,26 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int n;
+    char s[100005];
+    scanf("%d", &n);
+    scanf("%s", s);
+    
+    bool seen[26] = {false};
+    
+    for (int i = 0; i < n; i++) {
+        int index = s[i] - 'a';
+        
+        if (seen[index]) {
+            printf("Yes\n");
+            return 0;
+        }
+        
+        seen[index] = true;
+    }
+    
+    printf("No\n");
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int count_operations(const char *s, int n) {
+    int operations = 0;
+    
+    for (int i = 0; i < n - 1; i++) {
+        if (s[i] == 'A' && s[i + 1] == 'B') {
+            operations++;
+            i++;
+        }
+    }
+    return operations;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        char s[200005];
+        
+        scanf("%d", &n);
+        scanf("%s", s);
+        
+        printf("%d\n", count_operations(s, n));
+    }
+
+    return 0;
+}
 

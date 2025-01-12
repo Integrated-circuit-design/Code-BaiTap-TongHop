@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    char answers[n][m];
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf(" %c", &answers[i][j]);
+        }
+    }
+
+    int points[m];
+    
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &points[i]);
+    }
+
+    int total_score = 0;
+
+    for (int j = 0; j < m; j++) {
+        int max_frequency = 0;
+        for (char answer = 'A'; answer <= 'E'; answer++) {
+            int count = 0;
+            for (int i = 0; i < n; i++) {
+                if (answers[i][j] == answer) {
+                    count++;
+                }
+            }
+            if (count > max_frequency) {
+                max_frequency = count;
+            }
+        }
+        total_score += max_frequency * points[j];
+    }
+
+    printf("%d\n", total_score);
+    
+    return 0;
+}
 

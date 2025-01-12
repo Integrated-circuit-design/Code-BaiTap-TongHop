@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int maxVisitors(int a, int b, int c) {
+    int dishes[3] = {a, b, c};
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = i + 1; j < 3; j++) {
+            if (dishes[i] < dishes[j]) {
+                int temp = dishes[i];
+                dishes[i] = dishes[j];
+                dishes[j] = temp;
+            }
+        }
+    }
+
+    int count = 0;
+
+    if (dishes[0] > 0) { dishes[0]--; count++; }
+    if (dishes[1] > 0) { dishes[1]--; count++; }
+    if (dishes[2] > 0) { dishes[2]--; count++; }
+
+    if (dishes[0] > 0 && dishes[1] > 0) { dishes[0]--; dishes[1]--; count++; }
+    if (dishes[0] > 0 && dishes[2] > 0) { dishes[0]--; dishes[2]--; count++; }
+    if (dishes[1] > 0 && dishes[2] > 0) { dishes[1]--; dishes[2]--; count++; }
+
+    if (dishes[0] > 0 && dishes[1] > 0 && dishes[2] > 0) { dishes[0]--; dishes[1]--; dishes[2]--; count++; }
+
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, c;
+        scanf("%d %d %d", &a, &b, &c);
+        printf("%d\n", maxVisitors(a, b, c));
+    }
+
+    return 0;
+}
 

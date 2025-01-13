@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, c, r;
+        scanf("%d %d %d %d", &a, &b, &c, &r);
+
+        int left = (a < b) ? a : b;
+        int right = (a > b) ? a : b;
+
+        int coverage_left = c - r;
+        int coverage_right = c + r;
+
+        int overlap_left = (left > coverage_left) ? left : coverage_left;
+        int overlap_right = (right < coverage_right) ? right : coverage_right;
+
+        int overlap_time = (overlap_right > overlap_left) ? overlap_right - overlap_left : 0;
+
+        int total_time = right - left;
+
+        int no_coverage_time = total_time - overlap_time;
+
+        printf("%d\n", no_coverage_time);
+    }
+
+    return 0;
+}
 

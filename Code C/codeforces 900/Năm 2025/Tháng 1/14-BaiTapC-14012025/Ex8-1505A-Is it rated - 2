@@ -1,1 +1,13 @@
+#include <stdio.h>
+
+int main() {
+    char line[1000];
+
+    while (scanf("%[^\n]%*c", line) == 1) {
+        printf("NO\n");
+        fflush(stdout);
+    }
+
+    return 0;
+}
 

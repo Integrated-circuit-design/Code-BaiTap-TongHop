@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int color;
+    int count;
+} ColorCount;
+
+int compare(const void *a, const void *b) {
+    return ((*(ColorCount*)b).count - (*(ColorCount*)a).count);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int marbles[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &marbles[i]);
+        }
+
+        ColorCount colorCounts[n];
+        int colorIndex = 0;
+
+        for (int i = 0; i < n; i++) {
+            int color = marbles[i];
+            int found = 0;
+
+            for (int j = 0; j < colorIndex; j++) {
+                if (colorCounts[j].color == color) {
+                    colorCounts[j].count++;
+                    found = 1;
+                    break;
+                }
+            }
+
+            if (!found) {
+                colorCounts[colorIndex].color = color;
+                colorCounts[colorIndex].count = 1;
+                colorIndex++;
+            }
+        }
+
+        qsort(colorCounts, colorIndex, sizeof(ColorCount), compare);
+
+        int aliceScore = 0;
+        int bobScore = 0;
+
+        for (int i = 0; i < colorIndex; i++) {
+            if (i % 2 == 0) {
+                aliceScore++;
+                if (colorCounts[i].count > 1) {
+                    aliceScore++;
+                }
+            } else {
+                if (colorCounts[i].count > 1) {
+                    bobScore++;
+                }
+            }
+        }
+
+        printf("%d\n", aliceScore);
+    }
+
+    return 0;
+}
 

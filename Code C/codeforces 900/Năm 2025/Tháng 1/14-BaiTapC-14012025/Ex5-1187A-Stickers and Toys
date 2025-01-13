@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n, s, t;
+        scanf("%d %d %d", &n, &s, &t);
+
+        int maxStickerOnly = n - s;
+        int maxToyOnly = n - t;
+
+        int result = (maxStickerOnly > maxToyOnly) ? maxToyOnly + 1 : maxStickerOnly + 1;
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <math.h>
+
+int isPerfectSquare(int num) {
+    if (num < 0) return 0;
+    int squareRoot = sqrt(num);
+    return (squareRoot * squareRoot == num);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    int largestNonSquare = -1000001;
+
+    for (int i = 0; i < n; i++) {
+        if (!isPerfectSquare(arr[i]) && arr[i] > largestNonSquare) {
+            largestNonSquare = arr[i];
+        }
+    }
+
+    printf("%d\n", largestNonSquare);
+
+    return 0;
+}
 

@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+double calculate_distance(int l, int p, int q) {
+    return (double)p * l / (p + q);
+}
+
+int main() {
+    int l, p, q;
+
+    scanf("%d", &l);
+    scanf("%d", &p);
+    scanf("%d", &q);
+
+    double distance = calculate_distance(l, p, q);
+
+    printf("%.4f\n", distance);
+
+    return 0;
+}
 

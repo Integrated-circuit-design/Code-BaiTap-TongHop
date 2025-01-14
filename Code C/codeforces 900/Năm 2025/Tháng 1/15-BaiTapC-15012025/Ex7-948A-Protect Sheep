@@ -1,1 +1,77 @@
+#include <stdio.h>
+
+int R, C;
+char pasture[500][500];
+
+int is_valid(int x, int y) {
+    return x >= 0 && x < R && y >= 0 && y < C;
+}
+
+void protect_sheep() {
+    for (int i = 0; i < R; i++) {
+        for (int j = 0; j < C; j++) {
+            if (pasture[i][j] == 'W') {
+                if (is_valid(i - 1, j) && pasture[i - 1][j] == '.') pasture[i - 1][j] = 'D';
+                if (is_valid(i + 1, j) && pasture[i + 1][j] == '.') pasture[i + 1][j] = 'D';
+                if (is_valid(i, j - 1) && pasture[i][j - 1] == '.') pasture[i][j - 1] = 'D';
+                if (is_valid(i, j + 1) && pasture[i][j + 1] == '.') pasture[i][j + 1] = 'D';
+            }
+        }
+    }
+}
+
+int check_wolf_near_sheep() {
+    for (int i = 0; i < R; i++) {
+        for (int j = 0; j < C; j++) {
+            if (pasture[i][j] == 'S') {
+                if (is_valid(i - 1, j) && pasture[i - 1][j] == 'W') return 0;
+                if (is_valid(i + 1, j) && pasture[i + 1][j] == 'W') return 0;
+                if (is_valid(i, j - 1) && pasture[i][j - 1] == 'W') return 0;
+                if (is_valid(i, j + 1) && pasture[i][j + 1] == 'W') return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+int check_invalid_situation() {
+    for (int i = 0; i < R; i++) {
+        for (int j = 0; j < C; j++) {
+            if (pasture[i][j] == 'S') {
+                if ((is_valid(i - 1, j) && pasture[i - 1][j] == 'W') ||
+                    (is_valid(i + 1, j) && pasture[i + 1][j] == 'W') ||
+                    (is_valid(i, j - 1) && pasture[i][j - 1] == 'W') ||
+                    (is_valid(i, j + 1) && pasture[i][j + 1] == 'W')) {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+int main() {
+    scanf("%d %d", &R, &C);
+    for (int i = 0; i < R; i++) {
+        scanf("%s", pasture[i]);
+    }
+
+    if (check_invalid_situation()) {
+        printf("No\n");
+        return 0;
+    }
+
+    protect_sheep();
+
+    if (check_wolf_near_sheep()) {
+        printf("Yes\n");
+        for (int i = 0; i < R; i++) {
+            printf("%s\n", pasture[i]);
+        }
+    } else {
+        printf("No\n");
+    }
+
+    return 0;
+}
 

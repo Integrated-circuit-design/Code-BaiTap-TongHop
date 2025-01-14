@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int candies[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &candies[i]);
+    }
+    
+    int total_given = 0;
+    int available_candies = 0;
+    
+    for (int i = 0; i < n; i++) {
+        available_candies += candies[i];
+        
+        if (available_candies >= 8) {
+            total_given += 8;
+            available_candies -= 8;
+        } else {
+            total_given += available_candies;
+            available_candies = 0;
+        }
+
+        if (total_given >= k) {
+            printf("%d\n", i + 1);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

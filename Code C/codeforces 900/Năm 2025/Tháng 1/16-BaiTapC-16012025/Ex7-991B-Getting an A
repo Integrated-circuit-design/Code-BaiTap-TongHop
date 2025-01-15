@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int grades[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &grades[i]);
+    }
+
+    int current_sum = 0;
+    int redos = 0;
+
+    for (int i = 0; i < n; i++) {
+        current_sum += grades[i];
+    }
+
+    while ((double)current_sum / n < 4.5) {
+        int min_grade = 6;
+        int min_index = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (grades[i] < min_grade) {
+                min_grade = grades[i];
+                min_index = i;
+            }
+        }
+
+        current_sum += (5 - min_grade);
+        grades[min_index] = 5;
+        redos++;
+    }
+
+    printf("%d\n", redos);
+
+    return 0;
+}
 

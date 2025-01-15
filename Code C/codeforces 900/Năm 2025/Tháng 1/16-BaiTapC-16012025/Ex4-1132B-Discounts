@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAX_N 300000
+
+void sort_descending(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (arr[i] < arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d", &n);  
+    int prices[n];     
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &prices[i]);  
+    }
+
+    scanf("%d", &m);  
+    int coupons[m];    
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &coupons[i]);  
+    }
+
+    sort_descending(prices, n);
+
+    long long prefix_sum[n + 1];  
+    prefix_sum[0] = 0;  
+    for (int i = 1; i <= n; i++) {
+        prefix_sum[i] = prefix_sum[i - 1] + prices[i - 1];  
+    }
+
+    long long total_cost = prefix_sum[n];
+
+    for (int i = 0; i < m; i++) {
+        int q = coupons[i];
+        long long cost_with_coupon = total_cost - (prefix_sum[q] - prefix_sum[q - 1]);
+        printf("%lld ", cost_with_coupon);  
+    }
+
+    return 0;  
+}
 

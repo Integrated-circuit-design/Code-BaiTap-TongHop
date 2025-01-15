@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    if (m == 0) {
+        printf("1\n");
+    }
+    else if (m == n) {
+        printf("0\n");
+    }
+    else {
+        int remaining_cats = n - m;
+        int groups = remaining_cats > m ? m : remaining_cats;
+        printf("%d\n", groups);
+    }
+
+    return 0;
+}
 

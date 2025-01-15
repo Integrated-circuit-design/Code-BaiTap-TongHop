@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+bool can_follow(char current, char last) {
+    return (current >= last + 2);
+}
+
+int minimal_rocket_weight(int n, int k, char s[]) {
+    int freq[26] = {0};
+
+    for (int i = 0; i < n; i++) {
+        freq[s[i] - 'a']++;
+    }
+
+    int total_weight = 0;
+    int selected_count = 0;
+    char last_selected = 0;
+
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > 0) {
+            char current = 'a' + i;
+            
+            if (selected_count == 0 || can_follow(current, last_selected)) {
+                total_weight += i + 1;
+                last_selected = current;
+                selected_count++;
+
+                if (selected_count == k) {
+                    return total_weight;
+                }
+            }
+        }
+    }
+
+    return -1;
+}
+
+int main() {
+    int n, k;
+    char s[51];
+    
+    scanf("%d %d", &n, &k);
+    scanf("%s", s);
+    
+    printf("%d\n", minimal_rocket_weight(n, k, s));
+    
+    return 0;
+}
 

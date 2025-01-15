@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+#define ALPHABET_SIZE 26
+
+int main() {
+    char s[21];
+    scanf("%s", s);
+
+    int len = strlen(s);
+    char new_photobook[21];
+    int total = 0;
+
+    int seen[1000] = {0};
+    int unique_count = 0;
+
+    for (int i = 0; i <= len; i++) {
+        for (char c = 'a'; c <= 'z'; c++) {
+            int k = 0;
+            for (int j = 0; j < i; j++) {
+                new_photobook[k++] = s[j];
+            }
+            new_photobook[k++] = c;
+            for (int j = i; j < len; j++) {
+                new_photobook[k++] = s[j];
+            }
+            new_photobook[k] = '\0';
+
+            int found = 0;
+            for (int j = 0; j < unique_count; j++) {
+                if (strcmp(new_photobook, seen[j]) == 0) {
+                    found = 1;
+                    break;
+                }
+            }
+
+            if (!found) {
+                strcpy(seen[unique_count], new_photobook);
+                unique_count++;
+            }
+        }
+    }
+
+    printf("%d\n", unique_count);
+
+    return 0;
+}
 

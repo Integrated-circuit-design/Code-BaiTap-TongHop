@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    char s[101];
+    scanf("%s", s);
+
+    int count[26] = {0};
+
+    for (int i = 0; i < n; i++) {
+        count[s[i] - 'a']++;
+    }
+
+    for (int i = 0; i < 26; i++) {
+        if (count[i] > k) {
+            printf("NO\n");
+            return 0;
+        }
+    }
+
+    printf("YES\n");
+    return 0;
+}
 

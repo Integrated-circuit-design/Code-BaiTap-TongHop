@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    char victim1[11], victim2[11];
+    char murdered[11], new_victim[11];
+    int n;
+
+    scanf("%s %s", victim1, victim2);
+    printf("%s %s\n", victim1, victim2);
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s %s", murdered, new_victim);
+
+        if (murdered[0] == victim1[0]) {
+            for (int j = 0; j < 10; j++) {
+                victim1[j] = new_victim[j];
+            }
+        }
+        else {
+            for (int j = 0; j < 10; j++) {
+                victim2[j] = new_victim[j];
+            }
+        }
+
+        printf("%s %s\n", victim1, victim2);
+    }
+
+    return 0;
+}
 

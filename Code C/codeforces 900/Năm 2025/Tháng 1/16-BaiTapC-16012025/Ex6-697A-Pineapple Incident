@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int t, s, x;
+    scanf("%d %d %d", &t, &s, &x);
+
+    if (x == t) {
+        printf("YES\n");
+    } else {
+        int time = t;
+        while (time < x) {
+            time += s;
+            if (time == x) {
+                printf("YES\n");
+                return 0;
+            }
+            if (time + 1 == x) {
+                printf("YES\n");
+                return 0;
+            }
+        }
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

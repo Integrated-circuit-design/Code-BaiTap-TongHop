@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n, d;
+    scanf("%d %d", &n, &d);
+
+    int x[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x[i]);
+    }
+
+    int count = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        int gap = x[i + 1] - x[i];
+        
+        if (gap > 2 * d) {
+            count += 2;
+        }
+        else if (gap == 2 * d) {
+            count += 1;
+        }
+    }
+
+    count += 2;
+
+    printf("%d\n", count);
+
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n, x = 0, y = 0, coins = 0;
+    char moves[100005];
+    
+    scanf("%d", &n);
+    scanf("%s", moves);
+    
+    int kingdom = 0; 
+    
+    for (int i = 0; i < n; i++) {
+        if (moves[i] == 'U') {
+            y++;
+        } else if (moves[i] == 'R') {
+            x++;
+        }
+        
+        int new_kingdom = (x > y) ? 1 : (x < y) ? 2 : 0;
+        
+        if (kingdom != 0 && new_kingdom != 0 && kingdom != new_kingdom) {
+            coins++;
+        }
+        
+        kingdom = new_kingdom;
+    }
+    
+    printf("%d\n", coins);
+    return 0;
+}
 

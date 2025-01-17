@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    char name[MAX_N][11], status[MAX_N][10];
+    char crew[MAX_N][11];
+    int crew_index = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s %s", name[i], status[i]);
+        
+        if (strcmp(status[i], "rat") == 0) {
+            strcpy(crew[crew_index], name[i]);
+            crew_index++;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (strcmp(status[i], "woman") == 0 || strcmp(status[i], "child") == 0) {
+            strcpy(crew[crew_index], name[i]);
+            crew_index++;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (strcmp(status[i], "man") == 0) {
+            strcpy(crew[crew_index], name[i]);
+            crew_index++;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (strcmp(status[i], "captain") == 0) {
+            strcpy(crew[crew_index], name[i]);
+            crew_index++;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%s\n", crew[i]);
+    }
+
+    return 0;
+}
 

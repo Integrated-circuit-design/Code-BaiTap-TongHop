@@ -1,1 +1,71 @@
+#include <stdio.h>
+
+#define MAX_N 50
+
+int n;
+char board[MAX_N][MAX_N];
+
+int directions[5][2] = {
+    {0, 0},
+    {-1, 0},
+    {1, 0},
+    {0, -1},
+    {0, 1}
+};
+
+int canPlacePiece(int x, int y) {
+    for (int i = 0; i < 5; i++) {
+        int nx = x + directions[i][0];
+        int ny = y + directions[i][1];
+        
+        if (nx < 0 || ny < 0 || nx >= n || ny >= n || board[nx][ny] != '.') {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void placePiece(int x, int y) {
+    for (int i = 0; i < 5; i++) {
+        int nx = x + directions[i][0];
+        int ny = y + directions[i][1];
+        board[nx][ny] = '#';
+    }
+}
+
+int canTileBoard() {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (board[i][j] == '.' && canPlacePiece(i, j)) {
+                placePiece(i, j);
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (board[i][j] == '.') {
+                return 0;
+            }
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", board[i]);
+    }
+
+    if (canTileBoard()) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

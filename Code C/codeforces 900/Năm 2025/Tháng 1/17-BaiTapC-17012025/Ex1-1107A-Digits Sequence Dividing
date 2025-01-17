@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        char s[301];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        int found = 0;
+
+        for (int i = 1; i < n; i++) {
+            char part1[301], part2[301];
+            
+            for (int j = 0; j < i; j++) {
+                part1[j] = s[j];
+            }
+            part1[i] = '\0';
+
+            for (int j = i; j < n; j++) {
+                part2[j - i] = s[j];
+            }
+            part2[n - i] = '\0';
+
+            int num1 = atoi(part1);
+            int num2 = atoi(part2);
+
+            if (num1 < num2) {
+                printf("YES\n");
+                printf("2\n");
+                printf("%s %s\n", part1, part2);
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found) {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

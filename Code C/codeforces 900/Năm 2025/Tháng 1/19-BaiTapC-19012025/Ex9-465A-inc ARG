@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    char bits[n];
+    scanf("%s", bits);
+
+    int flipCount = 0;
+    int i;
+
+    for (i = 0; i < n; i++) {
+        if (bits[i] == '0') {
+            bits[i] = '1';
+            flipCount++;
+            break;
+        } else {
+            bits[i] = '0';
+            flipCount++;
+        }
+    }
+
+    if (i == n) {
+        flipCount = n;
+    }
+
+    printf("%d\n", flipCount);
+
+    return 0;
+}
 

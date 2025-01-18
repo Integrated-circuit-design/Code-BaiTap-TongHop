@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int n, k;
+    double total_length = 0.0;
+    
+    scanf("%d %d", &n, &k);
+
+    int x1, y1, x2, y2;
+    
+    scanf("%d %d", &x1, &y1);
+
+    for (int i = 1; i < n; i++) {
+        scanf("%d %d", &x2, &y2);
+        
+        double dist = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        
+        total_length += dist;
+        
+        x1 = x2;
+        y1 = y2;
+    }
+    
+    double time_per_signature = total_length / 50.0;
+    
+    double total_time = time_per_signature * k;
+    
+    printf("%.9f\n", total_time);
+    
+    return 0;
+}
 

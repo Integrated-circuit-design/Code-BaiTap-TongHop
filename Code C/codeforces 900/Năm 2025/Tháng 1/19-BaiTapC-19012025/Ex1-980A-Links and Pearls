@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    char necklace[101];
+    int pearl_count = 0, link_count = 0;
+    int i, length;
+
+    scanf("%s", necklace);
+    
+    for (length = 0; necklace[length] != '\0'; length++);
+
+    for (i = 0; i < length; i++) {
+        if (necklace[i] == 'o') {
+            pearl_count++;
+        } else if (necklace[i] == '-') {
+            link_count++;
+        }
+    }
+
+    if (pearl_count <= 1) {
+        printf("YES\n");
+    } else {
+        if (link_count % pearl_count == 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

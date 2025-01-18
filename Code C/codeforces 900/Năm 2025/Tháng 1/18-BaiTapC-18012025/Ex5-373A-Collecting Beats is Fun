@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int k;
+    scanf("%d", &k);
+    
+    char panel[4][4];
+    for (int i = 0; i < 4; i++) {
+        scanf("%s", panel[i]);
+    }
+    
+    int counts[10] = {0};
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (panel[i][j] >= '1' && panel[i][j] <= '9') {
+                int num = panel[i][j] - '0';
+                counts[num]++;
+            }
+        }
+    }
+    
+    int canPressAll = 1;
+    for (int i = 1; i <= 9; i++) {
+        if (counts[i] > 2 * k) {
+            canPressAll = 0;
+            break;
+        }
+    }
+    
+    if (canPressAll) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

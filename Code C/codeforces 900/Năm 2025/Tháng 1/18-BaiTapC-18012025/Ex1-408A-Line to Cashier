@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int num_cashiers;
+    scanf("%d", &num_cashiers);
+
+    int queue_size[num_cashiers];
+    
+    for (int i = 0; i < num_cashiers; i++) {
+        scanf("%d", &queue_size[i]);
+    }
+
+    int min_time = 1000000000;
+
+    for (int i = 0; i < num_cashiers; i++) {
+        int total_time_for_cashier = 0;
+
+        for (int j = 0; j < queue_size[i]; j++) {
+            int items_in_basket;
+            scanf("%d", &items_in_basket);
+
+            total_time_for_cashier += (5 * items_in_basket + 15);
+        }
+
+        if (total_time_for_cashier < min_time) {
+            min_time = total_time_for_cashier;
+        }
+    }
+
+    printf("%d\n", min_time);
+
+    return 0;
+}
 

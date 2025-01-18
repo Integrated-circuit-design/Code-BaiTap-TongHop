@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char a[1000001], b[1000001];
+
+    fgets(a, sizeof(a), stdin);
+    fgets(b, sizeof(b), stdin);
+
+    a[strcspn(a, "\n")] = '\0';
+    b[strcspn(b, "\n")] = '\0';
+
+    int i = 0, j = 0;
+    while (a[i] == '0' && a[i] != '\0') i++;
+    while (b[j] == '0' && b[j] != '\0') j++;
+
+    int len_a = strlen(a + i);
+    int len_b = strlen(b + j);
+
+    if (len_a < len_b) {
+        printf("<\n");
+    } else if (len_a > len_b) {
+        printf(">\n");
+    } else {
+        int result = strcmp(a + i, b + j);
+        if (result < 0) {
+            printf("<\n");
+        } else if (result > 0) {
+            printf(">\n");
+        } else {
+            printf("=\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+int main() {
+    int n, s;
+    scanf("%d %d", &n, &s);
+
+    int a[n], b[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &b[i]);
+    }
+
+    int canTravelDirectly = 1; 
+    for (int i = 0; i < s; i++) {
+        if (a[i] == 0) {
+            canTravelDirectly = 0; 
+            break;
+        }
+    }
+
+    int canSwitchToSecondTrack = 0;
+    if (!canTravelDirectly) {
+        if (a[n-1] == 1) {
+            for (int i = s - 1; i < n; i++) {
+                if (b[i] == 0) {
+                    canSwitchToSecondTrack = 0;
+                    break;
+                }
+                canSwitchToSecondTrack = 1;
+            }
+        }
+    } else {
+        canSwitchToSecondTrack = 1;
+    }
+
+    if (canTravelDirectly || canSwitchToSecondTrack) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

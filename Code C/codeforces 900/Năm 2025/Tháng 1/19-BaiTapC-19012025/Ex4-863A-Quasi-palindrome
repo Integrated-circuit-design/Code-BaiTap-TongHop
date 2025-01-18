@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int is_quasi_palindromic(int x) {
+    int original = x;
+    int reversed = 0;
+    
+    while (x > 0) {
+        reversed = reversed * 10 + (x % 10);
+        x /= 10;
+    }
+
+    while (original % 10 == 0 && original > 0) {
+        original /= 10;
+    }
+
+    return original == reversed;
+}
+
+int main() {
+    int x;
+    scanf("%d", &x);
+
+    if (is_quasi_palindromic(x)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

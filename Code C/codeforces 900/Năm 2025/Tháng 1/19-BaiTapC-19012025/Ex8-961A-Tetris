@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int height[n];
+    for (int i = 0; i < n; i++) {
+        height[i] = 0;
+    }
+
+    int score = 0;
+    int full_rows = 0;
+
+    for (int i = 0; i < m; i++) {
+        int column;
+        scanf("%d", &column);
+        column--;
+        
+        height[column]++;
+
+        int can_clear = 1;
+        for (int j = 0; j < n; j++) {
+            if (height[j] <= full_rows) {
+                can_clear = 0;
+                break;
+            }
+        }
+
+        if (can_clear) {
+            score++;
+            full_rows++;
+        }
+    }
+
+    printf("%d\n", score);
+    
+    return 0;
+}
 

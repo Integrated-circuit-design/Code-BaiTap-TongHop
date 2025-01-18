@@ -1,1 +1,16 @@
+#include <stdio.h>
+
+int main() {
+    int n, x, y;
+    scanf("%d %d %d", &n, &x, &y);
+    int required_people = (y * n + 99) / 100;
+
+    if (x >= required_people) {
+        printf("0\n");
+    } else {
+        printf("%d\n", required_people - x);
+    }
+
+    return 0;
+}
 

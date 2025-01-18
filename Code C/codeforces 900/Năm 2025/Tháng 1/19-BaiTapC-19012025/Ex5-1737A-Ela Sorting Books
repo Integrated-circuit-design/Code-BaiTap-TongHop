@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_N 200
+
+char calculate_mex(char *compartment, int compartment_size) {
+    int found[26] = {0};
+
+    for (int i = 0; i < compartment_size; i++) {
+        found[compartment[i] - 'a'] = 1;
+    }
+
+    for (int i = 0; i < 25; i++) {
+        if (found[i] == 0) {
+            return 'a' + i;
+        }
+    }
+
+    return 'z';
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        char books[MAX_N + 1];
+
+        scanf("%d %d", &n, &k);
+        scanf("%s", books);
+
+        int letter_count[26] = {0};
+        for (int i = 0; i < n; i++) {
+            letter_count[books[i] - 'a']++;
+        }
+
+        int compartment_size = n / k;
+        char result[k + 1];
+
+        for (int i = 0; i < k; i++) {
+            char compartment[MAX_N + 1];
+            int pos = 0;
+            
+            for (int j = 0; j < 26; j++) {
+                while (letter_count[j] > 0 && pos < compartment_size) {
+                    compartment[pos++] = 'a' + j;
+                    letter_count[j]--;
+                }
+            }
+
+            result[i] = calculate_mex(compartment, compartment_size);
+        }
+
+        result[k] = '\0';
+        printf("%s\n", result);
+    }
+
+    return 0;
+}
 

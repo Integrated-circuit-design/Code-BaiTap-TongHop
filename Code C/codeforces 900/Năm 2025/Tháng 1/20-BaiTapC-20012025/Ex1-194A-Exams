@@ -1,1 +1,15 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int max_sum = n * 5;
+    int difference = max_sum - k;
+    int resit_count = (difference + 2) / 3;
+
+    printf("%d\n", resit_count);
+    
+    return 0;
+}
 

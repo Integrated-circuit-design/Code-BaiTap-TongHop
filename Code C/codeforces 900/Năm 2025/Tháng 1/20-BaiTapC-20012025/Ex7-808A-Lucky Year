@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int isLuckyYear(int year) {
+    int count = 0;
+    
+    while (year > 0) {
+        if (year % 10 != 0) {
+            count++;
+        }
+        year /= 10;
+    }
+
+    return count <= 1;
+}
+
+int main() {
+    int currentYear;
+    scanf("%d", &currentYear);
+    
+    int nextYear = currentYear + 1;
+    
+    while (!isLuckyYear(nextYear)) {
+        nextYear++;
+    }
+
+    printf("%d\n", nextYear - currentYear);
+    
+    return 0;
+}
 

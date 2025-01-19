@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 1000
+#define MAX_LEN 1000
+
+void sort_string(char *str) {
+    int len = strlen(str);
+    for (int i = 0; i < len - 1; i++) {
+        for (int j = i + 1; j < len; j++) {
+            if (str[i] > str[j]) {
+                char temp = str[i];
+                str[i] = str[j];
+                str[j] = temp;
+            }
+        }
+    }
+}
+
+void get_root(char *word, char *root) {
+    int freq[26] = {0};
+    int len = strlen(word);
+    for (int i = 0; i < len; i++) {
+        freq[word[i] - 'a'] = 1;
+    }
+
+    int idx = 0;
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] == 1) {
+            root[idx++] = 'a' + i;
+        }
+    }
+    root[idx] = '\0';
+}
+
+int are_roots_equal(char *root1, char *root2) {
+    return strcmp(root1, root2) == 0;
+}
+
+int main() {
+    int n;
+    char words[MAX_N][MAX_LEN];
+
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", words[i]);
+    }
+
+    char roots[MAX_N][MAX_LEN];
+    int root_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        char root[MAX_LEN];
+        get_root(words[i], root);
+        sort_string(root);
+        
+        int found = 0;
+        for (int j = 0; j < root_count; j++) {
+            if (are_roots_equal(roots[j], root)) {
+                found = 1;
+                break;
+            }
+        }
+        
+        if (!found) {
+            strcpy(roots[root_count], root);
+            root_count++;
+        }
+    }
+
+    printf("%d\n", root_count);
+
+    return 0;
+}
 

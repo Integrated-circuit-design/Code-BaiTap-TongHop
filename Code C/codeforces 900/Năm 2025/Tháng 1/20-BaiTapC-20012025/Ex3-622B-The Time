@@ -1,1 +1,16 @@
+#include <stdio.h>
+
+int main() {
+    int hours, minutes, add_minutes;
+    scanf("%d:%d", &hours, &minutes);
+    scanf("%d", &add_minutes);
+
+    int total_minutes = (hours * 60 + minutes) + add_minutes;
+    hours = (total_minutes / 60) % 24;
+    minutes = total_minutes % 60;
+
+    printf("%02d:%02d\n", hours, minutes);
+
+    return 0;
+}
 

@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[1000006];
+    scanf("%s", s);
+    
+    long long left_torque = 0;
+    long long right_torque = 0;
+    
+    int pivot_position = 0;
+    
+    for (int i = 0; s[i] != '\0'; i++) {
+        if (s[i] == '^') {
+            pivot_position = i;
+        } else if (s[i] >= '1' && s[i] <= '9') {
+            if (i < pivot_position) {
+                left_torque += (s[i] - '0') * (pivot_position - i);
+            } else if (i > pivot_position) {
+                right_torque += (s[i] - '0') * (i - pivot_position);
+            }
+        }
+    }
+
+    if (left_torque > right_torque) {
+        printf("left\n");
+    } else if (right_torque > left_torque) {
+        printf("right\n");
+    } else {
+        printf("balance\n");
+    }
+
+    return 0;
+}
 

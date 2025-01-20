@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    int buttons[m];
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &buttons[i]);
+    }
+    
+    int lastTurnedOff = 0;
+    int result[n];
+    
+    for (int i = 0; i < n; i++) {
+        result[i] = -1;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int button = buttons[i];
+        for (int j = button - 1; j < n; j++) {
+            if (result[j] == -1) {
+                result[j] = button;
+            }
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

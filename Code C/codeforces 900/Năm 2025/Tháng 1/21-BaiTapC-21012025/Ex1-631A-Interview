@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+
+    scanf("%d", &n);
+
+    int a[n], b[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &b[i]);
+    }
+
+    int max_sum = 0;
+
+    for (int l = 0; l < n; l++) {
+        int or_a = 0, or_b = 0;
+        
+        for (int r = l; r < n; r++) {
+            or_a |= a[r];
+            or_b |= b[r];
+
+            if (or_a + or_b > max_sum) {
+                max_sum = or_a + or_b;
+            }
+        }
+    }
+
+    printf("%d\n", max_sum);
+
+    return 0;
+}
 

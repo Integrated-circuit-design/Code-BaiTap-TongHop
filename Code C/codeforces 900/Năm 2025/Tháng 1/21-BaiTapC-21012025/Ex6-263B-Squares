@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int countSquares(int squares[], int n, int x, int y) {
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        if (x >= 0 && x <= squares[i] && y >= 0 && y <= squares[i]) {
+            count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int squares[50];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &squares[i]);
+    }
+
+    int max_square = 0;
+    for (int i = 0; i < n; i++) {
+        if (squares[i] > max_square) {
+            max_square = squares[i];
+        }
+    }
+
+    int x = max_square / 2;
+    int y = max_square / 2;
+
+    if (countSquares(squares, n, x, y) == k) {
+        printf("%d %d\n", x, y);
+    } else {
+        printf("-1\n");
+    }
+    
+    return 0;
+}
 

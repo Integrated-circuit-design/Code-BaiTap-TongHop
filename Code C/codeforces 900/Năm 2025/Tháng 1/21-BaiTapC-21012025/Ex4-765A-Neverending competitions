@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    char home_airport[4];
+    char departure[4], arrival[4];
+
+    scanf("%d", &n);
+    scanf("%s", home_airport);
+
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%3s->%3s", departure, arrival);
+
+        if (strcmp(departure, home_airport) == 0) {
+            count++;
+        } else if (strcmp(arrival, home_airport) == 0) {
+            count--;
+        }
+    }
+
+    if (count == 0) {
+        printf("home\n");
+    } else {
+        printf("contest\n");
+    }
+
+    return 0;
+}
 

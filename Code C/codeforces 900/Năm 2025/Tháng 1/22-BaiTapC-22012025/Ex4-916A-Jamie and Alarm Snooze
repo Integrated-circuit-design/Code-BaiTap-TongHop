@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int has_digit_seven(int h, int m) {
+    if (h / 10 == 7 || h % 10 == 7) return 1;
+    if (m / 10 == 7 || m % 10 == 7) return 1;
+    return 0;
+}
+
+int main() {
+    int x, hh, mm;
+    
+    scanf("%d", &x);
+    scanf("%d %d", &hh, &mm);
+
+    int snoozes = 0;
+
+    while (!has_digit_seven(hh, mm)) {
+        mm -= x;
+        if (mm < 0) {
+            mm += 60;
+            hh -= 1;
+        }
+        if (hh < 0) {
+            hh += 24;
+        }
+        snoozes++;
+    }
+
+    printf("%d\n", snoozes);
+    return 0;
+}
 

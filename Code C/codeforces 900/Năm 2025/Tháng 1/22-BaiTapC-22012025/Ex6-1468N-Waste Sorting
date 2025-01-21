@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long c1, c2, c3;
+        long long a1, a2, a3, a4, a5;
+
+        scanf("%lld %lld %lld", &c1, &c2, &c3);
+        scanf("%lld %lld %lld %lld %lld", &a1, &a2, &a3, &a4, &a5);
+
+        if (a1 > c1 || a2 > c2 || a3 > c3) {
+            printf("NO\n");
+            continue;
+        }
+
+        c1 -= a1;
+        c2 -= a2;
+        c3 -= a3;
+
+        long long remainingA4 = a4;
+        if (remainingA4 <= c1) {
+            c1 -= remainingA4;
+        } else {
+            remainingA4 -= c1;
+            c1 = 0;
+            if (remainingA4 > c3) {
+                printf("NO\n");
+                continue;
+            }
+            c3 -= remainingA4;
+        }
+
+        long long remainingA5 = a5;
+        if (remainingA5 <= c2) {
+            c2 -= remainingA5;
+        } else {
+            remainingA5 -= c2;
+            c2 = 0;
+            if (remainingA5 > c3) {
+                printf("NO\n");
+                continue;
+            }
+            c3 -= remainingA5;
+        }
+
+        printf("YES\n");
+    }
+
+    return 0;
+}
 

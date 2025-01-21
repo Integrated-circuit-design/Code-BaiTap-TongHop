@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    char password[3];
+    int n;
+    
+    scanf("%s", password);
+    scanf("%d", &n);
+    
+    char words[n][3];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", words[i]);
+    }
+
+    int can_form = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (words[i][1] == password[0] && words[j][0] == password[1]) {
+                can_form = 1;
+                break;
+            }
+        }
+        if (can_form) break;
+    }
+
+    if (can_form) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

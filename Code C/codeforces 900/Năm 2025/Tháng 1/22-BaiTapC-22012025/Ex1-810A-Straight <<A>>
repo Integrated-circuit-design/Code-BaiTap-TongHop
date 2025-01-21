@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int marks[n];
+    int sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &marks[i]);
+        sum += marks[i];
+    }
+
+    double current_average = (double)sum / n;
+    int additional_marks = 0;
+
+    while (current_average < k) {
+        sum += k;
+        n++;
+        additional_marks++;
+        current_average = (double)sum / n;
+    }
+
+    printf("%d\n", additional_marks);
+
+    return 0;
+}
 

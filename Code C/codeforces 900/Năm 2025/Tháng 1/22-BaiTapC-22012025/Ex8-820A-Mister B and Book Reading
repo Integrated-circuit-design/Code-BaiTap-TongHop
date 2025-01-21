@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int c, v0, v1, a, l;
+    scanf("%d %d %d %d %d", &c, &v0, &v1, &a, &l);
+
+    int total_pages_read = 0;
+    int current_day = 1;
+    int current_reading_speed = v0;
+
+    while (total_pages_read < c) {
+        int pages_today = current_reading_speed;
+
+        if (current_day > 1) {
+            pages_today -= l;
+        }
+
+        if (pages_today < 0) {
+            pages_today = 0;
+        }
+
+        total_pages_read += pages_today;
+
+        if (total_pages_read >= c) {
+            break;
+        }
+
+        current_reading_speed += a;
+        
+        if (current_reading_speed > v1) {
+            current_reading_speed = v1;
+        }
+
+        current_day++;
+    }
+
+    printf("%d\n", current_day);
+
+    return 0;
+}
 

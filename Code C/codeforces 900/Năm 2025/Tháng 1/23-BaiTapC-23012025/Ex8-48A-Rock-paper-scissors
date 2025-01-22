@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char fyodor[10], matroskin[10], sharic[10];
+
+    scanf("%s", fyodor);
+    scanf("%s", matroskin);
+    scanf("%s", sharic);
+
+    if (strcmp(fyodor, matroskin) == 0 && strcmp(matroskin, sharic) == 0) {
+        printf("?\n");
+        return 0;
+    }
+
+    if ((strcmp(fyodor, "rock") == 0 && strcmp(matroskin, "scissors") == 0 && strcmp(sharic, "scissors") == 0) || 
+        (strcmp(fyodor, "scissors") == 0 && strcmp(matroskin, "paper") == 0 && strcmp(sharic, "paper") == 0) || 
+        (strcmp(fyodor, "paper") == 0 && strcmp(matroskin, "rock") == 0 && strcmp(sharic, "rock") == 0)) {
+        printf("F\n");
+        return 0;
+    }
+    
+    if ((strcmp(matroskin, "rock") == 0 && strcmp(fyodor, "scissors") == 0 && strcmp(sharic, "scissors") == 0) || 
+        (strcmp(matroskin, "scissors") == 0 && strcmp(fyodor, "paper") == 0 && strcmp(sharic, "paper") == 0) || 
+        (strcmp(matroskin, "paper") == 0 && strcmp(fyodor, "rock") == 0 && strcmp(sharic, "rock") == 0)) {
+        printf("M\n");
+        return 0;
+    }
+
+    if ((strcmp(sharic, "rock") == 0 && strcmp(fyodor, "scissors") == 0 && strcmp(matroskin, "scissors") == 0) || 
+        (strcmp(sharic, "scissors") == 0 && strcmp(fyodor, "paper") == 0 && strcmp(matroskin, "paper") == 0) || 
+        (strcmp(sharic, "paper") == 0 && strcmp(fyodor, "rock") == 0 && strcmp(matroskin, "rock") == 0)) {
+        printf("S\n");
+        return 0;
+    }
+
+    printf("?\n");
+    return 0;
+}
 

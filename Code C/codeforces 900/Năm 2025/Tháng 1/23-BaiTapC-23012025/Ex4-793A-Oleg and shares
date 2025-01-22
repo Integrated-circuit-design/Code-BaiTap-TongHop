@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    long long k;
+    scanf("%d %lld", &n, &k);
+
+    long long *a = (long long *)malloc(n * sizeof(long long));
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    long long minPrice = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] < minPrice) {
+            minPrice = a[i];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if ((a[i] - minPrice) % k != 0) {
+            printf("-1\n");
+            free(a);
+            return 0;
+        }
+    }
+
+    long long totalTime = 0;
+    for (int i = 0; i < n; i++) {
+        totalTime += (a[i] - minPrice) / k;
+    }
+
+    printf("%lld\n", totalTime);
+
+    free(a);
+    return 0;
+}
 

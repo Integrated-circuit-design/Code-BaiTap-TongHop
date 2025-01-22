@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int parent[n+1];
+    parent[1] = 0;
+
+    for (int i = 2; i <= n; i++) {
+        scanf("%d", &parent[i]);
+    }
+
+    int path[n];
+    int index = 0;
+    int current_router = n;
+
+    while (current_router != 0) {
+        path[index++] = current_router;
+        current_router = parent[current_router];
+    }
+
+    for (int i = index - 1; i >= 0; i--) {
+        printf("%d ", path[i]);
+    }
+
+    return 0;
+}
 

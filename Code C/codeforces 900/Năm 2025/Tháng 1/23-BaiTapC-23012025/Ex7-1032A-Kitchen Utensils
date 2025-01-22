@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+#define MAX_TYPE 100
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int utensils[MAX_TYPE] = {0};
+    int utensil_type;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &utensil_type);
+        utensils[utensil_type - 1]++;
+    }
+
+    int max_count = 0;
+    for (int i = 0; i < MAX_TYPE; i++) {
+        if (utensils[i] > max_count) {
+            max_count = utensils[i];
+        }
+    }
+
+    int sets_required = (max_count + k - 1) / k;
+
+    int distinct_types = 0;
+    for (int i = 0; i < MAX_TYPE; i++) {
+        if (utensils[i] > 0) {
+            distinct_types++;
+        }
+    }
+
+    int total_required = sets_required * distinct_types;
+
+    int stolen_utensils = total_required - n;
+
+    printf("%d\n", stolen_utensils);
+
+    return 0;
+}
 

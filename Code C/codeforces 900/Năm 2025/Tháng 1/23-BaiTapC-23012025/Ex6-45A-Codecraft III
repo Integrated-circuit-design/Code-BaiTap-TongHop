@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    char *months[] = {
+        "January", "February", "March", "April", "May", 
+        "June", "July", "August", "September", "October", 
+        "November", "December"
+    };
+
+    char current_month[20];
+    int k;
+
+    scanf("%s", current_month);
+    scanf("%d", &k);
+
+    int current_month_number = 0;
+
+    for (int i = 0; i < 12; i++) {
+        if (strcmp(current_month, months[i]) == 0) {
+            current_month_number = i;
+            break;
+        }
+    }
+
+    int result_month_number = (current_month_number + k) % 12;
+
+    printf("%s\n", months[result_month_number]);
+
+    return 0;
+}
 

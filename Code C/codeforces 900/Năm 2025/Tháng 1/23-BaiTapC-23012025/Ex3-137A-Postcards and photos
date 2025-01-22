@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[101];
+    scanf("%s", s);
+
+    int n = strlen(s);
+    int trips = 0;
+    int group_size = 1;
+
+    for (int i = 1; i <= n; i++) {
+        if (s[i] != s[i - 1] || i == n) {
+            trips += (group_size + 4) / 5;
+            group_size = 1;
+        } else {
+            group_size++;
+        }
+    }
+
+    printf("%d\n", trips);
+
+    return 0;
+}
 

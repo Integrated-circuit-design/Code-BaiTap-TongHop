@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, P1, P2, P3, T1, T2;
+    scanf("%d %d %d %d %d %d", &n, &P1, &P2, &P3, &T1, &T2);
+
+    int li, ri, prevEnd = 0, totalPower = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &li, &ri);
+
+        totalPower += (ri - li) * P1;
+
+        if (prevEnd != 0) {
+            int idleTime = li - prevEnd;
+
+            if (idleTime > 0) {
+                if (idleTime <= T1) {
+                    totalPower += idleTime * P1;
+                } else if (idleTime <= T1 + T2) {
+                    totalPower += T1 * P1 + (idleTime - T1) * P2;
+                } else {
+                    totalPower += T1 * P1 + T2 * P2 + (idleTime - T1 - T2) * P3;
+                }
+            }
+        }
+
+        prevEnd = ri;
+    }
+
+    printf("%d\n", totalPower);
+
+    return 0;
+}
 

@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100000
+
+int findMinTime(int n, int k, int a[], int b[]) {
+    int job_assigned[k + 1];
+    int total_persuasion_time = 0;
+
+    for (int i = 1; i <= k; i++) {
+        job_assigned[i] = 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        job_assigned[a[i]]++;
+    }
+
+    int persuasion_times[n], persuasion_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (job_assigned[a[i]] > 1) {
+            persuasion_times[persuasion_count++] = b[i];
+            job_assigned[a[i]]--;
+        }
+    }
+
+    qsort(persuasion_times, persuasion_count, sizeof(int), (int (*)(const void*, const void*))compare);
+
+    int jobs_to_fill = 0;
+    for (int i = 1; i <= k; i++) {
+        if (job_assigned[i] == 0) {
+            jobs_to_fill++;
+        }
+    }
+
+    for (int i = 0; i < jobs_to_fill; i++) {
+        total_persuasion_time += persuasion_times[i];
+    }
+
+    return total_persuasion_time;
+}
+
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[n], b[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &b[i]);
+    }
+
+    int result = findMinTime(n, k, a, b);
+    printf("%d\n", result);
+
+    return 0;
+}
 

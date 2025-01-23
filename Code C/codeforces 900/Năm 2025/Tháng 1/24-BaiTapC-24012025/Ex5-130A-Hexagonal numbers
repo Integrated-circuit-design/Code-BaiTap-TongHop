@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int calculate_hexagonal_number(int n) {
+    return 2 * n * n - n;
+}
+
+int main() {
+    int n;
+    printf("Nhập giá trị n: ");
+    scanf("%d", &n);
+
+    int result = calculate_hexagonal_number(n);
+
+    printf("Số lục giác thứ %d là: %d\n", n, result);
+
+    return 0;
+}
 

@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    char mountain[n][m];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", mountain[i]);
+    }
+
+    int heights[m];
+    
+    for (int j = 0; j < m; j++) {
+        heights[j] = 0;
+        for (int i = 0; i < n; i++) {
+            if (mountain[i][j] == '*') {
+                heights[j] = n - i;
+                break;
+            }
+        }
+    }
+
+    int max_rise = 0, max_fall = 0;
+
+    for (int i = 0; i < m - 1; i++) {
+        int diff = heights[i + 1] - heights[i];
+
+        if (diff > 0) {
+            if (diff > max_rise) {
+                max_rise = diff;
+            }
+        } else if (diff < 0) {
+            if (-diff > max_fall) {
+                max_fall = -diff;
+            }
+        }
+    }
+
+    printf("%d %d\n", max_rise, max_fall);
+
+    return 0;
+}
 

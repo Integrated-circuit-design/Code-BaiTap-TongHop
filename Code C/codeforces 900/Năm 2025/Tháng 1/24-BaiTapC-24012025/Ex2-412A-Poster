@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void paint_slogan(int n, int k, char *slogan) {
+    char direction;
+    char actions[200][100];
+    int action_count = 0;
+
+    if (k <= n / 2) {
+        direction = 'L';
+    } else {
+        direction = 'R';
+    }
+
+    if (direction == 'L') {
+        while (k > 1) {
+            strcpy(actions[action_count++], "LEFT");
+            k--;
+        }
+
+        for (int i = 0; i < n; i++) {
+            char print_action[100];
+            sprintf(print_action, "PRINT %c", slogan[i]);
+            strcpy(actions[action_count++], print_action);
+
+            if (i < n - 1) {
+                strcpy(actions[action_count++], "RIGHT");
+            }
+        }
+    } else {
+        while (k < n) {
+            strcpy(actions[action_count++], "RIGHT");
+            k++;
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            char print_action[100];
+            sprintf(print_action, "PRINT %c", slogan[i]);
+            strcpy(actions[action_count++], print_action);
+
+            if (i > 0) {
+                strcpy(actions[action_count++], "LEFT");
+            }
+        }
+    }
+
+    for (int i = 0; i < action_count; i++) {
+        printf("%s\n", actions[i]);
+    }
+}
+
+int main() {
+    int n, k;
+    char slogan[101];
+
+    scanf("%d %d", &n, &k);
+    scanf("%s", slogan);
+
+    paint_slogan(n, k, slogan);
+
+    return 0;
+}
 

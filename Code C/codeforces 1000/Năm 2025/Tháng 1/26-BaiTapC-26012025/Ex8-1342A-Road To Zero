@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+long long calculate_cost(int x, int y, int a, int b) {
+    long long cost = 0;
+    int common_steps = (x < y) ? x : y;
+    cost += (long long)common_steps * b;
+    cost += (long long)(x - common_steps) * a;
+    cost += (long long)(y - common_steps) * a;
+    return cost;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int x, y, a, b;
+        scanf("%d %d", &x, &y);
+        scanf("%d %d", &a, &b);
+        long long result = calculate_cost(x, y, a, b);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

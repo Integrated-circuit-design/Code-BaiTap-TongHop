@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[51];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        int open_count = 0;
+        int close_count = 0;
+        int moves = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '(') {
+                open_count++;
+            } else {
+                close_count++;
+            }
+
+            if (close_count > open_count) {
+                moves++;
+                close_count--;
+                open_count++;
+            }
+        }
+
+        printf("%d\n", moves);
+    }
+
+    return 0;
+}
 

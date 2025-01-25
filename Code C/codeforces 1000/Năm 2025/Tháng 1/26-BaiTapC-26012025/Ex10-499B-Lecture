@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 11
+#define MAX_N 3000
+#define MAX_M 3000
+
+void choose_shorter_word(char *first, char *second, char *result) {
+    if (strlen(first) <= strlen(second)) {
+        strcpy(result, first);
+    } else {
+        strcpy(result, second);
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    char first_lang[MAX_M][MAX_LEN], second_lang[MAX_M][MAX_LEN];
+    char translation[MAX_M][MAX_LEN];
+
+    for (int i = 0; i < m; i++) {
+        scanf("%s %s", first_lang[i], second_lang[i]);
+        choose_shorter_word(first_lang[i], second_lang[i], translation[i]);
+    }
+
+    char lecture_word[MAX_LEN];
+    for (int i = 0; i < n; i++) {
+        scanf("%s", lecture_word);
+
+        for (int j = 0; j < m; j++) {
+            if (strcmp(lecture_word, first_lang[j]) == 0) {
+                printf("%s ", translation[j]);
+                break;
+            }
+        }
+    }
+
+    return 0;
+}
 

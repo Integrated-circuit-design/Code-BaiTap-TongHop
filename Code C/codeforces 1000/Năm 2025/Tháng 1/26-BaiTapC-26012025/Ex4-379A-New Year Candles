@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int a, b;
+    scanf("%d %d", &a, &b);
+
+    int total_hours = 0;
+    int burnt_candles = 0;
+
+    while (a > 0) {
+        total_hours += a;
+        burnt_candles += a;
+        a = burnt_candles / b;
+        burnt_candles = burnt_candles % b;
+    }
+
+    printf("%d\n", total_hours);
+
+    return 0;
+}
 

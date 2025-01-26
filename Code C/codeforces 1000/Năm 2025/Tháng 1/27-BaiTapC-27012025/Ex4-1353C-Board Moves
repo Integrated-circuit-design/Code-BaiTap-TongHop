@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+long long calculate_moves(long long n) {
+    long long m = (n - 1) / 2;
+    long long total_moves = 0;
+
+    for (long long k = 1; k <= m; k++) {
+        total_moves += 8 * k * k;
+    }
+
+    return total_moves;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        
+        long long result = calculate_moves(n);
+        
+        printf("%lld\n", result);
+    }
+    
+    return 0;
+}
 

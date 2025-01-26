@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        char s[200005];
+        scanf("%d", &n);
+        scanf("%s", s);
+        
+        int max_distinct = 0;
+
+        for (int i = 1; i < n; i++) {
+            int left_seen[26] = {0};
+            int right_seen[26] = {0};
+            int left_distinct = 0;
+            int right_distinct = 0;
+            
+            for (int j = 0; j < i; j++) {
+                if (left_seen[s[j] - 'a'] == 0) {
+                    left_seen[s[j] - 'a'] = 1;
+                    left_distinct++;
+                }
+            }
+            
+            for (int j = i; j < n; j++) {
+                if (right_seen[s[j] - 'a'] == 0) {
+                    right_seen[s[j] - 'a'] = 1;
+                    right_distinct++;
+                }
+            }
+            
+            int current_distinct = left_distinct + right_distinct;
+            
+            if (current_distinct > max_distinct) {
+                max_distinct = current_distinct;
+            }
+        }
+        
+        printf("%d\n", max_distinct);
+    }
+    
+    return 0;
+}
 

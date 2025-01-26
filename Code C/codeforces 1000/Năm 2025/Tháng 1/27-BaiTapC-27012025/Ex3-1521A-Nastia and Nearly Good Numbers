@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long A, B;
+        scanf("%lld %lld", &A, &B);
+
+        if (B == 1) {
+            printf("NO\n");
+        } else {
+            long long x = A;
+            long long y = A * B;
+            long long z = A * (B + 1);
+            
+            printf("YES\n");
+            printf("%lld %lld %lld\n", x, y, z);
+        }
+    }
+
+    return 0;
+}
 

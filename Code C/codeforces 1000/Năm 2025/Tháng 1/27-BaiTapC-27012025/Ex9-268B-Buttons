@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+long long worst_case_presses(int n) {
+    long long total_presses = 0;
+    long long factorial = 1;
+    
+    for (int i = 1; i <= n; i++) {
+        factorial *= i;
+        total_presses += factorial;
+    }
+    
+    return total_presses;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    printf("%lld\n", worst_case_presses(n));
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int max_rounds = 0;
+
+    for (int i = 0; i < n; i++) {
+        int rounds = (a[i] + m - 1) / m;
+        if (rounds > max_rounds) {
+            max_rounds = rounds;
+        }
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        if ((a[i] + m - 1) / m == max_rounds) {
+            printf("%d\n", i + 1);
+            break;
+        }
+    }
+
+    return 0;
+}
 

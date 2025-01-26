@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a1, a2, b1, b2;
+        scanf("%d %d %d %d", &a1, &a2, &b1, &b2);
+
+        int win_count = 0;
+
+        for (int s1 = 0; s1 < 2; s1++) {
+            for (int s2 = 0; s2 < 2; s2++) {
+                int suneet_rounds = 0;
+                int slavic_rounds = 0;
+
+                int suneet_card_1 = (s1 == 0) ? a1 : a2;
+                int suneet_card_2 = (s1 == 0) ? a2 : a1;
+                int slavic_card_1 = (s2 == 0) ? b1 : b2;
+                int slavic_card_2 = (s2 == 0) ? b2 : b1;
+
+                if (suneet_card_1 > slavic_card_1) {
+                    suneet_rounds++;
+                } else if (slavic_card_1 > suneet_card_1) {
+                    slavic_rounds++;
+                }
+
+                if (suneet_card_2 > slavic_card_2) {
+                    suneet_rounds++;
+                } else if (slavic_card_2 > suneet_card_2) {
+                    slavic_rounds++;
+                }
+
+                if (suneet_rounds > slavic_rounds) {
+                    win_count++;
+                }
+            }
+        }
+
+        printf("%d\n", win_count);
+    }
+
+    return 0;
+}
 

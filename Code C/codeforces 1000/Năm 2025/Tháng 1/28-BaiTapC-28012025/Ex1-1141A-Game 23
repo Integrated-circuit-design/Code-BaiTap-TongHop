@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int transform(int n, int m) {
+    if (m % n != 0) {
+        return -1;
+    }
+
+    int steps = 0;
+    int factor = m / n;
+
+    while (factor > 1) {
+        if (factor % 2 == 0) {
+            factor /= 2;
+            steps++;
+        } else if (factor % 3 == 0) {
+            factor /= 3;
+            steps++;
+        } else {
+            return -1;
+        }
+    }
+
+    return steps;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    int result = transform(n, m);
+    printf("%d\n", result);
+    return 0;
+}
 

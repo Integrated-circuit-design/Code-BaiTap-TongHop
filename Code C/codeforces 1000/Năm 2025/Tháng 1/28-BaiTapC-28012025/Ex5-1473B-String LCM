@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <string.h>
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int lcm(int a, int b) {
+    return (a * b) / gcd(a, b);
+}
+
+int can_repeat_to_form(char *s, char *t) {
+    int len_s = strlen(s);
+    int len_t = strlen(t);
+
+    if (len_s % len_t != 0) {
+        return 0;
+    }
+
+    for (int i = 0; i < len_s; i++) {
+        if (s[i] != t[i % len_t]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    while (q--) {
+        char s[21], t[21];
+        scanf("%s", s);
+        scanf("%s", t);
+
+        int len_s = strlen(s);
+        int len_t = strlen(t);
+
+        int lcm_length = lcm(len_s, len_t);
+
+        char repeated_s[41] = {0}, repeated_t[41] = {0};
+
+        for (int i = 0; i < lcm_length / len_s; i++) {
+            strcat(repeated_s, s);
+        }
+
+        for (int i = 0; i < lcm_length / len_t; i++) {
+            strcat(repeated_t, t);
+        }
+
+        if (strcmp(repeated_s, repeated_t) == 0) {
+            printf("%s\n", repeated_s);
+        } else {
+            printf("-1\n");
+        }
+    }
+    return 0;
+}
 

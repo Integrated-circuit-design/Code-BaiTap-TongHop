@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        
+        char s[n + 1];
+        scanf("%s", s);
+        
+        int recolor_count = 0;
+        
+        for (int i = 0; i < k; i++) {
+            if (s[i] == 'W') {
+                recolor_count++;
+            }
+        }
+        
+        int min_recolor = recolor_count;
+        
+        for (int i = k; i < n; i++) {
+            if (s[i - k] == 'W') {
+                recolor_count--;
+            }
+            if (s[i] == 'W') {
+                recolor_count++;
+            }
+            
+            if (recolor_count < min_recolor) {
+                min_recolor = recolor_count;
+            }
+        }
+        
+        printf("%d\n", min_recolor);
+    }
+    
+    return 0;
+}
 

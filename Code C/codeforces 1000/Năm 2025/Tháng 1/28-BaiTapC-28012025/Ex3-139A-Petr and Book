@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int n, pages[7], totalPagesRead = 0, day = 0;
+    
+    scanf("%d", &n);
+    
+    for (int i = 0; i < 7; i++) {
+        scanf("%d", &pages[i]);
+    }
+
+    while (totalPagesRead < n) {
+        totalPagesRead += pages[day];
+        if (totalPagesRead >= n) {
+            printf("%d\n", day + 1);
+            break;
+        }
+        day = (day + 1) % 7;
+    }
+    
+    return 0;
+}
 

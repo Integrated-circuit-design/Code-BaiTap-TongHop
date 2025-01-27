@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char a[100005], b[100005];
+    
+    fgets(a, sizeof(a), stdin);
+    fgets(b, sizeof(b), stdin);
+    
+    a[strcspn(a, "\n")] = 0;
+    b[strcspn(b, "\n")] = 0;
+    
+    if (strcmp(a, b) == 0) {
+        printf("-1\n");
+    } else {
+        int len_a = strlen(a);
+        int len_b = strlen(b);
+        
+        if (len_a > len_b) {
+            printf("%d\n", len_a);
+        } else {
+            printf("%d\n", len_b);
+        }
+    }
+    
+    return 0;
+}
 

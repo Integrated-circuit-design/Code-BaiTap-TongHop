@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int is_valid(int num, int n) {
+    int temp = num;
+    while (temp > 0) {
+        int digit = temp % 10;
+        if (digit == 0 || num % digit == 0) {
+            return 0;
+        }
+        temp /= 10;
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        if (n == 1) {
+            printf("-1\n");
+        } else {
+            int num = 11;
+            while (1) {
+                if (is_valid(num, n)) {
+                    printf("%d\n", num);
+                    break;
+                }
+                num++;
+            }
+        }
+    }
+
+    return 0;
+}
 

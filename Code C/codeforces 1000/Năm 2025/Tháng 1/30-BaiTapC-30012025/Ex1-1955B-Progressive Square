@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool canFormProgressiveSquare(int n, int c, int d, int b[]) {
+    int min_val = b[0];
+    
+    for (int i = 0; i < n * n; i++) {
+        b[i] -= min_val;
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            int expected_value = i * c + j * d;
+            bool found = false;
+            for (int k = 0; k < n * n; k++) {
+                if (b[k] == expected_value) {
+                    b[k] = -1;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+void solve() {
+    int n, c, d;
+    scanf("%d %d %d", &n, &c, &d);
+    
+    int b[n * n];
+    for (int i = 0; i < n * n; i++) {
+        scanf("%d", &b[i]);
+    }
+
+    if (canFormProgressiveSquare(n, c, d, b)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

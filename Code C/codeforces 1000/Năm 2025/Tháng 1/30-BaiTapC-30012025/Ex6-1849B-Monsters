@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+typedef struct {
+    int health;
+    int index;
+} Monster;
+
+void solve() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    Monster monsters[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &monsters[i].health);
+        monsters[i].index = i + 1;
+    }
+
+    int deathOrder[n];
+    int deathCount = 0;
+
+    while (deathCount < n) {
+        int maxHealthIndex = -1;
+        int maxHealth = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (monsters[i].health > 0 && monsters[i].health > maxHealth) {
+                maxHealth = monsters[i].health;
+                maxHealthIndex = i;
+            }
+        }
+
+        monsters[maxHealthIndex].health -= k;
+
+        if (monsters[maxHealthIndex].health <= 0) {
+            deathOrder[deathCount++] = monsters[maxHealthIndex].index;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", deathOrder[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int sum_of_digits(int n) {
+    int sum = 0;
+    while (n > 0) {
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+
+int count_transformations(int n) {
+    int count = 0;
+    
+    if (n < 10) {
+        return 0;
+    }
+    
+    while (n >= 10) {
+        n = sum_of_digits(n);
+        count++;
+    }
+    
+    return count;
+}
+
+int main() {
+    char input[10000001];
+    scanf("%s", input);
+
+    int n = 0;
+    for (int i = 0; input[i] != '\0'; i++) {
+        n = n * 10 + (input[i] - '0');
+    }
+
+    printf("%d\n", count_transformations(n));
+
+    return 0;
+}
 

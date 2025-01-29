@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_VALUE 1000000
+
+void solve() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int a[n], b[m];
+    bool count_a[MAX_VALUE + 1] = {0};
+    bool count_b[MAX_VALUE + 1] = {0};
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        if (a[i] <= k) count_a[a[i]] = true;
+    }
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &b[i]);
+        if (b[i] <= k) count_b[b[i]] = true;
+    }
+
+    int count_in_a = 0, count_in_b = 0, total_count = 0;
+    
+    for (int i = 1; i <= k; i++) {
+        if (count_a[i]) count_in_a++;
+        if (count_b[i]) count_in_b++;
+        if (count_a[i] || count_b[i]) total_count++;
+    }
+
+    if (total_count == k && count_in_a >= k / 2 && count_in_b >= k / 2) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

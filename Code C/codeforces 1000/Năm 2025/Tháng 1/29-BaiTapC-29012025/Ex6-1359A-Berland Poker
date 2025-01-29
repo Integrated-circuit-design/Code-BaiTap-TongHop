@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+
+        int jokers_per_player = m / k;
+        int leftover_jokers = m % k;
+
+        int max_jokers = jokers_per_player;
+        if (leftover_jokers > 0) {
+            max_jokers++;
+        }
+
+        int second_max_jokers = jokers_per_player;
+        if (leftover_jokers > 1) {
+            second_max_jokers++;
+        }
+
+        int score = max_jokers - second_max_jokers;
+        printf("%d\n", score);
+    }
+
+    return 0;
+}
 

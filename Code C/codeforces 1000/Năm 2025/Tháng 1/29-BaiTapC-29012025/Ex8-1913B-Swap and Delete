@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+void solve() {
+    char s[200001];
+    scanf("%s", s);
+    int n = strlen(s);
+    
+    int count_zero = 0, count_one = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '0') {
+            count_zero++;
+        } else {
+            count_one++;
+        }
+    }
+    
+    int min_cost = (count_zero < count_one) ? count_zero : count_one;
+    printf("%d\n", min_cost);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        solve();
+    }
+    
+    return 0;
+}
 

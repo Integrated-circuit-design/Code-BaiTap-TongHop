@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+
+int checkRBS(char *s, int n) {
+    int balance = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '(') {
+            balance++;
+        } else if (s[i] == ')') {
+            balance--;
+        }
+        if (balance < 0) {
+            return 0;
+        }
+    }
+    
+    return balance == 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        char s[101];
+        scanf("%s", s);
+        
+        int n = strlen(s);
+        
+        int possible = 0;
+        
+        for (int i = 0; i < (1 << n); i++) {
+            char temp[101];
+            strcpy(temp, s);
+            
+            for (int j = 0; j < n; j++) {
+                if (temp[j] == '?') {
+                    if ((i >> j) & 1) {
+                        temp[j] = ')';
+                    } else {
+                        temp[j] = '(';
+                    }
+                }
+            }
+            
+            if (checkRBS(temp, n)) {
+                possible = 1;
+                break;
+            }
+        }
+        
+        if (possible) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

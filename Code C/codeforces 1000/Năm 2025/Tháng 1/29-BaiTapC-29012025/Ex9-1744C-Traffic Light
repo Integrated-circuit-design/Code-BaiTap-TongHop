@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char c;
+        char s[200005];
+
+        scanf("%d %c", &n, &c);
+        scanf("%s", s);
+
+        int result = n;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == c) {
+                for (int j = i + 1; j < i + n; j++) {
+                    if (s[j % n] == 'g') {
+                        result = j - i;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

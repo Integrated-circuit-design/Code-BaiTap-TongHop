@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+int find_min_cost(int n, int arr[]) {
+    int freq[MAXN] = {0};
+    int first_pos[MAXN];
+    int last_pos[MAXN];
+
+    for (int i = 0; i < MAXN; i++) {
+        first_pos[i] = -1;
+        last_pos[i] = -1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int x = arr[i];
+        freq[x]++;
+        if (first_pos[x] == -1) {
+            first_pos[x] = i;
+        }
+        last_pos[x] = i;
+    }
+
+    int min_cost = n;
+
+    for (int i = 1; i <= n; i++) {
+        if (freq[i] > 0) {
+            int cost = 1;
+            int last = first_pos[i];
+
+            for (int j = first_pos[i] + 1; j <= last_pos[i]; j++) {
+                if (arr[j] != i) {
+                    cost++;
+                }
+            }
+
+            if (cost < min_cost) {
+                min_cost = cost;
+            }
+        }
+    }
+
+    return min_cost;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int arr[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        printf("%d\n", find_min_cost(n, arr));
+    }
+
+    return 0;
+}
 

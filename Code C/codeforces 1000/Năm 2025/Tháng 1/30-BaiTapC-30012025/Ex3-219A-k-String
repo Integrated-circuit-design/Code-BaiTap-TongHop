@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 1000
+
+int can_form_k_string(int k, char s[]) {
+    int n = strlen(s);
+    if (n % k != 0) {
+        return 0;
+    }
+    
+    int freq[26] = {0};
+    for (int i = 0; i < n; i++) {
+        freq[s[i] - 'a']++;
+    }
+    
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] % k != 0) {
+            return 0;
+        }
+    }
+    
+    return 1;
+}
+
+void form_k_string(int k, char s[]) {
+    int n = strlen(s);
+    int freq[26] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        freq[s[i] - 'a']++;
+    }
+    
+    char base_substring[MAX_LEN + 1] = "";
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > 0) {
+            for (int j = 0; j < freq[i] / k; j++) {
+                strncat(base_substring, (char[]){i + 'a', '\0'}, 1);
+            }
+        }
+    }
+    
+    for (int i = 0; i < k; i++) {
+        printf("%s", base_substring);
+    }
+    printf("\n");
+}
+
+int main() {
+    int k;
+    char s[MAX_LEN + 1];
+
+    scanf("%d", &k);
+    scanf("%s", s);
+
+    if (can_form_k_string(k, s)) {
+        form_k_string(k, s);
+    } else {
+        printf("-1\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 50000
+
+int compare(const void *a, const void *b) {
+    return (*(long long*)a - *(long long*)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        long long global_min = 1e9, global_second_min = 1e9;
+        long long beauty = 0;
+        
+        long long min_of_all_arrays = 1e9;
+        
+        for (int i = 0; i < n; i++) {
+            int m;
+            scanf("%d", &m);
+            
+            long long arr[m];
+            
+            for (int j = 0; j < m; j++) {
+                scanf("%lld", &arr[j]);
+            }
+            
+            qsort(arr, m, sizeof(long long), compare);
+            
+            long long min_value = arr[0];
+            long long second_min_value = arr[1];
+            
+            beauty += min_value;
+            
+            if (min_value < min_of_all_arrays) {
+                min_of_all_arrays = min_value;
+            }
+            
+            if (min_value < global_min) {
+                global_second_min = global_min;
+                global_min = min_value;
+            } else if (min_value < global_second_min) {
+                global_second_min = min_value;
+            }
+        }
+        
+        beauty += global_second_min - global_min;
+        
+        printf("%lld\n", beauty);
+    }
+    
+    return 0;
+}
 

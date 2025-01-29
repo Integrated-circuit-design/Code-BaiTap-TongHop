@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        long long a, b, n, S;
+        scanf("%lld %lld %lld %lld", &a, &b, &n, &S);
+
+        long long coins_needed = S / n;  
+        if (coins_needed > a) {
+            coins_needed = a;
+        }
+
+        long long remaining_value = S - coins_needed * n;
+
+        if (remaining_value <= b) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

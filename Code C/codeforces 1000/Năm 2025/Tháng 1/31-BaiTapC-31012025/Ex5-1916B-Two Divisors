@@ -1,1 +1,27 @@
+#include <stdio.h>
 
+long long compute_gcd(long long a, long long b) {
+    while (b != 0) {
+        long long temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+
+        long long gcd_value = compute_gcd(a, b);
+        long long x = (a * b) / gcd_value;
+
+        printf("%lld\n", x);
+    }
+
+    return 0;
+}

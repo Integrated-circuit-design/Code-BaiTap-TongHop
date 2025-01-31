@@ -1,1 +1,23 @@
+#include <stdio.h>
 
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int l, r, L, R;
+        scanf("%d %d", &l, &r);
+        scanf("%d %d", &L, &R);
+
+        if (r < L || R < l) {
+            printf("1\n");
+        } else {
+            int start_overlap = (l > L) ? l : L;
+            int end_overlap = (r < R) ? r : R;
+            int doors_to_lock = end_overlap - start_overlap;
+            printf("%d\n", doors_to_lock);
+        }
+    }
+
+    return 0;
+}

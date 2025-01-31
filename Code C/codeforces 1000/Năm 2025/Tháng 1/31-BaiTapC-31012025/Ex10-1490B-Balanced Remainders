@@ -1,1 +1,51 @@
+#include <stdio.h>
 
+void balanced_remainders(int t) {
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        int c0 = 0, c1 = 0, c2 = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            if (a[i] % 3 == 0) c0++;
+            else if (a[i] % 3 == 1) c1++;
+            else c2++;
+        }
+
+        int target = n / 3;
+        int moves = 0;
+
+        while (c0 != target || c1 != target || c2 != target) {
+            if (c0 > target) {
+                int excess = c0 - target;
+                c0 -= excess;
+                c1 += excess;
+                moves += excess;
+            }
+            else if (c1 > target) {
+                int excess = c1 - target;
+                c1 -= excess;
+                c2 += excess;
+                moves += excess;
+            }
+            else if (c2 > target) {
+                int excess = c2 - target;
+                c2 -= excess;
+                c0 += excess;
+                moves += excess;
+            }
+        }
+        
+        printf("%d\n", moves);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    balanced_remainders(t);
+    return 0;
+}

@@ -1,1 +1,50 @@
+#include <stdio.h>
 
+int is_peak(int matrix[][100], int n, int m, int i, int j) {
+    if (i > 0 && matrix[i][j] <= matrix[i - 1][j]) return 0;
+    if (i < n - 1 && matrix[i][j] <= matrix[i + 1][j]) return 0;
+    if (j > 0 && matrix[i][j] <= matrix[i][j - 1]) return 0;
+    if (j < m - 1 && matrix[i][j] <= matrix[i][j + 1]) return 0;
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        int matrix[100][100];
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                scanf("%d", &matrix[i][j]);
+            }
+        }
+        
+        int changed = 1;
+        
+        while (changed) {
+            changed = 0;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (is_peak(matrix, n, m, i, j)) {
+                        matrix[i][j]--;
+                        changed = 1;
+                    }
+                }
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                printf("%d ", matrix[i][j]);
+            }
+            printf("\n");
+        }
+    }
+    
+    return 0;
+}

@@ -1,1 +1,71 @@
+#include <stdio.h>
+
+#define MAX_N 200
+#define MAX_M 200
+
+long long calculate_attack_sum(int n, int m, int board[MAX_N][MAX_M], int x, int y) {
+    long long sum = 0;
+
+    int i = x, j = y;
+    while (i >= 0 && j >= 0) {
+        sum += board[i][j];
+        i--;
+        j--;
+    }
+    i = x, j = y;
+    while (i < n && j < m) {
+        sum += board[i][j];
+        i++;
+        j++;
+    }
+
+    i = x, j = y;
+    while (i >= 0 && j < m) {
+        sum += board[i][j];
+        i--;
+        j++;
+    }
+    i = x, j = y;
+    while (i < n && j >= 0) {
+        sum += board[i][j];
+        i++;
+        j--;
+    }
+
+    return sum;
+}
+
+void solve() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int board[MAX_N][MAX_M];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &board[i][j]);
+        }
+    }
+
+    long long max_sum = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            long long current_sum = calculate_attack_sum(n, m, board, i, j);
+            if (current_sum > max_sum) {
+                max_sum = current_sum;
+            }
+        }
+    }
+
+    printf("%lld\n", max_sum);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

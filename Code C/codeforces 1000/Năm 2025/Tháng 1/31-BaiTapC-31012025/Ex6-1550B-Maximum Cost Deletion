@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
 
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, a, b;
+        char s[101];
+        
+        scanf("%d %d %d", &n, &a, &b);
+        scanf("%s", s);
+
+        int total_points = 0;
+
+        int i = 0;
+        while (i < n) {
+            int j = i;
+            while (j < n && s[j] == s[i]) {
+                j++;
+            }
+            
+            int length = j - i;
+            total_points += a * length + b;
+            i = j;
+        }
+
+        printf("%d\n", total_points);
+    }
+
+    return 0;
+}

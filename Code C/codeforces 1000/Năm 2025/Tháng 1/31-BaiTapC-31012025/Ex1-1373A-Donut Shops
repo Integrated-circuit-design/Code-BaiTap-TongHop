@@ -1,1 +1,25 @@
+#include <stdio.h>
 
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long a, b, c;
+        scanf("%lld %lld %lld", &a, &b, &c);
+        
+        long long result1 = -1, result2 = -1;
+
+        if (a < c) {
+            result1 = b;
+        }
+
+        if (b * c < a) {
+            result2 = 1;
+        }
+
+        printf("%lld %lld\n", result1, result2);
+    }
+
+    return 0;
+}

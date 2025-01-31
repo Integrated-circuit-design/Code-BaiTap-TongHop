@@ -1,1 +1,41 @@
+#include <stdio.h>
 
+#define MAX_N 200000
+
+long long a[MAX_N], cumulative[MAX_N];
+
+int main() {
+    int n, m;
+    
+    scanf("%d %d", &n, &m);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+    
+    cumulative[0] = a[0];
+    for (int i = 1; i < n; i++) {
+        cumulative[i] = cumulative[i - 1] + a[i];
+    }
+    
+    for (int i = 0; i < m; i++) {
+        long long room_number;
+        scanf("%lld", &room_number);
+        
+        int dorm = 0;
+        while (room_number > cumulative[dorm]) {
+            dorm++;
+        }
+        
+        int room_in_dorm;
+        if (dorm == 0) {
+            room_in_dorm = room_number;
+        } else {
+            room_in_dorm = room_number - cumulative[dorm - 1];
+        }
+        
+        printf("%d %d\n", dorm + 1, room_in_dorm);
+    }
+    
+    return 0;
+}

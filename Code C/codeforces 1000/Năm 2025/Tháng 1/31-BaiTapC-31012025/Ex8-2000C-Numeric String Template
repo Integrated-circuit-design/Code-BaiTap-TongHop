@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#define MAX_N 200005
+#define MAX_M 200005
+#define MAX_LEN 200005
+
+const char* check_matching_template(int a[], int n, char s[]) {
+    if (strlen(s) != n) {
+        return "NO";
+    }
+
+    int num_to_char[2 * MAX_N] = {0};
+    int char_to_num[26] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int num = a[i];
+        char c = s[i];
+        int char_index = c - 'a';
+
+        if (num_to_char[num + MAX_N] != 0) {
+            if (num_to_char[num + MAX_N] != char_index + 1) {
+                return "NO";
+            }
+        } else {
+            num_to_char[num + MAX_N] = char_index + 1;
+        }
+
+        if (char_to_num[char_index] != 0) {
+            if (char_to_num[char_index] != num) {
+                return "NO";
+            }
+        } else {
+            char_to_num[char_index] = num;
+        }
+    }
+
+    return "YES";
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int m;
+        scanf("%d", &m);
+
+        while (m--) {
+            char s[MAX_LEN];
+            scanf("%s", s);
+            printf("%s\n", check_matching_template(a, n, s));
+        }
+    }
+
+    return 0;
+}

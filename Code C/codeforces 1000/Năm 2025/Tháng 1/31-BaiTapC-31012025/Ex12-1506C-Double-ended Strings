@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
 
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char a[21], b[21];
+        scanf("%s %s", a, b);
+
+        int len_a = strlen(a);
+        int len_b = strlen(b);
+
+        int common_suffix_len = 0;
+        
+        while (len_a - common_suffix_len - 1 >= 0 && len_b - common_suffix_len - 1 >= 0 &&
+               a[len_a - common_suffix_len - 1] == b[len_b - common_suffix_len - 1]) {
+            common_suffix_len++;
+        }
+
+        int operations = (len_a - common_suffix_len) + (len_b - common_suffix_len);
+
+        printf("%d\n", operations);
+    }
+
+    return 0;
+}

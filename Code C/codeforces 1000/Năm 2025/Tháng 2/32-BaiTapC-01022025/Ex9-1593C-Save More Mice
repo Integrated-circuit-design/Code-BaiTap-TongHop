@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+
+        long long mice[k];
+        for (int i = 0; i < k; i++) {
+            scanf("%lld", &mice[i]);
+        }
+
+        long long saved = 0;
+        long long cat_distance = 0;
+
+        for (int i = 0; i < k; i++) {
+            for (int j = i + 1; j < k; j++) {
+                if (mice[i] < mice[j]) {
+                    long long temp = mice[i];
+                    mice[i] = mice[j];
+                    mice[j] = temp;
+                }
+            }
+        }
+
+        for (int i = 0; i < k; i++) {
+            if (mice[i] <= cat_distance) {
+                break;
+            }
+            saved++;
+            cat_distance += (n - mice[i]);
+        }
+
+        printf("%lld\n", saved);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

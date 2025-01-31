@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    long long n, m;
+
+    scanf("%lld %lld", &n, &m);
+
+    long long a[n];
+    long long b[m];
+    long long prefix[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    prefix[0] = a[0];
+    for (int i = 1; i < n; i++) {
+        prefix[i] = prefix[i - 1] + a[i];
+    }
+
+    for (int j = 0; j < m; j++) {
+        scanf("%lld", &b[j]);
+    }
+
+    for (int j = 0; j < m; j++) {
+        long long room_number = b[j];
+        int dormitory = 0;
+
+        while (dormitory < n && prefix[dormitory] < room_number) {
+            dormitory++;
+        }
+
+        long long room_in_dorm = (dormitory == 0) ? room_number : room_number - prefix[dormitory - 1];
+
+        printf("%d %lld\n", dormitory + 1, room_in_dorm);
+    }
+
+    return 0;
+}
 

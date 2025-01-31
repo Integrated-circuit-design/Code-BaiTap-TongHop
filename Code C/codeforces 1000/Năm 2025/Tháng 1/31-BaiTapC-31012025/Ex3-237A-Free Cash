@@ -1,1 +1,28 @@
+#include <stdio.h>
 
+#define MAX_TIME 1440
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int customers[MAX_TIME] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        int h, m;
+        scanf("%d %d", &h, &m);
+        int time_in_minutes = h * 60 + m;
+        customers[time_in_minutes]++;
+    }
+
+    int max_customers = 0;
+    for (int i = 0; i < MAX_TIME; i++) {
+        if (customers[i] > max_customers) {
+            max_customers = customers[i];
+        }
+    }
+
+    printf("%d\n", max_customers);
+
+    return 0;
+}

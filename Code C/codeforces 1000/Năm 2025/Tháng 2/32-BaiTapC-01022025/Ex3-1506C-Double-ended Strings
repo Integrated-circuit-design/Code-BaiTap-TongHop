@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+int longest_common_substring(const char* a, const char* b) {
+    int max_len = 0;
+    int n = strlen(a);
+    int m = strlen(b);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j <= n; j++) {
+            char sub_a[21];
+            strncpy(sub_a, a + i, j - i);
+            sub_a[j - i] = '\0';
+
+            if (strstr(b, sub_a) != NULL) {
+                int len = j - i;
+                if (len > max_len) {
+                    max_len = len;
+                }
+            }
+        }
+    }
+
+    return max_len;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char a[21], b[21];
+        scanf("%s %s", a, b);
+
+        int lcs_length = longest_common_substring(a, b);
+
+        int operations = strlen(a) + strlen(b) - 2 * lcs_length;
+
+        printf("%d\n", operations);
+    }
+
+    return 0;
+}
 

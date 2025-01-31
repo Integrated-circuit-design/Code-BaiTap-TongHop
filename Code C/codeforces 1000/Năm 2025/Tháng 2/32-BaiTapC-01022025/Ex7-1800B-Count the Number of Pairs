@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define ALPHABET_SIZE 26
+
+void solve() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    char s[n + 1];
+    scanf("%s", s);
+
+    int pairs = 0;
+    int lower[ALPHABET_SIZE] = {0};
+    int upper[ALPHABET_SIZE] = {0};
+
+    for (int i = 0; i < n; i++) {
+        if (islower(s[i])) {
+            lower[s[i] - 'a']++;
+        } else {
+            upper[s[i] - 'A']++;
+        }
+    }
+
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        int matched_pairs = (lower[i] < upper[i]) ? lower[i] : upper[i];
+        pairs += matched_pairs;
+
+        lower[i] -= matched_pairs;
+        upper[i] -= matched_pairs;
+    }
+
+    while (k > 0) {
+        int can_convert = 0;
+        
+        for (int i = 0; i < ALPHABET_SIZE; i++) {
+            if (lower[i] > 1) {
+                can_convert += lower[i] / 2;
+            }
+        }
+
+        for (int i = 0; i < ALPHABET_SIZE; i++) {
+            if (upper[i] > 1) {
+                can_convert += upper[i] / 2;
+            }
+        }
+
+        if (can_convert > k) {
+            pairs += k;
+            break;
+        }
+
+        pairs += can_convert;
+        k -= can_convert;
+    }
+
+    printf("%d\n", pairs);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
 

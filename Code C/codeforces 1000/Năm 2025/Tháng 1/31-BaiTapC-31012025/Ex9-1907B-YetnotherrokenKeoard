@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
 
+void process_typing(int t) {
+    char case_str[1000001];
+    for (int i = 0; i < t; i++) {
+        scanf("%s", case_str);
+
+        int len = strlen(case_str);
+        char typed_string[len + 1];
+        int top = 0;
+
+        for (int j = 0; j < len; j++) {
+            char ch = case_str[j];
+
+            if (ch == 'b') {
+                if (top > 0 && typed_string[top - 1] >= 'a' && typed_string[top - 1] <= 'z') {
+                    top--;
+                }
+            } else if (ch == 'B') {
+                if (top > 0 && typed_string[top - 1] >= 'A' && typed_string[top - 1] <= 'Z') {
+                    top--;
+                }
+            } else {
+                typed_string[top++] = ch;
+            }
+        }
+
+        typed_string[top] = '\0';
+        printf("%s\n", typed_string);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    process_typing(t);
+    return 0;
+}

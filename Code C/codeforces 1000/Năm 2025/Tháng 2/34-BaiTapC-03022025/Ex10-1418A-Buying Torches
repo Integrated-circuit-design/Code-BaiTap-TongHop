@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+long long calculate_trades(long long x, long long y, long long k) {
+    long long total_sticks_needed = k + k * y;
+    long long needed_sticks = total_sticks_needed - 1;
+    long long trade_stick = (needed_sticks + (x - 1)) / (x - 1);
+    return trade_stick + k;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long x, y, k;
+        scanf("%lld %lld %lld", &x, &y, &k);
+        printf("%lld\n", calculate_trades(x, y, k));
+    }
+    
+    return 0;
+}
 

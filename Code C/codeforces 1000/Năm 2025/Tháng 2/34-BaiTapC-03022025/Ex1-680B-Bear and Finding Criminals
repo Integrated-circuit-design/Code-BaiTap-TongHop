@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int n, a;
+    scanf("%d %d", &n, &a);
+
+    a--;
+
+    int t[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &t[i]);
+    }
+
+    int criminals_caught = 0;
+
+    for (int distance = 0; distance < n; distance++) {
+        int left_city = a - distance;
+        int right_city = a + distance;
+
+        if (distance == 0 && t[a] == 1) {
+            criminals_caught++;
+        }
+        if (left_city >= 0 && t[left_city] == 1) {
+            criminals_caught++;
+        }
+        if (right_city < n && right_city != left_city && t[right_city] == 1) {
+            criminals_caught++;
+        }
+    }
+
+    printf("%d\n", criminals_caught);
+    return 0;
+}
 

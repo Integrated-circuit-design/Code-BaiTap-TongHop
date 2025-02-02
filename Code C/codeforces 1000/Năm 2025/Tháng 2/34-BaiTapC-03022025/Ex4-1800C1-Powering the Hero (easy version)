@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    int cards[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &cards[i]);
+    }
+
+    long long totalPower = 0;
+    int currentBonus = 0;
+    int bonusCount = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (cards[i] == 0) {
+            if (bonusCount > 0) {
+                totalPower += currentBonus;
+                bonusCount--;
+                currentBonus = 0;
+            }
+        } else {
+            bonusCount++;
+            if (cards[i] > currentBonus) {
+                currentBonus = cards[i];
+            }
+        }
+    }
+
+    printf("%lld\n", totalPower);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

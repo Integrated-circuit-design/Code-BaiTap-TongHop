@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int N;
+    scanf("%d", &N);
+
+    int bars[1000];
+    int maxHeight = 0;
+    int totalTowers = 0;
+
+    for (int i = 0; i < N; i++) {
+        scanf("%d", &bars[i]);
+    }
+
+    for (int i = 0; i < N; i++) {
+        int currentLength = bars[i];
+        int count = 0;
+
+        for (int j = 0; j < N; j++) {
+            if (bars[j] == currentLength) {
+                count++;
+            }
+        }
+
+        if (count > maxHeight) {
+            maxHeight = count;
+        }
+
+        for (int k = i + 1; k < N; k++) {
+            if (bars[k] == currentLength) {
+                bars[k] = -1;
+            }
+        }
+
+        if (currentLength != -1) {
+            totalTowers++;
+        }
+    }
+
+    printf("%d %d\n", maxHeight, totalTowers);
+
+    return 0;
+}
 

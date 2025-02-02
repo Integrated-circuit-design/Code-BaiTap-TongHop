@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return *(int*)a - *(int*)b;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    int p[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &p[i]);
+    }
+
+    qsort(p, n, sizeof(int), compare);
+
+    int q[n];
+    int idx = 0;
+
+    for (int i = 0; i < (n + 1) / 2; i++) {
+        q[idx++] = p[n - 1 - i];
+        if (i != n - 1 - i) {
+            q[idx++] = p[i];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", q[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

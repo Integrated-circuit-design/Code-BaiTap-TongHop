@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int sum_friends = 0;
+    int fingers;
+    int count = 0;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &fingers);
+        sum_friends += fingers;
+    }
+
+    for (int dima = 1; dima <= 5; dima++) {
+        int total_fingers = sum_friends + dima;
+        if (total_fingers % (n + 1) != 1) {
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+
+    return 0;
+}
 

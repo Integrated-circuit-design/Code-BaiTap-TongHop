@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char grid[n][n];
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf(" %c", &grid[i][j]);
+        }
+    }
+
+    int isValid = 1;
+    char diagonalChar = grid[0][0];
+    char nonDiagonalChar = grid[0][1];
+
+    if (diagonalChar == nonDiagonalChar) {
+        printf("NO\n");
+        return 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j || i + j == n - 1) {
+                if (grid[i][j] != diagonalChar) {
+                    isValid = 0;
+                    break;
+                }
+            } else {
+                if (grid[i][j] != nonDiagonalChar) {
+                    isValid = 0;
+                    break;
+                }
+            }
+        }
+        if (!isValid) break;
+    }
+
+    if (isValid) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

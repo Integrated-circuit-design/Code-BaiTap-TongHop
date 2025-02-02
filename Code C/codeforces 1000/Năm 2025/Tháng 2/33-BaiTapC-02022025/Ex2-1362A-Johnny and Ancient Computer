@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int min_operations_to_transform(long long a, long long b) {
+    if (a == b) {
+        return 0;
+    }
+
+    if (b % a != 0) {
+        return -1;
+    }
+
+    long long ratio = b / a;
+    int operations = 0;
+
+    while (ratio > 1) {
+        if (ratio % 8 == 0) {
+            ratio /= 8;
+            operations++;
+        } else if (ratio % 4 == 0) {
+            ratio /= 4;
+            operations++;
+        } else if (ratio % 2 == 0) {
+            ratio /= 2;
+            operations++;
+        } else {
+            return -1;
+        }
+    }
+
+    return operations;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+        printf("%d\n", min_operations_to_transform(a, b));
+    }
+
+    return 0;
+}
 

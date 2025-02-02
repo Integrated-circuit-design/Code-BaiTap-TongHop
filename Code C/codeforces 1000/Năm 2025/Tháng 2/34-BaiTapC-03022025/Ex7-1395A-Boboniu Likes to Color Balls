@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int isOdd(int x) {
+    return x % 2;
+}
+
+int canBePalindrome(long long r, long long g, long long b, long long w) {
+    int oddCount = isOdd(r) + isOdd(g) + isOdd(b) + isOdd(w);
+    
+    if (oddCount <= 1) {
+        return 1;
+    }
+    
+    if (r > 0 && g > 0 && b > 0) {
+        oddCount = isOdd(r - 1) + isOdd(g - 1) + isOdd(b - 1) + isOdd(w + 3);
+        
+        if (oddCount <= 1) {
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    
+    while (T--) {
+        long long r, g, b, w;
+        scanf("%lld %lld %lld %lld", &r, &g, &b, &w);
+        
+        if (canBePalindrome(r, g, b, w)) {
+            printf("Yes\n");
+        } else {
+            printf("No\n");
+        }
+    }
+    
+    return 0;
+}
 

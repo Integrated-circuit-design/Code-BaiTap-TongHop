@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+void generatePermutation(int n) {
+    int i;
+    
+    for (i = 2; i <= n; i += 2) {
+        printf("%d ", i);
+    }
+    
+    for (i = 1; i <= n; i += 2) {
+        printf("%d ", i);
+    }
+
+    printf("\n");
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    
+    while (t--) {
+        scanf("%d", &n);
+        generatePermutation(n);
+    }
+    
+    return 0;
+}
 

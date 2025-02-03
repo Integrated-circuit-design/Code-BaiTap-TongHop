@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        char w[200005];
+        int p;
+        scanf("%s", w);
+        scanf("%d", &p);
+        
+        int n = strlen(w);
+        int total_price = 0;
+        
+        for (int i = 0; i < n; i++) {
+            total_price += w[i] - 'a' + 1;
+        }
+        
+        if (total_price <= p) {
+            printf("%s\n", w);
+            continue;
+        }
+        
+        int keep[200005] = {0};
+        
+        for (int i = 0; i < n; i++) {
+            if (total_price - (w[i] - 'a' + 1) >= p) {
+                total_price -= (w[i] - 'a' + 1);
+                keep[i] = 0;
+            } else {
+                keep[i] = 1;
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            if (keep[i]) {
+                printf("%c", w[i]);
+            }
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int calculateOperations(int a, int b) {
+    int result = a;
+    int steps = 0;
+
+    if (b == 1) {
+        b++;
+        steps++;
+    }
+
+    while (result > 0) {
+        int temp_result = result / b;  
+        
+        if (temp_result < result) {
+            result = temp_result;
+            steps++;
+        } else {
+            b++;
+            steps++;
+        }
+    }
+
+    return steps;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        printf("%d\n", calculateOperations(a, b));
+    }
+
+    return 0;
+}
 

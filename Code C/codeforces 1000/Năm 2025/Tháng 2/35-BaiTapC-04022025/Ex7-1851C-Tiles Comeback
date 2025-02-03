@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+#define MAX_N 200000
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int c[MAX_N];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &c[i]);
+        }
+
+        int possible = 0;
+
+        if (k == 1) {
+            printf("YES\n");
+            continue;
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (i + k > n) break;
+
+            int block_valid = 1;
+            for (int j = i + 1; j < i + k; j++) {
+                if (c[j] != c[i]) {
+                    block_valid = 0;
+                    break;
+                }
+            }
+
+            if (block_valid) {
+                if ((n - i) % k == 0) {
+                    possible = 1;
+                    break;
+                }
+            }
+        }
+
+        if (possible) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

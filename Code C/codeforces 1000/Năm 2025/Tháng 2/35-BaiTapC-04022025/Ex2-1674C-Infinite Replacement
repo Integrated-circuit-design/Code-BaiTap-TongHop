@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        char s[51], t[51];
+        scanf("%s %s", s, t);
+
+        int infinite = 0;
+        for (int i = 0; t[i] != '\0'; i++) {
+            if (t[i] == 'a' && strlen(t) > 1) {
+                infinite = 1;
+                break;
+            }
+        }
+
+        if (infinite) {
+            printf("-1\n");
+        } else if (strcmp(t, "a") == 0) {
+            printf("1\n");
+        } else {
+            printf("%d\n", strlen(s) + 1);
+        }
+    }
+
+    return 0;
+}
 

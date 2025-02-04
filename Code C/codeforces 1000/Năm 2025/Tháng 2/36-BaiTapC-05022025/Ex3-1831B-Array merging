@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+void find_max_streak(int arr[], int n, int *max_streak) {
+    int current_streak = 1;
+    for (int i = 1; i < n; i++) {
+        if (arr[i] == arr[i - 1]) {
+            current_streak++;
+        } else {
+            if (current_streak > *max_streak) {
+                *max_streak = current_streak;
+            }
+            current_streak = 1;
+        }
+    }
+    if (current_streak > *max_streak) {
+        *max_streak = current_streak;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n], b[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        int c[2 * n];
+        for (int i = 0; i < n; i++) {
+            c[i] = a[i];
+            c[n + i] = b[i];
+        }
+
+        int max_streak = 1;
+        find_max_streak(c, 2 * n, &max_streak);
+
+        printf("%d\n", max_streak);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int can_reach(int n, int m, int sx, int sy, int d) {
+    if (sx - d <= 1 && sy + d >= m) {
+        return 0;
+    }
+    if (sy - d <= 1 && sx + d >= n) {
+        return 0;
+    }
+    return 1;
+}
+
+void solve() {
+    int n, m, sx, sy, d;
+    scanf("%d %d %d %d %d", &n, &m, &sx, &sy, &d);
+
+    if (can_reach(n, m, sx, sy, d)) {
+        printf("%d\n", (n - 1) + (m - 1));
+    } else {
+        printf("-1\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

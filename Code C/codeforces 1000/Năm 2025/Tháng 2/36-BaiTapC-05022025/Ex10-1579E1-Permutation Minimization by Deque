@@ -1,1 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Deque {
+    int *data;
+    int front, back, size, capacity;
+} Deque;
+
+Deque* createDeque(int capacity) {
+    Deque *dq = (Deque*)malloc(sizeof(Deque));
+    dq->capacity = capacity;
+    dq->size = 0;
+    dq->front = -1;
+    dq->back = -1;
+    dq->data = (int*)malloc(capacity * sizeof(int));
+    return dq;
+}
+
+void pushFront(Deque *dq, int value) {
+    if (dq->size == 0) {
+        dq->front = dq->back = 0;
+        dq->data[dq->front] = value;
+    } else {
+        dq->front = (dq->front - 1 + dq->capacity) % dq->capacity;
+        dq->data[dq->front] = value;
+    }
+    dq->size++;
+}
+
+void pushBack(Deque *dq, int value) {
+    if (dq->size == 0) {
+        dq->front = dq->back = 0;
+        dq->data[dq->back] = value;
+    } else {
+        dq->back = (dq->back + 1) % dq->capacity;
+        dq->data[dq->back] = value;
+    }
+    dq->size++;
+}
+
+void printDeque(Deque *dq) {
+    for (int i = dq->front; i != dq->back; i = (i + 1) % dq->capacity) {
+        printf("%d ", dq->data[i]);
+    }
+    printf("%d\n", dq->data[dq->back]);
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    int *p = (int*)malloc(n * sizeof(int));
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &p[i]);
+    }
+
+    Deque *dq = createDeque(n);
+    
+    pushBack(dq, p[0]);
+
+    for (int i = 1; i < n; i++) {
+        if (p[i] < dq->data[dq->front]) {
+            pushFront(dq, p[i]);
+        } else {
+            pushBack(dq, p[i]);
+        }
+    }
+
+    printDeque(dq);
+
+    free(dq->data);
+    free(dq);
+    free(p);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

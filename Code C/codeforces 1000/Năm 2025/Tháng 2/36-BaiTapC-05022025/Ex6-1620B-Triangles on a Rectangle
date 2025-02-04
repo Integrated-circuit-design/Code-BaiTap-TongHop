@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+int calc_area(int x1, int y1, int x2, int y2, int x3, int y3) {
+    return abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
+}
+
+void solve() {
+    int w, h;
+    scanf("%d %d", &w, &h);
+
+    int k, i;
+    int bottom[200000], top[200000], left[200000], right[200000];
+
+    scanf("%d", &k);
+    for (i = 0; i < k; i++) {
+        scanf("%d", &bottom[i]);
+    }
+
+    scanf("%d", &k);
+    for (i = 0; i < k; i++) {
+        scanf("%d", &top[i]);
+    }
+
+    scanf("%d", &k);
+    for (i = 0; i < k; i++) {
+        scanf("%d", &left[i]);
+    }
+
+    scanf("%d", &k);
+    for (i = 0; i < k; i++) {
+        scanf("%d", &right[i]);
+    }
+
+    int max_width_bottom = bottom[k - 1] - bottom[0];
+    int max_width_top = top[k - 1] - top[0];
+
+    int max_height_left = left[k - 1] - left[0];
+    int max_height_right = right[k - 1] - right[0];
+
+    int max_area = 0;
+    max_area = calc_area(0, 0, bottom[0], 0, bottom[k - 1], 0);
+    max_area = (max_width_top * h > max_area) ? max_width_top * h : max_area;
+    max_area = (max_height_left * w > max_area) ? max_height_left * w : max_area;
+    max_area = (max_height_right * w > max_area) ? max_height_right * w : max_area;
+
+    printf("%d\n", max_area);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

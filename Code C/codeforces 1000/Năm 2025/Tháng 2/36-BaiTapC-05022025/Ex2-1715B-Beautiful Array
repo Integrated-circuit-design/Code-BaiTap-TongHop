@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+void solve() {
+    long long n, k, b, s;
+    scanf("%lld %lld %lld %lld", &n, &k, &b, &s);
+
+    long long min_sum = b * k;
+    long long max_sum = b * k + (n - 1) * (k - 1);
+
+    if (s < min_sum || s > max_sum) {
+        printf("-1\n");
+        return;
+    }
+
+    long long a[n];
+    a[0] = b * k;
+    s -= b * k;
+
+    for (long long i = 1; i < n; i++) {
+        long long add = (s > k - 1) ? k - 1 : s;
+        a[i] = add;
+        s -= add;
+        
+        if (s == 0) {
+            break;
+        }
+    }
+
+    if (s > 0) {
+        printf("-1\n");
+        return;
+    }
+
+    for (long long i = 0; i < n; i++) {
+        printf("%lld ", a[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

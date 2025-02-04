@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        char result[100001];
+        
+        if (n == 1) {
+            printf("8\n");
+        } else {
+            result[0] = '9';
+            result[1] = '9';
+            result[2] = '8';
+            
+            for (int i = 3; i < n; i++) {
+                result[i] = '8';
+            }
+            result[n] = '\0';
+            printf("%s\n", result);
+        }
+    }
+
+    return 0;
+}
 

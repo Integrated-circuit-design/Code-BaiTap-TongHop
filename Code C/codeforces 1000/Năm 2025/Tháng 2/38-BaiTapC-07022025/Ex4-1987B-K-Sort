@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    long long total_cost = 0;
+    int prev_max = a[0];
+
+    for (int i = 1; i < n; i++) {
+        if (a[i] < prev_max) {
+            total_cost += prev_max - a[i];
+        } else {
+            prev_max = a[i];
+        }
+    }
+
+    printf("%lld\n", total_cost);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

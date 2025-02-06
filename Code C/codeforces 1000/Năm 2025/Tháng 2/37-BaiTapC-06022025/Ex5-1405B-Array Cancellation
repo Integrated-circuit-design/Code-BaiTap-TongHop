@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    long long a[n];
+    long long sum = 0;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+        sum += a[i];
+    }
+
+    long long left_balance = 0, coins = 0;
+    
+    for (int i = 0; i < n; i++) {
+        left_balance += a[i];
+        if (left_balance < 0) {
+            coins += -left_balance;
+            left_balance = 0;
+        }
+    }
+
+    printf("%lld\n", coins);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+void find_cycle_days(int n, int p[]) {
+    int answer[n];
+    int visited[n];
+
+    for (int i = 0; i < n; i++) {
+        visited[i] = 0;
+        answer[i] = 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            int cycle_len = 0;
+            int current = i;
+            int cycle_start = i;
+
+            while (!visited[current]) {
+                visited[current] = 1;
+                current = p[current] - 1;
+                cycle_len++;
+            }
+
+            current = cycle_start;
+            for (int j = 0; j < cycle_len; j++) {
+                answer[current] = cycle_len;
+                current = p[current] - 1;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", answer[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+        int p[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+        }
+
+        find_cycle_days(n, p);
+    }
+
+    return 0;
+}
 

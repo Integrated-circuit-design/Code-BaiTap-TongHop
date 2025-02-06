@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int canCraftArtifact(int n, long long a[], long long b[]) {
+    long long surplus = 0, deficit = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] < b[i]) {
+            deficit += b[i] - a[i];
+        } else {
+            surplus += a[i] - b[i];
+        }
+    }
+
+    return surplus >= deficit;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        long long a[n], b[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &b[i]);
+        }
+
+        if (canCraftArtifact(n, a, b)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

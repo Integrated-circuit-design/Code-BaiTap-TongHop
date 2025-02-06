@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int p[n];
+        int liked[n];
+        int disliked[n];
+        int likeCount = 0, dislikeCount = 0;
+        char s[n + 1];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+        }
+
+        scanf("%s", s);
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '1') {
+                liked[likeCount++] = p[i];
+            } else {
+                disliked[dislikeCount++] = p[i];
+            }
+        }
+
+        qsort(liked, likeCount, sizeof(int), compare);
+        qsort(disliked, dislikeCount, sizeof(int), compare);
+
+        int q[n];
+        int rank = 1;
+
+        for (int i = 0; i < dislikeCount; i++) {
+            q[i] = rank++;
+        }
+
+        for (int i = 0; i < likeCount; i++) {
+            q[dislikeCount + i] = rank++;
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", q[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int p[n + 1];
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &p[i]);
+    }
+
+    for (int a = 1; a <= n; a++) {
+        int current = a;
+        int visited[n + 1];
+        for (int i = 1; i <= n; i++) {
+            visited[i] = 0;
+        }
+
+        while (!visited[current]) {
+            visited[current] = 1;
+            current = p[current];
+        }
+
+        printf("%d ", current);
+    }
+
+    printf("\n");
+    return 0;
+}
 

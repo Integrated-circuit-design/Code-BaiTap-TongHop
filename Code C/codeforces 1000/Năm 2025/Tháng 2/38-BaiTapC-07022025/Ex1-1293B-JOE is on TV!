@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+double calculate_harmonic_sum(int n) {
+    double sum = 0.0;
+
+    for (int i = 1; i <= n; i++) {
+        sum += 1.0 / i;
+    }
+
+    return sum;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    double result = calculate_harmonic_sum(n);
+
+    printf("%.12lf\n", result);
+
+    return 0;
+}
 

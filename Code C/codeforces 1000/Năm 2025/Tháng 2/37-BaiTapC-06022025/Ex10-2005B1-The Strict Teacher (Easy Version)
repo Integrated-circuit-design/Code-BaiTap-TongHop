@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m, q;
+        scanf("%d %d %d", &n, &m, &q);
+        
+        int teacher1, teacher2;
+        scanf("%d %d", &teacher1, &teacher2);
+        
+        int david;
+        scanf("%d", &david);
+        
+        int result;
+        if (teacher1 < teacher2) {
+            result = (david > teacher1) ? (david - teacher1) : (teacher2 - david);
+        } else {
+            result = (david < teacher1) ? (teacher1 - david) : (teacher2 - david);
+        }
+
+        printf("%d\n", result);
+    }
+    
+    return 0;
+}
 

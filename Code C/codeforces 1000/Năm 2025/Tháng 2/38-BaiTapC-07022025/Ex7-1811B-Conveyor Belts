@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int calculateLayer(int x, int y, int n) {
+    int top = x - 1;
+    int left = y - 1;
+    int bottom = n - x;
+    int right = n - y;
+    
+    return (top < left ? (top < bottom ? (top < right ? top : right) : (bottom < right ? bottom : right)) :
+                        (left < bottom ? (left < right ? left : right) : (bottom < right ? bottom : right)));
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, x1, y1, x2, y2;
+        scanf("%d %d %d %d %d", &n, &x1, &y1, &x2, &y2);
+        
+        int layer1 = calculateLayer(x1, y1, n);
+        int layer2 = calculateLayer(x2, y2, n);
+        
+        printf("%d\n", abs(layer1 - layer2));
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int can_transform(char a[], char b[], int n) {
+    if (strcmp(a, b) == 0) {
+        return 1;
+    }
+
+    int has_zero_a = 0, has_one_a = 0, has_zero_b = 0, has_one_b = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (a[i] == '0') has_zero_a = 1;
+        if (a[i] == '1') has_one_a = 1;
+        if (b[i] == '0') has_zero_b = 1;
+        if (b[i] == '1') has_one_b = 1;
+    }
+
+    if ((has_zero_a && has_one_a) && (has_zero_b && has_one_b)) {
+        return 1;
+    }
+
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        char a[5001], b[5001];
+        scanf("%s", a);
+        scanf("%s", b);
+        int n = strlen(a);
+
+        if (can_transform(a, b, n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    return 0;
+}
 

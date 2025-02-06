@@ -1,1 +1,11 @@
+#include <stdio.h>
+
+int main() {
+    int H, L;
+    scanf("%d %d", &H, &L);
+    double depth = (double)(L * L - H * H) / (2.0 * H);
+    printf("%.12lf\n", depth);
+
+    return 0;
+}
 

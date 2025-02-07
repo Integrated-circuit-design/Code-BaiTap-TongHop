@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int b[n];
+        bool found_duplicate = false;
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+            for (int j = 0; j < i; j++) {
+                if (b[i] == b[j]) {
+                    found_duplicate = true;
+                    break;
+                }
+            }
+            if (found_duplicate) break;
+        }
+
+        if (found_duplicate) {
+            printf("YES\n");
+            continue;
+        }
+
+        long long a[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = 1LL << b[i];
+        }
+
+        bool found = false;
+        long long prefix_sum = 0;
+        for (int i = 0; i < n; i++) {
+            prefix_sum += a[i];
+            for (int j = 0; j < i; j++) {
+                long long sum_subarray = 0;
+                for (int k = j; k <= i; k++) {
+                    sum_subarray += a[k];
+                }
+                if (sum_subarray == prefix_sum) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) break;
+        }
+
+        if (found) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

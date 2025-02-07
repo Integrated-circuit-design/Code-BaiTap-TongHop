@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200000
+
+long long calculate_time(int n, long long a[], int pos[]) {
+    long long total_time = 0;
+    for (int i = 0; i < n; i++) {
+        total_time += 2 * abs(pos[i] - pos[0]) * a[i];
+    }
+    return total_time;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    long long a[n];
+    int pos[n + 1];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    pos[0] = 0;
+
+    int indices[n];
+    for (int i = 0; i < n; i++) {
+        indices[i] = i;
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (a[indices[i]] < a[indices[j]]) {
+                int temp = indices[i];
+                indices[i] = indices[j];
+                indices[j] = temp;
+            }
+        }
+    }
+
+    int left = -1, right = 1;
+    for (int i = 0; i < n; i++) {
+        int idx = indices[i];
+        if (i % 2 == 0) {
+            pos[idx + 1] = right++;
+        } else {
+            pos[idx + 1] = left--;
+        }
+    }
+
+    long long total_time = calculate_time(n, a, pos);
+
+    printf("%lld\n", total_time);
+    for (int i = 0; i <= n; i++) {
+        printf("%d ", pos[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

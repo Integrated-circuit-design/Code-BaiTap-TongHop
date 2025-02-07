@@ -1,1 +1,21 @@
+#include <stdio.h>
+#include <math.h>
+
+void find_minimum_cost(long long num_chips) {
+    long long side_length = (long long)sqrt(num_chips - 1);
+    printf("%lld\n", side_length);
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        long long n;
+        scanf("%lld", &n);
+        find_minimum_cost(n);
+    }
+
+    return 0;
+}
 

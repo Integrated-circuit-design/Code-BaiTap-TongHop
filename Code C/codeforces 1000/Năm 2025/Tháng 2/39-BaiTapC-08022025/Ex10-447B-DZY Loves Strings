@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int calculate_string_value(char *s, int *weights) {
+    int value = 0;
+    for (int i = 0; s[i] != '\0'; i++) {
+        value += (i + 1) * weights[s[i] - 'a'];
+    }
+    return value;
+}
+
+int find_max_weight(int *weights) {
+    int max_weight = 0;
+    for (int i = 0; i < 26; i++) {
+        if (weights[i] > max_weight) {
+            max_weight = weights[i];
+        }
+    }
+    return max_weight;
+}
+
+int main() {
+    char s[1001];
+    int k, weights[26];
+    int total_value = 0;
+
+    scanf("%s", s);
+    scanf("%d", &k);
+    for (int i = 0; i < 26; i++) {
+        scanf("%d", &weights[i]);
+    }
+
+    total_value = calculate_string_value(s, weights);
+
+    int max_weight = find_max_weight(weights);
+
+    int n = 0;
+    while (s[n] != '\0') n++;
+
+    for (int i = 1; i <= k; i++) {
+        total_value += (n + i) * max_weight;
+    }
+
+    printf("%d\n", total_value);
+
+    return 0;
+}
 

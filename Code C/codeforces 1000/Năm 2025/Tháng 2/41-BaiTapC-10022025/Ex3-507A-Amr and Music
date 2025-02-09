@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int days[n];
+    int indices[n];
+    int selected[n];
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &days[i]);
+        indices[i] = i + 1;
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (days[i] > days[j]) {
+                int temp = days[i];
+                days[i] = days[j];
+                days[j] = temp;
+
+                temp = indices[i];
+                indices[i] = indices[j];
+                indices[j] = temp;
+            }
+        }
+    }
+
+    int total_days = 0;
+    for (int i = 0; i < n; i++) {
+        if (total_days + days[i] <= k) {
+            total_days += days[i];
+            selected[count++] = indices[i];
+        } else {
+            break;
+        }
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("%d ", selected[i]);
+    }
+    return 0;
+}
 

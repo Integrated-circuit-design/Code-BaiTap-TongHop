@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+
+    long long total_candies = 0;
+    long long add_actions = 0;
+
+    for (long long i = 1; i <= n; i++) {
+        if (total_candies + i <= n) {
+            total_candies += i;
+            add_actions++;
+        }
+    }
+
+    long long candies_eaten = n - add_actions;
+
+    printf("%lld\n", candies_eaten);
+
+    return 0;
+}
 

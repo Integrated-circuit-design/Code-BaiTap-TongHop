@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int share_limit;
+    int cost_per_share;
+} Resident;
+
+int compare_residents(const void *a, const void *b) {
+    return ((Resident *)a)->cost_per_share - ((Resident *)b)->cost_per_share;
+}
+
+void process_case() {
+    int n, p;
+    scanf("%d %d", &n, &p);
+    
+    Resident residents[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &residents[i].share_limit);
+    }
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &residents[i].cost_per_share);
+    }
+
+    qsort(residents, n, sizeof(Resident), compare_residents);
+
+    long long total_cost = 0;
+    int informed_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (informed_count < n) {
+            total_cost += p;
+            informed_count++;
+        }
+
+        if (informed_count < n) {
+            total_cost += residents[i].cost_per_share;
+            informed_count++;
+        }
+    }
+
+    printf("%lld\n", total_cost);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    for (int i = 0; i < t; i++) {
+        process_case();
+    }
+
+    return 0;
+}
 

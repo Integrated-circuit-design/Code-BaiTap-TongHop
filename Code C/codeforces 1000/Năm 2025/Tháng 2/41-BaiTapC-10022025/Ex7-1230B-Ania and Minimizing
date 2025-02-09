@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    char S[200001];
+
+    scanf("%d %d", &n, &k);
+    scanf("%s", S);
+
+    if (k > 0 && S[0] != '1') {
+        S[0] = '1';
+        k--;
+    }
+
+    for (int i = 1; i < n; i++) {
+        if (k > 0 && S[i] != '0') {
+            S[i] = '0';
+            k--;
+        }
+    }
+
+    printf("%s\n", S);
+
+    return 0;
+}
 

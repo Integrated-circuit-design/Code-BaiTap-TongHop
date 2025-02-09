@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+void solve_case(int n, int r, int b) {
+    char result[n + 1];
+    memset(result, 0, sizeof(result));
+
+    int r_count = 0, b_count = 0;
+    int i = 0;
+
+    while (r_count < r || b_count < b) {
+        if (r_count < r) {
+            result[i++] = 'R';
+            r_count++;
+        }
+        
+        if (b_count < b) {
+            result[i++] = 'B';
+            b_count++;
+        }
+    }
+
+    result[n] = '\0';
+    printf("%s\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, r, b;
+        scanf("%d %d %d", &n, &r, &b);
+        solve_case(n, r, b);
+    }
+
+    return 0;
+}
 

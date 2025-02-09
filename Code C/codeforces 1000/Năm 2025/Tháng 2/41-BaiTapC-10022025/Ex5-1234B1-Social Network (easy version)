@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int messages[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &messages[i]);
+    }
+
+    int screen[k];
+    int screen_size = 0;
+
+    for (int i = 0; i < n; i++) {
+        int id = messages[i];
+
+        int found = 0;
+        for (int j = 0; j < screen_size; j++) {
+            if (screen[j] == id) {
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found) {
+            if (screen_size == k) {
+                for (int j = 1; j < screen_size; j++) {
+                    screen[j - 1] = screen[j];
+                }
+                screen_size--;
+            }
+
+            screen[screen_size] = id;
+            screen_size++;
+        }
+    }
+
+    printf("%d\n", screen_size);
+    for (int i = 0; i < screen_size; i++) {
+        printf("%d ", screen[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

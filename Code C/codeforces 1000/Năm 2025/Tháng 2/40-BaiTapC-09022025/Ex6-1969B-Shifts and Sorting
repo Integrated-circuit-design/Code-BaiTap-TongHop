@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        char s[200001];
+        scanf("%s", s);
+        
+        int n = strlen(s);
+        int first_one = -1, last_zero = -1;
+        
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '1') {
+                first_one = i;
+                break;
+            }
+        }
+        
+        for (int i = n - 1; i >= 0; i--) {
+            if (s[i] == '0') {
+                last_zero = i;
+                break;
+            }
+        }
+
+        if (first_one == -1 || last_zero == -1 || first_one > last_zero) {
+            printf("0\n");
+        } else {
+            int cost = last_zero - first_one + 1;
+            printf("%d\n", cost);
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

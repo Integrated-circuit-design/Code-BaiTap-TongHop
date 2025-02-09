@@ -1,1 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int column_to_index(char c) {
+    return c - 'a' + 1;
+}
+
+int row_to_index(char c) {
+    return c - '0';
+}
+
+void print_move(int dx, int dy) {
+    if (dx == 1 && dy == 1) {
+        printf("RU\n");
+    } else if (dx == 1 && dy == -1) {
+        printf("RD\n");
+    } else if (dx == -1 && dy == 1) {
+        printf("LU\n");
+    } else if (dx == -1 && dy == -1) {
+        printf("LD\n");
+    } else if (dx == 1 && dy == 0) {
+        printf("R\n");
+    } else if (dx == -1 && dy == 0) {
+        printf("L\n");
+    } else if (dx == 0 && dy == 1) {
+        printf("U\n");
+    } else if (dx == 0 && dy == -1) {
+        printf("D\n");
+    }
+}
+
+void find_shortest_path(char s[3], char t[3]) {
+    int x1 = column_to_index(s[0]);
+    int y1 = row_to_index(s[1]);
+    int x2 = column_to_index(t[0]);
+    int y2 = row_to_index(t[1]);
+
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+
+    int moves = (abs(dx) > abs(dy)) ? abs(dx) : abs(dy);
+    printf("%d\n", moves);
+
+    while (x1 != x2 || y1 != y2) {
+        if (dx > 0) {
+            x1--;
+            dx--;
+        } else if (dx < 0) {
+            x1++;
+            dx++;
+        }
+
+        if (dy > 0) {
+            y1--;
+            dy--;
+        } else if (dy < 0) {
+            y1++;
+            dy++;
+        }
+
+        print_move(dx > 0 ? -1 : (dx < 0 ? 1 : 0), dy > 0 ? -1 : (dy < 0 ? 1 : 0));
+    }
+}
+
+int main() {
+    char s[3], t[3];
+    scanf("%s %s", s, t);
+    
+    find_shortest_path(s, t);
+    
+    return 0;
+}
 

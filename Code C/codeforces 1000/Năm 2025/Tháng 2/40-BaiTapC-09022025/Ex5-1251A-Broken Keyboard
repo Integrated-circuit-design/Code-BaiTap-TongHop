@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 500
+
+void processString(char *s) {
+    int len = strlen(s);
+    int appeared[26] = {0};
+    int working[26] = {1};
+
+    for (int i = 0; i < len; i++) {
+        int index = s[i] - 'a';
+        if (appeared[index]) {
+            if (working[index]) {
+                working[index] = 0;
+            }
+        } else {
+            appeared[index] = 1;
+        }
+    }
+
+    for (int i = 0; i < 26; i++) {
+        if (working[i]) {
+            putchar('a' + i);
+        }
+    }
+    putchar('\n');
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    getchar();
+
+    while (t--) {
+        char s[MAX_LEN + 1];
+        fgets(s, MAX_LEN + 1, stdin);
+        s[strcspn(s, "\n")] = 0;
+        processString(s);
+    }
+
+    return 0;
+}
 

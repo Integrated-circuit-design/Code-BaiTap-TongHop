@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+void solve() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    if (k == 1 || n % k == 0) {
+        printf("YES\n");
+
+        int arr[n][k];
+        int num = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < k; j++) {
+                arr[i][j] = num++;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < k; j++) {
+                printf("%d ", arr[i][j]);
+            }
+            printf("\n");
+        }
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

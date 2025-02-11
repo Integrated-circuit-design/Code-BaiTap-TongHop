@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    
+    while (q--) {
+        int l, r, d;
+        scanf("%d %d %d", &l, &r, &d);
+        
+        if (d < l) {
+            printf("%d\n", d);
+        } else {
+            int result = (r / d + 1) * d;
+            printf("%d\n", result);
+        }
+    }
+    
+    return 0;
+}
 

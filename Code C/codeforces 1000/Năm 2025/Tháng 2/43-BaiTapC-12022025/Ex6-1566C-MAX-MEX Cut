@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+int calculate_mex(int n, char row1[], char row2[]) {
+    int total_mex = 0;
+    int i = 0;
+    
+    while (i < n) {
+        if ((row1[i] == '0' && row2[i] == '1') || (row1[i] == '1' && row2[i] == '0')) {
+            total_mex += 2;
+            i++;
+        }
+        else if (row1[i] == '0' && row2[i] == '0') {
+            if (i + 1 < n && (row1[i + 1] == '1' || row2[i + 1] == '1')) {
+                total_mex += 2;
+                i++;
+            } else {
+                total_mex += 1;
+            }
+            i++;
+        } 
+        else {
+            if (i + 1 < n && (row1[i + 1] == '0' || row2[i + 1] == '0')) {
+                total_mex += 2;
+                i++;
+            } else {
+                total_mex += 0;
+            }
+            i++;
+        }
+    }
+    
+    return total_mex;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        char row1[n + 1], row2[n + 1];
+        scanf("%s", row1);
+        scanf("%s", row2);
+        
+        int result = calculate_mex(n, row1, row2);
+        printf("%d\n", result);
+    }
+    
+    return 0;
+}
 

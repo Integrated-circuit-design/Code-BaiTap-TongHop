@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100005
+
+int calculate_operations(int n, int k, int a[], int target) {
+    int segments = 0;
+    int current_changes = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] != target) {
+            current_changes++;
+        }
+
+        if (current_changes > k || (i == n - 1) || (a[i] == target)) {
+            segments++;
+            current_changes = 0;
+        }
+    }
+
+    return segments;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        int a[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int min_operations = n;
+
+        for (int target = 1; target <= 1000; target++) {
+            int ops = calculate_operations(n, k, a, target);
+            if (ops < min_operations) {
+                min_operations = ops;
+            }
+        }
+
+        printf("%d\n", min_operations);
+    }
+
+    return 0;
+}
 

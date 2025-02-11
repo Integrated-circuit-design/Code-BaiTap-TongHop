@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+int can_make_equal(int n, int a[], int b[]) {
+    int diff_start = -1, diff_end = -1, increment = 0;
+
+    for (int i = 0; i < n; i++) {
+        int diff = b[i] - a[i];
+
+        if (diff != 0) {
+            if (diff_start == -1) {
+                diff_start = i;
+            }
+            diff_end = i;
+            if (increment == 0) {
+                increment = diff;
+            } else if (increment != diff) {
+                return 0;
+            }
+        }
+    }
+
+    if (diff_start == -1) {
+        return 1;
+    }
+
+    if (increment <= 0) {
+        return 0;
+    }
+
+    for (int i = diff_start; i <= diff_end; i++) {
+        if (b[i] - a[i] != increment) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n], b[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        if (can_make_equal(n, a, b)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

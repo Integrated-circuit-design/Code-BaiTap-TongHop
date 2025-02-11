@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int calculate_max_sum(int rows, int cols, int grid[10][10]) {
+    int total = 0;
+    int negative_count = 0;
+    int smallest_abs = 101;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            int value = grid[i][j];
+            total += abs(value);
+            if (value < 0) {
+                negative_count++;
+            }
+            if (abs(value) < smallest_abs) {
+                smallest_abs = abs(value);
+            }
+        }
+    }
+
+    if (negative_count % 2 != 0) {
+        total -= 2 * smallest_abs;
+    }
+
+    return total;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int grid[10][10];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                scanf("%d", &grid[i][j]);
+            }
+        }
+
+        printf("%d\n", calculate_max_sum(n, m, grid));
+    }
+
+    return 0;
+}
 

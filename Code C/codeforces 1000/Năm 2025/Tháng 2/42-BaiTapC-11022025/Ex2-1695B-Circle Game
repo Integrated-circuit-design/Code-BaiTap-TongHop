@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n], total_stones = 0;
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            total_stones += a[i];
+        }
+
+        if (total_stones % 2 == 1)
+            printf("Mike\n");
+        else
+            printf("Joe\n");
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

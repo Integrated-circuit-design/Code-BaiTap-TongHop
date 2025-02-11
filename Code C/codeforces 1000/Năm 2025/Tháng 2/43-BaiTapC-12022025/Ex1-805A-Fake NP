@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int l, r;
+    scanf("%d %d", &l, &r);
+
+    int max_count = 0, best_divisor = 2;
+
+    for (int d = 2; d <= r; d++) {
+        int count = 0;
+        for (int num = l; num <= r; num++) {
+            if (num % d == 0) {
+                count++;
+            }
+        }
+
+        if (count > max_count) {
+            max_count = count;
+            best_divisor = d;
+        }
+    }
+
+    printf("%d\n", best_divisor);
+    return 0;
+}
 

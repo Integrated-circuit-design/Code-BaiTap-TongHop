@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n, v;
+    scanf("%d %d", &n, &v);
+
+    int validSellers[100];
+    int sellerCount = 0;
+
+    for (int i = 1; i <= n; i++) {
+        int k;
+        scanf("%d", &k);
+        int foundAffordableItem = 0;
+
+        for (int j = 0; j < k; j++) {
+            int price;
+            scanf("%d", &price);
+            if (price < v) {
+                foundAffordableItem = 1;
+            }
+        }
+
+        if (foundAffordableItem) {
+            validSellers[sellerCount++] = i;
+        }
+    }
+
+    printf("%d\n", sellerCount);
+    
+    for (int i = 0; i < sellerCount; i++) {
+        printf("%d ", validSellers[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

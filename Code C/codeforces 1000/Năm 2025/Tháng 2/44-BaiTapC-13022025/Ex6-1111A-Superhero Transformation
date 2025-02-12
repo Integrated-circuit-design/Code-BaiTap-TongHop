@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_consonant(char ch) {
+    return !(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u');
+}
+
+int main() {
+    char s[1001], t[1001];
+
+    scanf("%s", s);
+    scanf("%s", t);
+
+    if (strlen(s) != strlen(t)) {
+        printf("No\n");
+        return 0;
+    }
+
+    for (int i = 0; s[i] != '\0'; i++) {
+        if (is_consonant(s[i]) != is_consonant(t[i])) {
+            printf("No\n");
+            return 0;
+        }
+    }
+
+    printf("Yes\n");
+    return 0;
+}
 

@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_PARTICIPANTS 50000
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int m;
+        scanf("%d", &m);
+
+        int winners[m];
+        int used[MAX_PARTICIPANTS + 1] = {0};
+        int possible = 1;
+
+        for (int i = 0; i < m; i++) {
+            int ni;
+            scanf("%d", &ni);
+            int participants[ni];
+
+            for (int j = 0; j < ni; j++) {
+                scanf("%d", &participants[j]);
+            }
+
+            qsort(participants, ni, sizeof(int), compare);
+
+            int winner = -1;
+            for (int j = 0; j < ni; j++) {
+                if (!used[participants[j]]) {
+                    winner = participants[j];
+                    used[winner] = 1;
+                    break;
+                }
+            }
+
+            if (winner == -1) {
+                possible = 0;
+                break;
+            }
+            
+            winners[i] = winner;
+        }
+
+        if (possible) {
+            for (int i = 0; i < m; i++) {
+                printf("%d ", winners[i]);
+            }
+            printf("\n");
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

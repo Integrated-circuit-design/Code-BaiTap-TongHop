@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 105
+
+int checkMatch(int a[], int b[]) {
+    for (int i = 0; i < 26; i++) {
+        if (a[i] != b[i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void processTestCase() {
+    char p[MAX_LEN], h[MAX_LEN];
+    scanf("%s %s", p, h);
+
+    int len_p = strlen(p);
+    int len_h = strlen(h);
+
+    if (len_p > len_h) {
+        printf("NO\n");
+        return;
+    }
+
+    int freq_p[26] = {0};
+    int freq_h[26] = {0};
+
+    for (int i = 0; i < len_p; i++) {
+        freq_p[p[i] - 'a']++;
+    }
+
+    for (int i = 0; i < len_p; i++) {
+        freq_h[h[i] - 'a']++;
+    }
+
+    if (checkMatch(freq_p, freq_h)) {
+        printf("YES\n");
+        return;
+    }
+
+    for (int i = len_p; i < len_h; i++) {
+        freq_h[h[i] - 'a']++;
+        freq_h[h[i - len_p] - 'a']--;
+
+        if (checkMatch(freq_p, freq_h)) {
+            printf("YES\n");
+            return;
+        }
+    }
+
+    printf("NO\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        processTestCase();
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+
+        int sum = 0;
+        int canWin = 0;
+
+        for (int i = 0; i < n; i++) {
+            int x;
+            scanf("%d", &x);
+
+            if (x <= 2048) {
+                sum += x;
+            }
+
+            if (x == 2048) {
+                canWin = 1;
+            }
+        }
+
+        if (canWin || sum >= 2048) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

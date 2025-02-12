@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAX_N 100
+
+char board[MAX_N][MAX_N];
+
+int countAdjacentO(int i, int j, int n) {
+    int count = 0;
+    
+    if (i > 0 && board[i-1][j] == 'o') count++;
+    if (i < n-1 && board[i+1][j] == 'o') count++;
+    if (j > 0 && board[i][j-1] == 'o') count++;
+    if (j < n-1 && board[i][j+1] == 'o') count++;
+    
+    return count;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", board[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            int adjacentO = countAdjacentO(i, j, n);
+            
+            if (adjacentO % 2 != 0) {
+                printf("NO\n");
+                return 0;
+            }
+        }
+    }
+
+    printf("YES\n");
+    return 0;
+}
 

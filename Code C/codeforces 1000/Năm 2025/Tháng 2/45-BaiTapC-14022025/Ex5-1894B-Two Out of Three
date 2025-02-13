@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n, c;
+    scanf("%d %d", &n, &c);
+    
+    int x[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x[i]);
+    }
+
+    int max_profit = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        int current_profit = x[i] - x[i + 1] - c;
+
+        if (current_profit > max_profit) {
+            max_profit = current_profit;
+        }
+    }
+
+    printf("%d\n", max_profit);
+
+    return 0;
+}
 

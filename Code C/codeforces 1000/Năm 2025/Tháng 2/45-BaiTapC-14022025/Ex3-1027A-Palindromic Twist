@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int canFormPalindrome(int n, char s[]) {
+    for (int i = 0; i < n / 2; i++) {
+        char left = s[i];
+        char right = s[n - i - 1];
+        
+        int diff = abs(left - right);
+        
+        if (diff != 0 && diff != 2) {
+            return 0;
+        }
+    }
+    
+    return 1;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    
+    while (T--) {
+        int n;
+        char s[101];
+        
+        scanf("%d", &n);
+        scanf("%s", s);
+        
+        if (canFormPalindrome(n, s)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

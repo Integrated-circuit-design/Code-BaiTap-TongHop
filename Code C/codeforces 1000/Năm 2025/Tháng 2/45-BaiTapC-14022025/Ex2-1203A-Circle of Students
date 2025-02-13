@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+int is_clockwise(int n, int p[]) {
+    int start = 0;
+    while (p[start] != 1) start++;
+
+    for (int i = 1; i < n; i++) {
+        if (p[(start + i) % n] != i + 1) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int is_counterclockwise(int n, int p[]) {
+    int start = 0;
+    while (p[start] != 1) start++;
+
+    for (int i = 1; i < n; i++) {
+        if (p[(start - i + n) % n] != i + 1) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    int p[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &p[i]);
+    }
+
+    if (is_clockwise(n, p) || is_counterclockwise(n, p)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    while (q--) {
+        solve();
+    }
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    char directions[n];
+    int positions[n];
+    
+    scanf("%s", directions);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &positions[i]);
+    }
+
+    int earliest_collision_time = -1;
+
+    for (int i = 0; i < n - 1; i++) {
+        if (directions[i] == 'R' && directions[i + 1] == 'L') {
+            int time_to_collide = (positions[i + 1] - positions[i]) / 2;
+            if (earliest_collision_time == -1 || time_to_collide < earliest_collision_time) {
+                earliest_collision_time = time_to_collide;
+            }
+        }
+    }
+
+    printf("%d\n", earliest_collision_time);
+    
+    return 0;
+}
 

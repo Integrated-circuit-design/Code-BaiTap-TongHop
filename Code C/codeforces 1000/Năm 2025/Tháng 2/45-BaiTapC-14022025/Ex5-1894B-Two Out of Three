@@ -1,26 +1,59 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main() {
-    int n, c;
-    scanf("%d %d", &n, &c);
-    
-    int x[n];
+#define MAX_A 100
+
+void solveTestCase() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n], b[n];
+    int freq[MAX_A + 1] = {0};
+    int count[MAX_A + 1] = {0};
+
     for (int i = 0; i < n; i++) {
-        scanf("%d", &x[i]);
+        scanf("%d", &a[i]);
+        freq[a[i]]++;
     }
 
-    int max_profit = 0;
+    for (int i = 0; i < n; i++) {
+        b[i] = 1;
+    }
 
-    for (int i = 0; i < n - 1; i++) {
-        int current_profit = x[i] - x[i + 1] - c;
-
-        if (current_profit > max_profit) {
-            max_profit = current_profit;
+    int foundCondition1 = 0, foundCondition2 = 0, foundCondition3 = 0;
+    for (int i = 0; i < n; i++) {
+        if (freq[a[i]] == 2 && !foundCondition1) {
+            b[i] = (b[i] == 1) ? 2 : 1;
+            foundCondition1 = 1;
+        } else if (freq[a[i]] >= 3 && !foundCondition2) {
+            if (b[i] == 1) {
+                b[i] = 2;
+            } else if (b[i] == 2) {
+                b[i] = 3;
+            }
+            foundCondition2 = 1;
+        } else if (freq[a[i]] == 1 && !foundCondition3) {
+            foundCondition3 = 1;
         }
     }
 
-    printf("%d\n", max_profit);
+    if ((foundCondition1 + foundCondition2 + foundCondition3) != 2) {
+        printf("-1\n");
+    } else {
+        for (int i = 0; i < n; i++) {
+            printf("%d ", b[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solveTestCase();
+    }
 
     return 0;
 }
-

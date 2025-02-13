@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+void solve() {
+    char a[51], b[51];
+    scanf("%s %s", a, b);
+    
+    int n = strlen(a), m = strlen(b);
+    int i = 0, j = 0;
+    
+    while (i < n && j < m) {
+        if (a[i] == b[j]) {
+            printf("YES\n");
+            printf("%.*s*%.*s\n", i, a, n - i, a);
+            return;
+        }
+        i++;
+        j++;
+    }
+    
+    printf("NO\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

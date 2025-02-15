@@ -1,1 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    int so_truong;
+    scanf("%d", &so_truong);
+
+    int chi_phi_toi_thieu = so_truong - 1;
+    printf("%d\n", chi_phi_toi_thieu);
+
+    return 0;
+}
 

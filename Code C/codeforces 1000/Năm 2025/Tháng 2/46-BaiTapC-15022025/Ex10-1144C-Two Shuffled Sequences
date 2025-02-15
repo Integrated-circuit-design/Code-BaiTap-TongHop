@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+#define MAX_VAL 200005
+
+int main() {
+    int n, a[MAX_VAL], count[MAX_VAL] = {0};
+    int inc[MAX_VAL], dec[MAX_VAL];
+    int inc_size = 0, dec_size = 0;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        count[a[i]]++;  
+
+        if (count[a[i]] > 2) {  
+            printf("NO\n");  
+            return 0;
+        }
+    }
+
+    for (int i = 0; i < MAX_VAL; i++) {
+        if (count[i] == 1) {
+            inc[inc_size++] = i;
+        } else if (count[i] == 2) {
+            inc[inc_size++] = i;
+            dec[dec_size++] = i;
+        }
+    }
+
+    printf("YES\n");
+
+    printf("%d\n", inc_size);
+    for (int i = 0; i < inc_size; i++) {
+        printf("%d ", inc[i]);
+    }
+    printf("\n");
+
+    printf("%d\n", dec_size);
+    for (int i = dec_size - 1; i >= 0; i--) {
+        printf("%d ", dec[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void taoLuoiKhac(int n) {
+    int hangTren[n], hangDuoi[n];
+    int soLonNhat = 2 * n;
+    int soNhoNhat = 1;
+
+    for (int i = 0; i < n; i++) {
+        hangTren[i] = soLonNhat;
+        hangDuoi[i] = soNhoNhat;
+        soLonNhat -= 2;
+        soNhoNhat += 2;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", hangTren[i]);
+    }
+    printf("\n");
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", hangDuoi[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+        taoLuoiKhac(n);
+    }
+
+    return 0;
+}
 

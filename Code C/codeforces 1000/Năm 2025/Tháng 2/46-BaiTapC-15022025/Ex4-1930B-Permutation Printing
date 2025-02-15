@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+void inHoanVi(int n) {
+    int p[n];
+
+    p[0] = n;
+
+    for (int i = 1; i < n; i++) {
+        p[i] = i;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", p[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        inHoanVi(n);
+    }
+
+    return 0;
+}
 

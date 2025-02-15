@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int tinh_do_manh(char *a, char *b) {
+    int do_manh = 0;
+    int len = strlen(a);
+    for (int i = 0; i < len; i++) {
+        do_manh += abs(a[i] - b[i]);
+    }
+    return do_manh;
+}
+
+void xu_ly() {
+    char L[105], R[105];
+    scanf("%s %s", L, R);
+    
+    if (strcmp(L, R) == 0) {
+        printf("0\n");
+        return;
+    }
+
+    int len_L = strlen(L);
+    int len_R = strlen(R);
+
+    if (len_L != len_R) {
+        printf("%d\n", 9 * len_R);
+        return;
+    }
+
+    char min_val[105], max_val[105];
+    strcpy(min_val, L);
+    strcpy(max_val, R);
+
+    int i;
+    for (i = 0; i < len_R; i++) {
+        if (L[i] != R[i]) break;
+    }
+
+    for (int j = i + 1; j < len_R; j++) {
+        min_val[j] = '0';
+        max_val[j] = '9';
+    }
+    
+    printf("%d\n", tinh_do_manh(min_val, max_val));
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        xu_ly();
+    }
+    return 0;
+}
 

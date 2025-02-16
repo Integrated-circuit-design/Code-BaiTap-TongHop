@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int even, odd;
+    
+    scanf("%d %d", &even, &odd);
+
+    if (even == 0 && odd == 0) {
+        printf("NO\n");
+        return 0;
+    }
+
+    if (even == odd || even + 1 == odd || odd + 1 == even) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

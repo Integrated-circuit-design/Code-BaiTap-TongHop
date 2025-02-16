@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+void solve() {
+    int n, m, p, q;
+    int count_p[2] = {0, 0};
+    int count_q[2] = {0, 0};
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &p);
+        count_p[p % 2]++;
+    }
+
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &q);
+        count_q[q % 2]++;
+    }
+
+    long long result = (long long)count_p[0] * count_q[0] + (long long)count_p[1] * count_q[1];
+
+    printf("%lld\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

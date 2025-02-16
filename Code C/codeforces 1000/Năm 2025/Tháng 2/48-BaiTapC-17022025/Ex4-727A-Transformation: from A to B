@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int timDuongDi(long long a, long long b) {
+    if (a > b) return 0;
+    if (a == b) {
+        printf("%lld ", a);
+        return 1;
+    }
+    if (timDuongDi(a * 2, b)) {
+        printf("%lld ", a);
+        return 1;
+    }
+    if (timDuongDi(a * 10 + 1, b)) {
+        printf("%lld ", a);
+        return 1;
+    }
+    return 0;
+}
+
+int main() {
+    long long a, b;
+    scanf("%lld %lld", &a, &b);
+
+    if (timDuongDi(a, b)) {
+        printf("\nYES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

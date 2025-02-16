@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+void kiem_tra_chuoi() {
+    char s[101], t[101];
+    
+    scanf("%s", s);
+    scanf("%s", t);
+
+    for (int i = 0; s[i] != '\0'; i++) {
+        for (int j = 0; t[j] != '\0'; j++) {
+            if (s[i] == t[j]) {
+                printf("YES\n");
+                return;
+            }
+        }
+    }
+
+    printf("NO\n");
+}
+
+int main() {
+    int so_truy_van;
+    scanf("%d", &so_truy_van);
+
+    while (so_truy_van--) {
+        kiem_tra_chuoi();
+    }
+
+    return 0;
+}
 

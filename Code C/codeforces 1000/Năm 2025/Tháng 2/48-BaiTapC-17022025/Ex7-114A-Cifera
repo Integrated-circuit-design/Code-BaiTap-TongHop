@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    unsigned int k, l;
+    scanf("%u %u", &k, &l);
+
+    int so_lan_chia = 0;
+
+    while (l % k == 0) {
+        l /= k;
+        so_lan_chia++;
+    }
+
+    if (l == 1) {
+        printf("YES\n%d\n", so_lan_chia - 1);
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

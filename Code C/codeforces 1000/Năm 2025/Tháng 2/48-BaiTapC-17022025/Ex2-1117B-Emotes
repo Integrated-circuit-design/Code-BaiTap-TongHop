@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    long long m;
+    
+    scanf("%d %lld %d", &n, &m, &k);
+
+    int max1 = 0, max2 = 0;
+
+    for (int i = 0; i < n; i++) {
+        int x;
+        scanf("%d", &x);
+        
+        if (x > max1) {
+            max2 = max1;
+            max1 = x;
+        } else if (x > max2) {
+            max2 = x;
+        }
+    }
+
+    long long full_cycles = m / (k + 1);
+    long long remaining = m % (k + 1);
+
+    long long count_max1 = full_cycles * k + remaining;
+    long long count_max2 = full_cycles;
+
+    long long happiness = count_max1 * max1 + count_max2 * max2;
+
+    printf("%lld\n", happiness);
+    
+    return 0;
+}
 

@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100
+
+int manhattan_distance(int x1, int y1, int x2, int y2) {
+    return abs(x1 - x2) + abs(y1 - y2);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int x[MAX_N], y[MAX_N];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &x[i], &y[i]);
+        }
+
+        int possible = 0;
+
+        for (int i = 0; i < n; i++) {
+            int allWithinRange = 1;
+
+            for (int j = 0; j < n; j++) {
+                if (i != j && manhattan_distance(x[i], y[i], x[j], y[j]) > k) {
+                    allWithinRange = 0;
+                    break;
+                }
+            }
+
+            if (allWithinRange) {
+                possible = 1;
+                break;
+            }
+        }
+
+        printf("%d\n", possible ? 1 : -1);
+    }
+
+    return 0;
+}
 

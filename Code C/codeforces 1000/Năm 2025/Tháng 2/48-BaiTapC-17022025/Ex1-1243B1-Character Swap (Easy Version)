@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+void giaiBaiToan() {
+    int n;
+    scanf("%d", &n);
+
+    char s[n + 1], t[n + 1];
+    scanf("%s %s", s, t);
+
+    int viTri[2], soLuongKhac = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] != t[i]) {
+            if (soLuongKhac < 2) {
+                viTri[soLuongKhac] = i;
+            }
+            soLuongKhac++;
+        }
+    }
+
+    if (soLuongKhac == 2 &&
+        s[viTri[0]] == s[viTri[1]] &&
+        t[viTri[0]] == t[viTri[1]]) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int k;
+    scanf("%d", &k);
+
+    for (int i = 0; i < k; i++) {
+        giaiBaiToan();
+    }
+
+    return 0;
+}
 

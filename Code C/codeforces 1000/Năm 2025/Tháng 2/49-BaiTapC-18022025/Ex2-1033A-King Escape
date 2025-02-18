@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+int isSafe(int x, int y, int ax, int ay) {
+    if (x == ax || y == ay || x - y == ax - ay || x + y == ax + ay) {
+        return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int n;
+    int ax, ay, bx, by, cx, cy;
+
+    scanf("%d", &n);
+    scanf("%d %d", &ax, &ay);
+    scanf("%d %d", &bx, &by);
+    scanf("%d %d", &cx, &cy);
+
+    if (isSafe(bx, by, ax, ay) && isSafe(cx, cy, ax, ay)) {
+        int queue[100000][2];
+        int front = 0, rear = 0;
+
+        queue[rear][0] = bx;
+        queue[rear][1] = by;
+        rear++;
+
+        while (front < rear) {
+            int x = queue[front][0];
+            int y = queue[front][1];
+            front++;
+
+            if (x == cx && y == cy) {
+                printf("YES\n");
+                return 0;
+            }
+
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    int new_x = x + dx;
+                    int new_y = y + dy;
+
+                    if (new_x >= 1 && new_x <= n && new_y >= 1 && new_y <= n && isSafe(new_x, new_y, ax, ay)) {
+                        queue[rear][0] = new_x;
+                        queue[rear][1] = new_y;
+                        rear++;
+                    }
+                }
+            }
+        }
+
+        printf("NO\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

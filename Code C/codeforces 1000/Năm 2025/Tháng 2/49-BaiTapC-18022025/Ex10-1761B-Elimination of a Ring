@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int prev, current;
+        scanf("%d", &prev);
+        int total_operations = 0;
+
+        for (int i = 1; i < n; i++) {
+            scanf("%d", &current);
+
+            if (current == prev) {
+                total_operations++;
+            }
+            prev = current;
+        }
+
+        if (prev == current) {
+            total_operations++;
+        }
+
+        printf("%d\n", n - total_operations);
+    }
+
+    return 0;
+}
 

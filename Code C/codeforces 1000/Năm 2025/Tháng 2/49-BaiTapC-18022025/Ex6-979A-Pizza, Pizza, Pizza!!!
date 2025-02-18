@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+    
+    long long totalSlices = n + 1;
+    
+    long long cuts;
+    if (totalSlices % 2 == 0) {
+        cuts = totalSlices / 2;
+    } else {
+        cuts = totalSlices;
+    }
+    
+    printf("%lld\n", cuts);
+    
+    return 0;
+}
 

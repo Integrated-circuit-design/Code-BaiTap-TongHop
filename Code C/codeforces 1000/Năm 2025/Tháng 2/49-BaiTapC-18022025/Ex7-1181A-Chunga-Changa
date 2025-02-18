@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    long long x, y, z;
+    scanf("%lld %lld %lld", &x, &y, &z);
+
+    long long coconuts_sasha = x / z;
+    long long coconuts_masha = y / z;
+
+    long long remaining_sasha = x % z;
+    long long remaining_masha = y % z;
+
+    long long total_coconuts = coconuts_sasha + coconuts_masha;
+    
+    if (remaining_sasha + remaining_masha >= z) {
+        total_coconuts++;
+        long long min_transfer = (remaining_sasha < remaining_masha) 
+                                 ? (z - remaining_sasha) 
+                                 : (z - remaining_masha);
+        printf("%lld %lld\n", total_coconuts, min_transfer);
+    } else {
+        printf("%lld 0\n", total_coconuts);
+    }
+
+    return 0;
+}
 

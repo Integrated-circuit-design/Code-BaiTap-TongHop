@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int freq[1001] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int drink;
+        scanf("%d", &drink);
+        freq[drink]++;
+    }
+
+    int sets_needed = (n + 1) / 2;
+    int students_satisfied = 0;
+    int single_drinks = 0;
+
+    for (int i = 1; i <= k; i++) {
+        students_satisfied += (freq[i] / 2) * 2;
+        single_drinks += (freq[i] % 2);
+    }
+
+    int extra_students = (single_drinks < sets_needed) ? single_drinks : sets_needed;
+
+    printf("%d\n", students_satisfied + extra_students);
+    
+    return 0;
+}
 

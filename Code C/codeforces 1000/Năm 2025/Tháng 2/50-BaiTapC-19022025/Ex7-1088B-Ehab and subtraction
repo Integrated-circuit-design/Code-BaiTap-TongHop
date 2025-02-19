@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100005
+
+int a[MAX_N];
+int freq[MAX_N];
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    qsort(a, n, sizeof(int), cmp);
+
+    int unique_count = 0;
+    freq[unique_count++] = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] != a[i - 1]) {
+            freq[unique_count++] = a[i];
+        }
+    }
+
+    int lastPrinted = 0;
+    int index = 0;
+
+    for (int i = 0; i < k; i++) {
+        if (index < unique_count) {
+            printf("%d\n", freq[index] - lastPrinted);
+            lastPrinted = freq[index];
+            index++;
+        } else {
+            printf("0\n");
+        }
+    }
+
+    return 0;
+}
 

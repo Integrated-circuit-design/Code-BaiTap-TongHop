@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int count_beautiful(int n) {
+    int count = 0;
+    
+    for (int digit = 1; digit <= 9; digit++) {
+        int num = digit;
+        while (num <= n) {
+            count++;
+            num = num * 10 + digit;
+        }
+    }
+    
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        printf("%d\n", count_beautiful(n));
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 200005
+
+int dem_so_lan_bien_doi(char s[], int n, int m, int k) {
+    int so_lan_bien_doi = 0;
+    int i = 0;
+
+    while (i < n) {
+        if (s[i] == '0') {
+            int start = i;
+            while (i < n && s[i] == '0') {
+                i++;
+            }
+
+            int do_dai_doan_yeu = i - start;
+
+            if (do_dai_doan_yeu >= m) {
+                for (int j = start; j < i; j += k) {
+                    so_lan_bien_doi++;
+                }
+            }
+        } else {
+            i++;
+        }
+    }
+
+    return so_lan_bien_doi;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k;
+        char s[MAX_N];
+
+        scanf("%d %d %d", &n, &m, &k);
+        scanf("%s", s);
+
+        printf("%d\n", dem_so_lan_bien_doi(s, n, m, k));
+    }
+
+    return 0;
+}
 

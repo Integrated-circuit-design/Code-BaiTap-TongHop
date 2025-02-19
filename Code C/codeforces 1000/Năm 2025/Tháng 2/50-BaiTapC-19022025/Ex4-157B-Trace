@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <math.h>
+
+void sap_xep_giam_dan(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] < key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int r[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &r[i]);
+    }
+
+    sap_xep_giam_dan(r, n);
+
+    double dien_tich_mau_do = 0.0;
+    int flag = 1;
+
+    for (int i = 0; i < n; i++) {
+        double dien_tich = M_PI * r[i] * r[i];
+        dien_tich_mau_do += flag * dien_tich;
+        flag = -flag;
+    }
+
+    printf("%.10lf\n", dien_tich_mau_do);
+
+    return 0;
+}
 

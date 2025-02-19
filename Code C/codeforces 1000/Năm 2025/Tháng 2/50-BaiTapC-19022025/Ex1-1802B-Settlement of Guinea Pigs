@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    int cages = 0;
+    int pigs = 0;
+    int max_cages = 0;
+
+    for (int i = 0; i < n; i++) {
+        int action;
+        scanf("%d", &action);
+
+        if (action == 1) {
+            pigs++;
+            cages++;
+            if (cages > max_cages) {
+                max_cages = cages;
+            }
+        } else if (action == 2) {
+            pigs /= 2;
+            cages = pigs;
+        }
+    }
+
+    printf("%d\n", max_cages);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

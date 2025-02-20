@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int soDep(int k) {
+    return ((1 << k) - 1) * (1 << (k - 1));
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int k = 1;
+    
+    while (soDep(k + 1) <= 100000) {
+        k++;
+    }
+
+    for (; k >= 1; k--) {
+        int dep = soDep(k);
+        if (n % dep == 0) {
+            printf("%d\n", dep);
+            return 0;
+        }
+    }
+
+    printf("1\n");
+    return 0;
+}
 

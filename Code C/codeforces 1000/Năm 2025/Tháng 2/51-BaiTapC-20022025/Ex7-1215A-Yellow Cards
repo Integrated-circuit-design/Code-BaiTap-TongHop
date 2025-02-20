@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int a1, a2, k1, k2, n;
+    scanf("%d %d %d %d %d", &a1, &a2, &k1, &k2, &n);
+
+    int min_sent_off = 0;
+    if (n > a1 + a2) {
+        min_sent_off = n - (a1 + a2);
+    }
+
+    int max_sent_off = 0;
+    
+    if (k1 > k2) {
+        int temp = a1; a1 = a2; a2 = temp;
+        temp = k1; k1 = k2; k2 = temp;
+    }
+
+    while (n > 0 && a1 > 0) {
+        if (n >= k1) {
+            max_sent_off++;
+            n -= k1;
+            a1--;
+        } else {
+            break;
+        }
+    }
+
+    while (n > 0 && a2 > 0) {
+        if (n >= k2) {  
+            max_sent_off++;
+            n -= k2;
+            a2--;
+        } else {
+            break;
+        }
+    }
+
+    printf("%d %d\n", min_sent_off, max_sent_off);
+    
+    return 0;
+}
 

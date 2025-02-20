@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int min_moves(int n, int k) {
+    int left = k - 1;
+    int right = n - k;
+
+    int moves_left = 0;
+    for (int i = left; i >= 1; i--) {
+        moves_left += (2 * i + 1);
+    }
+
+    int moves_right = 0;
+    for (int i = right; i >= 1; i--) {
+        moves_right += (2 * i + 1);
+    }
+
+    return 1 + (moves_left < moves_right ? moves_left : moves_right);
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    printf("%d\n", min_moves(n, k));
+    return 0;
+}
 

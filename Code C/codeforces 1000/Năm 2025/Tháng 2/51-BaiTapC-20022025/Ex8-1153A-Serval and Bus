@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n, t;
+    scanf("%d %d", &n, &t);
+
+    int best_bus = -1;
+    int min_time = 1000000;
+
+    for (int i = 1; i <= n; i++) {
+        int s, d;
+        scanf("%d %d", &s, &d);
+
+        while (s < t) {
+            s += d;
+        }
+
+        if (s < min_time) {
+            min_time = s;
+            best_bus = i;
+        }
+    }
+
+    printf("%d\n", best_bus);
+    return 0;
+}
 

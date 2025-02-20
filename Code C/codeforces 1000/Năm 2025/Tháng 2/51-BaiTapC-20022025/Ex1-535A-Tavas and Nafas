@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+void print_number(int s) {
+    char *num1_19[] = {
+        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+        "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+        "seventeen", "eighteen", "nineteen"
+    };
+
+    char *tens_multiple[] = {
+        "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
+    };
+
+    if (s < 20) {
+        printf("%s\n", num1_19[s]);
+    } else {
+        int tens = s / 10;
+        int ones = s % 10;
+
+        printf("%s", tens_multiple[tens]);
+
+        if (ones > 0) {
+            printf("-%s", num1_19[ones]);
+        }
+
+        printf("\n");
+    }
+}
+
+int main() {
+    int s;
+    scanf("%d", &s);
+
+    print_number(s);
+
+    return 0;
+}
 

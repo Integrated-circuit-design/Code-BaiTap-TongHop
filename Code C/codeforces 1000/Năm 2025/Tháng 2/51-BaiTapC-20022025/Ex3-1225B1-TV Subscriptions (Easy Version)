@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define MAX_K 101
+
+int min_subscriptions(int n, int k, int d, int a[]) {
+    int count[MAX_K] = {0};
+    int exists[MAX_K] = {0};
+    int unique_shows = 0;
+    int min_shows = k;
+
+    for (int i = 0; i < d; i++) {
+        if (count[a[i]] == 0) unique_shows++;
+        count[a[i]]++;
+        exists[a[i]] = 1;
+    }
+    min_shows = unique_shows;
+
+    for (int i = d; i < n; i++) {
+        count[a[i - d]]--;
+        if (count[a[i - d]] == 0) {
+            unique_shows--;
+            exists[a[i - d]] = 0;
+        }
+
+        if (count[a[i]] == 0) unique_shows++;
+        count[a[i]]++;
+        exists[a[i]] = 1;
+
+        if (unique_shows < min_shows) min_shows = unique_shows;
+    }
+
+    return min_shows;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k, d;
+        scanf("%d %d %d", &n, &k, &d);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        printf("%d\n", min_subscriptions(n, k, d, a));
+    }
+
+    return 0;
+}
 

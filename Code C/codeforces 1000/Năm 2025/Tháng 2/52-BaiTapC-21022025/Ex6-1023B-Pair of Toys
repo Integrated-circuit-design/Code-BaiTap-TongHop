@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+    
+    long long left = 1, right = k - 1;
+    
+    if (right > n) {
+        right = n;
+    }
+    
+    long long count = (right - left + 1) / 2;
+    printf("%lld\n", count);
+    
+    return 0;
+}
 

@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    long long N, K;
+    scanf("%lld %lld", &N, &K);
+
+    long long best_type = 0, min_leftover = N, best_boxes = 0;
+
+    for (long long i = 1; i <= K; i++) {
+        long long a;
+        scanf("%lld", &a);
+
+        long long leftover = N % a;
+        long long boxes = N / a;
+
+        if (leftover < min_leftover) {
+            min_leftover = leftover;
+            best_type = i;
+            best_boxes = boxes;
+        }
+    }
+
+    printf("%lld %lld\n", best_type, best_boxes);
+    return 0;
+}
 

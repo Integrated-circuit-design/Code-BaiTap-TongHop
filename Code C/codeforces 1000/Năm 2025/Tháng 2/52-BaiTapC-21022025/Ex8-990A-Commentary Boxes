@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    long long n, m, a, b;
+    scanf("%lld %lld %lld %lld", &n, &m, &a, &b);
+
+    if (n % m == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    long long add_cost = (m - (n % m)) * a;
+    long long remove_cost = (n % m) * b;
+
+    printf("%lld\n", (add_cost < remove_cost) ? add_cost : remove_cost);
+    return 0;
+}
 

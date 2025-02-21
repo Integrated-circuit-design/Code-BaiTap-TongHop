@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+#define BULBASAUR "Bulbasaur"
+
+int main() {
+    char s[100005];
+    scanf("%s", s);
+    
+    int freq[128] = {0};
+    for (int i = 0; s[i] != '\0'; i++) {
+        freq[(int)s[i]]++;
+    }
+    
+    int min_bulbasaur = 100000;
+    min_bulbasaur = (freq['B'] < min_bulbasaur) ? freq['B'] : min_bulbasaur;
+    min_bulbasaur = (freq['u'] / 2 < min_bulbasaur) ? freq['u'] / 2 : min_bulbasaur;
+    min_bulbasaur = (freq['l'] < min_bulbasaur) ? freq['l'] : min_bulbasaur;
+    min_bulbasaur = (freq['b'] < min_bulbasaur) ? freq['b'] : min_bulbasaur;
+    min_bulbasaur = (freq['a'] / 2 < min_bulbasaur) ? freq['a'] / 2 : min_bulbasaur;
+    min_bulbasaur = (freq['s'] < min_bulbasaur) ? freq['s'] : min_bulbasaur;
+    min_bulbasaur = (freq['r'] < min_bulbasaur) ? freq['r'] : min_bulbasaur;
+    
+    printf("%d\n", min_bulbasaur);
+    
+    return 0;
+}
 

@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[105];
+    scanf("%s", s);
+    
+    int len = strlen(s);
+    int found_one = 0, zero_count = 0;
+
+    for (int i = 0; i < len; i++) {
+        if (s[i] == '1') {
+            found_one = 1;
+        }
+        if (found_one && s[i] == '0') {
+            zero_count++;
+        }
+    }
+
+    if (found_one && zero_count >= 6) {
+        printf("yes\n");
+    } else {
+        printf("no\n");
+    }
+
+    return 0;
+}
 

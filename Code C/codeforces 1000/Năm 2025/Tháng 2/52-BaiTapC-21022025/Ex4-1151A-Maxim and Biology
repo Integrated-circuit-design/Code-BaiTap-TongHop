@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int min_operations(char a, char b) {
+    int diff = abs(a - b);
+    return diff < 26 - diff ? diff : 26 - diff;
+}
+
+int main() {
+    int n;
+    char s[51];
+    scanf("%d", &n);
+    scanf("%s", s);
+    
+    char target[] = "ACTG";
+    int min_changes = 1e9;
+    
+    for (int i = 0; i <= n - 4; i++) {
+        int current_changes = 0;
+        for (int j = 0; j < 4; j++) {
+            current_changes += min_operations(s[i + j], target[j]);
+        }
+        if (current_changes < min_changes) {
+            min_changes = current_changes;
+        }
+    }
+    
+    printf("%d\n", min_changes);
+    return 0;
+}
 

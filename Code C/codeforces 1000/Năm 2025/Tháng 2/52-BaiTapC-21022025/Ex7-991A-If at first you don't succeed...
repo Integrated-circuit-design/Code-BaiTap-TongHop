@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int A, B, C, N;
+    scanf("%d %d %d %d", &A, &B, &C, &N);
+    
+    if (C > A || C > B) {
+        printf("-1\n");
+        return 0;
+    }
+    
+    int passed_students = (A - C) + (B - C) + C;
+    int failed_students = N - passed_students;
+    
+    if (failed_students < 1) {
+        printf("-1\n");
+    } else {
+        printf("%d\n", failed_students);
+    }
+    
+    return 0;
+}
 

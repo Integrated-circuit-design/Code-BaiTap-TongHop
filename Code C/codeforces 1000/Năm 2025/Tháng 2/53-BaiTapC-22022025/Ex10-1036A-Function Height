@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+long long timChieuCaoMin(long long n, long long k) {
+    long long tongTang = n * (n + 1) / 2;
+    return (k + tongTang - 1) / tongTang;
+}
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+    
+    long long chieuCaoMin = timChieuCaoMin(n, k);
+    printf("%lld\n", chieuCaoMin);
+    
+    return 0;
+}
 

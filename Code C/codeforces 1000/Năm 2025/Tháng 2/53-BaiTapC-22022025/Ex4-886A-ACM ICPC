@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool coTheChiaDoi(int a[]) {
+    int tongDiem = 0;
+    for (int i = 0; i < 6; i++) {
+        tongDiem += a[i];
+    }
+    if (tongDiem % 2 != 0) return false;
+    int mucTieu = tongDiem / 2;
+    
+    for (int mask = 0; mask < (1 << 6); mask++) {
+        int count = 0, sum = 0;
+        for (int i = 0; i < 6; i++) {
+            if (mask & (1 << i)) {
+                sum += a[i];
+                count++;
+            }
+        }
+        if (count == 3 && sum == mucTieu) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int diemThiSinh[6];
+    for (int i = 0; i < 6; i++) {
+        scanf("%d", &diemThiSinh[i]);
+    }
+    
+    if (coTheChiaDoi(diemThiSinh)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

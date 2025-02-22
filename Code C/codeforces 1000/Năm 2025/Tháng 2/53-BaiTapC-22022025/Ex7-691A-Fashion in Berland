@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int n, demNutCai = 0;
+    scanf("%d", &n);
+    
+    int danhSachNut[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &danhSachNut[i]);
+        if (danhSachNut[i] == 1) {
+            demNutCai++;
+        }
+    }
+    
+    if ((n == 1 && demNutCai == 1) || (n > 1 && demNutCai == n - 1)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    int groups[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &groups[i]);
+    }
+    
+    int bus_count = 0;
+    int current_capacity = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (current_capacity + groups[i] > m) {
+            bus_count++;
+            current_capacity = groups[i];
+        } else {
+            current_capacity += groups[i];
+        }
+    }
+    
+    if (current_capacity > 0) {
+        bus_count++;
+    }
+    
+    printf("%d\n", bus_count);
+    return 0;
+}
 

@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    int thao_tac = 0;
+    int truoc_do_la_doc = 1;
+    
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == 1) {
+            if (truoc_do_la_doc || (i > 0 && arr[i - 1] == 0)) {
+                thao_tac++;
+            }
+            truoc_do_la_doc = 0;
+        }
+    }
+    
+    printf("%d\n", thao_tac);
+    return 0;
+}
 

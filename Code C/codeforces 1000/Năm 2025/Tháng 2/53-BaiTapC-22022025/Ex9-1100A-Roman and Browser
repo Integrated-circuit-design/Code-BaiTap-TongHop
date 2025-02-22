@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int tim_chenh_lech_lon_nhat(int n, int k, int *tabs) {
+    int chenh_lech_max = 0;
+    
+    for (int b = 1; b <= k; b++) {
+        int so_luong_test = 0, so_luong_mang_xa_hoi = 0;
+        for (int i = 0; i < n; i++) {
+            if ((i + 1 - b) % k != 0) {
+                if (tabs[i] == 1)
+                    so_luong_test++;
+                else
+                    so_luong_mang_xa_hoi++;
+            }
+        }
+        int chenh_lech = abs(so_luong_test - so_luong_mang_xa_hoi);
+        if (chenh_lech > chenh_lech_max) {
+            chenh_lech_max = chenh_lech;
+        }
+    }
+    
+    return chenh_lech_max;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int tabs[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &tabs[i]);
+    }
+    
+    printf("%d\n", tim_chenh_lech_lon_nhat(n, k, tabs));
+    
+    return 0;
+}
 

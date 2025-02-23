@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+
+    int arr[101], i, j, operations = 0;
+
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    for (i = 0; i < x; i++) {
+        int found = 0;
+        for (j = 0; j < n; j++) {
+            if (arr[j] == i) {
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            operations++;
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        if (arr[i] == x) {
+            operations++;
+            break;
+        }
+    }
+
+    printf("%d\n", operations);
+
+    return 0;
+}
 

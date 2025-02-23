@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 1000
+
+char s[MAX_N + 1], t[MAX_N + 1];
+int minChanges = MAX_N, changePositions[MAX_N];
+
+void findMinChanges(int lenS, int lenT) {
+    for (int i = 0; i <= lenT - lenS; i++) {
+        int countMismatch = 0, mismatchPositions[MAX_N], indexMismatch = 0;
+        
+        for (int j = 0; j < lenS; j++) {
+            if (s[j] != t[i + j]) {
+                mismatchPositions[indexMismatch++] = j + 1;
+                countMismatch++;
+            }
+        }
+        
+        if (countMismatch < minChanges) {
+            minChanges = countMismatch;
+            memcpy(changePositions, mismatchPositions, countMismatch * sizeof(int));
+        }
+    }
+    
+    printf("%d\n", minChanges);
+    for (int i = 0; i < minChanges; i++) {
+        printf("%d ", changePositions[i]);
+    }
+    if (minChanges > 0) printf("\n");
+}
+
+int main() {
+    int lenS, lenT;
+    scanf("%d %d", &lenS, &lenT);
+    scanf("%s", s);
+    scanf("%s", t);
+    findMinChanges(lenS, lenT);
+    return 0;
+}
 

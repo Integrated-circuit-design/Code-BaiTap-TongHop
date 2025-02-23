@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int tinh_so_led(int n) {
+    int led[10] = {6, 2, 5, 5, 4, 5, 6, 3, 7, 6};
+    int tong = 0;
+    do {
+        tong += led[n % 10];
+        n /= 10;
+    } while (n > 0);
+    return tong;
+}
+
+int main() {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    
+    int tong_led = 0;
+    for (int i = a; i <= b; i++) {
+        tong_led += tinh_so_led(i);
+    }
+    
+    printf("%d\n", tong_led);
+    return 0;
+}
 

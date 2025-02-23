@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    char commands[n + 1];
+    scanf("%s", commands);
+    
+    int countL = 0, countR = 0, countU = 0, countD = 0;
+    
+    for (int i = 0; i < n; i++) {
+        switch (commands[i]) {
+            case 'L': countL++; break;
+            case 'R': countR++; break;
+            case 'U': countU++; break;
+            case 'D': countD++; break;
+        }
+    }
+    
+    int result = 2 * ((countL < countR ? countL : countR) + (countU < countD ? countU : countD));
+    printf("%d\n", result);
+    
+    return 0;
+}
 

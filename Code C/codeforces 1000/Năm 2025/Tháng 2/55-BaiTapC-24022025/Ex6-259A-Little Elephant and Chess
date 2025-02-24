@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+int canShiftToMatch(char row[], char expected[]) {
+    for (int shift = 0; shift < 8; shift++) {
+        int match = 1;
+        for (int j = 0; j < 8; j++) {
+            if (row[(j + shift) % 8] != expected[j]) {
+                match = 0;
+                break;
+            }
+        }
+        if (match) return 1;
+    }
+    return 0;
+}
+
+int main() {
+    char board[8][9];
+    char expectedBoard[8][9] = {
+        "WBWBWBWB",
+        "BWBWBWBW",
+        "WBWBWBWB",
+        "BWBWBWBW",
+        "WBWBWBWB",
+        "BWBWBWBW",
+        "WBWBWBWB",
+        "BWBWBWBW"
+    };
+
+    for (int i = 0; i < 8; i++) {
+        scanf("%s", board[i]);
+    }
+
+    for (int i = 0; i < 8; i++) {
+        if (!canShiftToMatch(board[i], expectedBoard[i])) {
+            printf("NO\n");
+            return 0;
+        }
+    }
+
+    printf("YES\n");
+    return 0;
+}
 

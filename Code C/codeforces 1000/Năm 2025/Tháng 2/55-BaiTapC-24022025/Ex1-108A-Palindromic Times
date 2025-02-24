@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int la_palindrome(int hh, int mm) {
+    char time_str[6];
+    sprintf(time_str, "%02d:%02d", hh, mm);
+    return (time_str[0] == time_str[4] && time_str[1] == time_str[3]);
+}
+
+void tim_palindrome_tiep_theo(int hh, int mm) {
+    while (1) {
+        mm++;
+        if (mm == 60) {
+            mm = 0;
+            hh++;
+        }
+        if (hh == 24) {
+            hh = 0;
+        }
+        if (la_palindrome(hh, mm)) {
+            printf("%02d:%02d\n", hh, mm);
+            return;
+        }
+    }
+}
+
+int main() {
+    int hh, mm;
+    scanf("%d:%d", &hh, &mm);
+    tim_palindrome_tiep_theo(hh, mm);
+    return 0;
+}
 

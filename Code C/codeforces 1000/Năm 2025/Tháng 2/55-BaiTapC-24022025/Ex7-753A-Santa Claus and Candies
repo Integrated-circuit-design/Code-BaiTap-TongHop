@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int arr[1000];
+    int sum = 0, count = 0;
+
+    for (int i = 1; sum + i <= n; i++) {
+        arr[count++] = i;
+        sum += i;
+    }
+
+    arr[count - 1] += (n - sum);
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

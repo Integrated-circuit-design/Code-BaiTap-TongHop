@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char ho[11], ten[11];
+    scanf("%s %s", ho, ten);
+    
+    char login_min[21];
+    login_min[0] = '\0';
+    
+    for (int i = 1; ho[i] != '\0' || i == 1; i++) {
+        char prefix_ho[11];
+        strncpy(prefix_ho, ho, i);
+        prefix_ho[i] = '\0';
+        
+        for (int j = 1; ten[j] != '\0' || j == 1; j++) {
+            char prefix_ten[11];
+            strncpy(prefix_ten, ten, j);
+            prefix_ten[j] = '\0';
+            
+            char login_hien_tai[21];
+            sprintf(login_hien_tai, "%s%s", prefix_ho, prefix_ten);
+            
+            if (login_min[0] == '\0' || strcmp(login_hien_tai, login_min) < 0) {
+                strcpy(login_min, login_hien_tai);
+            }
+        }
+    }
+    
+    printf("%s\n", login_min);
+    return 0;
+}
 

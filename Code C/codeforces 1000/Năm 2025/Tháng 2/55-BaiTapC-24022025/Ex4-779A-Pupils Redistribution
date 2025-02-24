@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_GRADE 5
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int freqA[MAX_GRADE + 1] = {0};
+    int freqB[MAX_GRADE + 1] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        int x;
+        scanf("%d", &x);
+        freqA[x]++;
+    }
+    
+    for (int i = 0; i < n; i++) {
+        int x;
+        scanf("%d", &x);
+        freqB[x]++;
+    }
+    
+    int totalSwaps = 0;
+    for (int i = 1; i <= MAX_GRADE; i++) {
+        int sum = freqA[i] + freqB[i];
+        if (sum % 2 != 0) {
+            printf("-1\n");
+            return 0;
+        }
+        totalSwaps += abs(freqA[i] - freqB[i]) / 2;
+    }
+    
+    printf("%d\n", totalSwaps / 2);
+    return 0;
+}
 

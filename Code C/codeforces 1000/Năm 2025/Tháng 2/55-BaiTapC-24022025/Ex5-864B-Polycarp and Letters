@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    char s[n + 1];
+    scanf("%s", s);
+    
+    int max_distinct = 0, current_count = 0;
+    int alphabet[26] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        if (s[i] >= 'A' && s[i] <= 'Z') {
+            memset(alphabet, 0, sizeof(alphabet));
+            current_count = 0;
+        } else {
+            if (!alphabet[s[i] - 'a']) {
+                alphabet[s[i] - 'a'] = 1;
+                current_count++;
+            }
+            if (current_count > max_distinct) {
+                max_distinct = current_count;
+            }
+        }
+    }
+    
+    printf("%d\n", max_distinct);
+    return 0;
+}
 

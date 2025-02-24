@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n, s;
+    scanf("%d %d", &n, &s);
+    
+    int floors[1010] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        int floor, time;
+        scanf("%d %d", &floor, &time);
+        if (time > floors[floor]) {
+            floors[floor] = time;
+        }
+    }
+    
+    int total_time = 0;
+    
+    for (int floor = s; floor >= 0; floor--) {
+        if (floors[floor] > total_time) {
+            total_time = floors[floor];
+        }
+        total_time++;
+    }
+    
+    printf("%d\n", total_time - 1);
+    return 0;
+}
 

@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int kiem_tra_palindrome(int gio, int phut) {
+    char tg[6];
+    sprintf(tg, "%02d:%02d", gio, phut);
+    return (tg[0] == tg[4] && tg[1] == tg[3]);
+}
+
+int tim_palindrome(int gio, int phut) {
+    int so_phut = 0;
+    
+    while (1) {
+        if (kiem_tra_palindrome(gio, phut)) {
+            return so_phut;
+        }
+
+        phut++;
+        if (phut == 60) {
+            phut = 0;
+            gio++;
+            if (gio == 24) {
+                gio = 0;
+            }
+        }
+
+        so_phut++;
+    }
+}
+
+int main() {
+    int gio, phut;
+    
+    scanf("%d:%d", &gio, &phut);
+    printf("%d\n", tim_palindrome(gio, phut));
+
+    return 0;
+}
 

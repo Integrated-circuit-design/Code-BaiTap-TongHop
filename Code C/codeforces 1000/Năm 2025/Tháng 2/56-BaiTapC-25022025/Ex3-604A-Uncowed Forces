@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int calculate_score(int points, int time, int wrong) {
+    int score1 = (3 * points) / 10;
+    int score2 = points - (points * time) / 250 - 50 * wrong;
+    return (score1 > score2) ? score1 : score2;
+}
+
+int main() {
+    int points[5] = {500, 1000, 1500, 2000, 2500};
+    int m[5], w[5], hs, hu;
+    int total_score = 0;
+    
+    for (int i = 0; i < 5; i++) {
+        scanf("%d", &m[i]);
+    }
+    
+    for (int i = 0; i < 5; i++) {
+        scanf("%d", &w[i]);
+    }
+    
+    scanf("%d %d", &hs, &hu);
+    
+    for (int i = 0; i < 5; i++) {
+        total_score += calculate_score(points[i], m[i], w[i]);
+    }
+    
+    total_score += hs * 100;
+    total_score -= hu * 50;
+    
+    printf("%d\n", total_score);
+    
+    return 0;
+}
 

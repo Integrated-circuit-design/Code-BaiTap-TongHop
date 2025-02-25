@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    char bumpers[n + 1];
+    scanf("%s", bumpers);
+    
+    int fall_count = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (bumpers[i] == '<' && i == 0) {
+            fall_count++;
+        }
+        if (bumpers[i] == '>' && i == n - 1) {
+            fall_count++;
+        }
+    }
+    
+    printf("%d\n", fall_count);
+    
+    return 0;
+}
 

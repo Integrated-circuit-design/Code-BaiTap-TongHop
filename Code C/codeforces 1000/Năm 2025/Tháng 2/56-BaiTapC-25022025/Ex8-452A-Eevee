@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LENGTH 9
+
+const char *pokemon_list[] = {
+    "vaporeon", "jolteon", "flareon", "espeon", "umbreon", "leafeon", "glaceon", "sylveon"
+};
+
+int is_match(const char *pattern, const char *pokemon) {
+    while (*pattern && *pokemon) {
+        if (*pattern != '.' && *pattern != *pokemon) {
+            return 0;
+        }
+        pattern++;
+        pokemon++;
+    }
+    return *pattern == '\0' && *pokemon == '\0';
+}
+
+int main() {
+    int length;
+    char input[MAX_LENGTH];
+    
+    scanf("%d", &length);
+    scanf("%s", input);
+    
+    for (int i = 0; i < 8; i++) {
+        if (strlen(pokemon_list[i]) == length && is_match(input, pokemon_list[i])) {
+            printf("%s\n", pokemon_list[i]);
+            return 0;
+        }
+    }
+    
+    return 0;
+}
 

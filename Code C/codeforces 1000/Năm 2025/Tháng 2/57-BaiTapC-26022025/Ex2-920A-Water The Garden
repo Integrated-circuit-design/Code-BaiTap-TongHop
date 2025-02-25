@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int max_value(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+void xu_ly_vuon() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    int *vtri = (int *)malloc(k * sizeof(int));
+    
+    for (int i = 0; i < k; i++) {
+        scanf("%d", &vtri[i]);
+    }
+    
+    int ket_qua = 0;
+    
+    for (int i = 1; i <= n; i++) {
+        int tg_min = n;
+        
+        for (int j = 0; j < k; j++) {
+            int tg = abs(i - vtri[j]) + 1;
+            if (tg < tg_min) {
+                tg_min = tg;
+            }
+        }
+        
+        ket_qua = max_value(ket_qua, tg_min);
+    }
+    
+    printf("%d\n", ket_qua);
+    
+    free(vtri);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        xu_ly_vuon();
+    }
+    
+    return 0;
+}
 

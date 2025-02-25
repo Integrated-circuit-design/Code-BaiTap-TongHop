@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, x0;
+    scanf("%d %d", &n, &x0);
+    
+    int left = -1, right = 1001;
+    
+    for (int i = 0; i < n; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        
+        int min_val = a < b ? a : b;
+        int max_val = a > b ? a : b;
+        
+        if (min_val > left) left = min_val;
+        if (max_val < right) right = max_val;
+    }
+    
+    if (left > right) {
+        printf("-1\n");
+    } else {
+        int move_distance = 0;
+        if (x0 < left) move_distance = left - x0;
+        else if (x0 > right) move_distance = x0 - right;
+        printf("%d\n", move_distance);
+    }
+    
+    return 0;
+}
 

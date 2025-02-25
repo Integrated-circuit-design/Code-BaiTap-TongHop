@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int get_rank_value(char rank) {
+    switch (rank) {
+        case '6': return 0;
+        case '7': return 1;
+        case '8': return 2;
+        case '9': return 3;
+        case 'T': return 4;
+        case 'J': return 5;
+        case 'Q': return 6;
+        case 'K': return 7;
+        case 'A': return 8;
+        default: return -1;
+    }
+}
+
+int main() {
+    char trump_suit;
+    char card1[3], card2[3];
+    
+    scanf(" %c", &trump_suit);
+    scanf(" %s %s", card1, card2);
+    
+    char rank1 = card1[0], suit1 = card1[1];
+    char rank2 = card2[0], suit2 = card2[1];
+    
+    if ((suit1 == trump_suit && suit2 != trump_suit) ||
+        (suit1 == suit2 && get_rank_value(rank1) > get_rank_value(rank2))) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

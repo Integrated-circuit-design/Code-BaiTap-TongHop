@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int toa, tang;
+} ViTri;
+
+int tinh_thoi_gian(int n, int h, int a, int b, ViTri bat_dau, ViTri dich) {
+    if (bat_dau.toa == dich.toa) {
+        return abs(bat_dau.tang - dich.tang);
+    }
+    
+    int tg_phai_di_chuyen = 0;
+    if (bat_dau.tang < a) {
+        tg_phai_di_chuyen = a - bat_dau.tang;
+        bat_dau.tang = a;
+    } else if (bat_dau.tang > b) {
+        tg_phai_di_chuyen = bat_dau.tang - b;
+        bat_dau.tang = b;
+    }
+    
+    return tg_phai_di_chuyen + abs(bat_dau.toa - dich.toa) + abs(bat_dau.tang - dich.tang);
+}
+
+int main() {
+    int n, h, a, b, k;
+    scanf("%d %d %d %d %d", &n, &h, &a, &b, &k);
+    
+    while (k--) {
+        ViTri bat_dau, dich;
+        scanf("%d %d %d %d", &bat_dau.toa, &bat_dau.tang, &dich.toa, &dich.tang);
+        printf("%d\n", tinh_thoi_gian(n, h, a, b, bat_dau, dich));
+    }
+    
+    return 0;
+}
 

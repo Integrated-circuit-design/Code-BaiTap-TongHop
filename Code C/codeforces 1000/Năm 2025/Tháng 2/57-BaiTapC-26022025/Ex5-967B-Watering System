@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] < arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, A, B;
+    scanf("%d %d %d", &n, &A, &B);
+    
+    int s[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &s[i]);
+    }
+    
+    int first_hole = s[0];
+    bubbleSort(s + 1, n - 1);
+    
+    long long total_size = 0;
+    for (int i = 0; i < n; i++) {
+        total_size += s[i];
+    }
+    
+    int blocked = 0;
+    while ((long long) first_hole * A < (long long) B * total_size) {
+        total_size -= s[blocked + 1];
+        blocked++;
+    }
+    
+    printf("%d\n", blocked);
+    return 0;
+}
 

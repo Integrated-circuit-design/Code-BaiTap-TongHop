@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int N;
+    scanf("%d", &N);
+
+    int minPerimeter = 2 * (N + 1);
+
+    for (int a = 1; a <= N / a; a++) {
+        if (N % a == 0) {
+            int b = N / a;
+            int perimeter = 2 * (a + b);
+
+            if (perimeter < minPerimeter) {
+                minPerimeter = perimeter;
+            }
+        }
+    }
+
+    printf("%d\n", minPerimeter);
+    return 0;
+}
 

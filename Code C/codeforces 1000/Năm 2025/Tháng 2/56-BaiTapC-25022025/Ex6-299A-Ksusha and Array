@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    return (b == 0) ? a : gcd(b, a % b);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int arr[n];
+    int overall_gcd;
+
+    scanf("%d", &arr[0]);
+    overall_gcd = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        scanf("%d", &arr[i]);
+        overall_gcd = gcd(overall_gcd, arr[i]);
+    }
+
+    int found = 0;  
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == overall_gcd) {
+            found = 1;
+            break;
+        }
+    }
+
+    printf("%d\n", found ? overall_gcd : -1);
+
+    return 0;
+}
 

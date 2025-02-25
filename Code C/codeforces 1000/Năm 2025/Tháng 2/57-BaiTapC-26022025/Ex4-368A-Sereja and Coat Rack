@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+void sort(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (arr[i] > arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, d, m;
+    
+    scanf("%d %d", &n, &d);
+    
+    int hooks[100];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &hooks[i]);
+    }
+    
+    scanf("%d", &m);
+    
+    sort(hooks, n);
+    
+    int profit = 0;
+    
+    for (int i = 0; i < m; i++) {
+        if (i < n) {
+            profit += hooks[i];
+        } else {
+            profit -= d;
+        }
+    }
+    
+    printf("%d\n", profit);
+    
+    return 0;
+}
 

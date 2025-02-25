@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int find_gcd(int x, int y) {
+    while (y != 0) {
+        int temp = y;
+        y = x % y;
+        x = temp;
+    }
+    return x;
+}
+
+int digit_sum(int A, int base) {
+    int sum = 0;
+    while (A > 0) {
+        sum += A % base;
+        A /= base;
+    }
+    return sum;
+}
+
+int main() {
+    int A;
+    scanf("%d", &A);
+
+    int total = 0;
+    int count = A - 2;
+
+    for (int base = 2; base < A; base++) {
+        total += digit_sum(A, base);
+    }
+
+    int greatest_common_divisor = find_gcd(total, count);
+    
+    printf("%d/%d\n", total / greatest_common_divisor, count / greatest_common_divisor);
+
+    return 0;
+}
 

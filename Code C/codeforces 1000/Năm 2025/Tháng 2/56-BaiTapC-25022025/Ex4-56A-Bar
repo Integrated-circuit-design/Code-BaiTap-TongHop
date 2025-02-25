@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define DRINK_COUNT 11
+
+const char *alcoholic_list[DRINK_COUNT] = {
+    "ABSINTH", "BEER", "BRANDY", "CHAMPAGNE", "GIN",
+    "RUM", "SAKE", "TEQUILA", "VODKA", "WHISKEY", "WINE"
+};
+
+int is_alcoholic(const char *drink) {
+    for (int i = 0; i < DRINK_COUNT; i++) {
+        if (strcmp(drink, alcoholic_list[i]) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main() {
+    int people_count;
+    scanf("%d", &people_count);
+    
+    int check_count = 0;
+    char entry[101];
+    
+    for (int i = 0; i < people_count; i++) {
+        scanf("%s", entry);
+        
+        if (isdigit(entry[0])) {
+            int age = atoi(entry);
+            if (age < 18) {
+                check_count++;
+            }
+        } else {
+            if (is_alcoholic(entry)) {
+                check_count++;
+            }
+        }
+    }
+    
+    printf("%d\n", check_count);
+    return 0;
+}
 

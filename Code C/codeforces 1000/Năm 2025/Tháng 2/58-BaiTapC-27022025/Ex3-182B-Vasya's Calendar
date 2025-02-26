@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int d, n;
+    scanf("%d %d", &d, &n);
+    
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    int manual_changes = 0;
+    int clock_day = 1;
+    
+    for (int i = 0; i < n; i++) {
+        int month_days = a[i];
+        for (int day = 1; day <= month_days; day++) {
+            while (clock_day != day) {
+                clock_day++;
+                manual_changes++;
+                if (clock_day > d) {
+                    clock_day = 1;
+                }
+            }
+            clock_day++;
+            if (clock_day > d) {
+                clock_day = 1;
+            }
+        }
+    }
+    
+    printf("%d\n", manual_changes);
+ 
 

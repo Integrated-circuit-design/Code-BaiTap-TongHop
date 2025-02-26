@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int vi_tri_hien_tai;
+    scanf("%d", &vi_tri_hien_tai);
+
+    for (int i = 0; i < 3; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        
+        if (vi_tri_hien_tai == x) {
+            vi_tri_hien_tai = y;
+        } else if (vi_tri_hien_tai == y) {
+            vi_tri_hien_tai = x;
+        }
+    }
+    
+    printf("%d\n", vi_tri_hien_tai);
+    return 0;
+}
 

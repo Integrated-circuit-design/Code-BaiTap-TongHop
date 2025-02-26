@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    char status[n + 1];
+    scanf("%s", status);
+    
+    int countA = 0, countI = 0, result = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (status[i] == 'A') countA++;
+        else if (status[i] == 'I') countI++;
+    }
+    
+    if (countI == 0) {
+        result = countA;
+    } else if (countI == 1) {
+        result = 1;
+    }
+    
+    printf("%d\n", result);
+    
+    return 0;
+}
 

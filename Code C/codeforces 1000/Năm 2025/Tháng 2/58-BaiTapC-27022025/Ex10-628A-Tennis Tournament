@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n, b, p;
+    scanf("%d %d %d", &n, &b, &p);
+    
+    int total_bottles = 0;
+    int total_towels = n * p;
+    
+    while (n > 1) {
+        int power = 1;
+        while (power * 2 <= n) {
+            power *= 2;
+        }
+        
+        int matches = power / 2;
+        total_bottles += matches * (b * 2 + 1);
+        
+        n = n - power + matches;
+    }
+    
+    printf("%d %d\n", total_bottles, total_towels);
+    return 0;
+}
 

@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100000
+#define MAX_HASH 200003
+
+typedef struct {
+    int key;
+    int value;
+} HashEntry;
+
+HashEntry hashmap[MAX_HASH];
+
+int hash(int key) {
+    return (key % MAX_HASH + MAX_HASH) % MAX_HASH;
+}
+
+void insert_or_update(int key, int value) {
+    int idx = hash(key);
+    while (hashmap[idx].key != 0 && hashmap[idx].key != key) {
+        idx = (idx + 1) % MAX_HASH;
+    }
+    if (hashmap[idx].key == key) {
+        if (hashmap[idx].value < value) hashmap[idx].value = value;
+    } else {
+        hashmap[idx].key = key;
+        hashmap[idx].value = value;
+    }
+}
+
+long long compute_max_income() {
+    long long total = 0;
+    for (int i = 0; i < MAX_HASH; i++) {
+        if (hashmap[i].key != 0) {
+            total += hashmap[i].value;
+        }
+    }
+    return total;
+}
+
+int main() {
+    int n, m;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        int index, value;
+        scanf("%d %d", &index, &value);
+        insert_or_update(index, value);
+    }
+
+    scanf("%d", &m);
+
+    for (int i = 0; i < m; i++) {
+        int index, value;
+        scanf("%d %d", &index, &value);
+        insert_or_update(index, value);
+    }
+
+    printf("%lld\n", compute_max_income
 

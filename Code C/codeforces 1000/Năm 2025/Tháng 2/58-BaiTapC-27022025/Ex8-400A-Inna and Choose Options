@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SO_COT_HANG 6
+#define TONG_LA_BAI 12
+
+int tap_hop_cach[][2] = { {1,12}, {2,6}, {3,4}, {4,3}, {6,2}, {12,1} };
+
+void tim_cach_thang(char *la_bai) {
+    int so_cach = 0;
+    char ket_qua[6][10];
+    
+    for (int i = 0; i < 6; i++) {
+        int a = tap_hop_cach[i][0];
+        int b = tap_hop_cach[i][1];
+        int co_the_thang = 0;
+        
+        for (int cot = 0; cot < b; cot++) {
+            int nguyen_cot_X = 1;
+            for (int hang = 0; hang < a; hang++) {
+                if (la_bai[hang * b + cot] != 'X') {
+                    nguyen_cot_X = 0;
+                    break;
+                }
+            }
+            if (nguyen_cot_X) {
+                co_the_thang = 1;
+                break;
+            }
+        }
+        
+        if (co_the_thang) {
+            sprintf(ket_qua[so_cach++], "%dx%d", a, b);
+        }
+    }
+    
+    if (so_cach == 0) {
+        printf("0\n");
+    } else {
+        printf("%d", so_cach);
+        for (int i = 0; i < so_cach; i++) {
+            printf(" %s", ket_qua[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int so_bo_thu;
+    char la_bai[13];
+    
+    scanf("%d", &so_bo_thu);
+    while (so_bo_thu--) {
+        scanf("%s", la_bai);
+        tim_cach_thang(la_bai);
+    }
+    
+    return 0;
+}
 

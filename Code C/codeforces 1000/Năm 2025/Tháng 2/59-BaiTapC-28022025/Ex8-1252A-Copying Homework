@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+void doiChoMang(int N, int A[]) {
+    int B[N];
+    
+    for (int i = 0; i < N; i++) {
+        B[i] = A[N - 1 - i];
+    }
+    
+    for (int i = 0; i < N; i++) {
+        printf("%d ", B[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int N;
+    scanf("%d", &N);
+    int A[N];
+    
+    for (int i = 0; i < N; i++) {
+        scanf("%d", &A[i]);
+    }
+    
+    doiChoMang(N, A);
+    
+    return 0;
+}
 

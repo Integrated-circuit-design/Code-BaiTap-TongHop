@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 200
+
+int countValidSubstrings(int n, char commands[]) {
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        int x = 0, y = 0;
+        for (int j = i; j < n; j++) {
+            if (commands[j] == 'U') y++;
+            else if (commands[j] == 'D') y--;
+            else if (commands[j] == 'L') x--;
+            else if (commands[j] == 'R') x++;
+            
+            if (x == 0 && y == 0) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+int main() {
+    int n;
+    char commands[MAX_N + 1];
+    
+    scanf("%d", &n);
+    scanf("%s", commands);
+    
+    printf("%d\n", countValidSubstrings(n, commands));
+    
+    return 0;
+}
 

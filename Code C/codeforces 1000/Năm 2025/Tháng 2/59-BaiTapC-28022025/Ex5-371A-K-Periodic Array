@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <limits.h>
+
+int find_min_changes(int n, int k, int arr[]) {
+    int min_changes = 0;
+    
+    for (int i = 0; i < k; i++) {
+        int freq[3] = {0};
+        
+        for (int j = i; j < n; j += k) {
+            freq[arr[j]]++;
+        }
+        
+        min_changes += (freq[1] < freq[2]) ? freq[1] : freq[2];
+    }
+    return min_changes;
+}
+
+int main() {
+    int n, k;
+    
+    scanf("%d %d", &n, &k);
+    int arr[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    printf("%d\n", find_min_changes(n, k, arr));
+    return 0;
+}
 

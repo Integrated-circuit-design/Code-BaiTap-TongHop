@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int k;
+    scanf("%d", &k);
+    
+    int length = 1;
+    long long count = 9, start = 1;
+    
+    while (k > length * count) {
+        k -= length * count;
+        length++;
+        count *= 10;
+        start *= 10;
+    }
+    
+    int targetNum = start + (k - 1) / length;
+    int digitPos = (k - 1) % length;
+    
+    char numStr[12];
+    sprintf(numStr, "%d", targetNum);
+    printf("%c\n", numStr[digitPos]);
+    
+    return 0;
+}
 

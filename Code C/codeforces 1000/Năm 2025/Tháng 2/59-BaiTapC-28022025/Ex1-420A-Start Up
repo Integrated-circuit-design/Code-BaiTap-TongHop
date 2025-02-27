@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int isSymmetricChar(char ch) {
+    char validChars[] = "AHIMOTUVWXY";
+    for (int i = 0; validChars[i] != '\0'; i++) {
+        if (ch == validChars[i]) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int isMirrorString(const char *str) {
+    int left = 0, right = strlen(str) - 1;
+    while (left <= right) {
+        if (!isSymmetricChar(str[left]) || str[left] != str[right]) {
+            return 0;
+        }
+        left++;
+        right--;
+    }
+    return 1;
+}
+
+int main() {
+    char input[100005];
+    scanf("%s", input);
+    
+    if (isMirrorString(input)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

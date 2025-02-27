@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    int difference = arr[1] - arr[0];
+    int is_arithmetic = 1;
+    
+    for (int i = 2; i < n; i++) {
+        if (arr[i] - arr[i - 1] != difference) {
+            is_arithmetic = 0;
+            break;
+        }
+    }
+    
+    int next_temperature = (is_arithmetic) ? arr[n - 1] + difference : arr[n - 1];
+    printf("%d\n", next_temperature);
+    
+    return 0;
+}
 

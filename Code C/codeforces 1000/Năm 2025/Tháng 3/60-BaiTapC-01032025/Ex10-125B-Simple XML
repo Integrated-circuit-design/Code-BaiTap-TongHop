@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+void dinhDangXML(const char *chuoi) {
+    int doThutLe = 0;
+    int viTri = 0;
+    int doDaiChuoi = strlen(chuoi);
+    
+    while (viTri < doDaiChuoi) {
+        if (chuoi[viTri] == '<') {
+            if (chuoi[viTri + 1] == '/') {
+                doThutLe--;
+            }
+            
+            for (int k = 0; k < 2 * doThutLe; k++) {
+                putchar(' ');
+            }
+            
+            while (viTri < doDaiChuoi && chuoi[viTri] != '>') {
+                putchar(chuoi[viTri]);
+                viTri++;
+            }
+            putchar('>');
+            putchar('\n');
+            
+            if (chuoi[viTri - 1] != '/' && chuoi[viTri - 2] != '/') {
+                doThutLe++;
+            }
+        }
+        viTri++;
+    }
+}
+
+int main() {
+    char chuoi[1001];
+    scanf("%1000s", chuoi);
+    dinhDangXML(chuoi);
+    return 0;
+}
 

@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 1001
+
+int adjacency[MAXN][MAXN] = {0};
+int degree[MAXN] = {0};
+
+int main() {
+    int N;
+    scanf("%d", &N);
+    
+    for (int i = 0; i < N - 1; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adjacency[u][v] = 1;
+        adjacency[v][u] = 1;
+        degree[u]++;
+        degree[v]++;
+    }
+    
+    int remote_planets = 0;
+    
+    for (int i = 1; i <= N; i++) {
+        if (degree[i] == 1) {
+            remote_planets++;
+        }
+    }
+    
+    printf("%d\n", remote_planets);
+    return 0;
+}
 

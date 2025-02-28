@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 3
+
+char grid[SIZE][SIZE];
+char words[100][4];
+int wordCount = 0;
+
+int dr[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+int dc[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+void sinhCacTu() {
+    for (int r = 0; r < SIZE; r++) {
+        for (int c = 0; c < SIZE; c++) {
+            for (int d1 = 0; d1 < 8; d1++) {
+                int r1 = r + dr[d1];
+                int c1 = c + dc[d1];
+                if (r1 < 0 || r1 >= SIZE || c1 < 0 || c1 >= SIZE) continue;
+                
+                for (int d2 = 0; d2 < 8; d2++) {
+                    int r2 = r1 + dr[d2];
+                    int c2 = c1 + dc[d2];
+                    if (r2 < 0 || r2 >= SIZE || c2 < 0 || c2 >= SIZE) continue;
+                    
+                    words[wordCount][0] = grid[r][c];
+                    words[wordCount][1] = grid[r1][c1];
+                    words[wordCount][2] = grid[r2][c2];
+                    words[wordCount][3] = '\0';
+                    wordCount++;
+                }
+            }
+        }
+    }
+}
+
+void timTuNhoNhat() {
+    char bestWord[4] = "ZZZ";
+    for (int i = 0; i < wordCount; i++) {
+        if 
 

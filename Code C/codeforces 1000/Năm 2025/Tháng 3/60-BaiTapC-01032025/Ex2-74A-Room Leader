@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 50
+#define MAX_LEN 21
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    char best_player[MAX_LEN];
+    int highest_score = -1;
+    
+    while (n--) {
+        char name[MAX_LEN];
+        int success, fail, A, B, C, D, E;
+        
+        scanf("%s %d %d %d %d %d %d %d", name, &success, &fail, &A, &B, &C, &D, &E);
+        
+        int score = (success * 100) - (fail * 50) + A + B + C + D + E;
+        
+        if (score > highest_score) {
+            highest_score = score;
+            strcpy(best_player, name);
+        }
+    }
+    
+    printf("%s\n", best_player);
+    
+    return 0;
+}
 

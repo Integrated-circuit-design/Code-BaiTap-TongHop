@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int n, a, b;
+    scanf("%d %d %d", &n, &a, &b);
+
+    if (n > a * b) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int grid[a][b];
+    for (int i = 0; i < a; i++) {
+        for (int j = 0; j < b; j++) {
+            grid[i][j] = 0;
+        }
+    }
+
+    int democrat = 1;
+    int republican = 2;
+
+    for (int j = 0; j < b; j++) { 
+        for (int i = 0; i < a; i++) {
+            if (democrat <= n) {
+                grid[i][j] = democrat;
+                democrat += 2;
+            }
+        }
+        for (int i = 0; i < a; i++) {
+            if (republican <= n) {
+                grid[i][j] = republican;
+                republican += 2;
+            }
+        }
+    }
+
+    for (int i = 0; i < a; i++) {
+        for (int j = 0; j < b; j++) {
+            printf("%d ", grid[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

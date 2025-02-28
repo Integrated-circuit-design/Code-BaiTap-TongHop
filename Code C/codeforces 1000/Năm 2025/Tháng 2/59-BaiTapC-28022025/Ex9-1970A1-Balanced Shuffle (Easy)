@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 500000
+
+char s[MAXN + 1];
+int balance[MAXN];
+int indexArr[MAXN];
+
+int compare(const void *a, const void *b) {
+    int i = *(int *)a;
+    int j = *(int *)b;
+
+    if (balance[i] != balance[j])
+        return balance[i] - balance[j];
+
+    return j - i;
+}
+
+int main() {
+    scanf("%s", s);
+
+    int n = strlen(s);
+    int currBalance = 0;
+
+    for (int i = 0; i < n; i++) {
+        balance[i] = currBalance;
+        indexArr[i] = i;
+
+        if (s[i] == '(')
+            currBalance++;
+        else
+            currBalance--;
+    }
+
+    qsort(indexArr, n, sizeof(int), compare);
+
+    char result[MAXN + 1];
+    for (int i = 0; i < n; i++)
+        result[i] = s[indexArr[i]];
+    result[n] = '\0';
+
+    printf("%s\n", result);
+
+    return 0;
+}
 

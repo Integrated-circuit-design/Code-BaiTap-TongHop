@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+void tinh_so_nguoi(int n, int k) {
+    int tong_heso = 1 + k + k * k + k * k * k;
+    int n1 = n / tong_heso;
+    int n2 = k * n1;
+    int n3 = k * n2;
+    int n4 = k * n3;
+    
+    printf("%d %d %d %d\n", n1, n2, n3, n4);
+}
+
+int main() {
+    int so_test;
+    scanf("%d", &so_test);
+    
+    while (so_test--) {
+        int tong_nguoi, he_so;
+        scanf("%d %d", &tong_nguoi, &he_so);
+        tinh_so_nguoi(tong_nguoi, he_so);
+    }
+    
+    return 0;
+}
 

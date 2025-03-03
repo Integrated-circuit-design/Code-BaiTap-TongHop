@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int A, B;
+    
+    scanf("%d", &A);
+    scanf("%d", &B);
+    
+    int N = A + B + 1;
+    
+    int max_height = N;
+    for (int i = 0; i <= A; i++) {
+        printf("%d ", i + 1);
+    }
+    for (int i = 0; i < B; i++) {
+        printf("%d ", max_height - i);
+    }
+    
+    printf("\n");
+    return 0;
+}
 

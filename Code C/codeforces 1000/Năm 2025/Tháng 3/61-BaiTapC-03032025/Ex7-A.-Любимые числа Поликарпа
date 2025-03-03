@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int bacCuaHai(int x) {
+    int bac = 0;
+    while (x % 2 == 0) {
+        bac++;
+        x /= 2;
+    }
+    return (1 << bac);
+}
+
+int main() {
+    int n;
+    printf("Nhập số lượng phần tử: ");
+    scanf("%d", &n);
+    
+    int a[n];
+    int maxBac = 1;
+    int soLuong = 0;
+    
+    printf("Nhập các phần tử của mảng: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        int bac = bacCuaHai(a[i]);
+        if (bac > maxBac) {
+            maxBac = bac;
+            soLuong = 1;
+        } else if (bac == maxBac) {
+            soLuong++;
+        }
+    }
+    
+    printf("Lũy thừa lớn nhất của 2: %d, Số lượng số chia hết: %d\n", maxBac, soLuong);
+    return 0;
+}
 

@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+#define MAX_N 100000
+
+int a[MAX_N];
+long long result[MAX_N];
+
+int main() {
+    int n;
+    
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    long long sum_moves = 0;
+    long long cumulative = 0;
+    
+    for (int k = 1; k < n; k++) {
+        cumulative += a[k - 1];
+        sum_moves += cumulative;
+        result[k - 1] = sum_moves;
+    }
+    
+    for (int k = 0; k < n - 1; k++) {
+        printf("%lld\n", result[k]);
+    }
+    
+    return 0;
+}
 

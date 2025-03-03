@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100000
+
+int n;
+int a[MAX_N];
+long long moves[MAX_N];
+
+void solve() {
+    long long total_moves = 0;
+    long long balance[MAX_N];
+    memset(balance, 0, sizeof(balance));
+
+    long long offset = 0;
+    for (int k = 0; k < n - 1; k++) {
+        offset += balance[k];
+        if (a[k] + offset > 0) {
+            long long needed = a[k] + offset;
+            total_moves += needed;
+            if (k + 2 < n) {
+                balance[k + 2] -= needed;
+            }
+            offset -= needed;
+        }
+        moves[k] = total_moves;
+    }
+
+    for (int k = 0; k < n - 1; k++) {
+        printf("%lld\n", moves[k]);
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    solve();
+    return 0;
+}
 

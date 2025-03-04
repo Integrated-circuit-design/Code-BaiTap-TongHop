@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int soSanhTangDan(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+int demCuaHang(int *mangGia, int soLuong, int soTien) {
+    int dem = 0;
+    for (int i = 0; i < soLuong; i++) {
+        if (mangGia[i] > soTien)
+            break;
+        dem++;
+    }
+    return dem;
+}
+
+int main() {
+    int soLuongCuaHang, soNgayMua;
+    scanf("%d", &soLuongCuaHang);
+    int *giaCuaHang = (int *)malloc(soLuongCuaHang * sizeof(int));
+    
+    for (int i = 0; i < soLuongCuaHang; i++) {
+        scanf("%d", &giaCuaHang[i]);
+    }
+    
+    qsort(giaCuaHang, soLuongCuaHang, sizeof(int), soSanhTangDan);
+    
+    scanf("%d", &soNgayMua);
+    
+    while (soNgayMua--) {
+        int soTien;
+        scanf("%d", &soTien);
+        printf("%d\n", demCuaHang(giaCuaHang, soLuongCuaHang, soTien));
+    }
+    
+    free(giaCuaHang);
+    return 0;
+}
 

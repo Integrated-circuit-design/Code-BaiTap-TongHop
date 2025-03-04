@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+void xacDinhDaGiac() {
+    int soTest;
+    scanf("%d", &soTest);
+    
+    for (int i = 0; i < soTest; i++) {
+        int gocTrong;
+        scanf("%d", &gocTrong);
+        
+        int gocNgoai = 180 - gocTrong;
+        if (360 % gocNgoai == 0)
+            puts("YES");
+        else
+            puts("NO");
+    }
+}
+
+int main() {
+    xacDinhDaGiac();
+    return 0;
+}
 

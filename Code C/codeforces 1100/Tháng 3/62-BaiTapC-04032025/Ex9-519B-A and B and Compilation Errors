@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int error1 = 0, error2 = 0, x;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x);
+        error1 ^= x;
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        scanf("%d", &x);
+        error1 ^= x;
+    }
+
+    for (int i = 0; i < n - 2; i++) {
+        scanf("%d", &x);
+        error2 ^= x;
+    }
+
+    printf("%d\n", error1);
+    printf("%d\n", error2);
+
+    return 0;
+}
 

@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int countDifferentBits(int x, int y) {
+    int xorResult = x ^ y;
+    int count = __builtin_popcount(xorResult);
+    return count;
+}
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+    
+    int armies[m + 1];
+    
+    for (int i = 0; i <= m; i++) {
+        scanf("%d", &armies[i]);
+    }
+    
+    int fedorArmy = armies[m];
+    int friendCount = 0;
+    
+    for (int i = 0; i < m; i++) {
+        if (countDifferentBits(armies[i], fedorArmy) <= k) {
+            friendCount++;
+        }
+    }
+    
+    printf("%d\n", friendCount);
+    
+    return 0;
+}
 

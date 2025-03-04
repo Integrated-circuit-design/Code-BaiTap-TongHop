@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100005
+
+int a[MAX_N], distinct_suffix[MAX_N];
+
+typedef struct {
+    int key, value;
+} HashNode;
+
+HashNode hashTable[MAX_N]; 
+int hashSize = 0;
+
+int isSeen(int num) {
+    for (int i = 0; i < hashSize; i++) {
+        if (hashTable[i].key == num)
+            return 1;
+    }
+    return 0;
+}
+
+void addSeen(int num) {
+    hashTable[hashSize].key = num;
+    hashTable[hashSize].value = 1;
+    hashSize++;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int distinct_count = 0;
+
+    for (int i = n; i >= 1; i--) {
+        if (!isSeen(a[i])) {
+            addSeen(a[i]);
+            distinct_count++;
+        }
+        distinct_suffix[i] = distinct_count;
+    }
+
+    while (m--) {
+        int l;
+        scanf("%d", &l);
+        printf("%d\n", distinct_suffix[l]);
+    }
+
+    return 0;
+}
 

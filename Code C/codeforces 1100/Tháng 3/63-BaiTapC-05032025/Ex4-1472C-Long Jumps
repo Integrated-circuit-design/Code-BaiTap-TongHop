@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAX_N 200005
+
+long long score[MAX_N];
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n+1]; 
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+        score[i] = 0;
+    }
+
+    long long max_score = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (score[i] == 0) {
+            score[i] = a[i];
+        }
+
+        if (score[i] > max_score) {
+            max_score = score[i];
+        }
+
+        int next = i + a[i];
+        if (next <= n) {
+            if (score[next] < score[i] + a[next]) {
+                score[next] = score[i] + a[next];
+            }
+        }
+    }
+
+    printf("%lld\n", max_score);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

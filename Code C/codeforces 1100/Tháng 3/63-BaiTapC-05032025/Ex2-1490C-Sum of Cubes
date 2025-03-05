@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdint.h>
+
+int co_phai_tong_hai_lap_phuong(int64_t x) {
+    int64_t a = 1;
+    while (a * a * a < x) {
+        int64_t a3 = a * a * a;
+        int64_t b3 = x - a3;
+        int64_t b = round(cbrt(b3));
+        if (b > 0 && b * b * b == b3) {
+            return 1;
+        }
+        a++;
+    }
+    return 0;
+}
+
+int main() {
+    int so_bo_thu_nghiem;
+    scanf("%d", &so_bo_thu_nghiem);
+    while (so_bo_thu_nghiem--) {
+        int64_t gia_tri_x;
+        scanf("%lld", &gia_tri_x);
+        if (co_phai_tong_hai_lap_phuong(gia_tri_x)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    return 0;
+}
 

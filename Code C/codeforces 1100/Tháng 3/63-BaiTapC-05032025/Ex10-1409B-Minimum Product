@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+const char *danh_sach[] = {"Sheldon", "Leonard", "Penny", "Rajesh", "Howard"};
+
+int main() {
+    int n;
+    printf("Nhập số thứ tự của lon nước: ");
+    scanf("%d", &n);
+    
+    int tong_nguoi = 5;
+    int he_so = 1;
+    
+    while (n > tong_nguoi) {
+        n -= tong_nguoi;
+        he_so *= 2;
+        tong_nguoi = 5 * he_so;
+    }
+    
+    int nguoi_uong = (n - 1) / he_so;
+    printf("Lon nước thứ %d được uống bởi: %s\n", n, danh_sach[nguoi_uong]);
+    
+    return 0;
+}
 

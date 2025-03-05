@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+    ll sum = 0;
+    int negative_count = 0;
+    int min_value = 1000000000;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        sum += abs(a[i]);
+        if (a[i] < 0) {
+            negative_count++;
+        }
+        if (abs(a[i]) < min_value) {
+            min_value = abs(a[i]);
+        }
+    }
+
+    if (negative_count % 2 != 0) {
+        sum -= 2 * min_value;
+    }
+
+    printf("%lld\n", sum);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

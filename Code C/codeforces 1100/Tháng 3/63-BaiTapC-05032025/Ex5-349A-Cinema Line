@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int n, tien;
+    scanf("%d", &n);
+    
+    int count_25 = 0, count_50 = 0, count_100 = 0;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &tien);
+        
+        switch (tien) {
+            case 25:
+                count_25++;
+                break;
+            case 50:
+                if (count_25 > 0) {
+                    count_25--;
+                    count_50++;
+                } else {
+                    printf("NO\n");
+                    return 0;
+                }
+                break;
+            case 100:
+                if (count_50 > 0 && count_25 > 0) {
+                    count_50--;
+                    count_25--;
+                    count_100++;
+                } else if (count_25 >= 3) {
+                    count_25 -= 3;
+                    count_100++;
+                } else {
+                    printf("NO\n");
+                    return 0;
+                }
+                break;
+        }
+    }
+    
+    printf("YES\n");
+    return 0;
+}
 

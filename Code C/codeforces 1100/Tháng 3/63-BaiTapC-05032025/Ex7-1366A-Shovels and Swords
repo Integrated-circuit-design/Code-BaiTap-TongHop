@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+long long min3(long long x, long long y, long long z) {
+    return (x < y) ? ((x < z) ? x : z) : ((y < z) ? y : z);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+        long long max_emeralds = min3((a + b) / 3, a, b);
+        printf("%lld\n", max_emeralds);
+    }
+    
+    return 0;
+}
 

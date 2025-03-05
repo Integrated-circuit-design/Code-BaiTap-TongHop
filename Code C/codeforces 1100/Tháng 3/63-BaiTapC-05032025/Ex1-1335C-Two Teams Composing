@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAX_N 200000
+
+int freq[MAX_N + 1];
+
+void solve() {
+    int n, i, skill, distinct = 0, maxFreq = 0;
+    
+    scanf("%d", &n);
+
+    for (i = 1; i <= n; i++) {
+        freq[i] = 0;
+    }
+
+    for (i = 0; i < n; i++) {
+        scanf("%d", &skill);
+        if (freq[skill] == 0) {
+            distinct++;
+        }
+        freq[skill]++;
+        if (freq[skill] > maxFreq) {
+            maxFreq = freq[skill];
+        }
+    }
+
+    int result = (distinct == maxFreq) ? distinct - 1 : (distinct < maxFreq ? distinct : maxFreq);
+
+    printf("%d\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

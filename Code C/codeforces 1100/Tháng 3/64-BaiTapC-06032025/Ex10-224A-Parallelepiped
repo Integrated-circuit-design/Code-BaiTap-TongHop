@@ -1,1 +1,18 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int S1, S2, S3;
+    scanf("%d %d %d", &S1, &S2, &S3);
+    
+    int x = sqrt(S1 * S3 / S2);
+    int y = sqrt(S1 * S2 / S3);
+    int z = sqrt(S2 * S3 / S1);
+    
+    int chuVi = 4 * (x + y + z);
+    
+    printf("%d\n", chuVi);
+    
+    return 0;
+}
 

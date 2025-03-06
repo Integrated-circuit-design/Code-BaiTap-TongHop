@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+void solve() {
+    char s[MAXN], t[MAXN];
+    scanf("%s %s", s, t);
+
+    int len_s = strlen(s);
+    int len_t = strlen(t);
+    int pos_t = 0;
+
+    for (int i = 0; i < len_s && pos_t < len_t; i++) {
+        if (s[i] == t[pos_t]) {
+            pos_t++;
+        }
+    }
+
+    if (pos_t < len_t) {
+        printf("NO\n");
+        return;
+    }
+
+    pos_t = len_t - 1;
+    for (int i = len_s - 1; i >= 0; i--) {
+        if (pos_t >= 0 && s[i] == t[pos_t]) {
+            pos_t--;
+        } else if (s[i] == '?') {
+            s[i] = 'a';
+        }
+    }
+
+    printf("YES\n%s\n", s);
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    
+    while (T--) {
+        solve();
+    }
+    
+    return 0;
+}
 

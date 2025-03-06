@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAX_N 100000
+
+void readArrayPositions(int n, int indexOf[]) {
+    for (int i = 1; i <= n; i++) {
+        int value;
+        scanf("%d", &value);
+        indexOf[value] = i;
+    }
+}
+
+void processQueries(int m, int n, int indexOf[]) {
+    long long vasyaCount = 0, petyaCount = 0;
+
+    for (int i = 0; i < m; i++) {
+        int query;
+        scanf("%d", &query);
+
+        int pos = indexOf[query];
+        vasyaCount += pos;
+        petyaCount += (n - pos + 1);
+    }
+
+    printf("%lld %lld\n", vasyaCount, petyaCount);
+}
+
+int main() {
+    int n, m;
+    int indexOf[MAX_N + 1];
+
+    scanf("%d", &n);
+    readArrayPositions(n, indexOf);
+
+    scanf("%d", &m);
+    processQueries(m, n, indexOf);
+
+    return 0;
+}
 

@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+long long so_lan_nhay(long long x, long long y, long long k) {
+    long long lan_nhay_x = (x % k == 0) ? (x / k) : (x / k + 1);
+    long long lan_nhay_y = (y % k == 0) ? (y / k) : (y / k + 1);
+    return lan_nhay_x + lan_nhay_y;
+}
+
+int main() {
+    int so_test;
+    scanf("%d", &so_test);
+    
+    while (so_test--) {
+        long long toa_do_x, toa_do_y, buoc_nhay_toi_da;
+        scanf("%lld %lld %lld", &toa_do_x, &toa_do_y, &buoc_nhay_toi_da);
+        printf("%lld\n", so_lan_nhay(toa_do_x, toa_do_y, buoc_nhay_toi_da));
+    }
+    
+    return 0;
+}
 

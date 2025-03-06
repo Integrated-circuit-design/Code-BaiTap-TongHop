@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAX_N 5000
+
+int a[MAX_N];
+
+int check_palindrome_subsequence(int n) {
+    int first_position[MAX_N + 1] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        if (first_position[a[i]] && i - first_position[a[i]] >= 2) {
+            return 1;
+        }
+        if (!first_position[a[i]]) {
+            first_position[a[i]] = i + 1;
+        }
+    }
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        if (check_palindrome_subsequence(n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    
+    return 0;
+}
 

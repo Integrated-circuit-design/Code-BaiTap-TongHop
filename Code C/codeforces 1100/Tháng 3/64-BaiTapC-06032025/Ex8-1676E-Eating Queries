@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAX_N 150000
+
+int a[MAX_N];
+
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int maxIdx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] > arr[maxIdx]) {
+                maxIdx = j;
+            }
+        }
+        int temp = arr[i];
+        arr[i] = arr[maxIdx];
+        arr[maxIdx] = temp;
+    }
+}
+
+int findCandies(int n, long long x) {
+    long long sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+        if (sum >= x) {
+            return i + 1;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        selectionSort(a, n);
+
+        while (q--) {
+            long long x;
+            scanf("%lld", &x);
+            printf("%d\n", findCandies(n, x));
+        }
+    }
+
+    return 0;
+}
 

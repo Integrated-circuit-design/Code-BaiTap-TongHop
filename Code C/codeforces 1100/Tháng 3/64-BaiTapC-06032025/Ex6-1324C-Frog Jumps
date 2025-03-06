@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 200005
+
+void solve() {
+    char s[MAX_N];
+    int pos[MAX_N];
+    int count = 0;
+
+    scanf("%s", s);
+    int n = strlen(s);
+
+    pos[count++] = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'R') {
+            pos[count++] = i + 1;
+        }
+    }
+
+    pos[count++] = n + 1;
+
+    int maxD = 0;
+    for (int i = 1; i < count; i++) {
+        int distance = pos[i] - pos[i - 1];
+        if (distance > maxD) {
+            maxD = distance;
+        }
+    }
+
+    printf("%d\n", maxD);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

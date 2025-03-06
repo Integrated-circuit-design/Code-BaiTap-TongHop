@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int la_so_hoan_hao(int n) {
+    int tong = 0;
+    for (int temp = n; temp > 0; temp /= 10) {
+        tong += temp % 10;
+    }
+    return tong == 10;
+}
+
+int tim_so_hoan_hao_thu_k(int k) {
+    int dem = 0, so = 18;
+    while (dem < k) {
+        so++;
+        if (la_so_hoan_hao(so)) {
+            dem++;
+        }
+    }
+    return so;
+}
+
+int main() {
+    int k;
+    scanf("%d", &k);
+    printf("%d\n", tim_so_hoan_hao_thu_k(k));
+    return 0;
+}
 

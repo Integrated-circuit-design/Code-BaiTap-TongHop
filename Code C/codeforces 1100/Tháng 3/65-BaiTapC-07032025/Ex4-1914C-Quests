@@ -1,1 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200005
+
+typedef struct {
+    int first_xp;
+    int repeat_xp;
+} Quest;
+
+int compare(const void *a, const void *b) {
+    return ((Quest*)b)->first_xp - ((Quest*)a)->first_xp;
+}
+
+typedef struct {
+    int data[MAX_N];
+    int size;
+} MinHeap;
+
+void heap_init(MinHeap *heap) {
+    heap->size = 0;
+}
+
+void heap_push(MinHeap *heap, int value) {
+    int i = heap->size++;
+    while (i > 0) {
+        int parent = (i - 1) / 2;
+        if (heap->data[parent] <= value) break;
+        heap->data[i] = heap->data[parent];
+        i = parent;
+    }
+    heap->data[i] = value;
+}
+
+int heap_pop(MinHeap *heap) {
+    int min_value = heap->data[0];
+    int temp = heap->data[--heap->size];
+    int i = 0;
+    while (2 * i + 1 < heap->size) {
+        int child = 2 * i + 1;
+        if (child + 1 < heap->size && heap->data[child + 1] < heap->data[child]) {
+            child++;
+        }
+        if (heap->data[child] >= temp) break;
+        heap->data[i] = heap->data[child];
+        i = child;
+    }
+    heap->data[i] = temp;
+    return min_value;
+}
+
+long long getMaxExperience(int n, int k, int a[], int b[]) {
+    Quest quests[MAX_N];
+
+    for (int i = 0; i < n; i++) {
+        quests[i].first_xp = a[i];
+        quests[i].repeat_xp = b[i];
+    }
+
+    qsort(quests, n, sizeof(Quest), compare);
+
+    long long total_xp = 0;
+    int completed = 0;
+    MinHeap heap;
+    heap_init(&heap);
+
+    for (int i = 0; i < n && completed < k; i++) {
+        total_xp += quests[i].first_xp;
+        heap_push(&heap, quests[i].repeat_xp);
+        completed++;
+    }
+
+    for (int i = 0; i < k - completed; i++) {
+        if (heap.size > 0) {
+            total_xp += heap_pop(&heap);
+        }
+    }
+
+    return total_xp;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        int a[MAX_N], b[MAX_N];
+
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+        for (int i = 0; i < n; i++) scanf("%d", &b[i]);
+
+        printf("%lld\n", getMaxExperience(n, k, a, b));
+    }
+
+    return 0;
+}
 

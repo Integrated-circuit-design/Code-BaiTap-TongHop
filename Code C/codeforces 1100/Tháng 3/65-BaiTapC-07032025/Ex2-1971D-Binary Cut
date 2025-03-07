@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+
+int tinhSoLanCat(char *s) {
+    int doDai = strlen(s);
+    int soLanCat = 1;
+    
+    for (int i = 1; i < doDai; i++) {
+        if (s[i] < s[i - 1]) {
+            soLanCat++;
+        }
+    }
+    
+    return soLanCat;
+}
+
+int main() {
+    int soLuongTest;
+    scanf("%d", &soLuongTest);
+    
+    while (soLuongTest--) {
+        char chuoi[501];
+        scanf("%s", chuoi);
+        printf("%d\n", tinhSoLanCat(chuoi));
+    }
+    
+    return 0;
+}
 

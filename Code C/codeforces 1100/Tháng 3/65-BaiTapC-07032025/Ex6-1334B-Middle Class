@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void solve() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+    
+    int a[n];
+    long long total = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        total += a[i];
+    }
+
+    qsort(a, n, sizeof(int), cmp);
+
+    long long sum = total;
+    int count = n;
+
+    for (int i = 0; i < n; i++) {
+        if (sum >= (long long)(count) * x) {
+            break;
+        }
+        sum -= a[i];
+        count--;
+    }
+
+    printf("%d\n", count);
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    
+    while (T--) {
+        solve();
+    }
+    
+    return 0;
+}
 

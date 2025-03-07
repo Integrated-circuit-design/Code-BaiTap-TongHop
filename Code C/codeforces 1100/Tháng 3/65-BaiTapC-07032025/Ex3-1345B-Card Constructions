@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+long long so_the_can(int h) {
+    return (1LL * h * (3 * h + 1)) / 2;
+}
+
+int tim_so_kim_tu_thap(int n) {
+    int dem = 0;
+    while (n >= 2) {
+        int h = 1;
+        while (so_the_can(h + 1) <= n) {
+            h++;
+        }
+        n -= so_the_can(h);
+        dem++;
+    }
+    return dem;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        printf("%d\n", tim_so_kim_tu_thap(n));
+    }
+    return 0;
+}
 

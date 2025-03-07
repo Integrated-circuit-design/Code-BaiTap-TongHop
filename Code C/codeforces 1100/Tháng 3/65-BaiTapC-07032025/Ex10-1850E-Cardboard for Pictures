@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+long long calculate_area(long long *sizes, int count, long long w) {
+    long long total_area = 0;
+    for (int i = 0; i < count; i++) {
+        long long full_size = sizes[i] + 2 * w;
+        total_area += full_size * full_size - sizes[i] * sizes[i];
+    }
+    return total_area;
+}
+
+long long find_w(long long *sizes, int count, long long target_area) {
+    long long low = 1, high = 1000000000, mid, result = 1;
+    while (low <= high) {
+        mid = (low + high) / 2;
+        long long current_area = calculate_area(sizes, count, mid);
+        
+        if (current_area == target_area) {
+            return mid;
+        } else if (current_area < target_area) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return result;
+}
+
+void process_tests() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        int n;
+        long long c;
+        scanf("%d %lld", &n, &c);
+        
+        long long sizes[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &sizes[i]);
+        }
+        
+        printf("%lld\n", find_w(sizes, n, c));
+    }
+}
+
+int main() {
+    process_tests();
+    return 0;
+}
 

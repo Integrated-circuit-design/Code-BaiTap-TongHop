@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAX_A 1000
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    int pos[MAX_A + 1] = {0};
+    int values[MAX_A], count = 0;
+
+    for (int i = 1; i <= n; i++) {
+        int x;
+        scanf("%d", &x);
+        if (pos[x] == 0) {
+            values[count++] = x;
+        }
+        pos[x] = i;
+    }
+    
+    int maxSum = -1;
+
+    for (int i = 0; i < count; i++) {
+        for (int j = i; j < count; j++) {
+            int x = values[i], y = values[j];
+            if (gcd(x, y) == 1) {
+                int sumIndices = pos[x] + pos[y];
+                if (sumIndices > maxSum) {
+                    maxSum = sumIndices;
+                }
+            }
+        }
+    }
+
+    printf("%d\n", maxSum);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

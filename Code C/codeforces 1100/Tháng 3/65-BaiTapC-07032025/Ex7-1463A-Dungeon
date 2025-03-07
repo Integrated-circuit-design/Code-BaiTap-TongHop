@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int co_the_tieu_diet(int a, int b, int c) {
+    int tong = a + b + c;
+    int min_mau = tong / 9;
+    return (tong % 9 == 0 && a >= min_mau && b >= min_mau && c >= min_mau);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int a, b, c;
+        scanf("%d %d %d", &a, &b, &c);
+        
+        if (co_the_tieu_diet(a, b, c)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void demGiaXau() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n], minGiaTuPhai[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    minGiaTuPhai[n - 1] = a[n - 1];
+    for (int i = n - 2; i >= 0; i--) {
+        minGiaTuPhai[i] = (a[i] < minGiaTuPhai[i + 1]) ? a[i] : minGiaTuPhai[i + 1];
+    }
+
+    int soNgayGiaXau = 0;
+    for (int i = 0; i < n - 1; i++) {
+        if (a[i] > minGiaTuPhai[i + 1]) {
+            soNgayGiaXau++;
+        }
+    }
+
+    printf("%d\n", soNgayGiaXau);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        demGiaXau();
+    }
+
+    return 0;
+}
 

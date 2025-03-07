@@ -1,1 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_N 100000
+#define MAX_LEN 8
+
+typedef struct {
+    char word[MAX_LEN + 1];
+    bool exists;
+} HashTable;
+
+HashTable hashTable[MAX_N];
+
+unsigned int hashFunction(char *str) {
+    unsigned int hash = 0;
+    while (*str) {
+        hash = (hash * 31) + (*str - 'a' + 1);
+        str++;
+    }
+    return hash % MAX_N;
+}
+
+void insertToHashTable(char *str) {
+    unsigned int index = hashFunction(str);
+    while (hashTable[index].exists) {
+        index = (index + 1) % MAX_N;
+    }
+    strcpy(hashTable[index].word, str);
+    hashTable[index].exists = true;
+}
+
+bool searchInHashTable(char *str) {
+    unsigned int index = hashFunction(str);
+    while (hashTable[index].exists) {
+        if (strcmp(hashTable[index].word, str) == 0) {
+            return true;
+        }
+        index = (index + 1) % MAX_N;
+    }
+    return false;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    char words[MAX_N][MAX_LEN + 1];
+    memset(hashTable, 0, sizeof(hashTable));
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", words[i]);
+        insertToHashTable(words[i]);
+    }
+    
+    char result[MAX_N + 1];
+    result[n] = '\0';
+    
+    for (int i = 0; i < n; i++) {
+        int len = strlen(words[i]);
+        bool found = false;
+        
+        for (int j = 1; j < len; j++) {
+            char prefix[MAX_LEN + 1], suffix[MAX_LEN + 1];
+            strncpy(prefix, words[i], j);
+            prefix[j] = '\0';
+            strcpy(suffix, words[i] + j);
+            
+            if (searchInHashTable(prefix) && searchInHashTable(suffix)) {
+                found = true;
+                break;
+            }
+        }
+        
+        result[i] = found ? '1' : '0';
+    }
+    
+    printf("%s\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
 

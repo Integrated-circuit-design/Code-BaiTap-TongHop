@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_N 100000
+
+int binaryDecimals[1000], count = 0;
+bool dp[MAX_N + 1];
+
+bool isBinaryDecimal(int num) {
+    while (num > 0) {
+        int digit = num % 10;
+        if (digit != 0 && digit != 1) return false;
+        num /= 10;
+    }
+    return true;
+}
+
+void generateBinaryDecimals() {
+    for (int i = 1; i <= MAX_N; i++) {
+        if (isBinaryDecimal(i)) {
+            binaryDecimals[count++] = i;
+        }
+    }
+}
+
+void preprocessDP() {
+    dp[0] = true;
+    
+    for (int i = 0; i < count; i++) {
+        int num = binaryDecimals[i];
+        for (int j = MAX_N; j >= num; j--) {
+            if (dp[j / num]) {
+                dp[j] = true;
+            }
+        }
+    }
+}
+
+int main() {
+    generateBinaryDecimals();
+    preprocessDP();
+
+    int t, n;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+        if (dp[n]) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

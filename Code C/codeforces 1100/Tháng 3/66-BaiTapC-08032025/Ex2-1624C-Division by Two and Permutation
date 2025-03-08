@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 50
+
+int compare(const void *a, const void *b) {
+    return *(int*)b - *(int*)a;
+}
+
+int isValidPermutation(int n, int a[]) {
+    int freq[MAX_N + 1] = {0};
+
+    qsort(a, n, sizeof(int), compare);
+
+    for (int i = 0; i < n; i++) {
+        int x = a[i];
+
+        while (x > n || (x >= 1 && freq[x] > 0)) {
+            x /= 2;
+        }
+
+        if (x < 1) {
+            return 0;
+        }
+
+        freq[x] = 1;
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[MAX_N];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        if (isValidPermutation(n, a)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_C 51
+
+typedef struct Node {
+    int color;
+    int index;
+    struct Node* prev;
+    struct Node* next;
+} Node;
+
+Node* head = NULL;
+Node* position[MAX_C];
+
+Node* createNode(int color, int index) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->color = color;
+    newNode->index = index;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void moveToFront(Node* node) {
+    if (node == head) return;
+
+    if (node->prev) node->prev->next = node->next;
+    if (node->next) node->next->prev = node->prev;
+
+    Node* last = head;
+    int pos = 1;
+    while (last->next) {
+        last = last->next;
+        last->index = ++pos;
+    }
+
+    node->next = head;
+    if (head) head->prev = node;
+    node->prev = NULL;
+    node->index = 1;
+    head = node;
+
+    Node* temp = node->next;
+    int idx = 2;
+    while (temp) {
+        temp->index = idx++;
+        temp = temp->next;
+    }
+}
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    for (int i = 1; i <= n; i++) {
+        int color;
+        scanf("%d", &color);
+
+        Node* newNode = createNode(color, i);
+        if (head == NULL) {
+            head = newNode;
+        } else {
+            Node* temp = head;
+            while (temp->next) temp = temp->next;
+            temp->next = newNode;
+            newNode->prev = temp;
+        }
+
+        if (position[color] == NULL) {
+            position[color] = newNode;
+        }
+    }
+
+    while (q--) {
+        int t;
+        scanf("%d", &t);
+        Node* node = position[t];
+        printf("%d ", node->index);
+
+        moveToFront(node);
+    }
+
+    return 0;
+}
 

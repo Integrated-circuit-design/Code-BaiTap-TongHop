@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100000
+
+int timSoChuoiCon(char *s, int n) {
+    int dem = 0;
+    int lastIndex[26];
+    memset(lastIndex, -1, sizeof(lastIndex));
+    
+    for (int i = 0; i < n; i++) {
+        if (lastIndex[s[i] - 'a'] < i - 2) {
+            dem++;
+        }
+        lastIndex[s[i] - 'a'] = i;
+    }
+    
+    return dem;
+}
+
+int main() {
+    int soBoTest;
+    scanf("%d", &soBoTest);
+    
+    while (soBoTest--) {
+        int doDaiChuoi;
+        char chuoi[MAX_N + 1];
+        
+        scanf("%d", &doDaiChuoi);
+        scanf("%s", chuoi);
+        
+        printf("%d\n", timSoChuoiCon(chuoi, doDaiChuoi));
+    }
+    
+    return 0;
+}
 

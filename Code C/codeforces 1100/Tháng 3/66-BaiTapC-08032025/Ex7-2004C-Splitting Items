@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void solve() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    qsort(a, n, sizeof(int), cmp);
+    
+    for (int i = 0; i < n - 1 && k > 0; i++) {
+        int diff = a[i + 1] - a[i];
+        int cost = diff * (i + 1);
+        if (cost <= k) {
+            k -= cost;
+            a[i] = a[i + 1];
+        } else {
+            a[i] += k / (i + 1);
+            k = 0;
+        }
+    }
+    
+    int sum_Alice = 0, sum_Bob = 0;
+    for (int i = n - 1; i >= 0; i--) {
+        if ((n - 1 - i) % 2 == 0) {
+            sum_Alice += a[i];
+        } else {
+            sum_Bob += a[i];
+        }
+    }
+    
+    printf("%d\n", sum_Alice - sum_Bob);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

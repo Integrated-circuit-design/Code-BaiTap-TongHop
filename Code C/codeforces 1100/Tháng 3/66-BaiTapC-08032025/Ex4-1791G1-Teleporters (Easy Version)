@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+void solve() {
+    int n, c;
+    scanf("%d %d", &n, &c);
+    
+    int a[n], cost[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        cost[i] = a[i] + (i + 1);
+    }
+    
+    for (int i = 1; i < n; i++) {
+        int key = cost[i];
+        int j = i - 1;
+        while (j >= 0 && cost[j] > key) {
+            cost[j + 1] = cost[j];
+            j--;
+        }
+        cost[j + 1] = key;
+    }
+    
+    int count = 0, total_cost = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (total_cost + cost[i] > c) {
+            break;
+        }
+        total_cost += cost[i];
+        count++;
+    }
+    
+    printf("%d\n", count);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
 

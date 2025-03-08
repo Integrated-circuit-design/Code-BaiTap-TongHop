@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        int row[50], col[50];
+        memset(row, 0, sizeof(row));
+        memset(col, 0, sizeof(col));
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int val;
+                scanf("%d", &val);
+                if (val == 1) {
+                    row[i] = 1;
+                    col[j] = 1;
+                }
+            }
+        }
+        
+        int free_rows = 0, free_cols = 0;
+        for (int i = 0; i < n; i++) if (!row[i]) free_rows++;
+        for (int j = 0; j < m; j++) if (!col[j]) free_cols++;
+        
+        int moves = (free_rows < free_cols) ? free_rows : free_cols;
+        
+        printf("%s\n", (moves % 2 == 1) ? "Ashish" : "Vivek");
+    }
+    
+    return 0;
+}
 

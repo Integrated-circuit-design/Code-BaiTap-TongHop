@@ -1,1 +1,20 @@
+#include <stdio.h>
+#include <math.h>
+
+void timHaiSo(int a, int b, int c) {
+    int g = pow(10, c - 1);
+    int x = g + pow(10, a - c);
+    int y = g + pow(10, b - c) * 2;
+    printf("%d %d\n", x, y);
+}
+
+int main() {
+    int t, a, b, c;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d %d", &a, &b, &c);
+        timHaiSo(a, b, c);
+    }
+    return 0;
+}
 

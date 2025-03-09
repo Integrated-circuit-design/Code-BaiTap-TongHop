@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+long long power(int base, int exp) {
+    long long result = 1;
+    while (exp--) {
+        result *= base;
+    }
+    return result;
+}
+
+int count_factor(int l, int base) {
+    int count = 0;
+    while (l % base == 0) {
+        l /= base;
+        count++;
+    }
+    return count;
+}
+
+int count_distinct_k(int a, int b, int l) {
+    int max_x = count_factor(l, a);
+    int max_y = count_factor(l, b);
+    int count = 0;
+
+    for (int x = 0; x <= max_x; x++) {
+        for (int y = 0; y <= max_y; y++) {
+            long long divisor = power(a, x) * power(b, y);
+            if (l % divisor == 0) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, l;
+        scanf("%d %d %d", &a, &b, &l);
+        printf("%d\n", count_distinct_k(a, b, l));
+    }
+
+    return 0;
+}
 

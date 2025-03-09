@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200000
+
+typedef struct {
+    int *data;
+    int top;
+} Stack;
+
+void stackInit(Stack *stack, int capacity) {
+    stack->data = (int *)malloc(capacity * sizeof(int));
+    stack->top = -1;
+}
+
+void stackPush(Stack *stack, int value) {
+    stack->data[++stack->top] = value;
+}
+
+int stackPop(Stack *stack) {
+    return stack->data[stack->top--];
+}
+
+int stackEmpty(Stack *stack) {
+    return stack->top == -1;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    Stack stack;
+    stackInit(&stack, n);
+    
+    long long totalPower = 0;
+    for (int i = 0; i < n; i++) {
+        int s;
+        scanf("%d", &s);
+        if (s > 0) {
+            stackPush(&stack, s);
+        } else if (s == 0 && !stackEmpty(&stack)) {
+            totalPower += stackPop(&stack);
+        }
+    }
+    
+    printf("%lld\n", totalPower);
+    free(stack.data);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

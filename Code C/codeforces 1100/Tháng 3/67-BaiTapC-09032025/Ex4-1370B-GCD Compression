@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+#define MAX_N 1000
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int arr[2 * MAX_N];
+        int indices[2 * MAX_N];
+        int used[2 * MAX_N] = {0};
+        
+        for (int i = 0; i < 2 * n; i++) {
+            scanf("%d", &arr[i]);
+            indices[i] = i + 1;
+        }
+        
+        int pairs_needed = n - 1;
+        
+        for (int i = 0; i < 2 * n - 1 && pairs_needed > 0; i++) {
+            if (!used[i] && !used[i + 1]) {
+                printf("%d %d\n", indices[i], indices[i + 1]);
+                used[i] = used[i + 1] = 1;
+                pairs_needed--;
+            }
+        }
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+int find_max(int arr[], int n) {
+    int max_value = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max_value) {
+            max_value = arr[i];
+        }
+    }
+    return max_value;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n];
+    long long sum = 0;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        sum += a[i];
+    }
+    
+    if (n == 1) {
+        printf("-1\n");
+        return;
+    }
+    
+    int max_value = find_max(a, n);
+    long long avg = (2 * sum + n - 1) / n;
+    
+    int unhappy_count = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] < avg) unhappy_count++;
+    }
+    
+    if (unhappy_count > n / 2) {
+        printf("%lld\n", max_value - sum + avg);
+    } else {
+        printf("-1\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

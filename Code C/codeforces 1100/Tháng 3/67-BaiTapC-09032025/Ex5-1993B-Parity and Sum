@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+void xu_ly_test_case() {
+    int n, x;
+    scanf("%d", &n);
+    
+    int dem_le = 0, dem_chan = 0;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x);
+        if (x & 1) dem_le++;
+        else dem_chan++;
+    }
+    
+    printf("%d\n", dem_le < dem_chan ? dem_le : dem_chan);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        xu_ly_test_case();
+    }
+    
+    return 0;
+}
 

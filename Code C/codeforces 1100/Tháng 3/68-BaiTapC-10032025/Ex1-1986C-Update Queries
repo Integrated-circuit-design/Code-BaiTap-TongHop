@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s[MAXN];
+int count[MAXN];
+char char_updates[MAXN][30];
+
+void solve() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    scanf("%s", s);
+
+    memset(count, 0, sizeof(int) * (n + 1));
+
+    for (int i = 0; i < m; i++) {
+        int pos;
+        scanf("%d", &pos);
+        pos--;
+        count[pos]++;
+    }
+
+    for (int i = 0; i < m; i++) {
+        char c;
+        scanf(" %c", &c);
+        int pos = -1;
+
+        for (int j = 0; j < n; j++) {
+            if (count[j] > 0) {
+                pos = j;
+                count[j]--;
+                break;
+            }
+        }
+
+        if (pos != -1) {
+            int len = strlen(char_updates[pos]);
+            char_updates[pos][len] = c;
+            char_updates[pos][len + 1] = '\0';
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (strlen(char_updates[i]) > 0) {
+            int len = strlen(char_updates[i]);
+            qsort(char_updates[i], len, sizeof(char), (int (*)(const void *, const void *)) strcmp);
+            s[i] = char_updates[i][0];
+        }
+    }
+
+    printf("%s\n", s);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

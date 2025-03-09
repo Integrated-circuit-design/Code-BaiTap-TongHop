@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int a[MAXN], sorted[MAXN], pos[MAXN];
+
+int cmp(const void *x, const void *y) {
+    return (*(int *)x - *(int *)y);
+}
+
+void solve() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        sorted[i] = a[i];
+    }
+
+    qsort(sorted, n, sizeof(int), cmp);
+
+    for (int i = 0; i < n; i++) {
+        pos[sorted[i]] = i;
+    }
+
+    int segments = 1;
+    for (int i = 1; i < n; i++) {
+        if (pos[a[i]] != pos[a[i - 1]] + 1) {
+            segments++;
+        }
+    }
+
+    printf(segments <= k ? "YES\n" : "NO\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

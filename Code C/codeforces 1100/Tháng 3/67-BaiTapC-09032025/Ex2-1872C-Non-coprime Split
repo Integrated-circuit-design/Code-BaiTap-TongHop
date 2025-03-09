@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+void tim_cach_chia(int l, int r) {
+    for (int a = l; a <= r; a++) {
+        for (int b = a + 1; b <= r; b++) {
+            if (gcd(a, b) > 1) {
+                printf("%d %d\n", a, b);
+                return;
+            }
+        }
+    }
+    printf("-1\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        tim_cach_chia(l, r);
+    }
+    
+    return 0;
+}
 

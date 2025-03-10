@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+
+int powerOfTwo(int x) {
+    return 1 << x;
+}
+
+int main() {
+    char n[11];
+    scanf("%s", n);
+
+    int length = strlen(n);
+    int index = powerOfTwo(length) - 2;
+
+    int binaryValue = 0;
+    for (int i = 0; i < length; i++) {
+        binaryValue = binaryValue * 2 + (n[i] == '7');
+    }
+
+    int result = index + binaryValue + 1;
+    printf("%d\n", result);
+
+    return 0;
+}
 

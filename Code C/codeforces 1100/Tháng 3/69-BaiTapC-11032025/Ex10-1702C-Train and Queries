@@ -1,1 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int station;
+    int first;
+    int last;
+} StationInfo;
+
+#define MAX_N 200005
+
+StationInfo stations[MAX_N];
+int stationCount;
+
+int compare(const void *a, const void *b) {
+    return ((StationInfo*)a)->station - ((StationInfo*)b)->station;
+}
+
+int binarySearch(int key) {
+    int left = 0, right = stationCount - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (stations[mid].station == key) return mid;
+        if (stations[mid].station < key) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+
+void solve() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    stationCount = 0;
+    int stationIndex[1000001] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int station;
+        scanf("%d", &station);
+
+        if (stationIndex[station] == 0) {
+            stations[stationCount].station = station;
+            stations[stationCount].first = i;
+            stations[stationCount].last = i;
+            stationIndex[station] = ++stationCount;
+        } else {
+            int pos = stationIndex[station] - 1;
+            stations[pos].last = i;
+        }
+    }
+
+    qsort(stations, stationCount, sizeof(StationInfo), compare);
+
+    for (int i = 0; i < k; i++) {
+        int start, end;
+        scanf("%d %d", &start, &end);
+
+        int startIdx = binarySearch(start);
+        int endIdx = binarySearch(end);
+
+        if (startIdx != -1 && endIdx != -1 && stations[startIdx].first <= stations[endIdx].last)
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

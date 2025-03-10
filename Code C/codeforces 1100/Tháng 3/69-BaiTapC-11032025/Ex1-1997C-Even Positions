@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200000
+
+int tinh_gia_tri_nho_nhat(char *chuoi, int do_dai) {
+    int stack[MAXN], dinh_stack = -1;
+    int tong_chi_phi = 0;
+    
+    for (int i = 0; i < do_dai; i += 2) {
+        if (chuoi[i + 1] == '(') {
+            stack[++dinh_stack] = i + 1;
+        } else {
+            if (dinh_stack >= 0) {
+                tong_chi_phi += (i + 1) - stack[dinh_stack];
+                --dinh_stack;
+            }
+        }
+    }
+    return tong_chi_phi;
+}
+
+int main() {
+    int so_luong_bo_kiem_tra;
+    scanf("%d", &so_luong_bo_kiem_tra);
+    
+    while (so_luong_bo_kiem_tra--) {
+        int do_dai_chuoi;
+        scanf("%d", &do_dai_chuoi);
+        char chuoi[MAXN + 1];
+        scanf("%s", chuoi);
+        
+        printf("%d\n", tinh_gia_tri_nho_nhat(chuoi, do_dai_chuoi));
+    }
+    
+    return 0;
+}
 

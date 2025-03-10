@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+#define MAXN 105
+
+void solve() {
+    int k, n, m;
+    scanf("%d %d %d", &k, &n, &m);
+
+    int a[MAXN], b[MAXN];
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+    for (int i = 0; i < m; i++) scanf("%d", &b[i]);
+
+    int result[MAXN * 2], idx = 0;
+    int i = 0, j = 0, lines = k;
+
+    while (i < n || j < m) {
+        int inserted = 0;
+
+        while (i < n && a[i] == 0) {
+            result[idx++] = a[i++];
+            lines++;
+            inserted = 1;
+        }
+        while (j < m && b[j] == 0) {
+            result[idx++] = b[j++];
+            lines++;
+            inserted = 1;
+        }
+
+        if (i < n && a[i] > 0 && a[i] <= lines) {
+            result[idx++] = a[i++];
+            inserted = 1;
+        }
+        if (j < m && b[j] > 0 && b[j] <= lines) {
+            result[idx++] = b[j++];
+            inserted = 1;
+        }
+
+        if (!inserted) {
+            printf("-1\n");
+            return;
+        }
+    }
+
+    for (int x = 0; x < idx; x++) printf("%d ", result[x]);
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

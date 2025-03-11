@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+long long findMultiple(int i, long long l, long long r) {
+    long long k = (l + i - 1) / i;
+    long long value = k * i;
+
+    if (value > r) return -1;
+    return value;
+}
+
+void solve() {
+    int n;
+    long long l, r;
+    
+    scanf("%d %lld %lld", &n, &l, &r);
+
+    long long result[n];
+    int possible = 1;
+
+    for (int i = 1; i <= n; i++) {
+        long long num = findMultiple(i, l, r);
+        if (num == -1) {
+            possible = 0;
+            break;
+        }
+        result[i - 1] = num;
+    }
+
+    if (!possible) {
+        printf("NO\n");
+    } else {
+        printf("YES\n");
+        for (int i = 0; i < n; i++) {
+            printf("%lld ", result[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

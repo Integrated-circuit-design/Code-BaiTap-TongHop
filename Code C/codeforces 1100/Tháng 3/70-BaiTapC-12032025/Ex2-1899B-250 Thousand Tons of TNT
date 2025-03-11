@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long max(long long a, long long b) {
+    return (a > b) ? a : b;
+}
+
+void tinhToan() {
+    int n;
+    scanf("%d", &n);
+    
+    int *boxWeights = (int *)malloc(n * sizeof(int));
+    long long totalWeight = 0;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &boxWeights[i]);
+        totalWeight += boxWeights[i];
+    }
+    
+    long long minWeight = 1000000000, maxWeight = 0;
+    for (int i = 0; i < n; i++) {
+        if (boxWeights[i] < minWeight) minWeight = boxWeights[i];
+        if (boxWeights[i] > maxWeight) maxWeight = boxWeights[i];
+    }
+    
+    long long maxDiff = maxWeight - minWeight;
+    printf("%lld\n", maxDiff);
+    
+    free(boxWeights);
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+    while (testCases--) {
+        tinhToan();
+    }
+    return 0;
+}
 

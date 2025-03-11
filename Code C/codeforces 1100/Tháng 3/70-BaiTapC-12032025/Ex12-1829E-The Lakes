@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 1000
+#define MAX_M 1000
+
+int grid[MAX_N][MAX_M];
+int visited[MAX_N][MAX_M];
+int n, m;
+
+int dx[] = {-1, 1, 0, 0};
+int dy[] = {0, 0, -1, 1};
+
+int is_valid(int x, int y) {
+    return (x >= 0 && x < n && y >= 0 && y < m && grid[x][y] > 0 && !visited[x][y]);
+}
+
+int bfs(int x, int y) {
+    int queue[MAX_N * MAX_M][2];
+    int front = 0, rear = 0, volume = 0;
+    
+    queue[rear][0] = x;
+    queue[rear++][1] = y;
+    visited[x][y] = 1;
+    
+    while (front < rear) {
+        int cx = queue[front][0];
+        int cy = queue[front++][1];
+        volume += grid[cx][cy];
+        
+        for (int i = 0; i < 4; i++) {
+            int nx = cx + dx[i];
+            int ny = cy + dy[i];
+            
+            if (is_valid(nx, ny)) {
+                visited[nx][ny] = 1;
+                queue[rear][0] = nx;
+                queue[rear++][1] = ny;
+            }
+        }
+    }
+    return volume;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        scanf("%d %d", &n, &m);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                scanf("%d", &grid[i][j]);
+                visited[i][j] = 0;
+            }
+        }
+        
+        int max_volume = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] > 0 && !visited[i][j]) {
+                    int lake_volume = bfs(i, j);
+                    if (lake_volume > max_volume) {
+                        max_volume = lake_volume;
+                    }
+                }
+            }
+        }
+        
+        printf("%d\n", max_volume);
+    }
+    return 0;
+}
 

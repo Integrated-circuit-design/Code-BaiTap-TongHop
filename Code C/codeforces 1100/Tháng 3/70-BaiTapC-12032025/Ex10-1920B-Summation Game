@@ -1,1 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200000
+
+typedef struct {
+    int data[MAX_N];
+    int size;
+} MinHeap;
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void pushMinHeap(MinHeap *heap, int value) {
+    heap->data[heap->size] = value;
+    int i = heap->size++;
+    while (i > 0 && heap->data[i] < heap->data[(i - 1) / 2]) {
+        swap(&heap->data[i], &heap->data[(i - 1) / 2]);
+        i = (i - 1) / 2;
+    }
+}
+
+int popMinHeap(MinHeap *heap) {
+    if (heap->size == 0) return 0;
+    int minValue = heap->data[0];
+    heap->data[0] = heap->data[--heap->size];
+    
+    int i = 0;
+    while (2 * i + 1 < heap->size) {
+        int smallest = 2 * i + 1;
+        if (smallest + 1 < heap->size && heap->data[smallest + 1] < heap->data[smallest])
+            smallest++;
+        if (heap->data[i] < heap->data[smallest])
+            break;
+        swap(&heap->data[i], &heap->data[smallest]);
+        i = smallest;
+    }
+    return minValue;
+}
+
+void solve() {
+    int n, k, x;
+    scanf("%d %d %d", &n, &k, &x);
+
+    MinHeap heap;
+    heap.size = 0;
+    long long sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        int value;
+        scanf("%d", &value);
+        pushMinHeap(&heap, value);
+        sum += value;
+    }
+
+    for (int i = 0; i < k && heap.size > 0; i++) {
+        int minValue = popMinHeap(&heap);
+        sum -= minValue;
+    }
+
+    for (int i = 0; i < x && heap.size > 0; i++) {
+        int minValue = popMinHeap(&heap);
+        sum -= 2 * minValue;
+    }
+
+    printf("%lld\n", sum);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        int year = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int nextYear = ((year / a[i]) + 1) * a[i];
+            year = nextYear;
+        }
+        
+        printf("%d\n", year);
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 200000
+
+int dem_so_vung(int n, char hang1[], char hang2[]) {
+    int so_vung = 0;
+    int da_tham[2][MAX_N] = {0};
+    
+    for (int dong = 0; dong < 2; dong++) {
+        for (int cot = 0; cot < n; cot++) {
+            if (da_tham[dong][cot] || hang1[cot] == 'x' || hang2[cot] == 'x') continue;
+            
+            int hang_doi[2 * MAX_N][2], dau = 0, cuoi = 0;
+            hang_doi[cuoi][0] = dong; hang_doi[cuoi][1] = cot; cuoi++;
+            
+            while (dau < cuoi) {
+                int r = hang_doi[dau][0], c = hang_doi[dau][1]; dau++;
+                if (da_tham[r][c]) continue;
+                da_tham[r][c] = 1;
+                
+                if (c > 0 && !da_tham[r][c - 1] && hang1[c - 1] != 'x' && hang2[c - 1] != 'x') {
+                    hang_doi[cuoi][0] = r; hang_doi[cuoi][1] = c - 1; cuoi++;
+                }
+                if (c < n - 1 && !da_tham[r][c + 1] && hang1[c + 1] != 'x' && hang2[c + 1] != 'x') {
+                    hang_doi[cuoi][0] = r; hang_doi[cuoi][1] = c + 1; cuoi++;
+                }
+                if (!da_tham[1 - r][c] && hang1[c] != 'x' && hang2[c] != 'x') {
+                    hang_doi[cuoi][0] = 1 - r; hang_doi[cuoi][1] = c; cuoi++;
+                }
+            }
+            so_vung++;
+        }
+    }
+    return so_vung;
+}
+
+int dem_o_hop_le(int n, char hang1[], char hang2[]) {
+    int dem = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (hang1[i] == 'x' || hang2[i] == 'x') continue;
+        
+        hang1[i] = hang2[i] = 'x';
+        
+        if (dem_so_vung(n, hang1, hang2) == 3) dem++;
+        
+        hang1[i] = hang2[i] = '.';
+    }
+    return dem;
+}
+
+int main() {
+    int so_bo_thu_nghiem;
+    scanf("%d", &so_bo_thu_nghiem);
+    
+    while (so_bo_thu_nghiem--) {
+        int n;
+        scanf("%d", &n);
+        
+        char hang1[MAX_N + 1], hang2[MAX_N + 1];
+        scanf("%s %s", hang1, hang2);
+        
+        printf("%d\n", dem_o_hop_le(n, hang1, hang2));
+    }
+    
+    return 0;
+}
 

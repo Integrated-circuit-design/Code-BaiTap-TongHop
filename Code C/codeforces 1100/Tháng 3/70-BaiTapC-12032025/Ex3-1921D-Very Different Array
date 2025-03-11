@@ -1,1 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int timMax(int arr[], int size) {
+    int maxVal = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > maxVal) {
+            maxVal = arr[i];
+        }
+    }
+    return maxVal;
+}
+
+int timMin(int arr[], int size) {
+    int minVal = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] < minVal) {
+            minVal = arr[i];
+        }
+    }
+    return minVal;
+}
+
+void hoanDoi(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sapXepTang(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                hoanDoi(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+}
+
+void sapXepGiam(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] < arr[j + 1]) {
+                hoanDoi(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+}
+
+void giaiQuyet() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    int a[n], b[m];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &b[i]);
+    }
+
+    int minA = timMin(a, n);
+    int maxA = timMax(a, n);
+    int minB = timMin(b, m);
+    int maxB = timMax(b, m);
+
+    sapXepTang(a, n);
+    sapXepGiam(b, m);
+
+    long long tongDoChenhLech = 0;
+    for (int i = 0; i < n; i++) {
+        tongDoChenhLech += abs(a[i] - b[i]);
+    }
+
+    printf("%lld\n", tongDoChenhLech);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        giaiQuyet();
+    }
+    return 0;
+}
 

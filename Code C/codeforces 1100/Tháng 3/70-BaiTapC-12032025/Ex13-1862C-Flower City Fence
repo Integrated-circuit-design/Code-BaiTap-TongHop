@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    int reversed[n];
+    for (int i = 0; i < n; i++) {
+        reversed[i] = a[n - i - 1];
+    }
+    
+    int is_symmetric = 1;
+    for (int i = 0; i < n; i++) {
+        if (a[i] != reversed[i]) {
+            is_symmetric = 0;
+            break;
+        }
+    }
+    
+    printf(is_symmetric ? "YES\n" : "NO\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
 

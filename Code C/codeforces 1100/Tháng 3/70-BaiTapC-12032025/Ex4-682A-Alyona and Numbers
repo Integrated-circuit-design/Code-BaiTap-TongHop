@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+long long countRemainder(long long limit, int r) {
+    return limit / 5 + (r <= (limit % 5) ? 1 : 0);
+}
+
+int main() {
+    long long n, m;
+    scanf("%lld %lld", &n, &m);
+
+    long long countN0 = countRemainder(n, 0);
+    long long countN1 = countRemainder(n, 1);
+    long long countN2 = countRemainder(n, 2);
+    long long countN3 = countRemainder(n, 3);
+    long long countN4 = countRemainder(n, 4);
+
+    long long countM0 = countRemainder(m, 0);
+    long long countM1 = countRemainder(m, 1);
+    long long countM2 = countRemainder(m, 2);
+    long long countM3 = countRemainder(m, 3);
+    long long countM4 = countRemainder(m, 4);
+
+    long long result = countN0 * countM0 + countN1 * countM4 +
+                       countN2 * countM3 + countN3 * countM2 +
+                       countN4 * countM1;
+
+    printf("%lld\n", result);
+
+    return 0;
+}
 

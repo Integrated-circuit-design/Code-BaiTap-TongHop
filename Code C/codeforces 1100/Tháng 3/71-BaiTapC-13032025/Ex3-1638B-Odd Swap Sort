@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+void check_sortable() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    int is_sorted = 1;
+    for (int i = 1; i < n; i++) {
+        if (a[i] < a[i - 1]) {
+            is_sorted = 0;
+            break;
+        }
+    }
+    if (is_sorted) {
+        printf("YES\n");
+        return;
+    }
+    
+    int prev_odd = -1, prev_even = -1;
+    for (int i = 0; i < n; i++) {
+        if (a[i] % 2 == 0) {
+            if (prev_even > a[i]) {
+                printf("NO\n");
+                return;
+            }
+            prev_even = a[i];
+        } else {
+            if (prev_odd > a[i]) {
+                printf("NO\n");
+                return;
+            }
+            prev_odd = a[i];
+        }
+    }
+    
+    printf("YES\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        check_sortable();
+    }
+    return 0;
+}
 

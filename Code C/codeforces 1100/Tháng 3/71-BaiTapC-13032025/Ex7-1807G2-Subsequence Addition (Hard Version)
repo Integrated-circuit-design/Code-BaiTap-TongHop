@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void sapXep(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void kiemTraMang() {
+    int n;
+    scanf("%d", &n);
+    
+    int c[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &c[i]);
+    }
+    
+    sapXep(c, n);
+    
+    if (c[0] != 1) {
+        printf("NO\n");
+        return;
+    }
+    
+    long long tongHienTai = 1;
+    
+    for (int i = 1; i < n; i++) {
+        if (c[i] > tongHienTai) {
+            printf("NO\n");
+            return;
+        }
+        tongHienTai += c[i];
+    }
+    
+    printf("YES\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        kiemTraMang();
+    }
+    
+    return 0;
+}
 

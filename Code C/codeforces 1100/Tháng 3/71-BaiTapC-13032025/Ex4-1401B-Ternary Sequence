@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll calculate_max_sum(ll x1, ll y1, ll z1, ll x2, ll y2, ll z2) {
+    ll max_score = 0;
+    
+    ll use_2_1 = (z1 < y2) ? z1 : y2;
+    max_score += 2 * use_2_1;
+    z1 -= use_2_1;
+    y2 -= use_2_1;
+    
+    ll use_1_2 = (y1 < z2) ? y1 : z2;
+    max_score -= 2 * use_1_2;
+    
+    return max_score;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    while (test_cases--) {
+        ll x1, y1, z1, x2, y2, z2;
+        scanf("%lld %lld %lld", &x1, &y1, &z1);
+        scanf("%lld %lld %lld", &x2, &y2, &z2);
+        
+        printf("%lld\n", calculate_max_sum(x1, y1, z1, x2, y2, z2));
+    }
+    return 0;
+}
 

@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 200005
+
+void processString() {
+    char s[MAX_LEN];
+    scanf("%s", s);
+    
+    int len = strlen(s);
+    int new_len = 0;
+
+    for (int i = 0; i < len; i++) {
+        if (new_len > 0 && ((s[new_len - 1] == 'A' && s[i] == 'B') || (s[new_len - 1] == 'B' && s[i] == 'B'))) {
+            new_len--;
+        } else {
+            s[new_len++] = s[i];
+        }
+    }
+
+    printf("%d\n", new_len);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        processString();
+    }
+    
+    return 0;
+}
 

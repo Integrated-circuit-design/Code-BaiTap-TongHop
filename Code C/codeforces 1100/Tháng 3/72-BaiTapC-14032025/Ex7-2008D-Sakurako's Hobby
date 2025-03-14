@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int p[MAXN];
+char color[MAXN];
+int F[MAXN];
+int visited[MAXN];
+int component[MAXN];
+int black_count[MAXN];
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &p[i]);
+    }
+
+    scanf("%s", color + 1);
+
+    memset(visited, 0, (n + 1) * sizeof(int));
+    memset(component, 0, (n + 1) * sizeof(int));
+    memset(black_count, 0, (n + 1) * sizeof(int));
+
+    int cycle_id = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i]) {
+            int cycle_size = 0;
+            int black_cells = 0;
+            int start = i;
+            cycle_id++;
+
+            while (!visited[start]) {
+                visited[start] = 1;
+                component[start] = cycle_id;
+                cycle_size++;
+
+                if (color[start] == '0') {
+                    black_cells++;
+                }
+
+                start = p[start];
+            }
+
+            black_count[cycle_id] = black_cells;
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        F[i] = black_count[component[i]];
+        printf("%d ", F[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
 

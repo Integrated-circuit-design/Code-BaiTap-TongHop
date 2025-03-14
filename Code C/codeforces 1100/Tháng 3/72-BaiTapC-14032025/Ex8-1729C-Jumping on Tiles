@@ -1,1 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_N 200000
+
+int soSanhTangDan(const void *a, const void *b) {
+    return (*(char *)a) - (*(char *)b);
+}
+
+int soSanhGiamDan(const void *a, const void *b) {
+    return (*(char *)b) - (*(char *)a);
+}
+
+void xuLyChuoi(char *chuoi, int doDai) {
+    int chiPhi = 0;
+    int viTri[MAX_N];
+    int soBuoc = 0;
+
+    int start = chuoi[0];
+    int end = chuoi[doDai - 1];
+
+    char kiTuChon[MAX_N];
+    int viTriChon[MAX_N];
+    int dem = 0;
+
+    for (int i = 0; i < doDai; i++) {
+        if ((start <= end && chuoi[i] >= start && chuoi[i] <= end) ||
+            (start > end && chuoi[i] <= start && chuoi[i] >= end)) {
+            kiTuChon[dem] = chuoi[i];
+            viTriChon[dem] = i + 1;
+            dem++;
+        }
+    }
+
+    if (start <= end) {
+        qsort(kiTuChon, dem, sizeof(char), soSanhTangDan);
+    } else {
+        qsort(kiTuChon, dem, sizeof(char), soSanhGiamDan);
+    }
+
+    for (int i = 0; i < dem; i++) {
+        for (int j = 0; j < doDai; j++) {
+            if (chuoi[j] == kiTuChon[i] && viTriChon[j] != -1) {
+                viTri[soBuoc++] = viTriChon[j];
+                viTriChon[j] = -1;
+                break;
+            }
+        }
+    }
+
+    for (int i = 1; i < soBuoc; i++) {
+        chiPhi += abs((chuoi[viTri[i] - 1] - 'a') - (chuoi[viTri[i - 1] - 1] - 'a'));
+    }
+
+    printf("%d %d\n", chiPhi, soBuoc);
+    for (int i = 0; i < soBuoc; i++) {
+        printf("%d%c", viTri[i], i == soBuoc - 1 ? '\n' : ' ');
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        char chuoi[MAX_N + 1];
+        scanf("%s", chuoi);
+        int doDai = strlen(chuoi);
+        xuLyChuoi(chuoi, doDai);
+    }
+    return 0;
+}
 

@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int tim_ucln(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+void xu_ly_truong_hop() {
+    int n;
+    scanf("%d", &n);
+    int mang[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &mang[i]);
+    }
+    
+    int la_giong_nhau = 1;
+    for (int i = 1; i < n; i++) {
+        if (mang[i] != mang[0]) {
+            la_giong_nhau = 0;
+            break;
+        }
+    }
+    if (la_giong_nhau) {
+        printf("-1\n");
+        return;
+    }
+    
+    int gia_tri_dau = mang[0];
+    int ket_qua = 0;
+    for (int i = 0; i < n; i++) {
+        if (mang[i] != gia_tri_dau) {
+            ket_qua = tim_ucln(ket_qua, abs(mang[i] - gia_tri_dau));
+        }
+    }
+    printf("%d\n", ket_qua);
+}
+
+int main() {
+    int so_bo_test;
+    scanf("%d", &so_bo_test);
+    while (so_bo_test--) {
+        xu_ly_truong_hop();
+    }
+    return 0;
+}
 

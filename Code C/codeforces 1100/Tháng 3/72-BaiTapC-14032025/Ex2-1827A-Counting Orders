@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MOD 1000000007
+
+int compare_int(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n], b[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &b[i]);
+    }
+    
+    qsort(a, n, sizeof(int), compare_int);
+    qsort(b, n, sizeof(int), compare_int);
+    
+    long long result = 1;
+    int index = n - 1;
+    
+    for (int i = n - 1; i >= 0; i--) {
+        while (index >= 0 && a[index] > b[i]) {
+            index--;
+        }
+        int choices = (n - 1 - index) - (n - 1 - i);
+        
+        if (choices <= 0) {
+            result = 0;
+            break;
+        }
+        
+        result = (result * choices) % MOD;
+    }
+    
+    printf("%lld\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
 

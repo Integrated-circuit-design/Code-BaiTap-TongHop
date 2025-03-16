@@ -1,45 +1,47 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#define MAX_N 100005
+int so_sanh(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
 
-int a[MAX_N];
-
-void solve() {
+void kiem_tra() {
     int n;
     scanf("%d", &n);
-    
+
+    int c[n];
+
     for (int i = 0; i < n; i++) {
-        scanf("%d", &a[i]);
+        scanf("%d", &c[i]);
     }
-    
-    int operations = 0;
-    int last_unsorted = n - 1;
-    
-    while (last_unsorted > 0) {
-        if (a[last_unsorted] < a[last_unsorted - 1]) {
-            int target = a[last_unsorted - 1];
-            
-            for (int i = 0; i <= last_unsorted; i++) {
-                if (a[i] == target) {
-                    a[i] = 0;
-                }
-            }
-            operations++;
-            last_unsorted = n - 1;
-        } else {
-            last_unsorted--;
+
+    qsort(c, n, sizeof(int), so_sanh);
+
+    if (c[0] != 1) {
+        printf("NO\n");
+        return;
+    }
+
+    long long tong = 1;
+
+    for (int i = 1; i < n; i++) {
+        if (c[i] > tong) {
+            printf("NO\n");
+            return;
         }
+        tong += c[i];
     }
-    
-    printf("%d\n", operations);
+
+    printf("YES\n");
 }
 
 int main() {
     int t;
     scanf("%d", &t);
+
     while (t--) {
-        solve();
+        kiem_tra();
     }
+
     return 0;
 }
-

@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAX_N 200000
+
+void giaiBaiToan() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[MAX_N];
+    int i, timThay = 0;
+
+    for (i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    for (i = 0; i < n; i++) {
+        if (a[i] == k) {
+            timThay = 1;
+            break;
+        }
+    }
+
+    if (timThay) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) { 
+        giaiBaiToan();
+    }
+
+    return 0;
+}
 

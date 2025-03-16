@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+long long tinhLuyThua(int coSo, int mu) {
+    long long ketQua = 1;
+    for (int i = 0; i < mu; i++) {
+        ketQua = (ketQua * coSo) % MOD;
+    }
+    return ketQua;
+}
+
+long long timSoDacBiet(int n, int k) {
+    long long ketQua = 0;
+    int mu = 0;
+    
+    for (; k > 0; k >>= 1) {
+        if (k & 1) {
+            ketQua = (ketQua + tinhLuyThua(n, mu)) % MOD;
+        }
+        mu++;
+    }
+
+    return ketQua;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        printf("%lld\n", timSoDacBiet(n, k));
+    }
+
+    return 0;
+}
 

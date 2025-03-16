@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+long long tinh_so_luot_danh(long long mau, long long sat_thuong) {
+    return (mau + sat_thuong - 1) / sat_thuong;
+}
+
+void giai_bai_toan() {
+    long long mau_nguoi, sat_thuong_nguoi, mau_quai, sat_thuong_quai, so_xu, tang_satk, tang_mau;
+    
+    scanf("%lld %lld", &mau_nguoi, &sat_thuong_nguoi);
+    scanf("%lld %lld", &mau_quai, &sat_thuong_quai);
+    scanf("%lld %lld %lld", &so_xu, &tang_satk, &tang_mau);
+    
+    for (long long i = 0; i <= so_xu; i++) {
+        long long sat_thuong_moi = sat_thuong_nguoi + i * tang_satk;
+        long long mau_moi = mau_nguoi + (so_xu - i) * tang_mau;
+        
+        long long luot_nguoi_danh = tinh_so_luot_danh(mau_quai, sat_thuong_moi);
+        long long luot_quai_danh = tinh_so_luot_danh(mau_moi, sat_thuong_quai);
+        
+        if (luot_nguoi_danh <= luot_quai_danh) {
+            printf("YES\n");
+            return;
+        }
+    }
+    printf("NO\n");
+}
+
+int main() {
+    int so_test;
+    scanf("%d", &so_test);
+    while (so_test--) {
+        giai_bai_toan();
+    }
+    return 0;
+}
 

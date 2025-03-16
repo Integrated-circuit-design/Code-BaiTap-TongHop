@@ -3,50 +3,42 @@
 
 #define MAX_N 100005
 
-// Hàm xử lý từng test case
 void xu_ly_test_case() {
     int n;
     char s[MAX_N];
     
-    // Nhập độ dài chuỗi và chuỗi ký tự
     scanf("%d", &n);
     scanf("%s", s);
     
-    int k = 0; // Vị trí đặt gương tốt nhất
+    int k = 0;
     
-    // Duyệt qua chuỗi để tìm vị trí tối ưu
     for (int i = 1; i < n; i++) {
         if (s[i] > s[i - 1]) {
-            break; // Dừng lại khi chuỗi bắt đầu tăng
+            break;
         }
         if (s[i] == s[i - 1] && i > 1) {
-            break; // Dừng lại khi gặp ký tự lặp lại sau vị trí đầu tiên
+            break;
         }
-        k = i; // Cập nhật vị trí k
+        k = i;
     }
     
-    // In ra phần gốc của chuỗi trước gương
     for (int i = 0; i <= k; i++) {
         putchar(s[i]);
     }
-    // In ra phần phản chiếu sau gương
     for (int i = k; i >= 0; i--) {
         putchar(s[i]);
     }
-    putchar('\n'); // Xuống dòng sau mỗi test case
+    putchar('\n');
 }
 
 int main() {
     int t;
     
-    // Nhập số lượng test case
     scanf("%d", &t);
     
-    // Xử lý từng test case
     while (t--) {
         xu_ly_test_case();
     }
     
     return 0;
 }
-

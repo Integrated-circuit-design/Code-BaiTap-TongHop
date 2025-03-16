@@ -1,37 +1,39 @@
 #include <stdio.h>
 
-#define MAX_N 100005
-
-int a[MAX_N];
+#define MAX_N 200000
 
 void solve() {
-    int n;
-    scanf("%d", &n);
+    int n, q;
+    scanf("%d %d", &n, &q);
     
+    int a[n];
     for (int i = 0; i < n; i++) {
         scanf("%d", &a[i]);
     }
     
-    int operations = 0;
-    int last_unsorted = n - 1;
+    int applied[31] = {0};
     
-    while (last_unsorted > 0) {
-        if (a[last_unsorted] < a[last_unsorted - 1]) {
-            int target = a[last_unsorted - 1];
-            
-            for (int i = 0; i <= last_unsorted; i++) {
-                if (a[i] == target) {
-                    a[i] = 0;
-                }
+    for (int i = 0; i < q; i++) {
+        int x;
+        scanf("%d", &x);
+        
+        if (applied[x]) continue;
+        applied[x] = 1;
+        
+        int add_val = (1 << (x - 1));
+        int div_val = (1 << x);
+        
+        for (int j = 0; j < n; j++) {
+            if (a[j] % div_val == 0) {
+                a[j] += add_val;
             }
-            operations++;
-            last_unsorted = n - 1;
-        } else {
-            last_unsorted--;
         }
     }
     
-    printf("%d\n", operations);
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
 }
 
 int main() {
@@ -42,4 +44,3 @@ int main() {
     }
     return 0;
 }
-

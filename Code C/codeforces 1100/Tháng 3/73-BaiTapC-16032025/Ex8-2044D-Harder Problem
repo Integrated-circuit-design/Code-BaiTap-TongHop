@@ -1,45 +1,44 @@
 #include <stdio.h>
+#include <string.h>
 
-#define MAX_N 100005
+#define MAX_N 200005
 
-int a[MAX_N];
+int freq[MAX_N];
 
 void solve() {
     int n;
     scanf("%d", &n);
     
+    int a[n], b[n];
+    
+    memset(freq, 0, sizeof(int) * (n + 1));
+
+    int max_freq = 0;
+    int mode = -1;
+
     for (int i = 0; i < n; i++) {
         scanf("%d", &a[i]);
-    }
-    
-    int operations = 0;
-    int last_unsorted = n - 1;
-    
-    while (last_unsorted > 0) {
-        if (a[last_unsorted] < a[last_unsorted - 1]) {
-            int target = a[last_unsorted - 1];
-            
-            for (int i = 0; i <= last_unsorted; i++) {
-                if (a[i] == target) {
-                    a[i] = 0;
-                }
-            }
-            operations++;
-            last_unsorted = n - 1;
-        } else {
-            last_unsorted--;
+        
+        b[i] = a[i];
+        freq[a[i]]++;
+
+        if (freq[a[i]] > max_freq) {
+            max_freq = freq[a[i]];
+            mode = a[i];
         }
+
+        printf("%d ", b[i]);
     }
-    
-    printf("%d\n", operations);
+    printf("\n");
 }
 
 int main() {
     int t;
     scanf("%d", &t);
+
     while (t--) {
         solve();
     }
+    
     return 0;
 }
-

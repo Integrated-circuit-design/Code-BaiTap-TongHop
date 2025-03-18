@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+void solve() {
+    long long a, b, c, d;
+    long long x, y, x1, y1, x2, y2;
+    
+    scanf("%lld %lld %lld %lld", &a, &b, &c, &d);
+    scanf("%lld %lld %lld %lld %lld %lld", &x, &y, &x1, &y1, &x2, &y2);
+    
+    long long left_moves = x - a;
+    long long right_moves = x + b;
+    long long down_moves = y - c;
+    long long up_moves = y + d;
+    
+    if (left_moves < x1 || right_moves > x2 || down_moves < y1 || up_moves > y2) {
+        printf("NO\n");
+        return;
+    }
+    
+    if ((x1 == x2 && a + b > 0) || (y1 == y2 && c + d > 0)) {
+        printf("NO\n");
+        return;
+    }
+    
+    printf("YES\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

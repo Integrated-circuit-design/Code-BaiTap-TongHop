@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int min_moves(int n) {
+    int sum = 1, moves = 0, current = 1;
+    
+    while (sum < n) {
+        if (sum + current <= n) {
+            sum += current;
+        } else {
+            current++;
+            sum += current;
+        }
+        moves++;
+    }
+    
+    return moves;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        printf("%d\n", min_moves(n));
+    }
+    
+    return 0;
+}
 

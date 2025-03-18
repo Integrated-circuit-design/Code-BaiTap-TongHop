@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100005  
+
+int a[MAX_N];  
+
+void swap(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+int partition(int arr[], int left, int right) {
+    int pivot = arr[right]; 
+    int i = left; 
+
+    for (int j = left; j < right; j++) {
+        if (arr[j] < pivot) { 
+            swap(&arr[i], &arr[j]);
+            i++;
+        }
+    }
+    swap(&arr[i], &arr[right]);
+    return i;
+}
+
+void quickSelect(int arr[], int left, int right, int k) {
+    if (left < right) {
+        int pivotIndex = partition(arr, left, right);
+        if (pivotIndex == k) return;
+        else if (pivotIndex > k) quickSelect(arr, left, pivotIndex - 1, k);
+        else quickSelect(arr, pivotIndex + 1, right, k);
+    }
+}
+
+void solve() {
+    int n, l, r;
+    
+    scanf("%d %d %d", &n, &l, &r);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int count = r - l + 1; 
+
+    quickSelect(a, 0, n - 1, count - 1);
+
+    long long sum = 0;
+    for (int i = 0; i < count; i++) {
+        sum += a[i];
+    }
+
+    printf("%lld\n", sum);
+}
+
+int main() {
+    int t;
+    
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

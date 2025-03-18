@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <limits.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    int p[n];
+    int misplaced_and = -1;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &p[i]);
+        if (p[i] != i) {
+            if (misplaced_and == -1) {
+                misplaced_and = p[i];
+            } else {
+                misplaced_and &= p[i];
+            }
+        }
+    }
+    
+    if (misplaced_and == -1) misplaced_and = 0;
+    
+    printf("%d\n", misplaced_and);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int is_k_good(int num, int k) {
+    int digits[10] = {0};
+    
+    while (num > 0) {
+        digits[num % 10] = 1;
+        num /= 10;
+    }
+    
+    for (int i = 0; i <= k; i++) {
+        if (!digits[i]) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int n, k, count = 0;
+    scanf("%d %d", &n, &k);
+    
+    int num;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &num);
+        if (is_k_good(num, k)) count++;
+    }
+    
+    printf("%d\n", count);
+    return 0;
+}
 

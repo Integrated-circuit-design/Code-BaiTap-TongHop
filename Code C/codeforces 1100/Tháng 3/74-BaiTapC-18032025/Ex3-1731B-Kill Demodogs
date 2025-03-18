@@ -1,1 +1,22 @@
+#include <stdio.h>
+#define MODULO 1000000007  
+#define FACTOR 2022 
+
+long long tinhDemodogs(long long n) {
+    long long ketQua = ((n % MODULO) * ((n + 1) % MODULO) % MODULO * ((2 * n + 1) % MODULO) % MODULO * 166666668) % MODULO;
+    return (ketQua * FACTOR) % MODULO;
+}
+
+int main() {
+    int soTest;
+    scanf("%d", &soTest);
+    
+    while (soTest--) {
+        long long n;
+        scanf("%lld", &n);
+        printf("%lld\n", tinhDemodogs(n));
+    }
+    
+    return 0;
+}
 

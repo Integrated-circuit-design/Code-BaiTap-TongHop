@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+long long tim_UCLN(long long a, long long b) {
+    while (b != 0) {
+        long long tam = b;
+        b = a % b;
+        a = tam;
+    }
+    return a;
+}
+
+void xu_ly_bai_toan() {
+    int kich_thuoc;
+    scanf("%d", &kich_thuoc);
+    
+    int mang[kich_thuoc];
+    for (int i = 0; i < kich_thuoc; i++) {
+        scanf("%d", &mang[i]);
+    }
+    
+    if (kich_thuoc == 1) {
+        printf("0\n");
+        return;
+    }
+    
+    long long ucln_chung = 0;
+    for (int i = 0; i < kich_thuoc / 2; i++) {
+        ucln_chung = tim_UCLN(ucln_chung, abs(mang[i] - mang[kich_thuoc - 1 - i]));
+    }
+    
+    printf("%lld\n", ucln_chung);
+}
+
+int main() {
+    int so_luong_bo_test;
+    scanf("%d", &so_luong_bo_test);
+    while (so_luong_bo_test--) {
+        xu_ly_bai_toan();
+    }
+    return 0;
+}
 

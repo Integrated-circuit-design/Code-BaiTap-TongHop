@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200005
+
+int a[MAX_N];
+char lid[MAX_N];
+
+typedef struct {
+    int value;
+    int index;
+} HeapNode;
+
+HeapNode heap[MAX_N];
+int heap_size = 0;
+
+int cmp(const void *a, const void *b) {
+    return ((HeapNode *)b)->value - ((HeapNode *)a)->value;
+}
+
+void push(int value, int index) {
+    heap[heap_size].value = value;
+    heap[heap_size].index = index;
+    heap_size++;
+}
+
+HeapNode pop() {
+    qsort(heap, heap_size, sizeof(HeapNode), cmp);
+    return heap[--heap_size];
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    scanf("%s", lid);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    heap_size = 0;
+    long long saved = 0;
+    int last_covered = -1;
+
+    for (int i = 0; i < n; i++) {
+        if (lid[i] == '1') {
+            push(a[i], i);
+        }
+
+        if (last_covered < i) {
+            if (heap_size > 0) {
+                HeapNode best = pop();
+                saved += best.value;
+                last_covered = best.index;
+            }
+        }
+    }
+
+    printf("%lld\n", saved);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

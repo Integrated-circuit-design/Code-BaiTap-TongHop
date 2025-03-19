@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_PETALS 1000000000
+#define MAX_N 200000
+
+typedef long long ll;
+
+void solve() {
+    int n;
+    ll m;
+    scanf("%d %lld", &n, &m);
+
+    int *freq = (int*)calloc(MAX_N + 1, sizeof(int));
+    int max_value = 0;
+
+    for (int i = 0; i < n; i++) {
+        int petals;
+        scanf("%d", &petals);
+        if (petals <= MAX_N) {
+            freq[petals]++;
+            if (petals > max_value) max_value = petals;
+        }
+    }
+
+    ll max_petals = 0;
+    ll current_petals = 0, current_cost = 0;
+    
+    for (int petals = 1; petals <= max_value; petals++) {
+        if (freq[petals] == 0) continue;
+
+        current_cost += (ll)freq[petals] * petals;
+        current_petals += (ll)freq[petals] * petals;
+
+        while (current_cost > m) {
+            current_cost -= freq[petals] * petals;
+            current_petals -= freq[petals] * petals;
+            freq[petals]--;
+        }
+
+        if (current_petals > max_petals) {
+            max_petals = current_petals;
+        }
+    }
+
+    printf("%lld\n", max_petals);
+    free(freq);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

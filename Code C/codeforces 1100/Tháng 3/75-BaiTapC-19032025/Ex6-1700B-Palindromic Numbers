@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int laSoPalindrome(long long so) {
+    char chuoi[20];
+    sprintf(chuoi, "%lld", so);
+    int doDai = strlen(chuoi);
+    for (int i = 0; i < doDai / 2; i++) {
+        if (chuoi[i] != chuoi[doDai - 1 - i]) return 0;
+    }
+    return 1;
+}
+
+void xuLy() {
+    int doDai;
+    scanf("%d", &doDai);
+    
+    char soGoc[doDai + 1];
+    scanf("%s", soGoc);
+    
+    char soDoiUng[doDai + 1];
+    for (int i = 0; i < doDai; i++) {
+        soDoiUng[i] = '1' + ('9' - soGoc[i]);
+    }
+    soDoiUng[doDai] = '\0';
+    
+    printf("%s\n", soDoiUng);
+}
+
+int main() {
+    int soBoTest;
+    scanf("%d", &soBoTest);
+    while (soBoTest--) {
+        xuLy();
+    }
+    return 0;
+}
 

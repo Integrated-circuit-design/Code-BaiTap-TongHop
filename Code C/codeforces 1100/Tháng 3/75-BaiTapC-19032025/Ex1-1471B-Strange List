@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+#define MAX_N 100000
+
+void solve() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+    
+    long long a[MAX_N];
+    long long sum = 0;
+    long long factor[MAX_N];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+        sum += a[i];
+        factor[i] = 1;
+    }
+    
+    int idx = 0;
+    while (idx < n) {
+        if (a[idx] % x == 0) {
+            a[n] = a[idx] / x;
+            factor[n] = factor[idx] * x;
+            sum += a[n] * factor[n];
+            n++;
+        } else {
+            break;
+        }
+        idx++;
+    }
+    
+    printf("%lld\n", sum);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

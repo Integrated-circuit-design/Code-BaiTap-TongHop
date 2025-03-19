@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+long long tinhThoiGianCapNhat(long long n, long long k) {
+    long long soGio = 0;
+    long long soMayHienCo = 1;
+
+    while (soMayHienCo < n) {
+        if (soMayHienCo < k) {
+            soMayHienCo *= 2;
+        } else {
+            soMayHienCo += k;
+        }
+        soGio++;
+    }
+
+    return soGio;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+        printf("%lld\n", tinhThoiGianCapNhat(n, k));
+    }
+
+    return 0;
+}
 

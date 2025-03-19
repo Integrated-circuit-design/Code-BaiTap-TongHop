@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n, t, k, d;
+    
+    scanf("%d %d %d %d", &n, &t, &k, &d);
+    
+    int time_one_oven = ((n + k - 1) / k) * t;
+    
+    int time_two_oven = d; 
+    int cakes_baked = 0;
+    
+    for (int time = 0; cakes_baked < n; time += t) {
+        cakes_baked += k;
+        if (time >= d) {
+            cakes_baked += k;
+        }
+        time_two_oven = time;
+    }
+    
+    if (time_two_oven < time_one_oven) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

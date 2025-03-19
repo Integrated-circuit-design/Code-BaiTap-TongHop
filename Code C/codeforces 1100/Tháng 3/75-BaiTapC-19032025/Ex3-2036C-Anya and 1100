@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s[MAXN];
+int dem_1100;
+
+int chua_1100(int n) {
+    return dem_1100 > 0;
+}
+
+void cap_nhat(int i, int n) {
+    for (int j = i - 3; j <= i; j++) {
+        if (j >= 0 && j <= n - 4) {
+            int truoc = (s[j] == '1' && s[j + 1] == '1' && s[j + 2] == '0' && s[j + 3] == '0');
+            int sau = (s[j] == '1' && s[j + 1] == '1' && s[j + 2] == '0' && s[j + 3] == '0');
+            if (truoc != sau) {
+                dem_1100 += sau - truoc;
+            }
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%s", s);
+        int n = strlen(s);
+        int q;
+        scanf("%d", &q);
+        
+        dem_1100 = 0;
+        for (int i = 0; i <= n - 4; i++) {
+            if (s[i] == '1' && s[i + 1] == '1' && s[i + 2] == '0' && s[i + 3] == '0') {
+                dem_1100++;
+            }
+        }
+        
+        while (q--) {
+            int i, v;
+            scanf("%d %d", &i, &v);
+            i--;
+            
+            if (s[i] - '0' != v) {
+                s[i] = v + '0';
+                cap_nhat(i, n);
+            }
+            
+            printf(chua_1100(n) ? "YES\n" : "NO\n");
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+bool is_large_number(long long num) {
+    while (num > 0) {
+        int digit = num % 10;
+        if (digit < 5 || digit > 9) return false;
+        num /= 10;
+    }
+    return true;
+}
+
+bool can_be_sum_of_large_numbers(long long x) {
+    char str[20];
+    sprintf(str, "%lld", x);
+    int len = strlen(str);
+
+    long long lower_bound = 1;
+    for (int i = 1; i < len; i++) {
+        lower_bound *= 10;
+    }
+
+    for (long long a = lower_bound; a * 2 <= x; a++) {
+        long long b = x - a;
+        if (is_large_number(a) && is_large_number(b)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long x;
+        scanf("%lld", &x);
+
+        if (can_be_sum_of_large_numbers(x)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

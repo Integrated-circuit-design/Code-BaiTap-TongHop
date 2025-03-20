@@ -1,1 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100000
+
+typedef struct {
+    int saved_size;
+} Heap;
+
+Heap heap[MAX_N];
+int heap_size = 0;
+
+void swap(Heap *x, Heap *y) {
+    Heap temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+void push(int value) {
+    heap[heap_size].saved_size = value;
+    int current = heap_size++;
+
+    while (current > 0) {
+        int parent = (current - 1) / 2;
+        if (heap[parent].saved_size >= heap[current].saved_size) break;
+        swap(&heap[parent], &heap[current]);
+        current = parent;
+    }
+}
+
+int pop() {
+    if (heap_size == 0) return 0;
+
+    int max_value = heap[0].saved_size;
+    heap[0] = heap[--heap_size];
+
+    int current = 0;
+    while (1) {
+        int left = current * 2 + 1, right = current * 2 + 2, largest = current;
+
+        if (left < heap_size && heap[left].saved_size > heap[largest].saved_size)
+            largest = left;
+        if (right < heap_size && heap[right].saved_size > heap[largest].saved_size)
+            largest = right;
+        if (largest == current) break;
+
+        swap(&heap[current], &heap[largest]);
+        current = largest;
+    }
+
+    return max_value;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    long long total_original_size = 0, total_compressed_size = 0;
+
+    for (int i = 0; i < n; i++) {
+        int ai, bi;
+        scanf("%d %d", &ai, &bi);
+        total_original_size += ai;
+        total_compressed_size += bi;
+        push(ai - bi);
+    }
+
+    if (total_compressed_size > m) {
+        printf("-1\n");
+        return 0;
+    }
+
+    if (total_original_size <= m) {
+        printf("0\n");
+        return 0;
+    }
+
+    int compressions = 0;
+    while (total_original_size > m) {
+        total_original_size -= pop();
+        compressions++;
+    }
+
+    printf("%d\n", compressions);
+    return 0;
+}
 

@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+void tim_nghi_pham() {
+    char s[200005];
+    scanf("%s", s);
+    
+    int n = strlen(s);
+    int vi_tri_0 = -1, vi_tri_1 = -1;
+    
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '0' && vi_tri_0 == -1) {
+            vi_tri_0 = i;
+        }
+        if (s[i] == '1') {
+            vi_tri_1 = i;
+        }
+    }
+    
+    if (vi_tri_1 == -1) {
+        printf("%d\n", n);
+        return;
+    }
+    
+    if (vi_tri_0 == -1) {
+        printf("%d\n", n - vi_tri_1);
+        return;
+    }
+    
+    printf("%d\n", vi_tri_0 - vi_tri_1 + 1);
+}
+
+int main() {
+    int so_bo_test;
+    scanf("%d", &so_bo_test);
+    while (so_bo_test--) {
+        tim_nghi_pham();
+    }
+    return 0;
+}
 

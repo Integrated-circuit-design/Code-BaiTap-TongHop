@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int tinhGiaiThuaMod9(int n) {
+    int ketQua = 1;
+    for (int i = 2; i <= n; i++) {
+        ketQua = (ketQua * i) % 9;
+    }
+    return ketQua;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, d;
+        scanf("%d %d", &n, &d);
+        
+        int duGiaiThua = tinhGiaiThuaMod9(n);
+        int soLapLaiMod9 = (duGiaiThua * d) % 9;
+        
+        int coChuSoLe = 0;
+        for (int i = 1; i <= 9; i += 2) {
+            if (soLapLaiMod9 % i == 0) {
+                printf("%d ", i);
+                coChuSoLe = 1;
+            }
+        }
+        if (!coChuSoLe) {
+            printf("Khong co");
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

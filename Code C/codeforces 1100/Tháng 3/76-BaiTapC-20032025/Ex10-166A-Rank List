@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+typedef struct {
+    int solved;
+    int penalty;
+} Team;
+
+void swap(Team *a, Team *b) {
+    Team temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sortTeams(Team teams[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (teams[j].solved < teams[j + 1].solved ||
+                (teams[j].solved == teams[j + 1].solved && teams[j].penalty > teams[j + 1].penalty)) {
+                swap(&teams[j], &teams[j + 1]);
+            }
+        }
+    }
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    Team teams[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &teams[i].solved, &teams[i].penalty);
+    }
+
+    sortTeams(teams, n);
+
+    int targetSolved = teams[k - 1].solved;
+    int targetPenalty = teams[k - 1].penalty;
+
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        if (teams[i].solved == targetSolved && teams[i].penalty == targetPenalty) {
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+    return 0;
+}
 

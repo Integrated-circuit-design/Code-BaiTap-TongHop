@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <math.h>
+
+int coTheHoanThanhTrongThoiGian(int soNgay, int thoiGianChay) {
+    if (thoiGianChay <= soNgay) {
+        return 1;
+    }
+    
+    for (int ngayToiUu = 0; ngayToiUu <= sqrt(thoiGianChay); ngayToiUu++) {
+        int tongNgaySuDung = ngayToiUu + (thoiGianChay + ngayToiUu) / (ngayToiUu + 1);
+        if (tongNgaySuDung <= soNgay) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void xuLyTestCase() {
+    int soLuongTest;
+    scanf("%d", &soLuongTest);
+    
+    while (soLuongTest--) {
+        int soNgay, thoiGianChay;
+        scanf("%d %d", &soNgay, &thoiGianChay);
+        printf(coTheHoanThanhTrongThoiGian(soNgay, thoiGianChay) ? "YES\n" : "NO\n");
+    }
+}
+
+int main() {
+    xuLyTestCase();
+    return 0;
+}
 

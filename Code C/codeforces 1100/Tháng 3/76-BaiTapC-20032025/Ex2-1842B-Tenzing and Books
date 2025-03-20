@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAX_N 100000
+
+void solve() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+    
+    int a[MAX_N], b[MAX_N], c[MAX_N];
+    
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+    for (int i = 0; i < n; i++) scanf("%d", &b[i]);
+    for (int i = 0; i < n; i++) scanf("%d", &c[i]);
+    
+    int knowledge = 0;
+    
+    for (int i = 0; i < n && knowledge != x; i++) {
+        if ((a[i] | x) == x) knowledge |= a[i];
+    }
+    for (int i = 0; i < n && knowledge != x; i++) {
+        if ((b[i] | x) == x) knowledge |= b[i];
+    }
+    for (int i = 0; i < n && knowledge != x; i++) {
+        if ((c[i] | x) == x) knowledge |= c[i];
+    }
+    
+    printf(knowledge == x ? "YES\n" : "NO\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

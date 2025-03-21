@@ -1,1 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100
+#define MAX_M 50
+
+char strings[MAX_N][MAX_M + 1];
+int paired[MAX_N];
+char result[MAX_N * MAX_M + 1];
+
+void reverse_str(char *s, char *rev) {
+    int len = strlen(s);
+    for (int i = 0; i < len; i++) {
+        rev[i] = s[len - 1 - i];
+    }
+    rev[len] = '\0';
+}
+
+int is_palindrome(char *s) {
+    int len = strlen(s);
+    for (int i = 0; i < len / 2; i++) {
+        if (s[i] != s[len - 1 - i]) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", strings[i]);
+    }
+    
+    int length = 0;
+    char middle[MAX_M + 1] = "";
+    char buffer[MAX_N * MAX_M + 1] = "";
+    
+    for (int i = 0; i < n; i++) {
+        if (paired[i]) continue;
+        char rev[MAX_M + 1];
+        reverse_str(strings[i], rev);
+        
+        for (int j = i + 1; j < n; j++) {
+            if (!paired[j] && strcmp(rev, strings[j]) == 0) {
+                strcat(buffer, strings[i]);
+                length += m * 2;
+                paired[i] = paired[j] = 1;
+                break;
+            }
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        if (!paired[i] && is_palindrome(strings[i])) {
+            strcpy(middle, strings[i]);
+            length += m;
+            break;
+        }
+    }
+    
+    printf("%d\n", length);
+    printf("%s%s", buffer, middle);
+    
+    int len = strlen(buffer);
+    for (int i = len - 1; i >= 0; i--) {
+        putchar(buffer[i]);
+    }
+    putchar('\n');
+    
+    return 0;
+}
 

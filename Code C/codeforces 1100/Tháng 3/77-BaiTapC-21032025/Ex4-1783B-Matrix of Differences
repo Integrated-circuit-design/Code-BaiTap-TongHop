@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+void tao_ma_tran(int n) {
+    int ma_tran[n][n];
+    int gia_tri = 1;
+    
+    int tren = 0, duoi = n - 1, trai = 0, phai = n - 1;
+    while (gia_tri <= n * n) {
+        for (int i = trai; i <= phai; i++)
+            ma_tran[tren][i] = gia_tri++;
+        tren++;
+
+        for (int i = tren; i <= duoi; i++)
+            ma_tran[i][phai] = gia_tri++;
+        phai--;
+
+        if (tren <= duoi) {
+            for (int i = phai; i >= trai; i--)
+                ma_tran[duoi][i] = gia_tri++;
+            duoi--;
+        }
+
+        if (trai <= phai) {
+            for (int i = duoi; i >= tren; i--)
+                ma_tran[i][trai] = gia_tri++;
+            trai++;
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", ma_tran[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int so_bo_test, kich_thuoc;
+    scanf("%d", &so_bo_test);
+    
+    while (so_bo_test--) {
+        scanf("%d", &kich_thuoc);
+        tao_ma_tran(kich_thuoc);
+    }
+    return 0;
+}
 

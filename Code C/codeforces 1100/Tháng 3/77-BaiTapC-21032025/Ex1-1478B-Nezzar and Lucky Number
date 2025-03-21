@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_A 1000000000
+#define MAX_LUCKY 10000
+
+int lucky[MAX_LUCKY];
+int lucky_count = 0;
+
+bool contains_digit(int num, int d) {
+    while (num > 0) {
+        if (num % 10 == d) return true;
+        num /= 10;
+    }
+    return false;
+}
+
+void precompute_lucky_numbers(int d) {
+    lucky_count = 0;
+    
+    for (int i = d; i <= MAX_A; i++) {
+        if (contains_digit(i, d)) {
+            lucky[lucky_count++] = i;
+            if (lucky_count >= MAX_LUCKY) break;
+        }
+    }
+}
+
+bool can_be_formed(int a) {
+    for (int i = 0; i < lucky_count && lucky[i] <= a; i++) {
+        if ((a - lucky[i]) % 10 == 0) return true;
+    }
+    return false;
+}
+
+void solve() {
+    int q, d;
+    scanf("%d %d", &q, &d);
+
+    precompute_lucky_numbers(d);
+
+    while (q--) {
+        int a;
+        scanf("%d", &a);
+
+        if (contains_digit(a, d) || can_be_formed(a)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

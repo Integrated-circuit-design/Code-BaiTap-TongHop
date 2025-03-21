@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 200
+#define ASCII_SIZE 256
+
+int main() {
+    char tieu_de[MAX_LEN + 1], van_ban[MAX_LEN + 1];
+    int tan_suat[ASCII_SIZE] = {0};
+
+    fgets(tieu_de, sizeof(tieu_de), stdin);
+    fgets(van_ban, sizeof(van_ban), stdin);
+
+    tieu_de[strcspn(tieu_de, "\n")] = '\0';
+    van_ban[strcspn(van_ban, "\n")] = '\0';
+
+    for (int i = 0; tieu_de[i]; i++) {
+        if (tieu_de[i] != ' ') {
+            tan_suat[(unsigned char)tieu_de[i]]++;
+        }
+    }
+
+    for (int i = 0; van_ban[i]; i++) {
+        if (van_ban[i] != ' ') {
+            if (tan_suat[(unsigned char)van_ban[i]] == 0) {
+                printf("NO\n");
+                return 0;
+            }
+            tan_suat[(unsigned char)van_ban[i]]--;
+        }
+    }
+
+    printf("YES\n");
+    return 0;
+}
 

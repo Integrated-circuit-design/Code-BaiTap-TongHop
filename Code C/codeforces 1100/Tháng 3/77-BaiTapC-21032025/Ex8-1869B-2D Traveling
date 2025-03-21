@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+#define ll long long
+
+typedef struct {
+    ll x, y;
+} City;
+
+ll manhattan_distance(City a, City b) {
+    return llabs(a.x - b.x) + llabs(a.y - b.y);
+}
+
+int compare_x(const void *a, const void *b) {
+    City *p1 = (City *)a;
+    City *p2 = (City *)b;
+    return (p1->x - p2->x);
+}
+
+int compare_y(const void *a, const void *b) {
+    City *p1 = (City *)a;
+    City *p2 = (City *)b;
+    return (p1->y - p2->y);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k, a, b;
+        scanf("%d %d %d %d", &n, &k, &a, &b);
+        a--; b--;
+
+        City cities[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld %lld", &cities[i].x, &cities[i].y);
+        }
+
+        ll direct_cost = manhattan_distance(cities[a], cities[b]);
+
+        if (k == 0) {
+            printf("%lld\n", direct_cost);
+            continue;
+        }
+
+        qsort(cities, k, sizeof(City), compare_x);
+        ll min_dist_a = LLONG_MAX;
+        ll min_dist_b = LLONG_MAX;
+
+        for (int i = 0; i < k; i++) {
+            ll dist_a = manhattan_distance(cities[a], cities[i]);
+            ll dist_b = manhattan_distance(cities[b], cities[i]);
+            if (dist_a < min_dist_a) min_dist_a = dist_a;
+            if (dist_b < min_dist_b) min_dist_b = dist_b;
+        }
+
+        ll via_major = min_dist_a + min_dist_b;
+
+        printf("%lld\n", (direct_cost < via_major) ? direct_cost : via_major);
+    }
+
+    return 0;
+}
 

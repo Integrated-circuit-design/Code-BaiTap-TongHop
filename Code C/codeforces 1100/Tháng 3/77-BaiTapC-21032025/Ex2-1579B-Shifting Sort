@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void cyclic_shift(int *a, int l, int r, int d) {
+    int temp[d];
+    memcpy(temp, a + l, d * sizeof(int));
+    memmove(a + l, a + l + d, (r - l - d + 1) * sizeof(int));
+    memcpy(a + r - d + 1, temp, d * sizeof(int));
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    int a[n], sorted[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        sorted[i] = a[i];
+    }
+    
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (sorted[i] > sorted[j]) {
+                int temp = sorted[i];
+                sorted[i] = sorted[j];
+                sorted[j] = temp;
+            }
+        }
+    }
+    
+    int operations[n][3], op_count = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (a[i] != sorted[i]) {
+            int pos = i;
+            
+            for (int j = i; j < n; j++) {
+                if (a[j] == sorted[i]) {
+                    pos = j;
+                    break;
+                }
+            }
+            
+            int d = pos - i;
+            if (d > 0) {
+                operations[op_count][0] = i + 1;
+                operations[op_count][1] = pos + 1;
+                operations[op_count][2] = d;
+                op_count++;
+                
+                cyclic_shift(a, i, pos, d);
+            }
+        }
+    }
+    
+    printf("%d\n", op_count);
+    for (int i = 0; i < op_count; i++) {
+        printf("%d %d %d\n", operations[i][0], operations[i][1], operations[i][2]);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

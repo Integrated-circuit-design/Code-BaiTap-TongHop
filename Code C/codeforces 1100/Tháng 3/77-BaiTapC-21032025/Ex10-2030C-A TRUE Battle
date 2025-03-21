@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    char s[n + 1];
+    scanf("%s", s);
+
+    int firstZero = -1;
+
+    int i = 0;
+    while (i < n) {
+        if (s[i] == '0') {
+            firstZero = i;
+            break;
+        }
+        i++;
+    }
+
+    if (firstZero == -1 || firstZero % 2 == 1) {
+        puts("YES");
+    } else {
+        puts("NO");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

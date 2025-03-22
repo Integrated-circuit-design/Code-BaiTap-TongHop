@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+int kiemTraChuoi(char *chuoi1, char *chuoi2) {
+    int n = strlen(chuoi1), m = strlen(chuoi2);
+    
+    if (n != m) return 0;
+    
+    int viTriSai[2], soLuongSai = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (chuoi1[i] != chuoi2[i]) {
+            if (soLuongSai >= 2) return 0;
+            viTriSai[soLuongSai++] = i;
+        }
+    }
+    
+    return (soLuongSai == 2 && chuoi1[viTriSai[0]] == chuoi2[viTriSai[1]] && chuoi1[viTriSai[1]] == chuoi2[viTriSai[0]]);
+}
+
+int main() {
+    char chuoi1[100005], chuoi2[100005];
+    
+    scanf("%s", chuoi1);
+    scanf("%s", chuoi2);
+    
+    if (kiemTraChuoi(chuoi1, chuoi2)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

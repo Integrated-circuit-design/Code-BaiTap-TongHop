@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n], sorted_a[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        sorted_a[i] = a[i];
+    }
+    
+    qsort(sorted_a, n, sizeof(int), cmp);
+    
+    int removable[n];
+    long long prefix_sum = 0;
+    int count = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (prefix_sum >= sorted_a[i]) {
+            count++;
+        }
+        prefix_sum += sorted_a[i];
+        removable[i] = count;
+    }
+    
+    int *lookup = (int*)malloc(1000001 * sizeof(int));
+    memset(lookup, -1, 1000001 * sizeof(int));
+    
+    for (int i = 0; i < n; i++) {
+        lookup[sorted_a[i]] = removable[i];
+    }
+    
+    for (int i = 0; i < n; i++) {
+        printf("%d ", lookup[a[i]]);
+    }
+    printf("\n");
+    
+    free(lookup);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

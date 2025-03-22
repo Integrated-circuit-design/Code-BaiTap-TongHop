@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_N 100000
+#define MAX_VAL 1000000000
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int arr[MAX_N];
+        bool present[MAX_N + 2] = {false};
+        int max_value = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+            present[arr[i]] = true;
+            if (arr[i] > max_value) {
+                max_value = arr[i];
+            }
+        }
+
+        int mex = 0;
+        while (present[mex]) {
+            mex++;
+        }
+
+        if (k == 0) {
+            printf("%d\n", n);
+            continue;
+        }
+
+        if (mex > max_value) {
+            printf("%d\n", n + k);
+            continue;
+        }
+
+        int new_element = (mex + max_value + 1) / 2;
+
+        if (present[new_element]) {
+            printf("%d\n", n);
+        } else {
+            printf("%d\n", n + 1);
+        }
+    }
+    return 0;
+}
 

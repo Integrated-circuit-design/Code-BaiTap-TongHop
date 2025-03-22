@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s[MAXN], t[MAXN];
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    scanf("%s", s);
+    scanf("%s", t);
+    
+    int ones = 0, zeros = 0;
+    int can_flip = 1;
+    
+    for (int i = n - 1; i >= 0; i--) {
+        if (s[i] == '1') ones++;
+        else zeros++;
+        
+        if (s[i] != t[i]) {
+            if (ones != zeros) {
+                printf("NO\n");
+                return;
+            }
+            can_flip = !can_flip;
+        }
+    }
+    printf("YES\n");
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    while (q--) {
+        solve();
+    }
+    return 0;
+}
 

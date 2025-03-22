@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+long long get_max(long long a, long long b, long long c) {
+    return (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c);
+}
+
+long long get_min(long long a, long long b, long long c) {
+    return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
+}
+
+void check_valid_string(long long a, long long b, long long c, long long m) {
+    long long max_adj = (a - 1) + (b - 1) + (c - 1);
+    long long largest = get_max(a, b, c);
+    long long sum_other = a + b + c - largest;
+    long long min_adj = largest - sum_other - 1;
+    if (min_adj < 0) min_adj = 0;
+
+    if (m >= min_adj && m <= max_adj) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b, c, m;
+        scanf("%lld %lld %lld %lld", &a, &b, &c, &m);
+        check_valid_string(a, b, c, m);
+    }
+
+    return 0;
+}
 

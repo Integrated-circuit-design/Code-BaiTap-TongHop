@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <math.h>
+
+int so_chu_so(int n) {
+    int dem = 0;
+    while (n > 0) {
+        n /= 10;
+        dem++;
+    }
+    return dem;
+}
+
+int kiem_tra(int a, int b) {
+    long long concat_ab = (long long)a * pow(10, so_chu_so(b)) + b;
+    return (a * b + a + b == concat_ab);
+}
+
+int dem_cap_hop_le(int A, int B) {
+    int dem = 0;
+    for (int a = 1; a <= A; a++) {
+        for (int b = 1; b <= B; b++) {
+            if (kiem_tra(a, b)) {
+                dem++;
+            }
+        }
+    }
+    return dem;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int A, B;
+        scanf("%d %d", &A, &B);
+        printf("%d\n", dem_cap_hop_le(A, B));
+    }
+    return 0;
+}
 

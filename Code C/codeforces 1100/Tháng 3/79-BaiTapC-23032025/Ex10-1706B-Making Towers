@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100005
+
+int t, n;
+int c[MAX_N];
+int maxTower[MAX_N];
+
+void solve() {
+    scanf("%d", &n);
+
+    memset(maxTower, 0, sizeof(int) * (n + 1));
+
+    int towerCount[MAX_N] = {0};
+    int last_parity[MAX_N];
+    
+    for (int i = 1; i <= n; i++) {
+        last_parity[i] = -1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int color = c[i];
+        int parity = i % 2;
+
+        if (last_parity[color] == -1 || last_parity[color] != parity) {
+            towerCount[color]++;
+        }
+
+        last_parity[color] = parity;
+        if (towerCount[color] > maxTower[color]) {
+            maxTower[color] = towerCount[color];
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        printf("%d ", maxTower[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

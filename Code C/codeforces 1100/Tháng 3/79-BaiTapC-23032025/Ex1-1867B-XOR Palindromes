@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+#define MAX_N 100005
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    char s[MAX_N];
+    scanf("%s", s);
+
+    int mismatches = 0;
+
+    // Đếm số cặp ký tự khác nhau giữa hai đầu chuỗi
+    for (int i = 0; i < n / 2; i++) {
+        if (s[i] != s[n - i - 1]) {
+            mismatches++;
+        }
+    }
+
+    // Mảng đánh dấu các giá trị hợp lệ
+    int is_good[MAX_N + 1] = {0};
+
+    // Đánh dấu những x hợp lệ
+    for (int x = mismatches; x <= n; x++) {
+        if ((x - mismatches) % 2 == 0 || n % 2 == 1) {
+            is_good[x] = 1;
+        }
+    }
+
+    // In kết quả
+    for (int i = 0; i <= n; i++) {
+        printf("%d", is_good[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

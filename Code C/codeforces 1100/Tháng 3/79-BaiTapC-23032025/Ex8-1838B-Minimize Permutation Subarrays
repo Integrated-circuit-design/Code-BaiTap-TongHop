@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+void timChiMucHoanDoi(int n, int p[]) {
+    int minIndex = -1, maxIndex = -1;
+    
+    for (int i = 0; i < n; i++) {
+        if (p[i] == 1) minIndex = i + 1;
+        if (p[i] == n) maxIndex = i + 1;
+    }
+    
+    if (minIndex > maxIndex) {
+        int temp = minIndex;
+        minIndex = maxIndex;
+        maxIndex = temp;
+    }
+    
+    printf("%d %d\n", minIndex, maxIndex);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int p[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+        }
+        
+        timChiMucHoanDoi(n, p);
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_Q 1000
+#define MAX_LEN 21
+
+typedef struct {
+    char oldHandle[MAX_LEN];
+    char newHandle[MAX_LEN];
+} UserHandle;
+
+UserHandle users[MAX_Q];
+int userCount = 0;
+
+int findUser(const char *handle) {
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(users[i].newHandle, handle) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    
+    for (int i = 0; i < q; i++) {
+        char oldHandle[MAX_LEN], newHandle[MAX_LEN];
+        scanf("%s %s", oldHandle, newHandle);
+        
+        int index = findUser(oldHandle);
+        if (index != -1) {
+            strcpy(users[index].newHandle, newHandle);
+        } else {
+            strcpy(users[userCount].oldHandle, oldHandle);
+            strcpy(users[userCount].newHandle, newHandle);
+            userCount++;
+        }
+    }
+    
+    printf("%d\n", userCount);
+    for (int i = 0; i < userCount; i++) {
+        printf("%s %s\n", users[i].oldHandle, users[i].newHandle);
+    }
+    
+    return 0;
+}
 

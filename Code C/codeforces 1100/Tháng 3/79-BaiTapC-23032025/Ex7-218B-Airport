@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp_asc(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int cmp_desc(const void *a, const void *b) {
+    return (*(int*)b - *(int*)a);
+}
+
+void calculate_profits(int n, int m, int seats[]) {
+    int max_seats[m], min_seats[m];
+    for (int i = 0; i < m; i++) {
+        max_seats[i] = seats[i];
+        min_seats[i] = seats[i];
+    }
+
+    qsort(max_seats, m, sizeof(int), cmp_desc);
+    qsort(min_seats, m, sizeof(int), cmp_asc);
+
+    int max_profit = 0, min_profit = 0;
+
+    for (int i = 0; i < n; i++) {
+        max_profit += max_seats[0];
+        max_seats[0]--;
+
+        for (int j = 0; j < m - 1; j++) {
+            if (max_seats[j] < max_seats[j + 1]) {
+                int temp = max_seats[j];
+                max_seats[j] = max_seats[j + 1];
+                max_seats[j + 1] = temp;
+            } else {
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (min_seats[j] > 0) {
+                min_profit += min_seats[j];
+                min_seats[j]--;
+                break;
+            }
+        }
+    }
+
+    printf("%d %d\n", max_profit, min_profit);
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int seats[m];
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &seats[i]);
+    }
+
+    calculate_profits(n, m, seats);
+    return 0;
+}
 

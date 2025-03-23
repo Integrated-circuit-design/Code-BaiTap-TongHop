@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 100005
+
+int t, n;
+int adj[MAXN][MAXN];
+int degree[MAXN];
+int queue[MAXN];
+
+void solve() {
+    scanf("%d", &n);
+    
+    memset(adj, 0, sizeof(adj));
+    memset(degree, 0, sizeof(degree));
+
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj[u][v] = adj[v][u] = 1;
+        degree[u]++;
+        degree[v]++;
+    }
+
+    int front = 0, rear = 0;
+    for (int i = 1; i <= n; i++) {
+        if (degree[i] == 1) {
+            queue[rear++] = i;
+        }
+    }
+
+    int remaining_nodes = n, operations = 0;
+    while (remaining_nodes > 1) {
+        int leaf_count = rear - front;
+        remaining_nodes -= leaf_count;
+        operations++;
+
+        int new_rear = rear;
+        for (int i = front; i < rear; i++) {
+            int node = queue[i];
+            for (int j = 1; j <= n; j++) {
+                if (adj[node][j]) {
+                    adj[node][j] = adj[j][node] = 0;
+                    degree[j]--;
+                    if (degree[j] == 1) {
+                        queue[new_rear++] = j;
+                    }
+                }
+            }
+        }
+        front = rear;
+        rear = new_rear;
+    }
+
+    printf("%d\n", operations);
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 200000
+
+int a[MAX_N + 5], freq[MAX_N + 5];
+int prefix[MAX_N + 5], suffix[MAX_N + 5];
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    memset(freq, 0, sizeof(int) * (n + 1));
+    int distinct = 0;
+    for (int i = 0; i < n; i++) {
+        if (freq[a[i]] == 0) distinct++;
+        freq[a[i]]++;
+        prefix[i] = distinct;
+    }
+
+    memset(freq, 0, sizeof(int) * (n + 1));
+    distinct = 0;
+    for (int i = n - 1; i >= 0; i--) {
+        if (freq[a[i]] == 0) distinct++;
+        freq[a[i]]++;
+        suffix[i] = distinct;
+    }
+
+    int initial_score = n - prefix[n - 1];
+    int max_score = initial_score;
+    int best_l = 0, best_r = 0, min_length = n;
+
+    for (int l = 0; l < n; l++) {
+        for (int r = l; r < n; r++) {
+            int remaining_length = n - (r - l + 1);
+            int remaining_distinct = (l > 0 ? prefix[l - 1] : 0) + (r + 1 < n ? suffix[r + 1] : 0);
+            int new_score = remaining_length - remaining_distinct;
+
+            if (new_score > max_score || (new_score == max_score && remaining_length < min_length)) {
+                max_score = new_score;
+                best_l = l + 1;
+                best_r = r + 1;
+                min_length = remaining_length;
+            }
+        }
+    }
+
+    if (max_score == initial_score) {
+        printf("0\n");
+    } else {
+        printf("%d %d\n", best_l, best_r);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

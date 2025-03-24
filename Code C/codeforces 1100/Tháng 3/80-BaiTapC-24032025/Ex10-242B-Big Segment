@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int l, r, index;
+} Segment;
+
+int compare(const void *a, const void *b) {
+    Segment *seg1 = (Segment *)a;
+    Segment *seg2 = (Segment *)b;
+    
+    if (seg1->l != seg2->l) 
+        return seg1->l - seg2->l;
+    return seg2->r - seg1->r;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    Segment segments[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &segments[i].l, &segments[i].r);
+        segments[i].index = i + 1;
+    }
+
+    qsort(segments, n, sizeof(Segment), compare);
+
+    int max_r = segments[0].r;
+    int index = segments[0].index;
+
+    for (int i = 1; i < n; i++) {
+        if (segments[i].r > max_r) { 
+            index = -1;
+            break;
+        }
+    }
+
+    printf("%d\n", index);
+    return 0;
+}
 

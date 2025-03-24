@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n, dem100 = 0, dem200 = 0, tongKhoiLuong = 0;
+    
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        int tao;
+        scanf("%d", &tao);
+        if (tao == 100) dem100++;
+        else dem200++;
+        tongKhoiLuong += tao;
+    }
+    
+    if (tongKhoiLuong % 2 != 0) {
+        printf("NO\n");
+        return 0;
+    }
+    
+    int mucTieu = tongKhoiLuong / 2;
+    
+    while (mucTieu >= 200 && dem200 > 0) {
+        mucTieu -= 200;
+        dem200--;
+    }
+    
+    while (mucTieu >= 100 && dem100 > 0) {
+        mucTieu -= 100;
+        dem100--;
+    }
+    
+    if (mucTieu == 0) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

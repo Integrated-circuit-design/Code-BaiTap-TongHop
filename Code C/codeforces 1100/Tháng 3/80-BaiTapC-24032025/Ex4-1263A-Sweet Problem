@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int max_days(int r, int g, int b) {
+    int max_candy = (r > g) ? ((r > b) ? r : b) : ((g > b) ? g : b);
+    int sum_two_smallest = (r + g + b) - max_candy;
+    
+    if (sum_two_smallest >= max_candy) {
+        return (r + g + b) / 2;
+    }
+    return sum_two_smallest;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int r, g, b;
+        scanf("%d %d %d", &r, &g, &b);
+        printf("%d\n", max_days(r, g, b));
+    }
+    return 0;
+}
 

@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <math.h>
+
+int isPerfectSquare(long long x) {
+    long long s = sqrt(x);
+    return (s * s == x);
+}
+
+void solve(int n) {
+    long long total = (1LL * n * (n + 1)) / 2;
+    
+    if (isPerfectSquare(total)) {
+        printf("-1\n");
+        return;
+    }
+
+    for (int i = n; i >= 1; i--) {
+        printf("%d ", i);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+        solve(n);
+    }
+
+    return 0;
+}
 

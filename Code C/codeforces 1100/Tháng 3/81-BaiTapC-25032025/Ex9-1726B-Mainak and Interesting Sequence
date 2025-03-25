@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void xuLyTestCase() {
+    int n;
+    long long m;
+    scanf("%d %lld", &n, &m);
+    
+    if (m < n || (m - n) % 2 != 0) {
+        printf("No\n");
+        return;
+    }
+    
+    printf("Yes\n");
+    
+    if (n % 2 == 1) {
+        for (int i = 0; i < n - 1; i++) {
+            printf("1 ");
+        }
+        printf("%lld\n", m - (n - 1));
+    } else {
+        for (int i = 0; i < n - 2; i++) {
+            printf("2 ");
+        }
+        long long cuoi = (m - 2 * (n - 2)) / 2;
+        printf("%lld %lld\n", cuoi, cuoi);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        xuLyTestCase();
+    }
+    return 0;
+}
 

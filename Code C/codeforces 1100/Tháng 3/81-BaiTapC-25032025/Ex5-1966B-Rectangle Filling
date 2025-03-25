@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_N 500
+#define MAX_M 500
+
+char grid[MAX_N][MAX_M + 1];
+
+bool kiemTraToMau(int n, int m) {
+    bool toMau1 = true, toMau2 = true;
+    char mau1 = grid[0][0], mau2 = (mau1 == 'W') ? 'B' : 'W';
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if ((i + j) % 2 == 0) {
+                if (grid[i][j] != mau1) toMau1 = false;
+                if (grid[i][j] != mau2) toMau2 = false;
+            } else {
+                if (grid[i][j] != mau2) toMau1 = false;
+                if (grid[i][j] != mau1) toMau2 = false;
+            }
+        }
+    }
+
+    return toMau1 || toMau2;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%s", grid[i]);
+        }
+
+        printf("%s\n", kiemTraToMau(n, m) ? "YES" : "NO");
+    }
+
+    return 0;
+}
 

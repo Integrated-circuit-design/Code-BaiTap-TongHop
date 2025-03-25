@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100005
+
+void selection_sort(char arr[], int length) {
+    for (int i = 0; i < length - 1; i++) {
+        int min_index = i;
+        for (int j = i + 1; j < length; j++) {
+            if (arr[j] < arr[min_index]) {
+                min_index = j;
+            }
+        }
+        char temp = arr[i];
+        arr[i] = arr[min_index];
+        arr[min_index] = temp;
+    }
+}
+
+void solve() {
+    int n, k;
+    char s[MAX_N], even[MAX_N], odd[MAX_N];
+    int even_count = 0, odd_count = 0;
+
+    scanf("%d %d", &n, &k);
+    scanf("%s", s);
+
+    if (k == 1) {
+        for (int i = 0; i < n; i++) {
+            if (i % 2 == 0) even[even_count++] = s[i];
+            else odd[odd_count++] = s[i];
+        }
+
+        selection_sort(even, even_count);
+        selection_sort(odd, odd_count);
+
+        even_count = odd_count = 0;
+        for (int i = 0; i < n; i++) {
+            if (i % 2 == 0) s[i] = even[even_count++];
+            else s[i] = odd[odd_count++];
+        }
+    } else {
+        selection_sort(s, n);
+    }
+
+    printf("%s\n", s);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

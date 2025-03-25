@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100005
+
+int find_lis(int *arr, int len) {
+    int lis[MAX_N], lis_size = 0;
+    for (int i = 0; i < len; i++) {
+        int j;
+        for (j = 0; j < lis_size; j++) {
+            if (lis[j] >= arr[i]) {
+                lis[j] = arr[i];
+                break;
+            }
+        }
+        if (j == lis_size) {
+            lis[lis_size++] = arr[i];
+        }
+    }
+    return lis_size;
+}
+
+void process_test_case() {
+    int n;
+    scanf("%d", &n);
+    int arr[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    int xor_value = 0;
+    int index = 0;
+
+    while (index < n) {
+        int min_lis_length = n;
+        int split_index = index + 1;
+
+        for (int j = index + 1; j <= n; j++) {
+            int lis_length = find_lis(arr + index, j - index);
+            if (lis_length < min_lis_length) {
+                min_lis_length = lis_length;
+                split_index = j;
+            }
+        }
+
+        xor_value ^= min_lis_length;
+        index = split_index;
+    }
+
+    printf(xor_value == 0 ? "YES\n" : "NO\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        process_test_case();
+    }
+    return 0;
+}
 

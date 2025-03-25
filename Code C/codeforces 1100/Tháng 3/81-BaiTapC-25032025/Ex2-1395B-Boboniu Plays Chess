@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+void solve(int n, int m, int Sx, int Sy) {
+    printf("%d %d\n", Sx, Sy);
+    
+    for (int i = 1; i <= n; i++) {
+        if (i != Sx) {
+            printf("%d %d\n", i, Sy);
+        }
+    }
+    
+    for (int j = 1; j <= m; j++) {
+        if (j == Sy) continue;
+        
+        if (j % 2 == Sy % 2) {
+            for (int i = 1; i <= n; i++) {
+                printf("%d %d\n", i, j);
+            }
+        } else {
+            for (int i = n; i >= 1; i--) {
+                printf("%d %d\n", i, j);
+            }
+        }
+    }
+}
+
+int main() {
+    int n, m, Sx, Sy;
+    scanf("%d %d %d %d", &n, &m, &Sx, &Sy);
+    solve(n, m, Sx, Sy);
+    return 0;
+}
 

@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int canAchieve(long long n, long long P, long long l, long long t, long long studyDays) {
+    long long lessonPoints = studyDays * l;
+    long long maxTasks = ((n - 1) / 7 + 1);
+    long long taskPoints = t * (studyDays * 2 > maxTasks ? maxTasks : studyDays * 2);
+
+    return (lessonPoints + taskPoints >= P);
+}
+
+void solve() {
+    long long n, P, l, t;
+    scanf("%lld %lld %lld %lld", &n, &P, &l, &t);
+
+    long long left = 0, right = n, answer = n; 
+
+    while (left <= right) {
+        long long mid = (left + right) / 2;
+        if (canAchieve(n, P, l, t, mid)) {
+            answer = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+
+    printf("%lld\n", n - answer);
+}
+
+int main() {
+    int tc;
+    scanf("%d", &tc);
+    while (tc--) {
+        solve();
+    }
+    return 0;
+}
 

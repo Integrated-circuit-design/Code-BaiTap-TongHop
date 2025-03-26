@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX_K 1000
+
+bool is_closed(int floor, int k, int closed[]) {
+    for (int i = 0; i < k; i++) {
+        if (closed[i] == floor) return true;
+    }
+    return false;
+}
+
+int find_nearest_open_floor(int n, int s, int k, int closed[]) {
+    for (int d = 0; d <= n; d++) {
+        if (s - d >= 1 && !is_closed(s - d, k, closed)) return d;
+        if (s + d <= n && !is_closed(s + d, k, closed)) return d;
+    }
+    return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, s, k;
+        scanf("%d %d %d", &n, &s, &k);
+
+        int closed[MAX_K];
+        for (int i = 0; i < k; i++) {
+            scanf("%d", &closed[i]);
+        }
+
+        printf("%d\n", find_nearest_open_floor(n, s, k, closed));
+    }
+
+    return 0;
+}
 

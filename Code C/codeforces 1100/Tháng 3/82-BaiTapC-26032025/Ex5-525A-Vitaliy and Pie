@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+#define MAX_KEYS 26
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    char s[2 * n - 1];
+    scanf("%s", s);
+    
+    int key_count[MAX_KEYS] = {0};
+    int missing_keys = 0;
+    
+    for (int i = 0; i < 2 * n - 2; i += 2) {
+        key_count[s[i] - 'a']++;
+        
+        int door_index = s[i + 1] - 'A';
+        if (key_count[door_index] > 0) {
+            key_count[door_index]--;
+        } else {
+            missing_keys++;
+        }
+    }
+    
+    printf("%d\n", missing_keys);
+    return 0;
+}
 

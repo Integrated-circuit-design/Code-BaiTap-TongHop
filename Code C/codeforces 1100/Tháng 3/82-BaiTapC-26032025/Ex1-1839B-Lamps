@@ -1,1 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int a, b;
+} Lamp;
+
+int compare(const void *x, const void *y) {
+    return ((Lamp*)x)->a - ((Lamp*)y)->a;
+}
+
+typedef struct {
+    int data[MAXN];
+    int size;
+} MaxHeap;
+
+void heap_push(MaxHeap *heap, int value) {
+    int i = heap->size++;
+    while (i > 0) {
+        int p = (i - 1) / 2;
+        if (heap->data[p] >= value) break;
+        heap->data[i] = heap->data[p];
+        i = p;
+    }
+    heap->data[i] = value;
+}
+
+int heap_pop(MaxHeap *heap) {
+    if (heap->size == 0) return -1;
+    int top = heap->data[0];
+    int value = heap->data[--heap->size];
+    int i = 0;
+    while (2 * i + 1 < heap->size) {
+        int left = 2 * i + 1, right = 2 * i + 2;
+        int maxIndex = left;
+        if (right < heap->size && heap->data[right] > heap->data[left]) {
+            maxIndex = right;
+        }
+        if (heap->data[maxIndex] <= value) break;
+        heap->data[i] = heap->data[maxIndex];
+        i = maxIndex;
+    }
+    heap->data[i] = value;
+    return top;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    Lamp lamps[MAXN];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &lamps[i].a, &lamps[i].b);
+    }
+
+    qsort(lamps, n, sizeof(Lamp), compare);
+
+    MaxHeap heap = { .size = 0 };
+    long long maxPoints = 0, currentPoints = 0;
+    int index = 0, turnedOn = 0;
+
+    for (int required = 1; required <= n; required++) {
+        while (index < n && lamps[index].a <= required) {
+            heap_push(&heap, lamps[index].b);
+            index++;
+        }
+
+        if (heap.size > 0) {
+            currentPoints += heap_pop(&heap);
+            turnedOn++;
+        }
+
+        if (currentPoints > maxPoints) {
+            maxPoints = currentPoints;
+        }
+    }
+
+    printf("%lld\n", maxPoints);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

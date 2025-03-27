@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAX_N 1000
+
+typedef struct {
+    int l, r;
+} Range;
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    Range ranges[MAX_N];
+    int result[MAX_N][3];
+    int used[MAX_N + 1] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &ranges[i].l, &ranges[i].r);
+    }
+    
+    for (int i = 0; i < n; i++) {
+        int l = ranges[i].l, r = ranges[i].r;
+        for (int d = l; d <= r; d++) {
+            if (!used[d]) {
+                used[d] = 1;
+                result[i][0] = l;
+                result[i][1] = r;
+                result[i][2] = d;
+                break;
+            }
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        printf("%d %d %d\n", result[i][0], result[i][1], result[i][2]);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

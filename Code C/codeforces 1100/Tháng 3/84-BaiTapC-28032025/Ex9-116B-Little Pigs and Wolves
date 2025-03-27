@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+#define MAX_N 10
+#define MAX_M 10
+
+char grid[MAX_N][MAX_M];
+int n, m;
+
+int dx[] = {-1, 1, 0, 0};
+int dy[] = {0, 0, -1, 1};
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", grid[i]);
+    }
+
+    int eaten_pigs = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == 'P') {
+                for (int d = 0; d < 4; d++) {
+                    int ni = i + dx[d];
+                    int nj = j + dy[d];
+
+                    if (ni >= 0 && ni < n && nj >= 0 && nj < m && grid[ni][nj] == 'W') {
+                        eaten_pigs++;
+                        grid[i][j] = '.';
+                        grid[ni][nj] = '.';
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    printf("%d\n", eaten_pigs);
+
+    return 0;
+}
 

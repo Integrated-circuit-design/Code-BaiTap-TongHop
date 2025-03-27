@@ -1,1 +1,14 @@
+#include <stdio.h>
+
+long long countShips(long long a, long long b) {
+    if (b == 0) return 0;
+    return (a / b) + countShips(b, a % b);
+}
+
+int main() {
+    long long a, b;
+    scanf("%lld %lld", &a, &b);
+    printf("%lld\n", countShips(a, b));
+    return 0;
+}
 

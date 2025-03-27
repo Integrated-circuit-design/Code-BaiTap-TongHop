@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_NM 100005
+
+typedef struct {
+    int sight;
+    int index;
+} Person;
+
+int cmp_sight(const void *a, const void *b) {
+    Person *p1 = (Person *)a;
+    Person *p2 = (Person *)b;
+    if (p1->sight == p2->sight)
+        return p1->index - p2->index;
+    return p1->sight - p2->sight;
+}
+
+int cmp_index(const void *a, const void *b) {
+    return ((Person*)a)->index - ((Person*)b)->index;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        int total = n * m;
+        Person people[MAX_NM];
+
+        for (int i = 0; i < total; i++) {
+            scanf("%d", &people[i].sight);
+            people[i].index = i;
+        }
+
+        qsort(people, total, sizeof(Person), cmp_sight);
+
+        int inconvenience = 0;
+        for (int i = 0; i < n; i++) {
+            Person row[MAX_NM];
+            for (int j = 0; j < m; j++)
+                row[j] = people[i * m + j];
+
+            qsort(row, m, sizeof(Person), cmp_index);
+
+            int occupied[MAX_NM] = {0};
+            int count = 0;
+            for (int j = 0; j < m; j++) {
+                int pos = row[j].index % m;
+                for (int k = 0; k < pos; k++) {
+                    if (occupied[k]) count++;
+                }
+                occupied[pos] = 1;
+            }
+            inconvenience += count;
+        }
+
+        printf("%d\n", inconvenience);
+    }
+
+    return 0;
+}
 

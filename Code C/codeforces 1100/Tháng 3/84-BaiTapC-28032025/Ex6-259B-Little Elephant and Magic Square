@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int grid[3][3];
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            scanf("%d", &grid[i][j]);
+        }
+    }
+    
+    int row_sums[3] = {0}, col_sums[3] = {0}, total_sum = 0;
+    int missing[3] = {0};
+    
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            row_sums[i] += grid[i][j];
+            col_sums[j] += grid[i][j];
+            if (i == j && grid[i][j] == 0) {
+                missing[i] = 1;
+            }
+        }
+    }
+    
+    for (int i = 0; i < 3; i++) {
+        if (missing[i] == 0) {
+            total_sum = row_sums[i];
+            break;
+        }
+    }
+    
+    for (int i = 0; i < 3; i++) {
+        if (missing[i] == 1) {
+            grid[i][i] = total_sum - (row_sums[i]);
+        }
+    }
+    
+    printf("\nMa trận hoàn chỉnh:\n");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", grid[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

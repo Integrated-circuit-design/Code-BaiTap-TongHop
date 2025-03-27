@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAX_CANDIDATES 100
+#define MAX_CITIES 100
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    int candidate_wins[MAX_CANDIDATES] = {0};
+
+    for (int i = 0; i < m; i++) {
+        int max_votes = -1;
+        int winner = -1;
+        
+        for (int j = 0; j < n; j++) {
+            int votes;
+            scanf("%d", &votes);
+            
+            if (votes > max_votes) {
+                max_votes = votes;
+                winner = j;
+            }
+        }
+        
+        candidate_wins[winner]++;
+    }
+    
+    int final_winner = 0;
+    
+    for (int i = 1; i < n; i++) {
+        if (candidate_wins[i] > candidate_wins[final_winner]) {
+            final_winner = i;
+        }
+    }
+    
+    printf("%d\n", final_winner + 1);
+    return 0;
+}
 

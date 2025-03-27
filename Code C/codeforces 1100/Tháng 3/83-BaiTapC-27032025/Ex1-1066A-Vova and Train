@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+long long count_visible_lanterns(long long L, long long v, long long l, long long r) {
+    long long total = L / v;
+    long long blocked = (r / v) - ((l - 1) / v);
+    return total - blocked;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        long long L, v, l, r;
+        scanf("%lld %lld %lld %lld", &L, &v, &l, &r);
+        printf("%lld\n", count_visible_lanterns(L, v, l, r));
+    }
+
+    return 0;
+}
 

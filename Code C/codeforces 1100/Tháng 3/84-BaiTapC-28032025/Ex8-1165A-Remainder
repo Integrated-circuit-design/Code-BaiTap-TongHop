@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, x, y;
+    scanf("%d %d %d", &n, &x, &y);
+    
+    char chuoi[n + 1];
+    scanf("%s", chuoi);
+    
+    int so_lan_doi = 0;
+    
+    for (int i = 0; i < x; i++) {
+        int vi_tri_kiem_tra = n - x + i;
+        if (i == x - y - 1) {
+            if (chuoi[vi_tri_kiem_tra] != '1') so_lan_doi++;
+        } else {
+            if (chuoi[vi_tri_kiem_tra] != '0') so_lan_doi++;
+        }
+    }
+    
+    printf("%d\n", so_lan_doi);
+    return 0;
+}
 

@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+long long getLastDigit(long long a, long long b) {
+    if (b >= a + 10) return 0;
+
+    int result = 1;
+    for (long long i = a + 1; i <= b; i++) {
+        int last = i % 10;
+        result = (result * last) % 10;
+        if (result == 0) return 0;
+    }
+    return result;
+}
+
+int main() {
+    long long a, b;
+    scanf("%lld %lld", &a, &b);
+    printf("%lld\n", getLastDigit(a, b));
+    return 0;
+}
 

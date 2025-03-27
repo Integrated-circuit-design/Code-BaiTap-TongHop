@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100005
+
+int a[MAX_N];
+
+int find_mex(int n) {
+    int found[MAX_N] = {0};
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] < n) found[a[i]] = 1;
+    }
+
+    for (int i = 0; i <= n; i++) {
+        if (!found[i]) return i;
+    }
+    return n + 1;
+}
+
+void solve() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int cycle_length = 0;
+    int previous_mex = -1;
+
+    while (k--) {
+        int mex = find_mex(n);
+
+        if (mex == previous_mex) break;
+        previous_mex = mex;
+
+        for (int i = 0; i < n; i++) {
+            a[i] = mex;
+        }
+
+        cycle_length++;
+
+        if (cycle_length > n) {
+            k %= cycle_length;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

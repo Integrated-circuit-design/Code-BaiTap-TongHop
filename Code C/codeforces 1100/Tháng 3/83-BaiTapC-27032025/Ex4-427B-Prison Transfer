@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int n, t, c;
+    scanf("%d %d %d", &n, &t, &c);
+    
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    int count = 0;
+    int left = 0, right = 0;
+    int valid_count = 0;
+    
+    while (right < n) {
+        if (arr[right] <= t) {
+            valid_count++;
+        } else {
+            valid_count = 0;
+            left = right + 1;
+        }
+        
+        if (valid_count >= c) {
+            count++;
+        }
+        right++;
+    }
+    
+    printf("%d\n", count);
+    return 0;
+}
 

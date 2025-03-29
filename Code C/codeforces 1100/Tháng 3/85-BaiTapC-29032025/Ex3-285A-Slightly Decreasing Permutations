@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+void tao_hoan_vi(int n, int k) {
+    int hoan_vi[n];
+    
+    int i = 0, j = n;
+    
+    for (int dem = 0; dem < k; dem++) {
+        hoan_vi[dem] = j--;
+    }
+    
+    for (int dem = k; dem < n; dem++) {
+        hoan_vi[dem] = i++ + 1;
+    }
+    
+    for (int dem = 0; dem < n; dem++) {
+        printf("%d ", hoan_vi[dem]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int n, k;
+    
+    scanf("%d %d", &n, &k);
+    
+    tao_hoan_vi(n, k);
+    
+    return 0;
+}
 

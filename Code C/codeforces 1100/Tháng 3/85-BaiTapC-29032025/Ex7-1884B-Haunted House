@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100005
+
+typedef struct {
+    int data[MAX_N];
+    int front, rear;
+} Queue;
+
+void initQueue(Queue *q) {
+    q->front = q->rear = 0;
+}
+
+void enqueue(Queue *q, int value) {
+    q->data[q->rear++] = value;
+}
+
+int dequeue(Queue *q) {
+    return q->data[q->front++];
+}
+
+int isEmpty(Queue *q) {
+    return q->front == q->rear;
+}
+
+void solve() {
+    int n;
+    char binary[MAX_N];
+
+    scanf("%d", &n);
+    scanf("%s", binary);
+
+    Queue zeroQueue;
+    initQueue(&zeroQueue);
+
+    for (int i = n - 1; i >= 0; i--) {
+        if (binary[i] == '0') {
+            enqueue(&zeroQueue, i);
+        }
+    }
+
+    int moveCount = 0;
+    for (int i = 1; i <= n; i++) {
+        if (isEmpty(&zeroQueue)) {
+            printf("-1 ");
+        } else {
+            int pos = dequeue(&zeroQueue);
+            moveCount += (n - i) - pos;
+            printf("%d ", moveCount);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

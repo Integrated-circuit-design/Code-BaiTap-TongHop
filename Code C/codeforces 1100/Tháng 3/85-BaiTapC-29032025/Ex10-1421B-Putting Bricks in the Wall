@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+#define MAX_N 200
+
+char grid[MAX_N][MAX_N];
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", grid[i]);
+    }
+    
+    int x1 = grid[0][1] - '0';
+    int x2 = grid[1][0] - '0';
+    int x3 = grid[n-2][n-1] - '0';
+    int x4 = grid[n-1][n-2] - '0';
+    
+    int count0 = (x1 == 0) + (x2 == 0) + (x3 == 0) + (x4 == 0);
+    int count1 = 4 - count0;
+    
+    if (count0 == 2 && count1 == 2) {
+        printf("0\n");
+    } else if (count0 > count1) {
+        printf("2\n");
+        if (x1 == 0) printf("1 2\n");
+        if (x2 == 0) printf("2 1\n");
+        if (x3 == 0) printf("%d %d\n", n-1, n);
+        if (x4 == 0) printf("%d %d\n", n, n-1);
+    } else {
+        printf("2\n");
+        if (x1 == 1) printf("1 2\n");
+        if (x2 == 1) printf("2 1\n");
+        if (x3 == 1) printf("%d %d\n", n-1, n);
+        if (x4 == 1) printf("%d %d\n", n, n-1);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

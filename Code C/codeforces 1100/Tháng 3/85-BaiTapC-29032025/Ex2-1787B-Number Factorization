@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int prime_factors[32];
+        int prime_powers[32];
+        int count = 0;
+        
+        int original_n = n;
+        
+        for (int p = 2; p * p <= n; p++) {
+            if (n % p == 0) {
+                prime_factors[count] = p;
+                prime_powers[count] = 0;
+                
+                while (n % p == 0) {
+                    n /= p;
+                    prime_powers[count]++;
+                }
+                count++;
+            }
+        }
+        
+        if (n > 1) {
+            prime_factors[count] = n;
+            prime_powers[count] = 1;
+            count++;
+        }
+
+        int sum = 0;
+        int a = 1;
+
+        for (int i = 0; i < count; i++) {
+            a *= prime_factors[i];
+        }
+        
+        for (int i = 0; i < count; i++) {
+            sum += a * (prime_powers[i]);
+        }
+
+        printf("%d\n", sum);
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

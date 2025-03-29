@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+void chiaTapHop(int n) {
+    long long tongSo = (long long)n * (n + 1) / 2;
+    
+    if (tongSo % 2 != 0) {
+        printf("No\n");
+        return;
+    }
+    
+    printf("Yes\n");
+    
+    long long mucTieu = tongSo / 2;
+    int tapHop1[n], tapHop2[n];
+    int soLuong1 = 0, soLuong2 = 0;
+    
+    for (int i = n; i >= 1; i--) {
+        if (mucTieu >= i) {
+            tapHop1[soLuong1++] = i;
+            mucTieu -= i;
+        } else {
+            tapHop2[soLuong2++] = i;
+        }
+    }
+    
+    printf("%d ", soLuong1);
+    for (int i = 0; i < soLuong1; i++) {
+        printf("%d ", tapHop1[i]);
+    }
+    printf("\n");
+    
+    printf("%d ", soLuong2);
+    for (int i = 0; i < soLuong2; i++) {
+        printf("%d ", tapHop2[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    chiaTapHop(n);
+    return 0;
+}
 

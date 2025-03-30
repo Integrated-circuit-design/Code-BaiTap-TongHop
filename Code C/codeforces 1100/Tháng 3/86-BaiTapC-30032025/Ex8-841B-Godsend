@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int n, x;
+    int odd_count = 0;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x);
+        if (x % 2 != 0) {
+            odd_count++;
+        }
+    }
+
+    printf("%s\n", (odd_count > 0) ? "First" : "Second");
+
+    return 0;
+}
 

@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+void canBangCan(char *can, char *them) {
+    char benTrai[101], benPhai[101];
+    int soLuongTrai = 0, soLuongPhai = 0, soLuongThem = strlen(them);
+    
+    char *viTriPhanCach = strchr(can, '|');
+    if (!viTriPhanCach) {
+        printf("Impossible\n");
+        return;
+    }
+    
+    strncpy(benTrai, can, viTriPhanCach - can);
+    benTrai[viTriPhanCach - can] = '\0';
+    strcpy(benPhai, viTriPhanCach + 1);
+    
+    soLuongTrai = strlen(benTrai);
+    soLuongPhai = strlen(benPhai);
+    
+    int tongTrongLuong = soLuongTrai + soLuongPhai + soLuongThem;
+    if (tongTrongLuong % 2 != 0) {
+        printf("Impossible\n");
+        return;
+    }
+    
+    int mucTieu = tongTrongLuong / 2;
+    int i = 0;
+    
+    while (soLuongTrai < mucTieu && i < soLuongThem) {
+        benTrai[soLuongTrai++] = them[i++];
+    }
+    while (soLuongPhai < mucTieu && i < soLuongThem) {
+        benPhai[soLuongPhai++] = them[i++];
+    }
+    
+    benTrai[soLuongTrai] = '\0';
+    benPhai[soLuongPhai] = '\0';
+    
+    if (soLuongTrai == soLuongPhai) {
+        printf("%s|%s\n", benTrai, benPhai);
+    } else {
+        printf("Impossible\n");
+    }
+}
+
+int main() {
+    char can[202], them[101];
+    scanf("%s", can);
+    scanf("%s", them);
+    canBangCan(can, them);
+    return 0;
+}
 

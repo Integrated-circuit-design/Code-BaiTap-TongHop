@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_N 200000
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, k;
+        char s[MAX_N + 1];
+        bool isSpecial[26] = {false};
+
+        scanf("%d", &n);
+        scanf("%s", s);
+        scanf("%d", &k);
+
+        for (int i = 0; i < k; i++) {
+            char c;
+            scanf(" %c", &c);
+            isSpecial[c - 'a'] = true;
+        }
+
+        int maxGap = 0, prevIndex = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (isSpecial[s[i] - 'a']) {
+                if (prevIndex != -1) {
+                    int gap = i - prevIndex;
+                    if (gap > maxGap) {
+                        maxGap = gap;
+                    }
+                }
+                prevIndex = i;
+            }
+        }
+
+        printf("%d\n", maxGap);
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAX_N 100000
+
+typedef long long ll;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    ll h[MAX_N];
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &h[i]);
+    }
+    
+    ll result[MAX_N];
+    ll max_right[MAX_N];
+    max_right[n - 1] = 0;
+    
+    for (int i = n - 2; i >= 0; i--) {
+        max_right[i] = (h[i + 1] > max_right[i + 1]) ? h[i + 1] : max_right[i + 1];
+    }
+    
+    for (int i = 0; i < n; i++) {
+        if (h[i] > max_right[i]) {
+            result[i] = 0;
+        } else {
+            result[i] = max_right[i] - h[i] + 1;
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        printf("%lld ", result[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
 

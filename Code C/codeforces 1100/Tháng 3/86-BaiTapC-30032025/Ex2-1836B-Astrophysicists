@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+long long tim_tien_tiet_kiem(long long n, long long k, long long g) {
+    long long tong_so_bac = k * g;
+    long long muc_lam_tron = (g + 1) / 2;
+    long long so_bac_tiet_kiem = ((n - 1) * (g - 1)) / g * g;
+    
+    return tong_so_bac - so_bac_tiet_kiem < muc_lam_tron ? tong_so_bac - muc_lam_tron : so_bac_tiet_kiem;
+}
+
+int main() {
+    int so_luong_bo_test;
+    scanf("%d", &so_luong_bo_test);
+    while (so_luong_bo_test--) {
+        long long n, k, g;
+        scanf("%lld %lld %lld", &n, &k, &g);
+        printf("%lld\n", tim_tien_tiet_kiem(n, k, g));
+    }
+    return 0;
+}
 

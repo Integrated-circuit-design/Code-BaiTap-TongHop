@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+void tinhToiUuUgliness() {
+    int n;
+    scanf("%d", &n);
+    
+    ll a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+    
+    ll ugliness = a[0] + a[n - 1];
+    for (int i = 1; i < n; i++) {
+        ugliness += abs(a[i] - a[i - 1]);
+    }
+    
+    for (int i = 0; i < n; i++) {
+        ll left = (i == 0) ? 0 : a[i - 1];
+        ll right = (i == n - 1) ? 0 : a[i + 1];
+        ll max_adjacent = (left > right) ? left : right;
+        
+        if (a[i] > max_adjacent) {
+            ugliness -= (a[i] - max_adjacent);
+        }
+    }
+    
+    printf("%lld\n", ugliness);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        tinhToiUuUgliness();
+    }
+    return 0;
+}
 

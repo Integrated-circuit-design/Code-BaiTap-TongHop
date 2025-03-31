@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 500
+#define MAX_M 500
+
+int rows[MAX_N][MAX_M], cols[MAX_M][MAX_N];
+int row_pos[MAX_N * MAX_M + 1];
+int result[MAX_N][MAX_M];
+
+void solve() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &rows[i][0]);
+        row_pos[rows[i][0]] = i;
+        for (int j = 1; j < m; j++) {
+            scanf("%d", &rows[i][j]);
+        }
+    }
+
+    for (int j = 0; j < m; j++) {
+        scanf("%d", &cols[j][0]);
+        for (int i = 1; i < n; i++) {
+            scanf("%d", &cols[j][i]);
+        }
+    }
+
+    int first_row_index = row_pos[cols[0][0]];
+    for (int j = 0; j < m; j++) {
+        result[0][j] = rows[first_row_index][j];
+    }
+
+    for (int i = 1; i < n; i++) {
+        int next_value = cols[0][i];
+        int row_index = row_pos[next_value];
+        for (int j = 0; j < m; j++) {
+            result[i][j] = rows[row_index][j];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

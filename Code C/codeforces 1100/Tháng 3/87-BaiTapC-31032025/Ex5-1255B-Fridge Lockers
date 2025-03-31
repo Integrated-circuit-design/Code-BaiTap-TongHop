@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 1000
+
+typedef struct {
+    int weight;
+    int index;
+} Fridge;
+
+int compare(const void *a, const void *b) {
+    return ((Fridge*)a)->weight - ((Fridge*)b)->weight;
+}
+
+void solve() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    if (m < n) {
+        printf("-1\n");
+        return;
+    }
+
+    Fridge fridges[MAX_N];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &fridges[i].weight);
+        fridges[i].index = i + 1;
+    }
+
+    qsort(fridges, n, sizeof(Fridge), compare);
+
+    int min_cost = 0;
+    int edges[MAX_N * 2][2]; 
+    int edge_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        int u = fridges[i].index;
+        int v = fridges[(i + 1) % n].index;
+        min_cost += fridges[i].weight + fridges[(i + 1) % n].weight;
+        edges[edge_count][0] = u;
+        edges[edge_count][1] = v;
+        edge_count++;
+    }
+
+    int extra_edges = m - n;
+    int min1 = fridges[0].index, min2 = fridges[1].index;
+    int min_sum = fridges[0].weight + fridges[1].weight;
+
+    for (int i = 0; i < extra_edges; i++) {
+        min_cost += min_sum;
+        edges[edge_count][0] = min1;
+        edges[edge_count][1] = min2;
+        edge_count++;
+    }
+
+    printf("%d\n", min_cost);
+    for (int i = 0; i < edge_count; i++) {
+        printf("%d %d\n", edges[i][0], edges[i][1]);
+    }
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        solve();
+    }
+    return 0;
+}
 

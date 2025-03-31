@@ -1,1 +1,54 @@
-
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+char* findEquidistantString(const char* s, const char* t) {
+    int n = strlen(s);
+    
+    int diffCount = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] != t[i]) {
+            diffCount++;
+        }
+    }
+    
+    if (diffCount % 2 != 0) {
+        return "impossible";
+    }
+    
+    char* p = (char*)malloc(n + 1);
+    p[n] = '\0';
+    
+    int diffUsed = 0;
+    int diffNeeded = diffCount / 2;
+    
+    for (int i = 0; i < n; i++) {
+        if (s[i] == t[i]) {
+            p[i] = s[i];
+        } else {
+            if (diffUsed < diffNeeded) {
+                p[i] = t[i];
+                diffUsed++;
+            } else {
+                p[i] = s[i];
+            }
+        }
+    }
+    
+    return p;
+}
+int main() {
+    char s[100001], t[100001];
+    
+    scanf("%s", s);
+    scanf("%s", t);
+    
+    char* result = findEquidistantString(s, t);
+    
+    printf("%s\n", result);
+    
+    if (strcmp(result, "impossible") != 0) {
+        free(result);
+    }
+    
+    return 0;
+}

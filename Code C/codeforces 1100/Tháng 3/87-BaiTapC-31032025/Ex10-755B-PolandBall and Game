@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX_WORDS 1003
+#define MAX_LEN 505
+
+char polandWords[MAX_WORDS][MAX_LEN];
+char enemyWords[MAX_WORDS][MAX_LEN];
+char commonWords[MAX_WORDS][MAX_LEN];
+
+int compareStrings(const void *a, const void *b) {
+    return strcmp((const char *)a, (const char *)b);
+}
+
+bool binarySearch(char arr[][MAX_LEN], int size, char *word) {
+    int left = 0, right = size - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        int cmp = strcmp(arr[mid], word);
+        if (cmp == 0)
+            return true;
+        else if (cmp < 0)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return false;
+}
+
+int main() {
+    int n, m, commonCount = 0;
+    scanf("%d %d", &n, &m);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", polandWords[i]);
+    }
+    for (int i = 0; i < m; i++) {
+        scanf("%s", enemyWords[i]);
+    }
+    
+    qsort(polandWords, n, MAX_LEN, compareStrings);
+    qsort(enemyWords, m, MAX_LEN, compareStrings);
+    
+    for (int i = 0; i < n; i++) {
+        if (binarySearch(enemyWords, m, polandWords[i])) {
+            strcpy(commonWords[commonCount++], polandWords[i]);
+        }
+    }
+    
+    int polandUnique = n - commonCount;
+    int enemyUnique = m - commonCount;
+    
+    if (polandUnique > enemyUnique || (polandUnique == enemyUnique && commonCount % 2 == 1)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

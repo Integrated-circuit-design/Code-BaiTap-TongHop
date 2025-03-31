@@ -1,1 +1,109 @@
+#include <stdio.h>
+#include <stdbool.h>
 
+typedef struct {
+    int top;
+    int bottom;
+    int side1;
+    int side2;
+    int side3;
+    int side4;
+} Orientation;
+
+typedef struct {
+    Orientation orientations[2];
+    int count;
+} DieOrientations;
+
+int opposite(int face) {
+    return 7 - face;
+}
+
+bool are_adjacent(int face1, int face2) {
+    return face1 != 7 - face2;
+}
+
+void get_possible_orientations(int top, int side1, int side2, DieOrientations *result) {
+    result->count = 0;
+    
+    if (are_adjacent(top, side1) && are_adjacent(top, side2) && are_adjacent(side1, side2)) {
+        int bottom = opposite(top);
+        
+        int remaining_sides[2] = {0};
+        int idx = 0;
+        
+        for (int i = 1; i <= 6; i++) {
+            if (i != top && i != bottom && i != side1 && i != side2) {
+                remaining_sides[idx++] = i;
+            }
+        }
+        
+        Orientation o1 = {top, bottom, side1, side2, remaining_sides[0], remaining_sides[1]};
+        result->orientations[result->count++] = o1;
+        
+        if (are_adjacent(side1, remaining_sides[0]) && are_adjacent(side2, remaining_sides[1]) &&
+            are_adjacent(side1, remaining_sides[1]) && are_adjacent(side2, remaining_sides[0])) {
+            Orientation o2 = {top, bottom, side1, side2, remaining_sides[1], remaining_sides[0]};
+            result->orientations[result->count++] = o2;
+        }
+    }
+}
+
+bool can_uniquely_identify_tower(int n, int top_face, int side_faces[][2]) {
+    DieOrientations dice_orientations[100];
+    
+    get_possible_orientations(top_face, side_faces[0][0], side_faces[0][1], &dice_orientations[0]);
+    
+    if (dice_orientations[0].count == 0) {
+        return false;
+    }
+    
+    for (int i = 1; i < n; i++) {
+        dice_orientations[i].count = 0;
+        
+        for (int j = 0; j < dice_orientations[i-1].count; j++) {
+            int current_top = opposite(dice_orientations[i-1].orientations[j].bottom);
+            
+            DieOrientations current_orientations;
+            get_possible_orientations(current_top, side_faces[i][0], side_faces[i][1], &current_orientations);
+            
+            for (int k = 0; k < current_orientations.count; k++) {
+                if (dice_orientations[i].count < 2) {
+                    dice_orientations[i].orientations[dice_orientations[i].count++] = current_orientations.orientations[k];
+                }
+            }
+        }
+        
+        if (dice_orientations[i].count == 0) {
+            return false;
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        if (dice_orientations[i].count > 1) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+int main() {
+    int n, top_face;
+    int side_faces[100][2];
+    
+    scanf("%d", &n);
+    scanf("%d", &top_face);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &side_faces[i][0], &side_faces[i][1]);
+    }
+    
+    if (can_uniquely_identify_tower(n, top_face, side_faces)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}

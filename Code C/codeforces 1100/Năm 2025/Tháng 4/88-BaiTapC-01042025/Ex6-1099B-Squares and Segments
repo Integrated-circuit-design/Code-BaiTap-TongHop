@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int side = 0;
+    while (side * side < n) {
+        side++;
+    }
+    
+    int result = 2 * side - 1;
+    
+    printf("%d\n", result);
+    
+    return 0;
+}
 

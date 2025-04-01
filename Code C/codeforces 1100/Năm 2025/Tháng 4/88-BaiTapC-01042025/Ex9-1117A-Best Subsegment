@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n], max_value = -1, start = -1, end = -1;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        if (a[i] > max_value) {
+            max_value = a[i];
+        }
+    }
+    
+    int longest_length = 0;
+    int current_length = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (a[i] == max_value) {
+            current_length++;
+        } else {
+            if (current_length > longest_length) {
+                longest_length = current_length;
+            }
+            current_length = 0;
+        }
+    }
+    
+    if (current_length > longest_length) {
+        longest_length = current_length;
+    }
+
+    printf("%d\n", longest_length);
+    return 0;
+}
 

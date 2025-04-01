@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int arr[n];
+    int min_value = 1000000001;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+        if (arr[i] < min_value) {
+            min_value = arr[i];
+        }
+    }
+
+    int first_index = -1, second_index = -1;
+    int min_distance = n;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == min_value) {
+            if (first_index == -1) {
+                first_index = i;
+            } else {
+                second_index = i;
+                int distance = second_index - first_index;
+                if (distance < min_distance) {
+                    min_distance = distance;
+                }
+                first_index = second_index;
+            }
+        }
+    }
+
+    printf("%d\n", min_distance);
+    return 0;
+}
 

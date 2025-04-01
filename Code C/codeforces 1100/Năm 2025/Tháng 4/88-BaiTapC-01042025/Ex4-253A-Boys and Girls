@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    if (n >= m) {
+        while (m > 0) {
+            printf("B");
+            printf("G");
+            n--;
+            m--;
+        }
+        
+        while (n > 0) {
+            printf("B");
+            n--;
+        }
+    } else {
+        while (n > 0) {
+            printf("G");
+            printf("B");
+            n--;
+            m--;
+        }
+        
+        while (m > 0) {
+            printf("G");
+            m--;
+        }
+    }
+    
+    printf("\n");
+    
+    return 0;
+}
 

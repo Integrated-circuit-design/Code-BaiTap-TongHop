@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    long long count = 0;
+
+    scanf("%lld", &n);
+
+    for (long long i = 2520; i <= n; i += 2520) {
+        count++;
+    }
+
+    printf("%lld\n", count);
+
+    return 0;
+}
 

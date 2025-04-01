@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+    
+    long long result = 1;
+    
+    for (long long i = 1; i <= n; i++) {
+        result += 6 * i;
+    }
+    
+    printf("%lld\n", result);
+    
+    return 0;
+}
 

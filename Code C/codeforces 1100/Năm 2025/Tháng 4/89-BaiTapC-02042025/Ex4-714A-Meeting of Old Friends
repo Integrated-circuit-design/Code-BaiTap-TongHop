@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    long long l1, r1, l2, r2, k;
+    scanf("%lld %lld %lld %lld %lld", &l1, &r1, &l2, &r2, &k);
+    
+    long long max_start = (l1 > l2) ? l1 : l2;
+    long long min_end = (r1 < r2) ? r1 : r2;
+    
+    if (max_start > min_end) {
+        printf("0\n");
+    } else {
+        long long meeting_time = min_end - max_start + 1;
+        
+        if (k >= max_start && k <= min_end) {
+            meeting_time--;
+        }
+        
+        printf("%lld\n", meeting_time);
+    }
+    
+    return 0;
+}
 

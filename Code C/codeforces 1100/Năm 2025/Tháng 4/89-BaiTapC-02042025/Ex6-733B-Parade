@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int r1, c1, r2, c2;
+    scanf("%d %d %d %d", &r1, &c1, &r2, &c2);
+    
+    int rook_moves = 2;
+    if (r1 == r2 || c1 == c2) {
+        rook_moves = 1;
+    }
+    
+    int bishop_moves = 0;
+    if ((r1 + c1) % 2 == (r2 + c2) % 2) {
+        if (abs(r1 - r2) == abs(c1 - c2)) {
+            bishop_moves = 1;
+        } else {
+            bishop_moves = 2;
+        }
+    }
+    
+    int row_diff = abs(r1 - r2);
+    int col_diff = abs(c1 - c2);
+    int king_moves = (row_diff > col_diff) ? row_diff : col_diff;
+    
+    printf("%d %d %d\n", rook_moves, bishop_moves, king_moves);
+    return 0;
+}
 

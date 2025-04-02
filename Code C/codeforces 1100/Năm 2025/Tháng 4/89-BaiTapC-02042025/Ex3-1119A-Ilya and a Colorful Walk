@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int colors[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &colors[i]);
+    }
+
+    int first_color = colors[0];
+    int last_color = colors[n - 1];
+
+    int left = 0;
+    while (colors[left] == first_color) {
+        left++;
+    }
+
+    int right = n - 1;
+    while (colors[right] == last_color) {
+        right--;
+    }
+
+    int max_dist = (left < n - 1 - right) ? n - 1 - right : left;
+
+    printf("%d\n", max_dist);
+
+    return 0;
+}
 

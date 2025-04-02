@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int r, d, n;
+    scanf("%d %d", &r, &d);
+    
+    int inner_radius = r - d;
+
+    scanf("%d", &n);
+    
+    int count = 0;
+    
+    for (int i = 0; i < n; i++) {
+        int x, y, ri;
+        scanf("%d %d %d", &x, &y, &ri);
+        
+        int distance_squared = x * x + y * y;
+        double distance = sqrt(distance_squared);
+        
+        if (distance - ri >= inner_radius && distance + ri <= r) {
+            count++;
+        }
+    }
+    
+    printf("%d\n", count);
+    
+    return 0;
+}
 

@@ -1,1 +1,14 @@
+#include <stdio.h>
+
+int main() {
+    int b, g, n;
+    scanf("%d %d %d", &b, &g, &n);
+
+    int min_boys = (n > g) ? n - g : 0;
+    int max_boys = (n < b) ? n : b;
+
+    printf("%d\n", max_boys - min_boys + 1);
+
+    return 0;
+}
 

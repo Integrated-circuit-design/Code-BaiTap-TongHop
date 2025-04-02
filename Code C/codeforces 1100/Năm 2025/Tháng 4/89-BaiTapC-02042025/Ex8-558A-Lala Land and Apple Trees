@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int x;
+    int apples;
+} AppleTree;
+
+int compare_left(const void *a, const void *b) {
+    return ((AppleTree*)b)->x - ((AppleTree*)a)->x;
+}
+
+int compare_right(const void *a, const void *b) {
+    return ((AppleTree*)a)->x - ((AppleTree*)b)->x;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    AppleTree trees_left[n], trees_right[n];
+    int left_count = 0, right_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        int x, apples;
+        scanf("%d %d", &x, &apples);
+        if (x < 0) {
+            trees_left[left_count++] = (AppleTree){x, apples};
+        } else {
+            trees_right[right_count++] = (AppleTree){x, apples};
+        }
+    }
+
+    qsort(trees_left, left_count, sizeof(AppleTree), compare_left);
+    qsort(trees_right, right_count, sizeof(AppleTree), compare_right);
+
+    int apples_collected = 0;
+    int i = 0, j = 0;
+
+    while (i < left_count || j < right_count) {
+        if (i < left_count) {
+            apples_collected += trees_left[i].apples;
+            i++;
+        }
+        if (j < right_count) {
+            apples_collected += trees_right[j].apples;
+            j++;
+        }
+    }
+
+    printf("%d\n", apples_collected);
+
+    return 0;
+}
 

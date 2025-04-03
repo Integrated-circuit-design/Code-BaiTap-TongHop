@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    char s[n + 1];
+    scanf("%s", s);
+
+    int max_word_length = 0;
+    int inside_words_count = 0;
+    int length_of_current_word = 0;
+    int is_inside_parentheses = 0;
+    int is_in_word = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (isalpha(s[i])) {
+            length_of_current_word++;
+            if (!is_in_word) {
+                is_in_word = 1;
+                if (is_inside_parentheses) {
+                    inside_words_count++;
+                }
+            }
+        } else {
+            if (length_of_current_word > 0) {
+                if (!is_inside_parentheses) {
+                    if (length_of_current_word > max_word_length) {
+                        max_word_length = length_of_current_word;
+                    }
+                }
+            }
+            length_of_current_word = 0;
+            is_in_word = 0;
+
+            if (s[i] == '(') {
+                is_inside_parentheses = 1;
+            } else if (s[i] == ')') {
+                is_inside_parentheses = 0;
+            }
+        }
+    }
+
+    if (length_of_current_word > 0) {
+        if (!is_inside_parentheses) {
+            if (length_of_current_word > max_word_length) {
+                max_word_length = length_of_current_word;
+            }
+        }
+    }
+
+    printf("%d %d\n", max_word_length, inside_words_count);
+
+    return 0;
+}
 

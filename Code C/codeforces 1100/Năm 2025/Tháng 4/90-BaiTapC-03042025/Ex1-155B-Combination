@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    int *card1 = (int *)a;
+    int *card2 = (int *)b;
+    
+    if (card1[0] == card2[0])
+        return card2[1] - card1[1];
+    return card2[0] - card1[0];
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int cards[n][2];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &cards[i][0], &cards[i][1]);
+    }
+    
+    qsort(cards, n, sizeof(cards[0]), compare);
+
+    int total_points = 0;
+    int counter = 1;
+    int index = 0;
+
+    while (counter > 0 && index < n) {
+        total_points += cards[index][0];
+        counter += cards[index][1] - 1;
+        index++;
+    }
+
+    printf("%d\n", total_points);
+    return 0;
+}
 

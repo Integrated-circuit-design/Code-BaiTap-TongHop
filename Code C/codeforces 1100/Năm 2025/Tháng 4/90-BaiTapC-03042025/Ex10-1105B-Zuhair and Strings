@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, k;
+    char s[200001];
+    
+    scanf("%d %d", &n, &k);
+    scanf("%s", s);
+
+    int max_level = 0;
+
+    for (char ch = 'a'; ch <= 'z'; ch++) {
+        int count = 0;
+        int streak = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (s[i] == ch) {
+                streak++;
+                if (streak == k) {
+                    count++;
+                    streak = 0;
+                }
+            } else {
+                streak = 0;
+            }
+        }
+        
+        if (count > max_level) {
+            max_level = count;
+        }
+    }
+    
+    printf("%d\n", max_level);
+    
+    return 0;
+}
 

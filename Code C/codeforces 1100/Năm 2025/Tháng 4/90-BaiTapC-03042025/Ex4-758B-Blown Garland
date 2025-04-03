@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[105];
+    int n;
+    int dead_count[4] = {0};
+    
+    scanf("%s", s);
+    n = strlen(s);
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '!') {
+            if (i % 4 == 0) {
+                dead_count[2]++;
+            } else if (i % 4 == 1) {
+                dead_count[3]++;
+            } else if (i % 4 == 2) {
+                dead_count[0]++;
+            } else {
+                dead_count[1]++;
+            }
+        }
+    }
+
+    printf("%d %d %d %d\n", dead_count[0], dead_count[1], dead_count[2], dead_count[3]);
+    
+    return 0;
+}
 

@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_LUCKY 1000
+#define ll long long
+
+int is_lucky_number(ll num) {
+    while (num > 0) {
+        int digit = num % 10;
+        if (digit != 4 && digit != 7) {
+            return 0;
+        }
+        num /= 10;
+    }
+    return 1;
+}
+
+void generate_lucky_numbers(ll* lucky, int* lucky_count) {
+    for (ll num = 1; num <= 10000000000LL; num++) {
+        if (is_lucky_number(num)) {
+            lucky[*lucky_count] = num;
+            (*lucky_count)++;
+        }
+    }
+}
+
+int main() {
+    ll l, r;
+    scanf("%lld %lld", &l, &r);
+
+    ll lucky[MAX_LUCKY];
+    int lucky_count = 0;
+
+    generate_lucky_numbers(lucky, &lucky_count);
+
+    ll sum = 0;
+    for (ll i = l; i <= r; i++) {
+        ll next_lucky = -1;
+        for (int j = 0; j < lucky_count; j++) {
+            if (lucky[j] >= i) {
+                next_lucky = lucky[j];
+                break;
+            }
+        }
+        sum += next_lucky;
+    }
+
+    printf("%lld\n", sum);
+    return 0;
+}
 

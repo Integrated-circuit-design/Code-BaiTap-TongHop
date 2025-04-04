@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int m = 1;
+    while (m * m < n) {
+        m++;
+    }
+
+    printf("%d\n", m);
+
+    int count = 0;
+    for (int i = 1; i <= m && count < n; i++) {
+        for (int j = i; j <= m && count < n; j++) {
+            printf("%d %d\n", i, j);
+            count++;
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+long long sum_of_digits(long long x) {
+    long long sum = 0;
+    while (x > 0) {
+        sum += x % 10;
+        x /= 10;
+    }
+    return sum;
+}
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    long long max_sum = 0;
+
+    for (long long a = n; a >= 0; a--) {
+        long long b = n - a;
+        long long current_sum = sum_of_digits(a) + sum_of_digits(b);
+        
+        if (current_sum > max_sum) {
+            max_sum = current_sum;
+        }
+    }
+
+    printf("%lld\n", max_sum);
+    return 0;
+}
 

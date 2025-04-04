@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAXN 2000
+#define MAXVAL 2000001
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int x[n], y[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &y[i]);
+    }
+
+    int valid[2 * MAXVAL] = {0};
+
+    for (int i = 0; i < n; i++) {
+        valid[x[i]] = 1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        valid[y[i]] = 1;
+    }
+
+    int valid_pairs = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            int result = x[i] ^ y[j];
+            if (result > 0 && valid[result] == 1) {
+                valid_pairs++;
+            }
+        }
+    }
+
+    if (valid_pairs % 2 == 0) {
+        printf("Karen\n");
+    } else {
+        printf("Koyomi\n");
+    }
+
+    return 0;
+}
 

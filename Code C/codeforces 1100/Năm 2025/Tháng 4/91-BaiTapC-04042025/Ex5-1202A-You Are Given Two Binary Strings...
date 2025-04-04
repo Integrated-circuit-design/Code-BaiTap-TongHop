@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+int findFirstOneFromRight(char *str, int len) {
+    for (int i = len - 1; i >= 0; --i) {
+        if (str[i] == '1') {
+            return len - 1 - i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    
+    while (T--) {
+        char x[100005], y[100005];
+        scanf("%s", x);
+        scanf("%s", y);
+
+        int len_x = strlen(x);
+        int len_y = strlen(y);
+
+        int pos_in_y = findFirstOneFromRight(y, len_y);
+
+        if (pos_in_y == -1) {
+            printf("0\n");
+            continue;
+        }
+
+        int k = -1;
+        for (int i = len_x - 1 - pos_in_y; i >= 0; --i) {
+            if (x[i] == '1') {
+                k = len_x - 1 - i - pos_in_y;
+                break;
+            }
+        }
+
+        if (k == -1) {
+            k = 0;
+        }
+
+        printf("%d\n", k);
+    }
+
+    return 0;
+}
 

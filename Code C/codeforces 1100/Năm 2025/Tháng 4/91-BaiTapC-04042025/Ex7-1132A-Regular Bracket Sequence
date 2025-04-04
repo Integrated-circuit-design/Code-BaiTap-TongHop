@@ -1,1 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    long long cnt1, cnt2, cnt3, cnt4;
+    scanf("%lld %lld %lld %lld", &cnt1, &cnt2, &cnt3, &cnt4);
+    
+    if (cnt1 == cnt4 && cnt3 <= cnt1 + cnt2) {
+        printf("1\n");
+    } else {
+        printf("0\n");
+    }
+
+    return 0;
+}
 

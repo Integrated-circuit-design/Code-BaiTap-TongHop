@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int genre_count[11] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int genre;
+        scanf("%d", &genre);
+        genre_count[genre]++;
+    }
+
+    long long total_pairs = 0;
+
+    for (int i = 1; i <= m; i++) {
+        for (int j = i + 1; j <= m; j++) {
+            total_pairs += (long long)genre_count[i] * genre_count[j];
+        }
+    }
+
+    printf("%lld\n", total_pairs);
+
+    return 0;
+}
 

@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    char n[20], m[20];
+    int count[10] = {0};
+
+    scanf("%s %s", n, m);
+
+    for (int i = 0; n[i] != '\0'; i++) {
+        count[n[i] - '0']++;
+    }
+
+    int index = 0;
+    if (count[0] > 0) {
+        for (int i = 1; i <= 9; i++) {
+            if (count[i] > 0) {
+                putchar(i + '0');
+                count[i]--;
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i <= 9; i++) {
+        for (int j = 0; j < count[i]; j++) {
+            putchar(i + '0');
+        }
+    }
+    
+    char result[20];
+    int len = 0;
+    for (int i = 0; i <= 9; i++) {
+        for (int j = 0; j < count[i]; j++) {
+            result[len++] = i + '0';
+        }
+    }
+    result[len] = '\0';
+
+    if (strcmp(result, m) == 0) {
+        printf("OK\n");
+    } else {
+        printf("WRONG_ANSWER\n");
+    }
+
+    return 0;
+}
 

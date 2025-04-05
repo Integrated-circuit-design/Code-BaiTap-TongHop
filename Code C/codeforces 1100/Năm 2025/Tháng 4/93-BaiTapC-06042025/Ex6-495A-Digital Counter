@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int segment[10] = {
+    0b1111110,
+    0b0110000,
+    0b1101101,
+    0b1111001,
+    0b0110011,
+    0b1011011,
+    0b1011111,
+    0b1110000,
+    0b1111111,
+    0b1111011
+};
+
+int main() {
+    char input[3];
+    scanf("%s", input);
+
+    int digit1 = input[0] - '0';
+    int digit2 = input[1] - '0';
+
+    int seg1 = segment[digit1];
+    int seg2 = segment[digit2];
+
+    int goodNumbers = 0;
+
+    for (int i = 0; i < 100; i++) {
+        int d1 = i / 10;
+        int d2 = i % 10;
+        
+        int segD1 = segment[d1];
+        int segD2 = segment[d2];
+
+        if ((segD1 | seg1) == segD1 && (segD2 | seg2) == segD2) {
+            goodNumbers++;
+        }
+    }
+
+    printf("%d\n", goodNumbers);
+    
+    return 0;
+}
 

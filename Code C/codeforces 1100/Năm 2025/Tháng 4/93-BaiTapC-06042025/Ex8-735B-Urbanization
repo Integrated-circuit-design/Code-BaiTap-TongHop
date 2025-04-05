@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, n1, n2;
+    scanf("%d %d %d", &n, &n1, &n2);
+
+    int *a = malloc(n * sizeof(int));
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &a[i]);
+    }
+
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if (a[i] < a[j]) {
+                int temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+
+    if (n1 > n2) {
+        int temp = n1;
+        n1 = n2;
+        n2 = temp;
+    }
+
+    long long sum1 = 0, sum2 = 0;
+
+    for (int i = 0; i < n1; ++i) {
+        sum1 += a[i];
+    }
+
+    for (int i = n1; i < n1 + n2; ++i) {
+        sum2 += a[i];
+    }
+
+    double result = (double)sum1 / n1 + (double)sum2 / n2;
+
+    printf("%.9f\n", result);
+
+    free(a);
+
+    return 0;
+}
 

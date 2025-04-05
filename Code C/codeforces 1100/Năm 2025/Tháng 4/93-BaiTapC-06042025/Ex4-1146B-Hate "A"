@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char t[100005];
+    scanf("%s", t);
+
+    int len_t = strlen(t);
+    int len_s = 0;
+    int count_non_a = 0;
+
+    for (int i = 0; i < len_t; i++) {
+        if (t[i] != 'a') {
+            count_non_a++;
+        }
+    }
+
+    len_s = len_t - count_non_a;
+
+    if (len_s < 0 || len_s > len_t) {
+        printf(":(");
+        return 0;
+    }
+
+    int i = 0, j = len_s;
+    while (i < len_s && j < len_t) {
+        if (t[i] == 'a') {
+            i++;
+        } else {
+            if (t[i] != t[j]) {
+                printf(":(");
+                return 0;
+            }
+            i++;
+            j++;
+        }
+    }
+
+    printf("%.*s", len_s, t);
+    return 0;
+}
 

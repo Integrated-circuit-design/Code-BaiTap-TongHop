@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int guests_in[26] = {0};
+    char s[n + 1];
+    scanf("%s", s);
+
+    for (int i = 0; i < n; i++) {
+        guests_in[s[i] - 'A']++;
+    }
+
+    int open_doors = 0;
+    int open_count[26] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int door = s[i] - 'A';
+
+        if (open_count[door] == 0) {
+            open_doors++;
+        }
+        
+        open_count[door]++;
+
+        if (open_count[door] == guests_in[door]) {
+            open_doors--;
+        }
+
+        if (open_doors > k) {
+            printf("YES\n");
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

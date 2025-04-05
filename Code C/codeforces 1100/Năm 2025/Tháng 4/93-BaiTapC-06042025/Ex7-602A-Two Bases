@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+long long convert_to_decimal(int digits[], int length, int base) {
+    long long result = 0;
+    int i;
+    for (i = 0; i < length; i++) {
+        result = result * base + digits[i];
+    }
+    return result;
+}
+
+int main() {
+    int n, bx, m, by;
+    int x[10], y[10];
+
+    scanf("%d %d", &n, &bx);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x[i]);
+    }
+
+    scanf("%d %d", &m, &by);
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &y[i]);
+    }
+
+    long long decX = 0, decY = 0;
+    int i;
+
+    for (i = 0; i < n; i++) {
+        decX = decX * bx + x[i];
+    }
+
+    for (i = 0; i < m; i++) {
+        decY = decY * by + y[i];
+    }
+
+    if (decX < decY) {
+        printf("<\n");
+    } else if (decX > decY) {
+        printf(">\n");
+    } else {
+        printf("=\n");
+    }
+
+    return 0;
+}
 

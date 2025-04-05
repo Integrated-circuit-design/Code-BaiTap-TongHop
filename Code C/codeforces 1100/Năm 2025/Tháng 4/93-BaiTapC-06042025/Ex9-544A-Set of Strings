@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int k;
+    char q[105];
+    scanf("%d", &k);
+    scanf("%s", q);
+
+    int len = strlen(q);
+    int partitions = 0;
+    char first_char = '\0';
+    int last_split_index = 0;
+    int split_indices[26] = { -1 };
+
+    for (int i = 0; i < len; i++) {
+        if (split_indices[q[i] - 'a'] == -1) {
+            split_indices[q[i] - 'a'] = i;
+            partitions++;
+            if (partitions == k) {
+                last_split_index = i + 1;
+                break;
+            }
+        }
+    }
+
+    if (partitions < k) {
+        printf("NO\n");
+    } else {
+        printf("YES\n");
+        int start = 0;
+
+        for (int i = 0; i < k - 1; i++) {
+            for (int j = start; j < split_indices[q[start] - 'a']; j++) {
+                putchar(q[j]);
+            }
+            putchar('\n');
+            start = split_indices[q[start] - 'a'];
+        }
+        for (int i = start; i < len; i++) {
+            putchar(q[i]);
+        }
+        putchar('\n');
+    }
+
+    return 0;
+}
 

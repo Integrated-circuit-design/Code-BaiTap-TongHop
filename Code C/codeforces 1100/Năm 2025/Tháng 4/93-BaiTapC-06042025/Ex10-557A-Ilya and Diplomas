@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int min1, max1;
+    int min2, max2;
+    int min3, max3;
+
+    scanf("%d", &n);
+    scanf("%d %d", &min1, &max1);
+    scanf("%d %d", &min2, &max2);
+    scanf("%d %d", &min3, &max3);
+
+    int first = max1;
+    int second = min2;
+    int third = n - first - second;
+
+    while (second < min2 || second > max2 || third < min3 || third > max3) {
+        second++;
+        third = n - first - second;
+
+        if (second > max2) {
+            second = min2;
+            first--;
+        }
+
+        if (first < min1) {
+            break;
+        }
+    }
+
+    printf("%d %d %d\n", first, second, third);
+
+    return 0;
+}
 

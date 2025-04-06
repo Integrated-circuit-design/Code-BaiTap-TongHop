@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+long long find_k_rounding(long long n, long long k) {
+    long long multiplier = 1;
+    long long ten_power = 1;
+
+    for (int i = 0; i < k; i++) {
+        ten_power *= 10;
+    }
+
+    while ((n * multiplier) % ten_power != 0) {
+        multiplier++;
+    }
+
+    return n * multiplier;
+}
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+    long long result = find_k_rounding(n, k);
+    printf("%lld\n", result);
+    return 0;
+}
 

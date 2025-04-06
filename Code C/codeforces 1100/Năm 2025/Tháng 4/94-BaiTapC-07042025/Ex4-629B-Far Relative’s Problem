@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAX_DAYS 366
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int maleStart[MAX_DAYS + 1] = {0};
+    int femaleStart[MAX_DAYS + 1] = {0};
+    int maleEnd[MAX_DAYS + 1] = {0};
+    int femaleEnd[MAX_DAYS + 1] = {0};
+
+    for (int i = 0; i < n; i++) {
+        char gender;
+        int a, b;
+        scanf(" %c %d %d", &gender, &a, &b);
+
+        if (gender == 'M') {
+            maleStart[a]++;
+            maleEnd[b]++;
+        } else if (gender == 'F') {
+            femaleStart[a]++;
+            femaleEnd[b]++;
+        }
+    }
+
+    int males = 0, females = 0;
+    int max_guests = 0;
+
+    for (int day = 1; day <= MAX_DAYS; day++) {
+        males += maleStart[day];
+        females += femaleStart[day];
+
+        males -= maleEnd[day];
+        females -= femaleEnd[day];
+
+        int guests_today = 2 * (males < females ? males : females);
+
+        if (guests_today > max_guests) {
+            max_guests = guests_today;
+        }
+    }
+
+    printf("%d\n", max_guests);
+
+    return 0;
+}
 

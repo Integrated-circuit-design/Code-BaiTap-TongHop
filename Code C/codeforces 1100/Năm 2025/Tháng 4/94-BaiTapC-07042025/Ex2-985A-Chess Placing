@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int main() {
+    int n, m, i;
+    scanf("%d", &n);
+    
+    int positions[100];
+    m = 0;
+    
+    while (scanf("%d", &positions[m]) == 1) {
+        m++;
+    }
+
+    int black_cells[100], white_cells[100];
+    int black_count = 0, white_count = 0;
+
+    for (i = 1; i <= n; i++) {
+        if (i % 2 == 1) {
+            black_cells[black_count++] = i;
+        } else {
+            white_cells[white_count++] = i;
+        }
+    }
+
+    int min_cost_black = 0;
+    for (i = 0; i < m; i++) {
+        min_cost_black += abs(positions[i] - black_cells[i]);
+    }
+
+    int min_cost_white = 0;
+    for (i = 0; i < m; i++) {
+        min_cost_white += abs(positions[i] - white_cells[i]);
+    }
+
+    if (min_cost_black < min_cost_white) {
+        printf("%d\n", min_cost_black);
+    } else {
+        printf("%d\n", min_cost_white);
+    }
+
+    return 0;
+}
 

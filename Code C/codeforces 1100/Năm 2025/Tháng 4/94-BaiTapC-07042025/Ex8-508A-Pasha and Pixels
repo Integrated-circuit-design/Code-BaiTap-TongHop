@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+#define MAX 1001
+
+int grid[MAX][MAX];
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int x, y;
+    int found = 0;
+
+    for (int move = 1; move <= k; ++move) {
+        scanf("%d %d", &x, &y);
+        grid[x][y] = 1;
+
+        if (x > 1 && y > 1 && grid[x][y] && grid[x-1][y] && grid[x][y-1] && grid[x-1][y-1]) {
+            printf("%d\n", move);
+            found = 1;
+            break;
+        }
+
+        if (x > 1 && y < m && grid[x][y] && grid[x-1][y] && grid[x][y+1] && grid[x-1][y+1]) {
+            printf("%d\n", move);
+            found = 1;
+            break;
+        }
+        if (x < n && y > 1 && grid[x][y] && grid[x+1][y] && grid[x][y-1] && grid[x+1][y-1]) {
+            printf("%d\n", move);
+            found = 1;
+            break;
+        }
+        if (x < n && y < m && grid[x][y] && grid[x+1][y] && grid[x][y+1] && grid[x+1][y+1]) {
+            printf("%d\n", move);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("0\n");
+    }
+
+    return 0;
+}
 

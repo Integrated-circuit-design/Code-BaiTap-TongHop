@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    char board[8][9];
+    int row_black[8] = {0};
+    int total_strokes = 0;
+
+    for (int i = 0; i < 8; i++) {
+        scanf("%s", board[i]);
+    }
+
+    for (int i = 0; i < 8; i++) {
+        int all_black = 1;
+        for (int j = 0; j < 8; j++) {
+            if (board[i][j] != 'B') {
+                all_black = 0;
+                break;
+            }
+        }
+        if (all_black) {
+            row_black[i] = 1;
+            total_strokes++;
+        }
+    }
+
+    for (int j = 0; j < 8; j++) {
+        int need_column = 0;
+        for (int i = 0; i < 8; i++) {
+            if (board[i][j] == 'B' && row_black[i] == 0) {
+                need_column = 1;
+                break;
+            }
+        }
+        if (need_column) {
+            total_strokes++;
+        }
+    }
+
+    printf("%d\n", total_strokes);
+
+    return 0;
+}
 

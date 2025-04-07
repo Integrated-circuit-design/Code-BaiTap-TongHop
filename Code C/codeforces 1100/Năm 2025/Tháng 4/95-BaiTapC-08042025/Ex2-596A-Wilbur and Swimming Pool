@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int calculate_area(int x1, int y1, int x2, int y2) {
+    int dx = abs(x1 - x2);
+    int dy = abs(y1 - y2);
+    if (dx == 0 || dy == 0) return -1;
+    return dx * dy;
+}
+
+void find_bounds(int arr[], int n, int *minVal, int *maxVal) {
+    *minVal = *maxVal = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < *minVal) *minVal = arr[i];
+        if (arr[i] > *maxVal) *maxVal = arr[i];
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int x[4], y[4];
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &x[i], &y[i]);
+    }
+
+    int area = -1;
+
+    switch (n) {
+        case 1:
+            area = -1;
+            break;
+        case 2:
+            area = calculate_area(x[0], y[0], x[1], y[1]);
+            break;
+        case 3:
+        case 4: {
+            int minX, maxX, minY, maxY;
+            find_bounds(x, n, &minX, &maxX);
+            find_bounds(y, n, &minY, &maxY);
+            area = (maxX - minX) * (maxY - minY);
+            break;
+        }
+    }
+
+    printf("%d\n", area);
+    return 0;
+}
 

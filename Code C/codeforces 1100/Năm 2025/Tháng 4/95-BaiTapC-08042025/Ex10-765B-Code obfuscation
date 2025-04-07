@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[501];
+    scanf("%s", s);
+
+    int thu_tu[26];
+    for (int i = 0; i < 26; i++) {
+        thu_tu[i] = -1;
+    }
+
+    int dem = 0;
+
+    for (int i = 0; s[i]; i++) {
+        int chi_so = s[i] - 'a';
+        if (thu_tu[chi_so] == -1) {
+            thu_tu[chi_so] = dem;
+            dem++;
+        }
+    }
+
+    for (int i = 0; i < 26; i++) {
+        if (thu_tu[i] == -1) break;
+        if (thu_tu[i] != i) {
+            printf("NO\n");
+            return 0;
+        }
+    }
+
+    printf("YES\n");
+    return 0;
+}
 

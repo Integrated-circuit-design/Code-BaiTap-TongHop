@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MAXN 105
+
+int main() {
+    int total, schools, selected;
+    scanf("%d %d %d", &total, &schools, &selected);
+
+    int strength[MAXN];
+    int belong[MAXN];
+    int top[MAXN] = {0};
+    int pick[MAXN];
+
+    for (int i = 0; i < total; i++) {
+        scanf("%d", &strength[i]);
+    }
+
+    for (int i = 0; i < total; i++) {
+        scanf("%d", &belong[i]);
+        int sch = belong[i];
+        if (strength[i] > top[sch]) {
+            top[sch] = strength[i];
+        }
+    }
+
+    for (int i = 0; i < selected; i++) {
+        scanf("%d", &pick[i]);
+        pick[i]--;
+    }
+
+    int fake_needed = 0;
+
+    for (int i = 0; i < selected; i++) {
+        int idx = pick[i];
+        int sch = belong[idx];
+        if (strength[idx] < top[sch]) {
+            fake_needed++;
+        }
+    }
+
+    printf("%d\n", fake_needed);
+
+    return 0;
+}
 

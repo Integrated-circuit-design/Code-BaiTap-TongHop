@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define N 105
+
+int n, m;
+char grid[N][N];
+
+int count_bombs(int i, int j) {
+    int count = 0;
+    for (int x = i - 1; x <= i + 1; x++) {
+        for (int y = j - 1; y <= j + 1; y++) {
+            if (x >= 0 && x < n && y >= 0 && y < m && !(x == i && y == j)) {
+                if (grid[x][y] == '*') {
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
+}
+
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < n; i++) {
+        scanf("%s", grid[i]);
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            char ch = grid[i][j];
+            if (ch >= '1' && ch <= '8') {
+                int expected = ch - '0';
+                int actual = count_bombs(i, j);
+                if (actual != expected) {
+                    printf("NO\n");
+                    return 0;
+                }
+            }
+            else if (ch == '.') {
+                if (count_bombs(i, j) != 0) {
+                    printf("NO\n");
+                    return 0;
+                }
+            }
+        }
+    }
+    printf("YES\n");
+    return 0;
+}
 

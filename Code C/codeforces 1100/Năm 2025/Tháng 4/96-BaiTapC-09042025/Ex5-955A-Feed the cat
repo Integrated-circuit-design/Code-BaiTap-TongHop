@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int tinh_so_banh(int hunger, int N) {
+    return (hunger + N - 1) / N;
+}
+
+double tinh_gia(int so_banh, double gia_banh) {
+    return so_banh * gia_banh;
+}
+
+int tinh_phut_con_lai(int hh, int mm) {
+    return (19 - hh) * 60 + (60 - mm);
+}
+
+int main() {
+    int hh, mm;
+    scanf("%d %d", &hh, &mm);
+
+    int H, D, C, N;
+    scanf("%d %d %d %d", &H, &D, &C, &N);
+
+    if (hh >= 20) {
+        int buns = tinh_so_banh(H, N);
+        double cost = tinh_gia(buns, C * 0.8);
+        printf("%.4f\n", cost);
+        return 0;
+    }
+
+    int buns_now = tinh_so_banh(H, N);
+    double cost_now = tinh_gia(buns_now, C);
+
+    int minutes_wait = tinh_phut_con_lai(hh, mm);
+    int hunger_later = H + minutes_wait * D;
+    int buns_later = tinh_so_banh(hunger_later, N);
+    double cost_later = tinh_gia(buns_later, C * 0.8);
+
+    if (cost_now < cost_later)
+        printf("%.4f\n", cost_now);
+    else
+        printf("%.4f\n", cost_later);
+
+    return 0;
+}
 

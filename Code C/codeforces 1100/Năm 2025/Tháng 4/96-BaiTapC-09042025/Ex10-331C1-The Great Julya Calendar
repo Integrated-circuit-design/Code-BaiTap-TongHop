@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    int buoc = 0;
+
+    printf("Nhap n: ");
+    scanf("%lld", &n);
+
+    while (n > 0) {
+        long long tam = n;
+        int max = 0;
+
+        while (tam > 0) {
+            int cs = tam % 10;
+            if (cs > max) {
+                max = cs;
+            }
+            tam = tam / 10;
+        }
+
+        n = n - max;
+        buoc++;
+    }
+
+    printf("So buoc can thuc hien: %d\n", buoc);
+    return 0;
+}
 

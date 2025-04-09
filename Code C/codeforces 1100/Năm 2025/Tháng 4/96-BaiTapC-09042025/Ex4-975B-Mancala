@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+long long tinh_diem(long long board[14], int vi_tri) {
+    long long ban_sao[14];
+    for (int i = 0; i < 14; i++) {
+        ban_sao[i] = board[i];
+    }
+
+    long long so_vien = ban_sao[vi_tri];
+    ban_sao[vi_tri] = 0;
+
+    long long chia_deu = so_vien / 14;
+    long long phan_du = so_vien % 14;
+
+    for (int i = 0; i < 14; i++) {
+        ban_sao[i] += chia_deu;
+    }
+
+    for (int i = 1; i <= phan_du; i++) {
+        int vi_tri_hien_tai = (vi_tri + i) % 14;
+        ban_sao[vi_tri_hien_tai]++;
+    }
+
+    long long diem = 0;
+    for (int i = 0; i < 14; i++) {
+        if (ban_sao[i] % 2 == 0) {
+            diem += ban_sao[i];
+        }
+    }
+
+    return diem;
+}
+
+int main() {
+    long long ban_co[14];
+    for (int i = 0; i < 14; i++) {
+        scanf("%lld", &ban_co[i]);
+    }
+
+    long long diem_cao_nhat = 0;
+
+    for (int i = 0; i < 14; i++) {
+        if (ban_co[i] > 0) {
+            long long diem = tinh_diem(ban_co, i);
+            if (diem > diem_cao_nhat) {
+                diem_cao_nhat = diem;
+            }
+        }
+    }
+
+    printf("%lld\n", diem_cao_nhat);
+    return 0;
+}
 

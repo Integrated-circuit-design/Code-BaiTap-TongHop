@@ -1,1 +1,85 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+#define MAX_NAME 33
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sort_tang(int a[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int min = i;
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[min])
+                min = j;
+        }
+        swap(&a[i], &a[min]);
+    }
+}
+
+void sort_giam(int a[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int max = i;
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] > a[max])
+                max = j;
+        }
+        swap(&a[i], &a[max]);
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int gia[MAX];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &gia[i]);
+    }
+
+    char ten[MAX][MAX_NAME];
+    int soLuong[MAX] = {0};
+    int demLoai = 0;
+
+    for (int i = 0; i < m; i++) {
+        char temp[MAX_NAME];
+        scanf("%s", temp);
+
+        int timThay = 0;
+        for (int j = 0; j < demLoai; j++) {
+            if (strcmp(ten[j], temp) == 0) {
+                soLuong[j]++;
+                timThay = 1;
+                break;
+            }
+        }
+
+        if (!timThay) {
+            strcpy(ten[demLoai], temp);
+            soLuong[demLoai] = 1;
+            demLoai++;
+        }
+    }
+
+    sort_tang(gia, n);
+    sort_giam(soLuong, demLoai);
+
+    int minTong = 0;
+    for (int i = 0; i < demLoai; i++) {
+        minTong += soLuong[i] * gia[i];
+    }
+
+    int maxTong = 0;
+    for (int i = 0; i < demLoai; i++) {
+        maxTong += soLuong[i] * gia[n - 1 - i];
+    }
+
+    printf("%d %d\n", minTong, maxTong);
+
+    return 0;
+}
 

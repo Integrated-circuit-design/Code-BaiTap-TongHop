@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+#define MAX 5001
+
+int main() {
+    int m;
+    scanf("%d", &m);
+
+    int a[MAX], freq[MAX] = {0};
+
+    for (int i = 0; i < m; i++) {
+        int x;
+        scanf("%d", &x);
+        if (freq[x] < 2) {
+            freq[x]++;
+        }
+    }
+
+    int peak = 0;
+    for (int i = 1; i < MAX; i++) {
+        if (freq[i] >= 1) {
+            printf("%d ", i);
+            peak = i;
+        }
+    }
+
+    for (int i = MAX - 1; i >= 1; i--) {
+        if (freq[i] == 2 && i != peak) {
+            printf("%d ", i);
+        }
+    }
+
+    int count = 0;
+    for (int i = 1; i < MAX; i++) {
+        if (freq[i] >= 1) count++;
+        if (freq[i] == 2 && i != peak) count++;
+    }
+
+    printf("\n%d\n", count);
+
+    return 0;
+}
 

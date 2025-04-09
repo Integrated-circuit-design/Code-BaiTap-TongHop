@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+int la_palindrome(char *s) {
+    int i = 0, j = strlen(s) - 1;
+    while (i < j) {
+        if (s[i] != s[j]) return 0;
+        i++;
+        j--;
+    }
+    return 1;
+}
+
+void chen_vao_vi_tri(char goc[], char ketqua[], char c, int vitri) {
+    int i, j = 0;
+    int len = strlen(goc);
+
+    for (i = 0; i < vitri; i++)
+        ketqua[j++] = goc[i];
+
+    ketqua[j++] = c;
+
+    for (i = vitri; i < len; i++)
+        ketqua[j++] = goc[i];
+
+    ketqua[j] = '\0';
+}
+
+int main() {
+    char s[11];
+    scanf("%s", s);
+
+    char moi[12];
+    int timduoc = 0;
+
+    for (int vt = 0; vt <= strlen(s); vt++) {
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            chen_vao_vi_tri(s, moi, ch, vt);
+            if (la_palindrome(moi)) {
+                printf("%s\n", moi);
+                timduoc = 1;
+                goto xong;
+            }
+        }
+    }
+
+xong:
+    if (!timduoc) {
+        printf("NA\n");
+    }
+
+    return 0;
+}
 

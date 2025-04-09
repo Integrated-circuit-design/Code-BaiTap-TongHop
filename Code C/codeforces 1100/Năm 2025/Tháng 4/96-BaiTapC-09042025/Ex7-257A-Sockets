@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int usefulSockets;
+} Filter;
+
+int compareFilters(const void *a, const void *b) {
+    return ((Filter*)b)->usefulSockets - ((Filter*)a)->usefulSockets;
+}
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    Filter filters[55];
+
+    for (int i = 0; i < n; i++) {
+        int x;
+        scanf("%d", &x);
+        filters[i].usefulSockets = x - 1;
+    }
+
+    if (k >= m) {
+        printf("0\n");
+        return 0;
+    }
+
+    int required = m - k;
+
+    qsort(filters, n, sizeof(Filter), compareFilters);
+
+    int gained = 0;
+    for (int i = 0; i < n; i++) {
+        gained += filters[i].usefulSockets;
+        if (gained >= required) {
+            printf("%d\n", i + 1);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

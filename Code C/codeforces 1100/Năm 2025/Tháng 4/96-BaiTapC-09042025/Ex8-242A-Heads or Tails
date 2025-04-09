@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+#define MAX 10000
+
+int main() {
+    int x, y, a, b;
+    scanf("%d %d %d %d", &x, &y, &a, &b);
+
+    int vasya_heads[MAX];
+    int petya_heads[MAX];
+    int total = 0;
+
+    for (int i = a; i <= x; i++) {
+        for (int j = b; j <= y; j++) {
+            if (i > j) {
+                vasya_heads[total] = i;
+                petya_heads[total] = j;
+                total++;
+            }
+        }
+    }
+
+    printf("%d\n", total);
+
+    for (int k = 0; k < total; k++) {
+        printf("%d %d\n", vasya_heads[k], petya_heads[k]);
+    }
+
+    return 0;
+}
 

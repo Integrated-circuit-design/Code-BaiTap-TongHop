@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[55];
+    scanf("%s", s);
+
+    char protocol[5], domain[55], context[55];
+    int i = 0, j = 0;
+
+    if (s[0] == 'h') {
+        strncpy(protocol, "http", 4);
+        protocol[4] = '\0';
+        i = 4;
+    } else {
+        strncpy(protocol, "ftp", 3);
+        protocol[3] = '\0';
+        i = 3;
+    }
+
+    int ru_pos = -1;
+    for (j = i + 1; s[j] != '\0'; ++j) {
+        if (s[j] == 'r' && s[j+1] == 'u') {
+            ru_pos = j;
+            break;
+        }
+    }
+
+    int d = 0;
+    for (int k = i; k < ru_pos; ++k) {
+        domain[d++] = s[k];
+    }
+    domain[d] = '\0';
+
+    int c = 0;
+    if (s[ru_pos + 2] != '\0') {
+        for (int k = ru_pos + 2; s[k] != '\0'; ++k) {
+            context[c++] = s[k];
+        }
+    }
+    context[c] = '\0';
+
+    printf("%s://%s.ru", protocol, domain);
+    if (context[0] != '\0') {
+        printf("/%s", context);
+    }
+    printf("\n");
+
+    return 0;
+}
 

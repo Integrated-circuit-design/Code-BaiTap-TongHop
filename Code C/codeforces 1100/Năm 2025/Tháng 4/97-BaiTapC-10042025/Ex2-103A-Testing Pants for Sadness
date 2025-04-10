@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long answers[105];
+    int index = 0;
+
+    while (index < n) {
+        scanf("%lld", &answers[index]);
+        index++;
+    }
+
+    long long clicks = 0;
+    long long repetition = 1;
+
+    index = 0;
+    while (index < n) {
+        clicks += answers[index] * repetition;
+        repetition *= answers[index];
+        index++;
+    }
+
+    printf("%lld\n", clicks);
+
+    return 0;
+}
 

@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int laHopLe(int n, int m) {
+    return !(n == 0 && m > 0);
+}
+
+int tinhToiDa(int n, int m) {
+    return n + m;
+}
+
+int tinhToiThieu(int n, int m) {
+    if (n >= m) {
+        return n;
+    } else {
+        return n + (m - n);
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    if (!laHopLe(n, m)) {
+        printf("Impossible\n");
+    } else {
+        int min = tinhToiThieu(n, m);
+        int max = tinhToiDa(n, m);
+        printf("%d %d\n", min, max);
+    }
+
+    return 0;
+}
 

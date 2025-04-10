@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int n;
+int a[1005];
+
+bool kiemTra(int day) {
+    bool ok[1005];
+    bool dp[1005] = {0};
+
+    for (int i = 0; i < n; i++) {
+        ok[i] = (day < a[i]);
+    }
+
+    if (!ok[0] || !ok[n - 1]) return false;
+
+    dp[0] = true;
+
+    for (int i = 0; i < n; i++) {
+        if (dp[i]) {
+            if (i + 1 < n && ok[i + 1]) dp[i + 1] = true;
+            if (i + 2 < n && ok[i + 2]) dp[i + 2] = true;
+        }
+    }
+
+    return dp[n - 1];
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int ketQua = 0;
+
+    for (int day = 1; day <= 1000; day++) {
+        if (kiemTra(day)) {
+            ketQua = day;
+        } else {
+            break;
+        }
+    }
+
+    printf("%d\n", ketQua);
+    return 0;
+}
 

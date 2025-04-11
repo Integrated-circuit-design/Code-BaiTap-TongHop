@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+#define MAX 1000
+
+typedef struct {
+    int start;
+    int end;
+} TimePeriod;
+
+int main() {
+    int n, m;
+    int a[MAX];
+    TimePeriod periods[MAX];
+    long long sum = 0;
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        sum += a[i];
+    }
+
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &periods[i].start, &periods[i].end);
+    }
+
+    for (int i = 0; i < m; i++) {
+        if (sum <= periods[i].end) {
+            int submit_time = (sum < periods[i].start) ? periods[i].start : (int)sum;
+            printf("%d\n", submit_time);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

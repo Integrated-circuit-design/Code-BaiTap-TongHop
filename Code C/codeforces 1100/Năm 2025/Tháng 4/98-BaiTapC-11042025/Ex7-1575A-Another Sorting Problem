@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char books[100005][55];
+int indices[100005];
+int n, m;
+
+int compare(const void *a, const void *b) {
+    int i = *(int *)a;
+    int j = *(int *)b;
+
+    for (int k = 0; k < m; k++) {
+        char ci = books[i][k];
+        char cj = books[j][k];
+
+        if (ci == cj) continue;
+        if ((k + 1) % 2 == 1) return ci - cj;
+        else return cj - ci;
+    }
+
+    return 0;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", books[i]);
+        indices[i] = i;
+    }
+
+    qsort(indices, n, sizeof(int), compare);
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", indices[i] + 1);
+    }
+
+    return 0;
+}
 

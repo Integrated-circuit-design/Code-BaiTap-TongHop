@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int k, a, b, v;
+    scanf("%d %d %d %d", &k, &a, &b, &v);
+
+    int hop = 0;
+
+    for (; a > 0; hop++) {
+        int ngan = 1 + (b >= k - 1 ? k - 1 : b);
+        int hat_trong_hop = ngan * v;
+        a -= hat_trong_hop;
+        b -= (ngan - 1);
+    }
+
+    printf("%d\n", hop);
+    return 0;
+}
 

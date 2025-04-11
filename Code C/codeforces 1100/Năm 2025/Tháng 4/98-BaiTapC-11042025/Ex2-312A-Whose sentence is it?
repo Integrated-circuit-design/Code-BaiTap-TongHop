@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int bat_dau_miao(const char *s) {
+    return strncmp(s, "miao.", 5) == 0;
+}
+
+int ket_thuc_lala(const char *s) {
+    int len = strlen(s);
+    if (len < 5) return 0;
+    return strcmp(s + len - 5, "lala.") == 0;
+}
+
+int main() {
+    int n;
+    char s[110];
+
+    scanf("%d", &n);
+    getchar();
+
+    for (int i = 0; i < n; ++i) {
+        fgets(s, sizeof(s), stdin);
+
+        char *p = strchr(s, '\n');
+        if (p) *p = '\0';
+
+        int bd = bat_dau_miao(s);
+        int kt = ket_thuc_lala(s);
+
+        if (kt && !bd) {
+            printf("Freda's\n");
+        } else if (bd && !kt) {
+            printf("Rainbow's\n");
+        } else {
+            printf("OMG>.< I don't know!\n");
+        }
+    }
+
+    return 0;
+}
 

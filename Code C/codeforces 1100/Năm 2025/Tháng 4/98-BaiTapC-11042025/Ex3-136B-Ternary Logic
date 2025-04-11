@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int a, c;
+    scanf("%d %d", &a, &c);
+
+    int b = 0;
+    int power = 1;
+
+    while (a > 0 || c > 0) {
+        int da = a % 3;
+        int dc = c % 3;
+
+        int db = (dc - da + 3) % 3;
+
+        b += db * power;
+
+        a /= 3;
+        c /= 3;
+        power *= 3;
+    }
+
+    printf("%d\n", b);
+    return 0;
+}
 

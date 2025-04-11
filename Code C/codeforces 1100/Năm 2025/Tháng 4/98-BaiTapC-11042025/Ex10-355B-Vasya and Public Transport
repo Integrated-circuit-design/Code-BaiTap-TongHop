@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+#define MAX 1005
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+int tinh_phi(int so_luong, int rides[], int c1, int c2) {
+    int tong = 0;
+    for (int i = 0; i < so_luong; i++) {
+        int theo_luot = rides[i] * c1;
+        int khong_gioi_han_xe = c2;
+        tong += min(theo_luot, khong_gioi_han_xe);
+    }
+    return tong;
+}
+
+int main() {
+    int c1, c2, c3, c4;
+    int bus_count, trolley_count;
+    int bus_rides[MAX], trolley_rides[MAX];
+
+    scanf("%d %d %d %d", &c1, &c2, &c3, &c4);
+    scanf("%d %d", &bus_count, &trolley_count);
+
+    for (int i = 0; i < bus_count; i++) {
+        scanf("%d", &bus_rides[i]);
+    }
+
+    for (int i = 0; i < trolley_count; i++) {
+        scanf("%d", &trolley_rides[i]);
+    }
+
+    int chi_phi_bus = min(tinh_phi(bus_count, bus_rides, c1, c2), c3);
+    int chi_phi_trolley = min(tinh_phi(trolley_count, trolley_rides, c1, c2), c3);
+    int tong_chi_phi = min(chi_phi_bus + chi_phi_trolley, c4);
+
+    printf("%d\n", tong_chi_phi);
+
+    return 0;
+}
 

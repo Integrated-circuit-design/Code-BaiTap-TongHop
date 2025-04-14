@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+const char *sizes[] = {"S", "M", "L", "XL", "XXL"};
+int tshirts[5];
+
+int get_index(const char *size) {
+    if (strcmp(size, "S") == 0) return 0;
+    if (strcmp(size, "M") == 0) return 1;
+    if (strcmp(size, "L") == 0) return 2;
+    if (strcmp(size, "XL") == 0) return 3;
+    if (strcmp(size, "XXL") == 0) return 4;
+    return -1;
+}
+
+int main() {
+    for (int i = 0; i < 5; ++i) {
+        scanf("%d", &tshirts[i]);
+    }
+
+    int k;
+    scanf("%d", &k);
+
+    for (int i = 0; i < k; ++i) {
+        char desired[10];
+        scanf("%s", desired);
+
+        int idx = get_index(desired);
+
+        int chosen = -1;
+        
+        for (int dist = 0; dist < 5; dist++) {
+            if (idx - dist >= 0 && tshirts[idx - dist] > 0) {
+                chosen = idx - dist;
+                break;
+            }
+            if (idx + dist < 5 && tshirts[idx + dist] > 0) {
+                chosen = idx + dist;
+                break;
+            }
+        }
+
+        printf("%s\n", sizes[chosen]);
+        tshirts[chosen]--;
+    }
+
+    return 0;
+}
 

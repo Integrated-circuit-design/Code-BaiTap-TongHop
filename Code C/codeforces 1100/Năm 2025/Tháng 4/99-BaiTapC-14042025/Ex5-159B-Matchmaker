@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 1001
+
+typedef struct {
+    int color;
+    int diameter;
+} Item;
+
+int compare(const void *a, const void *b) {
+    Item *itemA = (Item *)a;
+    Item *itemB = (Item *)b;
+    
+    if (itemA->diameter == itemB->diameter) {
+        return itemA->color - itemB->color;
+    }
+    return itemA->diameter - itemB->diameter;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    Item markers[n];
+    Item caps[m];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &markers[i].color, &markers[i].diameter);
+    }
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &caps[i].color, &caps[i].diameter);
+    }
+
+    qsort(markers, n, sizeof(Item), compare);
+    qsort(caps, m, sizeof(Item), compare);
+
+    int total_closed = 0;
+    int beautiful_closed = 0;
+
+    int i = 0, j = 0;
+    while (i < n && j < m) {
+        if (markers[i].diameter == caps[j].diameter && markers[i].color == caps[j].color) {
+            beautiful_closed++;
+            total_closed++;
+            i++; j++;
+        }
+        else if (markers[i].diameter == caps[j].diameter) {
+            total_closed++;
+            i++; j++;
+        }
+        else if (caps[j].diameter < markers[i].diameter) {
+            j++;
+        }
+        else {
+            i++;
+        }
+    }
+
+    printf("%d %d\n", total_closed, beautiful_closed);
+
+    return 0;
+}
 

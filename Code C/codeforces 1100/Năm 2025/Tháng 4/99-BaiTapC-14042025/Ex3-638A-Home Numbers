@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int n, a;
+    scanf("%d %d", &n, &a);
+
+    int time = 0;
+
+    if (a % 2 != 0) {
+        time = a / 2 + 1;
+    } else {
+        time = (n - a) / 2 + 1;
+    }
+
+    printf("%d\n", time);
+
+    return 0;
+}
 

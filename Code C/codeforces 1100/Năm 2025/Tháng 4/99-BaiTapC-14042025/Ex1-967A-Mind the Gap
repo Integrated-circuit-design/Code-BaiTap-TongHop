@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n, s;
+    scanf("%d %d", &n, &s);
+
+    int landing_times[101];
+
+    for (int i = 0; i < n; i++) {
+        int h, m;
+        scanf("%d %d", &h, &m);
+        landing_times[i] = h * 60 + m;
+    }
+
+    if (landing_times[0] >= s + 1) {
+        printf("0 0\n");
+        return 0;
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        int gap = landing_times[i + 1] - landing_times[i];
+        if (gap >= 2 * s + 2) {
+            int takeoff_time = landing_times[i] + s + 1;
+            int h = takeoff_time / 60;
+            int m = takeoff_time % 60;
+            printf("%d %d\n", h, m);
+            return 0;
+        }
+    }
+
+    int takeoff_time = landing_times[n - 1] + s + 1;
+    int h = takeoff_time / 60;
+    int m = takeoff_time % 60;
+    printf("%d %d\n", h, m);
+
+    return 0;
+}
 

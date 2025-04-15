@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char a[100005], s[100005];
+    scanf("%s", a);
+    scanf("%s", s);
+
+    int n = strlen(a);
+    int m = strlen(s);
+    
+    int count[10] = {0};
+
+    for (int i = 0; i < m; i++) {
+        count[s[i] - '0']++;
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int digit = 9; digit >= 0; digit--) {
+            if (count[digit] > 0 && digit > a[i] - '0') {
+                a[i] = digit + '0';
+                count[digit]--;
+                break;
+            }
+        }
+    }
+
+    printf("%s\n", a);
+    return 0;
+}
 

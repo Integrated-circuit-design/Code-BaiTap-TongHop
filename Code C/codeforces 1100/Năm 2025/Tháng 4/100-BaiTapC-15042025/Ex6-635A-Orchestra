@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int r, c, n, k;
+    scanf("%d %d %d %d", &r, &c, &n, &k);
+
+    int grid[11][11] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        grid[x][y] = 1;
+    }
+
+    int prefix_sum[11][11] = {0};
+
+    for (int i = 1; i <= r; i++) {
+        for (int j = 1; j <= c; j++) {
+            prefix_sum[i][j] = grid[i][j] + prefix_sum[i-1][j] + prefix_sum[i][j-1] - prefix_sum[i-1][j-1];
+        }
+    }
+
+    int result = 0;
+
+    for (int x1 = 1; x1 <= r; x1++) {
+        for (int y1 = 1; y1 <= c; y1++) {
+            for (int x2 = x1; x2 <= r; x2++) {
+                for (int y2 = y1; y2 <= c; y2++) {
+                    int violas_in_rectangle = prefix_sum[x2][y2] - prefix_sum[x1-1][y2] - prefix_sum[x2][y1-1] + prefix_sum[x1-1][y1-1];
+
+                    if (violas_in_rectangle >= k) {
+                        result++;
+                    }
+                }
+            }
+        }
+    }
+
+    printf("%d\n", result);
+    return 0;
+}
 

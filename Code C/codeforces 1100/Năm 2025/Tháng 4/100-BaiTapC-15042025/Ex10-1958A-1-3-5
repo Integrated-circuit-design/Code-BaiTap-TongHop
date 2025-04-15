@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int min_1_burle_coins(int n) {
+    if (n == 1) return 1;
+    if (n == 2) return 2;
+
+    if (n % 5 == 0) {
+        return 0;
+    }
+    
+    if (n % 3 == 0) {
+        return 0;
+    }
+    
+    for (int i = 0; i <= n / 5; i++) {
+        int remainder = n - i * 5;
+        if (remainder % 3 == 0) {
+            return remainder % 3;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t, n;
+
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        scanf("%d", &n);
+        printf("%d\n", min_1_burle_coins(n));
+    }
+
+    return 0;
+}
 

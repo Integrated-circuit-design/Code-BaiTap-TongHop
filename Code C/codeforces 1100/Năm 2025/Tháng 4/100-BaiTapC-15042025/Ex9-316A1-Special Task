@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 100005
+
+int main() {
+    char s[MAX_LEN]; 
+    scanf("%s", s);
+
+    int len = strlen(s);
+    int result = 1;
+    int letter_map[10];
+    for (int i = 0; i < 10; i++) {
+        letter_map[i] = -1;
+    }
+
+    int distinct_letters = 0;
+    int question_marks = 0;
+
+    for (int i = 0; i < len; i++) {
+        if (s[i] == '?') {
+            question_marks++;
+        } else if (s[i] >= 'A' && s[i] <= 'J') {
+            int letter_index = s[i] - 'A';
+            if (letter_map[letter_index] == -1) {
+                letter_map[letter_index] = distinct_letters++;
+            }
+        }
+    }
+
+    int available_digits = 10;
+    for (int i = 0; i < 10; i++) {
+        if (letter_map[i] != -1) {
+            result *= available_digits--;
+        }
+    }
+
+    for (int i = 0; i < question_marks; i++) {
+        if (i == 0) {
+            result *= 9;
+        } else {
+            result *= 10;
+        }
+    }
+
+    printf("%d\n", result);
+    return 0;
+}
 

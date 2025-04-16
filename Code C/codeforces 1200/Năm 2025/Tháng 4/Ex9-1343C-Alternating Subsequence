@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+long long max(long long a, long long b) {
+    return (a > b) ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        long long arr[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &arr[i]);
+        }
+
+        long long total_sum = arr[0];
+        long long last_sign = arr[0] > 0 ? 1 : -1;
+
+        for (int i = 1; i < n; i++) {
+            if ((arr[i] > 0 && last_sign == -1) || (arr[i] < 0 && last_sign == 1)) {
+                total_sum += arr[i];
+                last_sign = arr[i] > 0 ? 1 : -1;
+            }
+        }
+
+        printf("%lld\n", total_sum);
+    }
+
+    return 0;
+}
 

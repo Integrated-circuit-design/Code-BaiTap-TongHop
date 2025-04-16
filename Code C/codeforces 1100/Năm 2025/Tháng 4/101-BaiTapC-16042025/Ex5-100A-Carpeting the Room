@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int n, k, n1;
+    
+    scanf("%d %d %d", &n, &k, &n1);
+
+    int room_area = n * n;
+
+    int total_carpet_area = k * (n1 * n1);
+
+    if (total_carpet_area >= room_area) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

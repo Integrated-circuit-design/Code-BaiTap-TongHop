@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+void sort(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (arr[i] > arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d", &n);
+    int boys[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &boys[i]);
+    }
+
+    scanf("%d", &m);
+    int girls[m];
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &girls[i]);
+    }
+
+    sort(boys, n);
+    sort(girls, m);
+
+    int i = 0, j = 0, pairs = 0;
+
+    while (i < n && j < m) {
+        if (boys[i] - girls[j] <= 1 && boys[i] - girls[j] >= -1) {
+            pairs++;
+            i++;
+            j++;
+        } else if (boys[i] < girls[j]) {
+            i++;
+        } else {
+            j++;
+        }
+    }
+
+    printf("%d\n", pairs);
+    return 0;
+}
 

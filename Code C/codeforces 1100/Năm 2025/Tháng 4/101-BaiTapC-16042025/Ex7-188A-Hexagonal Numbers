@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Nhap n: ");
+    scanf("%d", &n);
+    
+    int hexagonal_number = 0;
+    
+    for (int i = 1; i <= n; i++) {
+        hexagonal_number = 2 * i * i - i;
+    }
+    
+    printf("So luc giac thu %d la: %d\n", n, hexagonal_number);
+    
+    return 0;
+}
 

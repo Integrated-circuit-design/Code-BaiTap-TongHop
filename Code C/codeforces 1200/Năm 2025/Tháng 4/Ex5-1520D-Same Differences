@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200005
+
+long long count_pairs(int *a, int n) {
+    long long result = 0;
+    int offset = MAX_N / 2;
+
+    int count[MAX_N] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int diff_value = a[i] - i + offset;
+        result += count[diff_value];
+        count[diff_value]++;
+    }
+
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        printf("%lld\n", count_pairs(a, n));
+    }
+
+    return 0;
+}
 

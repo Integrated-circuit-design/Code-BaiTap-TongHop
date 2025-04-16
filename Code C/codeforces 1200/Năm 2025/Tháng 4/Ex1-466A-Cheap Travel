@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, a, b;
+    scanf("%d %d %d %d", &n, &m, &a, &b);
+
+    int total_cost = 0;
+    total_cost += (n / m) * b;
+    int remaining_rides = n % m;
+
+    if (remaining_rides * a < b) {
+        total_cost += remaining_rides * a;
+    } else {
+        total_cost += b;
+    }
+
+    if (n < m && b < n * a) {
+        total_cost = b;
+    }
+
+    printf("%d\n", total_cost);
+
+    return 0;
+}
 

@@ -1,1 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char x[20];
+    scanf("%s", x);
+
+    for (int i = 0; x[i] != '\0'; i++) {
+        int digit = x[i] - '0';
+        int inverted_digit = 9 - digit;
+
+        if (i == 0 && inverted_digit == 0) {
+            continue;
+        }
+
+        if (inverted_digit < digit) {
+            x[i] = inverted_digit + '0';
+        }
+    }
+
+    printf("%s\n", x);
+    return 0;
+}
 

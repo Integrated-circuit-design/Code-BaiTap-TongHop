@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int compute_f(int x[], int N) {
+    int result = 1;
+    for (int i = 0; i < N; i++) {
+        if (x[i] == 0) {
+            result = 0;
+            break;
+        }
+    }
+    return result;
+}
+
+void solve(int x[], int N, int *y) {
+    int f_x = compute_f(x, N);
+    *y = *y ^ f_x;
+}
+
+int main() {
+    int N = 5;
+    int x[] = {1, 1, 0, 1, 1};
+    int y = 0;
+
+    solve(x, N, &y);
+
+    printf("Kết quả của y sau khi cập nhật: %d\n", y);
+    
+    return 0;
+}
 

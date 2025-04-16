@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+typedef long long ll;
+
+int compare(const void *a, const void *b) {
+    return (*(ll *)a - *(ll *)b);
+}
+
+int main() {
+    int n, m, type, l, r;
+    ll v[MAXN], u[MAXN];
+
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i) {
+        scanf("%lld", &v[i]);
+        u[i] = v[i];
+    }
+
+    qsort(u + 1, n, sizeof(ll), compare);
+
+    scanf("%d", &m);
+    while (m--) {
+        scanf("%d %d %d", &type, &l, &r);
+
+        ll sum = 0;
+        if (type == 1) {
+            for (int i = l; i <= r; ++i) {
+                sum += v[i];
+            }
+        } else {
+            for (int i = l; i <= r; ++i) {
+                sum += u[i];
+            }
+        }
+
+        printf("%lld\n", sum);
+    }
+
+    return 0;
+}
 

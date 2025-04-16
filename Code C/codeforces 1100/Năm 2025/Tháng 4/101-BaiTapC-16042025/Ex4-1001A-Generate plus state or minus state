@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+void setQubitState(int sign) {
+    const char *plusState = "|+⟩";
+    const char *minusState = "|−⟩";
+
+    if (sign == 1) {
+        printf("Trạng thái qubit: %s\n", plusState);
+    } else if (sign == -1) {
+        printf("Trạng thái qubit: %s\n", minusState);
+    } else {
+        printf("Lỗi: Giá trị sign không hợp lệ!\n");
+    }
+}
+
+int main() {
+    int sign;
+
+    printf("Nhập giá trị của sign (1 hoặc -1): ");
+    scanf("%d", &sign);
+
+    setQubitState(sign);
+
+    return 0;
+}
 

@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int n, i, j;
+    scanf("%d", &n);
+    
+    int a[n];
+    int countOnes = 0;
+
+    for(i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        if(a[i] == 1) {
+            countOnes++;
+        }
+    }
+
+    int maxOnes = countOnes;
+
+    for(i = 0; i < n; i++) {
+        int flippedOnes = countOnes;
+        
+        for(j = i; j < n; j++) {
+            if(a[j] == 1) {
+                flippedOnes--;
+            } else {
+                flippedOnes++;
+            }
+
+            if(flippedOnes > maxOnes) {
+                maxOnes = flippedOnes;
+            }
+        }
+    }
+
+    if(countOnes == n) {
+        printf("%d\n", n - 1);
+    } else {
+        printf("%d\n", maxOnes);
+    }
+
+    return 0;
+}
 

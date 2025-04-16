@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int pentagonal = 0;
+
+    for (int i = 1; i <= n; i++) {
+        pentagonal = pentagonal + (3 * i * i - i) / 2;
+    }
+
+    printf("%d\n", pentagonal);
+
+    return 0;
+}
 

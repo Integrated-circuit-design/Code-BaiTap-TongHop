@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 105
+
+int n, m;
+char grid[MAXN][MAXN];
+int visited[MAXN][MAXN];
+char path[MAXN * MAXN];
+int pathLen = 0;
+
+int startX, startY;
+
+int dx[4] = {-1, 0, 1, 0};
+int dy[4] = {0, 1, 0, -1};
+char moveChar[4] = {'U', 'R', 'D', 'L'};
+
+int is_valid(int x, int y) {
+    return x >= 0 && x < n && y >= 0 && y < m && (grid[x][y] == '*' || grid[x][y] == 'S') && !visited[x][y];
+}
+
+void move_robot(int x, int y, int prevX, int prevY) {
+    visited[x][y] = 1;
+
+    for (int dir = 0; dir < 4; dir++) {
+        int nx = x + dx[dir];
+        int ny = y + dy[dir];
+
+        if (nx == prevX && ny == prevY) continue;
+
+        if (is_valid(nx, ny)) {
+            path[pathLen++] = moveChar[dir];
+            move_robot(nx, ny, x, y);
+        }
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    getchar();
+
+    for (int i = 0; i < n; i++) {
+        fgets(grid[i], MAXN, stdin);
+        grid[i][strcspn(grid[i], "\n")] = 0;
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == 'S') {
+                startX = i;
+                startY = j;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            visited[i][j] = 0;
+        }
+    }
+
+    move_robot(startX, startY, -1, -1);
+
+    path[pathLen] = '\0';
+    printf("%s\n", path);
+
+    return 0;
+}
 

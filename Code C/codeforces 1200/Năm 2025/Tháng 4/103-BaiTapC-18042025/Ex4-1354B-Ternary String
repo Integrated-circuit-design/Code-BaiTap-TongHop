@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int contains_all(char s[], int left, int right) {
+    int count[3] = {0};
+    for (int i = left; i <= right; i++) {
+        count[s[i] - '1'] = 1;
+    }
+    return count[0] && count[1] && count[2];
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        char s[200005];
+        scanf("%s", s);
+        int n = strlen(s);
+        
+        int min_len = n + 1;
+        
+        for (int left = 0; left < n; left++) {
+            for (int right = left; right < n; right++) {
+                if (contains_all(s, left, right)) {
+                    min_len = (right - left + 1) < min_len ? (right - left + 1) : min_len;
+                }
+            }
+        }
+        
+        if (min_len == n + 1) {
+            printf("0\n");
+        } else {
+            printf("%d\n", min_len);
+        }
+    }
+    return 0;
+}
 

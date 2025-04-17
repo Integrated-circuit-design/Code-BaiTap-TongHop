@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int weights[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &weights[i]);
+        }
+        
+        int count[51] = {0};
+        for (int i = 0; i < n; i++) {
+            count[weights[i]]++;
+        }
+        
+        int max_teams = 0;
+        
+        for (int s = 2; s <= 2 * n; s++) {
+            int current_teams = 0;
+            
+            for (int i = 1; i <= s / 2; i++) {
+                int j = s - i;
+                if (j <= n) {
+                    if (i == j) {
+                        current_teams += count[i] / 2;
+                    } else {
+                        current_teams += (count[i] < count[j]) ? count[i] : count[j];
+                    }
+                }
+            }
+            
+            if (current_teams > max_teams) {
+                max_teams = current_teams;
+            }
+        }
+        
+        printf("%d\n", max_teams);
+    }
+    
+    return 0;
+}
 

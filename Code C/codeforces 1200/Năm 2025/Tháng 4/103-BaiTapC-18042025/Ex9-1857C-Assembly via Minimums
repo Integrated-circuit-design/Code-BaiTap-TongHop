@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int getBArraySize(int n) {
+    return (n * (n - 1)) / 2;
+}
+
+int findMaxInB(int *b, int size) {
+    int max = b[0];
+    for (int i = 1; i < size; i++) {
+        if (b[i] > max) {
+            max = b[i];
+        }
+    }
+    return max;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int size = getBArraySize(n);
+        int b[size];
+        
+        for (int i = 0; i < size; i++) {
+            scanf("%d", &b[i]);
+        }
+        
+        int maxValue = findMaxInB(b, size);
+        
+        int a[n];
+        
+        a[n - 1] = maxValue;
+        
+        int idx = 0;
+        for (int i = 0; i < size; i++) {
+            if (b[i] == maxValue) {
+                a[idx++] = b[i];
+                if (idx == n - 1) break;
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            printf("%d ", a[i]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

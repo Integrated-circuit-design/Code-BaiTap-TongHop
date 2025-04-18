@@ -1,1 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    long long x = *(long long *)a;
+    long long y = *(long long *)b;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int binary_search(long long *a, int n, long long k) {
+    int left = 0, right = n;
+    while (left < right) {
+        int mid = (left + right) / 2;
+        if (a[mid] <= k) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return left;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+
+        long long *a = (long long *)malloc(n * sizeof(long long));
+        long long *prefix_sum = (long long *)malloc(n * sizeof(long long));
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        prefix_sum[0] = a[0];
+        for (int i = 1; i < n; i++) {
+            prefix_sum[i] = prefix_sum[i - 1] + a[i];
+        }
+
+        long long *sorted_a = (long long *)malloc(n * sizeof(long long));
+        for (int i = 0; i < n; i++) {
+            sorted_a[i] = a[i];
+        }
+        qsort(sorted_a, n, sizeof(long long), compare);
+
+        while (q--) {
+            long long k;
+            scanf("%lld", &k);
+
+            int max_steps = binary_search(sorted_a, n, k);
+
+            if (max_steps == 0) {
+                printf("0 ");
+            } else {
+                printf("%lld ", prefix_sum[max_steps - 1]);
+            }
+        }
+
+        printf("\n");
+
+        free(a);
+        free(prefix_sum);
+        free(sorted_a);
+    }
+
+    return 0;
+}
 

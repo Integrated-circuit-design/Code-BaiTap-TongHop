@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    return *(int*)a - *(int*)b;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    int h[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &h[i]);
+    }
+
+    qsort(h, n, sizeof(int), cmp);
+
+    int left = 0, right = n - 1;
+    int result[n];
+    int idx = 0;
+
+    while (left <= right) {
+        if (left == right) {
+            result[idx++] = h[left];
+            break;
+        }
+        result[idx++] = h[left++];
+        result[idx++] = h[right--];
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+long long sum_to_n(long long n) {
+    return n * (n + 1) / 2;
+}
+
+long long sum_of_largest_k(long long n, long long k) {
+    long long sum = sum_to_n(n);
+    long long remove_sum = sum_to_n(n - k);
+    return sum - remove_sum;
+}
+
+long long sum_of_smallest_k(long long k) {
+    return sum_to_n(k);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, x, y;
+        scanf("%lld %lld %lld", &n, &x, &y);
+        
+        long long lcm_xy = (x * y) / __gcd(x, y);
+        
+        long long a = n / x;
+        long long b = n / y;
+        long long c = n / lcm_xy;
+        
+        long long a_only = a - c;
+        long long b_only = b - c;
+
+        long long pos_sum = sum_of_largest_k(n, a_only);
+        long long neg_sum = sum_of_smallest_k(b_only);
+
+        printf("%lld\n", pos_sum - neg_sum);
+    }
+
+    return 0;
+}
 

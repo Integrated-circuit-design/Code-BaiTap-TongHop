@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+char s[MAXN];
+int used[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; ++i)
+            scanf("%d", &a[i]);
+
+        scanf("%s", s);
+
+        for (int i = 0; i < n; ++i)
+            used[i] = 0;
+
+        long long score = 0;
+        int l_idx = -1;
+
+        for (int i = 0; i < n; ++i) {
+            if (s[i] == 'L' && !used[i]) {
+                l_idx = i;
+            }
+            else if (s[i] == 'R' && !used[i] && l_idx != -1) {
+                long long sum = 0;
+                for (int j = l_idx; j <= i; ++j) {
+                    sum += a[j];
+                    used[j] = 1;
+                }
+                score += sum;
+                l_idx = -1;
+            }
+        }
+
+        printf("%lld\n", score);
+    }
+
+    return 0;
+}
 

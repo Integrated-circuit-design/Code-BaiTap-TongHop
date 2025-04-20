@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+typedef unsigned long long ull;
+
+int findMinDigit(ull x) {
+    int minDigit = 9;
+    while (x > 0) {
+        int digit = x % 10;
+        if (digit < minDigit) {
+            minDigit = digit;
+        }
+        x /= 10;
+    }
+    return minDigit;
+}
+
+int findMaxDigit(ull x) {
+    int maxDigit = 0;
+    while (x > 0) {
+        int digit = x % 10;
+        if (digit > maxDigit) {
+            maxDigit = digit;
+        }
+        x /= 10;
+    }
+    return maxDigit;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        ull a, k;
+        scanf("%llu %llu", &a, &k);
+
+        for (ull i = 1; i < k; i++) {
+            int minD = findMinDigit(a);
+            int maxD = findMaxDigit(a);
+
+            if (minD == 0) {
+                break;
+            }
+
+            a = a + (ull)(minD * maxD);
+        }
+
+        printf("%llu\n", a);
+    }
+
+    return 0;
+}
 

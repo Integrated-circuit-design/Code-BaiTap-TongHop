@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+long long calculate_damage(int *a, int n, long long k) {
+    long long damage = 0;
+    long long poison_end_time = -1;
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] > poison_end_time) {
+            damage += k;
+            poison_end_time = a[i] + k - 1;
+        } else {
+            damage += a[i] + k - poison_end_time - 1;
+            poison_end_time = a[i] + k - 1;
+        }
+    }
+    
+    return damage;
+}
+
+long long find_min_k(int *a, int n, long long h) {
+    long long left = 1, right = 1e18, mid, result = -1;
+    
+    while (left <= right) {
+        mid = (left + right) / 2;
+        
+        if (calculate_damage(a, n, mid) >= h) {
+            result = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        long long h;
+        scanf("%d %lld", &n, &h);
+        
+        int a[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        printf("%lld\n", find_min_k(a, n, h));
+    }
+
+    return 0;
+}
 

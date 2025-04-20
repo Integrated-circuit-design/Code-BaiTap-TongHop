@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int max_sum_of_three_days(int n, int a[], int b[], int c[]) {
+    int max_sum = 0;
+    int best_a = -1, best_b = -1, best_c = -1;
+
+    for (int i = 0; i < n; ++i) {
+        if (best_a == -1 || a[i] > a[best_a]) best_a = i;
+        if (best_b == -1 || b[i] > b[best_b]) best_b = i;
+        if (best_c == -1 || c[i] > c[best_c]) best_c = i;
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i != j) {
+                for (int k = 0; k < n; ++k) {
+                    if (k != i && k != j) {
+                        int current_sum = a[i] + b[j] + c[k];
+                        if (current_sum > max_sum) {
+                            max_sum = current_sum;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return max_sum;
+}
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+
+    int a[MAXN], b[MAXN], c[MAXN];
+
+    for (int i = 0; i < n; ++i) scanf("%d", &a[i]);
+    for (int i = 0; i < n; ++i) scanf("%d", &b[i]);
+    for (int i = 0; i < n; ++i) scanf("%d", &c[i]);
+
+    int result = max_sum_of_three_days(n, a, b, c);
+
+    printf("%d\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

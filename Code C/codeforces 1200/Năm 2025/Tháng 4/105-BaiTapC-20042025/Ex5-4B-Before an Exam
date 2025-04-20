@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int d, sumTime;
+    scanf("%d %d", &d, &sumTime);
+
+    int minTime[d], maxTime[d];
+    int totalMin = 0, totalMax = 0;
+
+    for (int i = 0; i < d; i++) {
+        scanf("%d %d", &minTime[i], &maxTime[i]);
+        totalMin += minTime[i];
+        totalMax += maxTime[i];
+    }
+
+    if (sumTime < totalMin || sumTime > totalMax) {
+        printf("NO\n");
+        return 0;
+    }
+
+    int schedule[d];
+
+    for (int i = 0; i < d; i++) {
+        schedule[i] = minTime[i];
+    }
+
+    int remainingTime = sumTime - totalMin;
+
+    for (int i = 0; i < d && remainingTime > 0; i++) {
+        int availableTime = maxTime[i] - schedule[i];
+        int timeToAdd = (remainingTime < availableTime) ? remainingTime : availableTime;
+
+        schedule[i] += timeToAdd;
+        remainingTime -= timeToAdd;
+    }
+
+    printf("YES\n");
+    for (int i = 0; i < d; i++) {
+        printf("%d ", schedule[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

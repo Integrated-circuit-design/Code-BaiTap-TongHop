@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+long long power(long long base, long long exp, long long mod) {
+    long long result = 1;
+    for (long long i = 0; i < exp; ++i) {
+        result = (result * base) % mod;
+    }
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        
+        long long result = power(2, n, MOD);
+        
+        result = power(result, k, MOD);
+        
+        printf("%lld\n", result);
+    }
+    
+    return 0;
+}
 

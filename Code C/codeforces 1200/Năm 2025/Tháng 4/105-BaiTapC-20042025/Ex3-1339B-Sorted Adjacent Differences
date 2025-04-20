@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+void solve(int *a, int n) {
+    qsort(a, n, sizeof(int), cmp);
+    int mid = n / 2;
+    int result[n];
+    int idx = 0;
+
+    for (int i = n - 1; i >= mid; i--) {
+        result[idx++] = a[i];
+    }
+
+    for (int i = 0; i < mid; i++) {
+        result[idx++] = a[i];
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int *a = (int *)malloc(n * sizeof(int));
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        solve(a, n);
+        free(a);
+    }
+    return 0;
+}
 

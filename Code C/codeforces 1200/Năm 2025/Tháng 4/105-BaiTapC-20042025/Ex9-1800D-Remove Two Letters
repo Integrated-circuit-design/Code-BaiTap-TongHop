@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_LEN 200005
+
+void remove_consecutive(char* s, char* result, int n, int i) {
+    int pos = 0;
+    for (int j = 0; j < n; j++) {
+        if (j == i || j == i + 1) continue;
+        result[pos++] = s[j];
+    }
+    result[pos] = '\0';
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[MAX_LEN];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        bool seen[1000000] = {0};
+        int unique_count = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            char result[MAX_LEN];
+            remove_consecutive(s, result, n, i);
+
+            int hash = 0;
+            for (int j = 0; result[j] != '\0'; j++) {
+                hash = hash * 31 + result[j];
+            }
+
+            if (!seen[hash]) {
+                seen[hash] = 1;
+                unique_count++;
+            }
+        }
+
+        printf("%d\n", unique_count);
+    }
+
+    return 0;
+}
 

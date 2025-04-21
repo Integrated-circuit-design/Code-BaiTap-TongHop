@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+int freq_a[26], freq_b[26];
+
+void count_freq(char *s, int l, int r, int *freq) {
+    for (int i = 0; i < 26; i++) {
+        freq[i] = 0;
+    }
+    
+    for (int i = l; i <= r; i++) {
+        freq[s[i] - 'a']++;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+        
+        char a[MAXN], b[MAXN];
+        scanf("%s", a);
+        scanf("%s", b);
+
+        while (q--) {
+            int l, r;
+            scanf("%d %d", &l, &r);
+            
+            l--; r--;
+            
+            count_freq(a, l, r, freq_a);
+            count_freq(b, l, r, freq_b);
+            
+            int diff = 0;
+            for (int i = 0; i < 26; i++) {
+                diff += abs(freq_a[i] - freq_b[i]);
+            }
+            
+            printf("%d\n", diff / 2);
+        }
+    }
+
+    return 0;
+}
 

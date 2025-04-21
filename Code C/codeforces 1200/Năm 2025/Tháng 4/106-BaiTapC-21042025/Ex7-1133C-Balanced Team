@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int *a = (int*)malloc(n * sizeof(int));
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int max_skill = a[0], min_skill = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] > max_skill) max_skill = a[i];
+        if (a[i] < min_skill) min_skill = a[i];
+    }
+
+    int range = max_skill - min_skill + 1;
+    int *count = (int*)calloc(range, sizeof(int));
+
+    for (int i = 0; i < n; i++) {
+        count[a[i] - min_skill]++;
+    }
+
+    int max_team = 0;
+    for (int i = 0; i < range; i++) {
+        for (int j = i; j < range; j++) {
+            if (j - i <= 5) {
+                max_team += count[i] + count[j];
+            }
+        }
+    }
+
+    printf("%d\n", max_team);
+
+    free(a);
+    free(count);
+
+    return 0;
+}
 

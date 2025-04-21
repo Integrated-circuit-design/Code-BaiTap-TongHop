@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+void find_sequence(int n, int x, int y) {
+    int diff = y - x;
+    int step = diff;
+
+    while (step > 0) {
+        if (diff % step == 0 && (diff / step + 1) <= n) {
+            break;
+        }
+        step--;
+    }
+
+    int start = x - ((n - 1) * step);
+    if (start < 1) {
+        start = 1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", start + i * step);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x, y;
+        scanf("%d %d %d", &n, &x, &y);
+
+        find_sequence(n, x, y);
+    }
+
+    return 0;
+}
 

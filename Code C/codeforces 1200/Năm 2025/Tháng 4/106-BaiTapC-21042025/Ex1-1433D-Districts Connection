@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAXN 5005
+
+int a[MAXN];
+int visited[MAXN];
+
+void dfs(int u, int n) {
+    visited[u] = 1;
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i] && a[i] != a[u]) {
+            printf("%d %d\n", u, i);
+            dfs(i, n);
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++)
+            scanf("%d", &a[i]);
+
+        for (int i = 1; i <= n; i++)
+            visited[i] = 0;
+
+        int connected = 0;
+
+        for (int i = 2; i <= n; i++) {
+            if (a[i] != a[1]) {
+                printf("YES\n");
+                printf("1 %d\n", i);
+                connected = 1;
+                dfs(i, n);
+                break;
+            }
+        }
+
+        if (!connected) {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

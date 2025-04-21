@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int compare(const void *a, const void *b) {
+    return *(ll *)a - *(ll *)b;
+}
+
+int main() {
+    int n;
+    ll k, x;
+    
+    scanf("%d %lld %lld", &n, &k, &x);
+
+    ll levels[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &levels[i]);
+    }
+
+    qsort(levels, n, sizeof(ll), compare);
+
+    int groupCount = 1;
+    ll availableAdditions = k;
+
+    for (int i = 1; i < n; i++) {
+        ll diff = levels[i] - levels[i - 1];
+
+        if (diff > x) {
+            ll required = (diff - 1) / x;
+
+            if (availableAdditions >= required) {
+                availableAdditions -= required;
+            } else {
+                groupCount++;
+            }
+        }
+    }
+
+    printf("%d\n", groupCount);
+    return 0;
+}
 

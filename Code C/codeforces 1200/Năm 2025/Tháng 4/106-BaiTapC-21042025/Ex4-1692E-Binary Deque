@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, s;
+        scanf("%d %d", &n, &s);
+        
+        int a[n];
+        int prefix_sum[n + 1];
+        
+        prefix_sum[0] = 0;
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            prefix_sum[i + 1] = prefix_sum[i] + a[i];
+        }
+        
+        int min_operations = n + 1;
+        
+        for (int i = 0; i <= n; i++) {
+            for (int j = i + 1; j <= n; j++) {
+                int sum = prefix_sum[j] - prefix_sum[i];
+                if (sum == s) {
+                    min_operations = (min_operations < (n - (j - i))) ? min_operations : (n - (j - i));
+                }
+            }
+        }
+        
+        if (min_operations == n + 1) {
+            printf("-1\n");
+        } else {
+            printf("%d\n", min_operations);
+        }
+    }
+    
+    return 0;
+}
 

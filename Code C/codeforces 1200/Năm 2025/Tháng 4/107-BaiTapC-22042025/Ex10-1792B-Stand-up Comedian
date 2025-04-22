@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+long long min(long long a, long long b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long a1, a2, a3, a4;
+        scanf("%lld %lld %lld %lld", &a1, &a2, &a3, &a4);
+        
+        long long jokes = a1;
+        long long alice_mood = a1;
+        long long bob_mood = a1;
+
+        long long pair_jokes = min(a2, a3);
+        jokes += 2 * pair_jokes;
+        alice_mood += pair_jokes;
+        bob_mood += pair_jokes;
+        a2 -= pair_jokes;
+        a3 -= pair_jokes;
+
+        jokes += a2 + a3;
+        alice_mood += a2;
+        bob_mood += a3;
+
+        long long remaining_jokes = min(alice_mood, bob_mood);
+        jokes += min(a4, remaining_jokes);
+        
+        printf("%lld\n", jokes);
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+
+        long long A_position = n;
+        long long B_position = 1;
+        long long hour = 1;
+
+        while (hour < k) {
+            if (A_position != B_position) {
+                B_position = (B_position % n) + 1;
+            }
+            
+            A_position = (A_position == 1) ? n : A_position - 1;
+
+            hour++;
+        }
+
+        printf("%lld\n", B_position);
+    }
+
+    return 0;
+}
 

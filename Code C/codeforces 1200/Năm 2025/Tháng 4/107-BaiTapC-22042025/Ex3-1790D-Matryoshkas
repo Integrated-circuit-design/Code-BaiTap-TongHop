@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 1000000000
+
+int getMinSets(int *a, int n) {
+    int count[100001] = {0};
+
+    for (int i = 0; i < n; i++) {
+        count[a[i]]++;
+    }
+
+    int max_sets = 0;
+
+    for (int i = 0; i <= MAX_SIZE; i++) {
+        if (count[i] > 0) {
+            if (count[i] > max_sets) {
+                max_sets = count[i];
+            }
+        }
+    }
+    return max_sets;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int *a = (int*)malloc(n * sizeof(int));
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int result = getMinSets(a, n);
+        printf("%d\n", result);
+
+        free(a);
+    }
+
+    return 0;
+}
 

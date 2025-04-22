@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int calculate_max_teams(int c, int m, int x) {
+    int total_students = c + m + x;
+
+    if (total_students < 3) {
+        return 0;
+    }
+
+    int max_teams = total_students / 3;
+
+    if (max_teams > c) {
+        max_teams = c;
+    }
+    if (max_teams > m) {
+        max_teams = m;
+    }
+
+    return max_teams;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int c, m, x;
+        scanf("%d %d %d", &c, &m, &x);
+
+        printf("%d\n", calculate_max_teams(c, m, x));
+    }
+
+    return 0;
+}
 

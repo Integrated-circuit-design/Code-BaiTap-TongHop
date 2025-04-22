@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[n], t[n], total_awake = 0, max_gain = 0;
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &a[i]);
+    }
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &t[i]);
+        if (t[i] == 1) {
+            total_awake += a[i];
+        }
+    }
+
+    for (int i = 0; i < k; ++i) {
+        if (t[i] == 0) {
+            max_gain += a[i];
+        }
+    }
+
+    int current_gain = max_gain;
+
+    for (int i = k; i < n; ++i) {
+        if (t[i] == 0) {
+            current_gain += a[i];
+        }
+
+        if (t[i - k] == 0) {
+            current_gain -= a[i - k];
+        }
+
+        if (current_gain > max_gain) {
+            max_gain = current_gain;
+        }
+    }
+
+    printf("%d\n", total_awake + max_gain);
+
+    return 0;
+}
 

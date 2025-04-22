@@ -1,1 +1,67 @@
+#include <stdio.h>
+
+int count_twos(int x) {
+    int count = 0;
+    while (x % 2 == 0) {
+        count++;
+        x /= 2;
+    }
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        int total_twos = 0;
+        int operations_needed = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            total_twos += count_twos(a[i]);
+        }
+
+        if (total_twos >= n) {
+            printf("0\n");
+            continue;
+        }
+
+        int twos_available[n];
+        for (int i = 0; i < n; i++) {
+            twos_available[i] = count_twos(i + 1);
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (twos_available[i] < twos_available[j]) {
+                    int temp = twos_available[i];
+                    twos_available[i] = twos_available[j];
+                    twos_available[j] = temp;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            total_twos += twos_available[i];
+            operations_needed++;
+
+            if (total_twos >= n) {
+                break;
+            }
+        }
+
+        if (total_twos >= n) {
+            printf("%d\n", operations_needed);
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

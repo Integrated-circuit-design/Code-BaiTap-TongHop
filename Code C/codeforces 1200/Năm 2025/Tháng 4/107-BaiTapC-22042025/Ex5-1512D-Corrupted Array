@@ -1,1 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    return (*(long long*)a - *(long long*)b);
+}
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        long long b[n + 2];
+        long long total_sum = 0;
+        
+        for (int i = 0; i < n + 2; i++) {
+            scanf("%lld", &b[i]);
+            total_sum += b[i];
+        }
+
+        qsort(b, n + 2, sizeof(long long), cmp);
+
+        long long expected_sum = total_sum - b[n + 1];
+        int found = 0;
+
+        for (int i = 0; i < n + 1; i++) {
+            if (b[i] == expected_sum) {
+                for (int j = 0; j < n + 2; j++) {
+                    if (j != i && j != n + 1) {
+                        printf("%lld ", b[j]);
+                    }
+                }
+                printf("\n");
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found) {
+            expected_sum = total_sum - b[n];
+            for (int i = 0; i < n + 1; i++) {
+                if (b[i] == expected_sum) {
+                    for (int j = 0; j < n + 2; j++) {
+                        if (j != i && j != n) {
+                            printf("%lld ", b[j]);
+                        }
+                    }
+                    printf("\n");
+                    found = 1;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            printf("-1\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

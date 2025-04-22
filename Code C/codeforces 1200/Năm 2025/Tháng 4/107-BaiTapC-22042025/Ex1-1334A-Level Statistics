@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        int isValid = 1;
+        int prev_p = 0, prev_c = 0;
+
+        for (int i = 0; i < n; i++) {
+            int p, c;
+            scanf("%d %d", &p, &c);
+
+            if (p < prev_p || c < prev_c || c > p || (c - prev_c) > (p - prev_p)) {
+                isValid = 0;
+            }
+
+            prev_p = p;
+            prev_c = c;
+        }
+
+        if (isValid) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

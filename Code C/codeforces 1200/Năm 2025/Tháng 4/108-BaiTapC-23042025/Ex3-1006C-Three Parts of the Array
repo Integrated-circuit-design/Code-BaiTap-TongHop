@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long d[n];
+    long long prefixSum[n + 1];
+
+    prefixSum[0] = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &d[i]);
+        prefixSum[i + 1] = prefixSum[i] + d[i];
+    }
+
+    long long maxSum = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            long long sum1 = prefixSum[i + 1];
+            long long sum3 = prefixSum[n] - prefixSum[j];
+
+            if (sum1 == sum3) {
+                maxSum = sum1 > maxSum ? sum1 : maxSum;
+            }
+        }
+    }
+
+    printf("%lld\n", maxSum);
+    return 0;
+}
 

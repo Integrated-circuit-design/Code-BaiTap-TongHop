@@ -1,1 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int x, y;
+} Package;
+
+int compare(const void *a, const void *b) {
+    Package *pkgA = (Package *)a;
+    Package *pkgB = (Package *)b;
+
+    if (pkgA->x != pkgB->x)
+        return pkgA->x - pkgB->x;
+    return pkgA->y - pkgB->y;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        Package packages[n];
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d %d", &packages[i].x, &packages[i].y);
+        }
+
+        qsort(packages, n, sizeof(Package), compare);
+
+        int curX = 0, curY = 0;
+        char result[2005];
+        int resultIdx = 0;
+        int isPossible = 1;
+
+        for (int i = 0; i < n; ++i) {
+            int targetX = packages[i].x;
+            int targetY = packages[i].y;
+
+            if (targetX < curX || targetY < curY) {
+                isPossible = 0;
+                break;
+            }
+
+            while (curX < targetX) {
+                result[resultIdx++] = 'R';
+                curX++;
+            }
+
+            while (curY < targetY) {
+                result[resultIdx++] = 'U';
+                curY++;
+            }
+        }
+
+        if (!isPossible) {
+            printf("NO\n");
+        } else {
+            result[resultIdx] = '\0';
+            printf("YES\n%s\n", result);
+        }
+    }
+
+    return 0;
+}
 

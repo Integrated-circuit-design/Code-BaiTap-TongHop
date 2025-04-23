@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAX_N 200005
+
+long long sum, target;
+long long a[MAX_N];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        sum = 0;
+        
+        for (int i = 0; i < n; ++i) {
+            scanf("%lld", &a[i]);
+            sum += a[i];
+        }
+
+        if ((2 * sum) % n != 0) {
+            printf("0\n");
+            continue;
+        }
+
+        target = (2 * sum) / n;
+
+        long long count = 0;
+        long long map[1000001] = {0};
+
+        for (int i = 0; i < n; ++i) {
+            map[a[i]]++;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            map[a[i]]--;
+            long long need = target - a[i];
+
+            if (need >= 0 && need <= 1000000) {
+                count += map[need];
+            }
+        }
+
+        printf("%lld\n", count);
+    }
+
+    return 0;
+}
 

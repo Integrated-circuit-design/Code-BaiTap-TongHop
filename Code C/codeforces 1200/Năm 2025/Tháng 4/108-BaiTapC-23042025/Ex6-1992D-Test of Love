@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int n, m, k;
+char river[MAXN];
+int canReach[MAXN];
+
+void solve() {
+    scanf("%d %d %d", &n, &m, &k);
+    scanf("%s", river);
+
+    memset(canReach, 0, sizeof(canReach));
+
+    canReach[0] = 1;
+
+    for (int i = 0; i <= n; i++) {
+        if (canReach[i] == 1 && (i == n || river[i] != 'C')) {
+            if (i == 0 || river[i - 1] == 'L') {
+                for (int j = 1; j <= m; j++) {
+                    if (i + j <= n && river[i + j - 1] != 'C') {
+                        canReach[i + j] = 1;
+                    }
+                }
+            }
+            else if (river[i] == 'W') {
+                if (i + 1 <= n && river[i] != 'C') {
+                    canReach[i + 1] = 1;
+                }
+            }
+        }
+    }
+
+    if (canReach[n]) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

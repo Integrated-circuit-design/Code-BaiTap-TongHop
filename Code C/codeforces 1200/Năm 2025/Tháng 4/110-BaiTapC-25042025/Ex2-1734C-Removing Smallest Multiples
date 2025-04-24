@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1000005
+
+int t, n;
+char s[MAXN];
+int removed[MAXN];
+
+long long solve() {
+    long long total_cost = 0;
+    
+    for (int i = 1; i <= n; ++i) {
+        removed[i] = 0;
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        if (s[i] == '0' && removed[i] == 0) {
+            total_cost += i;
+            for (int j = i; j <= n; j += i) {
+                removed[j] = 1;
+            }
+        }
+    }
+    
+    return total_cost;
+}
+
+int main() {
+    scanf("%d", &t);
+    
+    while (t--) {
+        scanf("%d", &n);
+        scanf("%s", s + 1);
+        
+        printf("%lld\n", solve());
+    }
+    
+    return 0;
+}
 

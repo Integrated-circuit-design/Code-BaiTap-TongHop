@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+void swap_digits(char *a, char *b) {
+    char temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void optimizeProduct(char x[], char y[]) {
+    int len = strlen(x);
+
+    for (int i = 0; i < len; i++) {
+        if (x[i] < y[i]) {
+            swap_digits(&x[i], &y[i]);
+        }
+    }
+
+    printf("%s\n%s\n", x, y);
+}
+
+int main() {
+    int t;
+    char x[105], y[105];
+
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%s", x);
+        scanf("%s", y);
+
+        optimizeProduct(x, y);
+    }
+
+    return 0;
+}
 

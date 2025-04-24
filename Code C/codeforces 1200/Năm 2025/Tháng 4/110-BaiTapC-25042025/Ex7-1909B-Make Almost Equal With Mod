@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef unsigned long long ull;
+
+int cmp(const void *a, const void *b) {
+    if (*(ull *)a < *(ull *)b) return -1;
+    if (*(ull *)a > *(ull *)b) return 1;
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        ull a[105];
+        for (int i = 0; i < n; ++i) {
+            scanf("%llu", &a[i]);
+        }
+
+        qsort(a, n, sizeof(ull), cmp);
+
+        ull k = a[n-1] - a[0];
+
+        printf("%llu\n", k);
+    }
+
+    return 0;
+}
 

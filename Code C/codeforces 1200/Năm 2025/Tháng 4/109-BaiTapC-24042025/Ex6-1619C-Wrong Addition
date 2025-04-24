@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void solve() {
+    char a[20], s[20];
+    scanf("%s %s", a, s);
+
+    int len_a = strlen(a);
+    int len_s = strlen(s);
+
+    int max_len = len_a > len_s ? len_a : len_s;
+    char result[max_len + 1];
+
+    int i = len_a - 1;
+    int j = len_s - 1;
+    int k = max_len - 1;
+
+    int carry = 0;
+
+    while (i >= 0 || j >= 0) {
+        int digit_a = (i >= 0) ? a[i] - '0' : 0;
+        int digit_s = (j >= 0) ? s[j] - '0' : 0;
+
+        int sum = digit_a + digit_s + carry;
+        
+        if (sum >= 10) {
+            carry = 1;
+            sum -= 10;
+        } else {
+            carry = 0;
+        }
+
+        result[k--] = sum + '0';
+        i--;
+        j--;
+    }
+
+    if (carry) {
+        result[k--] = '1';
+    }
+
+    int start = k + 1;
+    while (start < max_len && result[start] == '0') {
+        start++;
+    }
+
+    if (start == max_len) {
+        printf("-1\n");
+    } else {
+        for (int i = start; i < max_len; i++) {
+            printf("%c", result[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[100000];
+        int has_diff = 0;
+        int min_value = 1000000001, max_value = -1;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+
+            if (arr[i] < min_value) min_value = arr[i];
+            if (arr[i] > max_value) max_value = arr[i];
+        }
+
+        if (min_value != max_value) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

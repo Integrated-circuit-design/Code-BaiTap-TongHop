@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = a % b;
+        a = b;
+        b = temp;
+    }
+    return a;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int x, n;
+        scanf("%d %d", &x, &n);
+
+        int max_balance = 1;
+
+        for (int i = 1; i <= n; i++) {
+            if (x % i == 0) {
+                max_balance = gcd(max_balance, i);
+            }
+        }
+
+        printf("%d\n", max_balance);
+    }
+
+    return 0;
+}
 

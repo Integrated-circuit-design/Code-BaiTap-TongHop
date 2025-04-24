@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+int find_min_length(char a[], char b[]) {
+    int alen = strlen(a);
+    int blen = strlen(b);
+    int min_length = alen + blen;
+
+    for (int i = 0; i <= blen; i++) {
+        int ai = 0, bi = 0;
+
+        while (bi < i && ai < alen) {
+            if (b[bi] == a[ai]) {
+                ai++;
+            }
+            bi++;
+        }
+
+        while (ai < alen) {
+            ai++;
+        }
+
+        while (bi < blen) {
+            if (b[bi] == a[ai]) {
+                ai++;
+            }
+            bi++;
+        }
+
+        if (ai == alen && bi == blen) {
+            int current_length = i + alen + (blen - i);
+            if (current_length < min_length) {
+                min_length = current_length;
+            }
+        }
+    }
+
+    return min_length;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char a[105], b[105];
+        scanf("%s", a);
+        scanf("%s", b);
+
+        int result = find_min_length(a, b);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

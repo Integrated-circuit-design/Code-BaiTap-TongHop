@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 300005
+
+long long countTriangles(int *a, int n) {
+    int count[MAX] = {0};
+    long long result = 0;
+
+    for (int i = 0; i < n; i++) {
+        count[a[i]]++;
+    }
+
+    for (int i = 0; i < MAX; i++) {
+        for (int j = i; j < MAX; j++) {
+            for (int k = j; k < MAX; k++) {
+                if (i + j > k) {
+                    if (i == j && j == k) {
+                        if (count[i] >= 3) result += (count[i] * (count[i] - 1) * (count[i] - 2)) / 6;
+                    } else if (i == j) {
+                        if (count[i] >= 2) result += (count[i] * (count[i] - 1)) / 2 * count[k];
+                    } else if (j == k) {
+                        if (count[j] >= 2) result += (count[i] * count[j] * (count[j] - 1)) / 2;
+                    } else {
+                        result += count[i] * count[j] * count[k];
+                    }
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int *a = (int *)malloc(n * sizeof(int));
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        printf("%lld\n", countTriangles(a, n));
+
+        free(a);
+    }
+
+    return 0;
+}
 

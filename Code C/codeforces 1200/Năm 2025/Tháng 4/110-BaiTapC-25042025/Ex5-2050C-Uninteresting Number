@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_possible(char* s) {
+    int digit_sum = 0;
+
+    for (int i = 0; s[i] != '\0'; i++) {
+        digit_sum += s[i] - '0';
+    }
+
+    if (digit_sum % 9 == 0) {
+        return 1;
+    }
+
+    for (int i = 0; s[i] != '\0'; i++) {
+        int digit = s[i] - '0';
+        int new_digit = digit;
+
+        if (digit <= 3) {
+            new_digit = digit * digit;
+        }
+
+        int new_sum = digit_sum - digit + new_digit;
+
+        if (new_sum % 9 == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    char s[100005];
+
+    while (t--) {
+        scanf("%s", s);
+        if (is_possible(s)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

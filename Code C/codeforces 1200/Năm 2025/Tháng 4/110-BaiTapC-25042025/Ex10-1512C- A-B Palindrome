@@ -1,1 +1,83 @@
+#include <stdio.h>
+#include <string.h>
+
+int solve_test_case(int a, int b, char s[]) {
+    int n = strlen(s);
+    
+    for (int i = 0; i < n / 2; i++) {
+        int j = n - i - 1;
+        if (s[i] == '?' && s[j] != '?') {
+            s[i] = s[j];
+        } else if (s[j] == '?' && s[i] != '?') {
+            s[j] = s[i];
+        } else if (s[i] != '?' && s[j] != '?' && s[i] != s[j]) {
+            return -1;
+        }
+    }
+
+    int count0 = 0, count1 = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '0') count0++;
+        if (s[i] == '1') count1++;
+    }
+
+    if (count0 > a || count1 > b) {
+        return -1;
+    }
+
+    a -= count0;
+    b -= count1;
+
+    for (int i = 0; i < n / 2; i++) {
+        int j = n - i - 1;
+        if (s[i] == '?' && s[j] == '?') {
+            if (a >= 2) {
+                s[i] = s[j] = '0';
+                a -= 2;
+            } else if (b >= 2) {
+                s[i] = s[j] = '1';
+                b -= 2;
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    if (n % 2 == 1 && s[n / 2] == '?') {
+        if (a > 0) {
+            s[n / 2] = '0';
+            a--;
+        } else if (b > 0) {
+            s[n / 2] = '1';
+            b--;
+        } else {
+            return -1;
+        }
+    }
+
+    if (a == 0 && b == 0) {
+        return 0;
+    }
+
+    return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int a, b;
+        char s[200005];
+        scanf("%d %d", &a, &b);
+        scanf("%s", s);
+
+        int result = solve_test_case(a, b, s);
+        if (result == -1) {
+            printf("-1\n");
+        } else {
+            printf("%s\n", s);
+        }
+    }
+    return 0;
+}
 

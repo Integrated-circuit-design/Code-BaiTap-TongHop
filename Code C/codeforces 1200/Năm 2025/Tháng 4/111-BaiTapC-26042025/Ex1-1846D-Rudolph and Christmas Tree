@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+double calc_area(int d, int h) {
+    return 0.5 * d * h;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, d, h;
+        scanf("%d %d %d", &n, &d, &h);
+
+        int y[n];
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &y[i]);
+        }
+
+        double total_area = 0.0;
+        double base_area = calc_area(d, h);
+
+        for (int i = 0; i < n - 1; ++i) {
+            int delta = y[i + 1] - y[i];
+
+            if (delta >= h) {
+                total_area += base_area;
+            } else {
+                double overlap_height = h - delta;
+                double overlap_base = (overlap_height / h) * d;
+                double overlap_area = calc_area(overlap_base, overlap_height);
+
+                total_area += (base_area - overlap_area);
+            }
+        }
+
+        total_area += base_area;
+
+        printf("%.10lf\n", total_area);
+    }
+
+    return 0;
+}
 

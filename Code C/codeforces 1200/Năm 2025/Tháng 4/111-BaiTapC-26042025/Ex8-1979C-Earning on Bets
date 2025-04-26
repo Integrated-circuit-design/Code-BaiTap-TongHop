@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int k[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &k[i]);
+        }
+
+        int valid = 1;
+        long long total_bet = 0;
+
+        long long x[n];
+        for (int i = 0; i < n; i++) {
+            x[i] = 1;
+            total_bet += x[i];
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (k[i] * x[i] <= total_bet) {
+                valid = 0;
+                break;
+            }
+        }
+
+        if (!valid) {
+            printf("-1\n");
+        } else {
+            for (int i = 0; i < n; i++) {
+                printf("%lld ", x[i]);
+            }
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

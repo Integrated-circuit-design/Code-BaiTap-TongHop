@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int can_make_equal(int *a, int n) {
+    int min_val = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] < min_val) {
+            min_val = a[i];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] % min_val != 0) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int *a = (int *)malloc(n * sizeof(int));
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        if (can_make_equal(a, n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+
+        free(a);
+    }
+
+    return 0;
+}
 

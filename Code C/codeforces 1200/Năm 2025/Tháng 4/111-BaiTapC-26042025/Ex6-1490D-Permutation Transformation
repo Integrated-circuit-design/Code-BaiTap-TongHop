@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+int depth[105];
+
+void assign_depth(int a[], int left, int right, int current_depth) {
+    int max_value = a[left];
+    int max_index = left;
+
+    for (int i = left; i <= right; i++) {
+        if (a[i] > max_value) {
+            max_value = a[i];
+            max_index = i;
+        }
+    }
+
+    depth[max_index] = current_depth;
+
+    if (max_index > left) {
+        assign_depth(a, left, max_index - 1, current_depth + 1);
+    }
+
+    if (max_index < right) {
+        assign_depth(a, max_index + 1, right, current_depth + 1);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, a[105];
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            depth[i] = -1;
+        }
+
+        assign_depth(a, 0, n - 1, 0);
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", depth[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

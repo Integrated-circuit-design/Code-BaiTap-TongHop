@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+#define MAX 1000000
+
+int coins[] = {1, 3, 6, 10, 15};
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    int dp[MAX + 1];
+
+    for (int i = 0; i <= MAX; i++) {
+        dp[i] = MAX;
+    }
+    dp[0] = 0;
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = coins[i]; j <= MAX; j++) {
+            dp[j] = (dp[j] < dp[j - coins[i]] + 1) ? dp[j] : dp[j - coins[i]] + 1;
+        }
+    }
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        printf("%d\n", dp[n]);
+    }
+
+    return 0;
+}
 

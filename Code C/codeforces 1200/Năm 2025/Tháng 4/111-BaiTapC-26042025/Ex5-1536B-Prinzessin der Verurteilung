@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_LEN 1000
+
+bool appeared[26];
+
+void reset_appeared() {
+    for (int i = 0; i < 26; i++) {
+        appeared[i] = false;
+    }
+}
+
+bool is_appeared_2_or_3(char* str, int len, int length) {
+    for (int i = 0; i <= len - length; i++) {
+        char temp[length + 1];
+        strncpy(temp, &str[i], length);
+        temp[length] = '\0';
+        for (int j = 0; j < length; j++) {
+            if (temp[j] < 'a' || temp[j] > 'z') return false;
+            appeared[temp[j] - 'a'] = true;
+        }
+    }
+    return true;
+}
+
+void solve() {
+    int n;
+    char str[MAX_LEN + 1];
+
+    scanf("%d", &n);
+    scanf("%s", str);
+
+    reset_appeared();
+
+    for (char c = 'a'; c <= 'z'; c++) {
+        if (!appeared[c - 'a']) {
+            printf("%c\n", c);
+            return;
+        }
+    }
+
+    if (!is_appeared_2_or_3(str, n, 2)) {
+        for (char c1 = 'a'; c1 <= 'z'; c1++) {
+            for (char c2 = 'a'; c2 <= 'z'; c2++) {
+                if (!appeared[c1 - 'a'] && !appeared[c2 - 'a']) {
+                    printf("%c%c\n", c1, c2);
+                    return;
+                }
+            }
+        }
+    }
+
+    if (!is_appeared_2_or_3(str, n, 3)) {
+        for (char c1 = 'a'; c1 <= 'z'; c1++) {
+            for (char c2 = 'a'; c2 <= 'z'; c2++) {
+                for (char c3 = 'a'; c3 <= 'z'; c3++) {
+                    if (!appeared[c1 - 'a'] && !appeared[c2 - 'a'] && !appeared[c3 - 'a']) {
+                        printf("%c%c%c\n", c1, c2, c3);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

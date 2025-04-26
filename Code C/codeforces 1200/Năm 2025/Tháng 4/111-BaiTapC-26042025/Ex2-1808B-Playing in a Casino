@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long abs_sum(int matrix[][100], int n, int m) {
+    long long total = 0;
+    for (int j = 0; j < m; j++) {
+        long long sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += matrix[i][j];
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int k = i + 1; k < n; k++) {
+                total += abs(matrix[i][j] - matrix[k][j]);
+            }
+        }
+    }
+    return total;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        
+        int matrix[100][100];
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                scanf("%d", &matrix[i][j]);
+            }
+        }
+        
+        long long result = abs_sum(matrix, n, m);
+        
+        printf("%lld\n", result);
+    }
+    
+    return 0;
+}
 

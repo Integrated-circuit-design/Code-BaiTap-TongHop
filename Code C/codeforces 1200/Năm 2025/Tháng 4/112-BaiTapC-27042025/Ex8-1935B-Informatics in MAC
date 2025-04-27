@@ -1,1 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int find_mex(int a[], int n) {
+    int mex = 0;
+    int present[MAXN] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        if (a[i] < MAXN) {
+            present[a[i]] = 1;
+        }
+    }
+
+    while (present[mex] == 1) {
+        mex++;
+    }
+    
+    return mex;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int mex = find_mex(a, n);
+        
+        int segments[MAXN][2];
+        int segment_count = 0;
+        
+        int start = 0;
+        int count[MAXN] = {0};
+        
+        for (int i = 0; i < n; i++) {
+            count[a[i]]++;
+
+            int valid = 1;
+            for (int j = 0; j < mex; j++) {
+                if (count[j] == 0) {
+                    valid = 0;
+                    break;
+                }
+            }
+
+            if (valid) {
+                segments[segment_count][0] = start + 1;
+                segments[segment_count][1] = i + 1;
+                segment_count++;
+                
+                start = i + 1;
+                
+                for (int j = 0; j < MAXN; j++) {
+                    count[j] = 0;
+                }
+            }
+        }
+
+        if (segment_count < 2) {
+            printf("-1\n");
+        } else {
+            printf("%d\n", segment_count);
+            for (int i = 0; i < segment_count; i++) {
+                printf("%d %d\n", segments[i][0], segments[i][1]);
+            }
+        }
+    }
+    
+    return 0;
+}
 

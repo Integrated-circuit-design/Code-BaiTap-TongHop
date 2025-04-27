@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    long long y, k, n;
+    scanf("%lld %lld %lld", &y, &k, &n);
+
+    long long start = ((y + k) / k) * k - y;
+
+    if (start + y > n) {
+        printf("-1\n");
+        return 0;
+    }
+
+    for (long long x = start; x <= n - y; x += k) {
+        printf("%lld ", x);
+    }
+
+    printf("\n");
+    return 0;
+}
 

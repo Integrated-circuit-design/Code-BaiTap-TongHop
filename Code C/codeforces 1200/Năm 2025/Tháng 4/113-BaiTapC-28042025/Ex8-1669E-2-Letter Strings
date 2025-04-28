@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+long long count_pairs(char s[MAXN][3], int n) {
+    long long result = 0;
+    int first_count[11] = {0};
+    int second_count[11] = {0};
+    int both_count[11][11] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int x = s[i][0] - 'a';
+        int y = s[i][1] - 'a';
+
+        result += first_count[x];
+        result += second_count[y];
+        result -= both_count[x][y];
+
+        first_count[x]++;
+        second_count[y]++;
+        both_count[x][y]++;
+    }
+
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        char s[MAXN][3];
+        for (int i = 0; i < n; i++) {
+            scanf("%s", s[i]);
+        }
+        
+        long long result = count_pairs(s, n);
+        printf("%lld\n", result);
+    }
+    
+    return 0;
+}
 

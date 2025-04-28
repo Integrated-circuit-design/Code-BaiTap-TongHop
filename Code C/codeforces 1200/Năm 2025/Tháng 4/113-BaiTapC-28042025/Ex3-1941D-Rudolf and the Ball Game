@@ -1,1 +1,72 @@
+#include <stdio.h>
+
+#define MAXN 1005
+
+int t, n, m, x;
+int r[MAXN];
+char c[MAXN];
+int players[MAXN];
+
+void move_ball(int *current_pos, int distance, char direction) {
+    if (direction == '0') {
+        *current_pos = (*current_pos + distance - 1) % n + 1;
+    } else if (direction == '1') {
+        *current_pos = (*current_pos - distance - 1 + n) % n + 1;
+    }
+}
+
+int main() {
+    scanf("%d", &t);
+    
+    while (t--) {
+        scanf("%d %d %d", &n, &m, &x);
+        
+        for (int i = 1; i <= n; i++) {
+            players[i] = 0;
+        }
+        players[x] = 1;
+        
+        for (int i = 0; i < m; i++) {
+            scanf("%d %c", &r[i], &c[i]);
+        }
+        
+        for (int i = 0; i < m; i++) {
+            int new_positions[MAXN] = {0};
+
+            for (int j = 1; j <= n; j++) {
+                if (players[j]) {
+                    if (c[i] == '0' || c[i] == '?') {
+                        move_ball(&j, r[i], '0');
+                        new_positions[j] = 1;
+                    }
+                    if (c[i] == '1' || c[i] == '?') {
+                        move_ball(&j, r[i], '1');
+                        new_positions[j] = 1;
+                    }
+                }
+            }
+
+            for (int j = 1; j <= n; j++) {
+                players[j] = new_positions[j];
+            }
+        }
+        
+        int count = 0;
+        for (int i = 1; i <= n; i++) {
+            if (players[i]) {
+                count++;
+            }
+        }
+        
+        printf("%d\n", count);
+        for (int i = 1; i <= n; i++) {
+            if (players[i]) {
+                printf("%d ", i);
+            }
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
 

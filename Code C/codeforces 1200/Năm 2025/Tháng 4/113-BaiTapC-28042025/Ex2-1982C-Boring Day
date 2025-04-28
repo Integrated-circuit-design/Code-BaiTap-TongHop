@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        long long l, r;
+        scanf("%d %lld %lld", &n, &l, &r);
+
+        long long a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        int winRounds = 0;
+        long long sum = 0;
+
+        for (int i = 0; i < n; ) {
+            sum = 0;
+            int j = i;
+
+            while (j < n && sum + a[j] <= r) {
+                sum += a[j];
+                j++;
+
+                if (sum >= l && sum <= r) {
+                    winRounds++;
+                    break;
+                }
+            }
+
+            if (sum >= l && sum <= r) {
+                i = j;
+            } else {
+                i++;
+            }
+        }
+
+        printf("%d\n", winRounds);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, q;
+        scanf("%d %d %d", &n, &m, &q);
+
+        int *b = (int*)malloc(m * sizeof(int));
+        for (int i = 0; i < m; ++i) {
+            scanf("%d", &b[i]);
+        }
+
+        while (q--) {
+            int a;
+            scanf("%d", &a);
+
+            int min_distance = 1000000000;
+
+            for (int i = 0; i < m; ++i) {
+                int dist = abs(b[i] - a);
+                if (dist < min_distance) {
+                    min_distance = dist;
+                }
+            }
+
+            int result = (min_distance + 1) / 2;
+            printf("%d\n", result);
+        }
+
+        free(b);
+    }
+
+    return 0;
+}
 

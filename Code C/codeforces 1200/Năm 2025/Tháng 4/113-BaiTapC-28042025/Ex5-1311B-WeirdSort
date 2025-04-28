@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+void solve() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int a[n], p[m], can_swap[n - 1];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        can_swap[i] = 0;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int x;
+        scanf("%d", &x);
+        can_swap[x - 1] = 1;
+    }
+
+    bool swapped = true;
+    while (swapped) {
+        swapped = false;
+        for (int i = 0; i < n - 1; i++) {
+            if (can_swap[i] && a[i] > a[i + 1]) {
+                int temp = a[i];
+                a[i] = a[i + 1];
+                a[i + 1] = temp;
+                swapped = true;
+            }
+        }
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        if (a[i] > a[i + 1]) {
+            printf("NO\n");
+            return;
+        }
+    }
+
+    printf("YES\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

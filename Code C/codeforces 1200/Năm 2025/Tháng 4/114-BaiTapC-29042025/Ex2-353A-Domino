@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int is_even(int number) {
+    return number % 2 == 0;
+}
+
+int main() {
+    int count;
+    scanf("%d", &count);
+
+    int top_total = 0, bottom_total = 0;
+    int has_mixed_domino = 0;
+
+    for (int i = 0; i < count; i++) {
+        int top, bottom;
+        scanf("%d %d", &top, &bottom);
+
+        top_total += top;
+        bottom_total += bottom;
+
+        if ((top % 2 == 0 && bottom % 2 == 1) || (top % 2 == 1 && bottom % 2 == 0)) {
+            has_mixed_domino = 1;
+        }
+    }
+
+    int top_even = is_even(top_total);
+    int bottom_even = is_even(bottom_total);
+
+    if (top_even && bottom_even) {
+        printf("0\n");
+    } else if (!top_even && !bottom_even && has_mixed_domino) {
+        printf("1\n");
+    } else {
+        printf("-1\n");
+    }
+
+    return 0;
+}
 

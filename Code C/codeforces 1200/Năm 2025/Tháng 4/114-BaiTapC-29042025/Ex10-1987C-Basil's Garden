@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int h[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &h[i]);
+        }
+
+        int max_time = 0;
+
+        for (int i = 0; i < n; i++) {
+            max_time = (max_time < h[i]) ? h[i] : max_time;
+        }
+
+        printf("%d\n", max_time);
+    }
+
+    return 0;
+}
 

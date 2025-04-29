@@ -1,1 +1,75 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAXN 100005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        bool princeTaken[MAXN] = {false};
+        bool unmarriedPrincess[MAXN] = {false};
+
+        int princessPreference[MAXN][MAXN];
+        int numberOfPreferences[MAXN];
+
+        for (int i = 1; i <= n; i++) {
+            numberOfPreferences[i] = 0;
+        }
+
+        for (int princess = 1; princess <= n; princess++) {
+            int k;
+            scanf("%d", &k);
+            numberOfPreferences[princess] = k;
+            
+            for (int j = 0; j < k; j++) {
+                int prince;
+                scanf("%d", &prince);
+                princessPreference[princess][j] = prince;
+            }
+        }
+
+        bool foundImprovement = false;
+        int firstUnmarriedPrincess = -1;
+        int freePrince = -1;
+
+        for (int princess = 1; princess <= n; princess++) {
+            bool married = false;
+
+            for (int j = 0; j < numberOfPreferences[princess]; j++) {
+                int prince = princessPreference[princess][j];
+                
+                if (!princeTaken[prince]) {
+                    princeTaken[prince] = true;
+                    married = true;
+                    break;
+                }
+            }
+
+            if (!married && firstUnmarriedPrincess == -1) {
+                firstUnmarriedPrincess = princess;
+            }
+        }
+
+        if (firstUnmarriedPrincess != -1) {
+            for (int prince = 1; prince <= n; prince++) {
+                if (!princeTaken[prince]) {
+                    freePrince = prince;
+                    break;
+                }
+            }
+
+            printf("IMPROVE\n");
+            printf("%d %d\n", firstUnmarriedPrincess, freePrince);
+        } else {
+            printf("OPTIMAL\n");
+        }
+    }
+
+    return 0;
+}
 

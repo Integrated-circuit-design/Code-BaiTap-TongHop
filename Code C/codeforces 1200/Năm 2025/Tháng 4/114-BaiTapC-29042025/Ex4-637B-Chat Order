@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+#define MAXLEN 15
+#define HASH_SIZE 100003
+
+typedef struct Node {
+    char name[MAXLEN];
+    struct Node* next;
+} Node;
+
+Node* hash_table[HASH_SIZE];
+char result[MAXN][MAXLEN];
+int res_cnt = 0;
+
+unsigned int hash(const char* str) {
+    unsigned int h = 0;
+    while (*str) {
+        h = (h * 131 + *str++) % HASH_SIZE;
+    }
+    return h;
+}
+
+int is_new(const char* str) {
+    unsigned int h = hash(str);
+    Node* cur = hash_table[h];
+    while (cur) {
+        if (strcmp(cur->name, str) == 0) return 0;
+        cur = cur->next;
+    }
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    strcpy(new_node->name, str);
+    new_node->next = hash_table[h];
+    hash_table[h] = new_node;
+    return 1;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char name[MAXLEN];
+    for (int i = 0; i < n; ++i) {
+        scanf("%s", name);
+        if (is_new(name)) {
+            strcpy(result[res_cnt++], name);
+        }
+    }
+
+    for (int i = res_cnt - 1; i >= 0; --i) {
+        printf("%s\n", result[i]);
+    }
+
+    return 0;
+}
 

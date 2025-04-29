@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 105
+#define MAXLEN 201
+
+char result[MAXN][MAXLEN];
+
+char get_letter(int pos) {
+    return 'a' + (pos % 26);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, a[MAXN];
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++)
+            scanf("%d", &a[i]);
+
+        for (int i = 0; i < MAXLEN - 1; i++) {
+            result[0][i] = get_letter(i);
+        }
+        result[0][MAXLEN - 1] = '\0';
+
+        for (int i = 1; i <= n; i++) {
+            int common = a[i - 1];
+            for (int j = 0; j < common; j++) {
+                result[i][j] = result[i - 1][j];
+            }
+            result[i][common] = get_letter(i + common);
+            for (int j = common + 1; j < MAXLEN - 1; j++) {
+                result[i][j] = get_letter(i + j);
+            }
+            result[i][MAXLEN - 1] = '\0';
+        }
+
+        for (int i = 0; i <= n; i++) {
+            printf("%s\n", result[i]);
+        }
+    }
+
+    return 0;
+}
 

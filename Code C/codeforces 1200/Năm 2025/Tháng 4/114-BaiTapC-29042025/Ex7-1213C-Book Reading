@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        long long n, m;
+        scanf("%lld %lld", &n, &m);
+
+        long long total_sum = 0;
+        
+        for (long long i = m; i <= n; i += m) {
+            total_sum += i % 10;
+        }
+
+        printf("%lld\n", total_sum);
+    }
+
+    return 0;
+}
 

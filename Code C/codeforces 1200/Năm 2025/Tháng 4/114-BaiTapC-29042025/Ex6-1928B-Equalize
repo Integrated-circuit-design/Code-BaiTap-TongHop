@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200005
+
+int compare(const void *a, const void *b) {
+    long long x = *(long long *)a;
+    long long y = *(long long *)b;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        long long a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+            a[i] -= i;
+        }
+
+        qsort(a, n, sizeof(long long), compare);
+
+        int max_count = 1, current_count = 1;
+        
+        for (int i = 1; i < n; i++) {
+            if (a[i] == a[i-1]) {
+                current_count++;
+            } else {
+                current_count = 1;
+            }
+
+            if (current_count > max_count) {
+                max_count = current_count;
+            }
+        }
+
+        printf("%d\n", max_count);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+long long can_place(long long n, long long m, long long k, long long max_bench_length) {
+    long long benches_per_row = m / max_bench_length;
+    long long total_benches = benches_per_row * n;
+    return total_benches >= k;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long n, m, k;
+        scanf("%lld %lld %lld", &n, &m, &k);
+        
+        long long left = 1, right = m;
+        long long result = m;
+        
+        while (left <= right) {
+            long long mid = (left + right) / 2;
+            
+            if (can_place(n, m, k, mid)) {
+                result = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        printf("%lld\n", result);
+    }
+    
+    return 0;
+}
 

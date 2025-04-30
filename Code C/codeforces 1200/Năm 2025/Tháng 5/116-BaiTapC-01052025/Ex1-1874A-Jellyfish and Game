@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m;
+        long long k;
+        scanf("%d %d %lld", &n, &m, &k);
+        int a[n], b[m];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        k = (k > 2) ? 2 : k;
+
+        for (long long i = 0; i < k; i++) {
+            if (i % 2 == 0) {
+                int minA = 0, maxB = 0;
+                for (int j = 1; j < n; j++) if (a[j] < a[minA]) minA = j;
+                for (int j = 1; j < m; j++) if (b[j] > b[maxB]) maxB = j;
+
+                if (b[maxB] > a[minA]) {
+                    swap(&a[minA], &b[maxB]);
+                }
+            } else {
+                int minA = 0, maxB = 0;
+                for (int j = 1; j < n; j++) if (a[j] < a[minA]) minA = j;
+                for (int j = 1; j < m; j++) if (b[j] > b[maxB]) maxB = j;
+
+                if (b[maxB] > a[minA]) {
+                    swap(&a[minA], &b[maxB]);
+                }
+            }
+        }
+
+        long long sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += a[i];
+        }
+
+        printf("%lld\n", sum);
+    }
+    return 0;
+}
 

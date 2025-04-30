@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long m, k, a1, ak;
+        scanf("%lld %lld %lld %lld", &m, &k, &a1, &ak);
+
+        long long regular_k_used = (m / k) < ak ? (m / k) : ak;
+        m -= regular_k_used * k;
+
+        long long regular_1_used = (m <= a1) ? m : a1;
+        m -= regular_1_used;
+
+        long long fancy_coins = 0;
+
+        if (m > 0) {
+            fancy_coins += m / k;
+            m %= k;
+
+            if (m > 0) {
+                fancy_coins += m;
+            }
+        }
+
+        printf("%lld\n", fancy_coins);
+    }
+
+    return 0;
+}
 

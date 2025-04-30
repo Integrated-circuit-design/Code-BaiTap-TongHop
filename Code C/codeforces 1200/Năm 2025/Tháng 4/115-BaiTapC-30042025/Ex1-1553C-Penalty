@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int minimumKicksToEnd(const char *s) {
+    int team1Score = 0, team2Score = 0;
+    int remainingTeam1 = 5, remainingTeam2 = 5;
+
+    for (int i = 0; i < 10; i++) {
+        if (i % 2 == 0) {
+            remainingTeam1--;
+            if (s[i] == '1') {
+                team1Score++;
+            }
+        } else {
+            remainingTeam2--;
+            if (s[i] == '1') {
+                team2Score++;
+            }
+        }
+
+        if (team1Score > team2Score + remainingTeam2 || team2Score > team1Score + remainingTeam1) {
+            return i + 1;
+        }
+    }
+
+    return 10;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[11];
+        scanf("%s", s);
+        printf("%d\n", minimumKicksToEnd(s));
+    }
+
+    return 0;
+}
 

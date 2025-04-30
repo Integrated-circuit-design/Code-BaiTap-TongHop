@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int count_sequences(int n, int k) {
+    int count = 0;
+
+    for (int f1 = 0; f1 <= n; f1++) {
+        for (int f2 = f1; f2 <= n; f2++) {
+            int a = f1, b = f2;
+            int valid = 1;
+
+            for (int i = 3; i <= k; i++) {
+                int next = a + b;
+                a = b;
+                b = next;
+
+                if (b > n) {
+                    valid = 0;
+                    break;
+                }
+            }
+
+            if (valid && b == n) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        printf("%d\n", count_sequences(n, k));
+    }
+
+    return 0;
+}
 

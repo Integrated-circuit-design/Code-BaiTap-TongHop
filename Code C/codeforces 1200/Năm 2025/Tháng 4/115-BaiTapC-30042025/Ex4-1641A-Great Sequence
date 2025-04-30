@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_VAL 1000000000
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        long long x;
+        scanf("%d %lld", &n, &x);
+        
+        long long* a = (long long*)malloc(n * sizeof(long long));
+        for (int i = 0; i < n; ++i) {
+            scanf("%lld", &a[i]);
+        }
+
+        int* count = (int*)calloc(MAX_VAL + 1, sizeof(int));
+        int added = 0;
+
+        for (int i = 0; i < n; ++i) {
+            count[a[i]]++;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            if (count[a[i]] == 0) continue;
+
+            long long need = a[i] * x;
+            if (need <= MAX_VAL && count[need] > 0) {
+                count[a[i]]--;
+                count[need]--;
+            } else {
+                added++;
+            }
+        }
+
+        printf("%d\n", added);
+        free(a);
+        free(count);
+    }
+    return 0;
+}
 

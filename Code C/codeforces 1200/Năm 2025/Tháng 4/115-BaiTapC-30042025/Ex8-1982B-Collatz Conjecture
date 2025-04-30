@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+long long collatz(long long x, long long y, long long k) {
+    while (k--) {
+        x++;
+        while (x % y == 0) {
+            x /= y;
+        }
+    }
+    return x;
+}
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        long long x, y, k;
+        scanf("%lld %lld %lld", &x, &y, &k);
+        printf("%lld\n", collatz(x, y, k));
+    }
+
+    return 0;
+}
 

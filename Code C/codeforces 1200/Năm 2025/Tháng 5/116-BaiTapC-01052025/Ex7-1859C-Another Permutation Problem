@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int max_cost(int n) {
+    int total_sum = 0;
+    int max_value = 0;
+    
+    for (int i = 1; i <= n; i++) {
+        total_sum += i * i;
+        if (i * i > max_value) {
+            max_value = i * i;
+        }
+    }
+    
+    return total_sum - max_value;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        printf("%d\n", max_cost(n));
+    }
+    
+    return 0;
+}
 

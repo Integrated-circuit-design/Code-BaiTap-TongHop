@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int infected[m];
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &infected[i]);
+        }
+
+        int gaps[m];
+        int gap_count = 0;
+
+        for (int i = 0; i < m; i++) {
+            int next = (i + 1) % m;
+            int diff = (infected[next] - infected[i] + n) % n - 1;
+            if (diff > 0) {
+                gaps[gap_count++] = diff;
+            }
+        }
+
+        int protected = 0;
+        int days = 0;
+
+        for (int i = 0; i < gap_count; i++) {
+            int infected_in_gap = gaps[i] - days * 2;
+            if (infected_in_gap <= 0) break;
+            protected += infected_in_gap - 1;
+            days += 2;
+        }
+
+        printf("%d\n", n - protected);  
+    }
+
+    return 0;
+}
 

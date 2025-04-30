@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+int check_palindrome(char s[], int n) {
+    for (int i = 0; i < n / 2; i++) {
+        if (s[i] != s[n - 1 - i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int min_deletions_to_make_palindrome(char s[], int n, char ch) {
+    int left = 0, right = n - 1;
+    int deletions = 0;
+
+    while (left < right) {
+        if (s[left] == s[right]) {
+            left++;
+            right--;
+        } else if (s[left] == ch) {
+            deletions++;
+            left++;
+        } else if (s[right] == ch) {
+            deletions++;
+            right--;
+        } else {
+            return -1;
+        }
+    }
+
+    return deletions;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[MAXN];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        if (check_palindrome(s, n)) {
+            printf("0\n");
+            continue;
+        }
+
+        int min_deletions = n;
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            int result = min_deletions_to_make_palindrome(s, n, ch);
+            if (result != -1) {
+                if (result < min_deletions) {
+                    min_deletions = result;
+                }
+            }
+        }
+
+        if (min_deletions == n) {
+            printf("-1\n");
+        } else {
+            printf("%d\n", min_deletions);
+        }
+    }
+
+    return 0;
+}
 

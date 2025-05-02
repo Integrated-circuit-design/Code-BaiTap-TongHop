@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void solve_case(int n) {
+    int miners[n], mines[n];
+    int miner_count = 0, mine_count = 0;
+
+    for (int i = 0; i < 2 * n; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+
+        if (x == 0) {
+            miners[miner_count++] = abs(y);
+        } else {
+            mines[mine_count++] = abs(x);
+        }
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (miners[i] > miners[j]) {
+                int temp = miners[i];
+                miners[i] = miners[j];
+                miners[j] = temp;
+            }
+            if (mines[i] > mines[j]) {
+                int temp = mines[i];
+                mines[i] = mines[j];
+                mines[j] = temp;
+            }
+        }
+    }
+
+    double total_energy = 0;
+
+    for (int i = 0; i < n; i++) {
+        total_energy += sqrt((double)(miners[i] * miners[i] + mines[i] * mines[i]));
+    }
+
+    printf("%.12lf\n", total_energy);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        solve_case(n);
+    }
+
+    return 0;
+}
 

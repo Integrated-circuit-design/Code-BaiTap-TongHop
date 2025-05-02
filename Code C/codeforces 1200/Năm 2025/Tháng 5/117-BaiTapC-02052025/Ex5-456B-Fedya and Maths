@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+int mod_large_number(const char *n, int mod) {
+    int result = 0;
+    int len = strlen(n);
+    for (int i = 0; i < len; i++) {
+        result = (result * 10 + (n[i] - '0')) % mod;
+    }
+    return result;
+}
+
+int main() {
+    char n[110];
+    scanf("%s", n);
+
+    int n_mod_4 = mod_large_number(n, 4);
+    int n_mod_2 = mod_large_number(n, 2);
+
+    int cycles_2[] = {2, 4, 3, 1};
+    int cycles_3[] = {3, 4, 2, 1};
+    int cycles_4[] = {4, 1};
+
+    int result_1 = 1;
+    int result_2 = cycles_2[n_mod_4];
+    int result_3 = cycles_3[n_mod_4];
+    int result_4 = cycles_4[n_mod_2];
+
+    int total = (result_1 + result_2 + result_3 + result_4) % 5;
+
+    printf("%d\n", total);
+
+    return 0;
+}
 

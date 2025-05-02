@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_USERS 200
+#define MAX_NAME_LENGTH 25
+
+void toLowerCase(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = tolower(str[i]);
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int repost_chain[MAX_USERS] = {0};
+    char users[MAX_USERS][MAX_NAME_LENGTH];
+    int user_count = 0;
+
+    strcpy(users[user_count], "polycarp");
+    repost_chain[user_count] = 1;
+    user_count++;
+
+    for (int i = 0; i < n; i++) {
+        char user1[MAX_NAME_LENGTH], user2[MAX_NAME_LENGTH];
+        scanf("%s reposted %s", user1, user2);
+
+        toLowerCase(user1);
+        toLowerCase(user2);
+
+        int user2_index = -1;
+        for (int j = 0; j < user_count; j++) {
+            if (strcmp(users[j], user2) == 0) {
+                user2_index = j;
+                break;
+            }
+        }
+
+        if (user2_index == -1) {
+            strcpy(users[user_count], user2);
+            repost_chain[user_count] = repost_chain[user_count - 1] + 1;
+            user2_index = user_count;
+            user_count++;
+        }
+
+        int user1_index = -1;
+        for (int j = 0; j < user_count; j++) {
+            if (strcmp(users[j], user1) == 0) {
+                user1_index = j;
+                break;
+            }
+        }
+
+        if (user1_index == -1) {
+            strcpy(users[user_count], user1);
+            repost_chain[user_count] = repost_chain[user2_index] + 1;
+            user1_index = user_count;
+            user_count++;
+        }
+
+        repost_chain[user1_index] = repost_chain[user2_index] + 1;
+    }
+
+    int max_chain_length = 0;
+    for (int i = 0; i < user_count; i++) {
+        if (repost_chain[i] > max_chain_length) {
+            max_chain_length = repost_chain[i];
+        }
+    }
+
+    printf("%d\n", max_chain_length);
+    return 0;
+}
 

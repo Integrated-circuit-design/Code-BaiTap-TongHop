@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+
+#define MAX_COST 1000000000
+
+int get_mask(char *vitamins) {
+    int mask = 0;
+    for (int i = 0; i < strlen(vitamins); i++) {
+        if (vitamins[i] == 'A') {
+            mask |= 1;
+        } else if (vitamins[i] == 'B') {
+            mask |= 2;
+        } else if (vitamins[i] == 'C') {
+            mask |= 4;
+        }
+    }
+    return mask;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int min_cost[8];
+    for (int i = 0; i < 8; i++) {
+        min_cost[i] = MAX_COST;
+    }
+    min_cost[0] = 0;
+
+    for (int i = 0; i < n; i++) {
+        int cost;
+        char vitamins[4];
+        scanf("%d %s", &cost, vitamins);
+
+        int mask = get_mask(vitamins);
+
+        for (int prev_mask = 0; prev_mask < 8; prev_mask++) {
+            int new_mask = prev_mask | mask;
+            min_cost[new_mask] = (min_cost[new_mask] < min_cost[prev_mask] + cost) ? min_cost[new_mask] : min_cost[prev_mask] + cost;
+        }
+    }
+
+    if (min_cost[7] == MAX_COST) {
+        printf("-1\n");
+    } else {
+        printf("%d\n", min_cost[7]);
+    }
+
+    return 0;
+}
 

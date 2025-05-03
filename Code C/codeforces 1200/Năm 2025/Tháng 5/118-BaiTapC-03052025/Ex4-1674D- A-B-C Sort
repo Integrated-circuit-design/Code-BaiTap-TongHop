@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+void move_to_middle(int b[], int *b_size, int value) {
+    int mid = *b_size / 2;
+    for (int i = *b_size; i > mid; i--) {
+        b[i] = b[i - 1];
+    }
+    b[mid] = value;
+    (*b_size)++;
+}
+
+bool can_sort(int n, int a[]) {
+    int b[n];
+    int b_size = 0;
+
+    for (int i = n - 1; i >= 0; i--) {
+        if (b_size % 2 == 0) {
+            b[b_size++] = a[i];
+        } else {
+            move_to_middle(b, &b_size, a[i]);
+        }
+    }
+
+    int c[n];
+    int c_size = 0;
+
+    while (b_size > 0) {
+        int mid = b_size / 2;
+        c[c_size++] = b[mid];
+
+        for (int i = mid; i < b_size - 1; i++) {
+            b[i] = b[i + 1];
+        }
+        b_size--;
+    }
+
+    for (int i = 1; i < n; i++) {
+        if (c[i] < c[i - 1]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        if (can_sort(n, a)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

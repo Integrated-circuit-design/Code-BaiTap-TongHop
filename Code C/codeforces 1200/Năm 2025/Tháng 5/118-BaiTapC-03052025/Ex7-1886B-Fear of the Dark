@@ -1,1 +1,68 @@
+#include <stdio.h>
+#include <math.h>
+
+#define EPSILON 1e-7
+
+double distance(int x1, int y1, int x2, int y2) {
+    return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+}
+
+int is_path_illuminated(int Ox, int Oy, int Px, int Py, int Ax, int Ay, int Bx, int By, double w) {
+    double dist_O_A = distance(Ox, Oy, Ax, Ay);
+    double dist_O_B = distance(Ox, Oy, Bx, By);
+    double dist_P_A = distance(Px, Py, Ax, Ay);
+    double dist_P_B = distance(Px, Py, Bx, By);
+    double dist_A_B = distance(Ax, Ay, Bx, By);
+
+    if ((dist_O_A <= w && dist_P_A <= w) || (dist_O_B <= w && dist_P_B <= w)) {
+        return 1;
+    }
+
+    if (dist_O_A <= w && dist_P_B <= w) {
+        return dist_A_B <= 2 * w;
+    }
+
+    if (dist_O_B <= w && dist_P_A <= w) {
+        return dist_A_B <= 2 * w;
+    }
+
+    return 0;
+}
+
+double find_min_radius(int Ox, int Oy, int Px, int Py, int Ax, int Ay, int Bx, int By) {
+    double low = 0.0;
+    double high = fmax(fmax(distance(Ox, Oy, Px, Py), distance(Ox, Oy, Ax, Ay)), 
+                       fmax(distance(Ox, Oy, Bx, By), fmax(distance(Px, Py, Ax, Ay), distance(Px, Py, Bx, By))));
+
+    while (high - low > EPSILON) {
+        double mid = (low + high) / 2.0;
+        if (is_path_illuminated(Ox, Oy, Px, Py, Ax, Ay, Bx, By, mid)) {
+            high = mid;
+        } else {
+            low = mid;
+        }
+    }
+
+    return high;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int Px, Py, Ax, Ay, Bx, By;
+        scanf("%d %d", &Px, &Py);
+        scanf("%d %d", &Ax, &Ay);
+        scanf("%d %d", &Bx, &By);
+
+        int Ox = 0, Oy = 0;
+
+        double result = find_min_radius(Ox, Oy, Px, Py, Ax, Ay, Bx, By);
+
+        printf("%.10f\n", result);
+    }
+
+    return 0;
+}
 

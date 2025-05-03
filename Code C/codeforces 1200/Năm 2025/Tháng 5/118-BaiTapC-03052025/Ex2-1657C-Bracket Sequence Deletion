@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_regular_bracket_sequence(const char* s, int start, int end) {
+    int balance = 0;
+    for (int i = start; i <= end; i++) {
+        if (s[i] == '(') {
+            balance++;
+        } else {
+            balance--;
+        }
+        if (balance < 0) return 0;
+    }
+    return balance == 0;
+}
+
+void process_test_case(int n, char* s) {
+    int i = 0;
+    int operations = 0;
+
+    while (i < n) {
+        int found = 0;
+
+        for (int j = i + 1; j <= n; j++) {
+            if (is_regular_bracket_sequence(s, i, j - 1)) {
+                operations++;
+                i = j;
+                found = 1;
+                break;
+            }
+        }
+
+        if (found) continue;
+
+        if (i + 1 < n && s[i] == s[i + 1]) {
+            operations++;
+            i += 2;
+        } else {
+            break;
+        }
+    }
+
+    printf("%d %d\n", operations, n - i);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        int n;
+        scanf("%d", &n);
+
+        char s[n + 1];
+        scanf("%s", s);
+
+        process_test_case(n, s);
+    }
+
+    return 0;
+}
 

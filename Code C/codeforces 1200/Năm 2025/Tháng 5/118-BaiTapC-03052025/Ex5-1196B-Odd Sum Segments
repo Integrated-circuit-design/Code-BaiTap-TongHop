@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int odd_count = 0;
+        for (int i = 0; i < n; i++) {
+            if (a[i] % 2 == 1) {
+                odd_count++;
+            }
+        }
+
+        if (odd_count < k || (odd_count - k) % 2 != 0) {
+            printf("NO\n");
+        } else {
+            int result[k];
+            int segment_count = 0;
+            int remaining_odds = odd_count - k;
+
+            for (int i = 0; i < n; i++) {
+                if (a[i] % 2 == 1) {
+                    segment_count++;
+                    result[segment_count - 1] = i + 1;
+                    if (segment_count == k - 1) {
+                        result[k - 1] = n;
+                        break;
+                    }
+                    remaining_odds--;
+                }
+            }
+
+            printf("YES\n");
+            for (int i = 0; i < k; i++) {
+                printf("%d ", result[i]);
+            }
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

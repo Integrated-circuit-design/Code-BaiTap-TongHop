@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int correct[n], wrong[m];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &correct[i]);
+    }
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &wrong[i]);
+    }
+
+    int maxCorrectTime = correct[0];
+    for (int i = 1; i < n; i++) {
+        if (correct[i] > maxCorrectTime) {
+            maxCorrectTime = correct[i];
+        }
+    }
+
+    int minCorrectTime = correct[0];
+    for (int i = 1; i < n; i++) {
+        if (correct[i] < minCorrectTime) {
+            minCorrectTime = correct[i];
+        }
+    }
+
+    int minWrongTime = wrong[0];
+    for (int i = 1; i < m; i++) {
+        if (wrong[i] < minWrongTime) {
+            minWrongTime = wrong[i];
+        }
+    }
+
+    int v = maxCorrectTime > 2 * minCorrectTime ? maxCorrectTime : 2 * minCorrectTime;
+
+    if (v < minWrongTime) {
+        printf("%d\n", v);
+    } else {
+        printf("-1\n");
+    }
+
+    return 0;
+}
 

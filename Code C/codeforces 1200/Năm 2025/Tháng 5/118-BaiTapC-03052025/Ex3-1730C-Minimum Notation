@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 200005
+
+void process_case(char s[]) {
+    int len = strlen(s);
+    char result[MAX_LEN];
+    int result_len = 0;
+
+    for (int i = 0; i < len; i++) {
+        if (result_len == 0) {
+            result[result_len++] = s[i];
+        } else {
+            if (result[result_len - 1] <= s[i]) {
+                result[result_len++] = s[i];
+            } else {
+                while (result_len > 0 && result[result_len - 1] > s[i]) {
+                    result_len--;
+                }
+                result[result_len++] = s[i];
+            }
+        }
+    }
+    result[result_len] = '\0';
+    printf("%s\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[MAX_LEN];
+        scanf("%s", s);
+        process_case(s);
+    }
+
+    return 0;
+}
 

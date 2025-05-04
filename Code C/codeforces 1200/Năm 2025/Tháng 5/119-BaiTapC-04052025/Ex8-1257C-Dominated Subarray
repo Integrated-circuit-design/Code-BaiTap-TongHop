@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+#define MAXN 200005
+
+int find_shortest_dominated_subarray(int n, int a[]) {
+    int last_pos[MAXN];
+    int min_len = INT_MAX;
+
+    for (int i = 0; i < MAXN; i++) {
+        last_pos[i] = -1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int num = a[i];
+
+        if (last_pos[num] != -1) {
+            int length = i - last_pos[num] + 1;
+
+            if (length < min_len) {
+                min_len = length;
+            }
+        }
+
+        last_pos[num] = i;
+    }
+
+    return (min_len == INT_MAX) ? -1 : min_len;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int result = find_shortest_dominated_subarray(n, a);
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

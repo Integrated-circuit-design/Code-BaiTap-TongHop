@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <math.h>
+
+double dist(double x1, double y1, double x2, double y2) {
+    return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        double circles[n][2];
+        for (int i = 0; i < n; i++) {
+            scanf("%lf %lf", &circles[i][0], &circles[i][1]);
+        }
+
+        double xs, ys, xt, yt;
+        scanf("%lf %lf %lf %lf", &xs, &ys, &xt, &yt);
+
+        double dx = xt - xs;
+        double dy = yt - ys;
+        double d = dist(xs, ys, xt, yt);
+
+        int possible = 1;
+
+        for (int i = 0; i < n; i++) {
+            double cx = circles[i][0], cy = circles[i][1];
+            double dist_to_center_start = dist(xs, ys, cx, cy);
+            double dist_to_center_end = dist(xt, yt, cx, cy);
+
+            if (dist_to_center_start < d || dist_to_center_end < d) {
+                possible = 0;
+                break;
+            }
+        }
+
+        if (possible) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

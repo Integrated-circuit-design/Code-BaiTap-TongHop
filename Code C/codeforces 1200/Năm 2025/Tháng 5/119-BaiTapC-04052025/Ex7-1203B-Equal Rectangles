@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_LENGTH 10001
+
+int can_form_equal_rectangles(int n, int sticks[]) {
+    int count[MAX_LENGTH] = {0};
+
+    for (int i = 0; i < 4 * n; i++) {
+        count[sticks[i]]++;
+    }
+
+    for (int i = 0; i < MAX_LENGTH; i++) {
+        if (count[i] % 2 != 0) {
+            return 0;
+        }
+    }
+
+    int pairs[2 * n];
+    int idx = 0;
+
+    for (int i = 0; i < MAX_LENGTH; i++) {
+        while (count[i] > 0) {
+            pairs[idx++] = i;
+            count[i] -= 2;
+        }
+    }
+
+    int area = pairs[0] * pairs[2 * n - 1];
+    for (int i = 0; i < n; i++) {
+        if (pairs[i] * pairs[2 * n - 1 - i] != area) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+
+        int sticks[4 * n];
+        for (int i = 0; i < 4 * n; i++) {
+            scanf("%d", &sticks[i]);
+        }
+
+        if (can_form_equal_rectangles(n, sticks)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

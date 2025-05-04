@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX_VAL 1000001
+
+void solve() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+    
+    int a[n];
+    bool present[MAX_VAL] = {false};
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        present[a[i]] = true;
+    }
+
+    int mex = 0;
+
+    while (true) {
+        if (present[mex] == false) {
+            bool can_create = false;
+
+            for (int i = 0; i < n; i++) {
+                if (a[i] <= mex && (mex - a[i]) % x == 0) {
+                    can_create = true;
+                    break;
+                }
+            }
+
+            if (can_create) {
+                present[mex] = true;
+                mex++;
+            } else {
+                break;
+            }
+        } else {
+            mex++;
+        }
+    }
+
+    printf("%d\n", mex);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
 

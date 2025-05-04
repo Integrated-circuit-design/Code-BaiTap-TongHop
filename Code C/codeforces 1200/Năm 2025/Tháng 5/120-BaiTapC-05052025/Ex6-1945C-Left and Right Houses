@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAXN 300005
+
+int count_zeros(const char *a, int start, int end) {
+    int count = 0;
+    for (int i = start; i <= end; i++) {
+        if (a[i] == '0') {
+            count++;
+        }
+    }
+    return count;
+}
+
+int count_ones(const char *a, int start, int end) {
+    int count = 0;
+    for (int i = start; i <= end; i++) {
+        if (a[i] == '1') {
+            count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char a[MAXN];
+        
+        scanf("%d", &n);
+        scanf("%s", a);
+
+        int best_i = -1;
+        int best_diff = MAXN;
+
+        for (int i = 0; i <= n; i++) {
+            int required_left_zeros = (i + 1) / 2;
+            int left_valid = count_zeros(a, 0, i - 1) >= required_left_zeros;
+            
+            int required_right_ones = (n - i + 1) / 2;
+            int right_valid = count_ones(a, i, n - 1) >= required_right_ones;
+
+            if (left_valid && right_valid) {
+                int diff = abs(n / 2 - i);
+                if (diff < best_diff || (diff == best_diff && i < best_i)) {
+                    best_i = i;
+                    best_diff = diff;
+                }
+            }
+        }
+
+        printf("%d\n", best_i);
+    }
+
+    return 0;
+}
 

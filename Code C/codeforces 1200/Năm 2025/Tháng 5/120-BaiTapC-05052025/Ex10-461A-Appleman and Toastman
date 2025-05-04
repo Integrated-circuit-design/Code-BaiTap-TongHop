@@ -1,1 +1,109 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 300005
+
+typedef struct {
+    int *arr;
+    int size;
+    int capacity;
+} MaxHeap;
+
+void initMaxHeap(MaxHeap *heap, int capacity) {
+    heap->arr = (int *)malloc(capacity * sizeof(int));
+    heap->size = 0;
+    heap->capacity = capacity;
+}
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void maxHeapify(MaxHeap *heap, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+    
+    if (left < heap->size && heap->arr[left] > heap->arr[largest]) {
+        largest = left;
+    }
+    if (right < heap->size && heap->arr[right] > heap->arr[largest]) {
+        largest = right;
+    }
+    
+    if (largest != i) {
+        swap(&heap->arr[i], &heap->arr[largest]);
+        maxHeapify(heap, largest);
+    }
+}
+
+void insert(MaxHeap *heap, int value) {
+    if (heap->size == heap->capacity) {
+        return;
+    }
+    
+    heap->arr[heap->size] = value;
+    int i = heap->size;
+    heap->size++;
+    
+    while (i > 0 && heap->arr[(i - 1) / 2] < heap->arr[i]) {
+        swap(&heap->arr[(i - 1) / 2], &heap->arr[i]);
+        i = (i - 1) / 2;
+    }
+}
+
+int extractMax(MaxHeap *heap) {
+    if (heap->size == 0) {
+        return -1;
+    }
+    
+    int root = heap->arr[0];
+    heap->arr[0] = heap->arr[heap->size - 1];
+    heap->size--;
+    
+    maxHeapify(heap, 0);
+    
+    return root;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n];
+    long long total_score = 0;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    MaxHeap heap;
+    initMaxHeap(&heap, n);
+    
+    for (int i = 0; i < n; i++) {
+        insert(&heap, a[i]);
+    }
+    
+    while (heap.size > 1) {
+        int first_group = extractMax(&heap);
+        int second_group = extractMax(&heap);
+        
+        total_score += first_group + second_group;
+        
+        if (first_group > 1) {
+            insert(&heap, first_group - 1);
+        }
+        if (second_group > 1) {
+            insert(&heap, second_group - 1);
+        }
+    }
+    
+    printf("%lld\n", total_score);
+    
+    free(heap.arr);
+    
+    return 0;
+}
 

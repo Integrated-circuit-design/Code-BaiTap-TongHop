@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+void swap(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+    int odd_count = 0, even_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int odd[n], even[n];
+    
+    for (int i = 0; i < n; i++) {
+        if (a[i] % 2 == 0) {
+            even[even_count++] = a[i];
+        } else {
+            odd[odd_count++] = a[i];
+        }
+    }
+
+    for (int i = 0; i < odd_count - 1; i++) {
+        for (int j = i + 1; j < odd_count; j++) {
+            if (odd[i] > odd[j]) {
+                swap(&odd[i], &odd[j]);
+            }
+        }
+    }
+
+    for (int i = 0; i < even_count - 1; i++) {
+        for (int j = i + 1; j < even_count; j++) {
+            if (even[i] > even[j]) {
+                swap(&even[i], &even[j]);
+            }
+        }
+    }
+
+    int odd_index = 0, even_index = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] % 2 == 0) {
+            a[i] = even[even_index++];
+        } else {
+            a[i] = odd[odd_index++];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

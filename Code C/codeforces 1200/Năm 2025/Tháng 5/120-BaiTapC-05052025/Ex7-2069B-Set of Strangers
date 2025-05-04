@@ -1,1 +1,85 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 700
+#define MAX_M 700
+
+int dx[] = {-1, 1, 0, 0};
+int dy[] = {0, 0, -1, 1};
+
+int n, m;
+int grid[MAX_N][MAX_M];
+int visited[MAX_N][MAX_M];
+
+int is_valid(int x, int y) {
+    return (x >= 0 && x < n && y >= 0 && y < m);
+}
+
+void bfs(int start_x, int start_y, int color) {
+    int queue[MAX_N * MAX_M][2];
+    int front = 0, rear = 0;
+
+    queue[rear][0] = start_x;
+    queue[rear][1] = start_y;
+    rear++;
+
+    visited[start_x][start_y] = 1;
+
+    while (front < rear) {
+        int x = queue[front][0];
+        int y = queue[front][1];
+        front++;
+
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if (is_valid(nx, ny) && !visited[nx][ny] && grid[nx][ny] == color) {
+                visited[nx][ny] = 1;
+                queue[rear][0] = nx;
+                queue[rear][1] = ny;
+                rear++;
+            }
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d %d", &n, &m);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                scanf("%d", &grid[i][j]);
+                visited[i][j] = 0;
+            }
+        }
+
+        int colorRegions[MAX_N * MAX_M + 1] = {0};
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (!visited[i][j]) {
+                    int color = grid[i][j];
+                    colorRegions[color]++;
+                    bfs(i, j, color);
+                }
+            }
+        }
+
+        int steps = 0;
+        for (int i = 1; i <= n * m; i++) {
+            if (colorRegions[i] > 0) {
+                steps++;
+            }
+        }
+
+        printf("%d\n", steps - 1);
+    }
+
+    return 0;
+}
 

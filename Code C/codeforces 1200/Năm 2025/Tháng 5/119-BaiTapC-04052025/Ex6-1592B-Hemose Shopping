@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void solve(int n, int x, int *a) {
+    int sorted_a[MAXN];
+    for (int i = 0; i < n; i++) {
+        sorted_a[i] = a[i];
+    }
+
+    qsort(sorted_a, n, sizeof(int), compare);
+
+    if (x <= n / 2) {
+        printf("YES\n");
+        return;
+    }
+
+    int can_sort = 1;
+    for (int i = 0; i < n; i++) {
+        if (a[i] != sorted_a[i]) {
+            can_sort = 0;
+            break;
+        }
+    }
+
+    if (can_sort) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+
+        int a[MAXN];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        solve(n, x, a);
+    }
+
+    return 0;
+}
 

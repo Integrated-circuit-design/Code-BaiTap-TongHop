@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAX_LIMIT 1000000000000000000
+
+long long calculate_cells(int n) {
+    return (long long)n * (n + 1) / 2;
+}
+
+int main() {
+    long long staircase_costs[100];
+    int n = 1;
+    
+    while (1) {
+        long long cost = calculate_cells(n);
+        if (cost > MAX_LIMIT) break;
+        staircase_costs[n - 1] = cost;
+        n++;
+    }
+
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long x;
+        scanf("%lld", &x);
+
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (x >= staircase_costs[i]) {
+                x -= staircase_costs[i];
+                count++;
+            }
+        }
+
+        printf("%d\n", count);
+    }
+
+    return 0;
+}
 

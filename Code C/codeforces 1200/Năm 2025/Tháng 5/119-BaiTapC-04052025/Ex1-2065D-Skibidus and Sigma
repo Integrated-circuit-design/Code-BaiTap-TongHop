@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    long long sum_a = 0, sum_b = 0;
+    int *arr_a = (int *)a, *arr_b = (int *)b;
+
+    for (int i = 0; i < 2; i++) sum_a += arr_a[i];
+    for (int i = 0; i < 2; i++) sum_b += arr_b[i];
+
+    if (sum_a < sum_b) return 1;
+    else return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int arrays[n][m];
+        long long total_score = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                scanf("%d", &arrays[i][j]);
+            }
+        }
+
+        qsort(arrays, n, sizeof(int) * m, compare);
+
+        int final_array[n * m];
+        int index = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                final_array[index++] = arrays[i][j];
+            }
+        }
+
+        long long prefix_sum = 0;
+        long long total_score = 0;
+
+        for (int i = 0; i < n * m; i++) {
+            prefix_sum += final_array[i];
+            total_score += prefix_sum;
+        }
+
+        printf("%lld\n", total_score);
+    }
+
+    return 0;
+}
 

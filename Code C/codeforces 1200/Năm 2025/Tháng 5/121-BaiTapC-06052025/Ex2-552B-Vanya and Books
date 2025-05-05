@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+long long count_digits(int n) {
+    long long digits = 0;
+    int current_length = 1;
+    int base = 1;
+    
+    while (base <= n) {
+        int next_base = base * 10 - 1;
+        if (next_base > n) {
+            next_base = n;
+        }
+
+        int count_in_range = next_base - base + 1;
+
+        digits += count_in_range * current_length;
+
+        base *= 10;
+        current_length++;
+    }
+    
+    return digits;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    printf("%lld\n", count_digits(n));
+    return 0;
+}
 

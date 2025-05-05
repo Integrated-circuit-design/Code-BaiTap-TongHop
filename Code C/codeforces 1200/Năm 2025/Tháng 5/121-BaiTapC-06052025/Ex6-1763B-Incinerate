@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int h[n], p[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &h[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+        }
+
+        int remaining_monsters = n;
+        int total_damage = 0;
+
+        while (remaining_monsters > 0 && k > 0) {
+            int max_health = 0;
+            for (int i = 0; i < n; i++) {
+                if (h[i] > 0 && h[i] > max_health) {
+                    max_health = h[i];
+                }
+            }
+
+            total_damage += k;
+
+            for (int i = 0; i < n; i++) {
+                if (h[i] > 0) {
+                    h[i] -= k;
+                    if (h[i] <= 0) {
+                        remaining_monsters--;
+                    }
+                }
+            }
+
+            int min_power = 1000000000;
+            for (int i = 0; i < n; i++) {
+                if (h[i] > 0 && p[i] < min_power) {
+                    min_power = p[i];
+                }
+            }
+
+            k -= min_power;
+        }
+
+        if (remaining_monsters == 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

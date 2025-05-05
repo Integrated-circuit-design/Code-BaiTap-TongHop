@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    qsort(a, n, sizeof(int), compare);
+
+    int result[n];
+    
+    int mid = (n + 1) / 2;
+    int left = 0, right = mid;
+
+    for (int i = 0; i < n; i++) {
+        if (i % 2 == 0) {
+            result[i] = a[left];
+            left++;
+        } else {
+            result[i] = a[right];
+            right++;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", result[i]);
+    }
+
+    return 0;
+}
 

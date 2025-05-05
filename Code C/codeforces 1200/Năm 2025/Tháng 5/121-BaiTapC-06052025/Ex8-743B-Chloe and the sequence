@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int getElement(int n, int k) {
+    int mid = 1 << (n - 1);
+    
+    if (k == mid) {
+        return n;
+    }
+    else if (k < mid) {
+        return getElement(n - 1, k);
+    }
+    else {
+        return getElement(n - 1, k - mid);
+    }
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    printf("%d\n", getElement(n, k));
+    
+    return 0;
+}
 

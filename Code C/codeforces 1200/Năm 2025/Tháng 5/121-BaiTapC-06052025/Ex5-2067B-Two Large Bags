@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAX_N 1001
+
+int can_equalize(int arr[], int n) {
+    int freq[MAX_N] = {0};
+
+    for (int i = 0; i < n; i++) {
+        freq[arr[i]]++;
+    }
+
+    for (int i = 1; i < MAX_N; i++) {
+        if (freq[i] > 1) {
+            freq[i + 1] += (freq[i] - 1);
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (freq[i] != 0) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int arr[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        if (can_equalize(arr, n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n, s, t;
+    scanf("%d %d %d", &n, &s, &t);
+    
+    int p[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &p[i]);
+    }
+    
+    if (s == t) {
+        printf("0\n");
+        return 0;
+    }
+
+    int visited[n + 1];
+    for (int i = 0; i <= n; i++) {
+        visited[i] = 0;
+    }
+
+    int current_pos = s;
+    int steps = 0;
+
+    while (!visited[current_pos]) {
+        visited[current_pos] = 1;
+        current_pos = p[current_pos - 1];
+        steps++;
+        if (current_pos == t) {
+            printf("%d\n", steps);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

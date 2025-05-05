@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAX_N 200000
+
+int is_unique(int n, int l[], int r[], int idx) {
+    for (int i = 0; i < n; i++) {
+        if (i != idx && (l[i] <= r[idx] && r[i] >= l[idx])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int l[n], r[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &l[i], &r[i]);
+        }
+
+        char result[n + 1];
+        for (int i = 0; i < n; i++) {
+            if (is_unique(n, l, r, i)) {
+                result[i] = '1';
+            } else {
+                result[i] = '0';
+            }
+        }
+        result[n] = '\0';
+
+        printf("%s\n", result);
+    }
+
+    return 0;
+}
 

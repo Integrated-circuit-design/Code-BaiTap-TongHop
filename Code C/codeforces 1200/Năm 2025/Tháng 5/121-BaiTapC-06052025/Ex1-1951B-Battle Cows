@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        k--;
+        
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int original_wins = 0;
+        int winner = a[0];
+        for (int i = 1; i < n; i++) {
+            if (a[k] > winner) {
+                original_wins++;
+                winner = a[k];
+            } else {
+                winner = a[i];
+            }
+        }
+
+        int max_wins = original_wins;
+        int temp_wins = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (i == k) continue;
+
+            temp_wins = 0;
+            winner = a[0];
+            for (int j = 1; j < n; j++) {
+                if (i == j) {
+                    if (a[k] > winner) {
+                        temp_wins++;
+                        winner = a[k];
+                    } else {
+                        winner = a[j];
+                    }
+                } else {
+                    if (a[k] > winner) {
+                        temp_wins++;
+                        winner = a[k];
+                    } else {
+                        winner = a[j];
+                    }
+                }
+            }
+            if (temp_wins > max_wins) {
+                max_wins = temp_wins;
+            }
+        }
+
+        printf("%d\n", max_wins);
+    }
+
+    return 0;
+}
 

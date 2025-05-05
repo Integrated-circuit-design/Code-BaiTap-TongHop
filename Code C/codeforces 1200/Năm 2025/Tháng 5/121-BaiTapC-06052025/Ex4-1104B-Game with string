@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+void game_with_string(char* s) {
+    int n = strlen(s);
+    int moves = 0;
+
+    for (int i = 0; i < n - 1;) {
+        if (s[i] == s[i + 1]) {
+            for (int j = i; j < n - 1; j++) {
+                s[j] = s[j + 2];
+            }
+            n -= 2;
+            moves++;
+            i = 0;
+        } else {
+            i++;
+        }
+    }
+
+    if (moves % 2 == 1) {
+        printf("Yes\n");
+    } else {
+        printf("No\n");
+    }
+}
+
+int main() {
+    char s[100001];
+    scanf("%s", s);
+    game_with_string(s);
+    return 0;
+}
 

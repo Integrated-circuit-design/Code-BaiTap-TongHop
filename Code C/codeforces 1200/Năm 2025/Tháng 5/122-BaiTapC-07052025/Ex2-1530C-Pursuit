@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare_desc(const void *a, const void *b) {
+    return (*(int*)b - *(int*)a);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n], b[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        qsort(a, n, sizeof(int), compare_desc);
+        qsort(b, n, sizeof(int), compare_desc);
+
+        int count = n - n / 4;
+        int your_score = 0;
+        int ilya_score = 0;
+
+        for (int i = 0; i < count; i++) {
+            your_score += a[i];
+            ilya_score += b[i];
+        }
+
+        if (your_score >= ilya_score) {
+            printf("0\n");
+            continue;
+        }
+
+        int additional_stages = 0;
+
+        while (your_score < ilya_score) {
+            additional_stages++;
+            int total = n + additional_stages;
+            int new_count = total - total / 4;
+
+            your_score = 100 * additional_stages;
+            for (int i = 0; i < new_count - additional_stages && i < n; i++) {
+                your_score += a[i];
+            }
+
+            ilya_score = 0;
+            for (int i = 0; i < new_count && i < n; i++) {
+                ilya_score += b[i];
+            }
+        }
+
+        printf("%d\n", additional_stages);
+    }
+
+    return 0;
+}
 

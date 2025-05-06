@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int a[n], b[m];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        int initial_xor = 0;
+        for (int i = 0; i < n; i++) {
+            initial_xor ^= a[i];
+        }
+
+        int max_xor = initial_xor;
+        for (int j = 0; j < m; j++) {
+            int xor_with_b = 0;
+            for (int i = 0; i < n; i++) {
+                xor_with_b ^= (a[i] | b[j]);
+            }
+            if (xor_with_b > max_xor) {
+                max_xor = xor_with_b;
+            }
+        }
+
+        int min_xor = initial_xor;
+        for (int j = 0; j < m; j++) {
+            int xor_with_b = 0;
+            for (int i = 0; i < n; i++) {
+                xor_with_b ^= (a[i] | b[j]);
+            }
+            if (xor_with_b < min_xor) {
+                min_xor = xor_with_b;
+            }
+        }
+
+        printf("%d %d\n", min_xor, max_xor);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int t[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &t[i]);
+    }
+
+    int alice = 0, bob = 0;
+    int alice_time = 0, bob_time = 0;
+    int left = 0, right = n - 1;
+
+    while (left <= right) {
+        if (alice_time <= bob_time) {
+            alice_time += t[left];
+            alice++;
+            left++;
+        } else {
+            bob_time += t[right];
+            bob++;
+            right--;
+        }
+    }
+
+    printf("%d %d\n", alice, bob);
+
+    return 0;
+}
 

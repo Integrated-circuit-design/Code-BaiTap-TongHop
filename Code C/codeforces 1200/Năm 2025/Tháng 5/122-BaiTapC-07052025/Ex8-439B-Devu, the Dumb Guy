@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+long long minimum_time_to_teach(int n, int x, int chapters[]) {
+    long long total_time = 0;
+    int time_per_chapter = x;
+    int temp;
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (chapters[i] < chapters[j]) {
+                temp = chapters[i];
+                chapters[i] = chapters[j];
+                chapters[j] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        total_time += (long long)chapters[i] * time_per_chapter;
+        if (time_per_chapter > 1) {
+            time_per_chapter--;
+        }
+    }
+
+    return total_time;
+}
+
+int main() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+    int chapters[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &chapters[i]);
+    }
+
+    printf("%lld\n", minimum_time_to_teach(n, x, chapters));
+    
+    return 0;
+}
 

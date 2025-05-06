@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        char s[n + 1];
+        scanf("%s", s);
+
+        int is_returnable = 0;
+        int can_go_right = 1, can_go_left = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] != '-') {
+                if (s[i] == '>') {
+                    can_go_left = 0;
+                }
+                if (s[i] == '<') {
+                    can_go_right = 0;
+                }
+            }
+        }
+
+        if (can_go_right || can_go_left || strchr(s, '-') != NULL) {
+            is_returnable = 1;
+        }
+
+        if (is_returnable) {
+            printf("%d\n", n);
+        } else {
+            printf("0\n");
+        }
+    }
+
+    return 0;
+}
 

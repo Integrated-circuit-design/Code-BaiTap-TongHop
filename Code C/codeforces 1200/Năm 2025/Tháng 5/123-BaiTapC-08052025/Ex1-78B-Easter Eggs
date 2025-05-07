@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+void paint_eggs(int n) {
+    char colors[] = "ROYGBIV";
+    
+    for (int i = 0; i < 7; i++) {
+        printf("%c", colors[i]);
+    }
+
+    int remaining = n - 7;
+    
+    char additional[] = {'G', 'B', 'I', 'V'};
+    
+    for (int i = 0; i < remaining; i++) {
+        printf("%c", additional[i % 4]);
+    }
+
+    printf("\n");
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    paint_eggs(n);
+    return 0;
+}
 

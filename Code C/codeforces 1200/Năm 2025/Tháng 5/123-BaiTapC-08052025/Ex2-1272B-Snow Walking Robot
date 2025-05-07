@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+void process_test_case(char* s) {
+    int L = 0, R = 0, U = 0, D = 0;
+    
+    for (int i = 0; s[i] != '\0'; i++) {
+        if (s[i] == 'L') L++;
+        else if (s[i] == 'R') R++;
+        else if (s[i] == 'U') U++;
+        else if (s[i] == 'D') D++;
+    }
+    
+    int horizontal_moves = (L < R) ? L : R;
+    int vertical_moves = (U < D) ? U : D;
+    
+    if (horizontal_moves == 0 && vertical_moves == 0) {
+        printf("0\n\n");
+        return;
+    }
+    
+    if (horizontal_moves == 0) {
+        printf("2\nUD\n");
+        return;
+    }
+    
+    if (vertical_moves == 0) {
+        printf("2\nLR\n");
+        return;
+    }
+    
+    char result[100001];
+    int idx = 0;
+
+    for (int i = 0; i < horizontal_moves; i++) result[idx++] = 'R';
+    for (int i = 0; i < vertical_moves; i++) result[idx++] = 'U';
+    for (int i = 0; i < horizontal_moves; i++) result[idx++] = 'L';
+    for (int i = 0; i < vertical_moves; i++) result[idx++] = 'D';
+
+    result[idx] = '\0';
+
+    printf("%d\n%s\n", idx, result);
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    
+    for (int i = 0; i < q; i++) {
+        char s[100001];
+        scanf("%s", s);
+        process_test_case(s);
+    }
+    
+    return 0;
+}
 

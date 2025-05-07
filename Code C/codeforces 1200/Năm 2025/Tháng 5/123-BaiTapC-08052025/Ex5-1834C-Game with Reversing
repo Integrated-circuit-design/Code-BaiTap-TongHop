@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        char S[n + 1], T[n + 1];
+
+        scanf("%s", S);
+        scanf("%s", T);
+
+        int diff_count = 0;
+        for (int i = 0; i < n; i++) {
+            if (S[i] != T[i]) {
+                diff_count++;
+            }
+        }
+
+        if (diff_count == 0) {
+            printf("0\n");
+        } else {
+            if (diff_count % 2 == 1) {
+                printf("%d\n", diff_count * 2 - 1);
+            } else {
+                printf("%d\n", diff_count * 2);
+            }
+        }
+    }
+
+    return 0;
+}
 

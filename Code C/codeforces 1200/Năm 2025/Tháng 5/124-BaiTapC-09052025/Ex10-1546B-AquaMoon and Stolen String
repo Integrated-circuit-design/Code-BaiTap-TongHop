@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100000
+#define MAX_M 100000
+
+void findStolenString(int n, int m, char original[][MAX_M + 1], char remaining[][MAX_M + 1]) {
+    int freq[MAX_M][26] = {0};
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            freq[j][original[i][j] - 'a']++;
+        }
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < m; j++) {
+            freq[j][remaining[i][j] - 'a']--;
+        }
+    }
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < 26; j++) {
+            if (freq[i][j] % 2 != 0) {
+                printf("%c", 'a' + j);
+                break;
+            }
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        char original[MAX_N][MAX_M + 1];
+        char remaining[MAX_N][MAX_M + 1];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%s", original[i]);
+        }
+
+        for (int i = 0; i < n - 1; i++) {
+            scanf("%s", remaining[i]);
+        }
+
+        findStolenString(n, m, original, remaining);
+    }
+
+    return 0;
+}
 

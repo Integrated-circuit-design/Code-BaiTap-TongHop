@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+void generate_binary_like_numbers(int current, int n, int* count) {
+    if (current > n) {
+        return;
+    }
+    
+    (*count)++;
+    
+    generate_binary_like_numbers(current * 10, n, count);
+    generate_binary_like_numbers(current * 10 + 1, n, count);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int count = 0;
+    generate_binary_like_numbers(1, n, &count);
+    printf("%d\n", count);
+    return 0;
+}
 

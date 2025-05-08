@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int A[n][m], B[n][m];
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &A[i][j]);
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            B[i][j] = 0;
+        }
+    }
+
+    int ops[2500][2];
+    int op_count = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < m - 1; j++) {
+            if (A[i][j] == 1 && A[i][j + 1] == 1 && A[i + 1][j] == 1 && A[i + 1][j + 1] == 1) {
+                ops[op_count][0] = i + 1;
+                ops[op_count][1] = j + 1;
+                op_count++;
+
+                B[i][j] = 1;
+                B[i][j + 1] = 1;
+                B[i + 1][j] = 1;
+                B[i + 1][j + 1] = 1;
+            }
+        }
+    }
+
+    int possible = 1;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (A[i][j] != B[i][j]) {
+                possible = 0;
+                break;
+            }
+        }
+        if (!possible) break;
+    }
+
+    if (possible) {
+        printf("%d\n", op_count);
+        for (int i = 0; i < op_count; i++) {
+            printf("%d %d\n", ops[i][0], ops[i][1]);
+        }
+    } else {
+        printf("-1\n");
+    }
+
+    return 0;
+}
 

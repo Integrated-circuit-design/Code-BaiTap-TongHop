@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    
+    scanf("%d %d", &n, &k);
+    
+    int d[n];
+    int remainder_count[k];
+    
+    for (int i = 0; i < k; i++) {
+        remainder_count[i] = 0;
+    }
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &d[i]);
+        remainder_count[d[i] % k]++;
+    }
+    
+    int total_pairs = 0;
+
+    total_pairs += remainder_count[0] / 2;
+    
+    for (int i = 1; i <= k / 2 && i != k - i; i++) {
+        total_pairs += (remainder_count[i] < remainder_count[k - i]) ? remainder_count[i] : remainder_count[k - i];
+    }
+    
+    if (k % 2 == 0) {
+        total_pairs += remainder_count[k / 2] / 2;
+    }
+    
+    printf("%d\n", total_pairs * 2);
+    
+    return 0;
+}
 

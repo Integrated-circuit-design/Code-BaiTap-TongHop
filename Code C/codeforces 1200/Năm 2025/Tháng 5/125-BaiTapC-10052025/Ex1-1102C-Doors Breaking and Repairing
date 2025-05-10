@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n, x, y;
+    scanf("%d %d %d", &n, &x, &y);
+
+    int doors[100];
+    int breakable = 0;
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &doors[i]);
+    }
+
+    if (x > y) {
+        printf("%d\n", n);
+        return 0;
+    }
+
+    for (int i = 0; i < n; ++i) {
+        if (doors[i] <= x) {
+            breakable++;
+        }
+    }
+
+    int result = (breakable + 1) / 2;
+
+    printf("%d\n", result);
+
+    return 0;
+}
 

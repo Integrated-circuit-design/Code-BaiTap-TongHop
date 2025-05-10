@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 500
+
+int find_winner(int n, long long k, int a[]) {
+    int front = 0;
+    int streak = 0;
+    int winner = a[0];
+
+    for (int i = 1; i < n; i++) {
+        if (a[front] > a[i]) {
+            streak++;
+            if (streak == k) {
+                return a[front];
+            }
+        } else {
+            winner = a[i];
+            streak = 1;
+            front = i;
+        }
+    }
+
+    return winner;
+}
+
+int main() {
+    int n;
+    long long k;
+
+    scanf("%d %lld", &n, &k);
+
+    int a[MAX_N];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    printf("%d\n", find_winner(n, k, a));
+
+    return 0;
+}
 

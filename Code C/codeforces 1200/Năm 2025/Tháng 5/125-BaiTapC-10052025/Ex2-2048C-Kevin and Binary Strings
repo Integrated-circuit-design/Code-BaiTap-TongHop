@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+int binary_to_int(char *s, int start, int len) {
+    int result = 0;
+    for (int i = 0; i < len; i++) {
+        result = result * 2 + (s[start + i] - '0');
+    }
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    char s[5010];
+
+    while (t--) {
+        scanf("%s", s);
+        int n = strlen(s);
+        int max_xor = -1;
+        int l1 = 1, r1 = 1, l2 = 1, r2 = 1;
+
+        for (int len = 1; len <= n; len++) {
+            for (int i = 0; i + len <= n; i++) {
+                int a = binary_to_int(s, i, len);
+                for (int j = 0; j + len <= n; j++) {
+                    int b = binary_to_int(s, j, len);
+                    int x = a ^ b;
+                    if (x > max_xor) {
+                        max_xor = x;
+                        l1 = i + 1;
+                        r1 = i + len;
+                        l2 = j + 1;
+                        r2 = j + len;
+                    }
+                }
+            }
+        }
+
+        printf("%d %d %d %d\n", l1, r1, l2, r2);
+    }
+
+    return 0;
+}
 

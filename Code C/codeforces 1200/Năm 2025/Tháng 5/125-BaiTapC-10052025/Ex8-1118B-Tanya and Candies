@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    long long total_odd = 0, total_even = 0;
+    for (int i = 0; i < n; i++) {
+        if (i % 2 == 0) {
+            total_odd += a[i];
+        } else {
+            total_even += a[i];
+        }
+    }
+
+    int count_good_candies = 0;
+    long long prefix_odd = 0, prefix_even = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long sum_odd = 0, sum_even = 0;
+
+        if (i % 2 == 0) {
+            sum_odd = prefix_odd + (total_even - prefix_even);
+            sum_even = prefix_even + (total_odd - prefix_odd - a[i]);
+        } else {
+            sum_odd = prefix_odd + (total_even - prefix_even - a[i]);
+            sum_even = prefix_even + (total_odd - prefix_odd);
+        }
+
+        if (sum_odd == sum_even) {
+            count_good_candies++;
+        }
+
+        if (i % 2 == 0) {
+            prefix_odd += a[i];
+        } else {
+            prefix_even += a[i];
+        }
+    }
+
+    printf("%d\n", count_good_candies);
+
+    return 0;
+}
 

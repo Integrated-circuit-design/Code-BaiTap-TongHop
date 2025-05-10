@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 105
+
+int n, m;
+int degree[MAX];
+int edges[MAX][MAX];
+int edgeCount[MAX];
+int removed[MAX];
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+
+        edges[a][edgeCount[a]++] = b;
+        edges[b][edgeCount[b]++] = a;
+
+        degree[a]++;
+        degree[b]++;
+    }
+
+    int result = 0;
+
+    while (1) {
+        int toKick[MAX];
+        int kickCount = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (!removed[i] && degree[i] == 1) {
+                toKick[kickCount++] = i;
+            }
+        }
+
+        if (kickCount == 0) break;
+
+        for (int i = 0; i < kickCount; i++) {
+            int student = toKick[i];
+            removed[student] = 1;
+
+            for (int j = 0; j < edgeCount[student]; j++) {
+                int neighbor = edges[student][j];
+                if (!removed[neighbor]) {
+                    degree[neighbor]--;
+                }
+            }
+        }
+
+        result++;
+    }
+
+    printf("%d\n", result);
+    return 0;
+}
 

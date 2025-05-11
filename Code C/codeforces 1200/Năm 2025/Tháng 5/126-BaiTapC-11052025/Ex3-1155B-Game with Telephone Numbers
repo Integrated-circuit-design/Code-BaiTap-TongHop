@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    char s[100005];
+
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    int found = 0;
+    for (int i = 0; i < n - 10; i++) {
+        if (s[i] == '8') {
+            found = 1;
+            break;
+        }
+    }
+
+    if (found) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

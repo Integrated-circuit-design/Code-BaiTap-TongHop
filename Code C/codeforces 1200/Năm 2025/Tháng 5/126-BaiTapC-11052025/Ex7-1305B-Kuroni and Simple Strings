@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 1000
+
+void solve_kuroni_brackets(char s[]) {
+    int n = strlen(s);
+    int operations = 0;
+    int op_indices[MAX_LEN][MAX_LEN];
+    int op_sizes[MAX_LEN];
+    int deleted[MAX_LEN] = {0};
+
+    while (1) {
+        int left_indices[MAX_LEN], right_indices[MAX_LEN];
+        int left_count = 0, right_count = 0;
+        int l = 0, r = n - 1;
+
+        while (l < r) {
+            while (l < n && (s[l] != '(' || deleted[l])) l++;
+            while (r >= 0 && (s[r] != ')' || deleted[r])) r--;
+
+            if (l < r) {
+                left_indices[left_count++] = l;
+                right_indices[right_count++] = r;
+                deleted[l] = 1;
+                deleted[r] = 1;
+                l++;
+                r--;
+            }
+        }
+
+        if (left_count == 0) {
+            break;
+        }
+
+        op_sizes[operations] = left_count + right_count;
+        for (int i = 0; i < left_count; i++) {
+            op_indices[operations][i] = left_indices[i] + 1;
+        }
+        for (int i = 0; i < right_count; i++) {
+            op_indices[operations][left_count + i] = right_indices[right_count - 1 - i] + 1;
+        }
+
+        operations++;
+    }
+
+    printf("%d\n", operations);
+    for (int i = 0; i < operations; i++) {
+        printf("%d\n", op_sizes[i]);
+        for (int j = 0; j < op_sizes[i]; j++) {
+            printf("%d ", op_indices[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    char s[MAX_LEN + 1];
+    scanf("%s", s);
+    solve_kuroni_brackets(s);
+    return 0;
+}
 

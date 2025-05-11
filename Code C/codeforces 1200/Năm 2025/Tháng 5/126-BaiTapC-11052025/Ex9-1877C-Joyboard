@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+int calculate_distinct_count(int n, int x) {
+    int count = 0;
+    int values[1000];
+    int idx = 0;
+
+    for (int i = n; i >= 1; --i) {
+        int mod_value = x % i;
+        
+        int found = 0;
+        for (int j = 0; j < idx; j++) {
+            if (values[j] == mod_value) {
+                found = 1;
+                break;
+            }
+        }
+        
+        if (!found) {
+            values[idx++] = mod_value;
+            count++;
+        }
+
+        x = mod_value;
+
+        if (x == 0) {
+            break;
+        }
+    }
+
+    return count;
+}
+
+int count_valid_ways(int n, int m, int k) {
+    int valid_count = 0;
+
+    for (int x = 0; x <= m; x++) {
+        if (calculate_distinct_count(n, x) == k) {
+            valid_count++;
+        }
+    }
+
+    return valid_count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+        printf("%d\n", count_valid_ways(n, m, k));
+    }
+
+    return 0;
+}
 

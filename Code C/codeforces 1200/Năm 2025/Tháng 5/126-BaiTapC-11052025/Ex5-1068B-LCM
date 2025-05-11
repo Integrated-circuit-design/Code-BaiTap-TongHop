@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int count_divisors(long long b) {
+    int count = 0;
+    for (long long i = 1; i * i <= b; i++) {
+        if (b % i == 0) {
+            count++;
+            if (i != b / i) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+int main() {
+    long long b;
+    scanf("%lld", &b);
+    printf("%d\n", count_divisors(b));
+    return 0;
+}
 

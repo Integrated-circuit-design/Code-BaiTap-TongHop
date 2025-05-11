@@ -1,1 +1,94 @@
+#include <stdio.h>
+#include <math.h>
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int all_equal = 1;
+    for (int i = 1; i < n; i++) {
+        if (a[i] != a[0]) {
+            all_equal = 0;
+            break;
+        }
+    }
+    
+    if (all_equal) {
+        printf("0\n");
+        return;
+    }
+
+    int has_one = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 1) {
+            has_one = 1;
+            break;
+        }
+    }
+
+    if (has_one) {
+        printf("-1\n");
+        return;
+    }
+
+    int ops = 0;
+    int op_list[30 * n][2];
+
+    while (1) {
+        int max_val = a[0], min_val = a[0];
+        int max_idx = 0, min_idx = 0;
+        
+        for (int i = 1; i < n; i++) {
+            if (a[i] > max_val) {
+                max_val = a[i];
+                max_idx = i;
+            }
+            if (a[i] < min_val) {
+                min_val = a[i];
+                min_idx = i;
+            }
+        }
+
+        if (max_val == min_val) {
+            break;
+        }
+
+        int new_val = ceil((double)a[max_idx] / a[min_idx]);
+        a[max_idx] = new_val;
+
+        op_list[ops][0] = max_idx + 1;
+        op_list[ops][1] = min_idx + 1;
+        ops++;
+
+        if (ops > 30 * n) {
+            ops = -1;
+            break;
+        }
+    }
+
+    if (ops == -1) {
+        printf("-1\n");
+    } else {
+        printf("%d\n", ops);
+        for (int i = 0; i < ops; i++) {
+            printf("%d %d\n", op_list[i][0], op_list[i][1]);
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAX_N 100000
+
+void cells_not_under_attack(int n, int m, int positions[][2]) {
+    int attacked_rows[MAX_N + 1] = {0};
+    int attacked_cols[MAX_N + 1] = {0};
+    int attacked_rows_count = 0;
+    int attacked_cols_count = 0;
+
+    for (int i = 0; i < m; i++) {
+        int x = positions[i][0];
+        int y = positions[i][1];
+
+        if (attacked_rows[x] == 0) {
+            attacked_rows[x] = 1;
+            attacked_rows_count++;
+        }
+
+        if (attacked_cols[y] == 0) {
+            attacked_cols[y] = 1;
+            attacked_cols_count++;
+        }
+
+        long long attacked_cells = (long long)attacked_rows_count * n + (long long)attacked_cols_count * n
+                                 - (long long)attacked_rows_count * attacked_cols_count;
+
+        long long non_attacked_cells = (long long)n * n - attacked_cells;
+
+        printf("%lld ", non_attacked_cells);
+    }
+
+    printf("\n");
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    int positions[m][2];
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &positions[i][0], &positions[i][1]);
+    }
+
+    cells_not_under_attack(n, m, positions);
+
+    return 0;
+}
 

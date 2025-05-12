@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+#define MAX_COLOR 100000
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int home_kits[n], away_kits[n];
+    int home_count[MAX_COLOR + 1] = {0};
+    int away_count[MAX_COLOR + 1] = {0};
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &home_kits[i], &away_kits[i]);
+        home_count[home_kits[i]]++;
+        away_count[away_kits[i]]++;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int home_games = n - 1;
+        int away_games = n - 1;
+        int conflict_home_away = home_count[away_kits[i]];
+
+        printf("%d %d\n", home_games, away_games - conflict_home_away);
+    }
+
+    return 0;
+}
 

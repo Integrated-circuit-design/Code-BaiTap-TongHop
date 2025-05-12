@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int toys[1000001] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int toy;
+        scanf("%d", &toy);
+        toys[toy] = 1;
+    }
+
+    int selected[1000001];
+    int count = 0;
+    int total_cost = 0;
+
+    for (int toy_type = 1; toy_type <= 1000000; toy_type++) {
+        if (toys[toy_type] == 0 && total_cost + toy_type <= m) {
+            selected[count++] = toy_type;
+            total_cost += toy_type;
+        }
+
+        if (total_cost > m) {
+            break;
+        }
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("%d ", selected[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

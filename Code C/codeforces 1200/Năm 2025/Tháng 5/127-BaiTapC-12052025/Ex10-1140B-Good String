@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        char s[101];
+        scanf("%d", &n);
+        scanf("%s", s);
+        
+        int has_greater = 0, has_less = 0;
+        int i;
+        
+        for (i = 0; i < n; i++) {
+            if (s[i] == '>') {
+                has_greater = 1;
+            }
+            if (s[i] == '<') {
+                has_less = 1;
+            }
+        }
+        
+        if (!has_greater || !has_less) {
+            printf("0\n");
+        } else {
+            int left_deletions = 0, right_deletions = 0;
+            
+            for (i = 0; i < n; i++) {
+                if (s[i] == '>') {
+                    break;
+                }
+                left_deletions++;
+            }
+            
+            for (i = n - 1; i >= 0; i--) {
+                if (s[i] == '<') {
+                    break;
+                }
+                right_deletions++;
+            }
+            
+            if (left_deletions < right_deletions) {
+                printf("%d\n", left_deletions);
+            } else {
+                printf("%d\n", right_deletions);
+            }
+        }
+    }
+    
+    return 0;
+}
 

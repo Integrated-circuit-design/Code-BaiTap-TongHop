@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return abs(*(int*)a) - abs(*(int*)b);
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    qsort(arr, n, sizeof(int), compare);
+    
+    for (int i = 0; i < n && k > 0; i++) {
+        if (arr[i] < 0) {
+            arr[i] = -arr[i];
+            k--;
+        }
+    }
+    
+    if (k % 2 == 1) {
+        qsort(arr, n, sizeof(int), compare);
+        arr[0] = -arr[0];
+    }
+    
+    long long sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+    }
+    
+    printf("%lld\n", sum);
+    
+    return 0;
+}
 

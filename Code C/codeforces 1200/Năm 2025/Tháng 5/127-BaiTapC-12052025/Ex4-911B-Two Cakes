@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int required_plates(int pieces, int x) {
+    return (pieces + x - 1) / x;
+}
+
+int main() {
+    int n, a, b;
+    scanf("%d %d %d", &n, &a, &b);
+    
+    int left = 1, right = (a > b) ? a : b;
+    int result = 0;
+    
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        int plates_for_cake1 = required_plates(a, mid);
+        int plates_for_cake2 = required_plates(b, mid);
+        
+        if (plates_for_cake1 + plates_for_cake2 <= n) {
+            result = mid;
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    
+    printf("%d\n", result);
+    
+    return 0;
+}
 

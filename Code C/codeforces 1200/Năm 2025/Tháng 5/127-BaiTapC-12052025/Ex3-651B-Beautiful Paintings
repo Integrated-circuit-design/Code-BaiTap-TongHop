@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+int maximum_happiness(int n, int a[]) {
+    qsort(a, n, sizeof(int), compare);
+    
+    int result[n];
+    int mid = (n + 1) / 2;
+    int left = mid - 1, right = mid;
+    int idx = 0;
+
+    while (left >= 0 || right < n) {
+        if (right < n) {
+            result[idx++] = a[right++];
+        }
+        if (left >= 0) {
+            result[idx++] = a[left--];
+        }
+    }
+
+    int happiness_count = 0;
+    for (int i = 1; i < n; i++) {
+        if (result[i] > result[i - 1]) {
+            happiness_count++;
+        }
+    }
+
+    return happiness_count;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int result = maximum_happiness(n, a);
+    printf("%d\n", result);
+
+    return 0;
+}
 

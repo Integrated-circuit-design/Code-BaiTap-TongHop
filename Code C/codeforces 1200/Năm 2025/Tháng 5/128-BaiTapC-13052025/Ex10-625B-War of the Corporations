@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char aiName[100001], phoneName[31];
+    scanf("%s", aiName);
+    scanf("%s", phoneName);
+
+    int aiLen = strlen(aiName);
+    int phoneLen = strlen(phoneName);
+    int replacements = 0;
+    
+    for (int i = 0; i <= aiLen - phoneLen; i++) {
+        int found = 1;
+        for (int j = 0; j < phoneLen; j++) {
+            if (aiName[i + j] != phoneName[j]) {
+                found = 0;
+                break;
+            }
+        }
+        
+        if (found) {
+            for (int j = 0; j < phoneLen; j++) {
+                if (aiName[i + j] != '#') {
+                    aiName[i + j] = '#';
+                    replacements++;
+                    break;
+                }
+            }
+        }
+    }
+
+    printf("%d\n", replacements);
+    
+    return 0;
+}
 

@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int l, r, x, y, k;
+    
+    scanf("%d %d %d %d %d", &l, &r, &x, &y, &k);
+    
+    int found = 0;
+    
+    for (int b = x; b <= y; ++b) {
+        int a = k * b;
+        
+        if (a >= l && a <= r) {
+            found = 1;
+            break;
+        }
+    }
+    
+    if (found) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
 

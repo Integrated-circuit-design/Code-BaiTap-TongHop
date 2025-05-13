@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LENGTH 5000
+
+int count_bear_substrings(char *s) {
+    int n = strlen(s);
+    int result = 0;
+    
+    for (int i = 0; i <= n - 4; i++) {
+        if (s[i] == 'b' && s[i + 1] == 'e' && s[i + 2] == 'a' && s[i + 3] == 'r') {
+            result += (i + 1) * (n - (i + 3));
+        }
+    }
+    
+    return result;
+}
+
+int main() {
+    char s[MAX_LENGTH + 1];
+    scanf("%s", s);
+    printf("%d\n", count_bear_substrings(s));
+    return 0;
+}
 

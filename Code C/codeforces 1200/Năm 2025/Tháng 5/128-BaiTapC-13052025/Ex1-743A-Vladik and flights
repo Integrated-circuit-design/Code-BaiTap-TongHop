@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int n, a, b;
+    char companies[100001];
+
+    scanf("%d %d %d", &n, &a, &b);
+    scanf("%s", companies);
+
+    if (companies[a - 1] == companies[b - 1]) {
+        printf("0\n");
+    } else {
+        printf("1\n");
+    }
+
+    return 0;
+}
 

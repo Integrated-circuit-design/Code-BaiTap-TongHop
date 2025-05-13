@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <limits.h>
+#include <string.h>
+
+#define MAX_N 100000
+#define MAX_K 100000
+#define MAX_WORD_LEN 21
+
+int n, k, m;
+char words[MAX_N][MAX_WORD_LEN];
+int costs[MAX_N];
+int group_id[MAX_N];
+int group_min_cost[MAX_K];
+
+int find_word_index(char *word) {
+    for (int i = 0; i < n; i++) {
+        if (strcmp(word, words[i]) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    scanf("%d %d %d", &n, &k, &m);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", words[i]);
+    }
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &costs[i]);
+    }
+    
+    for (int i = 0; i < k; i++) {
+        group_min_cost[i] = INT_MAX;
+    }
+
+    for (int gid = 0; gid < k; gid++) {
+        int x;
+        scanf("%d", &x);
+        for (int j = 0; j < x; j++) {
+            int idx;
+            scanf("%d", &idx);
+            idx--;
+            group_id[idx] = gid;
+            if (costs[idx] < group_min_cost[gid]) {
+                group_min_cost[gid] = costs[idx];
+            }
+        }
+    }
+
+    int total_cost = 0;
+    for (int i = 0; i < m; i++) {
+        char message_word[MAX_WORD_LEN];
+        scanf("%s", message_word);
+        int idx = find_word_index(message_word);
+        int gid = group_id[idx];
+        total_cost += group_min_cost[gid];
+    }
+    
+    printf("%d\n", total_cost);
+
+    return 0;
+}
 

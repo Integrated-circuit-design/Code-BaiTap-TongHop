@@ -1,1 +1,18 @@
+#include <stdio.h>
+#include <math.h>
+
+double tinh_ban_kinh_ngoai(int n, int r) {
+    double angle = 3.14159265358979323846 / n;
+    double sin_val = sin(angle);
+    double R = (r * sin_val) / (1 - sin_val);
+    return R;
+}
+
+int main() {
+    int n, r;
+    scanf("%d %d", &n, &r);
+    double R = tinh_ban_kinh_ngoai(n, r);
+    printf("%.7f\n", R);
+    return 0;
+}
 

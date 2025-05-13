@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int max_days(int n, int m, int a[]) {
+    int max_d = 0;
+
+    for (int d = 1; d <= m; d++) {
+        int participants_supported = 0;
+
+        for (int i = 0; i < m; i++) {
+            participants_supported += a[i] / d;
+        }
+
+        if (participants_supported >= n) {
+            max_d = d;
+        }
+    }
+
+    return max_d;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int a[m];
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    printf("%d\n", max_days(n, m, a));
+
+    return 0;
+}
 

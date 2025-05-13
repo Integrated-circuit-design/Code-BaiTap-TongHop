@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 200
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int b[n], a[2 * n];
+        bool used[2 * n + 1] = {false};
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+            used[b[i]] = true;
+        }
+        
+        int currentNumber = 1;
+        int valid = 1;
+        
+        for (int i = 0; i < n; i++) {
+            a[2 * i] = b[i];
+            
+            int nextAvailable = -1;
+            for (int j = currentNumber; j <= 2 * n; j++) {
+                if (!used[j] && j > b[i]) {
+                    nextAvailable = j;
+                    used[j] = true;
+                    currentNumber = j + 1;
+                    break;
+                }
+            }
+            
+            if (nextAvailable == -1) {
+                valid = 0;
+                break;
+            }
+            
+            a[2 * i + 1] = nextAvailable;
+        }
+        
+        if (valid) {
+            for (int i = 0; i < 2 * n; i++) {
+                printf("%d ", a[i]);
+            }
+            printf("\n");
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

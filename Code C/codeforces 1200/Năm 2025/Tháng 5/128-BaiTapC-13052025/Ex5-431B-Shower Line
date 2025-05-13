@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define N 5
+
+int g[N][N];
+
+int calculate_happiness(int perm[]) {
+    int h = 0;
+    h += g[perm[0]][perm[1]] + g[perm[1]][perm[0]];
+    h += g[perm[2]][perm[3]] + g[perm[3]][perm[2]];
+    h += g[perm[1]][perm[2]] + g[perm[2]][perm[1]];
+    h += g[perm[3]][perm[4]] + g[perm[4]][perm[3]];
+    h += g[perm[2]][perm[3]] + g[perm[3]][perm[2]];
+    h += g[perm[3]][perm[4]] + g[perm[4]][perm[3]];
+    return h;
+}
+
+void permute(int *perm, int l, int r, int *max_happiness) {
+    if (l == r) {
+        int h = calculate_happiness(perm);
+        if (h > *max_happiness) *max_happiness = h;
+        return;
+    }
+
+    for (int i = l; i <= r; i++) {
+        int tmp = perm[l];
+        perm[l] = perm[i];
+        perm[i] = tmp;
+
+        permute(perm, l + 1, r, max_happiness);
+
+        tmp = perm[l];
+        perm[l] = perm[i];
+        perm[i] = tmp;
+    }
+}
+
+int main() {
+    for (int i = 0; i < N; i++) 
+        for (int j = 0; j < N; j++) 
+            scanf("%d", &g[i][j]);
+
+    int perm[N] = {0, 1, 2, 3, 4};
+    int max_happiness = 0;
+
+    permute(perm, 0, N - 1, &max_happiness);
+
+    printf("%d\n", max_happiness);
+    return 0;
+}
 

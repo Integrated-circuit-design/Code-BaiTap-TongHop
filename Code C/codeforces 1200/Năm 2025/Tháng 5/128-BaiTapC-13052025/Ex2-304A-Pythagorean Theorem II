@@ -1,1 +1,24 @@
+#include <stdio.h>
+#include <math.h>
+
+int count_right_triangles(int n) {
+    int count = 0;
+    for (int c = 1; c <= n; c++) {
+        for (int b = 1; b <= c; b++) {
+            int a2 = c * c - b * b;
+            int a = sqrt(a2);
+            if (a * a == a2 && a <= b) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    printf("%d\n", count_right_triangles(n));
+    return 0;
+}
 

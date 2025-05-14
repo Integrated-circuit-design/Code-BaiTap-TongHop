@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int sweets[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &sweets[i]);
+    }
+
+    int maxSum = 2 * sweets[n - 1];
+    int count[maxSum + 1];
+    for (int i = 0; i <= maxSum; i++) {
+        count[i] = 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int total = sweets[i] + sweets[j];
+            count[total]++;
+        }
+    }
+
+    int result = 0;
+    for (int i = 0; i <= maxSum; i++) {
+        if (count[i] > result) {
+            result = count[i];
+        }
+    }
+
+    printf("%d\n", result);
+
+    return 0;
+}
 

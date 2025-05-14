@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int digit_sum(int x) {
+    int sum = 0;
+    while (x > 0) {
+        sum += x % 10;
+        x /= 10;
+    }
+    return sum;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int a = n, b = n;
+
+    while (1) {
+        if (digit_sum(a) >= n && digit_sum(b) >= n && digit_sum(a + b) <= m) {
+            printf("%d\n", a);
+            printf("%d\n", b);
+            return 0;
+        }
+
+        b++;
+
+        if (b > 1000) {
+            b = n;
+            a++;
+        }
+    }
+
+    return 0;
+}
 

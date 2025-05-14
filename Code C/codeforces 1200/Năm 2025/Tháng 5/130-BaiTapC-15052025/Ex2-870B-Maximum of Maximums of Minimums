@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <limits.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    if (k == 1) {
+        int min_value = arr[0];
+        for (int i = 1; i < n; i++) {
+            if (arr[i] < min_value) {
+                min_value = arr[i];
+            }
+        }
+        printf("%d\n", min_value);
+    }
+    
+    else if (k >= 3) {
+        int max_value = arr[0];
+        for (int i = 1; i < n; i++) {
+            if (arr[i] > max_value) {
+                max_value = arr[i];
+            }
+        }
+        printf("%d\n", max_value);
+    }
+    
+    else {
+        int prefix_min[n], suffix_min[n];
+        
+        prefix_min[0] = arr[0];
+        for (int i = 1; i < n; i++) {
+            prefix_min[i] = (arr[i] < prefix_min[i - 1]) ? arr[i] : prefix_min[i - 1];
+        }
+        
+        suffix_min[n - 1] = arr[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            suffix_min[i] = (arr[i] < suffix_min[i + 1]) ? arr[i] : suffix_min[i + 1];
+        }
+        
+        int max_result = INT_MIN;
+        for (int i = 1; i < n; i++) {
+            int left_min = prefix_min[i - 1];
+            int right_min = suffix_min[i];
+            int current_result = (left_min > right_min) ? left_min : right_min;
+            
+            if (current_result > max_result) {
+                max_result = current_result;
+            }
+        }
+        
+        printf("%d\n", max_result);
+    }
+
+    return 0;
+}
 

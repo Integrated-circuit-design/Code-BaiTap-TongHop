@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int is_koutsu(char tiles[3][3]) {
+    return tiles[0][0] == tiles[1][0] && tiles[1][0] == tiles[2][0];
+}
+
+int is_shuntsu(char tiles[3][3]) {
+    int num1 = tiles[0][0] - '0';
+    int num2 = tiles[1][0] - '0';
+    int num3 = tiles[2][0] - '0';
+    
+    return (tiles[0][1] == tiles[1][1] && tiles[1][1] == tiles[2][1]) &&
+           (num1 + 1 == num2 && num2 + 1 == num3);
+}
+
+int already_valid_mentsu(char tiles[3][3]) {
+    if (is_koutsu(tiles) || is_shuntsu(tiles)) {
+        return 1;
+    }
+    return 0;
+}
+
+int can_form_mentsu_by_adding_one(char tiles[3][3]) {
+    for (int i = 0; i < 3; i++) {
+        for (int num = 1; num <= 9; num++) {
+            for (char suit = 'm'; suit <= 's'; suit++) {
+                char new_tile[3];
+                sprintf(new_tile, "%d%c", num, suit);
+                
+                char new_hand[4][3];
+                for (int j = 0; j < 3; j++) {
+                    strcpy(new_hand[j], tiles[j]);
+                }
+                strcpy(new_hand[3], new_tile);
+
+                if (is_koutsu(new_hand) || is_shuntsu(new_hand)) {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+int main() {
+    char tiles[3][3];
+    
+    for (int i = 0; i < 3; i++) {
+        scanf("%s", tiles[i]);
+    }
+    
+    if (already_valid_mentsu(tiles)) {
+        printf("0\n");
+    }
+    else if (can_form_mentsu_by_adding_one(tiles)) {
+        printf("1\n");
+    }
+    else {
+        printf("2\n");
+    }
+
+    return 0;
+}
 

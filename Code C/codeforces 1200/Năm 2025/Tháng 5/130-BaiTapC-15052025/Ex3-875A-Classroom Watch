@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int sum_of_digits(int x) {
+    int total = 0;
+    while (x > 0) {
+        total += x % 10;
+        x /= 10;
+    }
+    return total;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int valid_x_count = 0;
+
+    for (int x = n - 81; x < n; x++) {
+        if (x + sum_of_digits(x) == n) {
+            printf("%d\n", x);
+            valid_x_count++;
+        }
+    }
+
+    if (valid_x_count == 0) {
+        printf("0\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+long long calculate_missed_meals(long long b, long long d, long long s) {
+    long long max_meals = b > d ? (b > s ? b : s) : (d > s ? d : s);
+    long long missed = 0;
+    
+    if (max_meals > b) {
+        missed += max_meals - b;
+    }
+    
+    if (max_meals > d) {
+        missed += max_meals - d;
+    }
+    
+    if (max_meals > s) {
+        missed += max_meals - s;
+    }
+
+    return missed;
+}
+
+int main() {
+    long long b, d, s;
+    scanf("%lld %lld %lld", &b, &d, &s);
+    printf("%lld\n", calculate_missed_meals(b, d, s));
+    return 0;
+}
 

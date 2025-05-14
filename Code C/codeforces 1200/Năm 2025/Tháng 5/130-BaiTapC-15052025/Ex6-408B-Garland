@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_COLORS 26
+
+int main() {
+    char available[1001], required[1001];
+    int available_count[MAX_COLORS] = {0};
+    int required_count[MAX_COLORS] = {0};
+
+    scanf("%s", available);
+    scanf("%s", required);
+
+    for (int i = 0; available[i] != '\0'; i++) {
+        available_count[available[i] - 'a']++;
+    }
+
+    for (int i = 0; required[i] != '\0'; i++) {
+        required_count[required[i] - 'a']++;
+    }
+
+    int total_area = 0;
+
+    for (int i = 0; i < MAX_COLORS; i++) {
+        if (required_count[i] > 0) {
+            if (available_count[i] == 0) {
+                printf("-1\n");
+                return 0;
+            }
+            total_area += (available_count[i] < required_count[i]) ? available_count[i] : required_count[i];
+        }
+    }
+
+    printf("%d\n", total_area);
+
+    return 0;
+}
 

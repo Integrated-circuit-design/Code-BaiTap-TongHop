@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c;
+
+    scanf("%d %d %d", &a, &b, &c);
+
+    int total_bonds = (a + b + c) / 2;
+
+    if ((a + b + c) % 2 != 0) {
+        printf("Impossible\n");
+        return 0;
+    }
+
+    int x = total_bonds - c;
+    int y = total_bonds - a;
+    int z = total_bonds - b;
+
+    if (x < 0 || y < 0 || z < 0) {
+        printf("Impossible\n");
+    } else {
+        printf("%d %d %d\n", x, y, z);
+    }
+
+    return 0;
+}
 

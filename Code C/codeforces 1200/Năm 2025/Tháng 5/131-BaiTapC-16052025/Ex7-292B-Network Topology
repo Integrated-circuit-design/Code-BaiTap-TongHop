@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int degree[n + 1];
+    for (int i = 1; i <= n; i++) {
+        degree[i] = 0;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        degree[u]++;
+        degree[v]++;
+    }
+
+    if (m == n - 1) {
+        int count1 = 0, count2 = 0, count_n_minus_1 = 0;
+        for (int i = 1; i <= n; i++) {
+            if (degree[i] == 1) count1++;
+            else if (degree[i] == 2) count2++;
+            else if (degree[i] == n - 1) count_n_minus_1++;
+        }
+
+        if (count1 == 2 && count2 == n - 2) {
+            printf("bus topology\n");
+        }
+        else if (count1 == n - 1 && count_n_minus_1 == 1) {
+            printf("star topology\n");
+        }
+        else {
+            printf("unknown topology\n");
+        }
+    } 
+    else if (m == n) {
+        int is_ring = 1;
+        for (int i = 1; i <= n; i++) {
+            if (degree[i] != 2) {
+                is_ring = 0;
+                break;
+            }
+        }
+
+        if (is_ring) {
+            printf("ring topology\n");
+        } else {
+            printf("unknown topology\n");
+        }
+    } 
+    else {
+        printf("unknown topology\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n; 
+    scanf("%d", &n);
+
+    int votes[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &votes[i]);
+    }
+
+    int bribes = 0;
+
+    while (1) {
+        int max_votes = 0;
+        int max_idx = -1;
+        for (int i = 1; i < n; i++) {
+            if (votes[i] > max_votes) {
+                max_votes = votes[i];
+                max_idx = i;
+            }
+        }
+
+        if (votes[0] > max_votes) {
+            break;
+        }
+
+        votes[0]++;
+        votes[max_idx]--;
+        bribes++;
+    }
+
+    printf("%d\n", bribes);
+
+    return 0;
+}
 

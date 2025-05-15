@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int n, s;
+    scanf("%d %d", &n, &s);
+    
+    int total_cents = s * 100;
+    int max_sweets = -1;
+
+    for (int i = 0; i < n; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        
+        int cost_cents = (x * 100) + y;
+        
+        if (cost_cents <= total_cents) {
+            int change = total_cents - cost_cents;
+            int sweets = change % 100;
+            
+            if (sweets > max_sweets) {
+                max_sweets = sweets;
+            }
+        }
+    }
+    
+    printf("%d\n", max_sweets);
+    
+    return 0;
+}
 

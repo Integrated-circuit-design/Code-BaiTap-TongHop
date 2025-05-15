@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, h;
+    scanf("%d %d %d", &n, &m, &h);
+
+    int front[m], left[n], topView[n][m];
+
+    for (int j = 0; j < m; j++) {
+        scanf("%d", &front[j]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &left[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &topView[i][j]);
+        }
+    }
+
+    int heightMatrix[n][m];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (topView[i][j] == 0) {
+                heightMatrix[i][j] = 0;
+            } else {
+                if (front[j] < left[i]) {
+                    heightMatrix[i][j] = front[j];
+                } else {
+                    heightMatrix[i][j] = left[i];
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            printf("%d ", heightMatrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

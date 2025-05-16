@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+#define MAX 100005
+
+int main() {
+    int n, x;
+    int count[MAX] = {0};
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x);
+        count[x]++;
+    }
+
+    for (int i = 1; i < MAX; i++) {
+        if (count[i] % 2 == 1) {
+            printf("Conan\n");
+            return 0;
+        }
+    }
+
+    printf("Agasa\n");
+    return 0;
+}
 

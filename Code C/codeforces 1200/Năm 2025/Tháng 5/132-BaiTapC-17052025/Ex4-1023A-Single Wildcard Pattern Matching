@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+bool isMatch(const char *pattern, const char *text) {
+    int lenP = strlen(pattern);
+    int lenT = strlen(text);
+
+    int star = -1;
+    for (int i = 0; i < lenP; ++i) {
+        if (pattern[i] == '*') {
+            star = i;
+            break;
+        }
+    }
+
+    if (star == -1) {
+        return strcmp(pattern, text) == 0;
+    }
+
+    int lenPrefix = star;
+    int lenSuffix = lenP - star - 1;
+
+    if (lenPrefix + lenSuffix > lenT) {
+        return false;
+    }
+
+    for (int i = 0; i < lenPrefix; ++i) {
+        if (pattern[i] != text[i]) {
+            return false;
+        }
+    }
+
+    for (int i = 0; i < lenSuffix; ++i) {
+        if (pattern[lenP - 1 - i] != text[lenT - 1 - i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    char pattern[n + 1];
+    char text[m + 1];
+
+    scanf("%s", pattern);
+    scanf("%s", text);
+
+    if (isMatch(pattern, text)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

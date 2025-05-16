@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAX_M 100000
+
+typedef struct {
+    long long count;
+    long long time;
+} Song;
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    Song playlist[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%lld %lld", &playlist[i].count, &playlist[i].time);
+    }
+
+    long long moments[MAX_M];
+    for (int i = 0; i < m; i++) {
+        scanf("%lld", &moments[i]);
+    }
+
+    int song_index = 0;
+    long long current_start = 1;
+
+    for (int i = 0; i < m; i++) {
+        long long moment = moments[i];
+
+        while (1) {
+            long long duration = playlist[song_index].count * playlist[song_index].time;
+            long long current_end = current_start + duration - 1;
+
+            if (moment >= current_start && moment <= current_end) {
+                printf("%d\n", song_index + 1);
+                break;
+            }
+
+            current_start = current_end + 1;
+            song_index++;
+        }
+    }
+
+    return 0;
+}
 

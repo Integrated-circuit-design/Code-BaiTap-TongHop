@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 20
+
+void generate_lucky_number(int k, char result[]) {
+    int pos = 0;
+
+    if (k % 2 == 1) {
+        result[pos++] = '4';
+        k -= 1;
+    }
+
+    for (int i = 0; i < k / 2; i++) {
+        result[pos++] = '8';
+    }
+
+    result[pos] = '\0';
+}
+
+int main() {
+    int k;
+    scanf("%d", &k);
+
+    if (k > 36) {
+        printf("-1\n");
+        return 0;
+    }
+
+    char lucky_number[MAX_LEN];
+    generate_lucky_number(k, lucky_number);
+
+    printf("%s\n", lucky_number);
+
+    return 0;
+}
 

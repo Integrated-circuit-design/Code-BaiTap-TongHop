@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 1000003
+
+int main() {
+    char program[101];
+    scanf("%s", program);
+
+    int bin_map[128] = {0};
+
+    bin_map['>'] = 8;
+    bin_map['<'] = 9;
+    bin_map['+'] = 10;
+    bin_map['-'] = 11;
+    bin_map['.'] = 12;
+    bin_map[','] = 13;
+    bin_map['['] = 14;
+    bin_map[']'] = 15;
+
+    unsigned long long result = 0;
+
+    for (int i = 0; program[i] != '\0'; i++) {
+        int value = bin_map[(int)program[i]];
+        result = ((result << 4) + value) % MOD;
+    }
+
+    printf("%llu\n", result);
+    return 0;
+}
 

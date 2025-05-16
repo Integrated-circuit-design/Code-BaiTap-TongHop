@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int is_same_point(int x1, int y1, int x2, int y2) {
+    return x1 == x2 && y1 == y2;
+}
+
+int main() {
+    int x[3], y[3];
+    
+    for (int i = 0; i < 3; i++) {
+        scanf("%d %d", &x[i], &y[i]);
+    }
+
+    int rx[3], ry[3], count = 0;
+
+    for (int i = 0; i < 3; i++) {
+        int j = (i + 1) % 3;
+        int k = (i + 2) % 3;
+
+        int dx = x[j] + x[k] - x[i];
+        int dy = y[j] + y[k] - y[i];
+
+        int duplicate = 0;
+        for (int t = 0; t < count; t++) {
+            if (is_same_point(dx, dy, rx[t], ry[t])) {
+                duplicate = 1;
+                break;
+            }
+        }
+
+        if (!duplicate) {
+            rx[count] = dx;
+            ry[count] = dy;
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("%d %d\n", rx[i], ry[i]);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int la_so_chan(long long x) {
+    return x % 2 == 0;
+}
+
+int main() {
+    long long kich_thuoc;
+    
+    scanf("%lld", &kich_thuoc);
+
+    if (la_so_chan(kich_thuoc)) {
+        printf("2\n");
+    } else {
+        printf("1\n");
+    }
+
+    return 0;
+}
 

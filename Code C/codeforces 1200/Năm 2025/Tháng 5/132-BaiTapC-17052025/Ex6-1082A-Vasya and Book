@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define INF 1000000000
+
+int steps(int a, int b, int d) {
+    if (abs(a - b) % d == 0) {
+        return abs(a - b) / d;
+    }
+    return INF;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x, y, d;
+        scanf("%d %d %d %d", &n, &x, &y, &d);
+
+        int ans = INF;
+
+        int direct = steps(x, y, d);
+        if (direct < ans) ans = direct;
+
+        int to1 = steps(x, 1, d);
+        int from1 = steps(1, y, d);
+        if (to1 < INF && from1 < INF && to1 + from1 < ans) {
+            ans = to1 + from1;
+        }
+
+        int toN = steps(x, n, d);
+        int fromN = steps(n, y, d);
+        if (toN < INF && fromN < INF && toN + fromN < ans) {
+            ans = toN + fromN;
+        }
+
+        if (ans == INF) {
+            printf("-1\n");
+        } else {
+            printf("%d\n", ans);
+        }
+    }
+
+    return 0;
+}
 

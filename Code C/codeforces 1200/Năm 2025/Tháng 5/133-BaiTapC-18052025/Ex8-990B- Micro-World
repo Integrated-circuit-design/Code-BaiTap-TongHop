@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+void insertion_sort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+int min_bacteria_remain(int n, int K, int a[]) {
+    insertion_sort(a, n);
+
+    int remaining_bacteria = 0;
+    int i = 0;
+
+    while (i < n) {
+        remaining_bacteria++;
+        int current_size = a[i];
+
+        while (i < n && a[i] <= current_size + K) {
+            i++;
+        }
+    }
+
+    return remaining_bacteria;
+}
+
+int main() {
+    int n, K;
+    scanf("%d %d", &n, &K);
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    printf("%d\n", min_bacteria_remain(n, K, a));
+
+    return 0;
+}
 

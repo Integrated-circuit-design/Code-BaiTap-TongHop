@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <math.h>
+
+long long calculate_number(long long x, long long y, long long n) {
+    long long even_cells = (n * n + 1) / 2;
+    long long index = (x - 1) * n + y;
+
+    if ((x + y) % 2 == 0) {
+        return (index + 1) / 2;
+    } else {
+        return (index + 1) / 2 + even_cells;
+    }
+}
+
+int main() {
+    long long n, q;
+    scanf("%lld %lld", &n, &q);
+
+    for (long long i = 0; i < q; i++) {
+        long long xi, yi;
+        scanf("%lld %lld", &xi, &yi);
+        
+        long long result = calculate_number(xi, yi, n);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

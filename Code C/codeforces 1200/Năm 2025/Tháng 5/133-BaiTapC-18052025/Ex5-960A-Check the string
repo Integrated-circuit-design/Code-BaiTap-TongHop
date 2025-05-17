@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+int check_valid_string(const char* s) {
+    int a_count = 0, b_count = 0, c_count = 0;
+    int n = strlen(s);
+    int i = 0;
+
+    while (i < n && s[i] == 'a') {
+        a_count++;
+        i++;
+    }
+
+    while (i < n && s[i] == 'b') {
+        b_count++;
+        i++;
+    }
+
+    while (i < n && s[i] == 'c') {
+        c_count++;
+        i++;
+    }
+
+    if (i != n) {
+        return 0;
+    }
+
+    if (c_count == a_count || c_count == b_count) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int main() {
+    char s[5001];
+
+    scanf("%s", s);
+
+    if (check_valid_string(s)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

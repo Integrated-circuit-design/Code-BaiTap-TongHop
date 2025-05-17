@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+void bubbleSort(int points[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (points[j] > points[j + 1]) {
+                int temp = points[j];
+                points[j] = points[j + 1];
+                points[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int minimum_removals(int n, int d, int points[]) {
+    bubbleSort(points, n);
+
+    int left = 0;
+    int max_valid_points = 0;
+
+    for (int right = 0; right < n; right++) {
+        while (points[right] - points[left] > d) {
+            left++;
+        }
+
+        int current_window_size = right - left + 1;
+        if (current_window_size > max_valid_points) {
+            max_valid_points = current_window_size;
+        }
+    }
+
+    return n - max_valid_points;
+}
+
+int main() {
+    int n, d;
+    scanf("%d %d", &n, &d);
+
+    int points[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &points[i]);
+    }
+
+    printf("%d\n", minimum_removals(n, d, points));
+
+    return 0;
+}
 

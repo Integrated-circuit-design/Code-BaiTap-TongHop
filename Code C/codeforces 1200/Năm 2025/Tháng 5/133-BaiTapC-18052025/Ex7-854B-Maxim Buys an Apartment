@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+
+    scanf("%d %d", &n, &k);
+
+    if (k == 0 || k == n) {
+        printf("0 0\n");
+        return 0;
+    }
+
+    int minGood = 1;
+    int maxGood = n - k;
+
+    printf("%d %d\n", minGood, maxGood);
+
+    return 0;
+}
 

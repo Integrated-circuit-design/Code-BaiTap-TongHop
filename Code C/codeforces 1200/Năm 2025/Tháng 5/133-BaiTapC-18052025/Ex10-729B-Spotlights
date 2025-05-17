@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+#define MAX 1000
+
+int n, m;
+int grid[MAX][MAX];
+
+void count_good_positions() {
+    int count = 0;
+    int right[MAX][MAX] = {0}, left[MAX][MAX] = {0}, up[MAX][MAX] = {0}, down[MAX][MAX] = {0};
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 1; j < m; j++) {
+            if (grid[i][j - 1] == 1) {
+                left[i][j] = 1;
+            }
+        }
+        for (int j = m - 2; j >= 0; j--) {
+            if (grid[i][j + 1] == 1) {
+                right[i][j] = 1;
+            }
+        }
+    }
+
+    for (int j = 0; j < m; j++) {
+        for (int i = 1; i < n; i++) {
+            if (grid[i - 1][j] == 1) {
+                up[i][j] = 1;
+            }
+        }
+        for (int i = n - 2; i >= 0; i--) {
+            if (grid[i + 1][j] == 1) {
+                down[i][j] = 1;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == 0) {
+                if (right[i][j] || left[i][j] || up[i][j] || down[i][j]) {
+                    count++;
+                }
+            }
+        }
+    }
+
+    printf("%d\n", count);
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &grid[i][j]);
+        }
+    }
+
+    count_good_positions();
+
+    return 0;
+}
 

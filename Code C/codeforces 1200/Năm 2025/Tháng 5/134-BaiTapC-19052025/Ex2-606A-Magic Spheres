@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c;
+    int x, y, z;
+
+    scanf("%d %d %d", &a, &b, &c);
+    scanf("%d %d %d", &x, &y, &z);
+
+    int missing_blue = x > a ? x - a : 0;
+    int missing_violet = y > b ? y - b : 0;
+    int missing_orange = z > c ? z - c : 0;
+
+    int surplus_blue = a > x ? a - x : 0;
+    int surplus_violet = b > y ? b - y : 0;
+    int surplus_orange = c > z ? c - z : 0;
+
+    int total_missing = missing_blue + missing_violet + missing_orange;
+    int total_surplus = surplus_blue / 2 + surplus_violet / 2 + surplus_orange / 2;
+
+    if (total_surplus >= total_missing) {
+        printf("Yes\n");
+    } else {
+        printf("No\n");
+    }
+
+    return 0;
+}
 

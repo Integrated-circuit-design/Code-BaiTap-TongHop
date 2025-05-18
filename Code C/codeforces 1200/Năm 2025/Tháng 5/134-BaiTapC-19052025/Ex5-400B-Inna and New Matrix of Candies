@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    
+    scanf("%d %d", &n, &m);
+
+    char matrix[n][m];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%s", matrix[i]);
+    }
+
+    int max_moves = 0;
+
+    for (int i = 0; i < n; i++) {
+        int g_pos = -1, s_pos = -1;
+
+        for (int j = 0; j < m; j++) {
+            if (matrix[i][j] == 'G') g_pos = j;
+            if (matrix[i][j] == 'S') s_pos = j;
+        }
+
+        if (g_pos > s_pos) {
+            printf("-1\n");
+            return 0;
+        }
+
+        int moves = s_pos - g_pos;
+
+        if (moves > max_moves) {
+            max_moves = moves;
+        }
+    }
+
+    printf("%d\n", max_moves);
+
+    return 0;
+}
 

@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAX_POPULATION 1000000
+
+typedef struct {
+    int x, y, population;
+} Location;
+
+double calculate_distance(int x, int y) {
+    return sqrt(x * x + y * y);
+}
+
+int main() {
+    int n, s;
+    
+    scanf("%d %d", &n, &s);
+    
+    Location locations[n];
+    double distances[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d %d", &locations[i].x, &locations[i].y, &locations[i].population);
+        distances[i] = calculate_distance(locations[i].x, locations[i].y);
+    }
+    
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (distances[i] > distances[j]) {
+                double temp_distance = distances[i];
+                distances[i] = distances[j];
+                distances[j] = temp_distance;
+
+                Location temp_location = locations[i];
+                locations[i] = locations[j];
+                locations[j] = temp_location;
+            }
+        }
+    }
+    
+    int current_population = s;
+    
+    for (int i = 0; i < n; i++) {
+        current_population += locations[i].population;
+
+        if (current_population >= MAX_POPULATION) {
+            printf("%.7f\n", distances[i]);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

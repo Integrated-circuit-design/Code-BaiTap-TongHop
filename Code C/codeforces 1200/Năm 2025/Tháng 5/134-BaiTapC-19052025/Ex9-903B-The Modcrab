@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+void battle(int *vova_health, int *modcrab_health, int a1, int a2, int c1, char actions[], int *action_count) {
+    if (*vova_health <= a2) {
+        actions[*action_count] = 'H';
+        *vova_health += c1;
+        (*action_count)++;
+    } else {
+        actions[*action_count] = 'S';
+        *modcrab_health -= a1;
+        (*action_count)++;
+    }
+
+    if (*modcrab_health > 0) {
+        *vova_health -= a2;
+    }
+}
+
+int main() {
+    int h1, a1, c1;
+    int h2, a2;
+
+    scanf("%d %d %d", &h1, &a1, &c1);
+    scanf("%d %d", &h2, &a2);
+
+    int vova_health = h1;
+    int modcrab_health = h2;
+
+    char actions[200];
+    int action_count = 0;
+
+    while (modcrab_health > 0) {
+        battle(&vova_health, &modcrab_health, a1, a2, c1, actions, &action_count);
+    }
+
+    printf("%d\n", action_count);
+    for (int i = 0; i < action_count; i++) {
+        if (actions[i] == 'H') {
+            printf("HEAL\n");
+        } else {
+            printf("STRIKE\n");
+        }
+    }
+
+    return 0;
+}
 

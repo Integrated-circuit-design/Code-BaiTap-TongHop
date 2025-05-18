@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_VAL 100000
+
+int main() {
+    int n, x;
+
+    scanf("%d %d", &n, &x);
+
+    int arr[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    int foundOriginal[MAX_VAL + 1] = {0};
+    int foundTransformed[MAX_VAL + 1] = {0};
+
+    for (int i = 0; i < n; i++) {
+        if (foundOriginal[arr[i]] == 1) {
+            printf("0\n");
+            return 0;
+        }
+        foundOriginal[arr[i]] = 1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int transformed = arr[i] & x;
+        if (foundOriginal[transformed] == 1) {
+            printf("1\n");
+            return 0;
+        }
+        foundTransformed[transformed] = 1;
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

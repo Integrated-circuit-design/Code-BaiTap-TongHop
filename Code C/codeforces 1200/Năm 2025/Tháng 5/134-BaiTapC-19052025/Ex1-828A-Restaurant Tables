@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n, a, b;
+    int denied_people = 0;
+    int remaining_one_seater = a;
+    int remaining_two_seater = b;
+    int half_occupied_two_seater = 0;
+
+    scanf("%d %d %d", &n, &a, &b);
+    for (int i = 0; i < n; i++) {
+        int group_size;
+        scanf("%d", &group_size);
+
+        if (group_size == 1) {
+            if (remaining_one_seater > 0) {
+                remaining_one_seater--;
+            } else if (remaining_two_seater > 0) {
+                remaining_two_seater--;
+                half_occupied_two_seater++;
+            } else if (half_occupied_two_seater > 0) {
+                half_occupied_two_seater--;
+            } else {
+                denied_people++;
+            }
+        } else if (group_size == 2) {
+            if (remaining_two_seater > 0) {
+                remaining_two_seater--;
+            } else {
+                denied_people += 2;
+            }
+        }
+    }
+
+    printf("%d\n", denied_people);
+
+    return 0;
+}
 

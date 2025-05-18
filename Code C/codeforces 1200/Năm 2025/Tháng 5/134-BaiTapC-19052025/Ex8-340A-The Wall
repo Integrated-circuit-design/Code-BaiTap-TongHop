@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+long long gcd(long long x, long long y) {
+    while (y != 0) {
+        long long temp = y;
+        y = x % y;
+        x = temp;
+    }
+    return x;
+}
+
+long long lcm(long long x, long long y) {
+    return (x * y) / gcd(x, y);
+}
+
+long long count_multiples_in_range(long long lcm_value, long long a, long long b) {
+    return (b / lcm_value) - ((a - 1) / lcm_value);
+}
+
+int main() {
+    long long x, y, a, b;
+    scanf("%lld %lld %lld %lld", &x, &y, &a, &b);
+    long long lcm_value = lcm(x, y);
+    long long result = count_multiples_in_range(lcm_value, a, b);
+    printf("%lld\n", result);
+    return 0;
+}
 

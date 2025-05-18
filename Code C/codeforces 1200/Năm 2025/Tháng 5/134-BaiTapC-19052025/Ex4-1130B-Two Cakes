@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100000
+
+long long min_distance_to_buy_cakes(int n, int a[]) {
+    int positions[MAX_N + 1][2];
+    long long total_distance = 0;
+    int sasha_position = 0, dima_position = 0;
+
+    for (int i = 0; i < 2 * n; i++) {
+        if (positions[a[i]][0] == 0) {
+            positions[a[i]][0] = i + 1;
+        } else {
+            positions[a[i]][1] = i + 1;
+        }
+    }
+
+    for (int tier = 1; tier <= n; tier++) {
+        int p1 = positions[tier][0];
+        int p2 = positions[tier][1];
+
+        long long dist_sasha_first = abs(sasha_position - p1) + abs(dima_position - p2);
+        long long dist_dima_first = abs(sasha_position - p2) + abs(dima_position - p1);
+
+        if (dist_sasha_first <= dist_dima_first) {
+            total_distance += dist_sasha_first;
+            sasha_position = p1;
+            dima_position = p2;
+        } else {
+            total_distance += dist_dima_first;
+            sasha_position = p2;
+            dima_position = p1;
+        }
+    }
+
+    return total_distance;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int a[2 * n];
+    for (int i = 0; i < 2 * n; i++) {
+        scanf("%d", &a[i]);
+    }
+    
+    long long result = min_distance_to_buy_cakes(n, a);
+    printf("%lld\n", result);
+
+    return 0;
+}
 

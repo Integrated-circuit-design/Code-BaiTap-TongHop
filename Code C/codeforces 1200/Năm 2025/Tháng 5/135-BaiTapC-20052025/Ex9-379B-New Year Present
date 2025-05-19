@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    char instructions[1000000];
+    int idx = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < a[i]; j++) {
+            instructions[idx++] = 'P';
+            if (j != a[i] - 1) {
+                if (i < n - 1) {
+                    instructions[idx++] = 'R';
+                    instructions[idx++] = 'L';
+                } else {
+                    instructions[idx++] = 'L';
+                    instructions[idx++] = 'R';
+                }
+            }
+        }
+        if (i < n - 1) {
+            instructions[idx++] = 'R';
+        }
+    }
+
+    instructions[idx] = '\0';
+    printf("%s\n", instructions);
+
+    return 0;
+}
 

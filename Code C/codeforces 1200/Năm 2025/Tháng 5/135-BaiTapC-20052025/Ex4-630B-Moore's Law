@@ -1,1 +1,17 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    long long n, t;
+
+    scanf("%lld %lld", &n, &t);
+
+    double growth_rate = log(1.000000011);
+
+    double result = n * exp(t * growth_rate);
+
+    printf("%.15f\n", result);
+
+    return 0;
+}
 

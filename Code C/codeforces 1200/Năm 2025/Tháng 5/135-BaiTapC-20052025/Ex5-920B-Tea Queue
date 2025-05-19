@@ -1,1 +1,65 @@
+#include <stdio.h>
+
+#define MAX_N 1000
+
+void processTestCase(int n, int arrival[], int leave[]) {
+    int times[MAX_N];
+    int current_time = 1;
+    int nextStudent = 0;
+    int queue[MAX_N];
+    int queueSize = 0;
+
+    for (int i = 0; i < n; i++) {
+        times[i] = 0;
+    }
+
+    while (nextStudent < n || queueSize > 0) {
+        while (nextStudent < n && arrival[nextStudent] <= current_time) {
+            queue[queueSize++] = nextStudent;
+            nextStudent++;
+        }
+
+        if (queueSize > 0) {
+            int idx = queue[0];
+            if (current_time <= leave[idx]) {
+                times[idx] = current_time;
+                current_time++;
+            }
+
+            for (int i = 1; i < queueSize; i++) {
+                queue[i - 1] = queue[i];
+            }
+            queueSize--;
+        } else {
+            if (nextStudent < n) {
+                current_time = arrival[nextStudent];
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", times[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arrival[MAX_N], leave[MAX_N];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &arrival[i], &leave[i]);
+        }
+
+        processTestCase(n, arrival, leave);
+    }
+
+    return 0;
+}
 

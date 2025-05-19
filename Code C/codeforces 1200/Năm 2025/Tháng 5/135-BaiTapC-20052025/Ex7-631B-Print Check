@@ -1,1 +1,50 @@
+#include <stdio.h>
 
+#define MAX_N 5000
+#define MAX_M 5000
+
+int lastRowOp[MAX_N + 1][2];
+int lastColOp[MAX_M + 1][2];
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    for (int i = 1; i <= n; i++) {
+        lastRowOp[i][0] = -1;
+    }
+    for (int j = 1; j <= m; j++) {
+        lastColOp[j][0] = -1;
+    }
+
+    for (int t = 0; t < k; t++) {
+        int op_type, idx, color;
+        scanf("%d %d %d", &op_type, &idx, &color);
+
+        if (op_type == 1) {
+            lastRowOp[idx][0] = t;
+            lastRowOp[idx][1] = color;
+        } else if (op_type == 2) {
+            lastColOp[idx][0] = t;
+            lastColOp[idx][1] = color;
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            int row_time = lastRowOp[i][0];
+            int row_color = lastRowOp[i][1];
+            int col_time = lastColOp[j][0];
+            int col_color = lastColOp[j][1];
+
+            if (row_time > col_time) {
+                printf("%d ", row_color);
+            } else {
+                printf("%d ", col_color);
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}

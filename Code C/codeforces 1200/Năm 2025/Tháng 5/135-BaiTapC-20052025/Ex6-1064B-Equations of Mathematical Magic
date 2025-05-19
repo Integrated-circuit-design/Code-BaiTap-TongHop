@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+unsigned long long calculate_solutions(unsigned int a) {
+    unsigned long long count_zero_bits = 0;
+
+    for (int i = 0; i < 30; i++) {
+        if ((a & (1 << i)) == 0) {
+            count_zero_bits++;
+        }
+    }
+
+    return 1ULL << count_zero_bits;
+}
+
+int main() {
+    int num_cases;
+    scanf("%d", &num_cases);
+
+    while (num_cases--) {
+        unsigned int a;
+        scanf("%u", &a);
+
+        printf("%llu\n", calculate_solutions(a));
+    }
+
+    return 0;
+}
 

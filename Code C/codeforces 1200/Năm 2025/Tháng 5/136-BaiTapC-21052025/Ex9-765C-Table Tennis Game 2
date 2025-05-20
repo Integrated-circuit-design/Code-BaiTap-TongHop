@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int k, a, b;
+    scanf("%d %d %d", &k, &a, &b);
+    
+    if (a < k && b < k) {
+        printf("-1\n");
+    } else {
+        int total_sets_misha = a / k;
+        int total_sets_vanya = b / k;
+        int total_sets = total_sets_misha + total_sets_vanya;
+        printf("%d\n", total_sets);
+    }
+
+    return 0;
+}
 

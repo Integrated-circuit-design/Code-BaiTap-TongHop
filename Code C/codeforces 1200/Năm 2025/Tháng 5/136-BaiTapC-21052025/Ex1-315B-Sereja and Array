@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int a[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int global_increment = 0;
+    int type, index, value, increment, query;
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &type);
+
+        if (type == 1) {
+            scanf("%d %d", &index, &value);
+            a[index - 1] = value - global_increment;
+        }
+        else if (type == 2) {
+            scanf("%d", &increment);
+            global_increment += increment;
+        }
+        else if (type == 3) {
+            scanf("%d", &query);
+            printf("%d\n", a[query - 1] + global_increment);
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int tinhTong(int N) {
+    int tong = 0;
+    for (int i = 1; i <= N; i++) {
+        tong += i;
+    }
+    return tong;
+}
+
+int main() {
+    int N;
+    printf("Nhap mot so nguyen N: ");
+    scanf("%d", &N);
+
+    if (N > 0) {
+        int ketQua = tinhTong(N);
+        printf("Tong cac so tu 1 den %d la: %d\n", N, ketQua);
+    } else {
+        printf("Vui long nhap so duong.\n");
+    }
+
+    return 0;
+}
 

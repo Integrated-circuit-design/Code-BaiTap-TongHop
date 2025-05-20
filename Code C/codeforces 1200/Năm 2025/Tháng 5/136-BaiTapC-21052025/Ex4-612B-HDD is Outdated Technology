@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+long long factorial(int n) {
+    long long result = 1;
+    for (int i = 1; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+int main() {
+    int number;
+    printf("Nhap mot so nguyen duong: ");
+    scanf("%d", &number);
+
+    if (number < 0) {
+        printf("Vui long nhap so nguyen duong!\n");
+    } else {
+        printf("Giai thua cua %d la: %lld\n", number, factorial(number));
+    }
+
+    return 0;
+}
 

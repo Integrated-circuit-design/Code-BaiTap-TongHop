@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char a[100005], b[100005];
+    scanf("%s", a);
+    scanf("%s", b);
+
+    int count_4_to_7 = 0;
+    int count_7_to_4 = 0;
+
+    int n = strlen(a);
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] != b[i]) {
+            if (a[i] == '4' && b[i] == '7') {
+                count_4_to_7++;
+            } else if (a[i] == '7' && b[i] == '4') {
+                count_7_to_4++;
+            }
+        }
+    }
+
+    int swaps = (count_4_to_7 < count_7_to_4) ? count_4_to_7 : count_7_to_4;
+    int remaining = (count_4_to_7 - swaps) + (count_7_to_4 - swaps);
+    int total_operations = swaps + remaining;
+
+    printf("%d\n", total_operations);
+
+    return 0;
+}
 

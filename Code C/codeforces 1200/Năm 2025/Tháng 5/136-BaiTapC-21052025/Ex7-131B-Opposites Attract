@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n, sum = 0;
+
+    printf("Nhập số lượng phần tử trong mảng: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Nhập các phần tử của mảng:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Phần tử %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+    }
+
+    printf("Tổng các phần tử trong mảng là: %d\n", sum);
+
+    return 0;
+}
 

@@ -1,1 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int x1, y1, x2, y2;
+    int x, y;
+    scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+    scanf("%d %d", &x, &y);
+
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+
+    if (dx % x == 0 && dy % y == 0) {
+        if ((dx / x) % 2 == (dy / y) % 2) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int min_power = 1000000000;
+    int best_start = -1;
+
+    for (int start = 0; start < k; start++) {
+        int current_sum = 0;
+        for (int i = start; i < n; i += k) {
+            current_sum += a[i];
+        }
+
+        if (current_sum < min_power) {
+            min_power = current_sum;
+            best_start = start;
+        }
+    }
+
+    printf("%d\n", best_start + 1);
+
+    return 0;
+}
 

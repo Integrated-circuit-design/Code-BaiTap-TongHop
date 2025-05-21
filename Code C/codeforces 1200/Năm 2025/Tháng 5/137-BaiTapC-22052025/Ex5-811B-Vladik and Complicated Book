@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int has_changed(int *P, int n, int l, int r, int x) {
+    int original_value = P[x];
+    int subsegment[r - l + 1];
+    for (int i = 0; i <= r - l; i++) {
+        subsegment[i] = P[l + i];
+    }
+    qsort(subsegment, r - l + 1, sizeof(int), compare);
+
+    int new_position = -1;
+    for (int i = 0; i <= r - l; i++) {
+        if (subsegment[i] == original_value) {
+            new_position = i + l;
+            break;
+        }
+    }
+
+    return new_position == x;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int P[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &P[i]);
+    }
+
+    for (int query = 0; query < m; query++) {
+        int l, r, x;
+        scanf("%d %d %d", &l, &r, &x);
+        l--; r--; x--;
+
+        if (has_changed(P, n, l, r, x)) {
+            printf("Yes\n");
+        } else {
+            printf("No\n");
+        }
+    }
+
+    return 0;
+}
 

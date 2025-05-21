@@ -1,1 +1,21 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int n;
+    double h;
+
+    scanf("%d %lf", &n, &h);
+
+    double total_area = 0.5 * h;
+
+    double piece_area = total_area / n;
+
+    for (int i = 1; i < n; i++) {
+        double cut_height = h * sqrt(i / (double)n);
+        printf("%.12lf ", cut_height);
+    }
+
+    return 0;
+}
 

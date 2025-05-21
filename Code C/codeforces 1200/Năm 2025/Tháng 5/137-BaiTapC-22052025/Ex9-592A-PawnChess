@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    char board[8][8];
+
+    for (int i = 0; i < 8; i++) {
+        scanf("%s", board[i]);
+    }
+
+    int min_white_steps = 8;
+    int min_black_steps = 8;
+
+    for (int c = 0; c < 8; c++) {
+        int white_steps = 8;
+        int black_steps = 8;
+
+        for (int r = 0; r < 8; r++) {
+            if (board[r][c] == 'W') {
+                int blocked = 0;
+                for (int k = r - 1; k >= 0; k--) {
+                    if (board[k][c] == 'B') {
+                        blocked = 1;
+                        break;
+                    }
+                }
+                if (!blocked) {
+                    white_steps = r;
+                }
+            }
+        }
+
+        for (int r = 0; r < 8; r++) {
+            if (board[r][c] == 'B') {
+                int blocked = 0;
+                for (int k = r + 1; k < 8; k++) {
+                    if (board[k][c] == 'W') {
+                        blocked = 1;
+                        break;
+                    }
+                }
+                if (!blocked) {
+                    black_steps = 7 -_
 

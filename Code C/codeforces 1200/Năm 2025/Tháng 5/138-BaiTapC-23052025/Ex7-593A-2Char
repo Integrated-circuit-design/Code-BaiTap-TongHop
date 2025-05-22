@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char words[100][1001];
+    for (int i = 0; i < n; i++) {
+        scanf("%s", words[i]);
+    }
+
+    int max_length = 0;
+
+    for (char x = 'a'; x <= 'z'; x++) {
+        for (char y = x; y <= 'z'; y++) {
+            int current_sum = 0;
+
+            for (int i = 0; i < n; i++) {
+                bool valid = true;
+                int len = strlen(words[i]);
+                for (int j = 0; j < len; j++) {
+                    if (words[i][j] != x && words[i][j] != y) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) {
+                    current_sum += len;
+                }
+            }
+
+            if (current_sum > max_length) {
+                max_length = current_sum;
+            }
+        }
+    }
+
+    printf("%d\n", max_length);
+
+    return 0;
+}
 

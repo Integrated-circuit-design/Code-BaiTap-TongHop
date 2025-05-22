@@ -1,1 +1,92 @@
+#include <stdio.h>
+
+#define MAX_N 150000
+#define MAX_K 6
+
+int n, k, q;
+int t[MAX_N + 1];
+int online[MAX_N + 1];
+
+int heap[MAX_K + 1];
+int heap_size = 0;
+
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+int cmp(int id1, int id2) {
+    return t[id1] < t[id2];
+}
+
+void heapify_up(int pos) {
+    while (pos > 1 && cmp(heap[pos], heap[pos/2])) {
+        swap(&heap[pos], &heap[pos/2]);
+        pos /= 2;
+    }
+}
+
+void heapify_down(int pos) {
+    int smallest = pos;
+    int left = pos * 2;
+    int right = pos * 2 + 1;
+
+    if (left <= heap_size && cmp(heap[left], heap[smallest])) smallest = left;
+    if (right <= heap_size && cmp(heap[right], heap[smallest])) smallest = right;
+
+    if (smallest != pos) {
+        swap(&heap[pos], &heap[smallest]);
+        heapify_down(smallest);
+    }
+}
+
+void heap_push(int id) {
+    heap_size++;
+    heap[heap_size] = id;
+    heapify_up(heap_size);
+}
+
+void heap_replace(int id) {
+    heap[1] = id;
+    heapify_down(1);
+}
+
+int in_heap(int id) {
+    for (int i = 1; i <= heap_size; i++) {
+        if (heap[i] == id) return 1;
+    }
+    return 0;
+}
+
+int main() {
+    scanf("%d %d %d", &n, &k, &q);
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &t[i]);
+        online[i] = 0;
+    }
+
+    for (int i = 0; i < q; i++) {
+        int type, id;
+        scanf("%d %d", &type, &id);
+
+        if (type == 1) {
+            online[id] = 1;
+
+            if (heap_size < k) {
+                heap_push(id);
+            } else {
+                if (t[id] > t[heap[1]]) {
+                    heap_replace(id);
+                }
+            }
+        } else {
+            if (in_heap(id)) printf("YES\n");
+            else printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

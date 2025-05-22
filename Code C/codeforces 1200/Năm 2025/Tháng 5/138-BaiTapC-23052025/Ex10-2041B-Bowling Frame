@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll total_pins(ll k) {
+    return k * (k + 1) / 2;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        ll w, b;
+        scanf("%lld %lld", &w, &b);
+
+        ll low = 0, high = 2000000000LL;
+        ll ans = 0;
+
+        while (low <= high) {
+            ll mid = (low + high) / 2;
+            ll needed = total_pins(mid);
+
+            if (needed <= w + b) {
+                ans = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

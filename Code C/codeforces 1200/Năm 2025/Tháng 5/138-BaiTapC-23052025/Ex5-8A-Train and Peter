@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+int find_substring(const char *str, const char *sub, int start) {
+    int len_str = strlen(str);
+    int len_sub = strlen(sub);
+    
+    for (int i = start; i <= len_str - len_sub; i++) {
+        int j;
+        for (j = 0; j < len_sub; j++) {
+            if (str[i + j] != sub[j]) {
+                break;
+            }
+        }
+        if (j == len_sub) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int can_see_in_order(const char *main, const char *first, const char *second) {
+    int pos_first = find_substring(main, first, 0);
+    if (pos_first == -1) return 0;
+    int pos_second = find_substring(main, second, pos_first + strlen(first));
+    if (pos_second == -1) return 0;
+    return 1;
+}
+
+int main() {
+    char track[100005];
+    char first_seq[105];
+    char second_seq[105];
+
+    scanf("%s", track);
+    scanf("%s", first_seq);
+    scanf("%s", second_seq);
+
+    int len = strlen(track);
+    char reversed_track[100005];
+    for (int i = 0; i < len; i++) {
+        reversed_track[i] = track[len - 1 - i];
+    }
+    reversed_track[len] = '\0';
+
+    int forward = can_see_in_order(track, first_seq, second_seq);
+    int backward = can_see_in_order(reversed_track, first_seq, second_seq);
+
+    if (forward && backward) {
+        printf("both\n");
+    } else if (forward) {
+        printf("forward\n");
+    } else if (backward) {
+        printf("backward\n");
+    } else {
+        printf("fantasy\n");
+    }
+
+    return 0;
+}
 

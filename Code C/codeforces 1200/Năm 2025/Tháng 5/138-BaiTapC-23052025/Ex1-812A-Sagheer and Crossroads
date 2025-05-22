@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+int canAccidentHappen(int partIndex, int directionLight, int pedestrianLights[4]) {
+    int targetPart;
+    if (directionLight == 0) {
+        targetPart = (partIndex + 3) % 4;
+    } else if (directionLight == 1) {
+        targetPart = (partIndex + 2) % 4;
+    } else {
+        targetPart = (partIndex + 1) % 4;
+    }
+
+    if (pedestrianLights[targetPart] == 1) {
+        return 1;
+    }
+    return 0;
+}
+
+int main() {
+    int trafficLights[4][4];
+
+    for (int i = 0; i < 4; i++) {
+        scanf("%d %d %d %d", &trafficLights[i][0], &trafficLights[i][1], &trafficLights[i][2], &trafficLights[i][3]);
+    }
+
+    int accidentPossible = 0;
+
+    for (int i = 0; i < 4 && accidentPossible == 0; i++) {
+        int l = trafficLights[i][0];
+        int s = trafficLights[i][1];
+        int r = trafficLights[i][2];
+        int p = trafficLights[i][3];
+
+        if (p == 1 && (l == 1 || s == 1 || r == 1)) {
+            accidentPossible = 1;
+            break;
+        }
+
+        if (l == 1 && canAccidentHappen(i, 0, (int[]){trafficLights[0][3], trafficLights[1][3], trafficLights[2][3], trafficLights[3][3]})) {
+            accidentPossible = 1;
+            break;
+        }
+        if (s == 1 && canAccidentHappen(i, 1, (int[]){trafficLights[0][3], trafficLights[1][3], trafficLights[2][3], trafficLights[3][3]})) {
+            accidentPossible = 1;
+            break;
+        }
+        if (r == 1 && canAccidentHappen(i, 2, (int[]){trafficLights[0][3], trafficLights[1][3], trafficLights[2][3], trafficLights[3][3]})) {
+            accidentPossible = 1;
+            break;
+        }
+    }
+
+    if (accidentPossible) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

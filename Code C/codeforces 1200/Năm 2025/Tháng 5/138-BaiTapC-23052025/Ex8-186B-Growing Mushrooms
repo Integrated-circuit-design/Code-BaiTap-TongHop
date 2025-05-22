@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Dwarf {
+    int number;
+    double maxHeight;
+};
+
+int cmp(const void *x, const void *y) {
+    struct Dwarf *a = (struct Dwarf *)x;
+    struct Dwarf *b = (struct Dwarf *)y;
+
+    if (a->maxHeight > b->maxHeight)
+        return -1;
+    else if (a->maxHeight < b->maxHeight)
+        return 1;
+    else
+        return a->number - b->number;
+}
+
+int main() {
+    int n, t1, t2, k;
+    scanf("%d %d %d %d", &n, &t1, &t2, &k);
+
+    struct Dwarf dwarfs[n];
+    double factor = 1.0 - (double)k / 100.0;
+
+    for (int i = 0; i < n; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+
+        double first_strategy = a * t1 * factor + b * t2;
+        double second_strategy = b * t1 * factor + a * t2;
+
+        dwarfs[i].number = i + 1;
+        dwarfs[i].maxHeight = (first_strategy > second_strategy) ? first_strategy : second_strategy;
+    }
+
+    qsort(dwarfs, n, sizeof(struct Dwarf), cmp);
+
+    for (int i = 0; i < n; i++) {
+        printf("%d %.2lf\n", dwarfs[i].number, dwarfs[i].maxHeight);
+    }
+
+    return 0;
+}
 

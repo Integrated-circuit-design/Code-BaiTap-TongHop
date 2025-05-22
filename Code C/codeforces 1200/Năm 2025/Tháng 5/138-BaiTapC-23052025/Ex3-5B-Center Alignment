@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LINES 1000
+#define MAX_LEN 1001
+
+int main() {
+    char lines[MAX_LINES][MAX_LEN];
+    int line_count = 0;
+    int max_len = 0;
+
+    while (fgets(lines[line_count], MAX_LEN, stdin)) {
+        int len = strlen(lines[line_count]);
+        if (len > 0 && lines[line_count][len - 1] == '\n') {
+            lines[line_count][len - 1] = '\0';
+            len--;
+        }
+        if (len > max_len) max_len = len;
+        line_count++;
+    }
+
+    int width = max_len + 2;
+
+    for (int i = 0; i < width; i++) {
+        putchar('*');
+    }
+    putchar('\n');
+
+    int alignLeft = 1;
+
+    for (int i = 0; i < line_count; i++) {
+        int len = strlen(lines[i]);
+        int total_padding = max_len - len;
+        int left_spaces = total_padding / 2;
+        int right_spaces = total_padding - left_spaces;
+
+        if (total_padding % 2 != 0) {
+            if (alignLeft) left_spaces++;
+            else right_spaces++;
+            alignLeft = !alignLeft;
+        }
+
+        putchar('*');
+        for (int j = 0; j < left_spaces; j++) putchar(' ');
+        printf("%s", lines[i]);
+        for (int j = 0; j < right_spaces; j++) putchar(' ');
+        putchar('*');
+        putchar('\n');
+    }
+
+    for (int i = 0; i < width; i++) {
+        putchar('*');
+    }
+    putchar('\n');
+
+    return 0;
+}
 

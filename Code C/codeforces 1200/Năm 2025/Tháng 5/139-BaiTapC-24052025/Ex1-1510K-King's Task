@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 2000
+
+int n;
+int original[MAX_SIZE];
+
+bool isSorted(int arr[]) {
+    for (int i = 0; i < 2 * n - 1; i++) {
+        if (arr[i] > arr[i + 1]) return false;
+    }
+    return true;
+}
+
+void swapAdjacentPairs(int arr[]) {
+    for (int i = 0; i < 2 * n; i += 2) {
+        int tmp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = tmp;
+    }
+}
+
+void swapHalves(int arr[]) {
+    for (int i = 0; i < n; i++) {
+        int tmp = arr[i];
+        arr[i] = arr[i + n];
+        arr[i + n] = tmp;
+    }
+}
+
+void copyArray(int dest[], int src[]) {
+    for (int i = 0; i < 2 * n; i++) {
+        dest[i] = src[i];
+    }
+}
+
+int findMinSteps(int firstOp) {
+    int arr[MAX_SIZE];
+    copyArray(arr, original);
+    int maxAttempts = 2 * n + 1;
+
+    for (int steps = 0; steps <= maxAttempts; steps++) {
+        if (isSorted(arr)) {
+            return steps;
+        }
+        if ((steps % 2 == 0 && firstOp == 1) || (steps % 2 == 1 && firstOp == 2)) {
+            swapAdjacentPairs(arr);
+        } else {
+            swapHalves(arr);
+        }
+    }
+    return -1;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < 2 * n; i++) {
+        scanf("%d", &original[i]);
+    }
+
+    int stepsStartingWithOp1 = findMinSteps(1);
+    int stepsStartingWithOp2 = findMinSteps(2);
+
+    if (stepsStartingWithOp1 == -1 && stepsStartingWithOp2 == -1) {
+        printf("-1\n");
+    } else if (stepsStartingWithOp1 == -1) {
+        printf("%d\n", stepsStartingWithOp2);
+    } else if (stepsStartingWithOp2 == -1) {
+        printf("%d\n", stepsStartingWithOp1);
+    } else {
+        printf("%d\n", stepsStartingWithOp1 < stepsStartingWithOp2 ? stepsStartingWithOp1 : stepsStartingWithOp2);
+    }
+
+    return 0;
+}
 

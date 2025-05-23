@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c;
+    scanf("%d %d %d", &a, &b, &c);
+
+    int part1 = a * b;
+    int part2 = b * c;
+    int part3 = c * a;
+    int subtract = a + b + c;
+
+    int totalTiles = part1 + part2 + part3 - subtract + 1;
+
+    printf("%d\n", totalTiles);
+
+    return 0;
+}
 

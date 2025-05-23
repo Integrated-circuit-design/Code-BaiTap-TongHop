@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+
+void print_int_with_commas(const char *int_part) {
+    int len = strlen(int_part);
+    int count = 0;
+    for (int i = 0; i < len; i++) {
+        putchar(int_part[i]);
+        count++;
+        int rem = (len - count) % 3;
+        if (rem == 0 && i != len -1) {
+            putchar(',');
+        }
+    }
+}
+
+int main() {
+    char input[110];
+    scanf("%s", input);
+
+    int negative = 0;
+    int start = 0;
+
+    if (input[0] == '-') {
+        negative = 1;
+        start = 1;
+    }
+
+    char int_part[110] = {0};
+    char frac_part[110] = {0};
+    int i = start, j = 0;
+
+    while (input[i] != '\0' && input[i] != '.') {
+        int_part[j++] = input[i++];
+    }
+    int_part[j] = '\0';
+
+    if (input[i] == '.') {
+        i++; 
+        j = 0;
+        while (input[i] != '\0') {
+            frac_part[j++] = input[i++];
+        }
+        frac_part[j] = '\0';
+    }
+
+    int len_frac = strlen(frac_part);
+    if (len_frac == 0) {
+        frac_part[0] = '0';
+        frac_part[1] = '0';
+        frac_part[2] = '\0';
+    } else if (len_frac == 1) {
+        frac_part[1] = '0';
+        frac_part[2] = '\0';
+    } else if (len_frac > 2) {
+        frac_part[2] = '\0';
+    }
+
+    int k = 0;
+    while (int_part[k] == '0' && int_part[k + 1] != '\0') {
+        k++;
+    }
+
+    char *trimmed_int = int_part + k;
+
+    if (negative) printf("(");
+    printf("$");
+    print_int_with_commas(trimmed_int);
+    printf(".%s", frac_part);
+    if (negative) printf(")");
+
+    printf("\n");
+
+    return 0;
+}
 

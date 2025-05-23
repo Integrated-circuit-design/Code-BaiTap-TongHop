@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[1000001];
+    scanf("%s", s);
+
+    int len = strlen(s);
+    int write_pos = 0;
+
+    for (int read_pos = 0; read_pos < len; read_pos++) {
+        char current = s[read_pos];
+
+        if (write_pos > 0 && s[write_pos - 1] == 'x' && current == 'y') {
+            write_pos--;
+        } else {
+            s[write_pos] = current;
+            write_pos++;
+        }
+    }
+
+    s[write_pos] = '\0';
+
+    printf("%s\n", s);
+
+    return 0;
+}
 

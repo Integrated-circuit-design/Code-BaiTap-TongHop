@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    unsigned int a1, a2;
+    scanf("%u %u", &a1, &a2);
+
+    unsigned int common = a1 & a2;
+    unsigned int diff_a1 = a1 ^ common;
+    unsigned int diff_a2 = a2 ^ common;
+
+    unsigned int result = diff_a1 + diff_a2;
+
+    printf("%u\n", result);
+
+    return 0;
+}
 

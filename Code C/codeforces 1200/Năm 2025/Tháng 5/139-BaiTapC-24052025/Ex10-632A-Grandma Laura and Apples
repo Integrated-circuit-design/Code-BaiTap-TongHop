@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, price;
+    scanf("%d %d", &n, &price);
+
+    char input[10];
+    long long current_apples = 0;
+    long long total_apples_sold = 0;
+
+    char buyers[n][10];
+    for (int i = 0; i < n; i++) {
+        scanf("%s", buyers[i]);
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        if (strcmp(buyers[i], "halfplus") == 0) {
+            current_apples = current_apples * 2 + 1;
+            total_apples_sold += current_apples / 2;
+        } else {
+            current_apples = current_apples * 2;
+            total_apples_sold += current_apples / 2;
+        }
+    }
+
+    printf("%lld\n", total_apples_sold * price);
+    return 0;
+}
 

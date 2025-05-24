@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int count[101] = {0};
+    for (int i = 0; i < n; i++) {
+        int r;
+        scanf("%d", &r);
+        count[r]++;
+    }
+
+    int coins = 0;
+
+    while (1) {
+        int sum_below_k = 0;
+        for (int i = 1; i < k; i++) {
+            if (count[i] > 0) {
+                sum_below_k++;
+            }
+        }
+        if (sum_below_k == 0) break;
+
+        for (int i = k - 1; i >= 1; i--) {
+            if (count[i] > 0) {
+                count[i]--;
+                count[i + 1]++;
+            }
+        }
+
+        coins++;
+    }
+
+    printf("%d\n", coins);
+
+    return 0;
+}
 

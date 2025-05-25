@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_X 4000
+
+int main() {
+    int x, k;
+    scanf("%d %d", &x, &k);
+
+    bool participated[MAX_X] = {0};
+    bool isDiv2[MAX_X] = {0};
+
+    for (int i = 0; i < k; i++) {
+        int type;
+        scanf("%d", &type);
+        
+        if (type == 1) {
+            int div2, div1;
+            scanf("%d %d", &div2, &div1);
+            participated[div2] = true;
+            participated[div1] = true;
+            isDiv2[div2] = true;
+        } else {
+            int div2;
+            scanf("%d", &div2);
+            participated[div2] = true;
+            isDiv2[div2] = true;
+        }
+    }
+
+    int missed[MAX_X], missedCount = 0;
+    for (int i = 1; i < x; i++) {
+        if (!participated[i]) {
+            missed[missedCount++] = i;
+        }
+    }
+
+    int maxMissed = missedCount;
+
+    int minMissed = 0;
+    for (int i = 0; i < missedCount; i++) {
+        if (i + 1 < missedCount && missed[i] + 1 == missed[i + 1]) {
+            minMissed++;
+            i++;
+        } else {
+            minMissed++;
+        }
+    }
+
+    printf("%d %d\n", minMissed, maxMissed);
+
+    return 0;
+}
 

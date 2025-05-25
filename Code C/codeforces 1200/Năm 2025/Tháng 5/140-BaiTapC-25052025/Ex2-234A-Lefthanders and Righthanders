@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    char hands[n];
+    scanf("%s", hands);
+
+    int left = 0, right = n / 2;
+
+    while (left < n / 2 && right < n) {
+        if (hands[left] == 'L' && hands[right] == 'R') {
+            printf("%d %d\n", left + 1, right + 1);
+        }
+        left++;
+        right++;
+    }
+
+    return 0;
+}
 

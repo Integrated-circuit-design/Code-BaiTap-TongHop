@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int positions[n + m];
+    int types[n + m];
+
+    for (int i = 0; i < n + m; i++) {
+        scanf("%d", &positions[i]);
+    }
+
+    for (int i = 0; i < n + m; i++) {
+        scanf("%d", &types[i]);
+    }
+
+    int taxis[m];
+    int result[m];
+
+    int taxi_count = 0;
+
+    for (int i = 0; i < n + m; i++) {
+        if (types[i] == 1) {
+            taxis[taxi_count++] = positions[i];
+        }
+    }
+
+    for (int i = 0; i < m; i++) {
+        result[i] = 0;
+    }
+
+    for (int i = 0; i < n + m; i++) {
+        if (types[i] == 0) {
+            int rider_position = positions[i];
+            int nearest_taxi = -1;
+            int min_distance = 1000000000;
+
+            for (int j = 0; j < m; j++) {
+                int taxi_position = taxis[j];
+                int distance = abs(rider_position - taxi_position);
+
+                if (distance < min_distance) {
+                    min_distance = distance;
+                    nearest_taxi = j;
+                } else if (distance == min_distance) {
+                    if (taxis[j] < taxis[nearest_taxi]) {
+                        nearest_taxi = j;
+                    }
+                }
+            }
+
+            result[nearest_taxi]++;
+        }
+    }
+
+    for (int i = 0; i < m; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

@@ -1,1 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    int hour, minute;
+    scanf("%d:%d", &hour, &minute);
+    hour = hour % 12;
+    double angleMinute = minute * 6.0;
+    double angleHour = hour * 30.0 + minute * 0.5;
+    printf("%.9lf %.9lf\n", angleHour, angleMinute);
+    return 0;
+}
 

@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX_N 100005
+
+int compare(const void *a, const void *b) {
+    return ((*(int*)b) - (*(int*)a));
+}
+
+int main() {
+    char s[MAX_N];
+    int k;
+    
+    scanf("%s", s);
+    scanf("%d", &k);
+
+    int n = strlen(s);
+    int freq[26] = {0};
+
+    for (int i = 0; i < n; i++) {
+        freq[s[i] - 'a']++;
+    }
+
+    int distinctCount = 0;
+    int freqList[26];
+
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > 0) {
+            freqList[distinctCount++] = freq[i];
+        }
+    }
+
+    qsort(freqList, distinctCount, sizeof(int), compare);
+
+    int deleted = 0;
+    int remainingDistinctCount = distinctCount;
+
+    for (int i = 0; i < distinctCount; i++) {
+        if (deleted + freqList[i] <= k) {
+            deleted += freqList[i];
+            remainingDistinctCount--;
+        } else {
+            break;
+        }
+    }
+
+    printf("%d\n", remainingDistinctCount);
+
+    int remaining[26] = {0};
+    deleted = 0;
+
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > 0 && deleted + freq[i] <= k) {
+            remaining[i] = 1;
+            deleted += freq[i];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (remaining[s[i] - 'a'] == 1) {
+            printf("%c", s[i]);
+        }
+    }
+
+    printf("\n");
+
+    return 0;
+}
 

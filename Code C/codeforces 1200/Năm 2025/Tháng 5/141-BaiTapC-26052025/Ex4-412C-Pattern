@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100000
+#define MAX_M 100000
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char patterns[n][MAX_M];
+    int m;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", patterns[i]);
+    }
+
+    m = strlen(patterns[0]);
+
+    char result[m + 1];
+    result[m] = '\0';
+
+    for (int i = 0; i < m; i++) {
+        char current_char = '?';
+        int is_conflict = 0;
+
+        for (int j = 0; j < n; j++) {
+            if (patterns[j][i] != '?') {
+                if (current_char == '?') {
+                    current_char = patterns[j][i];
+                } else if (current_char != patterns[j][i]) {
+                    is_conflict = 1;
+                    break;
+                }
+            }
+        }
+
+        if (is_conflict) {
+            result[i] = '?';
+        } else {
+            result[i] = current_char;
+        }
+    }
+
+    printf("%s\n", result);
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int calculateTime(int h, int p) {
+    int totalTasks = (1 << (h + 1)) - 1;
+    int timeMoments = 0;
+    int readyTasks = 1;
+
+    while (readyTasks < totalTasks) {
+        timeMoments++;
+        readyTasks += p;
+    }
+
+    timeMoments++;
+
+    return timeMoments;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int h, p;
+        scanf("%d %d", &h, &p);
+        printf("%d\n", calculateTime(h, p));
+    }
+
+    return 0;
+}
 

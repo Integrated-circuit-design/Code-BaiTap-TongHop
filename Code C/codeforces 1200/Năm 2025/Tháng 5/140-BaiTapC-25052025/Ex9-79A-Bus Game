@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+int can_take_ciel(int *x, int *y) {
+    for (int i = 2; i >= 0; i--) {
+        int j = (220 - 100 * i) / 10;
+        if (100 * i + 10 * j == 220 && j <= *y) {
+            *x -= i;
+            *y -= j;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int can_take_hanako(int *x, int *y) {
+    for (int j = 22; j >= 0; j--) {
+        int i = (220 - 10 * j) / 100;
+        if (100 * i + 10 * j == 220 && i <= *x) {
+            *x -= i;
+            *y -= j;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main() {
+    int x, y;
+    scanf("%d %d", &x, &y);
+
+    int turn = 1;
+
+    while (1) {
+        int result;
+
+        if (turn == 1) {
+            result = can_take_ciel(&x, &y);
+            if (!result) {
+                printf("Hanako\n");
+                break;
+            }
+        } else {
+            result = can_take_hanako(&x, &y);
+            if (!result) {
+                printf("Ciel\n");
+                break;
+            }
+        }
+
+        turn = 1 - turn;
+    }
+
+    return 0;
+}
 

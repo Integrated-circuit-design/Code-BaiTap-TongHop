@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int x;
+    int a;
+} House;
+
+int check_overlap(double new_left, double new_right, House houses[], int n) {
+    for (int i = 0; i < n; i++) {
+        double left_edge = houses[i].x - houses[i].a / 2.0;
+        double right_edge = houses[i].x + houses[i].a / 2.0;
+        
+        if (!(new_right <= left_edge || new_left >= right_edge)) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main() {
+    int n, t;
+    scanf("%d %d", &n, &t);
+    
+    House houses[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &houses[i].x, &houses[i].a);
+    }
+    
+    int count = 0;
+    
+    for (int i = 0; i < n; i++) {
+        double left_edge = houses[i].x - houses[i].a / 2.0;
+        double right_edge = houses[i].x + houses[i].a / 2.0;
+        
+        double new_pos_left = left_edge - t;
+        double new_pos_right = right_edge + t;
+        
+        if (!check_overlap(new_pos_left - t / 2.0, new_pos_left + t / 2.0, houses, n)) {
+            count++;
+        }
+        
+        if (!check_overlap(new_pos_right - t / 2.0, new_pos_right + t / 2.0, houses, n)) {
+            count++;
+        }
+    }
+    
+    printf("%d\n", count);
+    
+    return 0;
+}
 

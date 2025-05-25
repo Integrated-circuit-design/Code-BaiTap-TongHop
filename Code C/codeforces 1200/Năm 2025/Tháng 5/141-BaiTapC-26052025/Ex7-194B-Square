@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+long long calculate_crosses(long long n) {
+    long long perimeter = 4 * n;
+    long long step = n + 1;
+
+    long long crosses = 0;
+    
+    long long total_steps = perimeter / step;
+    
+    crosses = total_steps * 2 + 1;
+
+    return crosses;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    long long n;
+    for (int i = 0; i < t; i++) {
+        scanf("%lld", &n);
+        printf("%lld\n", calculate_crosses(n));
+    }
+
+    return 0;
+}
 

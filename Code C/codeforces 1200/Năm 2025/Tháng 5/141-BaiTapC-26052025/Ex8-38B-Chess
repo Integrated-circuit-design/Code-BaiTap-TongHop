@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+#define SIZE 8
+
+int knight_moves[8][2] = {
+    {-2, -1}, {-2, 1}, {2, -1}, {2, 1}, 
+    {-1, -2}, {1, -2}, {-1, 2}, {1, 2}
+};
+
+int is_valid(int x, int y) {
+    return x >= 0 && x < SIZE && y >= 0 && y < SIZE;
+}
+
+int count_valid_positions(char rook_pos[], char knight_pos[]) {
+    int rook_x = rook_pos[0] - 'a';
+    int rook_y = rook_pos[1] - '1';
+
+    int knight_x = knight_pos[0] - 'a';
+    int knight_y = knight_pos[1] - '1';
+
+    int attacked[SIZE][SIZE] = {0};
+
+    for (int i = 0; i < SIZE; i++) {
+        attacked[rook_x][i] = 1;
+        attacked[i][rook_y] = 1;
+    }
+
+    for (int i = 0; i < 8; i++) {
+        int new_x = knight_x + knight_moves[i][0];
+        int new_y = knight_y + knight_moves[i][1];
+        
+        if (is_valid(new_x, new_y)) {
+            attacked[new_x][new_y] = 1;
+        }
+    }
+
+    int valid_count = 0;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (attacked[i][j] == 0) {
+                valid_count++;
+            }
+        }
+    }
+
+    return valid_count;
+}
+
+int main() {
+    char rook_pos[2], knight_pos[2];
+
+    scanf("%s", rook_pos);
+    scanf("%s", knight_pos);
+
+    printf("%d\n", count_valid_positions(rook_pos, knight_pos));
+
+    return 0;
+}
 

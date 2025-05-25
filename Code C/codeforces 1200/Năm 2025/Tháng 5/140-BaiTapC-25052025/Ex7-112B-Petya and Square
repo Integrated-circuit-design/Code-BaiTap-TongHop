@@ -1,1 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int L, x, y;
+    scanf("%d %d %d", &L, &x, &y);
+
+    int half = L / 2;
+
+    if (x == half || x == half + 1 || y == half || y == half + 1) {
+        printf("NO\n");
+    } else {
+        printf("YES\n");
+    }
+
+    return 0;
+}
 

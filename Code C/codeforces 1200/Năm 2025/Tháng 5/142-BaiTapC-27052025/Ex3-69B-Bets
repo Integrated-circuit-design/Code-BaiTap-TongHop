@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAX_N 100
+#define MAX_M 100
+
+typedef struct {
+    int start, end, time, prize;
+} Athlete;
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    Athlete athletes[MAX_M];
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d %d %d", &athletes[i].start, &athletes[i].end, &athletes[i].time, &athletes[i].prize);
+    }
+
+    int total_profit = 0;
+
+    for (int section = 1; section <= n; section++) {
+        int best_time = 1001;
+        int winning_prize = 0;
+
+        for (int i = 0; i < m; i++) {
+            if (athletes[i].start <= section && athletes[i].end >= section) {
+                if (athletes[i].time < best_time || (athletes[i].time == best_time && i < winning_prize)) {
+                    best_time = athletes[i].time;
+                    winning_prize = athletes[i].prize;
+                }
+            }
+        }
+
+        total_profit += winning_prize;
+    }
+
+    printf("%d\n", total_profit);
+
+    return 0;
+}
 

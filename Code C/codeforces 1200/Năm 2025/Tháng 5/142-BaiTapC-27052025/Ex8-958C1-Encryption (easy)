@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+#define MAX_N 100000
+
+int max_encryption_score(int N, int p, int A[]) {
+    long long prefix[MAX_N + 1];
+    prefix[0] = 0;
+    for (int i = 0; i < N; i++) {
+        prefix[i + 1] = prefix[i] + A[i];
+    }
+
+    int left_max_mod[MAX_N];
+    int right_max_mod[MAX_N];
+    
+    int max_left = 0;
+    for (int i = 0; i < N; i++) {
+        int mod_sum = prefix[i + 1] % p;
+        if (mod_sum > max_left) {
+            max_left = mod_sum;
+        }
+        left_max_mod[i] = max_left;
+    }
+
+    int max_right = 0;
+    for (int i = N - 1; i >= 0; i--) {
+        int mod_sum = (prefix[N] - prefix[i]) % p;
+        if (mod_sum > max_right) {
+            max_right = mod_sum;
+        }
+        right_max_mod[i] = max_right;
+    }
+
+    int max_score = 0;
+    for (int i = 1; i < N; i++) {
+        int score = left_max_mod[i - 1] + right_max_mod[i];
+        if (score > max_score) {
+            max_score = score;
+        }
+    }
+
+    return max_score;
+}
+
+int main() {
+    int N, p;
+    scanf("%d %d", &N, &p);
+    int A[N];
+    for (int i = 0; i < N; i++) {
+        scanf("%d", &A[i]);
+    }
+
+    printf("%d\n", max_encryption_score(N, p, A));
+
+    return 0;
+}
 

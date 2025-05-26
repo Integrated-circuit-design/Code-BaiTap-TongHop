@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void normalize(char *str, char *normalized) {
+    int j = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        char c = str[i];
+        c = tolower(c);
+
+        if (c == 'o') {
+            normalized[j++] = '0';
+        } else if (c == 'O') {
+            normalized[j++] = '0';
+        } else if (c == '1') {
+            normalized[j++] = 'i';
+        } else if (c == 'l') {
+            normalized[j++] = 'i';
+        } else if (c == 'I') {
+            normalized[j++] = 'i';
+        } else {
+            normalized[j++] = c;
+        }
+    }
+    normalized[j] = '\0';
+}
+
+int main() {
+    char new_login[51];
+    int n;
+
+    scanf("%s", new_login);
+    scanf("%d", &n);
+
+    char existing_logins[n][51];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", existing_logins[i]);
+    }
+
+    char normalized_new_login[51];
+    normalize(new_login, normalized_new_login);
+
+    for (int i = 0; i < n; i++) {
+        char normalized_existing_login[51];
+        normalize(existing_logins[i], normalized_existing_login);
+
+        if (strcmp(normalized_new_login, normalized_existing_login) == 0) {
+            printf("No\n");
+            return 0;
+        }
+    }
+
+    printf("Yes\n");
+    return 0;
+}
 

@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+#define MAX_N 50
+#define MAX_M 50
+
+int garden[MAX_N][MAX_M];
+
+int main() {
+    int n, m, a, b;
+    
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &garden[i][j]);
+        }
+    }
+
+    scanf("%d %d", &a, &b);
+
+    int min_trees = n * m + 1;
+
+    for (int i = 0; i <= n - a; i++) {
+        for (int j = 0; j <= m - b; j++) {
+            int tree_count = 0;
+
+            for (int x = i; x < i + a; x++) {
+                for (int y = j; y < j + b; y++) {
+                    if (garden[x][y] == 1) {
+                        tree_count++;
+                    }
+                }
+            }
+
+            if (tree_count < min_trees) {
+                min_trees = tree_count;
+            }
+        }
+    }
+
+    for (int i = 0; i <= n - b; i++) {
+        for (int j = 0; j <= m - a; j++) {
+            int tree_count = 0;
+
+            for (int x = i; x < i + b; x++) {
+                for (int y = j; y < j + a; y++) {
+                    if (garden[x][y] == 1) {
+                        tree_count++;
+                    }
+                }
+            }
+
+            if (tree_count < min_trees) {
+                min_trees = tree_count;
+            }
+        }
+    }
+
+    printf("%d\n", min_trees);
+
+    return 0;
+}
 

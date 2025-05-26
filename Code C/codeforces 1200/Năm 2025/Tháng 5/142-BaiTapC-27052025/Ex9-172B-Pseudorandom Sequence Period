@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+#define MAX_M 100000
+
+int find_period(int a, int b, int m, int r0) {
+    int r = r0;
+    int history[MAX_M];
+    int step = 0;
+
+    for (int i = 0; i < m; i++) {
+        history[i] = -1;
+    }
+
+    while (history[r] == -1) {
+        history[r] = step;
+        step++;
+        r = (a * r + b) % m;
+    }
+
+    return step - history[r];
+}
+
+int main() {
+    int a, b, m, r0;
+    scanf("%d %d %d %d", &a, &b, &m, &r0);
+
+    printf("%d\n", find_period(a, b, m, r0));
+
+    return 0;
+}
 

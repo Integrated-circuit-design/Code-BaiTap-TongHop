@@ -1,1 +1,96 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PLANETS 10
+#define MAX_ITEMS 100
+
+typedef struct {
+    char name[11];
+    int a[MAX_ITEMS];
+    int b[MAX_ITEMS];
+    int c[MAX_ITEMS];
+} Planet;
+
+typedef struct {
+    int buyPlanet;
+    int sellPlanet;
+    int itemType;
+    int profit;
+    int quantityToBuy;
+} Transaction;
+
+int n, m, k;
+Planet planets[MAX_PLANETS];
+
+int maxProfit(int n, int m, int k) {
+    int max_profit = 0;
+
+    for (int buyPlanet = 0; buyPlanet < n; buyPlanet++) {
+        for (int sellPlanet = 0; sellPlanet < n; sellPlanet++) {
+            if (buyPlanet == sellPlanet) continue;
+
+            Transaction transactions[MAX_ITEMS];
+            int transactionCount = 0;
+
+            for (int itemType = 0; itemType < m; itemType++) {
+                int buyPrice = planets[buyPlanet].a[itemType];
+                int sellPrice = planets[sellPlanet].b[itemType];
+                int availableQuantity = planets[buyPlanet].c[itemType];
+                int profit = sellPrice - buyPrice;
+
+                if (profit > 0 && availableQuantity > 0) {
+                    transactions[transactionCount].buyPlanet = buyPlanet;
+                    transactions[transactionCount].sellPlanet = sellPlanet;
+                    transactions[transactionCount].itemType = itemType;
+                    transactions[transactionCount].profit = profit;
+                    transactions[transactionCount].quantityToBuy = availableQuantity;
+                    transactionCount++;
+                }
+            }
+
+            for (int i = 0; i < transactionCount - 1; i++) {
+                for (int j = i + 1; j < transactionCount; j++) {
+                    if (transactions[j].profit > transactions[i].profit) {
+                        Transaction temp = transactions[i];
+                        transactions[i] = transactions[j];
+                        transactions[j] = temp;
+                    }
+                }
+            }
+
+            int capacityLeft = k;
+            int totalCost = 0;
+            int totalRevenue = 0;
+
+            for (int i = 0; i < transactionCount && capacityLeft > 0; i++) {
+                int qtyToBuy = transactions[i].quantityToBuy < capacityLeft ? transactions[i].quantityToBuy : capacityLeft;
+                totalCost += qtyToBuy * planets[transactions[i].buyPlanet].a[transactions[i].itemType];
+                totalRevenue += qtyToBuy * planets[transactions[i].sellPlanet].b[transactions[i].itemType];
+                capacityLeft -= qtyToBuy;
+            }
+
+            int profit = totalRevenue - totalCost;
+            if (profit > max_profit) {
+                max_profit = profit;
+            }
+        }
+    }
+
+    return max_profit;
+}
+
+int main() {
+    scanf("%d %d %d", &n, &m, &k);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", planets[i].name);
+        for (int j = 0; j < m; j++) {
+            scanf("%d %d %d", &planets[i].a[j], &planets[i].b[j], &planets[i].c[j]);
+        }
+    }
+
+    printf("%d\n", maxProfit(n, m, k));
+
+    return 0;
+}
 

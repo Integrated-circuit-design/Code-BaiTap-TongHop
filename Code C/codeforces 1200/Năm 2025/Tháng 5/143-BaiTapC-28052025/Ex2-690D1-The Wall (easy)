@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int R, C;
+    scanf("%d %d", &R, &C);
+
+    char grid[R][C];
+
+    for (int i = 0; i < R; i++) {
+        scanf("%s", grid[i]);
+    }
+
+    int count = 0;
+    int in_segment = 0;
+
+    for (int col = 0; col < C; col++) {
+        int has_brick = 0;
+
+        for (int row = 0; row < R; row++) {
+            if (grid[row][col] == 'B') {
+                has_brick = 1;
+                break;
+            }
+        }
+
+        if (has_brick) {
+            if (in_segment == 0) {
+                count++;
+                in_segment = 1;
+            }
+        } else {
+            in_segment = 0;
+        }
+    }
+
+    printf("%d\n", count);
+
+    return 0;
+}
 

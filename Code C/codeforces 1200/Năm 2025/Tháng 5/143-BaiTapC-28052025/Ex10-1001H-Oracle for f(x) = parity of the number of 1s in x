@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int compute_parity(int *x, int n) {
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (x[i] == 1) {
+            count++;
+        }
+    }
+
+    return count % 2;
+}
+
+int main() {
+    int x[] = {1, 0, 1, 1};
+    int n = sizeof(x) / sizeof(x[0]);
+
+    int y = compute_parity(x, n);
+
+    printf("The parity of the number of 1s is: %d\n", y);
+
+    return 0;
+}
 

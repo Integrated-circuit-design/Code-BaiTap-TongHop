@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int x;
+    scanf("%d", &x);
+
+    int divisor_count = 0;
+    int even_count = 0;
+    int odd_count = 0;
+
+    for (int i = 1; i * i <= x; i++) {
+        if (x % i == 0) {
+            divisor_count++;
+            if (i % 2 == 0) {
+                even_count++;
+            } else {
+                odd_count++;
+            }
+
+            if (i != x / i) {
+                divisor_count++;
+                if ((x / i) % 2 == 0) {
+                    even_count++;
+                } else {
+                    odd_count++;
+                }
+            }
+        }
+    }
+
+    if (even_count == odd_count) {
+        printf("yes\n");
+    } else {
+        printf("no\n");
+    }
+
+    return 0;
+}
 

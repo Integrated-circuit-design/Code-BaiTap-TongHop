@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+int main() {
+    int w, h;
+    scanf("%d %d", &w, &h);
+    
+    char image[MAX_SIZE][MAX_SIZE + 1];
+    
+    for (int i = 0; i < h; i++) {
+        scanf("%s", image[i]);
+    }
+    
+    char rotated[MAX_SIZE][MAX_SIZE + 1];
+    
+    for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+            rotated[i][j] = image[h - 1 - j][i];
+        }
+        rotated[i][h] = '\0';
+    }
+    
+    for (int i = 0; i < w; i++) {
+        int left = 0, right = h - 1;
+        while (left < right) {
+            char temp = rotated[i][left];
+            rotated[i][left] = rotated[i][right];
+            rotated[i][right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    for (int i = 0; i < w; i++) {
+        for (int zoomRow = 0; zoomRow < 2; zoomRow++) {
+            for (int j = 0; j < h; j++) {
+                printf("%c%c", rotated[i][j], rotated[i][j]);
+            }
+            printf("\n");
+        }
+    }
+    
+    return 0;
+}
 

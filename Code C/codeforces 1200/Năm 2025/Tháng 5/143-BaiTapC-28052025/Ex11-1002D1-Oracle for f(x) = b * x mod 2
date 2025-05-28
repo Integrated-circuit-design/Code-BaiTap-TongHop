@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int compute_oracle(int x[], int b[], int N) {
+    int result = 0;
+
+    for (int i = 0; i < N; i++) {
+        if (b[i] == 1) {
+            result = (result + x[i]) % 2;
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    int N = 4;
+
+    int x[] = {1, 0, 1, 1};
+    int b[] = {1, 1, 0, 0};
+
+    int result = compute_oracle(x, b, N);
+
+    printf("f(x) = %d\n", result);
+
+    return 0;
+}
 

@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    long long n, m;
+    
+    scanf("%lld %lld", &n, &m);
+    
+    long long max_team_size = n - m + 1;
+    long long max_pairs = (max_team_size * (max_team_size - 1)) / 2;
+    
+    long long min_team_size = n / m;
+    long long extra_people = n % m;
+
+    long long min_pairs = 0;
+
+    min_pairs += extra_people * (min_team_size + 1) * min_team_size / 2;
+    min_pairs += (m - extra_people) * min_team_size * (min_team_size - 1) / 2;
+
+    printf("%lld %lld\n", min_pairs, max_pairs);
+
+    return 0;
+}
 

@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 100005
+#define MAX_NAME_LENGTH 32
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char names[MAX_N][MAX_NAME_LENGTH];
+    int name_count[MAX_N] = {0};
+
+    for (int i = 0; i < n; i++) {
+        char username[MAX_NAME_LENGTH];
+        scanf("%s", username);
+
+        int found = 0;
+
+        for (int j = 0; j < i; j++) {
+            if (strcmp(names[j], username) == 0) {
+                found = 1;
+                name_count[j]++;
+                printf("%s%d\n", username, name_count[j]);
+                break;
+            }
+        }
+
+        if (!found) {
+            strcpy(names[i], username);
+            name_count[i] = 0;
+            printf("OK\n");
+        }
+    }
+
+    return 0;
+}
 

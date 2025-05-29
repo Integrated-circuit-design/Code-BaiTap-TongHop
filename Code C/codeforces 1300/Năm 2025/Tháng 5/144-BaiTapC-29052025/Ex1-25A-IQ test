@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int arr[n];
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    int even_index = -1, odd_index = -1;
+    int even_count = 0, odd_count = 0;
+    
+    for (int i = 0; i < n; i++) {
+        if (arr[i] % 2 == 0) {
+            even_count++;
+            if (even_index == -1) {
+                even_index = i + 1;
+            }
+        } else {
+            odd_count++;
+            if (odd_index == -1) {
+                odd_index = i + 1;
+            }
+        }
+    }
+
+    if (even_count > odd_count) {
+        printf("%d\n", odd_index);
+    } else {
+        printf("%d\n", even_index);
+    }
+
+    return 0;
+}
 

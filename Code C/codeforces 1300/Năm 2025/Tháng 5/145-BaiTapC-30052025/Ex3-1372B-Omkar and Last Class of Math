@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long lcm(int a, int b) {
+    long long product = (long long)a * b;
+    long long gcd = a;
+    int temp = b;
+
+    while (temp != 0) {
+        int rem = gcd % temp;
+        gcd = temp;
+        temp = rem;
+    }
+
+    return product / gcd;
+}
+
+void find_min_lcm_pair(int n) {
+    if (n % 2 == 0) {
+        printf("%d %d\n", n / 2, n / 2);
+        return;
+    }
+
+    int best_a = 1, best_b = n - 1;
+    long long min_lcm = lcm(best_a, best_b);
+
+    for (int a = 2; a <= n / 2; a++) {
+        int b = n - a;
+        long long current_lcm = lcm(a, b);
+        if (current_lcm < min_lcm) {
+            min_lcm = current_lcm;
+            best_a = a;
+            best_b = b;
+        }
+    }
+
+    printf("%d %d\n", best_a, best_b);
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        scanf("%d", &n);
+        find_min_lcm_pair(n);
+    }
+
+    return 0;
+}
 

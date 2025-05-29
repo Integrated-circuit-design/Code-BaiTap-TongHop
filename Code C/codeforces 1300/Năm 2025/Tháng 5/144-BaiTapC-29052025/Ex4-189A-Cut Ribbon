@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+#define INF -9999
+
+int cutRibbon(int n, int a, int b, int c) {
+    int dp[n + 1];
+    dp[0] = 0;
+
+    for (int i = 1; i <= n; i++) {
+        dp[i] = INF;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (i >= a && dp[i - a] != INF) {
+            dp[i] = (dp[i] > dp[i - a] + 1) ? dp[i] : dp[i - a] + 1;
+        }
+        if (i >= b && dp[i - b] != INF) {
+            dp[i] = (dp[i] > dp[i - b] + 1) ? dp[i] : dp[i - b] + 1;
+        }
+        if (i >= c && dp[i - c] != INF) {
+            dp[i] = (dp[i] > dp[i - c] + 1) ? dp[i] : dp[i - c] + 1;
+        }
+    }
+
+    return dp[n];
+}
+
+int main() {
+    int n, a, b, c;
+    
+    scanf("%d %d %d %d", &n, &a, &b, &c);
+    
+    printf("%d\n", cutRibbon(n, a, b, c));
+    
+    return 0;
+}
 

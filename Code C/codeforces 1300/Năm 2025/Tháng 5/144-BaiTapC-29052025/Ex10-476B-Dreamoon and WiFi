@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <math.h>
+
+long long calculate_combinations(int n, int k) {
+    long long result = 1;
+    if (k > n) return 0;
+    if (k == 0 || k == n) return 1;
+    for (int i = 1; i <= k; ++i) {
+        result = result * (n - i + 1) / i;
+    }
+    return result;
+}
+
+double calculate_probability(char s1[], char s2[]) {
+    int target = 0;
+    int current = 0;
+    int question_marks = 0;
+
+    for (int i = 0; s1[i] != '\0'; i++) {
+        if (s1[i] == '+') target++;
+        else if (s1[i] == '-') target--;
+
+        if (s2[i] == '+') current++;
+        else if (s2[i] == '-') current--;
+        else if (s2[i] == '?') question_marks++;
+    }
+
+    int required_diff = target - current;
+
+    if (question_marks == 0) {
+        return current == target ? 1.0 : 0.0;
+    }
+
+    if ((required_diff + question_marks) % 2 != 0 || required_diff < -question_marks || required_diff > question_marks) {
+        return 0.0;
+    }
+
+    int x = (required_diff + question_marks) / 2;
+    long long favorable_outcomes = calculate_combinations(question_marks, x);
+    double total_outcomes = pow(2, question_marks);
+    return favorable_outcomes / total_outcomes;
+}
+
+int main() {
+    char s1[11], s2[11];
+    scanf("%s", s1);
+    scanf("%s", s2);
+    printf("%.12f\n", calculate_probability(s1, s2));
+    return 0;
+}
 

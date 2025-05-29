@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+void find_triplet(long long n) {
+    long long a = -1, b = -1, c = -1;
+
+    for (long long i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            a = i;
+            n /= i;
+            break;
+        }
+    }
+
+    if (a == -1) {
+        printf("NO\n");
+        return;
+    }
+
+    for (long long i = a + 1; i * i <= n; i++) {
+        if (n % i == 0) {
+            b = i;
+            n /= i;
+            break;
+        }
+    }
+
+    if (b == -1) {
+        printf("NO\n");
+        return;
+    }
+
+    c = n;
+
+    if (c <= b) {
+        printf("NO\n");
+        return;
+    }
+
+    printf("YES\n");
+    printf("%lld %lld %lld\n", a, b, c);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        find_triplet(n);
+    }
+
+    return 0;
+}
 

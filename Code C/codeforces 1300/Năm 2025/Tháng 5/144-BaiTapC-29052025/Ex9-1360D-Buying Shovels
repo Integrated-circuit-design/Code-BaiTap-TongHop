@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int min_packages(int n, int k) {
+    int min_packages_needed = n;
+
+    for (int i = 1; i <= k; i++) {
+        if (n % i == 0) {
+            int packages = n / i;
+            if (packages < min_packages_needed) {
+                min_packages_needed = packages;
+            }
+        }
+    }
+
+    return min_packages_needed;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        printf("%d\n", min_packages(n, k));
+    }
+
+    return 0;
+}
 

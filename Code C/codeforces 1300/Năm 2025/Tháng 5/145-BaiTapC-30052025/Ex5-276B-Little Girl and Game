@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[1001];
+    int char_count[26] = {0};
+
+    scanf("%s", s);
+
+    for (int i = 0; s[i] != '\0'; i++) {
+        char_count[s[i] - 'a']++;
+    }
+
+    int odd = 0;
+
+    for (int i = 0; i < 26; i++) {
+        if (char_count[i] % 2 != 0) {
+            odd++;
+        }
+    }
+
+    if (odd == 0 || odd % 2 == 1) {
+        printf("First\n");
+    } else {
+        printf("Second\n");
+    }
+
+    return 0;
+}
 

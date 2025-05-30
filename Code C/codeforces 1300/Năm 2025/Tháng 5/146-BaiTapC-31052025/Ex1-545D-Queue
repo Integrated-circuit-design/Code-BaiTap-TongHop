@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp_asc(const void *x, const void *y) {
+    long long a = *(long long*)x;
+    long long b = *(long long*)y;
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long *times = (long long*)malloc(n * sizeof(long long));
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &times[i]);
+    }
+
+    qsort(times, n, sizeof(long long), cmp_asc);
+
+    long long totalWait = 0;
+    int countSatisfied = 0;
+    int i = 0;
+
+    while (i < n) {
+        if (totalWait <= times[i]) {
+            countSatisfied++;
+            totalWait += times[i];
+        }
+        i++;
+    }
+
+    printf("%d\n", countSatisfied);
+
+    free(times);
+    return 0;
+}
 

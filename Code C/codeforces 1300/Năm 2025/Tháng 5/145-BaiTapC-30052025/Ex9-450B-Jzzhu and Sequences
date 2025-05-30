@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+int get_sequence_value(int x, int y, int n) {
+    int idx = (n - 1) % 6;
+
+    if (idx == 0) return x;
+    if (idx == 1) return y;
+    if (idx == 2) return (y - x) % MOD;
+    if (idx == 3) return (-x) % MOD;
+    if (idx == 4) return (-y) % MOD;
+    if (idx == 5) return (x - y) % MOD;
+
+    return 0;
+}
+
+int main() {
+    int x, y, n;
+    scanf("%d %d", &x, &y);
+    scanf("%d", &n);
+
+    int result = get_sequence_value(x, y, n);
+
+    if (result < 0) {
+        result += MOD;
+    }
+
+    printf("%d\n", result);
+    
+    return 0;
+}
 

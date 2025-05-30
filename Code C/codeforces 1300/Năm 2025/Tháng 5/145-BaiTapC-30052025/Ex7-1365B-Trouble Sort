@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n], b[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        int sorted = 1;
+        for (int i = 1; i < n; i++) {
+            if (a[i] < a[i - 1]) {
+                sorted = 0;
+                break;
+            }
+        }
+
+        if (sorted) {
+            printf("Yes\n");
+        } else {
+            int has_zero = 0, has_one = 0;
+            for (int i = 0; i < n; i++) {
+                if (b[i] == 0) has_zero = 1;
+                if (b[i] == 1) has_one = 1;
+                if (has_zero && has_one) break;
+            }
+
+            if (has_zero && has_one) {
+                printf("Yes\n");
+            } else {
+                printf("No\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

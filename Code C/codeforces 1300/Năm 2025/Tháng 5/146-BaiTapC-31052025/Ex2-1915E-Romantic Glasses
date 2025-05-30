@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+#define HASH_SIZE 524287
+
+typedef long long ll;
+
+ll a[MAXN];
+ll odd_sum, even_sum;
+
+ll hash_table[HASH_SIZE];
+char used[HASH_SIZE];
+
+unsigned int hash_func(ll x) {
+    unsigned int h = (unsigned int)(x ^ (x >> 32));
+    return h % HASH_SIZE;
+}
+
+int hash_insert(ll x) {
+    unsigned int h = hash_func(x);
+    while (used[h]) {
+        if (hash_table[h] == x) return 0;
+        h = (h + 1) % HASH_SIZE;
+    }
+    used[h] = 1;
+    hash_table[h] = x;
+    return 1;
+}
+
+int hash_exists(ll x) {
+    unsigned int h = hash_func(x);
+    while (used[h]) {
+        if (hash_table[h] == x) return 1;
+        h = (h + 1) % HASH_SIZE;
+    }
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        for (int i = 0; i < HASH_SIZE; i++) used[i] = 0;
+
+        odd_sum = 0;
+        even_sum = 0;
+
+        hash_insert(0);
+
+        int found = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i % 2 == 1) odd_sum += a[i];
+            else even_sum += a[i];
+
+            ll diff = odd_sum - even_sum;
+            if (hash_exists(diff)) {
+                printf("YES\n");
+                found = 1;
+                break;
+            }
+            hash_insert(diff);
+        }
+        if (!found) printf("NO\n");
+    }
+    return 0;
+}
 

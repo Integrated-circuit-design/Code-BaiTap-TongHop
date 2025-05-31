@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+#define MAXN 100000
+
+int parent[MAXN];
+long long cost[MAXN];
+
+int find(int x) {
+    if (parent[x] != x) {
+        parent[x] = find(parent[x]);
+    }
+    return parent[x];
+}
+
+void unite(int x, int y) {
+    int px = find(x);
+    int py = find(y);
+
+    if (px != py) {
+        if (cost[px] < cost[py]) {
+            parent[py] = px;
+        } else {
+            parent[px] = py;
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &cost[i]);
+        parent[i] = i;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        x--; y--;
+        unite(x, y);
+    }
+
+    long long total = 0;
+    bool counted[MAXN] = {false};
+
+    for (int i = 0; i < n; i++) {
+        int p = find(i);
+        if (!counted[p]) {
+            counted[p] = true;
+            total += cost[p];
+        }
+    }
+
+    printf("%lld\n", total);
+
+    return 0;
+}
 

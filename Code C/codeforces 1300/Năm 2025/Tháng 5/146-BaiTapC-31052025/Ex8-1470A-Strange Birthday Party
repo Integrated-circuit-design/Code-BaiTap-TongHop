@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+typedef struct {
+    int k;
+} Friend;
+
+int cmp_desc(const void *a, const void *b) {
+    Friend *fa = (Friend*)a;
+    Friend *fb = (Friend*)b;
+    return (fb->k - fa->k);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        Friend *friends = (Friend*)malloc(n * sizeof(Friend));
+        ll *c = (ll*)malloc(m * sizeof(ll));
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &friends[i].k);
+        }
+        for (int i = 0; i < m; i++) {
+            scanf("%lld", &c[i]);
+        }
+
+        qsort(friends, n, sizeof(Friend), cmp_desc);
+
+        ll total_cost = 0;
+        int cheap_gift_index = 0;
+
+        for (int i = 0; i < n; i++) {
+            int ki = friends[i].k;
+
+            if (cheap_gift_index < ki && cheap_gift_index < m && c[cheap_gift_index] < c[ki - 1]) {
+                total_cost += c[cheap_gift_index];
+                cheap_gift_index++;
+            } else {
+                total_cost += c[ki - 1];
+            }
+        }
+
+        printf("%lld\n", total_cost);
+
+        free(friends);
+        free(c);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        char s[n + 1];
+        scanf("%s", s);
+
+        int res = 0;
+        int i = 0;
+
+        while (i < n) {
+            if (s[i] == '1') {
+                i += k + 1;
+            } else {
+                int can_sit = 1;
+
+                for (int j = i - k; j < i; j++) {
+                    if (j >= 0 && s[j] == '1') {
+                        can_sit = 0;
+                        break;
+                    }
+                }
+
+                if (can_sit) {
+                    for (int j = i + 1; j <= i + k && j < n; j++) {
+                        if (s[j] == '1') {
+                            can_sit = 0;
+                            break;
+                        }
+                    }
+                }
+
+                if (can_sit) {
+                    res++;
+                    s[i] = '1';
+                    i += k + 1;
+                } else {
+                    i++;
+                }
+            }
+        }
+
+        printf("%d\n", res);
+    }
+
+    return 0;
+}
 

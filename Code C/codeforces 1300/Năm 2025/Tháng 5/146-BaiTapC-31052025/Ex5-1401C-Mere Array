@@ -1,1 +1,66 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int tmp = b;
+        b = a % b;
+        a = tmp;
+    }
+    return a;
+}
+
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        arr[j + 1] = key;
+    }
+}
+
+int canBeSorted(int a[], int sorted[], int n) {
+    int minValue = sorted[0];
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] != sorted[i]) {
+            if (gcd(a[i], minValue) != minValue) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        int sorted[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            sorted[i] = a[i];
+        }
+
+        insertionSort(sorted, n);
+
+        if (canBeSorted(a, sorted, n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

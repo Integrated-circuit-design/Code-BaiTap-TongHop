@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAX 100000
+
+int arrTop[MAX];
+int arrBottom[MAX];
+long long prefixSumBottom[MAX + 1];
+long long suffixSumTop[MAX + 1];
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int cols;
+        scanf("%d", &cols);
+
+        for (int i = 0; i < cols; i++) {
+            scanf("%d", &arrTop[i]);
+        }
+        for (int i = 0; i < cols; i++) {
+            scanf("%d", &arrBottom[i]);
+        }
+
+        prefixSumBottom[0] = 0;
+        for (int i = 1; i <= cols; i++) {
+            prefixSumBottom[i] = prefixSumBottom[i - 1] + arrBottom[i - 1];
+        }
+
+        suffixSumTop[cols] = 0;
+        for (int i = cols - 1; i >= 0; i--) {
+            suffixSumTop[i] = suffixSumTop[i + 1] + arrTop[i];
+        }
+
+        long long answer = 1LL << 60;
+
+        for (int i = 0; i < cols; i++) {
+            long long coinsAbove = suffixSumTop[i + 1];
+            long long coinsBelow = prefixSumBottom[i];
+            long long bobPoints = coinsAbove > coinsBelow ? coinsAbove : coinsBelow;
+            if (bobPoints < answer) {
+                answer = bobPoints;
+            }
+        }
+
+        printf("%lld\n", answer);
+    }
+
+    return 0;
+}
 

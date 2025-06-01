@@ -1,1 +1,116 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int* vals;
+    int size;
+    int capacity;
+} Group;
+
+void group_init(Group* g) {
+    g->size = 0;
+    g->capacity = 4;
+    g->vals = (int*) malloc(sizeof(int) * g->capacity);
+}
+
+void group_push(Group* g, int val) {
+    if (g->size == g->capacity) {
+        g->capacity *= 2;
+        g->vals = (int*) realloc(g->vals, sizeof(int)*g->capacity);
+    }
+    g->vals[g->size++] = val;
+}
+
+void group_free(Group* g) {
+    free(g->vals);
+}
+
+int cmp_int(const void* a, const void* b) {
+    int x = *(int*)a;
+    int y = *(int*)b;
+    return x - y;
+}
+
+long long count_pairs_x(int* mods, int size, int x) {
+    int* freq = (int*) calloc(x, sizeof(int));
+    for (int i = 0; i < size; i++) {
+        freq[mods[i]]++;
+    }
+
+    long long res = 0;
+    long long f0 = freq[0];
+    res += f0 * (f0 - 1) / 2;
+
+    int half = x / 2;
+    for (int i = 1; i <= half; i++) {
+        int j = (x - i) % x;
+        if (i != j) {
+            res += (long long) freq[i] * freq[j];
+            freq[i] = 0;
+            freq[j] = 0;
+        }
+    }
+    if (x % 2 == 0) {
+        long long f = freq[half];
+        res += f * (f - 1) / 2;
+    }
+
+    free(freq);
+    return res;
+}
+
+int main() {
+    int t; scanf("%d", &t);
+
+    while (t--) {
+        int n, x, y;
+        scanf("%d %d %d", &n, &x, &y);
+
+        int* a = (int*) malloc(sizeof(int)*n);
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        typedef struct {
+            int mod_y;
+            int mod_x;
+        } Elem;
+
+        Elem* elems = (Elem*) malloc(sizeof(Elem)*n);
+        for (int i = 0; i < n; i++) {
+            int mod_y_val = a[i] % y; if (mod_y_val < 0) mod_y_val += y;
+            int mod_x_val = a[i] % x; if (mod_x_val < 0) mod_x_val += x;
+            elems[i].mod_y = mod_y_val;
+            elems[i].mod_x = mod_x_val;
+        }
+
+        int cmp_elem(const void* p, const void* q) {
+            Elem* a = (Elem*)p;
+            Elem* b = (Elem*)q;
+            if (a->mod_y != b->mod_y) return a->mod_y - b->mod_y;
+            return 0;
+        }
+        qsort(elems, n, sizeof(Elem), cmp_elem);
+
+        long long result = 0;
+        int start = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i == n || elems[i].mod_y != elems[start].mod_y) {
+                int size = i - start;
+                int* mods_x = (int*) malloc(sizeof(int)*size);
+                for (int j = start; j < i; j++) {
+                    mods_x[j - start] = elems[j].mod_x;
+                }
+                result += count_pairs_x(mods_x, size, x);
+                free(mods_x);
+                start = i;
+            }
+        }
+
+        printf("%lld\n", result);
+
+        free(a);
+        free(elems);
+    }
+
+    return 0;
+}
 

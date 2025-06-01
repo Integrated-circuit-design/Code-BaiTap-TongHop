@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        long long k;
+        scanf("%d %lld", &n, &k);
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        int max_and = 0;
+
+        for (int bit_pos = 30; bit_pos >= 0; bit_pos--) {
+            int needed_ops = 0;
+            int bit_val = 1 << bit_pos;
+
+            for (int i = 0; i < n; i++) {
+                if ((arr[i] & bit_val) == 0) {
+                    needed_ops++;
+                }
+            }
+
+            if (needed_ops <= k) {
+                max_and |= bit_val;
+                k -= needed_ops;
+            }
+        }
+
+        printf("%d\n", max_and);
+    }
+
+    return 0;
+}
 

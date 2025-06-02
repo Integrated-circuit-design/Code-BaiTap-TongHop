@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int calculate_operations(int x) {
+    int count = 0;
+    while (x > 0) {
+        x = x / 3;
+        count++;
+    }
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        
+        int total_operations = 0;
+        
+        for (int i = l; i <= r; i++) {
+            total_operations += calculate_operations(i);
+        }
+        
+        printf("%d\n", total_operations);
+    }
+    
+    return 0;
+}
 

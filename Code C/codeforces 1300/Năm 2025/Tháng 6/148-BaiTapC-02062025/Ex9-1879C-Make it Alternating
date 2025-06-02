@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 998244353
+
+void solve(char *s) {
+    int n = strlen(s);
+    int deletions0 = 0, deletions1 = 0;
+    int ways0 = 1, ways1 = 1;
+    
+    int del_pos_0[n], del_pos_1[n];
+    int idx0 = 0, idx1 = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (i % 2 == 0) {
+            if (s[i] != '0') {
+                deletions0++;
+                del_pos_0[idx0++] = i;
+            }
+        } else {
+            if (s[i] != '1') {
+                deletions0++;
+                del_pos_0[idx0++] = i;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (i % 2 == 0) {
+            if (s[i] != '1') {
+                deletions1++;
+                del_pos_1[idx1++] = i;
+            }
+        } else {
+            if (s[i] != '0') {
+                deletions1++;
+                del_pos_1[idx1++] = i;
+            }
+        }
+    }
+
+    int min_deletions = deletions0 < deletions1 ? deletions0 : deletions1;
+
+    if (min_deletions == deletions0) {
+        ways0 = 1;
+        for (int i = 0; i < deletions0; i++) {
+            ways0 = (ways0 * (i + 1)) % MOD;
+        }
+    }
+
+    if (min_deletions == deletions1) {
+        ways1 = 1;
+        for (int i = 0; i < deletions1; i++) {
+            ways1 = (ways1 * (i + 1)) % MOD;
+        }
+    }
+
+    if (min_deletions == deletions0) {
+        printf("%d %d\n", deletions0, ways0);
+    } else {
+        printf("%d %d\n", deletions1, ways1);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[200005];
+        scanf("%s", s);
+        solve(s);
+    }
+
+    return 0;
+}
 

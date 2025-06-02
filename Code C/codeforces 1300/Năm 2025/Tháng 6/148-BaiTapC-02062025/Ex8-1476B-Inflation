@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int months, max_inflation;
+        scanf("%d %d", &months, &max_inflation);
+
+        long long prices[months];
+        for (int i = 0; i < months; i++) {
+            scanf("%lld", &prices[i]);
+        }
+
+        long long total_adjustments = 0;
+        long long accumulated_price = prices[0];
+
+        for (int i = 1; i < months; i++) {
+            long long allowed_price = (long long) (max_inflation * accumulated_price) / 100;
+
+            if (prices[i] > allowed_price) {
+                long long required_increase = prices[i] - allowed_price;
+                total_adjustments += required_increase;
+                prices[i] = allowed_price;
+            }
+
+            accumulated_price += prices[i];
+        }
+
+        printf("%lld\n", total_adjustments);
+    }
+
+    return 0;
+}
 

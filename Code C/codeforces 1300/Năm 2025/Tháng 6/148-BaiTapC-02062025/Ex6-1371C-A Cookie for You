@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int canServe(long long vanilla, long long chocolate, long long firstGuests, long long secondGuests) {
+    if (vanilla + chocolate < firstGuests + secondGuests) {
+        return 0;
+    }
+    
+    if (vanilla < secondGuests && chocolate < secondGuests) {
+        return 0;
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long a, b, n, m;
+        scanf("%lld %lld %lld %lld", &a, &b, &n, &m);
+        
+        if (canServe(a, b, n, m)) {
+            printf("Yes\n");
+        } else {
+            printf("No\n");
+        }
+    }
+    
+    return 0;
+}
 

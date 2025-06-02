@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <math.h>
+
+void decompose(long long n) {
+    long long factor = 2;
+    int count = 0;
+
+    long long factors[100];
+
+    while (factor * factor <= n) {
+        while (n % factor == 0) {
+            factors[count++] = factor;
+            n /= factor;
+        }
+        factor++;
+    }
+
+    if (n > 1) {
+        factors[count++] = n;
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("%lld ", factors[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        long long n;
+        scanf("%lld", &n);
+        decompose(n);
+    }
+
+    return 0;
+}
 

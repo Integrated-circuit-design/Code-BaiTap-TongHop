@@ -1,1 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_NODES 100005
+
+typedef struct Node {
+    int vertex;
+    struct Node* next;
+} Node;
+
+Node* graph[MAX_NODES];
+
+int colors[MAX_NODES];
+int n;
+
+Node* createNode(int vertex) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->vertex = vertex;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void dfs(int node, int color) {
+    colors[node] = color;
+    Node* temp = graph[node];
+    while (temp != NULL) {
+        int neighbor = temp->vertex;
+        if (colors[neighbor] == -1) {
+            dfs(neighbor, 1 - color);
+        }
+        temp = temp->next;
+    }
+}
+
+int main() {
+    int u, v;
+    int count_0 = 0, count_1 = 0;
+
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+        graph[i] = NULL;
+        colors[i] = -1;
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        scanf("%d %d", &u, &v);
+        Node* newNode1 = createNode(v);
+        newNode1->next = graph[u];
+        graph[u] = newNode1;
+
+        Node* newNode2 = createNode(u);
+        newNode2->next = graph[v];
+        graph[v] = newNode2;
+    }
+
+    dfs(1, 0);
+
+    for (int i = 1; i <= n; i++) {
+        if (colors[i] == 0) {
+            count_0++;
+        } else {
+            count_1++;
+        }
+    }
+
+    int max_edges = count_0 * count_1 - (n - 1);
+    printf("%d\n", max_edges);
+
+    for (int i = 1; i <= n; i++) {
+        Node* temp = graph[i];
+        while (temp != NULL) {
+            Node* toDelete = temp;
+            temp = temp->next;
+            free(toDelete);
+        }
+    }
+
+    return 0;
+}
 

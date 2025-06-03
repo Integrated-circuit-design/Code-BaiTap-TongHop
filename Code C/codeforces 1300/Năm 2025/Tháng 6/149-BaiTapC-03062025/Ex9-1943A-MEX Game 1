@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200000
+
+int find_game_score(int n, int *a) {
+    int freq[MAX_N] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        freq[a[i]]++;
+    }
+    
+    int mex = 0;
+    
+    while (freq[mex] > 0) {
+        freq[mex]--;
+        
+        for (int i = mex + 1; i < MAX_N; i++) {
+            if (freq[i] > 0) {
+                freq[i]--;
+                break;
+            }
+        }
+        
+        mex++;
+    }
+    
+    return mex;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        printf("%d\n", find_game_score(n, a));
+    }
+    
+    return 0;
+}
 

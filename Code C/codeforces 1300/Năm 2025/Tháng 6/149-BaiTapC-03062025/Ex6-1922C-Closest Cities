@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100000
+
+int min_cost(int *a, int n, int xi, int yi) {
+    int coins = 0;
+    
+    while (xi != yi) {
+        if (xi < yi) {
+            coins += 1;
+            xi++;
+        } else {
+            coins += 1;
+            xi--;
+        }
+    }
+    
+    return coins;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[MAX_N];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        int m;
+        scanf("%d", &m);
+        
+        while (m--) {
+            int xi, yi;
+            scanf("%d %d", &xi, &yi);
+            
+            xi--;
+            yi--;
+            
+            printf("%d\n", min_cost(a, n, xi, yi));
+        }
+    }
+    
+    return 0;
+}
 

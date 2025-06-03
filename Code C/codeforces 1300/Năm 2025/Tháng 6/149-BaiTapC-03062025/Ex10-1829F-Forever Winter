@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 0; i < m; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+        }
+
+        for (int x = 2; x < n; x++) {
+            if (m % x == 0) {
+                int y = m / x - 1;
+                if (1 + x + x * y == n) {
+                    printf("%d %d\n", x, y);
+                    break;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
 

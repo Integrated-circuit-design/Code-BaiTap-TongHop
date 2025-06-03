@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        long long k, x;
+        scanf("%lld %lld", &k, &x);
+        
+        long long total = k * (k + 1) / 2;
+
+        if (total >= x) {
+            long long sum = 0;
+            for (long long i = 1; i <= k; ++i) {
+                sum += i;
+                if (sum >= x) {
+                    printf("%lld\n", i);
+                    break;
+                }
+            }
+        } else {
+            long long sum = total;
+            for (long long i = k - 1; i > 0; --i) {
+                sum += i;
+                if (sum >= x) {
+                    printf("%lld\n", k + (k - i));
+                    break;
+                }
+            }
+            if (sum < x) {
+                printf("%lld\n", 2 * k - 1);
+            }
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

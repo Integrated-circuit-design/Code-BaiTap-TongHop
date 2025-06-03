@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 200000
+
+long long sum(int arr[], int n) {
+    long long total = 0;
+    for (int i = 0; i < n; i++) {
+        total += arr[i];
+    }
+    return total;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int arr[n];
+    long long total_sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+        total_sum += arr[i];
+    }
+
+    int nice_indices[MAX_N];
+    int nice_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long remaining_sum = total_sum - arr[i];
+        
+        if (remaining_sum % 2 == 0) {
+            long long target = remaining_sum / 2;
+            
+            int count_target = 0;
+            for (int j = 0; j < n; j++) {
+                if (arr[j] == target) {
+                    count_target++;
+                }
+            }
+            
+            if (target == arr[i]) {
+                if (count_target > 1) {
+                    nice_indices[nice_count++] = i + 1;
+                }
+            } else {
+                if (count_target > 0) {
+                    nice_indices[nice_count++] = i + 1;
+                }
+            }
+        }
+    }
+
+    if (nice_count == 0) {
+        printf("0\n");
+    } else {
+        printf("%d\n", nice_count);
+        for (int i = 0; i < nice_count; i++) {
+            printf("%d ", nice_indices[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

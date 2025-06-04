@@ -1,1 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_REDUCED 15
+
+int cmp(const void *a, const void *b) {
+    int x = *(int*)a;
+    int y = *(int*)b;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int exists(int *arr, int n, int val) {
+    int left = 0, right = n -1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (arr[mid] == val) return 1;
+        if (arr[mid] < val) left = mid + 1;
+        else right = mid -1;
+    }
+    return 0;
+}
+
+int main() {
+    int T; scanf("%d", &T);
+
+    while (T--) {
+        int n; scanf("%d", &n);
+
+        int *arr = (int*)malloc(n * sizeof(int));
+        for (int i = 0; i < n; i++) scanf("%d", &arr[i]);
+
+        qsort(arr, n, sizeof(int), cmp);
+
+        int reduced[MAX_REDUCED];
+        int freq[MAX_REDUCED];
+        int rlen = 0;
+
+        for (int i = 0; i < n;) {
+            int val = arr[i];
+            int j = i + 1;
+            while (j < n && arr[j] == val) j++;
+
+            int count = j - i;
+
+            int allowed = (val == 0) ? (count < 3 ? count : 3) : (count < 2 ? count : 2);
+
+            reduced[rlen] = val;
+            freq[rlen] = allowed;
+            rlen++;
+
+            i = j;
+        }
+
+        int elements[MAX_REDUCED * 3];
+        int idx = 0;
+        for (int i = 0; i < rlen; i++) {
+            for (int c = 0; c < freq[i]; c++) {
+                elements[idx++] = reduced[i];
+            }
+        }
+
+        int is_closed = 1;
+        for (int i = 0; i < idx && is_closed; i++) {
+            for (int j = i+1; j < idx && is_closed; j++) {
+                for (int k = j+1; k < idx && is_closed; k++) {
+                    int sum = elements[i] + elements[j] + elements[k];
+                    if (!exists(arr, n, sum)) {
+                        is_closed = 0;
+                    }
+                }
+            }
+        }
+
+        printf("%s\n", is_closed ? "YES" : "NO");
+
+        free(arr);
+    }
+
+    return 0;
+}
 

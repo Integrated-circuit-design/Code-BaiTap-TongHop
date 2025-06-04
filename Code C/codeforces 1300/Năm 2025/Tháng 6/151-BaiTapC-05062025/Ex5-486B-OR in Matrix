@@ -1,1 +1,78 @@
+#include <stdio.h>
+
+int main() {
+    int m, n;
+    scanf("%d %d", &m, &n);
+
+    int B[m][n];
+    int A[m][n];
+    
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &B[i][j]);
+
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            A[i][j] = 1;
+
+    int rowZero[m], colZero[n];
+    for (int i = 0; i < m; i++) rowZero[i] = 1;
+    for (int j = 0; j < n; j++) colZero[j] = 1;
+
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            if (B[i][j] == 0){
+                rowZero[i] = 0;
+                colZero[j] = 0;
+            }
+        }
+    }
+
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            if (rowZero[i] == 0 || colZero[j] == 0){
+                A[i][j] = 0;
+            }
+        }
+    }
+
+    int B_check[m][n];
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            int rowOr = 0, colOr = 0;
+
+            for (int k = 0; k < n; k++)
+                rowOr |= A[i][k];
+            for (int k = 0; k < m; k++)
+                colOr |= A[k][j];
+
+            B_check[i][j] = rowOr | colOr;
+        }
+    }
+
+    int possible = 1;
+    for (int i = 0; i < m && possible; i++){
+        for (int j = 0; j < n; j++){
+            if (B[i][j] != B_check[i][j]){
+                possible = 0;
+                break;
+            }
+        }
+    }
+
+    if (!possible) {
+        printf("NO\n");
+    } else {
+        printf("YES\n");
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                printf("%d", A[i][j]);
+                if (j < n - 1) printf(" ");
+            }
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

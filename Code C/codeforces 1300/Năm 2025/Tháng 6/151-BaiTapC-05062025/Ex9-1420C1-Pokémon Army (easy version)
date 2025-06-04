@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        long long result = 0;
+        int start = 0;
+        
+        while (start < n) {
+            int end = start;
+            while (end + 1 < n && a[end] < a[end + 1]) {
+                end++;
+            }
+            result += a[end];
+            
+            if (end == n - 1) break;
+            
+            start = end + 1;
+            while (start + 1 < n && a[start] > a[start + 1]) {
+                start++;
+            }
+            result -= a[start];
+            
+            start++;
+        }
+        
+        printf("%lld\n", result);
+    }
+    return 0;
+}
 

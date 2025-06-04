@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 20
+
+void generate_powers_of_two(char powers[][MAX_LEN], int *count) {
+    unsigned long long val = 1ULL;
+    *count = 0;
+    while (*count <= 60) {
+        sprintf(powers[*count], "%llu", val);
+        val <<= 1;
+        (*count)++;
+    }
+}
+
+int longest_subsequence(const char *s, const char *t) {
+    int i = 0, j = 0;
+    int len_s = strlen(s);
+    int len_t = strlen(t);
+    while (i < len_s && j < len_t) {
+        if (s[i] == t[j]) {
+            j++;
+        }
+        i++;
+    }
+    return j;
+}
+
+int main() {
+    int t; scanf("%d", &t);
+
+    char powers[61][MAX_LEN];
+    int powers_count;
+    generate_powers_of_two(powers, &powers_count);
+
+    while (t--) {
+        char n[MAX_LEN];
+        scanf("%s", n);
+
+        int len_n = strlen(n);
+        int ans = 1000000000;
+
+        for (int i = 0; i < powers_count; i++) {
+            int len_p = strlen(powers[i]);
+            int match = longest_subsequence(n, powers[i]);
+
+            int ops = (len_n - match) + (len_p - match);
+            if (ops < ans) ans = ops;
+        }
+        printf("%d\n", ans);
+    }
+
+    return 0;
+}
 

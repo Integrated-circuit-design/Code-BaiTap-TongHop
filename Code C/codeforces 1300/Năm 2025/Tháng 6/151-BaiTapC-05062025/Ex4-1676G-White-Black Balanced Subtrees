@@ -1,1 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int vertex;
+    struct Node *next;
+} Node;
+
+Node* children[4005];
+char colors[4005];
+int balancedCount;
+
+void addChild(int u, int v) {
+    Node* newNode = (Node*) malloc(sizeof(Node));
+    newNode->vertex = v;
+    newNode->next = children[u];
+    children[u] = newNode;
+}
+
+void dfs(int u, int* black, int* white) {
+    int b = 0, w = 0;
+    if (colors[u] == 'B') b = 1;
+    else w = 1;
+
+    Node* cur = children[u];
+    while (cur != NULL) {
+        int cb = 0, cw = 0;
+        dfs(cur->vertex, &cb, &cw);
+        b += cb;
+        w += cw;
+        cur = cur->next;
+    }
+
+    if (b == w) balancedCount++;
+
+    *black = b;
+    *white = w;
+}
+
+void freeChildren(int n) {
+    for (int i = 0; i < n; i++) {
+        Node* cur = children[i];
+        while (cur) {
+            Node* temp = cur;
+            cur = cur->next;
+            free(temp);
+        }
+        children[i] = NULL;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            children[i] = NULL;
+        }
+
+        for (int i = 1; i < n; i++) {
+            int p;
+            scanf("%d", &p);
+            p--;
+            addChild(p, i);
+        }
+
+        scanf("%s", colors);
+
+        balancedCount = 0;
+        int b = 0, w = 0;
+        dfs(0, &b, &w);
+
+        printf("%d\n", balancedCount);
+
+        freeChildren(n);
+    }
+
+    return 0;
+}
 

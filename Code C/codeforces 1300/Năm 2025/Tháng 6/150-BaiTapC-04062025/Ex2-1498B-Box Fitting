@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+#define MAX_POWER 21
+
+int find_power(int w) {
+    int p = 0;
+    while (w > 1) {
+        w /= 2;
+        p++;
+    }
+    return p;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, W;
+        scanf("%d %d", &n, &W);
+
+        int count[MAX_POWER] = {0};
+
+        for (int i = 0; i < n; i++) {
+            int w;
+            scanf("%d", &w);
+            int p = find_power(w);
+            count[p]++;
+        }
+
+        int height = 0;
+
+        while (1) {
+            int width_left = W;
+
+            int total_remaining = 0;
+            for (int i = 0; i < MAX_POWER; i++) {
+                total_remaining += count[i];
+            }
+            if (total_remaining == 0) break;
+
+            for (int p = MAX_POWER - 1; p >= 0; p--) {
+                if (count[p] == 0) continue;
+
+                int rect_width = 1 << p;
+                int fit = width_left / rect_width;
+
+                if (fit > 0) {
+                    int to_place = (count[p] < fit) ? count[p] : fit;
+                    count[p] -= to_place;
+                    width_left -= to_place * rect_width;
+                }
+            }
+
+            height++;
+        }
+
+        printf("%d\n", height);
+    }
+
+    return 0;
+}
 

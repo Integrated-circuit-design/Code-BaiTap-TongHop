@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long myMax(long long x, long long y) {
+    return (x > y) ? x : y;
+}
+
+long long absLL(long long x) {
+    return x < 0 ? -x : x;
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int length;
+        scanf("%d", &length);
+
+        long long *array = malloc(length * sizeof(long long));
+        for (int i = 0; i < length; i++) {
+            scanf("%lld", &array[i]);
+        }
+
+        long long resNoAbs = 0, resAbs = 0;
+
+        for (int i = 0; i < length; i++) {
+            long long tempNoAbs = myMax(resNoAbs, resAbs) + array[i];
+            long long tempAbs = myMax(absLL(resNoAbs + array[i]), absLL(resAbs + array[i]));
+
+            resNoAbs = tempNoAbs;
+            resAbs = tempAbs;
+        }
+
+        printf("%lld\n", myMax(resNoAbs, resAbs));
+
+        free(array);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char a[n + 1], b[n + 1];
+    scanf("%s", a);
+    scanf("%s", b);
+
+    int cost = 0;
+    int i = 0;
+
+    while (i < n) {
+        if (a[i] != b[i]) {
+            int canSwap = 0;
+            if (i + 1 < n) {
+                if (a[i+1] != b[i+1] && a[i] != a[i+1]) {
+                    canSwap = 1;
+                }
+            }
+
+            if (canSwap) {
+                cost += 1;
+                i += 2;
+            } else {
+                cost += 1;
+                i++;
+            }
+        } else {
+            i++;
+        }
+    }
+
+    printf("%d\n", cost);
+    return 0;
+}
 

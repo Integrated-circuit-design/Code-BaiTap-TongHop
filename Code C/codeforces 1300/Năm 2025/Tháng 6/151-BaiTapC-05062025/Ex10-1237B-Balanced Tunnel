@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int enter[n];
+    int exit_order[n];
+    int exit_pos[n + 1];
+
+    for (int i = 0; i < n; i++) scanf("%d", &enter[i]);
+    for (int i = 0; i < n; i++) scanf("%d", &exit_order[i]);
+
+    for (int i = 0; i < n; i++) {
+        exit_pos[exit_order[i]] = i;
+    }
+
+    int fined = 0;
+    int earliest_exit = n + 1;
+
+    for (int i = 0; i < n; i++) {
+        int car = enter[i];
+        int pos_out = exit_pos[car];
+
+        if (pos_out < earliest_exit) {
+            earliest_exit = pos_out;
+        } else {
+            fined++;
+        }
+    }
+
+    printf("%d\n", fined);
+    return 0;
+}
 

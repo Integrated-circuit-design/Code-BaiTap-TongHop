@@ -1,1 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int left, right;
+} Interval;
+
+int cmp_intervals(const void *a, const void *b) {
+    Interval *ia = (Interval*)a;
+    Interval *ib = (Interval*)b;
+    if (ia->left != ib->left)
+        return ia->left - ib->left;
+    return ia->right - ib->right;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int *a = (int*)malloc(n * sizeof(int));
+        char *colors = (char*)malloc((n + 1) * sizeof(char));
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        scanf("%s", colors);
+
+        Interval *intervals = (Interval*)malloc(n * sizeof(Interval));
+
+        for (int i = 0; i < n; i++) {
+            if (colors[i] == 'B') {
+                if (a[i] < 1) {
+                    intervals[i].left = 1;
+                    intervals[i].right = 0;
+                } else {
+                    intervals[i].left = 1;
+                    intervals[i].right = a[i] < n ? a[i] : n;
+                }
+            } else {
+                if (a[i] > n) {
+                    intervals[i].left = 1;
+                    intervals[i].right = 0;
+                } else {
+                    intervals[i].left = a[i] > 1 ? a[i] : 1;
+                    intervals[i].right = n;
+                }
+            }
+        }
+
+        qsort(intervals, n, sizeof(Interval), cmp_intervals);
+
+        int cur = 1;
+        int possible = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (intervals[i].left > cur) {
+                possible = 0;
+                break;
+            }
+            if (intervals[i].right < cur) {
+                continue;
+            }
+            cur++;
+            if (cur > n) break;
+        }
+
+        if (cur <= n) possible = 0;
+
+        printf(possible ? "YES\n" : "NO\n");
+
+        free(a);
+        free(colors);
+        free(intervals);
+    }
+
+    return 0;
+}
 

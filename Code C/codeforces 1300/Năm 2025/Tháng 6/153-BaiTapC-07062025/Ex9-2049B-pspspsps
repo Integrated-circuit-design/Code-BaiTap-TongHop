@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+bool isPermutation(int *arr, int length) {
+    bool seen[501] = {0};
+    for (int i = 0; i < length; i++) {
+        if (arr[i] < 1 || arr[i] > length || seen[arr[i]]) return false;
+        seen[arr[i]] = true;
+    }
+    return true;
+}
+
+int main() {
+    int t; scanf("%d", &t);
+    while (t--) {
+        int n; scanf("%d", &n);
+        char s[505];
+        scanf("%s", s);
+
+        int p[505] = {0};
+
+        bool impossible = false;
+
+        int max_p = 0;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'p') {
+                if (i + 1 > max_p) max_p = i + 1;
+            }
+        }
+
+        int max_s = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (s[i] == 's') {
+                int length = n - i;
+                if (length > max_s) max_s = length;
+            }
+        }
+
+        if (max_p + max_s > n + 1) {
+            impossible = true;
+        }
+
+        if (impossible) {
+            printf("NO\n");
+            continue;
+        }
+
+        printf("YES\n");
+    }
+    return 0;
+}
 

@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d%d", &n, &m);
+
+        int total = n * m;
+        int max_dist = (n - 1) + (m - 1);
+
+        int dist_count[max_dist + 1];
+        for (int i = 0; i <= max_dist; i++) {
+            dist_count[i] = 0;
+        }
+
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < m; c++) {
+                int dist_top_left = r + c;
+                int dist_top_right = r + (m - 1 - c);
+                int dist_bottom_left = (n - 1 - r) + c;
+                int dist_bottom_right = (n - 1 - r) + (m - 1 - c);
+
+                int dist_max = dist_top_left;
+                if (dist_top_right > dist_max) dist_max = dist_top_right;
+                if (dist_bottom_left > dist_max) dist_max = dist_bottom_left;
+                if (dist_bottom_right > dist_max) dist_max = dist_bottom_right;
+
+                dist_count[dist_max]++;
+            }
+        }
+
+        for (int dist = 0; dist <= max_dist; dist++) {
+            for (int count = 0; count < dist_count[dist]; count++) {
+                printf("%d ", dist);
+            }
+        }
+        printf("\n");
+    }
+    return 0;
+}
 

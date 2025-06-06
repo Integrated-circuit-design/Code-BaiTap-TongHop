@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n], chosen[n];
+        int used[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            used[i] = 0;
+        }
+
+        int max_pos = 0;
+        for (int i = 1; i < n; i++) {
+            if (a[i] > a[max_pos]) max_pos = i;
+        }
+        chosen[0] = a[max_pos];
+        used[max_pos] = 1;
+        int current_gcd = a[max_pos];
+
+        for (int i = 1; i < n; i++) {
+            int max_gcd = 0;
+            int candidate = -1;
+
+            for (int j = 0; j < n; j++) {
+                if (!used[j]) {
+                    int val = gcd(current_gcd, a[j]);
+                    if (val > max_gcd) {
+                        max_gcd = val;
+                        candidate = j;
+                    }
+                }
+            }
+
+            chosen[i] = a[candidate];
+            used[candidate] = 1;
+            current_gcd = gcd(current_gcd, a[candidate]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", chosen[i]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
 

@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[1000001];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    long long prefixPairs = 0;
+    long long suffixPairs = 0;
+    long long wow = 0;
+
+    long long prefixCount[1000001];
+    long long suffixCount[1000001];
+
+    prefixCount[0] = 0;
+    for (int i = 1; i < n; i++) {
+        prefixCount[i] = prefixCount[i-1];
+        if (s[i] == 'v' && s[i-1] == 'v') {
+            prefixCount[i]++;
+        }
+    }
+
+    suffixCount[n-1] = 0;
+    for (int i = n - 2; i >= 0; i--) {
+        suffixCount[i] = suffixCount[i+1];
+        if (s[i] == 'v' && s[i+1] == 'v') {
+            suffixCount[i]++;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'o') {
+            wow += prefixCount[i] * suffixCount[i];
+        }
+    }
+
+    printf("%lld\n", wow);
+
+    return 0;
+}
 

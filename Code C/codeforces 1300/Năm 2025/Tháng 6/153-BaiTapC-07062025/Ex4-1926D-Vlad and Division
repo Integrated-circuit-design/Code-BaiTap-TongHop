@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define HASH_SIZE 400003
+
+typedef struct {
+    unsigned int key;
+    int count;
+} HashEntry;
+
+HashEntry hash_table[HASH_SIZE];
+
+unsigned int hash_func(unsigned int x) {
+    return (x * 2654435761U) % HASH_SIZE;
+}
+
+int hash_insert(unsigned int key) {
+    unsigned int pos = hash_func(key);
+    while (hash_table[pos].count != 0 && hash_table[pos].key != key) {
+        pos = (pos + 1) % HASH_SIZE;
+    }
+    hash_table[pos].key = key;
+    hash_table[pos].count++;
+    return hash_table[pos].count;
+}
+
+void reset_hash() {
+    for (int i = 0; i < HASH_SIZE; i++) {
+        hash_table[i].count = 0;
+        hash_table[i].key = 0;
+    }
+}
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        reset_hash();
+
+        int max_count = 0;
+        for (int i = 0; i < n; i++) {
+            unsigned int x;
+            scanf("%u", &x);
+            unsigned int masked = x & 0x7FFFFFFF;
+            int cur = hash_insert(masked);
+            if (cur > max_count) max_count = cur;
+        }
+
+        printf("%d\n", max_count);
+    }
+
+    return 0;
+}
 

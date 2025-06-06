@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int length;
+        scanf("%d", &length);
+
+        unsigned int X[length], Y[length];
+        for (int i = 0; i < length; i++) {
+            scanf("%u", &X[i]);
+        }
+
+        unsigned int prev_a = X[0];
+        Y[0] = 0;
+
+        for (int i = 1; i < length; i++) {
+            unsigned int current_a = prev_a | X[i];
+            Y[i] = current_a ^ X[i];
+            prev_a = current_a;
+        }
+
+        for (int i = 0; i < length; i++) {
+            printf("%u ", Y[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

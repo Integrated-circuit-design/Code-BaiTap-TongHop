@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct {
+    int a, b;
+} Pair;
+
+bool isForbidden(Pair *forbiddenPairs, int m, int x, int y) {
+    for (int i = 0; i < m; i++) {
+        if ((forbiddenPairs[i].a == x && forbiddenPairs[i].b == y) || 
+            (forbiddenPairs[i].a == y && forbiddenPairs[i].b == x)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    Pair *forbiddenPairs = (Pair *)malloc(m * sizeof(Pair));
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &forbiddenPairs[i].a, &forbiddenPairs[i].b);
+    }
+
+    int hub = -1;
+
+    for (int city = 1; city <= n; city++) {
+        bool canBeHub = true;
+
+        for (int other = 1; other <= n; other++) {
+            if (city == other) continue;
+            if (isForbidden(forbiddenPairs, m, city, other)) {
+                canBeHub = false;
+                break;
+            }
+        }
+
+        if (canBeHub) {
+            hub = city;
+            break;
+        }
+    }
+
+    printf("%d\n", n - 1);
+    for (int city = 1; city <= n; city++) {
+        if (city != hub) {
+            printf("%d %d\n", hub, city);
+        }
+    }
+
+    free(forbiddenPairs);
+    return 0;
+}
 

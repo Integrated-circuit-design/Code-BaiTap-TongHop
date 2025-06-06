@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_N 200000
+
+int p[MAX_N];
+bool visited[MAX_N];
+int answer[MAX_N];
+int cycle_nodes[MAX_N];
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+            p[i]--;
+            visited[i] = false;
+            answer[i] = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                int length = 0;
+                int current = i;
+
+                while (!visited[current]) {
+                    visited[current] = true;
+                    cycle_nodes[length++] = current;
+                    current = p[current];
+                }
+
+                for (int j = 0; j < length; j++) {
+                    answer[cycle_nodes[j]] = length;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", answer[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

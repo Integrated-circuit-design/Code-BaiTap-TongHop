@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        int break_pos = -1;
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                break_pos = i;
+                break;
+            }
+        }
+
+        if (break_pos == -1) {
+            printf("0\n");
+            continue;
+        }
+
+        int rotate_pos = break_pos + 1;
+
+        bool suffix_sorted = true;
+        for (int i = rotate_pos; i < n - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                suffix_sorted = false;
+                break;
+            }
+        }
+
+        if (!suffix_sorted) {
+            printf("-1\n");
+            continue;
+        }
+
+        if (arr[n - 1] > arr[0]) {
+            printf("-1\n");
+            continue;
+        }
+
+        printf("%d\n", rotate_pos);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int removeFactors(int number) {
+    while (number % 2 == 0) {
+        number = number / 2;
+    }
+    while (number % 3 == 0) {
+        number = number / 3;
+    }
+    return number;
+}
+
+int main() {
+    int totalPlayers;
+    scanf("%d", &totalPlayers);
+
+    int bids[totalPlayers];
+    for (int i = 0; i < totalPlayers; i++) {
+        scanf("%d", &bids[i]);
+    }
+
+    int coreValue = removeFactors(bids[0]);
+
+    for (int i = 1; i < totalPlayers; i++) {
+        if (removeFactors(bids[i]) != coreValue) {
+            printf("No\n");
+            return 0;
+        }
+    }
+
+    printf("Yes\n");
+    return 0;
+}
 

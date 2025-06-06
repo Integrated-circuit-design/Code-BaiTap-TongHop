@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int cmp(const void *a, const void *b) {
+    ll x = *(ll*)a;
+    ll y = *(ll*)b;
+    return (x > y) - (x < y);
+}
+
+int binary_search(ll *arr, int size, ll x) {
+    int low = 0, high = size - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (arr[mid] == x) return mid;
+        else if (arr[mid] < x) low = mid + 1;
+        else high = mid - 1;
+    }
+    return -1;
+}
+
+int main() {
+    int t; scanf("%d", &t);
+    while (t--) {
+        int n, k; scanf("%d %d", &n, &k);
+        ll *a = (ll*)malloc(n * sizeof(ll));
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        
+        ll *vals = (ll*)malloc(n * sizeof(ll));
+        for (int i = 0; i < n; i++) vals[i] = a[i];
+        qsort(vals, n, sizeof(ll), cmp);
+        
+        int unique_count = 0;
+        for (int i = 0; i < n; i++) {
+            if (i == 0 || vals[i] != vals[i-1]) {
+                vals[unique_count++] = vals[i];
+            }
+        }
+        
+        ll *freq = (ll*)calloc(unique_count, sizeof(ll));
+        for (int i = 0; i < n; i++) {
+            int pos = binary_search(vals, unique_count, a[i]);
+            freq[pos]++;
+        }
+        
+        int left = 0;
+        ll sum = 0, ans = 0;
+        for (int right = 0; right < unique_count; right++) {
+            sum += freq[right];
+            while (vals[right] - vals[left] > k) {
+                sum -= freq[left];
+                left++;
+            }
+            if (sum > ans) ans = sum;
+        }
+        
+        printf("%lld\n", ans);
+        
+        free(a);
+        free(vals);
+        free(freq);
+    }
+    return 0;
+}
 

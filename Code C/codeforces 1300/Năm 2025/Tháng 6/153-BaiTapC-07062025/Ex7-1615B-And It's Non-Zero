@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAX 200001
+#define BITS 20
+
+int prefixBits[BITS][MAX];
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    for (int num = 1; num < MAX; num++) {
+        for (int bit = 0; bit < BITS; bit++) {
+            prefixBits[bit][num] = prefixBits[bit][num - 1];
+            if ((num & (1 << bit)) != 0) {
+                prefixBits[bit][num]++;
+            }
+        }
+    }
+
+    while (testCases--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+
+        int length = r - l + 1;
+        int maxCount = 0;
+
+        for (int bit = 0; bit < BITS; bit++) {
+            int countOnes = prefixBits[bit][r] - prefixBits[bit][l - 1];
+            if (countOnes > maxCount) {
+                maxCount = countOnes;
+            }
+        }
+
+        printf("%d\n", length - maxCount);
+    }
+
+    return 0;
+}
 

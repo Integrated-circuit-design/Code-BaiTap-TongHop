@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200000
+#define HASHSIZE 400003
+
+int hashTable[HASHSIZE];
+int screen[MAXN];
+int size = 0;
+int k;
+
+int hash(int x) {
+    if (x < 0) x = -x;
+    return x % HASHSIZE;
+}
+
+int contains(int x) {
+    int h = hash(x);
+    while (hashTable[h] != -1) {
+        if (hashTable[h] == x) return 1;
+        h = (h + 1) % HASHSIZE;
+    }
+    return 0;
+}
+
+void insert(int x) {
+    int h = hash(x);
+    while (hashTable[h] != -1 && hashTable[h] != x) {
+        h = (h + 1) % HASHSIZE;
+    }
+    hashTable[h] = x;
+}
+
+void removeLast() {
+    int last = screen[size - 1];
+    int h = hash(last);
+    while (hashTable[h] != last) {
+        h = (h + 1) % HASHSIZE;
+    }
+    hashTable[h] = -2;
+
+    size--;
+}
+
+int main() {
+    int n;
+    scanf("%d %d", &n, &k);
+
+    for (int i = 0; i < HASHSIZE; i++) hashTable[i] = -1;
+
+    for (int i = 0; i < n; i++) {
+        int id;
+        scanf("%d", &id);
+
+        if (!contains(id)) {
+            if (size == k) {
+                removeLast();
+            }
+            for (int j = size; j > 0; j--) {
+                screen[j] = screen[j - 1];
+            }
+            screen[0] = id;
+            size++;
+            insert(id);
+        }
+    }
+
+    printf("%d\n", size);
+    for (int i = 0; i < size; i++) {
+        printf("%d ", screen[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

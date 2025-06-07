@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+int get_best_length(int val, int count) {
+    double product = 1.0;
+    double factorial = 1.0;
+    double max_score = 0.0;
+    int best_len = 0;
+
+    for (int d = 1; d <= count; d++) {
+        product *= val;
+        factorial *= d;
+        double score = product / factorial;
+
+        if (score > max_score) {
+            max_score = score;
+            best_len = d;
+        } else if (score == max_score && d > best_len) {
+            best_len = d;
+        }
+    }
+
+    return best_len;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int max_val = -1;
+        int count = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] != max_val) {
+                max_val = a[i];
+                count = 1;
+            } else {
+                count++;
+            }
+
+            int cost = get_best_length(max_val, count);
+            printf("%d ", cost);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

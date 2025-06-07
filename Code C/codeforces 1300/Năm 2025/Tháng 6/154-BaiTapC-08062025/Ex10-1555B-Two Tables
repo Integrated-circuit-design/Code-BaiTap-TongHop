@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <float.h>
+
+double min(double a, double b) {
+    return a < b ? a : b;
+}
+
+double calc_move(long long room_size, long long t1_start, long long t1_end, long long t2_size) {
+    long long t1_size = t1_end - t1_start;
+
+    if (t1_size + t2_size > room_size) return -1.0;
+
+    double res = DBL_MAX;
+
+    if (t2_size <= t1_start) {
+        res = 0.0;
+    }
+
+    if (t2_size <= room_size - t1_end) {
+        res = 0.0;
+    }
+
+    double move_left = (double)(t2_size - (room_size - t1_end));
+    if (move_left < 0) move_left = 0;
+    if (move_left <= t1_start) {
+        if (move_left < res) res = move_left;
+    }
+
+    double move_right = (double)(t2_size - t1_start);
+    if (move_right < 0) move_right = 0;
+    if (move_right <= (room_size - t1_end)) {
+        if (move_right < res) res = move_right;
+    }
+
+    if (res == DBL_MAX) return -1.0;
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long W, H;
+        scanf("%lld %lld", &W, &H);
+        long long x1, y1, x2, y2;
+        scanf("%lld %lld %lld %lld", &x1, &y1, &x2, &y2);
+        long long w, h;
+        scanf("%lld %lld", &w, &h);
+
+        double hor_move = calc_move(W, x1, x2, w);
+        double ver_move = calc_move(H, y1, y2, h);
+
+        if (hor_move < 0 && ver_move < 0) {
+            printf("-1\n");
+        } else if (hor_move < 0) {
+            printf("%.9f\n", ver_move);
+        } else if (ver_move < 0) {
+            printf("%.9f\n", hor_move);
+        } else {
+            double ans = hor_move < ver_move ? hor_move : ver_move;
+            printf("%.9f\n", ans);
+        }
+    }
+    return 0;
+}
 

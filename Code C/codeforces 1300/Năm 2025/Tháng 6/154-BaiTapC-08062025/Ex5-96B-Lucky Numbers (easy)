@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX_LEN 12
+#define MAX_SUPER 1000000
+
+char superLucky[MAX_SUPER][MAX_LEN];
+int count = 0;
+
+int cmpStrNum(const void *a, const void *b) {
+    const char *s1 = (const char *)a;
+    const char *s2 = (const char *)b;
+    int len1 = strlen(s1);
+    int len2 = strlen(s2);
+    if (len1 != len2) return len1 - len2;
+    return strcmp(s1, s2);
+}
+
+int next_permutation(char *arr, int n) {
+    int i = n - 2;
+    while (i >= 0 && arr[i] >= arr[i + 1]) i--;
+    if (i < 0) return 0;
+    
+    int j = n - 1;
+    while (arr[j] <= arr[i]) j--;
+    
+    char tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+    
+    int left = i + 1, right = n - 1;
+    while (left < right) {
+        tmp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = tmp;
+        left++; right--;
+    }
+    return 1;
+}
+
+int main() {
+    char n[MAX_LEN];
+    scanf("%s", n);
+    
+    count = 0;
+    char arr[MAX_LEN];
+    
+    for (int len = 2; len <= 10; len += 2) {
+        int half = len / 2;
+        
+        for (int i = 0; i < half; i++) arr[i] = '4';
+        for (int i = half; i < len; i++) arr[i] = '7';
+        
+        qsort(arr, len, sizeof(char), (int(*)(const void*,const void*))strcmp);
+        
+        do {
+            arr[len] = '\0';
+            strcpy(superLucky[count++], arr);
+            if (count >= MAX_SUPER) break;
+        } while (next_permutation(arr, len) && count < MAX_SUPER);
+    }
+    
+    qsort(superLucky, count, sizeof(superLucky[0]), cmpStrNum);
+    
+    for (int i = 0; i < count; i++) {
+        int lenS = strlen(superLucky[i]);
+        int lenN = strlen(n);
+        if (lenS > lenN || (lenS == lenN && strcmp(superLucky[i], n) >= 0)) {
+            printf("%s\n", superLucky[i]);
+            break;
+        }
+    }
+    
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int length, parts;
+        scanf("%d %d", &length, &parts);
+
+        int arr[length];
+        for (int i = 0; i < length; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        int needed = parts / 2;
+        int current_target = 1;
+
+        for (int i = 0; i < length && current_target <= needed; i++) {
+            if (arr[i] == current_target) {
+                current_target++;
+            }
+        }
+
+        printf("%d\n", current_target);
+    }
+
+    return 0;
+}
 

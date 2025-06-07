@@ -1,1 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+int *buffer;
+
+bool isIncreasing(int *arr, int size) {
+    for (int i = 1; i < size; i++) {
+        if (arr[i-1] > arr[i]) return false;
+    }
+    return true;
+}
+
+int solve(int *arr, int n, int *res) {
+    if (n == 1) {
+        res[0] = arr[0];
+        return 0;
+    }
+
+    int half = n / 2;
+
+    int *leftRes = (int *)malloc(half * sizeof(int));
+    int *rightRes = (int *)malloc(half * sizeof(int));
+
+    int leftOps = solve(arr, half, leftRes);
+    if (leftOps == -1) {
+        free(leftRes);
+        free(rightRes);
+        return -1;
+    }
+
+    int rightOps = solve(arr + half, half, rightRes);
+    if (rightOps == -1) {
+        free(leftRes);
+        free(rightRes);
+        return -1;
+    }
+
+    for (int i = 0; i < half; i++) {
+        buffer[i] = leftRes[i];
+        buffer[i + half] = rightRes[i];
+    }
+    bool canNoSwap = isIncreasing(buffer, n);
+
+    for (int i = 0; i < half; i++) {
+        buffer[i] = rightRes[i];
+        buffer[i + half] = leftRes[i];
+    }
+    bool canSwap = isIncreasing(buffer, n);
+
+    int minOps = -1;
+    if (canNoSwap && canSwap) {
+        int ops1 = leftOps + rightOps;
+        int ops2 = leftOps + rightOps + 1;
+        if (ops1 <= ops2) {
+            minOps = ops1;
+            for (int i = 0; i < half; i++) res[i] = leftRes[i];
+            for (int i = 0; i < half; i++) res[i + half] = rightRes[i];
+        } else {
+            minOps = ops2;
+            for (int i = 0; i < n; i++) res[i] = buffer[i];
+        }
+    } else if (canNoSwap) {
+        minOps = leftOps + rightOps;
+        for (int i = 0; i < half; i++) res[i] = leftRes[i];
+        for (int i = 0; i < half; i++) res[i + half] = rightRes[i];
+    } else if (canSwap) {
+        minOps = leftOps + rightOps + 1;
+        for (int i = 0; i < n; i++) res[i] = buffer[i];
+    } else {
+        minOps = -1;
+    }
+
+    free(leftRes);
+    free(rightRes);
+
+    return minOps;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    buffer = (int *)malloc(262144 * sizeof(int));
+
+    while (t--) {
+        int m;
+        scanf("%d", &m);
+
+        int *arr = (int *)malloc(m * sizeof(int));
+        int *result = (int *)malloc(m * sizeof(int));
+
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        int answer = solve(arr, m, result);
+        printf("%d\n", answer);
+
+        free(arr);
+        free(result);
+    }
+
+    free(buffer);
+    return 0;
+}
 

@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int and_all = a[0];
+        for (int i = 1; i < n; i++) {
+            and_all = and_all & a[i];
+        }
+
+        int segment_count = 0;
+        int partial_and = ~0;
+
+        for (int i = 0; i < n; i++) {
+            partial_and = partial_and & a[i];
+
+            if (partial_and == and_all) {
+                segment_count++;
+                partial_and = ~0;
+            }
+        }
+
+        for (int k = 1; k <= segment_count; k++) {
+            if (segment_count % k == 0) {
+                printf("%d ", k);
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

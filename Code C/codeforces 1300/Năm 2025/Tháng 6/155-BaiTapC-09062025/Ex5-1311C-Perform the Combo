@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s[MAXN];
+int press[MAXN];
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        scanf("%s", s);
+
+        for (int i = 0; i < n; i++) {
+            press[i] = 0;
+        }
+
+        for (int i = 0; i < m; i++) {
+            int p; 
+            scanf("%d", &p);
+            for (int j = 0; j < p; j++) {
+                press[j]++;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            press[i]++;
+        }
+
+        long long freq[26] = {0};
+        for (int i = 0; i < n; i++) {
+            freq[s[i] - 'a'] += press[i];
+        }
+
+        for (int i = 0; i < 26; i++) {
+            printf("%lld", freq[i]);
+            if (i < 25) printf(" ");
+            else printf("\n");
+        }
+    }
+
+    return 0;
+}
 

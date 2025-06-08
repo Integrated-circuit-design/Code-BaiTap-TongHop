@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int item_count;
+        uint64_t capacity;
+        scanf("%d %llu", &item_count, &capacity);
+
+        uint64_t* items = malloc(item_count * sizeof(uint64_t));
+        for (int i = 0; i < item_count; i++) {
+            scanf("%llu", &items[i]);
+        }
+
+        uint64_t min_required = (capacity + 1) / 2;
+
+        int solution_found = 0;
+
+        for (int i = 0; i < item_count; i++) {
+            if (items[i] >= min_required && items[i] <= capacity) {
+                printf("1\n%d\n", i + 1);
+                solution_found = 1;
+                break;
+            }
+        }
+
+        if (solution_found) {
+            free(items);
+            continue;
+        }
+
+        uint64_t sum_weights = 0;
+        int* selected_indices = malloc(item_count * sizeof(int));
+        int selected_count = 0;
+
+        for (int i = 0; i < item_count; i++) {
+            if (items[i] < min_required) {
+                sum_weights += items[i];
+                selected_indices[selected_count++] = i + 1;
+                if (sum_weights >= min_required) break;
+            }
+        }
+
+        if (sum_weights >= min_required && sum_weights <= capacity) {
+            printf("%d\n", selected_count);
+            for (int i = 0; i < selected_count; i++) {
+                printf("%d%c", selected_indices[i], (i == selected_count - 1) ? '\n' : ' ');
+            }
+        } else {
+            printf("-1\n");
+        }
+
+        free(items);
+        free(selected_indices);
+    }
+
+    return 0;
+}
 

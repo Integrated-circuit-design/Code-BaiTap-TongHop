@@ -1,1 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int t;
+int n;
+ll k;
+int startB, startS;
+
+int *perm;
+ll *scoreArr;
+
+int *firstVisit;
+int *order;
+ll *prefixSum;
+
+ll maximum(ll x, ll y) {
+    return x > y ? x : y;
+}
+
+ll calculate_max_score(int start) {
+    for (int i = 0; i < n; i++) {
+        firstVisit[i] = -1;
+    }
+    int count = 0;
+    int currPos = start;
+
+    while (firstVisit[currPos] == -1 && count < k) {
+        firstVisit[currPos] = count;
+        order[count] = currPos;
+        count++;
+        currPos = perm[currPos];
+    }
+
+    prefixSum[0] = scoreArr[order[0]];
+    for (int i = 1; i < count; i++) {
+        prefixSum[i] = prefixSum[i - 1] + scoreArr[order[i]];
+    }
+
+    if (count == k || firstVisit[currPos] == -1) {
+        return prefixSum[(k < count) ? (k - 1) : (count - 1)];
+    }
+
+    int cycleStart = firstVisit[currPos];
+    int cycleLength = count - cycleStart;
+
+    ll cycleSum = 0;
+    for (int i = cycleStart; i < count; i++) {
+        cycleSum += scoreArr[order[i]];
+    }
+
+    ll bestScore = prefixSum[(k < count) ? (k - 1) : (count - 1)];
+
+    for (int i = 0; i < cycleStart; i++) {
+        ll remaining = k - (i + 1);
+        if (remaining < 0) break;
+
+        ll fullCycles = remaining / cycleLength;
+        int extraSteps = remaining % cycleLength;
+
+        ll currentScore = prefixSum[i] + fullCycles * cycleSum;
+
+        for (int j = 0; j < extraSteps; j++) {
+            currentScore += scoreArr[order[cycleStart + j]];
+        }
+
+        bestScore = maximum(bestScore, currentScore);
+    }
+
+    if (k > count) {
+        ll fullCycles = k / cycleLength;
+        int extraSteps = k % cycleLength;
+
+        ll currentScore = fullCycles * cycleSum;
+        for (int j = 0; j < extraSteps; j++) {
+            currentScore += scoreArr[order[cycleStart + j]];
+        }
+        bestScore = maximum(bestScore, currentScore);
+    }
+
+    return bestScore;
+}
+
+int main() {
+    scanf("%d", &t);
+
+    perm = malloc(200000 * sizeof(int));
+    scoreArr = malloc(200000 * sizeof(ll));
+    firstVisit = malloc(200000 * sizeof(int));
+    order = malloc(200000 * sizeof(int));
+    prefixSum = malloc(200000 * sizeof(ll));
+
+    while (t--) {
+        scanf("%d %lld %d %d", &n, &k, &startB, &startS);
+        startB--;
+        startS--;
+
+        for (int i = 0; i < n; i++) scanf("%d", &perm[i]);
+        for (int i = 0; i < n; i++) perm[i]--;
+        for (int i = 0; i < n; i++) scanf("%lld", &scoreArr[i]);
+
+        ll scoreB = calculate_max_score(startB);
+        ll scoreS = calculate_max_score(startS);
+
+        if (scoreB > scoreS) printf("Bodya\n");
+        else if (scoreB < scoreS) printf("Sasha\n");
+        else printf("Draw\n");
+    }
+
+    free(perm);
+    free(scoreArr);
+    free(firstVisit);
+    free(order);
+    free(prefixSum);
+
+    return 0;
+}
 

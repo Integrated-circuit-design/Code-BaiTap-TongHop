@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_N 50
+#define MAX_K 50
+#define MAX_ELEMENT 50
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int sets[MAX_N][MAX_K];
+        int sizes[MAX_N];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &sizes[i]);
+            for (int j = 0; j < sizes[i]; j++) {
+                scanf("%d", &sets[i][j]);
+            }
+        }
+        
+        bool full_union[MAX_ELEMENT + 1] = {false};
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < sizes[i]; j++) {
+                full_union[sets[i][j]] = true;
+            }
+        }
+        
+        int max_size = 0;
+        unsigned long long limit = 1ULL << n;
+        
+        for (unsigned long long mask = 1; mask < limit - 1; mask++) {
+            bool curr_union[MAX_ELEMENT + 1] = {false};
+            
+            for (int i = 0; i < n; i++) {
+                if (mask & (1ULL << i)) {
+                    for (int j = 0; j < sizes[i]; j++) {
+                        curr_union[sets[i][j]] = true;
+                    }
+                }
+            }
+            
+            bool equal = true;
+            for (int e = 1; e <= MAX_ELEMENT; e++) {
+                if (curr_union[e] != full_union[e]) {
+                    equal = false;
+                    break;
+                }
+            }
+            
+            if (!equal) {
+                int count = 0;
+                for (int e = 1; e <= MAX_ELEMENT; e++) {
+                    if (curr_union[e]) count++;
+                }
+                if (count > max_size) max_size = count;
+            }
+        }
+        
+        printf("%d\n", max_size);
+    }
+    
+    return 0;
+}
 

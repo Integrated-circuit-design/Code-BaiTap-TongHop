@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    long long n, m;
+    scanf("%lld %lld", &n, &m);
+
+    if (m == 1) {
+        printf("2\n");
+    } else if (m == n) {
+        printf("%lld\n", n - 1);
+    } else {
+        long long a1 = m - 1;
+        long long a2 = m + 1;
+
+        long long countA1 = (m + a1) / 2;
+        long long countA2 = n - ((m + a2) / 2);
+
+        if (countA1 >= countA2) {
+            printf("%lld\n", a1);
+        } else {
+            printf("%lld\n", a2);
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        int n; 
+        scanf("%d", &n);
+        ll given[n];
+        
+        for (int i = 0; i < n - 1; i++) {
+            scanf("%lld", &given[i]);
+        }
+
+        ll S = (ll)n * (n + 1) / 2;
+
+        ll full_prefix[n];
+        
+        int inserted = 0;
+
+        int i = 0, j = 0;
+        while (i < n) {
+            if (!inserted && (j == n - 1 || given[j] > (i > 0 ? full_prefix[i - 1] : 0))) {
+                if (i == 0) {
+                    full_prefix[i] = 0;
+                } else {
+                    full_prefix[i] = full_prefix[i - 1];
+                }
+                inserted = 1;
+                i++;
+            } else {
+                full_prefix[i] = given[j];
+                i++; j++;
+            }
+        }
+
+        if (!inserted) {
+            full_prefix[n - 1] = S;
+        }
+
+        int freq[n + 1];
+        for (int k = 1; k <= n; k++) freq[k] = 0;
+
+        int valid = 1;
+        ll prev = 0;
+        for (int k = 0; k < n; k++) {
+            ll val = full_prefix[k] - prev;
+            prev = full_prefix[k];
+            if (val < 1 || val > n) {
+                valid = 0;
+                break;
+            }
+            freq[val]++;
+        }
+
+        for (int k = 1; k <= n; k++) {
+            if (freq[k] != 1) {
+                valid = 0;
+                break;
+            }
+        }
+
+        printf(valid ? "YES\n" : "NO\n");
+    }
+
+    return 0;
+}
 

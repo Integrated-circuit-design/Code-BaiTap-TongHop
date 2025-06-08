@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAX_BITS 30
+
+int canFormSum(long long target, int freq[]) {
+    for (int bit = MAX_BITS - 1; bit >= 0; bit--) {
+        long long powerVal = 1LL << bit;
+        if (freq[bit] == 0) continue;
+
+        long long needed = target / powerVal;
+        if (needed > freq[bit]) needed = freq[bit];
+
+        target -= needed * powerVal;
+        if (target == 0) return 1;
+    }
+    return target == 0;
+}
+
+int main() {
+    int Q; 
+    scanf("%d", &Q);
+
+    int freq[MAX_BITS] = {0};
+
+    for (int i = 0; i < Q; i++) {
+        int queryType, val;
+        scanf("%d %d", &queryType, &val);
+
+        if (queryType == 1) {
+            freq[val]++;
+        } else {
+            if (canFormSum(val, freq)) {
+                printf("YES\n");
+            } else {
+                printf("NO\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

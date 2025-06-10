@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int a[MAXN];
+
+int check(int n, int k) {
+    int current_or = 0;
+    for (int i = 0; i < k; i++) {
+        current_or |= a[i];
+    }
+
+    int expected_or = current_or;
+
+    for (int start = 1; start <= n - k; start++) {
+        current_or = 0;
+        for (int i = start; i < start + k; i++) {
+            current_or |= a[i];
+        }
+        if (current_or != expected_or) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        int n; 
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int left = 1, right = n, ans = n;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (check(n, mid)) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

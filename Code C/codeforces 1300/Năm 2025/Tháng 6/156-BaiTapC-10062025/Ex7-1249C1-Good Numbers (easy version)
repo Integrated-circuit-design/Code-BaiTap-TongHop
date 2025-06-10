@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+#define MAX_DIGITS 25
+
+int to_base3(int n, int digits[]) {
+    int len = 0;
+    while (n > 0) {
+        digits[len++] = n % 3;
+        n /= 3;
+    }
+    return len;
+}
+
+int from_base3(int digits[], int len) {
+    int res = 0, pow3 = 1;
+    for (int i = 0; i < len; i++) {
+        res += digits[i] * pow3;
+        pow3 *= 3;
+    }
+    return res;
+}
+
+int fix_digits(int digits[], int len) {
+    for (int i = 0; i < len; i++) {
+        if (digits[i] == 2) {
+            digits[i] = 0;
+            int j = i + 1;
+            while (j < len && digits[j] == 1) {
+                digits[j] = 0;
+                j++;
+            }
+            if (j == len) {
+                digits[j] = 1;
+                len++;
+            } else {
+                digits[j] += 1;
+            }
+            for (int k = 0; k < i; k++) {
+                digits[k] = 0;
+            }
+            break;
+        }
+    }
+    return len;
+}
+
+int main() {
+    int q; 
+    scanf("%d", &q);
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+
+        int digits[MAX_DIGITS] = {0};
+        int len = to_base3(n, digits);
+        len = fix_digits(digits, len);
+
+        int ans = from_base3(digits, len);
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 1005
+
+struct Vertex {
+    int edges_count;
+    int id;
+};
+
+int vertex_cmp(const void *a, const void *b) {
+    struct Vertex *v1 = (struct Vertex*)a;
+    struct Vertex *v2 = (struct Vertex*)b;
+    if (v1->edges_count < v2->edges_count) return -1;
+    if (v1->edges_count > v2->edges_count) return 1;
+    return 0;
+}
+
+int main() {
+    int tests;
+    scanf("%d", &tests);
+
+    while (tests--) {
+        int n;
+        scanf("%d", &n);
+
+        char adjacency[MAXN][MAXN];
+        struct Vertex vertices[MAXN];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%s", adjacency[i]);
+            vertices[i].edges_count = 0;
+            vertices[i].id = i;
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (adjacency[i][j] == '1') {
+                    vertices[i].edges_count++;
+                }
+            }
+        }
+
+        qsort(vertices, n, sizeof(struct Vertex), vertex_cmp);
+
+        int permutation[MAXN];
+        for (int pos = 0; pos < n; pos++) {
+            permutation[vertices[pos].id] = pos + 1;
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d", permutation[i]);
+            if (i != n - 1) printf(" ");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

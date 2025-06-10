@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        long long str, intl, exp;
+        scanf("%lld %lld %lld", &str, &intl, &exp);
+
+        long long count = 0;
+
+        for (long long x = 0; x <= exp; x++) {
+            long long newStr = str + x;
+            long long newInt = intl + (exp - x);
+            if (newStr > newInt) {
+                count++;
+            }
+        }
+
+        printf("%lld\n", count);
+    }
+
+    return 0;
+}
 

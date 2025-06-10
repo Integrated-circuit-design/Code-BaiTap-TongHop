@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int canMakeZero(long long a, long long b) {
+    long long total = a + b;
+    long long minVal = (a < b) ? a : b;
+    long long maxVal = (a > b) ? a : b;
+
+    if (total % 3 != 0) return 0;
+    if (minVal * 2 < maxVal) return 0;
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+
+        if (canMakeZero(a, b)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

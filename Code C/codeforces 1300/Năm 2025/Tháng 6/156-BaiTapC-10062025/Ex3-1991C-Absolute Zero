@@ -1,1 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAXN 200005
+
+long long a[MAXN];
+long long ops[45];
+
+bool is_all_zero(long long arr[], int n) {
+    for (int i = 0; i < n; i++)
+        if (arr[i] != 0)
+            return false;
+    return true;
+}
+
+long long find_max(long long arr[], int n) {
+    long long max_val = arr[0];
+    for (int i = 1; i < n; i++)
+        if (arr[i] > max_val)
+            max_val = arr[i];
+    return max_val;
+}
+
+void update_array(long long arr[], int n, long long x) {
+    for (int i = 0; i < n; i++) {
+        long long diff = arr[i] - x;
+        arr[i] = diff >= 0 ? diff : -diff;
+    }
+}
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+    while (t--) {
+        int n; 
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++)
+            scanf("%lld", &a[i]);
+
+        if (is_all_zero(a, n)) {
+            printf("0\n\n");
+            continue;
+        }
+
+        int count = 0;
+        bool success = false;
+
+        for (int step = 0; step < 40; step++) {
+            long long x = find_max(a, n);
+            if (x == 0) {
+                success = true;
+                break;
+            }
+            ops[count++] = x;
+            update_array(a, n, x);
+
+            if (is_all_zero(a, n)) {
+                success = true;
+                break;
+            }
+        }
+
+        if (!success) {
+            printf("-1\n");
+        } else {
+            printf("%d\n", count);
+            for (int i = 0; i < count; i++) {
+                printf("%lld", ops[i]);
+                if (i < count - 1) printf(" ");
+            }
+            printf("\n");
+        }
+    }
+    return 0;
+}
 

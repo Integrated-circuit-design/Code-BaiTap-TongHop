@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        long long k, l1, r1, l2, r2;
+        scanf("%lld %lld %lld %lld %lld", &k, &l1, &r1, &l2, &r2);
+
+        long long answer = 0;
+        long long currentPower = 1;
+
+        for (;;) {
+            long long startX = l2 / currentPower;
+            if (l2 % currentPower != 0) startX++;
+
+            long long endX = r2 / currentPower;
+
+            if (startX < l1) startX = l1;
+            if (endX > r1) endX = r1;
+
+            if (startX <= endX) {
+                answer += (endX - startX + 1);
+            }
+
+            if (currentPower > r2 / k) break;
+
+            currentPower *= k;
+        }
+
+        printf("%lld\n", answer);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+typedef long long ll;
+
+ll a[MAXN], b[MAXN];
+ll prefixA[MAXN];
+ll bSorted[MAXN];
+
+int cmp(const void *x, const void *y) {
+    ll a = *(ll*)x;
+    ll b = *(ll*)y;
+    if (a < b) return -1;
+    else if (a > b) return 1;
+    else return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        for (int i = 0; i < n; i++) scanf("%lld", &b[i]);
+
+        prefixA[0] = 0;
+        for (int i = 1; i <= m; i++) {
+            prefixA[i] = prefixA[i-1] + a[i-1];
+        }
+
+        ll res = (ll)1e15;
+
+        for (int i = 1; i <= m; i++) {
+            int countB = n - i;
+
+            int len = n - i;
+            for (int j = 0; j < len; j++) {
+                bSorted[j] = b[i + j];
+            }
+
+            qsort(bSorted, len, sizeof(ll), cmp);
+
+            ll sumB = 0;
+            for (int j = 0; j < countB; j++) {
+                sumB += bSorted[j];
+            }
+
+            ll cost = prefixA[i] + sumB;
+            if (cost < res) res = cost;
+        }
+
+        printf("%lld\n", res);
+    }
+    return 0;
+}
 

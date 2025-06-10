@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAXN 10000000
+
+char is_prime[MAXN + 1];
+unsigned int primes[MAXN / 10];
+unsigned int prime_count = 0;
+
+void sieve(unsigned int n) {
+    for (unsigned int i = 0; i <= n; i++)
+        is_prime[i] = 1;
+    is_prime[0] = 0;
+    is_prime[1] = 0;
+
+    for (unsigned int i = 2; i * i <= n; i++) {
+        if (is_prime[i]) {
+            for (unsigned int j = i * i; j <= n; j += i)
+                is_prime[j] = 0;
+        }
+    }
+
+    prime_count = 0;
+    for (unsigned int i = 2; i <= n; i++) {
+        if (is_prime[i]) {
+            primes[prime_count++] = i;
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    int n_values[t];
+    unsigned int max_n = 0;
+
+    for (int i = 0; i < t; i++) {
+        scanf("%d", &n_values[i]);
+        if ((unsigned int)n_values[i] > max_n) {
+            max_n = n_values[i];
+        }
+    }
+
+    sieve(max_n);
+
+    for (int i = 0; i < t; i++) {
+        unsigned int n = (unsigned int)n_values[i];
+        long long count = 0;
+
+        for (unsigned int j = 0; j < prime_count && primes[j] <= n; j++) {
+            count += n / primes[j];
+        }
+        printf("%lld\n", count);
+    }
+
+    return 0;
+}
 

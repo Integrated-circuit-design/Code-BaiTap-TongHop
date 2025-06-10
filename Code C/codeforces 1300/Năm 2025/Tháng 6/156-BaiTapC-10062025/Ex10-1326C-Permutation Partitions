@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MOD 998244353
+
+int cmp(const void *a, const void *b) {
+    int x = *(int*)a;
+    int y = *(int*)b;
+    return (x > y) - (x < y);
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int *p = (int*)malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &p[i]);
+    }
+
+    int threshold = n - k + 1;
+
+    int *positions = (int*)malloc(k * sizeof(int));
+    int idx = 0;
+    for (int i = 0; i < n; i++) {
+        if (p[i] >= threshold) {
+            positions[idx++] = i;
+        }
+    }
+
+    qsort(positions, k, sizeof(int), cmp);
+
+    long long max_sum = 0;
+    for (int x = threshold; x <= n; x++) {
+        max_sum += x;
+    }
+
+    long long ways = 1;
+    for (int i = 1; i < k; i++) {
+        long long gap = positions[i] - positions[i - 1];
+        ways = (ways * gap) % MOD;
+    }
+
+    printf("%lld %lld\n", max_sum, ways);
+
+    free(p);
+    free(positions);
+    return 0;
+}
 

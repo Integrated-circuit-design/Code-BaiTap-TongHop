@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+#define OFFSET 200000000
+
+int visited[400000010];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        memset(visited, 0, sizeof(int) * (2 * OFFSET + 10));
+
+        long long prefixSum = 0;
+        int count = 0;
+
+        visited[OFFSET] = 1;
+
+        for (int i = 0; i < n; i++) {
+            prefixSum += a[i];
+            int idx = (int)(prefixSum + OFFSET);
+            if (visited[idx]) {
+                count++;
+                memset(visited, 0, sizeof(int) * (2 * OFFSET + 10));
+                prefixSum = 0;
+                visited[OFFSET] = 1;
+            } else {
+                visited[idx] = 1;
+            }
+        }
+
+        printf("%d\n", count);
+    }
+
+    return 0;
+}
 

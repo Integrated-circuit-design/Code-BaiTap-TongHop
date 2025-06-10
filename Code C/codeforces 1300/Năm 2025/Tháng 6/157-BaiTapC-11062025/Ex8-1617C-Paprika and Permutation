@@ -1,1 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAXN 200005
+
+int compareInt(const void* a, const void* b) {
+    int aa = *(int*)a;
+    int bb = *(int*)b;
+    return (aa > bb) - (aa < bb);
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        int *arr = (int*)malloc(n * sizeof(int));
+        bool *present = (bool*)calloc(n + 1, sizeof(bool));
+        int *leftover = (int*)malloc(n * sizeof(int));
+        int leftoverCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (arr[i] >= 1 && arr[i] <= n && !present[arr[i]]) {
+                present[arr[i]] = true;
+            } else {
+                leftover[leftoverCount++] = arr[i];
+            }
+        }
+
+        int *missing = (int*)malloc(n * sizeof(int));
+        int missingCount = 0;
+        for (int i = 1; i <= n; i++) {
+            if (!present[i]) {
+                missing[missingCount++] = i;
+            }
+        }
+
+        if (leftoverCount < missingCount) {
+            printf("-1\n");
+            free(arr);
+            free(present);
+            free(leftover);
+            free(missing);
+            continue;
+        }
+
+        qsort(leftover, leftoverCount, sizeof(int), compareInt);
+        qsort(missing, missingCount, sizeof(int), compareInt);
+
+        int ops = 0;
+        int idxLeftover = 0;
+        bool fail = false;
+
+        for (int i = 0; i < missingCount; i++) {
+            while (idxLeftover < leftoverCount && leftover[idxLeftover] < 2 * missing[i]) {
+                idxLeftover++;
+            }
+            if (idxLeftover == leftoverCount) {
+                fail = true;
+                break;
+            }
+            ops++;
+            idxLeftover++;
+        }
+
+        if (fail) {
+            printf("-1\n");
+        } else {
+            printf("%d\n", ops);
+        }
+
+        free(arr);
+        free(present);
+        free(leftover);
+        free(missing);
+    }
+
+    return 0;
+}
 

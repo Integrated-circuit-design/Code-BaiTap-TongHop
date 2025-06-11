@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int find_parent(int parent[], int x) {
+    if (parent[x] != x)
+        parent[x] = find_parent(parent, parent[x]);
+    return parent[x];
+}
+
+void union_set(int parent[], int rank[], int a, int b) {
+    a = find_parent(parent, a);
+    b = find_parent(parent, b);
+    if (a != b) {
+        if (rank[a] < rank[b]) {
+            parent[a] = b;
+        } else if (rank[b] < rank[a]) {
+            parent[b] = a;
+        } else {
+            parent[b] = a;
+            rank[a]++;
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int *p = (int *)malloc(n * sizeof(int));
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &p[i]);
+        }
+
+        int *parent = (int *)malloc(n * sizeof(int));
+        int *rank = (int *)calloc(n, sizeof(int));
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            rank[i] = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (p[i] > p[j]) {
+                    union_set(parent, rank, i, j);
+                }
+            }
+        }
+
+        int components = 0;
+        for (int i = 0; i < n; i++) {
+            if (parent[i] == i) {
+                components++;
+            }
+        }
+
+        printf("%d\n", components);
+
+        free(p);
+        free(parent);
+        free(rank);
+    }
+    return 0;
+}
 

@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+long long absll(long long x) {
+    return x < 0 ? -x : x;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        int a[MAXN];
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        long long coins = 0;
+        int start = 0, end = n - 1;
+
+        while (start <= end) {
+            if (absll(a[start]) >= absll(a[end])) {
+                coins += absll(a[start]);
+                if (a[start] > 0) {
+                    start = start + 1;
+                } else {
+                    end = start - 1;
+                }
+            } else {
+                coins += absll(a[end]);
+                if (a[end] > 0) {
+                    start = end + 1;
+                } else {
+                    end = end - 1;
+                }
+            }
+        }
+
+        printf("%lld\n", coins);
+    }
+
+    return 0;
+}
 

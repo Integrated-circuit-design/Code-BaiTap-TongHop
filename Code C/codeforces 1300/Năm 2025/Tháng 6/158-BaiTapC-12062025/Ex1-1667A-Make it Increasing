@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <limits.h>
+
+long long calculate_moves_left(int start, long long a[]) {
+    long long moves = 0;
+    long long last_value = 0;
+    for (int i = start; i >= 0; i--) {
+        long long k = last_value / a[i] + 1;
+        moves += k;
+        last_value = k * a[i];
+    }
+    return moves;
+}
+
+long long calculate_moves_right(int start, int n, long long a[]) {
+    long long moves = 0;
+    long long last_value = 0;
+    for (int i = start; i < n; i++) {
+        long long k = last_value / a[i] + 1;
+        moves += k;
+        last_value = k * a[i];
+    }
+    return moves;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    long long a[n];
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+    long long min_total_moves = LLONG_MAX;
+
+    for (int i = 0; i < n; i++) {
+        long long left_moves = 0;
+        long long right_moves = 0;
+
+        if (i > 0) {
+            left_moves = calculate_moves_left(i - 1, a);
+        }
+        if (i < n - 1) {
+            right_moves = calculate_moves_right(i + 1, n, a);
+        }
+
+        long long total_moves = left_moves + right_moves;
+        if (total_moves < min_total_moves) {
+            min_total_moves = total_moves;
+        }
+    }
+
+    printf("%lld\n", min_total_moves);
+
+    return 0;
+}
 

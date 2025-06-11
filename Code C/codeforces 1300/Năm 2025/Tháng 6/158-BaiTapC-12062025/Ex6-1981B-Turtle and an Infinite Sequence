@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        unsigned int n, m;
+        scanf("%u %u", &n, &m);
+
+        unsigned int answer = n;
+
+        unsigned int count = (m < 60) ? m : 60;
+        for (unsigned int offset = 1; offset <= count; offset++) {
+            if (offset > n) {
+                break;
+            }
+            unsigned int val = n - offset;
+            answer = answer | val;
+        }
+
+        printf("%u\n", answer);
+    }
+
+    return 0;
+}
 

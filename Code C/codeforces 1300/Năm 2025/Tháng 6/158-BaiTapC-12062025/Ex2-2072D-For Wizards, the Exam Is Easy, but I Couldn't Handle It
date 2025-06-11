@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define MAXN 2005
+
+int a[MAXN], b[MAXN], n;
+
+int count_inversions_simple(int arr[], int length) {
+    int inv = 0;
+    for (int i = 0; i < length - 1; i++) {
+        for (int j = i + 1; j < length; j++) {
+            if (arr[i] > arr[j]) inv++;
+        }
+    }
+    return inv;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int min_inv = 1000000000;
+        int best_l = 1, best_r = 1;
+
+        for (int l = 0; l < n; l++) {
+            for (int r = l; r < n; r++) {
+                for (int i = 0; i < n; i++) b[i] = a[i];
+
+                int first = b[l];
+                for (int i = l; i < r; i++) {
+                    b[i] = b[i + 1];
+                }
+                b[r] = first;
+
+                int inv = count_inversions_simple(b, n);
+
+                if (inv < min_inv) {
+                    min_inv = inv;
+                    best_l = l + 1;
+                    best_r = r + 1;
+                }
+            }
+        }
+
+        printf("%d %d\n", best_l, best_r);
+    }
+    return 0;
+}
 

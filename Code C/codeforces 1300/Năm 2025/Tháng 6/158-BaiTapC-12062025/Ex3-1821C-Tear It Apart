@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[200005];
+        scanf("%s", s);
+
+        int length = strlen(s);
+        int ans = length;
+
+        for (char c = 'a'; c <= 'z'; c++) {
+            int ops = 0;
+            int i = 0;
+
+            while (i < length) {
+                if (s[i] == c) {
+                    i++;
+                    continue;
+                }
+
+                int count = 0;
+                while (i < length && s[i] != c) {
+                    count++;
+                    i++;
+                }
+
+                ops += (count + 1) / 2;
+            }
+
+            if (ops < ans) {
+                ans = ops;
+            }
+        }
+
+        printf("%d\n", ans);
+    }
+
+    return 0;
+}
 

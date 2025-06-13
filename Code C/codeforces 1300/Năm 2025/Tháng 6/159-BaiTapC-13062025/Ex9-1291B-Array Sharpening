@@ -1,1 +1,62 @@
+#include <stdio.h>
 
+int kiem_tra_tang(int a[], int start, int end) {
+    for (int i = start; i <= end; i++) {
+        int gia_tri_can_thiet = i - start;
+        if (a[i] < gia_tri_can_thiet) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int kiem_tra_giam(int a[], int start, int end) {
+    for (int i = start; i <= end; i++) {
+        int gia_tri_can_thiet = end - i;
+        if (a[i] < gia_tri_can_thiet) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t > 0) {
+        int n;
+        scanf("%d", &n);
+        
+        int arr[300005];
+        int i;
+        for (i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+        
+        int tim_thay_dinh = 0;
+        
+        for (int dinh = 0; dinh < n && tim_thay_dinh == 0; dinh++) {
+            int phan_tang_ok = 1;
+            int phan_giam_ok = 1;
+            
+            if (dinh > 0) {
+                phan_tang_ok = kiem_tra_tang(arr, 0, dinh);
+            }
+            
+            if (dinh < n - 1) {
+                phan_giam_ok = kiem_tra_giam(arr, dinh, n - 1);
+            }
+            
+            if (phan_tang_ok == 1 && phan_giam_ok == 1) {
+                tim_thay_dinh = 1;
+            }
+        }
+        
+        printf("%s\n", tim_thay_dinh ? "Yes" : "No");
+        
+        t--;
+    }
+    
+    return 0;
+}

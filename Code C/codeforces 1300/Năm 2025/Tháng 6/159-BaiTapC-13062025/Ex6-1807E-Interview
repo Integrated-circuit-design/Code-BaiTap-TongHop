@@ -1,1 +1,50 @@
+#include <stdio.h>
 
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int pile_stones[200005];
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &pile_stones[i]);
+        }
+        
+        int left = 1, right = n;
+        
+        while (left < right) {
+            
+            int mid = (left + right) / 2;
+            int query_count = mid - left + 1;
+            
+            printf("? %d", query_count);
+            for (int pile = left; pile <= mid; pile++) {
+                printf(" %d", pile);
+            }
+            printf("\n");
+            fflush(stdout);
+            
+            int actual_weight;
+            scanf("%d", &actual_weight);
+            
+            int normal_weight = 0;
+            for (int pile = left; pile <= mid; pile++) {
+                normal_weight += pile_stones[pile];
+            }
+            
+            if (actual_weight > normal_weight) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        printf("! %d\n", left);
+        fflush(stdout);
+    }
+    
+    return 0;
+}

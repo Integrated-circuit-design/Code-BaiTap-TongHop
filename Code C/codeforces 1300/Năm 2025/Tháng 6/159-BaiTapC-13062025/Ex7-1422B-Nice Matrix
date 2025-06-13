@@ -1,1 +1,74 @@
+#include <stdio.h>
 
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int absolute(int x) {
+    return x < 0 ? -x : x;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases--) {
+        int rows, cols;
+        scanf("%d %d", &rows, &cols);
+        
+        int a[100][100];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                scanf("%d", &a[i][j]);
+            }
+        }
+        
+        int total_cost = 0;
+        
+        for (int i = 0; i <= (rows - 1) / 2; i++) {
+            for (int j = 0; j <= (cols - 1) / 2; j++) {
+                
+                int group_values[4];
+                int group_size = 0;
+                
+                group_values[group_size++] = a[i][j];
+                
+                if (j != cols - 1 - j) {
+                    group_values[group_size++] = a[i][cols - 1 - j];
+                }
+                
+                if (i != rows - 1 - i) {
+                    group_values[group_size++] = a[rows - 1 - i][j];
+                }
+                
+                if (i != rows - 1 - i && j != cols - 1 - j) {
+                    group_values[group_size++] = a[rows - 1 - i][cols - 1 - j];
+                }
+                
+                bubbleSort(group_values, group_size);
+                
+                int target = group_values[group_size / 2];
+                
+                int group_cost = 0;
+                for (int k = 0; k < group_size; k++) {
+                    group_cost += absolute(group_values[k] - target);
+                }
+                
+                total_cost += group_cost;
+            }
+        }
+        
+        printf("%d\n", total_cost);
+    }
+    
+    return 0;
+}

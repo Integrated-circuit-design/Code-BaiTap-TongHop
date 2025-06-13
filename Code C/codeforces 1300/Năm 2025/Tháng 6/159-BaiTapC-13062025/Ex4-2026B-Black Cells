@@ -1,1 +1,87 @@
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
+#define MAXN 2005
+#define INF 1000000000000000000LL
+
+long long tinh_k_cho_cap_lien_ke(long long arr[], int len) {
+    long long result = 0;
+    int i;
+    for (i = 0; i < len - 1; i += 2) {
+        long long dist = arr[i + 1] - arr[i];
+        if (dist > result) {
+            result = dist;
+        }
+    }
+    return result;
+}
+
+int sao_chep_mang_bo_qua(long long nguon[], int n, long long dich[], int skip) {
+    int j = 0;
+    int i;
+    for (i = 0; i < n; i++) {
+        if (i != skip) {
+            dich[j++] = nguon[i];
+        }
+    }
+    return j;
+}
+
+long long xu_ly_truong_hop_chan(long long a[], int n) {
+    return tinh_k_cho_cap_lien_ke(a, n);
+}
+
+long long xu_ly_truong_hop_le(long long a[], int n) {
+    long long ket_qua_nho_nhat = INF;
+    long long mang_tam[MAXN];
+    int i;
+    
+    for (i = 0; i < n; i++) {
+        int kich_thuoc_moi = sao_chep_mang_bo_qua(a, n, mang_tam, i);
+        
+        long long k_hien_tai = tinh_k_cho_cap_lien_ke(mang_tam, kich_thuoc_moi);
+        
+        if (k_hien_tai < 1) {
+            k_hien_tai = 1;
+        }
+        
+        if (k_hien_tai < ket_qua_nho_nhat) {
+            ket_qua_nho_nhat = k_hien_tai;
+        }
+    }
+    
+    return ket_qua_nho_nhat;
+}
+
+long long giai_mot_test() {
+    int n;
+    long long a[MAXN];
+    
+    scanf("%d", &n);
+    
+    int i;
+    for (i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+    
+    if (n % 2 == 0) {
+        return xu_ly_truong_hop_chan(a, n);
+    } else {
+        return xu_ly_truong_hop_le(a, n);
+    }
+}
+
+int main() {
+    int so_test;
+    scanf("%d", &so_test);
+    
+    while (so_test > 0) {
+        long long dap_an = giai_mot_test();
+        printf("%lld\n", dap_an);
+        so_test--;
+    }
+    
+    return 0;
+}
+```

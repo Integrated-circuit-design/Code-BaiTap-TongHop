@@ -1,1 +1,37 @@
+#include <stdio.h>
 
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+    
+    while (test_cases > 0) {
+        int n;
+        scanf("%d", &n);
+        
+        int arr[200005];
+        for (int idx = 0; idx < n; idx++) {
+            scanf("%d", &arr[idx]);
+        }
+        
+        long long result = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int val_i = arr[i];
+                int val_j = arr[j];
+                
+                int dieu_kien_1 = (val_i == val_j);
+                int dieu_kien_2 = ((val_i == 1 && val_j == 2) || (val_i == 2 && val_j == 1));
+                
+                if (dieu_kien_1 || dieu_kien_2) {
+                    result++;
+                }
+            }
+        }
+        
+        printf("%lld\n", result);
+        test_cases--;
+    }
+    
+    return 0;
+}

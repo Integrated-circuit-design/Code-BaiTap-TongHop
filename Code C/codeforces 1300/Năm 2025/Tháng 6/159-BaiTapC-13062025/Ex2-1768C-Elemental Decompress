@@ -1,1 +1,179 @@
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
+typedef struct {
+    int pos;
+    int val;
+} Pair;
+
+int compare(const void *a, const void *b) {
+    Pair *pa = (Pair*)a;
+    Pair *pb = (Pair*)b;
+    return pb->val - pa->val;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        
+        int a[n + 1];
+        int p[n + 1] = {0};
+        int q[n + 1] = {0};
+        
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &a[i]);
+        }
+        
+        Pair pairs[n];
+        for (int i = 0; i < n; i++) {
+            pairs[i].pos = i + 1;
+            pairs[i].val = a[i + 1];
+        }
+        qsort(pairs, n, sizeof(Pair), compare);
+        
+        int freq[n + 1] = {0};
+        for (int i = 1; i <= n; i++) {
+            freq[a[i]]++;
+        }
+        
+        int valid = 1;
+        for (int i = 1; i <= n; i++) {
+            if (freq[i] > 2) {
+                valid = 0;
+                break;
+            }
+        }
+        
+        if (!valid) {
+            printf("NO\n");
+            continue;
+        }
+        
+        int stack_p[n + 1], top_p = 0;
+        int stack_q[n + 1], top_q = 0;
+        
+        for (int i = 1; i <= n; i++) {
+            stack_p[top_p++] = i;
+            stack_q[top_q++] = i;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            int pos = pairs[i].pos;
+            int val = pairs[i].val;
+            
+            while (top_p > 0 && stack_p[top_p - 1] >= val) {
+                top_p--;
+            }
+            while (top_q > 0 && stack_q[top_q - 1] >= val) {
+                top_q--;
+            }
+            
+            int can_assign_val_to_p = 1, can_assign_val_to_q = 1;
+            
+            int found_in_p = 0, found_in_q = 0;
+            for (int j = 0; j < top_p; j++) {
+                if (stack_p[j] == val) {
+                    found_in_p = 1;
+                    break;
+                }
+            }
+            for (int j = 0; j < top_q; j++) {
+                if (stack_q[j] == val) {
+                    found_in_q = 1;
+                    break;
+                }
+            }
+            
+            if (found_in_p && found_in_q) {
+                p[pos] = val;
+                for (int j = 0; j < top_p; j++) {
+                    if (stack_p[j] == val) {
+                        for (int k = j; k < top_p - 1; k++) {
+                            stack_p[k] = stack_p[k + 1];
+                        }
+                        top_p--;
+                        break;
+                    }
+                }
+                
+                if (top_q > 0) {
+                    q[pos] = stack_q[top_q - 1];
+                    top_q--;
+                } else {
+                    valid = 0;
+                    break;
+                }
+            } else if (found_in_p) {
+                p[pos] = val;
+                for (int j = 0; j < top_p; j++) {
+                    if (stack_p[j] == val) {
+                        for (int k = j; k < top_p - 1; k++) {
+                            stack_p[k] = stack_p[k + 1];
+                        }
+                        top_p--;
+                        break;
+                    }
+                }
+                
+                if (top_q > 0) {
+                    q[pos] = stack_q[top_q - 1];
+                    top_q--;
+                } else {
+                    valid = 0;
+                    break;
+                }
+            } else if (found_in_q) {
+                q[pos] = val;
+                for (int j = 0; j < top_q; j++) {
+                    if (stack_q[j] == val) {
+                        for (int k = j; k < top_q - 1; k++) {
+                            stack_q[k] = stack_q[k + 1];
+                        }
+                        top_q--;
+                        break;
+                    }
+                }
+                
+                if (top_p > 0) {
+                    p[pos] = stack_p[top_p - 1];
+                    top_p--;
+                } else {
+                    valid = 0;
+                    break;
+                }
+            } else {
+                if (top_p > 0 && top_q > 0) {
+                    p[pos] = stack_p[top_p - 1];
+                    top_p--;
+                    q[pos] = stack_q[top_q - 1];
+                    top_q--;
+                } else {
+                    valid = 0;
+                    break;
+                }
+            }
+        }
+        
+        if (!valid) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+            for (int i = 1; i <= n; i++) {
+                printf("%d ", p[i]);
+            }
+            printf("\n");
+            for (int i = 1; i <= n; i++) {
+                printf("%d ", q[i]);
+            }
+            printf("\n");
+        }
+    }
+    
+    return 0;
+}
+```

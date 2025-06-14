@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+#define MAX 200005
+
+int fillings[MAX];
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        if (n == 1) {
+            printf("-1\n");
+            continue;
+        }
+
+        for (int i = 0; i < n; i++) {
+            fillings[i] = 0;
+        }
+
+        int fill_num = 1;
+        int possible = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (fillings[i] == 0) {
+                int found = 0;
+
+                for (int k = 1; ; k++) {
+                    int j = i + k * k;
+                    if (j >= n) break;
+
+                    if (fillings[j] == 0) {
+                        fillings[i] = fill_num;
+                        fillings[j] = fill_num;
+                        fill_num++;
+                        found = 1;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    possible = 0;
+                    break;
+                }
+            }
+        }
+
+        if (!possible) {
+            printf("-1\n");
+        } else {
+            for (int i = 0; i < n; i++) {
+                printf("%d ", fillings[i]);
+            }
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

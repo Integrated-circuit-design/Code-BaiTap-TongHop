@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 200005
+
+int t, m;
+char wall[2][MAX];
+int visited[2][MAX];
+
+int totalB;
+int countB;
+
+int dr[4] = {-1, 1, 0, 0};
+int dc[4] = {0, 0, -1, 1};
+
+int isValid(int r, int c) {
+    return (r >= 0 && r < 2 && c >= 0 && c < m && wall[r][c] == 'B' && !visited[r][c]);
+}
+
+void dfs(int r, int c) {
+    visited[r][c] = 1;
+    countB++;
+
+    for (int i = 0; i < 4; i++) {
+        int nr = r + dr[i];
+        int nc = c + dc[i];
+        if (isValid(nr, nc)) {
+            dfs(nr, nc);
+        }
+    }
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &m);
+        scanf("%s", wall[0]);
+        scanf("%s", wall[1]);
+
+        totalB = 0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < m; j++) {
+                if (wall[i][j] == 'B') totalB++;
+            }
+        }
+
+        int start_r = -1, start_c = -1;
+        for (int c = 0; c < m; c++) {
+            if (wall[0][c] == 'B') {
+                start_r = 0; start_c = c;
+                break;
+            }
+            if (wall[1][c] == 'B') {
+                start_r = 1; start_c = c;
+                break;
+            }
+        }
+
+        memset(visited, 0, sizeof(visited));
+        countB = 0;
+        if (start_r == -1) {
+            printf("NO\n");
+            continue;
+        }
+
+        dfs(start_r, start_c);
+
+        if (countB == totalB) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    long long result = n;
+
+    for (long long i = 2; i * i <= result; i++) {
+        while (result % (i * i) == 0) {
+            result /= i;
+        }
+    }
+
+    printf("%lld\n", result);
+
+    return 0;
+}
 

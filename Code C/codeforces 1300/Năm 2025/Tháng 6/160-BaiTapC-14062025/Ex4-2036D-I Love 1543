@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 1002
+
+char carpet[MAX][MAX];
+
+int countSequence(char *arr, int len) {
+    int count = 0;
+    for (int i = 0; i + 3 < len; i++) {
+        if (arr[i] == '1' && arr[i+1] == '5' && arr[i+2] == '4' && arr[i+3] == '3') {
+            count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    int t; scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%s", carpet[i]);
+        }
+
+        int totalCount = 0;
+        int layers = (n < m ? n : m) / 2;
+
+        for (int layer = 0; layer < layers; layer++) {
+            int top = layer;
+            int bottom = n - 1 - layer;
+            int left = layer;
+            int right = m - 1 - layer;
+
+            int len = 2 * (bottom - top + right - left);
+            char *arr = (char *)malloc(sizeof(char) * len);
+
+            int pos = 0;
+
+            for (int c = left; c <= right; c++) arr[pos++] = carpet[top][c];
+            for (int r = top + 1; r <= bottom - 1; r++) arr[pos++] = carpet[r][right];
+            for (int c = right; c >= left; c--) arr[pos++] = carpet[bottom][c];
+            for (int r = bottom - 1; r >= top + 1; r--) arr[pos++] = carpet[r][left];
+
+            totalCount += countSequence(arr, len);
+
+            free(arr);
+        }
+
+        printf("%d\n", totalCount);
+    }
+
+    return 0;
+}
 

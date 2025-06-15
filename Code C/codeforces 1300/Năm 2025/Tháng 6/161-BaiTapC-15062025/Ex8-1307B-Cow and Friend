@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int _ = 0; _ < test_cases; _++) {
+        int fav_count;
+        long long distance_goal;
+        scanf("%d %lld", &fav_count, &distance_goal);
+
+        long long max_fav = 0;
+        int can_jump_direct = 0;
+
+        for (int i = 0; i < fav_count; i++) {
+            int fav;
+            scanf("%d", &fav);
+            if (fav == distance_goal) {
+                can_jump_direct = 1;
+            }
+            if (fav > max_fav) {
+                max_fav = fav;
+            }
+        }
+
+        if (can_jump_direct) {
+            printf("1\n");
+        } else if (max_fav >= distance_goal) {
+            printf("2\n");
+        } else {
+            long long steps = (distance_goal + max_fav - 1) / max_fav;
+            printf("%lld\n", steps);
+        }
+    }
+
+    return 0;
+}
 

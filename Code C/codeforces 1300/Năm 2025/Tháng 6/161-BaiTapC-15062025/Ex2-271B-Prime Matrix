@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define ROW_MAX 510
+#define COL_MAX 510
+#define MAX_NUM 100010
+
+int rows, cols;
+int grid[ROW_MAX][COL_MAX];
+bool prime_flag[MAX_NUM];
+int increment_needed[MAX_NUM];
+
+void generate_primes() {
+    for (int i = 0; i < MAX_NUM; i++)
+        prime_flag[i] = true;
+
+    prime_flag[0] = false;
+    prime_flag[1] = false;
+
+    for (int i = 2; i * i < MAX_NUM; i++) {
+        if (prime_flag[i]) {
+            for (int j = i * i; j < MAX_NUM; j += i)
+                prime_flag[j] = false;
+        }
+    }
+}
+
+void calculate_increments() {
+    increment_needed[MAX_NUM - 1] = 0;
+    for (int i = MAX_NUM - 2; i >= 0; i--) {
+        if (prime_flag[i]) {
+            increment_needed[i] = 0;
+        } else {
+            increment_needed[i] = increment_needed[i + 1] + 1;
+        }
+    }
+}
+
+int main() {
+    scanf("%d %d", &rows, &cols);
+
+    generate_primes();
+    calculate_increments();
+
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            scanf("%d", &grid[r][c]);
+        }
+    }
+
+    int minimal_moves = 1 << 30;
+
+    for (int r = 0; r < rows; r++) {
+        int total = 0;
+        for (int c = 0; c < cols; c++) {
+            total += increment_needed[grid[r][c]];
+        }
+        if (total < minimal_moves) minimal_moves = total;
+    }
+
+    for (int c = 0; c < cols; c++) {
+        int total = 0;
+        for (int r = 0; r < rows; r++) {
+            total += increment_needed[grid[r][c]];
+        }
+        if (total < minimal_moves) minimal_moves = total;
+    }
+
+    printf("%d\n", minimal_moves);
+    return 0;
+}
 

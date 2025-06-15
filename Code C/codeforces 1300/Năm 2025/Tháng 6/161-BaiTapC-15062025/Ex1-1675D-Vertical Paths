@@ -1,1 +1,109 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+typedef struct Node {
+    int vertex;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+int p[MAXN];
+int used[MAXN];
+int n, t;
+
+int root;
+
+void add_child(int u, int v) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->vertex = v;
+    newNode->next = adj[u];
+    adj[u] = newNode;
+}
+
+int dfs_path(int u, int path[]) {
+    used[u] = 1;
+    path[0] = u;
+
+    Node* cur = adj[u];
+    int childCount = 0;
+    Node* lastChild = NULL;
+
+    while (cur != NULL) {
+        if (!used[cur->vertex]) {
+            childCount++;
+            lastChild = cur;
+        }
+        cur = cur->next;
+    }
+
+    if (childCount == 1) {
+        int len = dfs_path(lastChild->vertex, path + 1);
+        return len + 1;
+    }
+    return 1;
+}
+
+void free_adj(int n) {
+    for (int i = 1; i <= n; i++) {
+        Node* cur = adj[i];
+        while (cur != NULL) {
+            Node* tmp = cur;
+            cur = cur->next;
+            free(tmp);
+        }
+        adj[i] = NULL;
+    }
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        root = -1;
+
+        for (int i = 1; i <= n; i++) {
+            used[i] = 0;
+            adj[i] = NULL;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &p[i]);
+            if (p[i] == i) root = i;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if (p[i] != i) {
+                add_child(p[i], i);
+            }
+        }
+
+        int **paths = (int**)malloc(sizeof(int*) * n);
+        int *path_lengths = (int*)malloc(sizeof(int) * n);
+        int path_count = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (!used[i]) {
+                paths[path_count] = (int*)malloc(sizeof(int) * n);
+                path_lengths[path_count] = dfs_path(i, paths[path_count]);
+                path_count++;
+            }
+        }
+
+        printf("%d\n", path_count);
+        for (int i = 0; i < path_count; i++) {
+            printf("%d\n", path_lengths[i]);
+            for (int j = 0; j < path_lengths[i]; j++) {
+                printf("%d%c", paths[i][j], j == path_lengths[i] - 1 ? '\n' : ' ');
+            }
+            free(paths[i]);
+        }
+
+        free(paths);
+        free(path_lengths);
+        free_adj(n);
+    }
+    return 0;
+}
 

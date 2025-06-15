@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 200005
+
+int array[MAX];
+int flag[MAX];
+
+int compute_mex(int *arr, int len) {
+    memset(flag, 0, sizeof(int) * (len + 5));
+    for (int i = 0; i < len; i++) {
+        if (arr[i] <= len + 2 && arr[i] >= 0)
+            flag[arr[i]] = 1;
+    }
+    for (int i = 0; ; i++) {
+        if (flag[i] == 0)
+            return i;
+    }
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &array[i]);
+        }
+
+        int mex_before = compute_mex(array, n);
+        int mex_after = mex_before + 1;
+
+        int start = -1, end = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (array[i] == mex_after) {
+                if (start == -1) start = i;
+                end = i;
+            }
+        }
+
+        if (start == -1) {
+            int valid = 1;
+            memset(flag, 0, sizeof(int) * (mex_before + 2));
+            for (int i = 0; i < n; i++) {
+                if (array[i] < mex_before) flag[array[i]] = 1;
+            }
+            for (int i = 0; i < mex_before; i++) {
+                if (!flag[i]) {
+                    valid = 0;
+                    break;
+                }
+            }
+            if (valid) printf("Yes\n");
+            else printf("No\n");
+        }
+        else {
+            int *temp = (int*)malloc(n * sizeof(int));
+            for (int i = 0; i < n; i++) {
+                if (i >= start && i <= end)
+                    temp[i] = mex_before;
+                else
+                    temp[i] = array[i];
+            }
+
+            int new_mex = compute_mex(temp, n);
+            free(temp);
+
+            if (new_mex == mex_after) printf("Yes\n");
+            else printf("No\n");
+        }
+    }
+
+    return 0;
+}
 

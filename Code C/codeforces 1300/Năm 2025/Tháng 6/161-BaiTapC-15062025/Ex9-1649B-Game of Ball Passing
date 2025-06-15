@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int tc = 0; tc < test_cases; tc++) {
+        int player_count;
+        scanf("%d", &player_count);
+
+        long long total_pass = 0;
+        int pass_num;
+        
+        for (int i = 0; i < player_count; i++) {
+            scanf("%d", &pass_num);
+            total_pass += pass_num;
+        }
+
+        if (total_pass == 0) {
+            printf("0\n");
+        } else {
+            long long min_balls = total_pass - player_count + 1;
+            if (min_balls < 1) min_balls = 1;
+            printf("%lld\n", min_balls);
+        }
+    }
+
+    return 0;
+}
 

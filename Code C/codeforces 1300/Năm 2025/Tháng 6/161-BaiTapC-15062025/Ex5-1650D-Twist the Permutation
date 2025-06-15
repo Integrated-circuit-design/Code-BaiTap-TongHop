@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 105
+
+int checkSubsequence(const char s[], const char t[]) {
+    int sIndex = 0, tIndex = 0;
+    int lenS = strlen(s);
+    int lenT = strlen(t);
+
+    while (sIndex < lenS && tIndex < lenT) {
+        if (s[sIndex] == t[tIndex]) {
+            sIndex++;
+        }
+        tIndex++;
+    }
+    return sIndex == lenS;
+}
+
+void countChars(const char str[], int count[]) {
+    for (int i = 0; i < 26; i++) {
+        count[i] = 0;
+    }
+    for (int i = 0; str[i] != '\0'; i++) {
+        count[str[i] - 'a']++;
+    }
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        char s[MAX_LEN], t[MAX_LEN], p[MAX_LEN];
+        int countS[26], countT[26], countP[26];
+
+        scanf("%s %s %s", s, t, p);
+
+        if (!checkSubsequence(s, t)) {
+            printf("NO\n");
+            continue;
+        }
+
+        countChars(s, countS);
+        countChars(t, countT);
+        countChars(p, countP);
+
+        int canTransform = 1;
+        for (int i = 0; i < 26; i++) {
+            if (countS[i] + countP[i] < countT[i]) {
+                canTransform = 0;
+                break;
+            }
+        }
+
+        if (canTransform)
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+
+    return 0;
+}
 

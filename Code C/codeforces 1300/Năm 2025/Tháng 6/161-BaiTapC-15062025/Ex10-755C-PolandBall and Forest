@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define MAXN 10005
+#define MAXM 20010
+
+int n;
+int p[MAXN];
+int visited[MAXN];
+
+int edges_u[MAXM];
+int edges_v[MAXM];
+int edge_count = 0;
+
+int adj_count[MAXN];
+int adj[MAXN][20];
+
+void add_edge(int u, int v) {
+    adj[u][adj_count[u]++] = v;
+}
+
+void dfs(int u) {
+    visited[u] = 1;
+    for (int i = 0; i < adj_count[u]; i++) {
+        int v = adj[u][i];
+        if (!visited[v]) {
+            dfs(v);
+        }
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) scanf("%d", &p[i]);
+
+    for (int i = 1; i <= n; i++) {
+        if (p[i] != i) {
+            add_edge(i, p[i]);
+            add_edge(p[i], i);
+        }
+    }
+
+    int trees = 0;
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i]) {
+            dfs(i);
+            trees++;
+        }
+    }
+
+    printf("%d\n", trees);
+    return 0;
+}
 

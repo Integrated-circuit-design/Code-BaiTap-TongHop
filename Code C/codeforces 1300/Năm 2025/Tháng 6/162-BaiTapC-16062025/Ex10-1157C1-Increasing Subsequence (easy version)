@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+char moves[MAXN];
+
+int count_left(int l, int r, int last) {
+    int cnt = 0;
+    while (l <= r && a[l] > last) {
+        last = a[l++];
+        cnt++;
+    }
+    return cnt;
+}
+
+int count_right(int l, int r, int last) {
+    int cnt = 0;
+    while (r >= l && a[r] > last) {
+        last = a[r--];
+        cnt++;
+    }
+    return cnt;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    int l = 0, r = n - 1, last = 0, m = 0;
+
+    while (l <= r) {
+        int lv = a[l], rv = a[r];
+
+        if (lv <= last && rv <= last) break;
+
+        if (lv > last && rv > last) {
+            if (lv < rv) {
+                moves[m++] = 'L';
+                last = a[l++];
+            } else if (rv < lv) {
+                moves[m++] = 'R';
+                last = a[r--];
+            } else {
+                int cntL = count_left(l, r, last);
+                int cntR = count_right(l, r, last);
+                if (cntL >= cntR) {
+                    for (int i = 0; i < cntL; i++) moves[m++] = 'L';
+                } else {
+                    for (int i = 0; i < cntR; i++) moves[m++] = 'R';
+                }
+                break;
+            }
+        } else if (lv > last) {
+            moves[m++] = 'L';
+            last = a[l++];
+        } else {
+            moves[m++] = 'R';
+            last = a[r--];
+        }
+    }
+
+    moves[m] = '\0';
+    printf("%d\n%s\n", m, moves);
+    return 0;
+}
 

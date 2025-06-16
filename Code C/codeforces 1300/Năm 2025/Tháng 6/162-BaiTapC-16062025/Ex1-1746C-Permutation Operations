@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+int used[MAXN];
+int picked[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            used[i] = 0;
+            picked[i] = 0;
+        }
+
+        int ans[MAXN];
+
+        for (int op = 0; op < n; op++) {
+            int min_val = 1e9;
+            int idx = -1;
+
+            for (int i = 0; i < n; i++) {
+                if (!picked[i] && a[i] < min_val) {
+                    min_val = a[i];
+                    idx = i;
+                }
+            }
+
+            picked[idx] = 1;
+            ans[op] = idx + 1;
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d%c", ans[i], (i == n - 1) ? '\n' : ' ');
+        }
+    }
+
+    return 0;
+}
 

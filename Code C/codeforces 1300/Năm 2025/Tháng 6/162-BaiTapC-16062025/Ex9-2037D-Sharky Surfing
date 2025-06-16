@@ -1,1 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+#define INF 1000000000
+
+typedef struct {
+    int l, r;
+} Hurdle;
+
+typedef struct {
+    int x, v;
+} PowerUp;
+
+Hurdle hurdles[MAXN];
+PowerUp powerups[MAXN];
+
+int compare_hurdle(const void *a, const void *b) {
+    return ((Hurdle*)a)->l - ((Hurdle*)b)->l;
+}
+
+int compare_powerup(const void *a, const void *b) {
+    return ((PowerUp*)a)->x - ((PowerUp*)b)->x;
+}
+
+typedef struct {
+    int v[MAXN];
+    int size;
+} MinHeap;
+
+void heap_push(MinHeap *h, int val) {
+    int i = h->size++;
+    while (i > 0 && h->v[(i-1)/2] > val) {
+        h->v[i] = h->v[(i-1)/2];
+        i = (i - 1) / 2;
+    }
+    h->v[i] = val;
+}
+
+int heap_pop(MinHeap *h) {
+    int ret = h->v[0];
+    int tmp = h->v[--h->size];
+    int i = 0;
+    while (2*i+1 < h->size) {
+        int child = 2*i+1;
+        if (child+1 < h->size && h->v[child+1] < h->v[child]) child++;
+        if (tmp <= h->v[child]) break;
+        h->v[i] = h->v[child];
+        i = child;
+    }
+    h->v[i] = tmp;
+    return ret;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m, L;
+        scanf("%d %d %d", &n, &m, &L);
+        
+        for (int i = 0; i < n; ++i)
+            scanf("%d %d", &hurdles[i].l, &hurdles[i].r);
+        for (int i = 0; i < m; ++i)
+            scanf("%d %d", &powerups[i].x, &powerups[i].v);
+
+        qsort(hurdles, n, sizeof(Hurdle), compare_hurdle);
+        qsort(powerups, m, sizeof(PowerUp), compare_powerup);
+
+        int pos = 1, jump = 1, used = 0, i = 0, j = 0, hurdle = 0;
+        MinHeap heap = {.size = 0};
+
+        while (pos < L) {
+            int max_reach = pos + jump;
+
+            while (hurdle < n && hurdles[hurdle].r < pos)
+                hurdle++;
+
+            if (hurdle < n && hurdles[hurdle].l <= max_reach)
+                max_reach = hurdles[hurdle].l - 1;
+
+            while (j < m && powerups[j].x <= max_reach) {
+                if (powerups[j].x >= pos)
+                    heap_push(&heap, powerups[j].v);
+                j++;
+            }
+
+            if (max_reach == pos) {
+                if (heap.size == 0) {
+                    used = -1;
+                    break;
+                }
+                jump += heap_pop(&heap);
+                used++;
+            } else {
+                pos = max_reach;
+            }
+        }
+
+        printf("%d\n", used);
+    }
+    return 0;
+}
 

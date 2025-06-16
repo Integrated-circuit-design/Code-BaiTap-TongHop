@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 400005
+#define MOD 1000000007
+
+int pos1[MAXN], pos2[MAXN];
+int visited[MAXN];
+
+long long fast_pow(int x) {
+    long long res = 1, base = 2;
+    while (x > 0) {
+        if (x % 2 == 1) res = (res * base) % MOD;
+        base = (base * base) % MOD;
+        x /= 2;
+    }
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[MAXN], b[MAXN];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            pos1[a[i]] = i;
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+            pos2[b[i]] = i;
+        }
+
+        memset(visited, 0, sizeof(int) * (n + 2));
+
+        int cycles = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                cycles++;
+                int cur = i;
+
+                while (!visited[cur]) {
+                    visited[cur] = 1;
+                    int value = b[cur];
+                    int next = pos1[value];
+                    cur = next;
+                }
+            }
+        }
+
+        printf("%lld\n", fast_pow(cycles));
+    }
+
+    return 0;
+}
 

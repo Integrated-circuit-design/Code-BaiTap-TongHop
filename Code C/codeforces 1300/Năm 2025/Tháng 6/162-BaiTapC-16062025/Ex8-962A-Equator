@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int n, x;
+    scanf("%d", &n);
+
+    long long total = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x);
+        total += x;
+    }
+
+    fseek(stdin, 0, SEEK_SET);
+
+    scanf("%d", &n);
+
+    long long sum = 0;
+    long long half = (total + 1) / 2;
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &x);
+        sum += x;
+        if (sum >= half) {
+            printf("%d\n", i);
+            break;
+        }
+    }
+
+    return 0;
+}
 

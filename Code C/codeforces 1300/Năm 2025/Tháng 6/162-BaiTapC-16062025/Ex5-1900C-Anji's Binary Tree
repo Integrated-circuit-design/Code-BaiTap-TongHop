@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 300005
+
+typedef struct {
+    int left, right;
+} Node;
+
+Node tree[MAXN];
+char label[MAXN];
+int parent[MAXN];
+int visited[MAXN];
+int n;
+int result;
+
+void dfs(int node, int changes) {
+    if (visited[node]) return;
+    visited[node] = 1;
+
+    if (tree[node].left == 0 && tree[node].right == 0) {
+        if (changes < result) result = changes;
+        return;
+    }
+
+    if (tree[node].left && label[node] == 'L') {
+        dfs(tree[node].left, changes);
+    } else if (tree[node].left) {
+        dfs(tree[node].left, changes + 1);
+    }
+
+    if (tree[node].right && label[node] == 'R') {
+        dfs(tree[node].right, changes);
+    } else if (tree[node].right) {
+        dfs(tree[node].right, changes + 1);
+    }
+}
+
+void buildParent() {
+    for (int i = 1; i <= n; i++) {
+        if (tree[i].left) parent[tree[i].left] = i;
+        if (tree[i].right) parent[tree[i].right] = i;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        scanf("%s", label + 1);
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%d %d", &tree[i].left, &tree[i].right);
+            parent[i] = 0;
+            visited[i] = 0;
+        }
+
+        buildParent();
+        result = n + 1;
+
+        dfs(1, 0);
+
+        printf("%d\n", result);
+    }
+    return 0;
+}
 

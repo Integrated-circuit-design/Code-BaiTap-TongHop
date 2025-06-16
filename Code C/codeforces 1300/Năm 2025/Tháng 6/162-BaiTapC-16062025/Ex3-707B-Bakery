@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <limits.h>
+
+#define MAXM 100005
+#define INF 1000000001
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int U[MAXM], V[MAXM], L[MAXM];
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d %d", &U[i], &V[i], &L[i]);
+    }
+
+    if (k == 0 || k == n) {
+        printf("-1\n");
+        return 0;
+    }
+
+    bool storage[100005] = {false};
+    for (int i = 0; i < k; i++) {
+        int city;
+        scanf("%d", &city);
+        storage[city] = true;
+    }
+
+    int result = INF;
+
+    for (int i = 0; i < m; i++) {
+        int u = U[i], v = V[i], len = L[i];
+
+        if ((storage[u] && !storage[v]) || (!storage[u] && storage[v])) {
+            if (len < result) {
+                result = len;
+            }
+        }
+    }
+
+    if (result == INF)
+        printf("-1\n");
+    else
+        printf("%d\n", result);
+
+    return 0;
+}
 

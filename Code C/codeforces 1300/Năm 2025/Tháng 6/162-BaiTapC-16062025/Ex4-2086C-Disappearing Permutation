@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int a[MAXN], del[MAXN];
+int is_deleted[MAXN];
+int current[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; ++i) {
+            scanf("%d", &a[i]);
+            is_deleted[i] = 0;
+        }
+
+        for (int i = 1; i <= n; ++i) {
+            scanf("%d", &del[i]);
+        }
+
+        for (int i = 1; i <= n; ++i) {
+            current[i] = a[i];
+        }
+
+        for (int step = 1; step <= n; ++step) {
+            int pos = del[step];
+
+            current[pos] = 0;
+
+            int changes = 0;
+
+            for (int i = 1; i <= n; ++i) {
+                if (current[i] != 0 && current[i] != i) {
+                    changes++;
+                }
+            }
+
+            for (int i = 1; i <= n; ++i) {
+                if (current[i] == 0) {
+                    changes++;
+                }
+            }
+
+            printf("%d ", changes);
+        }
+        printf("\n");
+    }
+    return 0;
+}
 

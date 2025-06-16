@@ -1,1 +1,96 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 10000007
+#define MAXP 1000
+
+int prime[MAXP], prime_count = 0;
+int freq[100] = {0};
+
+int sc_list[] = {4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 24, 27, 28, 30};
+int sc_size = sizeof(sc_list) / sizeof(sc_list[0]);
+
+void build_primes() {
+    char is_prime[MAXP];
+    memset(is_prime, 1, sizeof(is_prime));
+    is_prime[0] = is_prime[1] = 0;
+    for (int i = 2; i < MAXP; i++) {
+        if (is_prime[i]) {
+            prime[prime_count++] = i;
+            for (int j = i * i; j < MAXP; j += i)
+                is_prime[j] = 0;
+        }
+    }
+}
+
+void add_factors(int x) {
+    for (int i = 0; i < prime_count && prime[i] * prime[i] <= x; i++) {
+        while (x % prime[i] == 0) {
+            freq[prime[i]]++;
+            x /= prime[i];
+        }
+    }
+    if (x > 1) freq[x]++;
+}
+
+int try_build(int sc) {
+    int temp = sc;
+    int local[100] = {0};
+    for (int i = 0; i < prime_count && prime[i] * prime[i] <= temp; i++) {
+        while (temp % prime[i] == 0) {
+            local[prime[i]]++;
+            temp /= prime[i];
+        }
+    }
+    if (temp > 1) local[temp]++;
+
+    for (int i = 2; i < 100; i++) {
+        if (local[i] > freq[i]) return 0;
+    }
+
+    for (int i = 2; i < 100; i++) {
+        freq[i] -= local[i];
+    }
+    return 1;
+}
+
+int solve(int a[], int n) {
+    memset(freq, 0, sizeof(freq));
+
+    for (int i = 0; i < n; i++) {
+        add_factors(a[i]);
+    }
+
+    int res = 0, found;
+    do {
+        found = 0;
+        for (int i = sc_size - 1; i >= 0; i--) {
+            if (try_build(sc_list[i])) {
+                res++;
+                found = 1;
+                break;
+            }
+        }
+    } while (found);
+
+    return res;
+}
+
+int main() {
+    build_primes();
+
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, a[1010];
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        int k = solve(a, n);
+        printf("%d\n", k);
+    }
+
+    return 0;
+}
 

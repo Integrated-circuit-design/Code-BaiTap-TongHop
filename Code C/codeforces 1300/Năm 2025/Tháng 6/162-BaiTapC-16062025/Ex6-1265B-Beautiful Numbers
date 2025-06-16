@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+int indexInArray[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &a[i]);
+            indexInArray[a[i]] = i;
+        }
+
+        int minPos = indexInArray[1];
+        int maxPos = indexInArray[1];
+
+        char result[MAXN];
+
+        result[0] = '1';
+
+        for (int m = 2; m <= n; m++) {
+            int currentPos = indexInArray[m];
+
+            if (currentPos < minPos) minPos = currentPos;
+            if (currentPos > maxPos) maxPos = currentPos;
+
+            if ((maxPos - minPos + 1) == m)
+                result[m - 1] = '1';
+            else
+                result[m - 1] = '0';
+        }
+
+        result[n] = '\0';
+        printf("%s\n", result);
+    }
+
+    return 0;
+}
 

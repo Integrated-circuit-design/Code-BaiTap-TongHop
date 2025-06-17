@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 300005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[MAXN];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        int groups = 1;
+
+        printf("1 ");
+
+        for (int i = 1; i < n - 1; ++i) {
+            if (s[i] != s[i - 1]) {
+                groups++;
+            }
+            printf("%d ", groups);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
 

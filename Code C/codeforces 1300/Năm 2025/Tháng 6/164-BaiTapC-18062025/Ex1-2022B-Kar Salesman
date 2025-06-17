@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MAXN 500005
+
+void doc_du_lieu(int a[], int n, long long *tong_xe, int *so_model) {
+    *tong_xe = 0;
+    *so_model = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        *tong_xe += a[i];
+        if (a[i] > 0)
+            (*so_model)++;
+    }
+}
+
+long long tinh_so_khach(long long tong_xe, int x, int so_model) {
+    long long khach = (tong_xe + x - 1) / x;
+    if (khach < so_model)
+        khach = so_model;
+    return khach;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    int a[MAXN];
+
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+
+        long long tong_xe;
+        int so_model;
+
+        doc_du_lieu(a, n, &tong_xe, &so_model);
+
+        long long ket_qua = tinh_so_khach(tong_xe, x, so_model);
+        printf("%lld\n", ket_qua);
+    }
+
+    return 0;
+}
 

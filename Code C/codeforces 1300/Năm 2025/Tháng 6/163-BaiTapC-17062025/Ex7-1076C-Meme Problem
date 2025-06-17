@@ -1,1 +1,26 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        double d;
+        scanf("%lf", &d);
+
+        double discriminant = d * d - 4 * d;
+
+        if (discriminant < 0) {
+            printf("N\n");
+        } else {
+            double root = sqrt(discriminant);
+            double x1 = (d - root) / 2.0;
+            double x2 = (d + root) / 2.0;
+            printf("Y %.9f %.9f\n", x1, x2);
+        }
+    }
+
+    return 0;
+}
 

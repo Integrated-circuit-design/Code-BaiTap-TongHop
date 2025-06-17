@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 200005
+
+int countConnectedComponents(char *bracketSeq, int length) {
+    int balance = 0;
+    int components = 0;
+
+    for (int i = 0; i < length; i++) {
+        if (bracketSeq[i] == '(') {
+            balance++;
+        } else {
+            balance--;
+        }
+
+        if (balance == 0) {
+            components++;
+        }
+    }
+
+    return components;
+}
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int n;
+        scanf("%d", &n);
+
+        char s[2 * n + 1];
+        scanf("%s", s);
+
+        int result = countConnectedComponents(s, 2 * n);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

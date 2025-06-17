@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MAX 1005
+
+int a[MAX], b[MAX];
+
+void sap_xep_giam(int b[], int k) {
+    for (int i = 0; i < k - 1; i++) {
+        int max_idx = i;
+        for (int j = i + 1; j < k; j++) {
+            if (b[j] > b[max_idx])
+                max_idx = j;
+        }
+        int tmp = b[i];
+        b[i] = b[max_idx];
+        b[max_idx] = tmp;
+    }
+}
+
+int dat_duoc_k_chai(int k, int h) {
+    for (int i = 0; i < k; i++)
+        b[i] = a[i];
+
+    sap_xep_giam(b, k);
+
+    int tong = 0;
+    for (int i = 0; i < k; i += 2)
+        tong += b[i];
+
+    return tong <= h;
+}
+
+int main() {
+    int n, h;
+    scanf("%d %d", &n, &h);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    int kq = 1;
+    for (int k = 1; k <= n; k++) {
+        if (dat_duoc_k_chai(k, h))
+            kq = k;
+        else
+            break;
+    }
+
+    printf("%d\n", kq);
+    return 0;
+}
 

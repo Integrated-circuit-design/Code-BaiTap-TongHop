@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    char t[55];
+    scanf("%d %d", &n, &k);
+    scanf("%s", t);
+
+    int overlap = 0;
+
+    for (int len = n - 1; len > 0; len--) {
+        int match = 1;
+        for (int i = 0; i < len; i++) {
+            if (t[n - len + i] != t[i]) {
+                match = 0;
+                break;
+            }
+        }
+        if (match) {
+            overlap = len;
+            break;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        putchar(t[i]);
+    }
+
+    for (int times = 1; times < k; times++) {
+        for (int i = overlap; i < n; i++) {
+            putchar(t[i]);
+        }
+    }
+
+    return 0;
+}
 

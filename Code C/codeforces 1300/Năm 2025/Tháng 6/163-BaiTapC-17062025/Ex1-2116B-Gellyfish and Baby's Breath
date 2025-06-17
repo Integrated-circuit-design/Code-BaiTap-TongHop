@@ -1,1 +1,41 @@
+#include <stdio.h>
+#define MOD 998244353
+#define MAX_SIZE 100005
+
+int p_arr[MAX_SIZE];
+int q_arr[MAX_SIZE];
+
+int compute_r_i(int i) {
+    int max_val = 0;
+    for (int j = 0; j <= i; j++) {
+        int current = 2 * p_arr[j] + 2 * q_arr[i - j];
+        if (current > max_val) {
+            max_val = current;
+        }
+    }
+    return max_val % MOD;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int idx = 0; idx < n; idx++) {
+            scanf("%d", &p_arr[idx]);
+        }
+        for (int idx = 0; idx < n; idx++) {
+            scanf("%d", &q_arr[idx]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            int res = compute_r_i(i);
+            printf("%d%c", res, (i == n - 1) ? '\n' : ' ');
+        }
+    }
+    return 0;
+}
 

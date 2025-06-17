@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+#define MAXN 105
+
+char a[MAXN][MAXN];
+int ops[MAXN * MAXN][4];
+
+int main() {
+    int t; scanf("%d", &t);
+    while (t--) {
+        int n, m; scanf("%d %d", &n, &m);
+        for (int i = 0; i < n; i++) scanf("%s", a[i]);
+
+        int impossible = 0;
+        for (int i = 0; i < n && !impossible; i++) {
+            for (int j = 0; j < m; j++) {
+                if (a[i][j] == '1' && (i + j) % 2 == 0) {
+                    impossible = 1;
+                    break;
+                }
+            }
+        }
+        if (impossible) {
+            printf("-1\n");
+            continue;
+        }
+
+        int count = 0;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < m - 1; j++) {
+                if (a[i][j] == '1') {
+                    ops[count][0] = i + 1;
+                    ops[count][1] = j + 1;
+                    ops[count][2] = i + 2;
+                    ops[count][3] = j + 2;
+                    count++;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (a[i][m - 1] == '1') impossible = 1;
+        }
+        for (int j = 0; j < m; j++) {
+            if (a[n - 1][j] == '1') impossible = 1;
+        }
+
+        if (impossible) {
+            printf("-1\n");
+            continue;
+        }
+
+        printf("%d\n", count);
+        for (int i = 0; i < count; i++) {
+            printf("%d %d %d %d\n",
+                ops[i][0], ops[i][1], ops[i][2], ops[i][3]);
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 50005
+
+int is_possible(char *s, int start) {
+    int count[26] = {0}, qmark = 0;
+
+    for (int i = 0; i < 26; i++) {
+        char c = s[start + i];
+        if (c == '?') qmark++;
+        else {
+            int idx = c - 'A';
+            if (count[idx]) return 0;
+            count[idx] = 1;
+        }
+    }
+
+    return 1;
+}
+
+void fill_window(char *s, int start) {
+    int used[26] = {0};
+
+    for (int i = 0; i < 26; i++) {
+        if (s[start + i] != '?')
+            used[s[start + i] - 'A'] = 1;
+    }
+
+    int next = 0;
+    for (int i = 0; i < 26; i++) {
+        if (s[start + i] == '?') {
+            while (used[next]) next++;
+            s[start + i] = 'A' + next;
+            used[next] = 1;
+        }
+    }
+}
+
+int main() {
+    char s[MAX];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    if (n < 26) {
+        printf("-1\n");
+        return 0;
+    }
+
+    for (int i = 0; i <= n - 26; i++) {
+        if (is_possible(s, i)) {
+            fill_window(s, i);
+            for (int j = 0; j < n; j++) {
+                if (s[j] == '?') s[j] = 'A';
+            }
+            printf("%s\n", s);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

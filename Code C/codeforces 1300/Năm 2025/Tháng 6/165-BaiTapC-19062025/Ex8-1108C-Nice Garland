@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define MAX 200005
+
+void get_pattern(int index, char *a, char *b, char *c) {
+    if (index == 0) { *a = 'R'; *b = 'G'; *c = 'B'; }
+    else if (index == 1) { *a = 'R'; *b = 'B'; *c = 'G'; }
+    else if (index == 2) { *a = 'G'; *b = 'R'; *c = 'B'; }
+    else if (index == 3) { *a = 'G'; *b = 'B'; *c = 'R'; }
+    else if (index == 4) { *a = 'B'; *b = 'R'; *c = 'G'; }
+    else { *a = 'B'; *b = 'G'; *c = 'R'; }
+}
+
+int main() {
+    int n;
+    char s[MAX], result[MAX];
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    int min_change = n;
+
+    for (int p = 0; p < 6; p++) {
+        char a, b, c;
+        get_pattern(p, &a, &b, &c);
+
+        int change = 0;
+
+        for (int i = 0; i < n; i++) {
+            char expected;
+            if (i % 3 == 0) expected = a;
+            else if (i % 3 == 1) expected = b;
+            else expected = c;
+
+            if (s[i] != expected) {
+                change++;
+            }
+        }
+
+        if (change < min_change) {
+            min_change = change;
+
+            for (int i = 0; i < n; i++) {
+                if (i % 3 == 0) result[i] = a;
+                else if (i % 3 == 1) result[i] = b;
+                else result[i] = c;
+            }
+        }
+    }
+
+    result[n] = '\0';
+    printf("%d\n%s\n", min_change, result);
+    return 0;
+}
 

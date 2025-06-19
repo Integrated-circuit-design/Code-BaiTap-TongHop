@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+int mirror_map[10] = {0, 1, 5, -1, -1, 2, -1, -1, 8, -1};
+
+int is_valid(int h, int m, int hour, int minute) {
+    int a = hour / 10;
+    int b = hour % 10;
+    int c = minute / 10;
+    int d = minute % 10;
+
+    if (mirror_map[a] == -1 || mirror_map[b] == -1 ||
+        mirror_map[c] == -1 || mirror_map[d] == -1)
+        return 0;
+
+    int new_hour = mirror_map[d] * 10 + mirror_map[c];
+    int new_minute = mirror_map[b] * 10 + mirror_map[a];
+
+    return (new_hour < h && new_minute < m);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int h, m;
+        char s[6];
+        scanf("%d %d", &h, &m);
+        scanf("%s", s);
+
+        int hour = (s[0] - '0') * 10 + (s[1] - '0');
+        int minute = (s[3] - '0') * 10 + (s[4] - '0');
+
+        int total_minutes = hour * m + minute;
+        int day_minutes = h * m;
+
+        for (int i = 0; i < day_minutes; ++i) {
+            int cur_hour = (total_minutes / m) % h;
+            int cur_minute = total_minutes % m;
+
+            if (is_valid(h, m, cur_hour, cur_minute)) {
+                printf("%02d:%02d\n", cur_hour, cur_minute);
+                break;
+            }
+
+            total_minutes = (total_minutes + 1) % day_minutes;
+        }
+    }
+
+    return 0;
+}
 

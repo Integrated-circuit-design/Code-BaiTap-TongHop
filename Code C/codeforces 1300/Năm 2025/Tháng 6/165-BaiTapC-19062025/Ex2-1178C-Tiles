@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+#define MOD 998244353
+#define MAX 2001
+
+long long memo[MAX];
+
+long long power2(int n) {
+    if (n == 0) return 1;
+    if (memo[n] != -1) return memo[n];
+
+    if (n % 2 == 0) {
+        long long half = power2(n / 2);
+        return memo[n] = (half * half) % MOD;
+    } else {
+        return memo[n] = (2 * power2(n - 1)) % MOD;
+    }
+}
+
+int main() {
+    int w, h;
+    scanf("%d %d", &w, &h);
+
+    for (int i = 0; i < MAX; i++) {
+        memo[i] = -1;
+    }
+
+    long long result = power2(w + h);
+    printf("%lld\n", result);
+    return 0;
+}
 

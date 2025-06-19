@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int color[100005] = {0};
+    int current_color = 1;
+
+    for (int i = 2; i <= n; i++) {
+        if (color[i] == 0) {
+            for (int j = i; j <= n; j += i) {
+                if (color[j] == 0) {
+                    color[j] = current_color;
+                }
+            }
+            current_color++;
+        }
+    }
+
+    for (int i = 2; i <= n; i++) {
+        printf("%d ", color[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

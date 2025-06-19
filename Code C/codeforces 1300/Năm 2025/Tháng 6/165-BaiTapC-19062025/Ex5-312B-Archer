@@ -1,1 +1,23 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int a, b, c, d;
+    scanf("%d %d %d %d", &a, &b, &c, &d);
+
+    double P = (double)a / b;
+    double Q = (double)c / d;
+
+    double result = 0.0;
+    double current_prob = 1.0;
+    double eps = 1e-12;
+
+    while (current_prob > eps) {
+        result += current_prob * P;
+        current_prob *= (1.0 - P) * (1.0 - Q);
+    }
+
+    printf("%.12f\n", result);
+    return 0;
+}
 

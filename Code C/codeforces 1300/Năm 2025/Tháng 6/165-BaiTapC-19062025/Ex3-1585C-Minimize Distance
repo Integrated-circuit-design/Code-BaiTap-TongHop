@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+int cmp_longlong(const void *a, const void *b) {
+    long long x = *(long long*)a;
+    long long y = *(long long*)b;
+    return (x > y) - (x < y);
+}
+
+long long max_ll(long long a, long long b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        long long x[MAXN];
+        for (int i = 0; i < n; ++i) {
+            scanf("%lld", &x[i]);
+        }
+
+        long long temp[MAXN];
+        int cnt = 0;
+        long long total = 0;
+        long long furthest = 0;
+
+        cnt = 0;
+        for (int i = 0; i < n; ++i) {
+            if (x[i] < 0) temp[cnt++] = -x[i];
+        }
+        qsort(temp, cnt, sizeof(long long), cmp_longlong);
+        for (int i = cnt - 1; i >= 0; i -= k) {
+            total += 2 * temp[i];
+            furthest = max_ll(furthest, temp[i]);
+        }
+
+        cnt = 0;
+        for (int i = 0; i < n; ++i) {
+            if (x[i] > 0) temp[cnt++] = x[i];
+        }
+        qsort(temp, cnt, sizeof(long long), cmp_longlong);
+        for (int i = cnt - 1; i >= 0; i -= k) {
+            total += 2 * temp[i];
+            furthest = max_ll(furthest, temp[i]);
+        }
+
+        total -= furthest;
+
+        printf("%lld\n", total);
+    }
+
+    return 0;
+}
 

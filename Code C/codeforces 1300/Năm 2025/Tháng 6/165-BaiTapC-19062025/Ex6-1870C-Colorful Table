@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 105
+
+int top[MAX], bottom[MAX], left[MAX], right[MAX];
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+void init_positions(int k) {
+    for (int i = 1; i <= k; i++) {
+        top[i] = bottom[i] = left[i] = right[i] = -1;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int a[MAX];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        init_positions(k);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int color = min(a[i], a[j]);
+
+                if (top[color] == -1) {
+                    top[color] = bottom[color] = i;
+                    left[color] = right[color] = j;
+                } else {
+                    top[color] = min(top[color], i);
+                    bottom[color] = max(bottom[color], i);
+                    left[color] = min(left[color], j);
+                    right[color] = max(right[color], j);
+                }
+            }
+        }
+
+        for (int c = 1; c <= k; c++) {
+            if (top[c] == -1) {
+                printf("0 ");
+            } else {
+                int height = bottom[c] - top[c] + 1;
+                int width = right[c] - left[c] + 1;
+                printf("%d ", height + width);
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

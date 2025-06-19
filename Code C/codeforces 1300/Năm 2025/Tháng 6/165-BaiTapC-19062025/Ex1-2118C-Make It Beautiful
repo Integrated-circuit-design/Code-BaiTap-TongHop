@@ -1,1 +1,70 @@
+#include <stdio.h>
+
+#define MAXN 5005
+
+int bit_count(int x) {
+    int count = 0;
+    while (x > 0) {
+        count += (x & 1);
+        x >>= 1;
+    }
+    return count;
+}
+
+int best_gain(int x, int *cost) {
+    int before = bit_count(x);
+    for (int i = 1; i <= 64; i++) {
+        int after = bit_count(x + i);
+        if (after > before) {
+            *cost = i;
+            return after - before;
+        }
+    }
+    *cost = -1;
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        long long k;
+        int a[MAXN];
+        scanf("%d %lld", &n, &k);
+        
+        long long total = 0;
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            total += bit_count(a[i]);
+        }
+
+        while (k > 0) {
+            int best_index = -1;
+            int best_cost = 1e9, best_increase = 0;
+
+            for (int i = 0; i < n; i++) {
+                int cost, gain = best_gain(a[i], &cost);
+                if (gain > 0 && cost <= k) {
+                    if (gain > best_increase || (gain == best_increase && cost < best_cost)) {
+                        best_increase = gain;
+                        best_cost = cost;
+                        best_index = i;
+                    }
+                }
+            }
+
+            if (best_index == -1) break;
+
+            a[best_index] += best_cost;
+            k -= best_cost;
+            total += best_increase;
+        }
+
+        printf("%lld\n", total);
+    }
+
+    return 0;
+}
 

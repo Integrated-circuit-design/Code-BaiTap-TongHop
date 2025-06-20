@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int a, b, x;
+    scanf("%d %d %d", &a, &b, &x);
+
+    char s[205];
+    int pos = 0;
+    int groups = x + 1;
+
+    int group0 = (a >= b) ? (groups + 1) / 2 : groups / 2;
+    int group1 = groups - group0;
+
+    int size0 = (group0 == 0) ? 0 : a / group0;
+    int rem0 = (group0 == 0) ? 0 : a % group0;
+
+    int size1 = (group1 == 0) ? 0 : b / group1;
+    int rem1 = (group1 == 0) ? 0 : b % group1;
+
+    int current = (group0 >= group1) ? 0 : 1;
+
+    for (int i = 0; i < groups; ++i) {
+        int len;
+        if (current == 0) {
+            len = size0 + (rem0 > 0);
+            rem0--;
+            for (int j = 0; j < len; ++j) s[pos++] = '0';
+        } else {
+            len = size1 + (rem1 > 0);
+            rem1--;
+            for (int j = 0; j < len; ++j) s[pos++] = '1';
+        }
+        current ^= 1;
+    }
+
+    s[pos] = '\0';
+    printf("%s\n", s);
+    return 0;
+}
 

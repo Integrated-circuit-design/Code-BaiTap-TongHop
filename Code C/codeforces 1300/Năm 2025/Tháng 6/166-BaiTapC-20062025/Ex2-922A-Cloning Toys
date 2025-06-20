@@ -1,1 +1,24 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool kiem_tra_toy(long long sao, long long goc) {
+    if (goc < 1) return false;
+    
+    long long a = goc - 1;
+    long long phan_du = sao - a;
+
+    return (phan_du >= 0) && (phan_du % 2 == 0);
+}
+
+int main() {
+    long long x, y;
+    scanf("%lld %lld", &x, &y);
+
+    if (kiem_tra_toy(x, y))
+        printf("Yes\n");
+    else
+        printf("No\n");
+
+    return 0;
+}
 

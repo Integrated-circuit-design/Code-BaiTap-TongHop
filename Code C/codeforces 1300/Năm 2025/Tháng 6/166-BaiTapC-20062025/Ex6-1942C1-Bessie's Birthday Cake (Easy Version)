@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+#define MAX 200005
+
+int vertices[MAX];
+
+int tinh_so_tam_giac(int x) {
+    if (x < 3) return 0;
+    return x - 2;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x, y;
+        scanf("%d %d %d", &n, &x, &y);
+
+        for (int i = 0; i < x; ++i) {
+            scanf("%d", &vertices[i]);
+        }
+
+        int ket_qua = tinh_so_tam_giac(x);
+        printf("%d\n", ket_qua);
+    }
+
+    return 0;
+}
 

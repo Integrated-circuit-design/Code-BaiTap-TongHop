@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, x;
+        scanf("%lld %lld", &n, &x);
+
+        if (n == 1) {
+            if (x == 0) puts("-1");
+            else printf("%lld\n", x);
+            continue;
+        }
+
+        if (n == 2) {
+            if (x == 0) {
+                puts("2");
+            } else {
+                long long a = 1;
+                long long b = x ^ a;
+                if (b != 0 && b != a) {
+                    printf("%lld\n", a + b);
+                } else {
+                    puts("-1");
+                }
+            }
+            continue;
+        }
+
+        long long sum = n - 1;
+        long long xor_all = (n - 1) % 2;
+        long long last = x ^ xor_all;
+
+        if (last == 0 || last == 1) {
+            long long a = 1 << 16;
+            long long b = 1 << 17;
+            xor_all = xor_all ^ 1 ^ 1 ^ a ^ b;
+            last = x ^ xor_all;
+            sum = sum - 2 + a + b;
+        }
+
+        sum += last;
+        printf("%lld\n", sum);
+    }
+
+    return 0;
+}
 

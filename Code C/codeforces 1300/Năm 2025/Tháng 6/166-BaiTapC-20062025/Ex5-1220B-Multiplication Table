@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long M[1000][1000];
+    long long a[1000];
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%lld", &M[i][j]);
+
+    long long ab = M[0][1];
+    long long bc = M[1][2];
+    long long ac = M[0][2];
+
+    long long a0_squared = (ab * ac) / bc;
+
+    long long low = 1, high = 1000000000, mid;
+    while (low <= high) {
+        mid = (low + high) / 2;
+        if (mid * mid == a0_squared) {
+            a[0] = mid;
+            break;
+        } else if (mid * mid < a0_squared) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    for (int i = 1; i < n; ++i)
+        a[i] = M[0][i] / a[0];
+
+    for (int i = 0; i < n; ++i)
+        printf("%lld ", a[i]);
+
+    return 0;
+}
 

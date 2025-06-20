@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 10001
+
+void rotate_substring(char s[], int l, int r, int k) {
+    int len = r - l + 1;
+    k = k % len;
+
+    if (k == 0) return;
+
+    char right[MAXN], left[MAXN];
+
+    strncpy(right, s + r - k + 1, k);
+    right[k] = '\0';
+
+    strncpy(left, s + l, len - k);
+    left[len - k] = '\0';
+
+    for (int i = 0; i < k; i++) {
+        s[l + i] = right[i];
+    }
+    for (int i = 0; i < len - k; i++) {
+        s[l + k + i] = left[i];
+    }
+}
+
+int main() {
+    char s[MAXN];
+    int m;
+
+    scanf("%s", s);
+    scanf("%d", &m);
+
+    for (int i = 0; i < m; i++) {
+        int l, r, k;
+        scanf("%d %d %d", &l, &r, &k);
+        rotate_substring(s, l - 1, r - 1, k);
+    }
+
+    printf("%s\n", s);
+    return 0;
+}
 

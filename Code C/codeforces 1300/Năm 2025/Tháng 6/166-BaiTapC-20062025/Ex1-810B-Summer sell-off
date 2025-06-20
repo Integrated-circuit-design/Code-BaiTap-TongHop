@@ -1,1 +1,67 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+typedef long long ll;
+
+ll heap[MAXN];
+int heap_size = 0;
+
+void push(ll value) {
+    int i = heap_size++;
+    heap[i] = value;
+    while (i > 0) {
+        int parent = (i - 1) / 2;
+        if (heap[parent] >= heap[i]) break;
+        ll tmp = heap[parent];
+        heap[parent] = heap[i];
+        heap[i] = tmp;
+        i = parent;
+    }
+}
+
+ll pop() {
+    if (heap_size == 0) return 0;
+    ll top = heap[0];
+    heap[0] = heap[--heap_size];
+    int i = 0;
+    while (1) {
+        int left = i * 2 + 1, right = i * 2 + 2, largest = i;
+        if (left < heap_size && heap[left] > heap[largest]) largest = left;
+        if (right < heap_size && heap[right] > heap[largest]) largest = right;
+        if (largest == i) break;
+        ll tmp = heap[i];
+        heap[i] = heap[largest];
+        heap[largest] = tmp;
+        i = largest;
+    }
+    return top;
+}
+
+int main() {
+    int n, f;
+    scanf("%d %d", &n, &f);
+
+    ll tong_ban = 0;
+
+    for (int i = 0; i < n; i++) {
+        ll k, l;
+        scanf("%lld %lld", &k, &l);
+
+        ll ban_thuong = k < l ? k : l;
+        ll ban_giamgia = (2 * k < l) ? 2 * k : l;
+
+        tong_ban += ban_thuong;
+
+        ll loi_ich = ban_giamgia - ban_thuong;
+        if (loi_ich > 0) push(loi_ich);
+    }
+
+    for (int i = 0; i < f && heap_size > 0; i++) {
+        tong_ban += pop();
+    }
+
+    printf("%lld\n", tong_ban);
+    return 0;
+}
 

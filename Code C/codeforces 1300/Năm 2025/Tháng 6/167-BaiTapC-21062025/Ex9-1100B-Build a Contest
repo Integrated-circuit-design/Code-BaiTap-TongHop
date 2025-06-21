@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100005
+
+int main() {
+    int n, m;
+    int counter[MAX];
+    int total[MAX];
+    int a, i;
+    char output[MAX];
+
+    scanf("%d %d", &n, &m);
+
+    int got = 0;
+
+    memset(counter, 0, sizeof(counter));
+
+    for (i = 0; i < m; i++) {
+        scanf("%d", &a);
+
+        if (counter[a] == 0) {
+            got++;
+        }
+        counter[a]++;
+
+        if (got == n) {
+            output[i] = '1';
+            got = 0;
+            for (int j = 1; j <= n; j++) {
+                counter[j]--;
+                if (counter[j] > 0)
+                    got++;
+            }
+        } else {
+            output[i] = '0';
+        }
+    }
+
+    output[m] = '\0';
+    printf("%s\n", output);
+
+    return 0;
+}
 

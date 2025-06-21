@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+#define MAX 505
+
+char grid[MAX][MAX];
+int h, w;
+
+int main() {
+    scanf("%d %d", &h, &w);
+    int total_stars = 0;
+
+    for (int i = 0; i < h; i++) {
+        scanf("%s", grid[i]);
+        for (int j = 0; j < w; j++) {
+            if (grid[i][j] == '*') total_stars++;
+        }
+    }
+
+    for (int i = 1; i < h - 1; i++) {
+        for (int j = 1; j < w - 1; j++) {
+            if (grid[i][j] != '*') continue;
+
+            int up = 0, down = 0, left = 0, right = 0;
+
+            for (int k = i - 1; k >= 0 && grid[k][j] == '*'; k--) up++;
+            for (int k = i + 1; k < h && grid[k][j] == '*'; k++) down++;
+            for (int k = j - 1; k >= 0 && grid[i][k] == '*'; k--) left++;
+            for (int k = j + 1; k < w && grid[i][k] == '*'; k++) right++;
+
+            if (up > 0 && down > 0 && left > 0 && right > 0) {
+                int star_count = up + down + left + right + 1;
+                if (star_count == total_stars) {
+                    printf("YES\n");
+                    return 0;
+                }
+            }
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

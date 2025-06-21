@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+#define MAX_K 61
+
+typedef long long ll;
+
+const int COLOR_COUNT = 6;
+
+int ok[6][6] = {
+    { 0, 1, 1, 1, 1, 0 },
+    { 1, 0, 1, 0, 1, 1 },
+    { 1, 1, 0, 1, 0, 1 },
+    { 1, 0, 1, 0, 1, 1 },
+    { 1, 1, 0, 1, 0, 1 },
+    { 0, 1, 1, 1, 1, 0 }
+};
+
+ll memo[MAX_K][6];
+int computed[MAX_K][6];
+
+ll count_ways(int h, int color) {
+    if (computed[h][color]) return memo[h][color];
+    computed[h][color] = 1;
+
+    if (h == 1) return memo[h][color] = 1;
+
+    ll sum = 0;
+    for (int c = 0; c < COLOR_COUNT; c++) {
+        if (ok[color][c]) {
+            sum = (sum + count_ways(h - 1, c)) % MOD;
+        }
+    }
+
+    return memo[h][color] = (sum * sum) % MOD;
+}
+
+int main() {
+    int k;
+    scanf("%d", &k);
+
+    ll total = 0;
+    for (int c = 0; c < COLOR_COUNT; c++) {
+        total = (total + count_ways(k, c)) % MOD;
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

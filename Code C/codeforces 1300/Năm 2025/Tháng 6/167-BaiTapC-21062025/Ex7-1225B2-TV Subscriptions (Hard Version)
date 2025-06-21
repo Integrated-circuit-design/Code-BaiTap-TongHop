@@ -1,1 +1,65 @@
+#include <stdio.h>
+
+#define MAXN 200005
+#define MAXK 1000005
+
+int a[MAXN];
+int last_seen[MAXK];
+int count_unique[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    int test_id = 1;
+
+    while (t--) {
+        int n, k, d;
+        scanf("%d %d %d", &n, &k, &d);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int unique = 0;
+        int min_shows;
+
+        for (int i = 0; i < d; i++) {
+            if (last_seen[a[i]] != test_id) {
+                last_seen[a[i]] = test_id;
+                unique++;
+            }
+        }
+
+        min_shows = unique;
+
+        for (int i = d, l = 0; i < n; i++, l++) {
+            if (last_seen[a[l]] == test_id) {
+                int still_exist = 0;
+                for (int j = l + 1; j <= i; j++) {
+                    if (a[j] == a[l]) {
+                        still_exist = 1;
+                        break;
+                    }
+                }
+                if (!still_exist) {
+                    unique--;
+                    last_seen[a[l]] = 0;
+                }
+            }
+
+            if (last_seen[a[i]] != test_id) {
+                last_seen[a[i]] = test_id;
+                unique++;
+            }
+
+            if (unique < min_shows)
+                min_shows = unique;
+        }
+
+        printf("%d\n", min_shows);
+        test_id++;
+    }
+
+    return 0;
+}
 

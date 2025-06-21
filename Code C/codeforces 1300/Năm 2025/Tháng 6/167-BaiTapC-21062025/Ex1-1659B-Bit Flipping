@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        long long k;
+        char s[MAXN];
+        int pick[MAXN] = {0};
+
+        scanf("%d %lld", &n, &k);
+        scanf("%s", s);
+
+        int flip_flag = 0;
+        long long remain = k;
+
+        for (int i = 0; i < n; i++) {
+            int bit = s[i] - '0';
+
+            if (flip_flag % 2 == 1) bit ^= 1;
+
+            if (bit == 0 && remain > 0) {
+                pick[i] = 1;
+                flip_flag++;
+                remain--;
+            }
+        }
+
+        pick[n - 1] += remain;
+
+        for (int i = 0; i < n; i++) {
+            int bit = s[i] - '0';
+            int flip_total = (k - pick[i]) % 2;
+
+            if ((flip_total + pick[i]) % 2 == 1)
+                bit ^= 1;
+
+            printf("%d", bit);
+        }
+        printf("\n");
+
+        for (int i = 0; i < n; i++) {
+            printf("%d%c", pick[i], (i == n - 1) ? '\n' : ' ');
+        }
+    }
+    return 0;
+}
 

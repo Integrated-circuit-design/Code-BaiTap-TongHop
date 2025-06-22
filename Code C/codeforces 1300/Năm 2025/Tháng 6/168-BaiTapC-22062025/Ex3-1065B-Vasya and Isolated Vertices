@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+long long min_isolated(long long n, long long m) {
+    long long low = 0, high = n;
+    while (low < high) {
+        long long mid = (low + high) / 2;
+        if (mid * (mid - 1) / 2 >= m)
+            high = mid;
+        else
+            low = mid + 1;
+    }
+    return n - low;
+}
+
+int main() {
+    long long n, m;
+    scanf("%lld %lld", &n, &m);
+
+    long long min_iso = min_isolated(n, m);
+    long long max_iso = n >= 2 * m ? n - 2 * m : 0;
+
+    printf("%lld %lld\n", min_iso, max_iso);
+    return 0;
+}
 

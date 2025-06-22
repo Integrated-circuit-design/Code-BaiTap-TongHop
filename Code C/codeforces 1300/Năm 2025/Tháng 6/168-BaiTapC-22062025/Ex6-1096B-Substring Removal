@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 998244353
+#define MAXN 200005
+
+int is_valid(char *s, int n, int l, int r) {
+    char c = 0;
+    for (int i = 0; i < l; i++) {
+        if (c == 0) c = s[i];
+        else if (s[i] != c) return 0;
+    }
+    for (int i = r + 1; i < n; i++) {
+        if (c == 0) c = s[i];
+        else if (s[i] != c) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int n;
+    char s[MAXN];
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    long long count = 0;
+
+    for (int l = 0; l < n; l++) {
+        for (int r = l; r < n; r++) {
+            if (is_valid(s, n, l, r)) {
+                count = (count + 1) % MOD;
+            }
+        }
+    }
+
+    printf("%lld\n", count);
+    return 0;
+}
 

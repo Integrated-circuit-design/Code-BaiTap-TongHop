@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 100005
+
+typedef struct {
+    int u, parent, depth;
+    int flip_even, flip_odd;
+} StackItem;
+
+int n;
+int adj[MAXN][100], deg[MAXN];
+int init[MAXN], goal[MAXN];
+int result[MAXN], res_cnt = 0;
+
+int visited[MAXN];
+
+void push(StackItem *stack, int *top, StackItem item) {
+    stack[++(*top)] = item;
+}
+
+StackItem pop(StackItem *stack, int *top) {
+    return stack[(*top)--];
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 0; i < n - 1; ++i) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj[u][deg[u]++] = v;
+        adj[v][deg[v]++] = u;
+    }
+
+    for (int i = 1; i <= n; ++i) scanf("%d", &init[i]);
+    for (int i = 1; i <= n; ++i) scanf("%d", &goal[i]);
+
+    StackItem stack[MAXN];
+    int top = -1;
+    push(stack, &top, (StackItem){1, 0, 0, 0, 0});
+
+    while (top >= 0) {
+        StackItem current = pop(stack, &top);
+        int u = current.u;
+        if (visited[u]) continue;
+        visited[u] = 1;
+
+        int val = init[u];
+        if (current.depth % 2 == 0) val ^= current.flip_even;
+        else val ^= current.flip_odd;
+
+        int new_flip_even = current.flip_even;
+        int new_flip_odd = current.flip_odd;
+
+        if (val != goal[u]) {
+            result[res_cnt++] = u;
+            if (current.depth % 2 == 0)
+                new_flip_even ^= 1;
+            else
+                new_flip_odd ^= 1;
+        }
+
+        for (int i = 0; i < deg[u]; ++i) {
+            int v = adj[u][i];
+            if (!visited[v]) {
+                push(stack, &top, (StackItem){v, u, current.depth + 1, new_flip_even, new_flip_odd});
+            }
+        }
+    }
+
+    printf("%d\n", res_cnt);
+    for (int i = 0; i < res_cnt; ++i)
+        printf("%d\n", result[i]);
+
+    return 0;
+}
 

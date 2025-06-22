@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+#define MAX 500
+
+int grid[MAX][MAX];
+
+void tao_ma_tran_zigzag(int n) {
+    int gia_tri = 0;
+    for (int hang = 0; hang < n; hang++) {
+        if (hang % 2 == 0) {
+            for (int cot = 0; cot < n; cot++) {
+                grid[hang][cot] = gia_tri++;
+            }
+        } else {
+            for (int cot = n - 1; cot >= 0; cot--) {
+                grid[hang][cot] = gia_tri++;
+            }
+        }
+    }
+
+    for (int hang = 0; hang < n; hang++) {
+        for (int cot = 0; cot < n; cot++) {
+            printf("%d ", grid[hang][cot]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        tao_ma_tran_zigzag(n);
+    }
+    return 0;
+}
 

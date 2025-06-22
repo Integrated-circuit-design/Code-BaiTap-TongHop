@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int is_possible(int breaks, int a, int b, int first_server) {
+    int total = a + b;
+    int sA = (total + first_server) / 2;
+    int sB = total - sA;
+    int x = a - (sB - (b - (breaks - (a - sA))));
+    return (x >= 0 && x <= sA && breaks - x >= 0 && breaks - x <= sB);
+}
+
+void solve(int a, int b) {
+    int total = a + b;
+    int result[200005];
+    int count = 0;
+
+    for (int k = 0; k <= total; k++) {
+        if (is_possible(k, a, b, 0) || is_possible(k, a, b, 1)) {
+            result[count++] = k;
+        }
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t, a, b;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &a, &b);
+        solve(a, b);
+    }
+    return 0;
+}
 

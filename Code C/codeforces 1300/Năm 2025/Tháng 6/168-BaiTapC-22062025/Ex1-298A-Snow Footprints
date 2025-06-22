@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    char s[1005];
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    int firstR = -1, lastR = -1;
+    int firstL = -1;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'R') {
+            if (firstR == -1)
+                firstR = i;
+            lastR = i;
+        } else if (s[i] == 'L' && firstL == -1) {
+            firstL = i;
+        }
+    }
+
+    if (firstR != -1) {
+        printf("%d %d\n", firstR + 1, lastR + 2);
+    } else if (firstL != -1) {
+        printf("%d %d\n", firstL + 1, firstL);
+    }
+
+    return 0;
+}
 

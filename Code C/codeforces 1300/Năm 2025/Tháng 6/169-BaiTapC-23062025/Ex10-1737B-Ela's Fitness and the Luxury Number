@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int la_so_luxurious(ll x) {
+    ll can = 1;
+    while (can * can <= x) can++;
+    can--;
+    return x % can == 0;
+}
+
+ll dem_luxurious_den(ll n) {
+    ll k = 1, dem = 0;
+
+    while (k * k <= n) {
+        ll a = k * k;
+        ll b = k * (k + 1);
+        ll c = k * (k + 2);
+
+        if (a <= n) dem++;
+        if (b <= n) dem++;
+        if (c <= n) dem++;
+
+        k++;
+    }
+
+    return dem;
+}
+
+ll xu_ly(ll l, ll r) {
+    return dem_luxurious_den(r) - dem_luxurious_den(l - 1);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    for (int i = 0; i < t; i++) {
+        ll l, r;
+        scanf("%lld %lld", &l, &r);
+        printf("%lld\n", xu_ly(l, r));
+    }
+    return 0;
+}
 

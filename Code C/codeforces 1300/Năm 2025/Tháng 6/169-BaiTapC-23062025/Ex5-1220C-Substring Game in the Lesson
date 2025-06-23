@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char chuoi[500005];
+    scanf("%s", chuoi);
+
+    int do_dai = strlen(chuoi);
+    char ky_tu_nho_nhat = '{';
+
+    for (int vi_tri = 0; vi_tri < do_dai; vi_tri++) {
+        char hien_tai = chuoi[vi_tri];
+
+        if (hien_tai > ky_tu_nho_nhat) {
+            printf("Ann\n");
+        } else {
+            printf("Mike\n");
+        }
+
+        if (hien_tai < ky_tu_nho_nhat) {
+            ky_tu_nho_nhat = hien_tai;
+        }
+    }
+
+    return 0;
+}
 

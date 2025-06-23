@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+char s[MAXN], res[MAXN];
+int freq[26];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    for (int i = 0; i < n; i++) {
+        freq[s[i] - 'a']++;
+    }
+
+    int left = 0;
+    int right = n - 1;
+
+    for (int i = 0; i < 26; i++) {
+        while (freq[i] >= 2) {
+            res[left++] = 'a' + i;
+            res[right--] = 'a' + i;
+            freq[i] -= 2;
+        }
+    }
+
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] == 1) {
+            res[left] = 'a' + i;
+            break;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%c", res[i]);
+    }
+    printf("\n");
+    return 0;
+}
 

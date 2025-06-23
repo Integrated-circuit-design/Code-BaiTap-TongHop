@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[MAXN];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    long long sum = 0;
+    long long prefixSum[MAXN];
+
+    prefixSum[0] = 0;
+    for (int i = 0; i < n; i++) {
+        prefixSum[i + 1] = prefixSum[i] + a[i];
+    }
+
+    for (int i = 0; i <= n - k; i++) {
+        sum += prefixSum[i + k] - prefixSum[i];
+    }
+
+    double result = (double)sum / (n - k + 1);
+    printf("%.10f\n", result);
+
+    return 0;
+}
 

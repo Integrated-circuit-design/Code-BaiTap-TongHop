@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAXN 405
+#define BIG 1000000000
+
+char a[MAXN][MAXN];
+int rowDots[MAXN], colDots[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d%d", &n, &m);
+
+        for (int i = 0; i < n; i++) rowDots[i] = 0;
+        for (int j = 0; j < m; j++) colDots[j] = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%s", a[i]);
+            for (int j = 0; j < m; j++) {
+                if (a[i][j] == '.') {
+                    rowDots[i]++;
+                    colDots[j]++;
+                }
+            }
+        }
+
+        int best = BIG;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int need = rowDots[i] + colDots[j];
+                if (a[i][j] == '.') need--;
+                if (need < best) best = need;
+            }
+        }
+
+        printf("%d\n", best);
+    }
+
+    return 0;
+}
 

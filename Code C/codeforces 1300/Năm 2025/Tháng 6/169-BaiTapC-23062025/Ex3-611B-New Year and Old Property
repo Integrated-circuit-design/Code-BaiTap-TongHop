@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int coDung1So0(long long x) {
+    int dem0 = 0;
+    int daGap1 = 0;
+
+    for (int i = 62; i >= 0; i--) {
+        if ((x >> i) & 1) {
+            daGap1 = 1;
+        } else if (daGap1) {
+            dem0++;
+        }
+    }
+
+    return dem0 == 1;
+}
+
+int main() {
+    long long a, b;
+    scanf("%lld %lld", &a, &b);
+
+    int dem = 0;
+
+    if (b - a <= 1000000) {
+        for (long long i = a; i <= b; i++) {
+            if (coDung1So0(i)) {
+                dem++;
+            }
+        }
+    } else {
+        for (int soBit = 2; soBit < 63; soBit++) {
+            long long full = (1LL << soBit) - 1;
+
+            for (int i = 0; i < soBit - 1; i++) {
+                long long so = full ^ (1LL << i);
+                if (so >= a && so <= b)
+                    dem++;
+            }
+        }
+    }
+
+    printf("%d\n", dem);
+    return 0;
+}
 

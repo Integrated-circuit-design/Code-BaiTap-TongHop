@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    char s[105];
+    int prefix_sum[105];
+
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    prefix_sum[0] = s[0] - '0';
+    for (int i = 1; i < n; i++) {
+        prefix_sum[i] = prefix_sum[i - 1] + (s[i] - '0');
+    }
+
+    int total = prefix_sum[n - 1];
+
+    for (int target = 1; target < total; target++) {
+        int last_index = -1;
+        int ok = 1;
+
+        for (int i = 0; i < n; i++) {
+            int sum_segment = prefix_sum[i] - (last_index == -1 ? 0 : prefix_sum[last_index]);
+            if (sum_segment > target) {
+                ok = 0;
+                break;
+            }
+            if (sum_segment == target) {
+                last_index = i;
+            }
+        }
+
+        if (ok && last_index == n - 1) {
+            printf("YES\n");
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

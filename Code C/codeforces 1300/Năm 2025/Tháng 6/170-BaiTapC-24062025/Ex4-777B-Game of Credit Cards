@@ -1,1 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1001
+
+void count_digits(const char *str, int *count) {
+    for (int i = 0; str[i]; i++)
+        count[str[i] - '0']++;
+}
+
+int count_min_moriarty(const char *sherlock, int *moriarty_digits, int n) {
+    int tmp[10], flicks = 0;
+    memcpy(tmp, moriarty_digits, sizeof(int) * 10);
+
+    for (int i = 0; i < n; i++) {
+        int d = sherlock[i] - '0';
+        int matched = 0;
+        for (int j = d; j <= 9; j++) {
+            if (tmp[j]) {
+                tmp[j]--;
+                matched = 1;
+                break;
+            }
+        }
+        if (!matched) flicks++;
+    }
+    return flicks;
+}
+
+int count_max_sherlock(const char *sherlock, int *moriarty_digits, int n) {
+    int tmp[10], flicks = 0;
+    memcpy(tmp, moriarty_digits, sizeof(int) * 10);
+
+    for (int i = 0; i < n; i++) {
+        int d = sherlock[i] - '0';
+        int flicked = 0;
+        for (int j = d + 1; j <= 9; j++) {
+            if (tmp[j]) {
+                tmp[j]--;
+                flicks++;
+                flicked = 1;
+                break;
+            }
+        }
+        if (!flicked) {
+            for (int j = 0; j <= 9; j++) {
+                if (tmp[j]) {
+                    tmp[j]--;
+                    break;
+                }
+            }
+        }
+    }
+    return flicks;
+}
+
+int main() {
+    int n;
+    char s[MAX], m[MAX];
+    int moriarty_digits[10] = {0};
+
+    scanf("%d", &n);
+    scanf("%s", s);
+    scanf("%s", m);
+
+    count_digits(m, moriarty_digits);
+
+    int min_flick_moriarty = count_min_moriarty(s, moriarty_digits, n);
+    int max_flick_sherlock = count_max_sherlock(s, moriarty_digits, n);
+
+    printf("%d\n%d\n", min_flick_moriarty, max_flick_sherlock);
+
+    return 0;
+}
 

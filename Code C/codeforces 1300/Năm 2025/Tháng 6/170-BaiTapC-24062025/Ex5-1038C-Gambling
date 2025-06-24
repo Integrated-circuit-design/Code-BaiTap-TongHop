@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int value;
+    int owner;
+} Turn;
+
+int cmp_turns(const void *a, const void *b) {
+    Turn *ta = (Turn*)a;
+    Turn *tb = (Turn*)b;
+    return tb->value - ta->value;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    Turn *all = (Turn*)malloc(sizeof(Turn) * 2 * n);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &all[i].value);
+        all[i].owner = 0;
+    }
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &all[n + i].value);
+        all[n + i].owner = 1;
+    }
+
+    qsort(all, 2 * n, sizeof(Turn), cmp_turns);
+
+    long long score_a = 0, score_b = 0;
+
+    for (int i = 0; i < 2 * n; i++) {
+        if (i % 2 == 0) {
+            if (all[i].owner == 0)
+                score_a += all[i].value;
+        } else {
+            if (all[i].owner == 1)
+                score_b += all[i].value;
+        }
+    }
+
+    printf("%lld\n", score_a - score_b);
+
+    free(all);
+    return 0;
+}
 

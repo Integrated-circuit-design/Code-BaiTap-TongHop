@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+#define int long long
+#define MAXN 200005
+
+int a[MAXN], b[MAXN];
+
+void restore_sequence(int n) {
+    int min_left = 0, max_right = 1e18;
+
+    for (int i = 0; i < n / 2; ++i) {
+        int sum = b[i];
+        int ai = (sum < max_right) ? min_left : sum - max_right;
+        if (ai < min_left) ai = min_left;
+        int aj = sum - ai;
+        a[i] = ai;
+        a[n - 1 - i] = aj;
+        min_left = ai;
+        max_right = aj;
+    }
+}
+
+void read_input(int *n) {
+    scanf("%lld", n);
+    for (int i = 0; i < *n / 2; ++i)
+        scanf("%lld", &b[i]);
+}
+
+void print_output(int n) {
+    for (int i = 0; i < n; ++i)
+        printf("%lld%c", a[i], (i == n - 1 ? '\n' : ' '));
+}
+
+int main() {
+    int n;
+    read_input(&n);
+    restore_sequence(n);
+    print_output(n);
+    return 0;
+}
 

@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+#define NORTH_POLE 0
+#define SOUTH_POLE 20000
+
+int is_valid_move(int current_pos, int distance, const char* direction) {
+    if (strcmp(direction, "South") == 0) {
+        return current_pos + distance <= SOUTH_POLE;
+    }
+    if (strcmp(direction, "North") == 0) {
+        return current_pos - distance >= NORTH_POLE;
+    }
+    if (current_pos == NORTH_POLE || current_pos == SOUTH_POLE) {
+        return 0;
+    }
+    return 1;
+}
+
+int update_position(int current_pos, int distance, const char* direction) {
+    if (strcmp(direction, "South") == 0) {
+        return current_pos + distance;
+    }
+    if (strcmp(direction, "North") == 0) {
+        return current_pos - distance;
+    }
+    return current_pos;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int position = 0;
+    int distance;
+    char direction[10];
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d %s", &distance, direction);
+        if (!is_valid_move(position, distance, direction)) {
+            printf("NO\n");
+            return 0;
+        }
+        position = update_position(position, distance, direction);
+    }
+
+    printf(position == 0 ? "YES\n" : "NO\n");
+    return 0;
+}
 

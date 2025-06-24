@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int l, r;
+    for (int i = 0; i < m; ++i) {
+        scanf("%d %d", &l, &r);
+    }
+
+    for (int i = 0; i < n; ++i) {
+        if (i % 2 == 0) printf("0");
+        else printf("1");
+    }
+    printf("\n");
+
+    printf("2\n");
+
+    return 0;
+}
 

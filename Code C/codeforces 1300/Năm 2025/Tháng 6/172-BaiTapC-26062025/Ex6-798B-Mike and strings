@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+#define INF 1000000000000000000LL
+
+int main() {
+    long long n, a, b, c;
+    scanf("%lld %lld %lld %lld", &n, &a, &b, &c);
+
+    int need = (4 - n % 4) % 4;
+
+    if (need == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    long long min_cost = INF;
+
+    for (int i = 0; i <= need; i++) {
+        for (int j = 0; j <= need / 2 + 1; j++) {
+            for (int k = 0; k <= need / 3 + 1; k++) {
+                if (i + 2 * j + 3 * k == need) {
+                    long long cost = i * a + j * b + k * c;
+                    if (cost < min_cost) {
+                        min_cost = cost;
+                    }
+                }
+            }
+        }
+    }
+
+    printf("%lld\n", min_cost);
+    return 0;
+}
 

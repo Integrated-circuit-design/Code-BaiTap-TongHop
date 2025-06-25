@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_LOG 100
+
+typedef struct {
+    int id;
+    int active;
+} Reader;
+
+Reader list[MAX_LOG];
+int list_size = 0;
+
+int is_in_room(int id) {
+    for (int i = 0; i < list_size; i++) {
+        if (list[i].id == id && list[i].active)
+            return 1;
+    }
+    return 0;
+}
+
+void enter_room(int id) {
+    list[list_size].id = id;
+    list[list_size].active = 1;
+    list_size++;
+}
+
+void leave_room(int id) {
+    for (int i = 0; i < list_size; i++) {
+        if (list[i].id == id && list[i].active) {
+            list[i].active = 0;
+            return;
+        }
+    }
+}
+
+int main() {
+    int n, current = 0, max_people = 0;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        char op;
+        int id;
+        scanf(" %c %d", &op, &id);
+
+        if (op == '+') {
+            if (!is_in_room(id)) {
+                enter_room(id);
+                current++;
+                if (current > max_people)
+                    max_people = current;
+            }
+        } else {
+            if (is_in_room(id)) {
+                leave_room(id);
+                current--;
+            } else {
+                max_people++;
+            }
+        }
+    }
+
+    printf("%d\n", max_people);
+    return 0;
+}
 

@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int la_tam_giac(int a, int b, int c) {
+    return a + b > c && a + c > b && b + c > a;
+}
+
+int dem_xorangle(int n) {
+    int dem = 0;
+
+    for (int c = n; c >= 1; c--) {
+        for (int b = 1; b <= c; b++) {
+            int a = b ^ c;
+            if (a > b || a < 1 || a > n) continue;
+            if (la_tam_giac(a, b, c)) {
+                dem++;
+            }
+        }
+    }
+
+    return dem;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    printf("%d\n", dem_xorangle(n));
+    return 0;
+}
 

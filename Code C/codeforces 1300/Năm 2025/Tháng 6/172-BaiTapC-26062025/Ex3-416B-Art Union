@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+#define MAX_M 50000
+#define MAX_N 5
+
+typedef struct {
+    int time[MAX_N];
+} Picture;
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    int m, n;
+    Picture pictures[MAX_M];
+    int available[MAX_N] = {0};
+
+    scanf("%d %d", &m, &n);
+
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &pictures[i].time[j]);
+
+    for (int i = 0; i < m; i++) {
+        int current = 0;
+        for (int j = 0; j < n; j++) {
+            current = max(current, available[j]) + pictures[i].time[j];
+            available[j] = current;
+        }
+        printf("%d ", current);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MAXN 105
+#define LOWER_BOUND 0
+#define UPPER_BOUND 1001
+
+int can_restore(int left_val, int right_val, int elements_erased) {
+    int possible_between = right_val - left_val - 1;
+    return possible_between == elements_erased;
+}
+
+int max_erasable(int a[], int n) {
+    int max_count = 0;
+
+    for (int i = 0; i <= n; ++i) {
+        for (int j = i + 2; j <= n + 1; ++j) {
+            int erased = j - i - 1;
+            if (can_restore(a[i], a[j], erased)) {
+                if (erased > max_count)
+                    max_count = erased;
+            }
+        }
+    }
+
+    return max_count;
+}
+
+int main() {
+    int n, a[MAXN];
+
+    scanf("%d", &n);
+
+    a[0] = LOWER_BOUND;
+
+    for (int i = 1; i <= n; ++i) {
+        scanf("%d", &a[i]);
+    }
+
+    a[n + 1] = UPPER_BOUND;
+
+    printf("%d\n", max_erasable(a, n));
+
+    return 0;
+}
 

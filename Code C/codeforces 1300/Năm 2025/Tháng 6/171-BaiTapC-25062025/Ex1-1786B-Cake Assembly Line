@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+#define MAX 100005
+#define INF 1000000000000000000LL
+
+// Hàm tìm giá trị lớn hơn
+long long max(long long a, long long b) {
+    return (a > b) ? a : b;
+}
+
+// Hàm tìm giá trị nhỏ hơn
+long long min(long long a, long long b) {
+    return (a < b) ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t); // Đọc số lượng test case
+
+    while (t--) {
+        int n, w, h;
+        scanf("%d %d %d", &n, &w, &h); // Đọc số lượng bánh, độ rộng bánh và độ rộng chocolate
+
+        long long a[MAX], b[MAX];
+
+        // Đọc vị trí các bánh
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        // Đọc vị trí các dispenser
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &b[i]);
+        }
+
+        // Ban đầu giới hạn dịch chuyển nằm ở khoảng rất rộng
+        long long d_min = -INF;
+        long long d_max = INF;
+
+        // Xét từng bánh và dispenser tương ứng
+        for (int i = 0; i < n; i++) {
+            // Tính khoảng dịch chuyển nhỏ nhất để dispenser i nằm trong bánh i
+            long long shift_min = (b[i] + h) - (a[i] + w);
+
+            // Tính khoảng dịch chuyển lớn nhất để dispenser i không ra khỏi bánh i
+            long long shift_max = (b[i] - h) - (a[i] - w);
+
+            // Cập nhật khoảng giao nhau giữa tất cả các dịch chuyển hợp lệ
+            d_min = max(d_min, shift_min);
+            d_max = min(d_max, shift_max);
+        }
+
+        // Nếu có ít nhất một khoảng dịch chuyển hợp lệ
+        if (d_min <= d_max) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

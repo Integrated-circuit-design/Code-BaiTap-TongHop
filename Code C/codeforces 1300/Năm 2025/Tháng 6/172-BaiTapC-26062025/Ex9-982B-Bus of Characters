@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+#define MAX 200005
+
+typedef struct {
+    int width;
+    int id;
+} Seat;
+
+Seat bus[MAX];
+bool taken[MAX];
+char seq[2 * MAX];
+int ans[2 * MAX];
+
+int cmp(const void *a, const void *b) {
+    Seat *s1 = (Seat *)a;
+    Seat *s2 = (Seat *)b;
+    return s1->width - s2->width;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &bus[i].width);
+        bus[i].id = i + 1;
+    }
+
+    qsort(bus, n, sizeof(Seat), cmp);
+    scanf("%s", seq);
+
+    int ptr_empty = 0;
+    int occupied_ids[MAX];
+    int occ_top = 0;
+
+    for (int i = 0; i < 2 * n; ++i) {
+        if (seq[i] == '0') {
+            int pos = bus[ptr_empty].id;
+            ans[i] = pos;
+            taken[bus[ptr_empty].id] = true;
+            occupied_ids[occ_top++] = bus[ptr_empty].id;
+            ptr_empty++;
+        } else {
+            int max_w = -1, max_id = -1, idx = -1;
+            for (int j = 0; j < occ_top; ++j) {
+                int id = occupied_ids[j];
+                if (taken[id]) {
+                    if (bus[id - 1].width > max_w) {
+                        max_w = bus[id - 1].width;
+                        max_id = id;
+                        idx = j;
+                    }
+                }
+            }
+            ans[i] = max_id;
+            taken[max_id] = false;
+        }
+    }
+
+    for (int i = 0; i < 2 * n; ++i) {
+        printf("%d ", ans[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

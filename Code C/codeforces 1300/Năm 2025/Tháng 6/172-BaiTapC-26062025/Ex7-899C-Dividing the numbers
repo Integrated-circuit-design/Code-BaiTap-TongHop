@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAXN 60005
+
+int group[MAXN], size = 0;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long sum_all = (long long)n * (n + 1) / 2;
+    long long group_sum = 0;
+
+    int left = 1, right = n;
+
+    while (left <= right) {
+        if (group_sum + right <= sum_all / 2) {
+            group[group_sum] = right;
+            group_sum += right;
+            size++;
+        } else if (group_sum + left <= sum_all / 2) {
+            group[group_sum] = left;
+            group_sum += left;
+            size++;
+        }
+        right--;
+        left++;
+    }
+
+    printf("%lld\n", sum_all - 2 * group_sum);
+    printf("%d", size);
+    for (int i = 0; i < size; i++) {
+        printf(" %d", group[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
 

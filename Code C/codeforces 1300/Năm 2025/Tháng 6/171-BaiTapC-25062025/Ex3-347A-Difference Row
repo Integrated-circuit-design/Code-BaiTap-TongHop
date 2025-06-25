@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n, a[105];
+    int freq[2005] = {0};
+    int offset = 1000;
+    int i, min = 1001, max = -1001;
+
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        freq[a[i] + offset]++;
+        if (a[i] < min) min = a[i];
+        if (a[i] > max) max = a[i];
+    }
+
+    if (min == max) {
+        for (i = 0; i < n; i++)
+            printf("%d ", min);
+        return 0;
+    }
+
+    printf("%d ", max);
+    freq[max + offset]--;
+
+    for (i = -1000; i <= 1000; i++) {
+        if (i != min && i != max) {
+            while (freq[i + offset]--)
+                printf("%d ", i);
+        }
+    }
+
+    while (freq[min + offset]--)
+        printf("%d ", min);
+
+    return 0;
+}
 

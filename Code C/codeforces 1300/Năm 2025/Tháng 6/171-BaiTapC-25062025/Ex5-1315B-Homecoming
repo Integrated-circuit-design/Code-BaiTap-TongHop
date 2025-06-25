@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 100005
+
+int find_start_index(int a, int b, int p, char s[]) {
+    int n = strlen(s);
+    int total_cost = 0;
+    char current = 'X';
+
+    for (int i = n - 2; i >= 0; i--) {
+        if (s[i] != current) {
+            if (s[i] == 'A') {
+                total_cost += a;
+            } else {
+                total_cost += b;
+            }
+
+            if (total_cost > p) {
+                return i + 2;
+            }
+
+            current = s[i];
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, p;
+        char s[MAX_LEN];
+
+        scanf("%d %d %d", &a, &b, &p);
+        scanf("%s", s);
+
+        int result = find_start_index(a, b, p, s);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

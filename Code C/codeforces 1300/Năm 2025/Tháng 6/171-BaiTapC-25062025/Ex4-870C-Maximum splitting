@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int get_max_composite_parts(int n) {
+    if (n < 4 || n == 5 || n == 7 || n == 11)
+        return -1;
+
+    int count = n / 4;
+
+    if (n % 4 == 1 || n % 4 == 3)
+        count--;
+
+    return count;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+        printf("%d\n", get_max_composite_parts(n));
+    }
+
+    return 0;
+}
 

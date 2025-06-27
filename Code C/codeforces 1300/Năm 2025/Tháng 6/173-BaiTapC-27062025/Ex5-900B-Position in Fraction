@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, c;
+    scanf("%d %d %d", &a, &b, &c);
+
+    int du = a % b;
+    int viTri = 1;
+
+    while (du != 0 && viTri <= 100000) {
+        du *= 10;
+        int chuSo = du / b;
+
+        if (chuSo == c) {
+            printf("%d\n", viTri);
+            return 0;
+        }
+
+        du = du % b;
+        viTri++;
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

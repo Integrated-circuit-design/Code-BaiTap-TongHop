@@ -1,1 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, pos, l, r;
+    scanf("%d %d %d %d", &n, &pos, &l, &r);
+
+    int ketQua = 0;
+
+    if (l == 1 && r == n) {
+        ketQua = 0;
+    }
+    else if (l > 1 && r < n) {
+        if (pos < l)
+            ketQua = (l - pos) + (r - l) + 2;
+        else if (pos > r)
+            ketQua = (pos - r) + (r - l) + 2;
+        else
+            ketQua = (r - l) + 2;
+    }
+    else if (l > 1) {
+        ketQua = abs(pos - l) + 1;
+    }
+    else if (r < n) {
+        ketQua = abs(pos - r) + 1;
+    }
+
+    printf("%d\n", ketQua);
+    return 0;
+}
 

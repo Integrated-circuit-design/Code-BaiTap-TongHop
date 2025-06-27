@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+long long power2(int x) {
+    long long result = 1;
+    while (x--) {
+        result *= 2;
+    }
+    return result;
+}
+
+int main() {
+    int n, m;
+    int a[50][50];
+
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &a[i][j]);
+        }
+    }
+
+    long long total = 0;
+
+    for (int i = 0; i < n; i++) {
+        int count_white = 0;
+        int count_black = 0;
+        for (int j = 0; j < m; j++) {
+            if (a[i][j] == 0)
+                count_white++;
+            else
+                count_black++;
+        }
+        if (count_white > 0)
+            total += power2(count_white) - 1;
+        if (count_black > 0)
+            total += power2(count_black) - 1;
+    }
+
+    for (int j = 0; j < m; j++) {
+        int count_white = 0;
+        int count_black = 0;
+        for (int i = 0; i < n; i++) {
+            if (a[i][j] == 0)
+                count_white++;
+            else
+                count_black++;
+        }
+        if (count_white > 0)
+            total += power2(count_white) - 1;
+        if (count_black > 0)
+            total += power2(count_black) - 1;
+    }
+
+    total -= (long long)n * m;
+
+    printf("%lld\n", total);
+
+    return 0;
+}
 

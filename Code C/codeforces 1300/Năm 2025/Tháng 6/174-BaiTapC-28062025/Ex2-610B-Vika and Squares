@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int main() {
+    int n, a[MAXN];
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &a[i]);
+    }
+
+    long long max_squares = 0;
+
+    for (int start = 0; start < n; ++start) {
+        long long current = 0;
+        int i = start;
+        int steps = 0;
+
+        int b[MAXN];
+        for (int j = 0; j < n; ++j) b[j] = a[j];
+
+        while (b[i] > 0) {
+            b[i]--;
+            current++;
+            i = (i + 1) % n;
+            steps++;
+            if (steps > n * 2) break;
+        }
+
+        if (current > max_squares) {
+            max_squares = current;
+        }
+    }
+
+    printf("%lld\n", max_squares);
+    return 0;
+}
 

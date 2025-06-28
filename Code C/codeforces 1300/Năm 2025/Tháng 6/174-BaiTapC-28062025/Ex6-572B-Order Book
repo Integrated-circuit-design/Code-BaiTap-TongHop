@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+    char type;
+    int price;
+    int volume;
+} Order;
+
+int add_or_merge(Order orders[], int count, char type, int price, int volume) {
+    for (int i = 0; i < count; i++) {
+        if (orders[i].type == type && orders[i].price == price) {
+            orders[i].volume += volume;
+            return count;
+        }
+    }
+    orders[count].type = type;
+    orders[count].price = price;
+    orders[count].volume = volume;
+    return count + 1;
+}
+
+int cmp_buy(const void *a, const void *b) {
+    return ((Order *)b)->price - ((Order *)a)->price;
+}
+
+int cmp_sell(const void *a, const void *b) {
+    return ((Order *)a)->price - ((Order *)b)->price;
+}
+
+int main() {
+    int n, s;
+    scanf("%d %d", &n, &s);
+
+    Order allOrders[1000];
+    int total = 0;
+
+    for (int i = 0; i < n; i++) {
+        char type;
+        int price, volume;
+        scanf(" %c %d %d", &type, &price, &volume);
+        total = add_or_merge(allOrders, total, type, price, volume);
+    }
+
+    Order buy[1000], sell[1000];
+    int bcount = 0, scount = 0;
+
+    for (int i = 0; i < total; i++) {
+        if (allOrders[i].type == 'B') {
+            buy[bcount++] = allOrders[i];
+        } else {
+            sell[scount++] = allOrders[i];
+        }
+    }
+
+    qsort(buy, bcount, sizeof(Order), cmp_buy);
+    qsort(sell, scount, sizeof(Order), cmp_sell);
+
+    if (scount > s) scount = s;
+    for (int i = scount - 1; i >= 0; i--) {
+        printf("S %d %d\n", sell[i].price, sell[i].volume);
+    }
+
+    if (bcount > s) bcount = s;
+    for (int i = 0; i < bcount; i++) {
+        printf("B %d %d\n", buy[i].price, buy[i].volume);
+    }
+
+    return 0;
+}
 

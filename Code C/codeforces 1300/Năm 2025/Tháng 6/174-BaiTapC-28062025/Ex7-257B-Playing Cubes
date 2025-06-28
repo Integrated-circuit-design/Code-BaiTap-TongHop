@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+typedef struct {
+    int petya;
+    int vasya;
+} Score;
+
+Score tinh_diem(int red, int blue) {
+    Score kq;
+    int tong_cap = red + blue - 1;
+
+    kq.vasya = (red < blue) ? red : blue;
+    kq.petya = tong_cap - kq.vasya;
+
+    return kq;
+}
+
+int main() {
+    int do, xanh;
+    scanf("%d %d", &do, &xanh);
+
+    Score diem = tinh_diem(do, xanh);
+    printf("%d %d\n", diem.petya, diem.vasya);
+
+    return 0;
+}
 

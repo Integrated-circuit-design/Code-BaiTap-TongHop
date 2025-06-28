@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, p, q;
+    scanf("%d %d %d", &n, &p, &q);
+
+    char s[105];
+    scanf("%s", s);
+
+    for (int j = 0; j * q <= n; ++j) {
+        int remaining = n - j * q;
+        if (remaining % p == 0) {
+            int i = remaining / p;
+            int total = i + j;
+            printf("%d\n", total);
+
+            int index = 0;
+            char buffer[105];
+
+            for (int a = 0; a < i; ++a) {
+                strncpy(buffer, s + index, p);
+                buffer[p] = '\0';
+                printf("%s\n", buffer);
+                index += p;
+            }
+
+            for (int a = 0; a < j; ++a) {
+                strncpy(buffer, s + index, q);
+                buffer[q] = '\0';
+                printf("%s\n", buffer);
+                index += q;
+            }
+
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+#define MAX 1005
+
+int n, m;
+char input[MAX][MAX];
+char simulated[MAX][MAX];
+
+const int dx[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+const int dy[8] = {-1,  0,  1,-1, 1,-1, 0, 1};
+
+int can_place_brush(int i, int j) {
+    for (int d = 0; d < 8; ++d) {
+        int x = i + dx[d];
+        int y = j + dy[d];
+        if (x < 0 || x >= n || y < 0 || y >= m || input[x][y] != '#') {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void apply_brush(int i, int j) {
+    for (int d = 0; d < 8; ++d) {
+        int x = i + dx[d];
+        int y = j + dy[d];
+        simulated[x][y] = '#';
+    }
+}
+
+int is_match() {
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < m; ++j)
+            if (input[i][j] == '#' && simulated[i][j] != '#')
+                return 0;
+    return 1;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%s", input[i]);
+        for (int j = 0; j < m; ++j) {
+            simulated[i][j] = '.';
+        }
+    }
+
+    for (int i = 1; i < n - 1; ++i) {
+        for (int j = 1; j < m - 1; ++j) {
+            if (can_place_brush(i, j)) {
+                apply_brush(i, j);
+            }
+        }
+    }
+
+    if (is_match())
+        printf("YES\n");
+    else
+        printf("NO\n");
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void sap_xep_giam(int a[], int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (a[j] < a[j + 1]) {
+                int tam = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = tam;
+            }
+        }
+    }
+}
+
+int main() {
+    int so_nguoi, suc_chua;
+    scanf("%d %d", &so_nguoi, &suc_chua);
+
+    int tang_muon_den[2005];
+
+    for (int i = 0; i < so_nguoi; ++i) {
+        scanf("%d", &tang_muon_den[i]);
+    }
+
+    sap_xep_giam(tang_muon_den, so_nguoi);
+
+    int thoi_gian_tong = 0;
+
+    for (int i = 0; i < so_nguoi; i += suc_chua) {
+        int tang_cao_nhat = tang_muon_den[i];
+        thoi_gian_tong += 2 * (tang_cao_nhat - 1);
+    }
+
+    printf("%d\n", thoi_gian_tong);
+    return 0;
+}
 

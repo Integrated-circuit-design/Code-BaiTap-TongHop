@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll get_steps(ll x, ll y, ll dx, ll dy, ll n, ll m) {
+    ll steps_x = 1e18, steps_y = 1e18;
+
+    if (dx > 0)
+        steps_x = (n - x) / dx;
+    else if (dx < 0)
+        steps_x = (x - 1) / (-dx);
+
+    if (dy > 0)
+        steps_y = (m - y) / dy;
+    else if (dy < 0)
+        steps_y = (y - 1) / (-dy);
+
+    return (steps_x < steps_y) ? steps_x : steps_y;
+}
+
+void move_position(ll *x, ll *y, ll dx, ll dy, ll steps) {
+    *x += dx * steps;
+    *y += dy * steps;
+}
+
+int main() {
+    ll n, m, x, y;
+    int k;
+    scanf("%lld %lld", &n, &m);
+    scanf("%lld %lld", &x, &y);
+    scanf("%d", &k);
+
+    ll total_steps = 0;
+
+    for (int i = 0; i < k; ++i) {
+        ll dx, dy;
+        scanf("%lld %lld", &dx, &dy);
+
+        ll steps = get_steps(x, y, dx, dy, n, m);
+        move_position(&x, &y, dx, dy, steps);
+        total_steps += steps;
+    }
+
+    printf("%lld\n", total_steps);
+    return 0;
+}
 

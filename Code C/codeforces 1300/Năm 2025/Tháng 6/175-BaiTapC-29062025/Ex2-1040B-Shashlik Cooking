@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+typedef struct {
+    int id;
+    int pos;
+} Member;
+
+Member morning[MAXN];
+int evening[MAXN];
+
+int cmp_id(const void* a, const void* b) {
+    return ((Member*)a)->id - ((Member*)b)->id;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &morning[i].id);
+            morning[i].pos = i;
+        }
+
+        qsort(morning, n, sizeof(Member), cmp_id);
+
+        int pos_map[MAXN];
+        for (int i = 0; i < n; i++) {
+            pos_map[morning[i].id] = morning[i].pos;
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &evening[i]);
+        }
+
+        int suffix_length = 0;
+        int expect_pos = n - 1;
+        for (int i = n - 1; i >= 0; i--) {
+            int id = evening[i];
+            if (pos_map[id] == expect_pos) {
+                suffix_length++;
+                expect_pos--;
+            } else {
+                break;
+            }
+        }
+
+        printf("%d\n", n - suffix_length);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 200005
+
+int A[MAX], B[MAX], A_sorted[MAX];
+int B_index[MAX], result[MAX];
+
+int cmp_A(const void *x, const void *y) {
+    return A_sorted[*(int *)x] - A_sorted[*(int *)y];
+}
+
+int cmp_B(const void *x, const void *y) {
+    return B[*(int *)y] - B[*(int *)x];
+}
+
+int main() {
+    int m;
+    scanf("%d", &m);
+
+    for (int i = 0; i < m; ++i) {
+        scanf("%d", &A[i]);
+        A_sorted[i] = A[i];
+    }
+
+    for (int i = 0; i < m; ++i) {
+        scanf("%d", &B[i]);
+        B_index[i] = i;
+    }
+
+    int A_index[m];
+    for (int i = 0; i < m; ++i) A_index[i] = i;
+
+    qsort(A_index, m, sizeof(int), cmp_A);
+    qsort(B_index, m, sizeof(int), cmp_B);
+
+    for (int i = 0; i < m; ++i) {
+        int pos = B_index[i];
+        result[pos] = A_sorted[A_index[i]];
+    }
+
+    for (int i = 0; i < m; ++i)
+        printf("%d%c", result[i], i == m - 1 ? '\n' : ' ');
+
+    return 0;
+}
 

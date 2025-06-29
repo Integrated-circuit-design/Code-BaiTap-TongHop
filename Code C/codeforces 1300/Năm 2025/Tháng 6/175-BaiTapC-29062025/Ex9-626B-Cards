@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int table[501][501];
+
+    int max_num = n * n;
+    int min_num = 1;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < k - 1; j++) {
+            table[i][j] = min_num++;
+        }
+        for (int j = n - 1; j >= k - 1; j--) {
+            table[i][j] = max_num--;
+        }
+    }
+
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += table[i][k - 1];
+    }
+
+    printf("%d\n", sum);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d", table[i][j]);
+            if (j != n - 1) printf(" ");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

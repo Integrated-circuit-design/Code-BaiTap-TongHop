@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+
+#define B 1
+#define G 2
+#define R 4
+
+int main() {
+    int n;
+    char s[205];
+    scanf("%d %s", &n, s);
+
+    int mask = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (s[i] == 'B') mask |= B;
+        else if (s[i] == 'G') mask |= G;
+        else if (s[i] == 'R') mask |= R;
+    }
+
+    if (mask == (B | G | R)) {
+        printf("BGR\n");
+        return 0;
+    }
+
+    if (mask == B || mask == G || mask == R) {
+        if (mask & B) printf("B\n");
+        if (mask & G) printf("G\n");
+        if (mask & R) printf("R\n");
+        return 0;
+    }
+
+    int countB = 0, countG = 0, countR = 0;
+    for (int i = 0; i < n; ++i) {
+        if (s[i] == 'B') countB++;
+        else if (s[i] == 'G') countG++;
+        else if (s[i] == 'R') countR++;
+    }
+
+    int result = 0;
+
+    if (mask == (B | G)) {
+        result |= R;
+        if (countB > 1) result |= B;
+        if (countG > 1) result |= G;
+    } else if (mask == (B | R)) {
+        result |= G;
+        if (countB > 1) result |= B;
+        if (countR > 1) result |= R;
+    } else if (mask == (G | R)) {
+        result |= B;
+        if (countG > 1) result |= G;
+        if (countR > 1) result |= R;
+    }
+
+    if (result & B) putchar('B');
+    if (result & G) putchar('G');
+    if (result & R) putchar('R');
+    putchar('\n');
+
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int result[1001];
+    int count = 0;
+
+    int i = n;
+
+    while (i >= 1) {
+        int turn_pos = i - k;
+
+        if (turn_pos < 1)
+            turn_pos = 1;
+
+        result[count++] = turn_pos;
+
+        i = turn_pos - 1;
+    }
+
+    printf("%d\n", count);
+    for (int j = count - 1; j >= 0; j--) {
+        printf("%d ", result[j]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 55
+
+int n, L;
+int a[MAX], b[MAX];
+int da[MAX * 2], db[MAX];
+int pi[MAX];
+
+void build_diff(int in[], int out[]) {
+    for (int i = 0; i < n; ++i)
+        out[i] = (in[(i + 1) % n] - in[i] + L) % L;
+}
+
+void build_prefix(int *pattern) {
+    pi[0] = 0;
+    for (int i = 1; i < n; ++i) {
+        int j = pi[i - 1];
+        while (j > 0 && pattern[i] != pattern[j])
+            j = pi[j - 1];
+        if (pattern[i] == pattern[j]) ++j;
+        pi[i] = j;
+    }
+}
+
+int kmp_match(int *text, int *pattern) {
+    build_prefix(pattern);
+    int j = 0;
+    for (int i = 0; i < 2 * n; ++i) {
+        while (j > 0 && text[i] != pattern[j])
+            j = pi[j - 1];
+        if (text[i] == pattern[j]) ++j;
+        if (j == n) return 1;
+    }
+    return 0;
+}
+
+int main() {
+    scanf("%d%d", &n, &L);
+    for (int i = 0; i < n; ++i) scanf("%d", &a[i]);
+    for (int i = 0; i < n; ++i) scanf("%d", &b[i]);
+
+    build_diff(a, da);
+    build_diff(b, db);
+
+    for (int i = 0; i < n; ++i) da[i + n] = da[i];
+
+    printf("%s\n", kmp_match(da, db) ? "YES" : "NO");
+    return 0;
+}
 

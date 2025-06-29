@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int hop_le(int h, int m, int che_do) {
+    if (m < 0 || m >= 60) return 0;
+    if (che_do == 24) return (h >= 0 && h < 24);
+    return (h >= 1 && h <= 12);
+}
+
+int dem_thay_doi(int h1, int m1, int h2, int m2) {
+    int thay_doi = 0;
+    if (h1 / 10 != h2 / 10) thay_doi++;
+    if (h1 % 10 != h2 % 10) thay_doi++;
+    if (m1 / 10 != m2 / 10) thay_doi++;
+    if (m1 % 10 != m2 % 10) thay_doi++;
+    return thay_doi;
+}
+
+int main() {
+    int che_do;
+    char s[6];
+    scanf("%d", &che_do);
+    scanf("%s", s);
+
+    int hh = (s[0] - '0') * 10 + (s[1] - '0');
+    int mm = (s[3] - '0') * 10 + (s[4] - '0');
+
+    int min_thay_doi = 10;
+    int ket_h, ket_m;
+
+    for (int h = 0; h < 100; h++) {
+        for (int m = 0; m < 100; m++) {
+            if (!hop_le(h, m, che_do)) continue;
+            int thay_doi = dem_thay_doi(hh, mm, h, m);
+            if (thay_doi < min_thay_doi) {
+                min_thay_doi = thay_doi;
+                ket_h = h;
+                ket_m = m;
+            }
+        }
+    }
+
+    printf("%02d:%02d\n", ket_h, ket_m);
+    return 0;
+}
 

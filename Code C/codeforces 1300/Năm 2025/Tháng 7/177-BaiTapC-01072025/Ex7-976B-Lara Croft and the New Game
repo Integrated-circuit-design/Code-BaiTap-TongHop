@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+void tim_vi_tri(ll n, ll m, ll k, ll* hang, ll* cot) {
+    if (k < n - 1) {
+        *hang = k + 1;
+        *cot = 1;
+        return;
+    }
+
+    k -= (n - 1);
+    ll buoc_tren_hang = m - 1;
+    ll so_lan_doi_hang = k / buoc_tren_hang;
+    ll buoc_trong_hang = k % buoc_tren_hang;
+
+    *hang = n - so_lan_doi_hang;
+
+    if (so_lan_doi_hang % 2 == 0) {
+        *cot = 2 + buoc_trong_hang;
+    } else {
+        *cot = m - buoc_trong_hang;
+    }
+}
+
+int main() {
+    ll n, m, k;
+    scanf("%lld %lld %lld", &n, &m, &k);
+
+    ll hang, cot;
+    tim_vi_tri(n, m, k, &hang, &cot);
+    printf("%lld %lld\n", hang, cot);
+
+    return 0;
+}
 

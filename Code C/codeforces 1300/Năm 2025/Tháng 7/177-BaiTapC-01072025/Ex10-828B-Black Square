@@ -1,1 +1,65 @@
+#include <stdio.h>
+
+#define MAX 105
+
+char grid[MAX][MAX];
+
+void find_bounds(int n, int m, int *top, int *bottom, int *left, int *right) {
+    *top = n;
+    *bottom = -1;
+    *left = m;
+    *right = -1;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == 'B') {
+                if (i < *top) *top = i;
+                if (i > *bottom) *bottom = i;
+                if (j < *left) *left = j;
+                if (j > *right) *right = j;
+            }
+        }
+    }
+}
+
+int count_white(int top, int left, int size, int n, int m) {
+    int count = 0;
+    for (int i = top; i < top + size; i++) {
+        for (int j = left; j < left + size; j++) {
+            if (i < n && j < m && grid[i][j] == 'W') {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+int solve(int n, int m) {
+    int top, bottom, left, right;
+    find_bounds(n, m, &top, &bottom, &left, &right);
+
+    if (bottom == -1) return 1;
+
+    int height = bottom - top + 1;
+    int width = right - left + 1;
+    int size = height > width ? height : width;
+
+    if (size > n || size > m) return -1;
+
+    return count_white(top, left, size, n, m);
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", grid[i]);
+    }
+
+    int result = solve(n, m);
+    printf("%d\n", result);
+
+    return 0;
+}
 

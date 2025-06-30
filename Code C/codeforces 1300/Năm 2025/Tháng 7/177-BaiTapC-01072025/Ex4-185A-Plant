@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+typedef long long ll;
+
+typedef struct {
+    ll m[2][2];
+} Matrix;
+
+Matrix mat_mul(Matrix A, Matrix B) {
+    Matrix R;
+    for (int i = 0; i < 2; ++i)
+        for (int j = 0; j < 2; ++j) {
+            R.m[i][j] = 0;
+            for (int k = 0; k < 2; ++k)
+                R.m[i][j] = (R.m[i][j] + A.m[i][k] * B.m[k][j]) % MOD;
+        }
+    return R;
+}
+
+Matrix mat_pow(Matrix base, ll exp) {
+    Matrix res = {{{1, 0}, {0, 1}}};
+    while (exp > 0) {
+        if (exp & 1)
+            res = mat_mul(res, base);
+        base = mat_mul(base, base);
+        exp >>= 1;
+    }
+    return res;
+}
+
+int main() {
+    ll n;
+    scanf("%lld", &n);
+
+    Matrix M = {{{3, 1}, {1, 3}}};
+
+    Matrix Mn = mat_pow(M, n);
+
+    printf("%lld\n", Mn.m[0][0]);
+
+    return 0;
+}
 

@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_EVENTS 100
+#define MAX_NAME 25
+
+typedef struct {
+    int yellow;
+    int red;
+    int red_time;
+    int shown;
+} Player;
+
+Player players[2][100];
+
+int main() {
+    char home[MAX_NAME], away[MAX_NAME];
+    int n;
+
+    scanf("%s", home);
+    scanf("%s", away);
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; ++i) {
+        int t, num;
+        char team, card;
+        scanf("%d %c %d %c", &t, &team, &num, &card);
+
+        int side = (team == 'h') ? 0 : 1;
+        Player *p = &players[side][num];
+
+        if (p->red) continue;
+
+        if (card == 'r') {
+            p->red = 1;
+            p->red_time = t;
+            if (!p->shown) {
+                printf("%s %d %d\n", side == 0 ? home : away, num, t);
+                p->shown = 1;
+            }
+        } else {
+            p->yellow++;
+            if (p->yellow == 2) {
+                p->red = 1;
+                p->red_time = t;
+                if (!p->shown) {
+                    printf("%s %d %d\n", side == 0 ? home : away, num, t);
+                    p->shown = 1;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
 

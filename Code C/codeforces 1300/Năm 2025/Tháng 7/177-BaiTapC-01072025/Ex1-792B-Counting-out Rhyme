@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[100];
+    for (int i = 0; i < k; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int is_alive[101] = {0};
+    for (int i = 1; i <= n; i++) {
+        is_alive[i] = 1;
+    }
+
+    int leader = 1;
+    int alive_count = n;
+
+    for (int i = 0; i < k; i++) {
+        int count = a[i];
+        int current = leader;
+
+        while (count > 0) {
+            current++;
+            if (current > n) current = 1;
+            if (is_alive[current]) {
+                count--;
+            }
+        }
+
+        printf("%d ", current);
+        is_alive[current] = 0;
+        alive_count--;
+
+        leader = current;
+        do {
+            leader++;
+            if (leader > n) leader = 1;
+        } while (!is_alive[leader]);
+    }
+
+    return 0;
+}
 

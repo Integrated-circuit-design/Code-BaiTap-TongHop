@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char n[105];
+    scanf("%s", n);
+
+    int len = strlen(n);
+
+    if (len < 3 || (len == 3 && strcmp(n, "127") <= 0)) {
+        printf("byte\n");
+    }
+    else if (len < 5 || (len == 5 && strcmp(n, "32767") <= 0)) {
+        printf("short\n");
+    }
+    else if (len < 10 || (len == 10 && strcmp(n, "2147483647") <= 0)) {
+        printf("int\n");
+    }
+    else if (len < 19 || (len == 19 && strcmp(n, "9223372036854775807") <= 0)) {
+        printf("long\n");
+    }
+    else {
+        printf("BigInteger\n");
+    }
+
+    return 0;
+}
 

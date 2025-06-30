@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int likes(int personSize, int carSize) {
+    return personSize <= carSize && 2 * personSize >= carSize;
+}
+
+int mashaLikes(int mashaSize, int carSize) {
+    return mashaSize <= carSize && 2 * mashaSize >= carSize;
+}
+
+int main() {
+    int V1, V2, V3, Vm;
+    scanf("%d %d %d %d", &V1, &V2, &V3, &Vm);
+
+    for (int s3 = Vm; s3 <= 100; ++s3) {
+        if (!likes(V3, s3) || !mashaLikes(Vm, s3)) continue;
+
+        for (int s2 = s3 + 1; s2 <= 100; ++s2) {
+            if (!likes(V2, s2)) continue;
+
+            for (int s1 = s2 + 1; s1 <= 100; ++s1) {
+                if (!likes(V1, s1)) continue;
+
+                printf("%d\n%d\n%d\n", s1, s2, s3);
+                return 0;
+            }
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

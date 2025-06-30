@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAX 1000
+
+typedef struct {
+    long long x;
+    long long y;
+} Point;
+
+long long max(long long a, long long b) {
+    return a > b ? a : b;
+}
+
+long long minSquareArea(Point points[], int n) {
+    long long x_min = points[0].x;
+    long long x_max = points[0].x;
+    long long y_min = points[0].y;
+    long long y_max = points[0].y;
+
+    for (int i = 1; i < n; i++) {
+        if (points[i].x < x_min) x_min = points[i].x;
+        if (points[i].x > x_max) x_max = points[i].x;
+        if (points[i].y < y_min) y_min = points[i].y;
+        if (points[i].y > y_max) y_max = points[i].y;
+    }
+
+    long long width = x_max - x_min;
+    long long height = y_max - y_min;
+    long long side = max(width, height);
+
+    return side * side;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    Point points[MAX];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld %lld", &points[i].x, &points[i].y);
+    }
+
+    long long area = minSquareArea(points, n);
+    printf("%lld\n", area);
+
+    return 0;
+}
 

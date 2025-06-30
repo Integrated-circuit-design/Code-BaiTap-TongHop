@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    if ((k == 1 && n > 1) || k > n) {
+        printf("-1\n");
+        return 0;
+    }
+
+    char result[n + 1];
+    int index = 0;
+
+    for (int i = 0; i < k; ++i) {
+        result[index++] = 'a' + i;
+    }
+
+    char alt[2] = {'a', 'b'};
+    for (int i = 0; i < n - k; ++i) {
+        result[index++] = alt[i % 2];
+    }
+
+    result[n] = '\0';
+
+    printf("%s\n", result);
+    return 0;
+}
 

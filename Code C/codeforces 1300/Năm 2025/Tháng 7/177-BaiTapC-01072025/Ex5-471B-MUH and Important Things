@@ -1,1 +1,72 @@
+#include <stdio.h>
+
+#define MAX 2005
+
+int n;
+int difficulty[MAX];
+int index[MAX];
+
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void sort() {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if (difficulty[i] > difficulty[j] ||
+               (difficulty[i] == difficulty[j] && index[i] > index[j])) {
+                swap(&difficulty[i], &difficulty[j]);
+                swap(&index[i], &index[j]);
+            }
+        }
+    }
+}
+
+void print_plan() {
+    for (int i = 0; i < n; ++i)
+        printf("%d%c", index[i], i == n - 1 ? '\n' : ' ');
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &difficulty[i]);
+        index[i] = i + 1;
+    }
+
+    sort();
+
+    int pos1 = -1, pos2 = -1;
+
+    for (int i = 0; i < n - 1; ++i) {
+        if (difficulty[i] == difficulty[i + 1]) {
+            if (pos1 == -1) pos1 = i;
+            else {
+                pos2 = i;
+                break;
+            }
+        }
+    }
+
+    if (pos2 == -1) {
+        printf("NO\n");
+        return 0;
+    }
+
+    printf("YES\n");
+
+    print_plan();
+
+    swap(&index[pos1], &index[pos1 + 1]);
+    print_plan();
+
+    swap(&index[pos1], &index[pos1 + 1]);
+    swap(&index[pos2], &index[pos2 + 1]);
+    print_plan();
+
+    return 0;
+}
 

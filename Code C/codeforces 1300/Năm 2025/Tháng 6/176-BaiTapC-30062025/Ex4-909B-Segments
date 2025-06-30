@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int N;
+    scanf("%d", &N);
+
+    int max_layers = 0;
+
+    for (int x = 1; x < N; x++) {
+        int count = x * (N - x + 1);
+        if (count > max_layers)
+            max_layers = count;
+    }
+
+    if (max_layers == 0) max_layers = 1;
+
+    printf("%d\n", max_layers);
+
+    return 0;
+}
 

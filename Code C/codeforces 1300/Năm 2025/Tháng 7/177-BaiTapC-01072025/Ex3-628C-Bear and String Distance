@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 100005
+
+char best_char(char current, int *k) {
+    int da = current - 'a';
+    int dz = 'z' - current;
+
+    if (da >= dz) {
+        int move = (*k < da) ? *k : da;
+        *k -= move;
+        return current - move;
+    } else {
+        int move = (*k < dz) ? *k : dz;
+        *k -= move;
+        return current + move;
+    }
+}
+
+int process_string(char *s, int k) {
+    int n = strlen(s);
+    for (int i = 0; i < n && k > 0; i++) {
+        s[i] = best_char(s[i], &k);
+    }
+    return k;
+}
+
+int main() {
+    int n, k;
+    char s[MAX_LEN];
+
+    scanf("%d %d", &n, &k);
+    scanf("%s", s);
+
+    int remaining = process_string(s, k);
+
+    if (remaining > 0) {
+        printf("-1\n");
+    } else {
+        printf("%s\n", s);
+    }
+
+    return 0;
+}
 

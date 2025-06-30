@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+#define MAXEVENTS (2 * MAXN)
+
+int years[MAXEVENTS];
+int delta[MAXEVENTS];
+
+int cmpint(const void *a, const void *b) {
+    int x = *(int *)a;
+    int y = *(int *)b;
+    return x - y;
+}
+
+int find_index(int *arr, int size, int value) {
+    int l = 0, r = size - 1;
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (arr[mid] == value) return mid;
+        else if (arr[mid] < value) l = mid + 1;
+        else r = mid - 1;
+    }
+    return -1;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int birth[MAXN], death[MAXN];
+    int all_years[MAXEVENTS], all_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &birth[i], &death[i]);
+        all_years[all_count++] = birth[i];
+        all_years[all_count++] = death[i];
+    }
+
+    qsort(all_years, all_count, sizeof(int), cmpint);
+
+    int unique_years[MAXEVENTS], ucount = 0;
+    unique_years[ucount++] = all_years[0];
+    for (int i = 1; i < all_count; i++) {
+        if (all_years[i] != all_years[i - 1])
+            unique_years[ucount++] = all_years[i];
+    }
+
+    for (int i = 0; i < n; i++) {
+        int bi = find_index(unique_years, ucount, birth[i]);
+        int di = find_index(unique_years, ucount, death[i]);
+
+        delta[bi] += 1;
+        delta[di] -= 1;
+    }
+
+    int max_alive = 0, best_year = 0, current = 0;
+    for (int i = 0; i < ucount; i++) {
+        current += delta[i];
+        if (current > max_alive) {
+            max_alive = current;
+            best_year = unique_years[i];
+        }
+    }
+
+    printf("%d %d\n", best_year, max_alive);
+
+    return 0;
+}
 

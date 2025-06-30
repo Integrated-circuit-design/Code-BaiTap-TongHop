@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll banana_sum(ll width, ll height) {
+    ll sum_i = width * (width + 1) / 2;
+    ll sum_j = height * (height + 1) / 2;
+
+    ll total = (height + 1) * sum_i + (width + 1) * sum_j;
+    return total;
+}
+
+ll max_banana(int slope_m, int y_intercept_b) {
+    ll best = 0;
+
+    for (int j = 0; j <= y_intercept_b; ++j) {
+        ll i = 1LL * (y_intercept_b - j) * slope_m;
+        ll current = banana_sum(i, j);
+
+        if (current > best) {
+            best = current;
+        }
+    }
+
+    return best;
+}
+
+int main() {
+    int m, b;
+    scanf("%d %d", &m, &b);
+
+    ll answer = max_banana(m, b);
+    printf("%lld\n", answer);
+
+    return 0;
+}
 

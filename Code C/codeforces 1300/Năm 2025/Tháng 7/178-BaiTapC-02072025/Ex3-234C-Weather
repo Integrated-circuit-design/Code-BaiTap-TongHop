@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int temp[MAXN];
+
+int main() {
+    FILE *fin = fopen("input.txt", "r");
+    FILE *fout = fopen("output.txt", "w");
+
+    int n;
+    fscanf(fin, "%d", &n);
+
+    for (int i = 0; i < n; ++i)
+        fscanf(fin, "%d", &temp[i]);
+
+    int total_min = n;
+    int left_neg = 0;
+    int right_pos = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (temp[i] > 0)
+            right_pos++;
+    }
+
+    for (int k = 1; k < n; ++k) {
+        if (temp[k - 1] < 0) left_neg++;
+        if (temp[k - 1] > 0) right_pos--;
+
+        int left_changes = k - left_neg;
+        int right_changes = (n - k) - right_pos;
+        int total_changes = left_changes + right_changes;
+
+        if (total_changes < total_min)
+            total_min = total_changes;
+    }
+
+    fprintf(fout, "%d\n", total_min);
+
+    fclose(fin);
+    fclose(fout);
+    return 0;
+}
 

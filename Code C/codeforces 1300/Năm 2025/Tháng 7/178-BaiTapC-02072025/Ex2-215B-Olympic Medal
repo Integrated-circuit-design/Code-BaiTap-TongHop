@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAX 5005
+
+int R[MAX], D1[MAX], D2[MAX];
+
+double calc_r2(double r, double p1, double p2, int A, int B) {
+    double den = p1 + (1.0 * A / B) * p2;
+    if (den == 0.0) return 0.0;
+    return sqrt((r * r * p1) / den);
+}
+
+int main() {
+    int n, m, k, A, B;
+    
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++i) scanf("%d", &R[i]);
+    
+    scanf("%d", &m);
+    for (int i = 0; i < m; ++i) scanf("%d", &D1[i]);
+    
+    scanf("%d", &k);
+    for (int i = 0; i < k; ++i) scanf("%d", &D2[i]);
+
+    scanf("%d %d", &A, &B);
+
+    double best = 0.0;
+
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < m; ++j)
+            for (int l = 0; l < k; ++l) {
+                double r2 = calc_r2(R[i], D1[j], D2[l], A, B);
+                if (r2 > best)
+                    best = r2;
+            }
+
+    printf("%.12lf\n", best);
+    return 0;
+}
 

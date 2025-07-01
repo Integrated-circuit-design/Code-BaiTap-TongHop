@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAX 5000
+
+typedef struct {
+    int x, y;
+} Point;
+
+typedef struct {
+    int x, y, r;
+} Radiator;
+
+Point generals[MAX];
+Radiator heaters[1000];
+int gcount = 0, hcount;
+
+void collect_generals(int xa, int ya, int xb, int yb) {
+    if (xa > xb) { int t = xa; xa = xb; xb = t; }
+    if (ya > yb) { int t = ya; ya = yb; yb = t; }
+
+    for (int x = xa; x <= xb; x++) {
+        generals[gcount++] = (Point){x, ya};
+        if (ya != yb) generals[gcount++] = (Point){x, yb};
+    }
+    for (int y = ya + 1
 

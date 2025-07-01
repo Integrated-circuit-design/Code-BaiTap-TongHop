@@ -1,1 +1,91 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1005
+
+int n;
+int a[MAXN], b[MAXN], p[MAXN];
+int used_a[MAXN], used_b[MAXN];
+int missing_a = 0, missing_b = 0;
+int mismatch_index[2], mismatch_count = 0;
+
+int main() {
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        used_a[a[i]]++;
+    }
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &b[i]);
+        used_b[b[i]]++;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (used_a[i] == 0) missing_a = i;
+        if (used_b[i] == 0) missing_b = i;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] != b[i]) {
+            mismatch_index[mismatch_count++] = i;
+        }
+    }
+
+    for (int k = 0; k < 2; k++) {
+        int idx = mismatch_index[k];
+
+        for (int i = 0; i < n; i++) {
+            p[i] = a[i];
+        }
+        p[idx] = missing_a;
+
+        int diff_a = 0, diff_b = 0, ok = 1;
+        int check_used[MAXN] = {0};
+
+        for (int i = 0; i < n; i++) {
+            if (++check_used[p[i]] > 1) {
+                ok = 0;
+                break;
+            }
+            if (p[i] != a[i]) diff_a++;
+            if (p[i] != b[i]) diff_b++;
+        }
+
+        if (ok && diff_a == 1 && diff_b == 1) {
+            for (int i = 0; i < n; i++) {
+                printf("%d ", p[i]);
+            }
+            printf("\n");
+            return 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            p[i] = a[i];
+        }
+        p[idx] = missing_b;
+
+        diff_a = diff_b = 0;
+        ok = 1;
+        memset(check_used, 0, sizeof(check_used));
+        for (int i = 0; i < n; i++) {
+            if (++check_used[p[i]] > 1) {
+                ok = 0;
+                break;
+            }
+            if (p[i] != a[i]) diff_a++;
+            if (p[i] != b[i]) diff_b++;
+        }
+
+        if (ok && diff_a == 1 && diff_b == 1) {
+            for (int i = 0; i < n; i++) {
+                printf("%d ", p[i]);
+            }
+            printf("\n");
+            return 0;
+        }
+    }
+
+    return 0;
+}
 

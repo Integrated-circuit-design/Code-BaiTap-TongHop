@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+
+double tinh_goc(int n, int k) {
+    return 180.0 * k / n;
+}
+
+int tim_k_gan_nhat(int n, int a) {
+    int k, best_k = 1;
+    double min_diff = fabs(tinh_goc(n, 1) - a);
+
+    for (k = 2; k <= n - 2; ++k) {
+        double goc = tinh_goc(n, k);
+        double diff = fabs(goc - a);
+        if (diff < min_diff) {
+            min_diff = diff;
+            best_k = k;
+        }
+    }
+
+    return best_k;
+}
+
+int main() {
+    int n, a;
+    scanf("%d %d", &n, &a);
+
+    int k = tim_k_gan_nhat(n, a);
+
+    int v2 = 1;
+    int v1 = ((v2 - 1 + n) % n) + 1;
+    int v3 = ((v2 + k - 1) % n) + 1;
+
+    printf("%d %d %d\n", v1, v2, v3);
+    return 0;
+}
 

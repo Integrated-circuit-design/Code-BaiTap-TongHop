@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+#define MAX 200005
+
+int main() {
+    int n, i, count = 0;
+    scanf("%d", &n);
+
+    int ti, used[MAX] = {0};
+
+    for (i = 1; i <= n; i++) {
+        scanf("%d", &ti);
+        if (!used[ti]) {
+            used[ti] = 1;
+            count++;
+        }
+    }
+
+    printf("%d\n", count + 1);
+    return 0;
+}
 

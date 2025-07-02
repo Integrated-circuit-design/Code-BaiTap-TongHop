@@ -1,1 +1,46 @@
+#include <stdio.h>
+#define MAX 50
+#define INF 1000000000
+
+int a[2][MAX];
+int b[MAX];
+int n;
+
+int sum_row(int row, int to) {
+    int sum = 0;
+    for (int i = 0; i < to; i++) {
+        sum += a[row][i];
+    }
+    return sum;
+}
+
+int time_to_shop(int cross) {
+    return sum_row(1, cross) + b[cross] + sum_row(0, cross);
+}
+
+int time_to_home(int cross) {
+    return sum_row(0, cross) + b[cross] + sum_row(1, cross);
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 0; i < n - 1; i++) scanf("%d", &a[0][i]);
+    for (int i = 0; i < n - 1; i++) scanf("%d", &a[1][i]);
+    for (int i = 0; i < n; i++) scanf("%d", &b[i]);
+
+    int res = INF;
+
+    for (int go = 0; go < n; go++) {
+        for (int back = 0; back < n; back++) {
+            if (go == back) continue;
+
+            int total = time_to_shop(go) + time_to_home(back);
+            if (total < res) res = total;
+        }
+    }
+
+    printf("%d\n", res);
+    return 0;
+}
 

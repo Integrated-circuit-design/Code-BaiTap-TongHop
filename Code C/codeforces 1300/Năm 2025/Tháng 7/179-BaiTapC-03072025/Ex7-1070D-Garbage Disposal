@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int n;
+    ll capacity;
+    scanf("%d %lld", &n, &capacity);
+
+    ll total_bags = 0;
+    ll leftover = 0;
+
+    while (n--) {
+        ll today_garbage;
+        scanf("%lld", &today_garbage);
+
+        ll to_dispose = today_garbage + leftover;
+
+        ll used_bags = to_dispose / capacity;
+        total_bags += used_bags;
+
+        leftover = to_dispose - used_bags * capacity;
+    }
+
+    if (leftover > 0) {
+        total_bags++;
+    }
+
+    printf("%lld\n", total_bags);
+    return 0;
+}
 

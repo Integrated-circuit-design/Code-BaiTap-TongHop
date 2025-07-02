@@ -1,1 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_OP 36
+#define MAX_LEN 8
+
+typedef struct {
+    char pattern[3];
+    char result;
+} Rule;
+
+Rule rules[MAX_OP];
+int n, q, total = 0;
+
+int simulate_compression(char *s) {
+    char temp[MAX_LEN];
+    int len = n;
+    strcpy(temp, s);
+
+    for (int step = 0; step < n - 1; ++step) {
+        int applied = 0;
+
+        for (int i = 0; i < q; ++i) {
+            if (temp[0] == rules[i].pattern[0] && temp[1] == rules[i].pattern[1]) {
+                temp[0] = rules[i].result;
+                for (int j = 2; j < len; ++j)
+                    temp[j - 1] = temp[j];
+                len--;
+                temp[len] = '\0';
+                applied = 1;
+                break;
+            }
+        }
+
+        if (!applied) return 0;
+    }
+
+    return (len == 1 && temp[0] == 'a');
+}
+
+void generate_and_check() {
+    char s[MAX_LEN];
+    int index[MAX_LEN];
+    for (int i = 0; i < n; ++i) index[i] = 0;
+
+    while (1) {
+        for (int i = 0; i < n; ++i)
+            s[i] = 'a' + index[i];
+        s[n] = '\0';
+
+        if (simulate_compression(s))
+            total++;
+
+        int pos = n - 1;
+        while (pos >= 0) {
+            index[pos]++;
+            if (index[pos] < 6) break;
+            index[pos] = 0;
+            pos--;
+        }
+        if (pos < 0) break;
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &q);
+    for (int i = 0; i < q; ++i)
+        scanf("%s %c", rules[i].pattern, &rules[i].result);
+
+    generate_and_check();
+    printf("%d\n", total);
+    return 0;
+}
 

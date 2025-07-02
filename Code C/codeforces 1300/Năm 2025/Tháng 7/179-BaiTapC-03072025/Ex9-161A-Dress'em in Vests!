@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAX 100005
+
+int a[MAX], b[MAX];
+int res_soldier[MAX], res_vest[MAX];
+int n, m, x, y;
+
+void read_input() {
+    scanf("%d %d %d %d", &n, &m, &x, &y);
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+    for (int i = 0; i < m; i++) scanf("%d", &b[i]);
+}
+
+int match_soldiers_and_vests() {
+    int i = 0, j = 0, count = 0;
+
+    while (i < n && j < m) {
+        int min_size = a[i] - x;
+        int max_size = a[i] + y;
+
+        if (b[j] < min_size) {
+            j++;
+        } else if (b[j] > max_size) {
+            i++;
+        } else {
+            res_soldier[count] = i + 1;
+            res_vest[count] = j + 1;
+            count++;
+            i++;
+            j++;
+        }
+    }
+
+    return count;
+}
+
+void print_result(int count) {
+    printf("%d\n", count);
+    for (int k = 0; k < count; k++) {
+        printf("%d %d\n", res_soldier[k], res_vest[k]);
+    }
+}
+
+int main() {
+    read_input();
+    int total_matches = match_soldiers_and_vests();
+    print_result(total_matches);
+    return 0;
+}
 

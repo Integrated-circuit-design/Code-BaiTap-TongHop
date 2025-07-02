@@ -1,1 +1,68 @@
+#include <stdio.h>
+#define MAX 1000005
+
+int bits[MAX];
+int len = 0;
+
+void read_binary_as_bits() {
+    char ch;
+    while ((ch = getchar()) != '\n' && ch != EOF) {
+        if (ch == '0' || ch == '1') {
+            bits[len++] = ch - '0';
+        }
+    }
+}
+
+int is_one() {
+    return len == 1 && bits[0] == 1;
+}
+
+void divide_by_2() {
+    int carry = 0;
+    for (int i = 0; i < len; i++) {
+        int cur = carry * 2 + bits[i];
+        bits[i] = cur / 2;
+        carry = cur % 2;
+    }
+    if (bits[0] == 0 && len > 1) {
+        for (int i = 0; i < len - 1; i++) {
+            bits[i] = bits[i + 1];
+        }
+        len--;
+    }
+}
+
+void add_one() {
+    int i = len - 1;
+    while (i >= 0 && bits[i] == 1) {
+        bits[i] = 0;
+        i--;
+    }
+    if (i >= 0) {
+        bits[i] = 1;
+    } else {
+        for (int j = len; j > 0; j--) {
+            bits[j] = bits[j - 1];
+        }
+        bits[0] = 1;
+        len++;
+    }
+}
+
+int main() {
+    read_binary_as_bits();
+
+    int steps = 0;
+    while (!is_one()) {
+        if (bits[len - 1] == 0) {
+            divide_by_2();
+        } else {
+            add_one();
+        }
+        steps++;
+    }
+
+    printf("%d\n", steps);
+    return 0;
+}
 

@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int abs_val(int x) {
+    return x < 0 ? -x : x;
+}
+
+int compare(const void *a, const void *b) {
+    int ia = *(int *)a;
+    int ib = *(int *)b;
+
+    int mid = *(int *)(((int *)a) + 1);
+    int dist_a = abs_val(ia - mid);
+    int dist_b = abs_val(ib - mid);
+
+    if (dist_a != dist_b) return dist_a - dist_b;
+    return ia - ib;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int middle = (m + 1) / 2;
+
+    int priority[100005];
+    for (int i = 1; i <= m; i++) {
+        priority[i - 1] = i;
+    }
+
+    for (int i = 0; i < m - 1; i++) {
+        for (int j = i + 1; j < m; j++) {
+            int dist_i = abs_val(priority[i] - middle);
+            int dist_j = abs_val(priority[j] - middle);
+            if (dist_i > dist_j || (dist_i == dist_j && priority[i] > priority[j])) {
+                int temp = priority[i];
+                priority[i] = priority[j];
+                priority[j] = temp;
+            }
+        }
+    }
+
+    int basket_count[100005] = {0};
+
+    for (int ball = 1; ball <= n; ball++) {
+        int min_count = basket_count[priority[0]];
+        int chosen = priority[0];
+
+        for (int i = 1; i < m; i++) {
+            int b = priority[i];
+            if (basket_count[b] < min_count) {
+                min_count = basket_count[b];
+                chosen = b;
+            }
+        }
+
+        basket_count[chosen]++;
+        printf("%d\n", chosen);
+    }
+
+    return 0;
+}
 

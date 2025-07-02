@@ -1,1 +1,67 @@
+#include <stdio.h>
+
+#define MAX 100005
+
+int hair[MAX];
+int n, m, l;
+
+int is_over(int i) {
+    return (i >= 1 && i <= n && hair[i] > l);
+}
+
+int count_segments() {
+    int count = 0;
+    int i = 1;
+    while (i <= n) {
+        if (hair[i] > l) {
+            count++;
+            while (i <= n && hair[i] > l) i++;
+        } else {
+            i++;
+        }
+    }
+    return count;
+}
+
+int update_and_check(int p, int d, int old_segments) {
+    int before = is_over(p);
+    hair[p] += d;
+    int after = is_over(p);
+
+    if (!before && after) {
+        int left = is_over(p - 1);
+        int right = is_over(p + 1);
+
+        if (!left && !right) return old_segments + 1;
+        if (left && right)   return old_segments - 1;
+        return old_segments;
+    }
+
+    return old_segments;
+}
+
+int main() {
+    scanf("%d %d %d", &n, &m, &l);
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &hair[i]);
+    }
+
+    int segments = count_segments();
+
+    for (int i = 0; i < m; i++) {
+        int t;
+        scanf("%d", &t);
+
+        if (t == 0) {
+            printf("%d\n", segments);
+        } else {
+            int p, d;
+            scanf("%d %d", &p, &d);
+            segments = update_and_check(p, d, segments);
+        }
+    }
+
+    return 0;
+}
 

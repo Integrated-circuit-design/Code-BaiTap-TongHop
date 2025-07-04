@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int n, k, t;
+    scanf("%d %d %d", &n, &k, &t);
+
+    int result[105];
+    int filled = (n * k * t) / 100;
+
+    for (int i = 0; i < n; i++) {
+        if (filled >= k) {
+            result[i] = k;
+            filled -= k;
+        } else {
+            result[i] = filled;
+            filled = 0;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

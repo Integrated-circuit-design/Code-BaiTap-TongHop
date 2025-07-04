@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+#define N 105
+
+int n, k;
+char board[N][N];
+int score[N][N];
+
+int check_horizontal(int i, int j) {
+    if (j + k > n) return 0;
+    for (int d = 0; d < k; d++) {
+        if (board[i][j + d] == '#') return 0;
+    }
+    return 1;
+}
+
+int check_vertical(int i, int j) {
+    if (i + k > n) return 0;
+    for (int d = 0; d < k; d++) {
+        if (board[i + d][j] == '#') return 0;
+    }
+    return 1;
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", board[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (check_horizontal(i, j)) {
+                for (int d = 0; d < k; d++) {
+                    score[i][j + d]++;
+                }
+            }
+            if (check_vertical(i, j)) {
+                for (int d = 0; d < k; d++) {
+                    score[i + d][j]++;
+                }
+            }
+        }
+    }
+
+    int maxVal = 0, bestRow = 0, bestCol = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (score[i][j] > maxVal) {
+                maxVal = score[i][j];
+                bestRow = i;
+                bestCol = j;
+            }
+        }
+    }
+
+    printf("%d %d\n", bestRow + 1, bestCol + 1);
+
+    return 0;
+}
 

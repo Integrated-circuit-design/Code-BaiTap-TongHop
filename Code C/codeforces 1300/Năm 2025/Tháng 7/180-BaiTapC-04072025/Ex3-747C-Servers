@@ -1,1 +1,75 @@
+#include <stdio.h>
+
+#define MAX_N 105
+#define MAX_Q 100005
+
+typedef struct {
+    int id;
+    int free_time;
+} Server;
+
+typedef struct {
+    int time;
+    int needed;
+    int duration;
+} Task;
+
+Server servers[MAX_N];
+Task tasks[MAX_Q];
+
+void sort_servers_by_id(Server *arr, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (arr[i].id > arr[j].id) {
+                Server temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+int process_task(Task task, int n) {
+    int count = 0, sum = 0;
+    int selected[MAX_N];
+
+    for (int i = 0; i < n; i++) {
+        if (servers[i].free_time <= task.time) {
+            selected[count++] = i;
+            if (count == task.needed)
+                break;
+        }
+    }
+
+    if (count < task.needed)
+        return -1;
+
+    for (int i = 0; i < count; i++) {
+        int idx = selected[i];
+        servers[idx].free_time = task.time + task.duration;
+        sum += servers[idx].id;
+    }
+
+    return sum;
+}
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    for (int i = 0; i < n; i++) {
+        servers[i].id = i + 1;
+        servers[i].free_time = 0;
+    }
+
+    sort_servers_by_id(servers, n);
+
+    for (int i = 0; i < q; i++) {
+        scanf("%d %d %d", &tasks[i].time, &tasks[i].needed, &tasks[i].duration);
+        int result = process_task(tasks[i], n);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+int digit_sum(long long n) {
+    int sum = 0;
+    while (n) {
+        sum += (n % 10);
+        n /= 10;
+    }
+    return sum;
+}
+
+long long concat(int a, int b) {
+    long long result = a;
+    int multiplier = 1;
+    int temp = b;
+    while (temp > 0) {
+        multiplier *= 10;
+        temp /= 10;
+    }
+    result = result * multiplier + b;
+    return result;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[10005];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int used[10005] = {0};
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (used[i]) continue;
+        for (int j = i + 1; j < n; j++) {
+            if (used[j]) continue;
+            long long x1 = concat(a[i], a[j]);
+            long long x2 = concat(a[j], a[i]);
+            if (digit_sum(x1) % 3 == 0 || digit_sum(x2) % 3 == 0) {
+                used[i] = used[j] = 1;
+                count++;
+                break;
+            }
+        }
+    }
+
+    printf("%d\n", count);
+    return 0;
+}
 

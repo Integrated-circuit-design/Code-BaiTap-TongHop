@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAX_N 1005
+
+int n, A, B, C, T;
+int t[MAX_N];
+
+void read_input() {
+    scanf("%d %d %d %d %d", &n, &A, &B, &C, &T);
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &t[i]);
+    }
+}
+
+int compute_immediate_total() {
+    return n * A;
+}
+
+int compute_delayed_total() {
+    int sum = 0;
+    for (int i = 0; i < n; ++i) {
+        int wait = T - t[i];
+        int value = A + (C - B) * wait;
+        sum += value;
+    }
+    return sum;
+}
+
+int main() {
+    read_input();
+
+    int result;
+    if (C <= B) {
+        result = compute_immediate_total();
+    } else {
+        result = compute_delayed_total();
+    }
+
+    printf("%d\n", result);
+    return 0;
+}
 

@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_lucky_mask_str(int c, const char* b_str) {
+    char c_str[20], mask[20];
+    int j = 0;
+
+    sprintf(c_str, "%d", c);
+
+    for (int i = 0; c_str[i]; i++) {
+        if (c_str[i] == '4' || c_str[i] == '7') {
+            mask[j++] = c_str[i];
+        }
+    }
+    mask[j] = '\0';
+
+    return strcmp(mask, b_str) == 0;
+}
+
+int main() {
+    int a, b;
+    char b_str[20];
+
+    scanf("%d %d", &a, &b);
+    sprintf(b_str, "%d", b);
+
+    int c = a + 1;
+    while (1) {
+        if (is_lucky_mask_str(c, b_str)) {
+            printf("%d\n", c);
+            break;
+        }
+        c++;
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    char level[105];
+
+    scanf("%d", &n);
+    scanf("%s", level);
+
+    for (int d = 1; d < n; d++) {
+        for (int i = 0; i + 4 * d < n; i++) {
+            if (level[i] == '*' &&
+                level[i + d] == '*' &&
+                level[i + 2 * d] == '*' &&
+                level[i + 3 * d] == '*' &&
+                level[i + 4 * d] == '*') {
+                printf("yes\n");
+                return 0;
+            }
+        }
+    }
+
+    printf("no\n");
+    return 0;
+}
 

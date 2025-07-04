@@ -1,1 +1,24 @@
+#include <stdio.h>
+#include <math.h>
+
+void giaiPhuongTrinh(int a, int b, int c) {
+    double delta = b * b - 4.0 * a * c;
+    double canDelta = sqrt(delta);
+
+    double nghiem1 = (-b + canDelta) / (2.0 * a);
+    double nghiem2 = (-b - canDelta) / (2.0 * a);
+
+    if (nghiem1 > nghiem2) {
+        printf("%.6f\n%.6f\n", nghiem1, nghiem2);
+    } else {
+        printf("%.6f\n%.6f\n", nghiem2, nghiem1);
+    }
+}
+
+int main() {
+    int a, b, c;
+    scanf("%d %d %d", &a, &b, &c);
+    giaiPhuongTrinh(a, b, c);
+    return 0;
+}
 

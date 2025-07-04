@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int dem_chu_so(int n, int *cs) {
+    for (int i = 0; i < 10; i++) cs[i] = 0;
+    while (n > 0) {
+        cs[n % 10] = 1;
+        n /= 10;
+    }
+    return 0;
+}
+
+int co_chu_so_trung(int *a, int b) {
+    while (b > 0) {
+        if (a[b % 10]) return 1;
+        b /= 10;
+    }
+    return 0;
+}
+
+int main() {
+    int x;
+    scanf("%d", &x);
+
+    int chu_so_x[10];
+    dem_chu_so(x, chu_so_x);
+
+    int ket_qua = 0;
+
+    for (int i = 1; i * i <= x; i++) {
+        if (x % i == 0) {
+            int a = i;
+            int b = x / i;
+
+            if (co_chu_so_trung(chu_so_x, a)) ket_qua++;
+            if (a != b && co_chu_so_trung(chu_so_x, b)) ket_qua++;
+        }
+    }
+
+    printf("%d\n", ket_qua);
+    return 0;
+}
 

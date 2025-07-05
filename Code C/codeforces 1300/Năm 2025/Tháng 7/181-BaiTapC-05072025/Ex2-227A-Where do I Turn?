@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+typedef struct {
+    long long x, y;
+} Point;
+
+long long cross_product(long long ux, long long uy, long long vx, long long vy) {
+    return ux * vy - uy * vx;
+}
+
+int main() {
+    Point p1, p2, p3;
+
+    scanf("%lld %lld", &p1.x, &p1.y);
+    scanf("%lld %lld", &p2.x, &p2.y);
+    scanf("%lld %lld", &p3.x, &p3.y);
+
+    long long dx1 = p2.x - p1.x;
+    long long dy1 = p2.y - p1.y;
+
+    long long dx2 = p3.x - p2.x;
+    long long dy2 = p3.y - p2.y;
+
+    long long dir = cross_product(dx1, dy1, dx2, dy2);
+
+    if (dir > 0)
+        puts("LEFT");
+    else if (dir < 0)
+        puts("RIGHT");
+    else
+        puts("TOWARDS");
+
+    return 0;
+}
 

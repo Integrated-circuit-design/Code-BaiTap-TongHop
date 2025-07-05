@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int w, h;
+    scanf("%d %d", &w, &h);
+
+    long long total = 0;
+
+    for (int dx = 2; dx <= w; dx += 2) {
+        for (int dy = 2; dy <= h; dy += 2) {
+            long long count_x = (w - dx) / 2 + 1;
+            long long count_y = (h - dy) / 2 + 1;
+            total += count_x * count_y;
+        }
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

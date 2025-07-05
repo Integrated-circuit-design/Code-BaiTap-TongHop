@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int laSoChinhPhuong(int n) {
+    for (int i = 0; i * i <= n; i++) {
+        if (i * i == n)
+            return 1;
+    }
+    return 0;
+}
+
+int main() {
+    int x, y;
+    scanf("%d %d", &x, &y);
+
+    int tong = x * x + y * y;
+
+    if (laSoChinhPhuong(tong))
+        printf("black\n");
+    else
+        printf("white\n");
+
+    return 0;
+}
 

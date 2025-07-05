@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_LEN 105
+#define MAX_ANSWER 605
+
+void demTanSo(char *s, int freq[26]) {
+    for (int i = 0; i < 26; i++) freq[i] = 0;
+    for (int i = 0; s[i]; i++) {
+        if (isalpha(s[i])) {
+            freq[tolower(s[i]) - 'a']++;
+        }
+    }
+}
+
+int soSanhTanSo(int a[26], int b[26]) {
+    for (int i = 0; i < 26; i++)
+        if (a[i] != b[i])
+            return 0;
+    return 1;
+}
+
+int main() {
+    char s1[MAX_LEN], s2[MAX_LEN], s3[MAX_LEN];
+    char full[3 * MAX_LEN];
+    int gocFreq[26], ansFreq[26];
+
+    fgets(s1, MAX_LEN, stdin);
+    fgets(s2, MAX_LEN, stdin);
+    fgets(s3, MAX_LEN, stdin);
+    s1[strcspn(s1, "\n")] = '\0';
+    s2[strcspn(s2, "\n")] = '\0';
+    s3[strcspn(s3, "\n")] = '\0';
+
+    strcpy(full, "");
+    strcat(full, s1);
+    strcat(full, s2);
+    strcat(full, s3);
+
+    demTanSo(full, gocFreq);
+
+    int n;
+    scanf("%d\n", &n);
+
+    for (int i = 0; i < n; i++) {
+        char ans[MAX_ANSWER];
+        fgets(ans, MAX_ANSWER, stdin);
+        ans[strcspn(ans, "\n")] = '\0';
+
+        demTanSo(ans, ansFreq);
+
+        if (soSanhTanSo(gocFreq, ansFreq))
+            printf("ACC\n");
+        else
+            printf("WA\n");
+    }
+
+    return 0;
+}
 

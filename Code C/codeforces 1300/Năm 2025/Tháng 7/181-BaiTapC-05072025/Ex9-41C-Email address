@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 110
+
+char input[MAX], output[MAX];
+
+int main() {
+    scanf("%s", input);
+    int n = strlen(input);
+    int i = 0, j = 0;
+    int at_replaced = 0;
+
+    while (i < n) {
+        if (!at_replaced && i + 1 < n && input[i] == 'a' && input[i+1] == 't') {
+            output[j++] = '@';
+            i += 2;
+            at_replaced = 1;
+        } else if (i + 2 < n && input[i] == 'd' && input[i+1] == 'o' && input[i+2] == 't') {
+            output[j++] = '.';
+            i += 3;
+        } else {
+            output[j++] = input[i++];
+        }
+    }
+
+    output[j] = '\0';
+
+    int len = strlen(output), at_count = 0;
+    if (output[0] == '@' || output[0] == '.' || output[len - 1] == '@' || output[len - 1] == '.') {
+        printf("Invalid email\n");
+        return 0;
+    }
+    for (int k = 0; k < len; ++k) {
+        if (output[k] == '@') at_count++;
+    }
+
+    if (at_count != 1) {
+        printf("Invalid email\n");
+    } else {
+        printf("%s\n", output);
+    }
+
+    return 0;
+}
 

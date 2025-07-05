@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+#define MAXN 2000
+
+typedef struct {
+    long long x, y;
+} Point;
+
+Point points[MAXN];
+
+void generatePoints(int n) {
+    for (int i = 0; i < n; ++i) {
+        points[i].x = 0;
+        points[i].y = i * 1000000LL;
+    }
+}
+
+int main() {
+    int n;
+    long long k;
+    scanf("%d %lld", &n, &k);
+
+    long long maxTot = (long long)n * (n - 1) / 2;
+
+    if (maxTot <= k) {
+        printf("no solution\n");
+        return 0;
+    }
+
+    generatePoints(n);
+
+    for (int i = 0; i < n; ++i) {
+        printf("%lld %lld\n", points[i].x, points[i].y);
+    }
+
+    return 0;
+}
 

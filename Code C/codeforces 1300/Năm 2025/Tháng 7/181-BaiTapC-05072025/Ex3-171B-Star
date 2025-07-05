@@ -1,1 +1,14 @@
+#include <stdio.h>
+
+int tinh_output(int a) {
+    return 6 * a + 1;
+}
+
+int main() {
+    int a;
+    scanf("%d", &a);
+    int ket_qua = tinh_output(a);
+    printf("%d\n", ket_qua);
+    return 0;
+}
 

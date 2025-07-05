@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAX_COMPANIES 200005
+
+typedef struct {
+    int employee_count;
+    int max_salary;
+} Company;
+
+Company companies[MAX_COMPANIES];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int overall_max_salary = 0;
+
+    for (int i = 0; i < n; i++) {
+        int count;
+        scanf("%d", &count);
+        companies[i].employee_count = count;
+
+        int max_in_this_company = 0;
+        for (int j = 0; j < count; j++) {
+            int salary;
+            scanf("%d", &salary);
+            if (salary > max_in_this_company) {
+                max_in_this_company = salary;
+            }
+        }
+
+        companies[i].max_salary = max_in_this_company;
+
+        if (max_in_this_company > overall_max_salary) {
+            overall_max_salary = max_in_this_company;
+        }
+    }
+
+    long long total_increase = 0;
+
+    for (int i = 0; i < n; i++) {
+        int diff = overall_max_salary - companies[i].max_salary;
+        total_increase += 1LL * diff * companies[i].employee_count;
+    }
+
+    printf("%lld\n", total_increase);
+    return 0;
+}
 

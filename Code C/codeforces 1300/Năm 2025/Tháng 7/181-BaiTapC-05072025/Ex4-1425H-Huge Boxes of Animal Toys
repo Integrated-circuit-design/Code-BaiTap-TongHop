@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int isOdd(int x) {
+    return x % 2 == 1;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    
+    while (T--) {
+        int A, B, C, D;
+        scanf("%d %d %d %d", &A, &B, &C, &D);
+
+        int negative_count = A + B;
+        int has_small_value = (B > 0 || C > 0);
+        int has_large_value = (A > 0 || D > 0);
+
+        int box1 = 0, box2 = 0, box3 = 0, box4 = 0;
+
+        if (isOdd(negative_count) && has_large_value)
+            box1 = 1;
+
+        if (isOdd(negative_count) && has_small_value)
+            box2 = 1;
+
+        if (!isOdd(negative_count) && has_small_value)
+            box3 = 1;
+
+        if (!isOdd(negative_count) && has_large_value)
+            box4 = 1;
+
+        printf("%s %s %s %s\n",
+               box1 ? "Ya" : "Tidak",
+               box2 ? "Ya" : "Tidak",
+               box3 ? "Ya" : "Tidak",
+               box4 ? "Ya" : "Tidak");
+    }
+
+    return 0;
+}
 

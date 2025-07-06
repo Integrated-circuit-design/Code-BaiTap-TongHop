@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int sinh_vi_tri_nhan_ao(int diem, int vi_tri_cua_ban) {
+    int i = (diem / 50) % 475;
+    for (int dem = 0; dem < 25; dem++) {
+        i = (i * 96 + 42) % 475;
+        int vi_tri = 26 + i;
+        if (vi_tri == vi_tri_cua_ban) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int tim_so_hack_it_nhat(int vi_tri, int diem_hien_tai, int diem_can_thang) {
+    int diem_thu_nghiem = diem_hien_tai;
+    while (1) {
+        if (diem_thu_nghiem >= diem_can_thang) {
+            if (sinh_vi_tri_nhan_ao(diem_thu_nghiem, vi_tri)) {
+                int so_hack = (diem_thu_nghiem - diem_hien_tai + 99) / 100;
+                return so_hack;
+            }
+        }
+        diem_thu_nghiem += 50;
+    }
+}
+
+int main() {
+    int vi_tri_cua_ban, diem_dang_co, diem_can_thang;
+    scanf("%d %d %d", &vi_tri_cua_ban, &diem_dang_co, &diem_can_thang);
+
+    int ket_qua = tim_so_hack_it_nhat(vi_tri_cua_ban, diem_dang_co, diem_can_thang);
+    printf("%d\n", ket_qua);
+
+    return 0;
+}
 

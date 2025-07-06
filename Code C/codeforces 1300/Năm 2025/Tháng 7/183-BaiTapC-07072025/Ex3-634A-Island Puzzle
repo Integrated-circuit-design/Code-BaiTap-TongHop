@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+#define BASE 911
+#define MOD 1000000007
+
+int a[MAXN], b[MAXN], pa[MAXN], pb[MAXN], pa2[MAXN * 2];
+long long hash_pb = 0, pow_base[MAXN];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int lenA = 0, lenB = 0;
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &a[i]);
+        if (a[i] != 0) pa[lenA++] = a[i];
+    }
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &b[i]);
+        if (b[i] != 0) pb[lenB++] = b[i];
+    }
+
+    if (lenA != lenB) {
+        puts("NO");
+        return 0;
+    }
+
+    for (int i = 0; i < lenA; ++i) {
+        hash_pb = (hash_pb * BASE + pb[i]) % MOD;
+    }
+
+    pow_base[0] = 1;
+    for (int i = 1; i <= lenA; ++i)
+        pow_base[i] = (pow_base[i - 1] * BASE) % MOD;
+
+    for (int i = 0; i < lenA; ++i) {
+        pa2[i] = pa[i];
+        pa2[i + lenA] = pa[i];
+    }
+
+    long long hash = 0;
+    for (int i = 0; i < lenA * 2; ++i) {
+        hash = (hash * BASE + pa2[i]) % MOD;
+        if (i >= lenA) {
+            hash = (hash - pa2[i - lenA] * pow_base[lenA] % MOD + MOD) % MOD;
+        }
+        if (i >= lenA - 1 && hash == hash_pb) {
+            puts("YES");
+            return 0;
+        }
+    }
+
+    puts("NO");
+    return 0;
+}
 

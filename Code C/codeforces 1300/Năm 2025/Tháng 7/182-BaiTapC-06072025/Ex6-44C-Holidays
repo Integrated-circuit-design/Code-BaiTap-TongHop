@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+void check_watering_schedule(int n, int m) {
+    int watering[101] = {0};
+
+    for (int i = 0; i < m; i++) {
+        int start, end;
+        scanf("%d %d", &start, &end);
+        while (start <= end) {
+            watering[start]++;
+            start++;
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (watering[i] != 1) {
+            printf("%d %d\n", i, watering[i]);
+            return;
+        }
+    }
+
+    printf("OK\n");
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    check_watering_schedule(n, m);
+    return 0;
+}
 

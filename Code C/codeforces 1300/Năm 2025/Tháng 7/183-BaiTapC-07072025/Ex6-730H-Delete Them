@@ -1,1 +1,85 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 105
+
+char filenames[MAX][MAX];
+int delete_flag[MAX];
+int delete_indices[MAX];
+int n, m;
+
+int build_pattern(char *pattern) {
+    int i, j;
+    int len = strlen(filenames[delete_indices[0]]);
+    strcpy(pattern, filenames[delete_indices[0]]);
+
+    for (i = 1; i < m; i++) {
+        int idx = delete_indices[i];
+        if (strlen(filenames[idx]) != len) {
+            return 0;
+        }
+
+        for (j = 0; j < len; j++) {
+            if (pattern[j] != filenames[idx][j]) {
+                pattern[j] = '?';
+            }
+        }
+    }
+    pattern[len] = '\0';
+    return 1;
+}
+
+int is_match(const char *pattern, const char *filename) {
+    int len_p = strlen(pattern);
+    int len_f = strlen(filename);
+    if (len_p != len_f) return 0;
+
+    for (int i = 0; i < len_p; i++) {
+        if (pattern[i] != '?' && pattern[i] != filename[i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int is_valid_pattern(const char *pattern) {
+    for (int i = 0; i < n; i++) {
+        if (!delete_flag[i] && is_match(pattern, filenames[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", filenames[i]);
+    }
+
+    memset(delete_flag, 0, sizeof(delete_flag));
+    for (int i = 0; i < m; i++) {
+        int idx;
+        scanf("%d", &idx);
+        idx--;
+        delete_indices[i] = idx;
+        delete_flag[idx] = 1;
+    }
+
+    char pattern[MAX];
+    if (!build_pattern(pattern)) {
+        printf("No\n");
+        return 0;
+    }
+
+    if (!is_valid_pattern(pattern)) {
+        printf("No\n");
+        return 0;
+    }
+
+    printf("Yes\n");
+    printf("%s\n", pattern);
+    return 0;
+}
 

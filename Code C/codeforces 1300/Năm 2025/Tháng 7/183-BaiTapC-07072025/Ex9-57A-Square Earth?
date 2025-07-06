@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+typedef struct {
+    int x, y;
+} Point;
+
+int absolute(int a) {
+    return a < 0 ? -a : a;
+}
+
+int getPerimeterPosition(Point p, int n) {
+    if (p.y == 0) return p.x;
+    else if (p.x == n) return n + p.y;
+    else if (p.y == n) return 3 * n - p.x;
+    else return 4 * n - p.y;
+}
+
+int shortestDistance(Point a, Point b, int n) {
+    int posA = getPerimeterPosition(a, n);
+    int posB = getPerimeterPosition(b, n);
+    int diff = absolute(posA - posB);
+    int perimeter = 4 * n;
+    return diff < (perimeter - diff) ? diff : (perimeter - diff);
+}
+
+int main() {
+    int n;
+    Point p1, p2;
+
+    scanf("%d %d %d %d %d", &n, &p1.x, &p1.y, &p2.x, &p2.y);
+    printf("%d\n", shortestDistance(p1, p2, n));
+    return 0;
+}
 

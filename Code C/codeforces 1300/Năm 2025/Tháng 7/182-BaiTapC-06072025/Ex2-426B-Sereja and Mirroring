@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+#define MAX 105
+
+int a[MAX][MAX];
+
+int so_sanh_hang(int r1, int r2, int m) {
+    for (int j = 0; j < m; j++) {
+        if (a[r1][j] != a[r2][j]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int co_the_tao_tu_b(int n, int m, int x) {
+    for (int i = 0; i < n; i++) {
+        int vi_tri = i % (2 * x);
+        int hang_b = vi_tri < x ? vi_tri : 2 * x - vi_tri - 1;
+
+        if (!so_sanh_hang(i, hang_b, m)) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            scanf("%d", &a[i][j]);
+
+    int ket_qua = n;
+    for (int x = 1; x <= n; x++) {
+        if (n % x == 0 && co_the_tao_tu_b(n, m, x)) {
+            ket_qua = x;
+            break;
+        }
+    }
+
+    printf("%d\n", ket_qua);
+    return 0;
+}
 

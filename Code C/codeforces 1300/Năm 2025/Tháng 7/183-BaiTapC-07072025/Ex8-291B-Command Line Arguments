@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 100005
+
+int main() {
+    char s[MAX];
+    scanf("%[^\n]", s);
+
+    char *p = s;
+    while (*p != '\0') {
+        while (*p == ' ') p++;
+
+        if (*p == '\0') break;
+
+        if (*p == '"') {
+            p++;
+            printf("<");
+            while (*p != '"' && *p != '\0') {
+                putchar(*p);
+                p++;
+            }
+            printf(">\n");
+            if (*p == '"') p++;
+        } else {
+            printf("<");
+            while (*p != ' ' && *p != '\0') {
+                putchar(*p);
+                p++;
+            }
+            printf(">\n");
+        }
+    }
+
+    return 0;
+}
 

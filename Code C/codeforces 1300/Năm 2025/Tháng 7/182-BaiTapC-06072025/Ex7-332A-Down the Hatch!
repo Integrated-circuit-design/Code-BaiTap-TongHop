@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+#define MAX 2005
+
+int n;
+char s[MAX];
+int isVasya[MAX];
+
+int countJuice(const char s[]) {
+    int count = 0;
+    for (int i = 3; s[i]; i++) {
+        if (s[i] == s[i - 1] && s[i] == s[i - 2] && s[i] == s[i - 3]) {
+            if (isVasya[i]) count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    int len = 0;
+    while (s[len]) {
+        isVasya[len] = (len % n == 0);
+        len++;
+    }
+
+    for (int i = 0; i < len; i++) {
+        if (isVasya[i]) {
+            char original = s[i];
+            int maxJuice = 0;
+            char bestMove = original;
+
+            s[i] = 'a';
+            int juiceA = countJuice(s);
+            if (juiceA > maxJuice) {
+                maxJuice = juiceA;
+                bestMove = 'a';
+            }
+
+            s[i] = 'b';
+            int juiceB = countJuice(s);
+            if (juiceB > maxJuice) {
+                maxJuice = juiceB;
+                bestMove = 'b';
+            }
+
+            s[i] = bestMove;
+        }
+    }
+
+    printf("%d\n", countJuice(s));
+    return 0;
+}
 

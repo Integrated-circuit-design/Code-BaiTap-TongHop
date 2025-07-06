@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    FILE *input = fopen("input.txt", "r");
+    FILE *output = fopen("output.txt", "w");
+
+    int n;
+    char s[105];
+    fscanf(input, "%d", &n);
+    fscanf(input, "%s", s);
+
+    int last = -1;
+    int diff = -1;
+    int ok = 1;
+
+    for (int i = 0; i < n; ++i) {
+        if (s[i] == '1') {
+            if (last == -1) {
+                last = i;
+            } else {
+                int d = i - last;
+                if (diff == -1) {
+                    diff = d;
+                } else if (d != diff) {
+                    ok = 0;
+                    break;
+                }
+                last = i;
+            }
+        }
+    }
+
+    fprintf(output, ok ? "YES\n" : "NO\n");
+
+    fclose(input);
+    fclose(output);
+    return 0;
+}
 

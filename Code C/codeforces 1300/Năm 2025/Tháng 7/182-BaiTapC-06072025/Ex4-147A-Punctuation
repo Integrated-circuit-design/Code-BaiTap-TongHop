@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <ctype.h>
+
+#define MAX 10010
+
+int main() {
+    char input[MAX];
+    fgets(input, MAX, stdin);
+
+    char *p = input;
+    int space_needed = 0;
+
+    while (*p != '\0') {
+        if (isalpha(*p)) {
+            if (space_needed) {
+                putchar(' ');
+                space_needed = 0;
+            }
+            while (isalpha(*p)) {
+                putchar(*p);
+                p++;
+            }
+            space_needed = 1;
+        } else if (*p == ' ') {
+            while (*p == ' ') p++;
+        } else if (*p == ',' || *p == '.' || *p == '!' || *p == '?') {
+            putchar(*p);
+            p++;
+            while (*p == ' ') p++;
+            putchar(' ');
+            space_needed = 0;
+        } else {
+            p++;
+        }
+    }
+
+    return 0;
+}
 

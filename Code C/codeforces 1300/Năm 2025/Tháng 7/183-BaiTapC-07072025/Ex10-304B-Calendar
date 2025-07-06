@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int parse_date(char *s, struct tm *t) {
+    int y, m, d;
+    if (sscanf(s, "%d:%d:%d", &y, &m, &d) != 3) return 0;
+    t->tm_year = y - 1900;
+    t->tm_mon = m - 1;
+    t->tm_mday = d;
+    t->tm_hour = 0;
+    t->tm_min = 0;
+    t->tm_sec = 0;
+    t->tm_isdst = -1;
+    return 1;
+}
+
+int main() {
+    char s1[11], s2[11];
+    struct tm t1 = {0}, t2 = {0};
+
+    fgets(s1, sizeof(s1), stdin);
+    fgets(s2, sizeof(s2), stdin);
+
+    if (s1[10] == '\n') s1[10] = 0;
+    if (s2[10] == '\n') s2[10] = 0;
+
+    parse_date(s1, &t1);
+    parse_date(s2, &t2);
+
+    time_t time1 = mktime(&t1);
+    time_t time2 = mktime(&t2);
+
+    int diff_days = abs((int)((time1 - time2) / 86400));
+
+    printf("%d\n", diff_days);
+    return 0;
+}
 

@@ -1,1 +1,71 @@
+#include <stdio.h>
+
+#define MAX_CUPS 1000
+
+typedef struct {
+    int volume;
+    int index;
+} Cup;
+
+Cup cups[MAX_CUPS];
+int n;
+
+int get_total_volume() {
+    int total = 0;
+    for (int i = 0; i < n; i++)
+        total += cups[i].volume;
+    return total;
+}
+
+void check_configuration() {
+    int total = get_total_volume();
+
+    if (total % n != 0) {
+        printf("Unrecoverable configuration.\n");
+        return;
+    }
+
+    int avg = total / n;
+    Cup *from = NULL, *to = NULL;
+    int diff = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (cups[i].volume > avg) {
+            if (from != NULL) {
+                printf("Unrecoverable configuration.\n");
+                return;
+            }
+            from = &cups[i];
+            diff = cups[i].volume - avg;
+        }
+        else if (cups[i].volume < avg) {
+            if (to != NULL) {
+                printf("Unrecoverable configuration.\n");
+                return;
+            }
+            to = &cups[i];
+            if (avg - cups[i].volume != diff) {
+                printf("Unrecoverable configuration.\n");
+                return;
+            }
+        }
+    }
+
+    if (from == NULL && to == NULL) {
+        printf("Exemplary pages.\n");
+    } else {
+        printf("%d ml. from cup #%d to cup #%d.\n", diff, from->index, to->index);
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &cups[i].volume);
+        cups[i].index = i + 1;
+    }
+
+    check_configuration();
+    return 0;
+}
 

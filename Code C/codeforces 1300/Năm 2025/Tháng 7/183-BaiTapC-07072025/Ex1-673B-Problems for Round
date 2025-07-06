@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+#define MAXM 100000
+
+int u[MAXM], v[MAXM];
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; ++i) {
+        scanf("%d %d", &u[i], &v[i]);
+    }
+
+    int demCach = 0;
+
+    for (int k = 1; k < n; ++k) {
+        int hopLe = 1;
+
+        for (int i = 0; i < m; ++i) {
+            int a = u[i];
+            int b = v[i];
+
+            if ((a <= k && b <= k) || (a > k && b > k)) {
+                hopLe = 0;
+                break;
+            }
+        }
+
+        if (hopLe) {
+            demCach++;
+        }
+    }
+
+    printf("%d\n", demCach);
+    return 0;
+}
 

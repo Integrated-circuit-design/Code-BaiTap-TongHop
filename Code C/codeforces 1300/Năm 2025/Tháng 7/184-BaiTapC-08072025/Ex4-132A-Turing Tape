@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int reverse8(int x) {
+    int result = 0;
+    for (int i = 0; i < 8; i++) {
+        if (x & (1 << i)) {
+            result |= (1 << (7 - i));
+        }
+    }
+    return result;
+}
+
+void phuc_hoi_mang(const char* str, int* out, int len) {
+    int prev_ascii = 0;
+    for (int i = 0; i < len; i++) {
+        int rev_prev = reverse8(prev_ascii);
+        int rev_curr = reverse8((unsigned char)str[i]);
+        out[i] = (rev_prev - rev_curr + 256) % 256;
+        prev_ascii = (unsigned char)str[i];
+    }
+}
+
+int main() {
+    char text[105];
+    int result[105];
+
+    fgets(text, sizeof(text), stdin);
+
+    int len = 0;
+    while (text[len] != '\0' && text[len] != '\n') len++;
+
+    phuc_hoi_mang(text, result, len);
+
+    for (int i = 0; i < len; i++) {
+        printf("%d\n", result[i]);
+    }
+
+    return 0;
+}
 

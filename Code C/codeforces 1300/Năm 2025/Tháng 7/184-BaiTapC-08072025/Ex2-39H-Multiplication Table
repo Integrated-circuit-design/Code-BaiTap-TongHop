@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+void convert_to_base_k(int num, int base, char *result) {
+    char temp[20];
+    int i = 0;
+
+    if (num == 0) {
+        strcpy(result, "0");
+        return;
+    }
+
+    while (num > 0) {
+        temp[i++] = '0' + (num % base);
+        num /= base;
+    }
+
+    int j;
+    for (j = 0; j < i; j++) {
+        result[j] = temp[i - j - 1];
+    }
+    result[j] = '\0';
+}
+
+int main() {
+    int k;
+    scanf("%d", &k);
+
+    for (int i = 1; i < k; i++) {
+        for (int j = 1; j < k; j++) {
+            int product = i * j;
+            char converted[20];
+            convert_to_base_k(product, k, converted);
+            printf("%s", converted);
+            if (j < k - 1) printf(" ");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

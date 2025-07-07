@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+#define MAXN 1005
+#define MAXM 100005
+
+typedef struct {
+    int x, y;
+} Cell;
+
+int grid[MAXN][MAXN];
+Cell moves[MAXM];
+
+int is_full_black_square(int x, int y) {
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j)
+            if (grid[x + i][y + j] == 0)
+                return 0;
+    return 1;
+}
+
+int check_after_move(int x, int y, int n) {
+    for (int dx = -2; dx <= 0; ++dx) {
+        for (int dy = -2; dy <= 0; ++dy) {
+            int i = x + dx;
+            int j = y + dy;
+            if (i >= 1 && j >= 1 && i + 2 <= n && j + 2 <= n) {
+                if (is_full_black_square(i, j)) return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; ++i) {
+        scanf("%d %d", &moves[i].x, &moves[i].y);
+    }
+
+    for (int i = 0; i < m; ++i) {
+        int x = moves[i].x;
+        int y = moves[i].y;
+        grid[x][y] = 1;
+
+        if (check_after_move(x, y, n)) {
+            printf("%d\n", i + 1);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

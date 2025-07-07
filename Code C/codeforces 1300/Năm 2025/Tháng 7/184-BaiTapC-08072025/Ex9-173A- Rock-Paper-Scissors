@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXLEN 1001
+
+int danhGiaKetQua(char a, char b) {
+    if (a == b) return 0;
+    if ((a == 'R' && b == 'S') || 
+        (a == 'S' && b == 'P') || 
+        (a == 'P' && b == 'R'))
+        return 1;
+    return 2;
+}
+
+long long UCLN(int a, int b) {
+    return b == 0 ? a : UCLN(b, a % b);
+}
+
+long long BCNN(int a, int b) {
+    return (long long)a * b / UCLN(a, b);
+}
+
+void demTrongChuKy(char *A, int m, char *B, int k, int *thuaA, int *thuaB) {
+    long long chuKy = BCNN(m, k);
+    for (int i = 0; i < chuKy; ++i) {
+        int kq = danhGiaKetQua(A[i % m], B[i % k]);
+        if (kq == 1) (*thuaB)++;
+        else if (kq == 2) (*thuaA)++;
+    }
+}
+
+int main() {
+    long long n;
+    char A[MAXLEN], B[MAXLEN];
+    scanf("%lld", &n);
+    scanf("%s", A);
+    scanf("%s", B);
+
+    int m = strlen(A);
+    int k = strlen(B);
+    long long chuKy = BCNN(m, k);
+
+    int thuaA1ChuKy = 0, thuaB1ChuKy = 0;
+    demTrongChuKy(A, m, B, k, &thuaA1ChuKy, &thuaB1ChuKy);
+
+    long long soChuKyDayDu = n / chuKy;
+    long long du = n % chuKy;
+
+    long long tongThuaA = soChuKyDayDu * thuaA1ChuKy;
+    long long tongThuaB = soChuKyDayDu * thuaB1ChuKy;
+
+    for (int i = 0; i < du; ++i) {
+        int kq = danhGiaKetQua(A[i % m], B[i % k]);
+        if (kq == 1) tongThuaB++;
+        else if (kq == 2) tongThuaA++;
+    }
+
+    printf("%lld %lld\n", tongThuaA, tongThuaB);
+    return 0;
+}
 

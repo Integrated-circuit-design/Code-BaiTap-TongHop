@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int docSo() {
+    int n;
+    scanf("%d", &n);
+    return n;
+}
+
+void inKetQua(int kq) {
+    printf("%d\n", kq);
+}
+
+int main() {
+    int dauVao = docSo();
+    int ketQua = 2;
+    inKetQua(ketQua);
+    return 0;
+}
 

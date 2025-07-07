@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAX_YEARS 105
+
+void readInput(int *n, int income[]) {
+    scanf("%d", n);
+    for (int i = 0; i < *n; i++) {
+        scanf("%d", &income[i]);
+    }
+}
+
+int findPerfectGrowthYears(int n, int income[], int years[]) {
+    int expected = 1;
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (income[i] == expected) {
+            years[count++] = 2000 + i + 1;
+            expected++;
+        }
+    }
+
+    return count;
+}
+
+void printResult(int count, int years[]) {
+    if (count == 0) {
+        printf("0\n");
+        return;
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("%d", years[i]);
+        if (i < count - 1) {
+            printf(" ");
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int n;
+    int income[MAX_YEARS];
+    int resultYears[MAX_YEARS];
+
+    readInput(&n, income);
+
+    int count = findPerfectGrowthYears(n, income, resultYears);
+
+    printResult(count, resultYears);
+
+    return 0;
+}
 

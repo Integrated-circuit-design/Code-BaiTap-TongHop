@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+int tinh_tong_chu_so(char s[]) {
+    int tong = 0;
+    for (int i = 0; s[i]; i++) {
+        tong += s[i] - '0';
+    }
+    return tong;
+}
+
+long long chuyen_chuoi_sang_so(char s[]) {
+    long long kq = 0;
+    for (int i = 0; s[i]; i++) {
+        kq = kq * 10 + (s[i] - '0');
+    }
+    return kq;
+}
+
+int main() {
+    char x_str[20];
+    scanf("%s", x_str);
+
+    int tong_max = tinh_tong_chu_so(x_str);
+    long long ket_qua = chuyen_chuoi_sang_so(x_str);
+
+    int len = strlen(x_str);
+
+    for (int i = 0; i < len; i++) {
+        if (x_str[i] == '0') continue;
+
+        char tam[20];
+        strcpy(tam, x_str);
+
+        tam[i]--;
+
+        for (int j = i + 1; j < len; j++) {
+            tam[j] = '9';
+        }
+
+        if (tam[0] == '0') continue;
+
+        long long so = chuyen_chuoi_sang_so(tam);
+        long long x = chuyen_chuoi_sang_so(x_str);
+
+        if (so <= x) {
+            int tong = tinh_tong_chu_so(tam);
+            if (tong > tong_max || (tong == tong_max && so > ket_qua)) {
+                tong_max = tong;
+                ket_qua = so;
+            }
+        }
+    }
+
+    printf("%lld\n", ket_qua);
+    return 0;
+}
 

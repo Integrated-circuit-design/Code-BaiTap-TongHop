@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 1005
+
+typedef struct Node {
+    int v;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+int visited[MAXN];
+
+void add_edge(int u, int v) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->v = v;
+    node->next = adj[u];
+    adj[u] = node;
+
+    node = (Node*)malloc(sizeof(Node));
+    node->v = u;
+    node->next = adj[v];
+    adj[v] = node;
+}
+
+void dfs_iterative(int start) {
+    int stack[MAXN], top = 0;
+    stack[top++] = start;
+    visited[start] = 1;
+
+    while (top > 0) {
+        int u = stack[--top];
+        for (Node* p = adj[u]; p; p = p->next) {
+            int v = p->v;
+            if (!visited[v]) {
+                visited[v] = 1;
+                stack[top++] = v;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    if (m != n - 1) {
+        printf("no\n");
+        return 0;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        add_edge(u, v);
+    }
+
+    dfs_iterative(1);
+
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i]) {
+            printf("no\n");
+            return 0;
+        }
+    }
+
+    printf("yes\n");
+    return 0;
+}
 

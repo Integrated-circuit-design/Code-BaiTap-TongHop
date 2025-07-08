@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 110
+#define MAXL 20
+
+int n, k;
+char seat[MAXN][MAXL];
+int cost[MAXN][MAXL];
+int used[MAXN][MAXL];
+
+int total_neighbors = 0;
+
+void tinh_anh_huong() {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; seat[i][j]; ++j) {
+            if (seat[i][j] == 'S') {
+                if (j > 0 && seat[i][j - 1] == 'S') total_neighbors++;
+                if (seat[i][j + 1] && seat[i][j + 1] == 'S') total_neighbors++;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; seat[i][j]; ++j) {
+            if (seat[i][j] == '.') {
+                int c = 0;
+                if (j > 0 && seat[i][j - 1] == 'S') c++;
+                if (seat[i][j + 1] && seat[i][j + 1] == 'S') c++;
+                cost[i][j] = c;
+            } else {
+                cost[i][j] = 9999;
+            }
+        }
+    }
+}
+
+void dat_hanh_khach() {
+    for (int t = 0; t < k; ++t) {
+        int min_cost = 9999;
+        int ri = -1, ci = -1;
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; seat[i][j]; ++j) {
+                if (seat[i][j] == '.' && !used[i][j]) {
+                    if (cost[i][j] < min_cost) {
+                        min_cost = cost[i][j];
+                        ri = i;
+                        ci = j;
+                    }
+                }
+            }
+        }
+
+        if (ri != -1 && ci != -1) {
+            seat[ri][ci] = 'x';
+            used[ri][ci] = 1;
+            total_neighbors += cost[ri][ci];
+        }
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+    for (int i = 0; i < n; ++i) {
+        scanf("%s", seat[i]);
+    }
+
+    tinh_anh_huong();
+    dat_hanh_khach();
+
+    printf("%d\n", total_neighbors);
+    for (int i = 0; i < n; ++i) {
+        printf("%s\n", seat[i]);
+    }
+
+    return 0;
+}
 

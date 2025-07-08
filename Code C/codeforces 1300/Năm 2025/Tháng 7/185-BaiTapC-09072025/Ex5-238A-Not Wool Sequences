@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+#define MODULO 1000000009
+
+typedef long long ll;
+
+typedef struct {
+    int n;
+    int m;
+    ll total_values;
+} Problem;
+
+ll fast_power(ll base, int exponent) {
+    ll result = 1;
+    base %= MODULO;
+
+    while (exponent > 0) {
+        if (exponent % 2 == 1)
+            result = (result * base) % MODULO;
+        base = (base * base) % MODULO;
+        exponent /= 2;
+    }
+
+    return result;
+}
+
+ll count_non_wool_sequences(Problem prob) {
+    if (prob.n >= prob.total_values)
+        return 0;
+
+    ll result = 1;
+    for (int i = 0; i < prob.n; ++i) {
+        result = (result * (prob.total_values - 1 - i)) % MODULO;
+    }
+    return result;
+}
+
+void solve() {
+    Problem prob;
+    scanf("%d %d", &prob.n, &prob.m);
+
+    prob.total_values = fast_power(2, prob.m);
+
+    ll answer = count_non_wool_sequences(prob);
+    printf("%lld\n", answer);
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 10001
+
+typedef struct Node {
+    int vertex;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+
+void addEdge(int u, int v) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->vertex = v;
+    newNode->next = adj[u];
+    adj[u] = newNode;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        addEdge(a, b);
+        addEdge(b, a);
+    }
+
+    long long lifelines = 0;
+
+    for (int i = 1; i <= n; i++) {
+        int degree = 0;
+        Node* curr = adj[i];
+        while (curr != NULL) {
+            degree++;
+            curr = curr->next;
+        }
+        lifelines += (long long)degree * (degree - 1) / 2;
+    }
+
+    printf("%lld\n", lifelines);
+
+    for (int i = 1; i <= n; i++) {
+        Node* curr = adj[i];
+        while (curr) {
+            Node* temp = curr;
+            curr = curr->next;
+            free(temp);
+        }
+    }
+
+    return 0;
+}
 

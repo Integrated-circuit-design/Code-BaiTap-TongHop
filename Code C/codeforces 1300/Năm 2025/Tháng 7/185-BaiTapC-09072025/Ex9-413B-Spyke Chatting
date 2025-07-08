@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MAX_EMPLOYEES 20005
+#define MAX_CHATS 11
+#define MAX_MEMBERS 20005
+
+int n, m, k;
+int notifications[MAX_EMPLOYEES] = {0};
+int chat_members[MAX_CHATS][MAX_MEMBERS];
+int chat_size[MAX_CHATS];
+
+int main() {
+    scanf("%d %d %d", &n, &m, &k);
+
+    for (int emp = 1; emp <= n; ++emp) {
+        for (int ch = 1; ch <= m; ++ch) {
+            int x;
+            scanf("%d", &x);
+            if (x == 1) {
+                chat_members[ch][chat_size[ch]++] = emp;
+            }
+        }
+    }
+
+    for (int i = 0; i < k; ++i) {
+        int sender, chat_id;
+        scanf("%d %d", &sender, &chat_id);
+
+        for (int j = 0; j < chat_size[chat_id]; ++j) {
+            int member = chat_members[chat_id][j];
+            if (member != sender) {
+                notifications[member]++;
+            }
+        }
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        printf("%d", notifications[i]);
+        if (i != n) printf(" ");
+    }
+    printf("\n");
+
+    return 0;
+}
 

@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+void nhapMang(int a[], int n) {
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+}
+
+int tinhThoiGian(int m, int k, int d[], int s[]) {
+    int tongThoiGian = 0;
+    int nhienLieu = 0;
+
+    for (int i = 0; i < m; i++) {
+        nhienLieu += s[i];
+        while (nhienLieu < d[i]) {
+            tongThoiGian += k;
+            nhienLieu += s[i];
+        }
+        tongThoiGian += d[i];
+        nhienLieu -= d[i];
+    }
+
+    return tongThoiGian;
+}
+
+int main() {
+    int m, k;
+    scanf("%d %d", &m, &k);
+
+    int d[1005], s[1005];
+
+    nhapMang(d, m);
+    nhapMang(s, m);
+
+    int ketQua = tinhThoiGian(m, k, d, s);
+    printf("%d\n", ketQua);
+
+    return 0;
+}
 

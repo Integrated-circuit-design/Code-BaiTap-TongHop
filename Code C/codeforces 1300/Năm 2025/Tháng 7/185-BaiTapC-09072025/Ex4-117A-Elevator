@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    ll so_nguoi, so_tang;
+    scanf("%lld %lld", &so_nguoi, &so_tang);
+
+    ll chuky = 2 * (so_tang - 1);
+
+    for (ll i = 0; i < so_nguoi; ++i) {
+        ll tang_dung, tang_muon_den, thoi_gian_bat_dau;
+        scanf("%lld %lld %lld", &tang_dung, &tang_muon_den, &thoi_gian_bat_dau);
+
+        if (tang_dung == tang_muon_den) {
+            printf("%lld\n", thoi_gian_bat_dau);
+            continue;
+        }
+
+        ll len = tang_dung - 1;
+        ll xuong = (2 * so_tang - 2) - tang_dung;
+
+        ll den_luc_len = (thoi_gian_bat_dau <= len)
+            ? len
+            : ((thoi_gian_bat_dau - len + chuky - 1) / chuky) * chuky + len;
+
+        ll den_luc_xuong = (thoi_gian_bat_dau <= xuong)
+            ? xuong
+            : ((thoi_gian_bat_dau - xuong + chuky - 1) / chuky) * chuky + xuong;
+
+        if (tang_muon_den > tang_dung) {
+            printf("%lld\n", den_luc_len + (tang_muon_den - tang_dung));
+        } else {
+            printf("%lld\n", den_luc_xuong + (tang_dung - tang_muon_den));
+        }
+    }
+
+    return 0;
+}
 

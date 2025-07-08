@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAXN 105
+
+char grid[4][MAXN];
+
+char fill_block(int start_col, char ch) {
+    grid[0][start_col] = grid[0][start_col + 1] = ch;
+    ch = (ch == 'z') ? 'a' : ch + 1;
+    grid[0][start_col + 2] = grid[0][start_col + 3] = ch;
+    ch = (ch == 'z') ? 'a' : ch + 1;
+
+    grid[1][start_col] = grid[1][start_col + 1] = ch;
+    ch = (ch == 'z') ? 'a' : ch + 1;
+    grid[1][start_col + 2] = grid[1][start_col + 3] = ch;
+    ch = (ch == 'z') ? 'a' : ch + 1;
+
+    grid[2][start_col] = grid[2][start_col + 1] = ch;
+    ch = (ch == 'z') ? 'a' : ch + 1;
+    grid[2][start_col + 2] = grid[2][start_col + 3] = ch;
+    ch = (ch == 'z') ? 'a' : ch + 1;
+
+    grid[3][start_col] = grid[3][start_col + 1] = ch;
+    ch = (ch == 'z') ? 'a' : ch + 1;
+    grid[3][start_col + 2] = grid[3][start_col + 3] = ch;
+    ch = (ch == 'z') ? 'a' : ch + 1;
+
+    return ch;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    if (n % 4 != 0) {
+        printf("-1\n");
+        return 0;
+    }
+
+    char ch = 'a';
+
+    for (int col = 0; col < n; col += 4) {
+        ch = fill_block(col, ch);
+    }
+
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < n; ++col) {
+            putchar(grid[row][col]);
+        }
+        putchar('\n');
+    }
+
+    return 0;
+}
 

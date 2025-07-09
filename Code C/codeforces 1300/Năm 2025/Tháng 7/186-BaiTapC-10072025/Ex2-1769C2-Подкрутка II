@@ -1,1 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int day;
+    int count;
+} DayCount;
+
+int cmp(const void *a, const void *b) {
+    DayCount *x = (DayCount*)a;
+    DayCount *y = (DayCount*)b;
+    return x->day - y->day;
+}
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int *a = (int*)malloc(n * sizeof(int));
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        DayCount *days = (DayCount*)malloc(n * sizeof(DayCount));
+        int size = 0;
+        qsort(a, n, sizeof(int), cmp);
+
+        days[0].day = a[0];
+        days[0].count = 1;
+        size = 1;
+
+        for (int i = 1; i < n; i++) {
+            if (a[i] == days[size-1].day) {
+                days[size-1].count++;
+            } else {
+                days[size].day = a[i];
+                days[size].count = 1;
+                size++;
+            }
+        }
+
+        int ans = 0;
+        int streak = 0;
+        int prev_day = 0;
+        int leftover = 0;
+
+        for (int i = 0; i < size; i++) {
+            int d = days[i].day;
+            int c = days[i].count;
+
+            if (d > prev_day + 1) {
+                streak = 0;
+                leftover = 0;
+            }
+
+            int total = c + leftover;
+
+            if (total > 0) {
+                streak++;
+                leftover = total - 1; 
+                if (leftover < 0) leftover = 0;
+
+                if (streak > ans) ans = streak;
+            } else {
+                streak = 0;
+                leftover = 0;
+            }
+
+            prev_day = d;
+        }
+
+        printf("%d\n", ans);
+
+        free(a);
+        free(days);
+    }
+
+    return 0;
+}
 

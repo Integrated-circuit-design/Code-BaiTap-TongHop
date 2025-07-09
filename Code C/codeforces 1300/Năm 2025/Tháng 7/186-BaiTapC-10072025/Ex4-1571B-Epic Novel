@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int greater(int x, int y) {
+    return (x > y) ? x : y;
+}
+
+int lesser(int x, int y) {
+    return (x < y) ? x : y;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int i = 0; i < test_cases; i++) {
+        int total_volumes;
+        scanf("%d", &total_volumes);
+
+        int day_a, vol_a;
+        scanf("%d %d", &day_a, &vol_a);
+
+        int day_c, vol_c;
+        scanf("%d %d", &day_c, &vol_c);
+
+        int day_b;
+        scanf("%d", &day_b);
+
+        int lower_bound = greater(vol_a, vol_c - (day_c - day_b));
+        int upper_bound = lesser(vol_c, vol_a + (day_b - day_a));
+
+        printf("%d\n", lower_bound);
+    }
+
+    return 0;
+}
 

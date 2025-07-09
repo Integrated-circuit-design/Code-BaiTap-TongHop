@@ -1,22 +1,20 @@
-#include <stdio.h>
+namespace Solution {
+    open Microsoft.Quantum.Primitive;
+    open Microsoft.Quantum.Canon;
 
-int compute_fx(const int *x, const int *b, int n) {
-    int result = 0;
-    for (int i = 0; i < n; ++i) {
-        result += (b[i] == 1) ? x[i] : (1 - x[i]);
+    operation Solve (x : Qubit[], y : Qubit, b : Int[]) : ()
+    {
+        body
+        {
+            for (i in 0 .. Length(x) - 1) {
+                if (b[i] == 1) {
+                    CNOT(x[i], y);
+                } else {
+                    X(x[i]);
+                    CNOT(x[i], y);
+                    X(x[i]);
+                }
+            }
+        }
     }
-    return result % 2;
 }
-
-int main() {
-    int x[] = {0, 1, 1, 0};
-    int b[] = {1, 0, 1, 0};
-    int n = sizeof(x) / sizeof(x[0]);
-
-    int fx = compute_fx(x, b, n);
-
-    printf("Giá trị f(x) là: %d\n", fx);
-
-    return 0;
-}
-

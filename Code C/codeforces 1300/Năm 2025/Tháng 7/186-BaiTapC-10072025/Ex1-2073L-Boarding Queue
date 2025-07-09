@@ -1,1 +1,80 @@
+#include <stdio.h>
+
+#define MAXN 1000001
+#define MAXRC 1001
+
+typedef struct {
+    int r, c;
+} Pos;
+
+int r, c, n, p;
+Pos initial[MAXN];
+Pos p_path[MAXN];
+int is_adjacent[MAXN];
+
+int adjacent(Pos a, Pos b) {
+    int dr = a.r - b.r;
+    int dc = a.c - b.c;
+    return (dr == 0 && (dc == 1 || dc == -1)) || (dc == 0 && (dr == 1 || dr == -1));
+}
+
+int gcd(int a, int b) {
+    while (b) {
+        int t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+int main() {
+    scanf("%d%d%d%d", &r, &c, &n, &p);
+
+    int grid[MAXRC][MAXRC];
+    for (int i = 0; i < r; ++i)
+        for (int j = 0; j < c; ++j) {
+            int x;
+            scanf("%d", &x);
+            grid[i][j] = x;
+            if (x > 0) {
+                initial[x].r = i;
+                initial[x].c = j;
+            }
+        }
+
+    for (int step = 0; step < p; ++step) {
+        int id = p - step;
+        p_path[step] = initial[id];
+    }
+
+    for (int q = 1; q <= n; ++q) {
+        if (q == p) continue;
+
+        int max_step = (q < p) ? (q - 1) : (p - 1);
+
+        for (int s = 0; s <= max_step; ++s) {
+            int pos_id = q - s;
+            if (pos_id < 1) break;
+
+            Pos q_pos = initial[pos_id];
+            Pos p_pos = p_path[s];
+
+            if (adjacent(p_pos, q_pos)) {
+                is_adjacent[q] = 1;
+                break;
+            }
+        }
+    }
+
+    int count = 0;
+    for (int i = 1; i <= n; ++i)
+        if (i != p && is_adjacent[i])
+            count++;
+
+    int denom = n - 1;
+    int g = gcd(count, denom);
+
+    printf("%d/%d\n", count / g, denom / g);
+    return 0;
+}
 

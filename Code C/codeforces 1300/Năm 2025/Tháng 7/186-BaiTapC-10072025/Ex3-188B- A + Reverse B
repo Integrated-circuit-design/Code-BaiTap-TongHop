@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+void reverseString(char s[]) {
+    int len = strlen(s);
+    for (int i = 0; i < len / 2; i++) {
+        char tmp = s[i];
+        s[i] = s[len - i - 1];
+        s[len - i - 1] = tmp;
+    }
+}
+
+int stringToInt(char s[]) {
+    int num = 0;
+    for (int i = 0; s[i] != '\0'; i++) {
+        num = num * 10 + (s[i] - '0');
+    }
+    return num;
+}
+
+int main() {
+    int a;
+    char b[20];
+    scanf("%d %s", &a, b);
+
+    reverseString(b);
+    int bReversed = stringToInt(b);
+
+    printf("%d\n", a + bReversed);
+
+    return 0;
+}
 

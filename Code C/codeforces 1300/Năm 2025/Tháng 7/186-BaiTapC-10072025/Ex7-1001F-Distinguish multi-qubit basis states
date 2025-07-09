@@ -2,17 +2,23 @@ namespace Solution {
     open Microsoft.Quantum.Primitive;
     open Microsoft.Quantum.Canon;
 
-    operation Solve (qs : Qubit[], bits : Bool[]) : ()
+    operation Solve (qs : Qubit[], bits0 : Bool[], bits1 : Bool[]) : Int
     {
         body
         {
-            H(qs[0]);
-            
-            for (i in 1 .. Length(qs) - 1) {
-                if (bits[i]) {
-                    CNOT(qs[0], qs[i]);
+            for (i in 0 .. Length(qs) - 1) {
+                if (bits0[i] != bits1[i]) {
+                    let result = M(qs[i]);
+                    let measured_bit = (result == One);
+                    
+                    if (measured_bit == bits0[i]) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
                 }
             }
+            return 0;
         }
     }
 }

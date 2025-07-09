@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+int countOnes(const int *arr, int size) {
+    int cnt = 0;
+    const int *end = arr + size;
+    for (const int *p = arr; p < end; p++) {
+        if (*p == 1) {
+            cnt++;
+            if (cnt > 1) break;
+        }
+    }
+    return cnt;
+}
+
+int classifyState(const int *qubits, int n) {
+    int ones = countOnes(qubits, n);
+    if (ones == 0) return 0;
+    if (ones == 1) return 1;
+    return -1;
+}
+
+int main(void) {
+    int n;
+    printf("Nhap so luong qubit (2 den 8): ");
+    scanf("%d", &n);
+    if (n < 2 || n > 8) {
+        printf("So luong qubit khong hop le!\n");
+        return 1;
+    }
+
+    int qubits[8];
+    printf("Nhap gia tri cua tung qubit (0 hoac 1):\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &qubits[i]);
+    }
+
+    int result = classifyState(qubits, n);
+    switch (result) {
+        case 0:
+            printf("Trang thai la |0...0⟩\n");
+            break;
+        case 1:
+            printf("Trang thai la W state\n");
+            break;
+        default:
+            printf("Trang thai khong hop le\n");
+            break;
+    }
+
+    return 0;
+}
 

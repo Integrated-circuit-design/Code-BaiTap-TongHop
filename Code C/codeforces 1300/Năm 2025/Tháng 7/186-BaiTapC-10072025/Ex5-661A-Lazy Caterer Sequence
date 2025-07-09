@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+unsigned int lazy_caterer(unsigned int n) {
+    return n * (n + 1) / 2 + 1;
+}
+
+int main() {
+    unsigned int n;
+    
+    printf("Nhap so lan cat (n) (0 <= n <= 100): ");
+    if (scanf("%u", &n) != 1 || n > 100) {
+        printf("Nhap sai! Vui long nhap so nguyen tu 0 den 100.\n");
+        return 1;
+    }
+
+    unsigned int result = lazy_caterer(n);
+    printf("So phan toi da khi cat %u lan la: %u\n", n, result);
+    
+    return 0;
+}
 

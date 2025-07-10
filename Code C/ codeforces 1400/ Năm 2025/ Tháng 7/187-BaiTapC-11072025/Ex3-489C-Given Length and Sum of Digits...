@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+void solve(int m, int s) {
+    if ((s == 0 && m > 1) || s > 9 * m) {
+        printf("-1 -1\n");
+        return;
+    }
+
+    int min[100], max[100];
+    int sum = s;
+
+    for (int i = 0; i < m; i++) {
+        if (sum >= 9) {
+            max[i] = 9;
+            sum -= 9;
+        } else {
+            max[i] = sum;
+            sum = 0;
+        }
+    }
+
+    sum = s;
+    for (int i = m - 1; i >= 0; i--) {
+        int d = 0;
+        int min_left = i * 9;
+        int start = (i == 0 && m > 1) ? 1 : 0;
+
+        for (d = start; d <= 9; d++) {
+            if (sum - d <= min_left) {
+                min[i] = d;
+                sum -= d;
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < m; i++) printf("%d", min[i]);
+    printf(" ");
+    for (int i = 0; i < m; i++) printf("%d", max[i]);
+    printf("\n");
+}
+
+int main() {
+    int m, s;
+    scanf("%d %d", &m, &s);
+    solve(m, s);
+    return 0;
+}
 

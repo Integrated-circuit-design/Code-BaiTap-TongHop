@@ -1,1 +1,60 @@
+#include <stdio.h>
+
+#define MAX 200005
+#define ll long long
+
+int arr[MAX], temp[MAX];
+int length;
+ll max_operations;
+
+void merge_sort(int l, int r) {
+    if (l >= r) return;
+    int m = (l + r) / 2;
+    merge_sort(l, m);
+    merge_sort(m + 1, r);
+
+    int i = l, j = m + 1, k = l;
+    while (i <= m && j <= r) {
+        if (arr[i] < arr[j]) temp[k++] = arr[i++];
+        else temp[k++] = arr[j++];
+    }
+    while (i <= m) temp[k++] = arr[i++];
+    while (j <= r) temp[k++] = arr[j++];
+    for (i = l; i <= r; i++) arr[i] = temp[i];
+}
+
+int is_possible(int target) {
+    ll needed = 0;
+    for (int i = length / 2; i < length; i++) {
+        if (arr[i] < target)
+            needed += (ll)(target - arr[i]);
+        if (needed > max_operations)
+            return 0;
+    }
+    return 1;
+}
+
+int main() {
+    scanf("%d %lld", &length, &max_operations);
+    for (int i = 0; i < length; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    merge_sort(0, length - 1);
+
+    int low = arr[length / 2];
+    int high = low + max_operations + 1;
+    int mid;
+
+    while (low < high) {
+        mid = (low + high + 1) / 2;
+        if (is_possible(mid))
+            low = mid;
+        else
+            high = mid - 1;
+    }
+
+    printf("%d\n", low);
+    return 0;
+}
 

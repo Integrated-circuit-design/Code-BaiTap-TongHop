@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n, t;
+    scanf("%d %d", &n, &t);
+
+    int a[100005];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    int max_books = 0;
+    int current_sum = 0;
+    int start = 0;
+
+    for (int end = 0; end < n; end++) {
+        current_sum += a[end];
+
+        while (current_sum > t) {
+            current_sum -= a[start];
+            start++;
+        }
+
+        int books_read = end - start + 1;
+        if (books_read > max_books)
+            max_books = books_read;
+    }
+
+    printf("%d\n", max_books);
+    return 0;
+}
 

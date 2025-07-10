@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+#define INF 1000000000
+#define min(a, b) ((a) < (b) ? (a) : (b))
+
+int main() {
+    int n, a[105];
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+    int prev_0 = 0, prev_1 = INF, prev_2 = INF;
+
+    for (int i = 0; i < n; i++) {
+        int today_0 = min(min(prev_0, prev_1), prev_2) + 1;
+        int today_1 = INF, today_2 = INF;
+
+        if (a[i] == 1 || a[i] == 3)
+            today_1 = min(prev_0, prev_2);
+        if (a[i] == 2 || a[i] == 3)
+            today_2 = min(prev_0, prev_1);
+
+        prev_0 = today_0;
+        prev_1 = today_1;
+        prev_2 = today_2;
+    }
+
+    int result = min(min(prev_0, prev_1), prev_2);
+    printf("%d\n", result);
+    return 0;
+}
 

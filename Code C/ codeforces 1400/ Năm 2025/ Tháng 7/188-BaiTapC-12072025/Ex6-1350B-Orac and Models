@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAX 100005
+
+int s[MAX];
+int dp[MAX];
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int process(int n) {
+    int i, j;
+
+    for (i = 1; i <= n; ++i) {
+        dp[i] = 1;
+    }
+
+    for (i = 1; i <= n; ++i) {
+        int current_size = s[i];
+
+        for (j = i * 2; j <= n; j += i) {
+            if (current_size < s[j]) {
+                int new_length = dp[i] + 1;
+                if (new_length > dp[j]) {
+                    dp[j] = new_length;
+                }
+            }
+        }
+    }
+
+    int max_length = 1;
+    for (i = 1; i <= n; ++i) {
+        if (dp[i] > max_length) {
+            max_length = dp[i];
+        }
+    }
+
+    return max_length;
+}
+
+int main() {
+    int t, n, i;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+        for (i = 1; i <= n; ++i) {
+            scanf("%d", &s[i]);
+        }
+
+        int answer = process(n);
+        printf("%d\n", answer);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 1000006
+
+char str[MAXN];
+
+long long min_moves(char *s, int n) {
+    int total = 0;
+    for (int i = 0; i < n; ++i)
+        if (s[i] == '*')
+            total++;
+
+    if (total <= 1) return 0;
+
+    int count = 0, median_index = (total + 1) / 2, median_pos = -1;
+    for (int i = 0; i < n; ++i) {
+        if (s[i] == '*') {
+            count++;
+            if (count == median_index) {
+                median_pos = i;
+                break;
+            }
+        }
+    }
+
+    long long moves = 0;
+    int left = median_pos - 1, right = median_pos + 1;
+    count = 1;
+
+    for (int i = median_pos - 1; i >= 0; --i) {
+        if (s[i] == '*') {
+            moves += (median_pos - count) - i;
+            count++;
+        }
+    }
+
+    count = 1;
+    for (int i = median_pos + 1; i < n; ++i) {
+        if (s[i] == '*') {
+            moves += i - (median_pos + count);
+            count++;
+        }
+    }
+
+    return moves;
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        scanf("%s", str);
+        printf("%lld\n", min_moves(str, n));
+    }
+    return 0;
+}
 

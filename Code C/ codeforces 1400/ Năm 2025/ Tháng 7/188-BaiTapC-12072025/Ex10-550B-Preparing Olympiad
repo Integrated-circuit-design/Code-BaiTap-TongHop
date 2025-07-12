@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+#define MAXN 15
+
+int n, l, r, x;
+int c[MAXN];
+int result = 0;
+
+void try_combinations(int pos, int count, int sum, int min_val, int max_val) {
+    if (count >= 2) {
+        if (sum >= l && sum <= r && (max_val - min_val) >= x) {
+            result++;
+        }
+    }
+
+    for (int i = pos; i < n; i++) {
+        int new_sum = sum + c[i];
+        int new_min = (count == 0 || c[i] < min_val) ? c[i] : min_val;
+        int new_max = (count == 0 || c[i] > max_val) ? c[i] : max_val;
+
+        try_combinations(i + 1, count + 1, new_sum, new_min, new_max);
+    }
+}
+
+int main() {
+    scanf("%d %d %d %d", &n, &l, &r, &x);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &c[i]);
+    }
+
+    try_combinations(0, 0, 0, 1000000000, 0);
+
+    printf("%d\n", result);
+    return 0;
+}
 

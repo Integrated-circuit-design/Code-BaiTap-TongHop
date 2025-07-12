@@ -1,1 +1,29 @@
+#include <stdio.h>
+#define ll long long
+
+ll UCLN(ll a, ll b) {
+    return b ? UCLN(b, a % b) : a;
+}
+
+int main() {
+    ll X, i, j;
+    scanf("%lld", &X);
+
+    ll bestA = 1, bestB = X;
+
+    for (i = X; i >= 1; --i) {
+        if (X % i == 0) {
+            j = X / i;
+
+            if (UCLN(i, j) == 1) {
+                bestA = i < j ? i : j;
+                bestB = i > j ? i : j;
+                break;
+            }
+        }
+    }
+
+    printf("%lld %lld\n", bestA, bestB);
+    return 0;
+}
 

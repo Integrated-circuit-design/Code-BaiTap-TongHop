@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+void solve_case() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    
+    int a[105], b[105], cnt = 0;
+    int is_used[105] = {0};
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        if (!is_used[a[i]]) {
+            is_used[a[i]] = 1;
+            b[cnt++] = a[i];
+        }
+    }
+
+    if (cnt > k) {
+        printf("-1\n");
+        return;
+    }
+
+    while (cnt < k) {
+        b[cnt++] = 1;
+    }
+
+    int total = k * ((n + k - 1) / k);
+    printf("%d\n", total);
+
+    for (int i = 0; i < total; i++) {
+        printf("%d ", b[i % k]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve_case();
+    }
+    return 0;
+}
 

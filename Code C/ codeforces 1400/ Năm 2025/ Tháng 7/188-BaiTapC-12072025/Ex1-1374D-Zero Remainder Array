@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+typedef unsigned long long ull;
+
+int t, n;
+ull k;
+ull a[MAXN], delta[MAXN];
+
+int cmp(const void *a, const void *b) {
+    ull x = *(ull*)a, y = *(ull*)b;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int main() {
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d %llu", &n, &k);
+        int cnt = 0;
+
+        for (int i = 0; i < n; ++i) {
+            ull ai;
+            scanf("%llu", &ai);
+            ull r = ai % k;
+            if (r != 0) {
+                delta[cnt++] = k - r;
+            }
+        }
+
+        if (cnt == 0) {
+            puts("0");
+            continue;
+        }
+
+        qsort(delta, cnt, sizeof(ull), cmp);
+
+        ull max_steps = 0;
+        for (int i = 0; i < cnt;) {
+            ull val = delta[i];
+            ull freq = 1;
+            while (i + freq < cnt && delta[i + freq] == val) {
+                freq++;
+            }
+
+            ull last_move = val + (freq - 1) * k;
+            if (last_move > max_steps) {
+                max_steps = last_move;
+            }
+
+            i += freq;
+        }
+
+        printf("%llu\n", max_steps + 1);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+int isPrime(int n) {
+    if (n < 2) return 0;
+    if (n % 2 == 0) return n == 2;
+    for (int i = 3; i * i <= n; i += 2)
+        if (n % i == 0) return 0;
+    return 1;
+}
+
+int isPowerOfTwo(int n) {
+    return (n & (n - 1)) == 0;
+}
+
+void solve(int n) {
+    if (n == 1) {
+        printf("FastestFinger\n");
+        return;
+    }
+    if (n == 2) {
+        printf("Ashishgup\n");
+        return;
+    }
+    if (n % 2 == 1) {
+        printf("Ashishgup\n");
+        return;
+    }
+    if (isPowerOfTwo(n)) {
+        printf("FastestFinger\n");
+        return;
+    }
+    if (n % 2 == 0 && isPrime(n / 2)) {
+        printf("FastestFinger\n");
+        return;
+    }
+    printf("Ashishgup\n");
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        solve(n);
+    }
+    return 0;
+}
 

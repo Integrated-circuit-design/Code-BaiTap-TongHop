@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int min_flips(char *s) {
+    int n = strlen(s);
+    int total0 = 0, total1 = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (s[i] == '0') total0++;
+        else total1++;
+    }
+
+    int left0 = 0, left1 = 0;
+    int result = n;
+
+    for (int i = 0; i <= n; ++i) {
+        int flip_01 = left1 + (total0 - left0);
+        int flip_10 = left0 + (total1 - left1);
+        if (flip_01 < result) result = flip_01;
+        if (flip_10 < result) result = flip_10;
+
+        if (i < n) {
+            if (s[i] == '0') left0++;
+            else left1++;
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    char s[1010];
+    while (t--) {
+        scanf("%s", s);
+        printf("%d\n", min_flips(s));
+    }
+
+    return 0;
+}
 

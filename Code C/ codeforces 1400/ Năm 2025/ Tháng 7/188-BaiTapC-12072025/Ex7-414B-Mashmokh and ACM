@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+#define MAX 2001
+#define MOD 1000000007
+
+int dp[MAX][MAX];
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    for (int i = 1; i <= n; ++i)
+        dp[1][i] = 1;
+
+    for (int len = 2; len <= k; ++len) {
+        for (int val = 1; val <= n; ++val) {
+            for (int mul = val; mul <= n; mul += val) {
+                dp[len][val] = (dp[len][val] + dp[len - 1][mul]) % MOD;
+            }
+        }
+    }
+
+    int res = 0;
+    for (int i = 1; i <= n; ++i)
+        res = (res + dp[k][i]) % MOD;
+
+    printf("%d\n", res);
+    return 0;
+}
 

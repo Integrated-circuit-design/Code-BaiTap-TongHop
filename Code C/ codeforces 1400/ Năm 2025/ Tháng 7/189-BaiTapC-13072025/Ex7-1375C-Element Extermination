@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int is_reducible(int arr[], int len) {
+    for (int i = 0; i < len - 1; i++) {
+        if (arr[i] < arr[i + 1]) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int size;
+        scanf("%d", &size);
+
+        int data[300005];
+        for (int i = 0; i < size; i++) {
+            scanf("%d", &data[i]);
+        }
+
+        if (is_reducible(data, size))
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+
+    return 0;
+}
 

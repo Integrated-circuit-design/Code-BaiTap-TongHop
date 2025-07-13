@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_TEMP 200005
+
+typedef struct {
+    int a, b;
+} Query;
+
+int diff[MAX_TEMP], count[MAX_TEMP], valid[MAX_TEMP], prefix[MAX_TEMP];
+
+void prepare(int n, int k) {
+    for (int i = 1; i < MAX_TEMP; ++i)
+        count[i] = count[i - 1] + diff[i];
+
+    for (int i = 1; i < MAX_TEMP; ++i)
+        valid[i] = (count[i] >= k) ? 1 : 0;
+
+    for (int i = 1; i < MAX_TEMP; ++i)
+        prefix[i] = prefix[i - 1] + valid[i];
+}
+
+int answer_query(Query q) {
+    return prefix[q.b] - prefix[q.a - 1];
+}
+
+int main() {
+    int n, k, q;
+    scanf("%d %d %d", &n, &k, &q);
+
+    for (int i = 0; i < n; ++i) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        diff[l]++;
+        diff[r + 1]--;
+    }
+
+    prepare(n, k);
+
+    Query* queries = (Query*)malloc(q * sizeof(Query));
+    for (int i = 0; i < q; ++i) {
+        scanf("%d %d", &queries[i].a, &queries[i].b);
+    }
+
+    for (int i = 0; i < q; ++i) {
+        printf("%d\n", answer_query(queries[i]));
+    }
+
+    free(queries);
+    return 0;
+}
 

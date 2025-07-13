@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+#define MAX 1000005
+
+int main() {
+    char s[MAX];
+    int top = -1, i, res = 0;
+
+    scanf("%s", s);
+
+    for (i = 0; s[i] != '\0'; i++) {
+        if (s[i] == '(') {
+            top++;
+        } else if (s[i] == ')') {
+            if (top >= 0) {
+                top--;
+                res += 2;
+            }
+        }
+    }
+
+    printf("%d\n", res);
+    return 0;
+}
 

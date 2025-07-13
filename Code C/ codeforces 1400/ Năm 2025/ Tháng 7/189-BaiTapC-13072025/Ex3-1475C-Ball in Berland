@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 200005
+
+typedef struct {
+    int boy;
+    int girl;
+} Pair;
+
+int boy_count[MAX];
+int girl_count[MAX];
+Pair pairs[MAX];
+
+long long comb2(int n) {
+    return 1LL * n * (n - 1) / 2;
+}
+
+void reset_counts(int num_boys, int num_girls) {
+    for (int i = 1; i <= num_boys; i++) boy_count[i] = 0;
+    for (int i = 1; i <= num_girls; i++) girl_count[i] = 0;
+}
+
+void count_boys_and_girls(int k) {
+    for (int i = 0; i < k; i++) {
+        boy_count[pairs[i].boy]++;
+        girl_count[pairs[i].girl]++;
+    }
+}
+
+long long count_valid_pairs(int k) {
+    long long total = comb2(k);
+    long long conflict = 0;
+    for (int i = 0; i < k; i++) {
+        conflict += (boy_count[pairs[i].boy] - 1);
+        conflict += (girl_count[pairs[i].girl] - 1);
+    }
+    return total - conflict / 2;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int a, b, k;
+        scanf("%d %d %d", &a, &b, &k);
+
+        reset_counts(a, b);
+
+        for (int i = 0; i < k; i++) {
+            scanf("%d", &pairs[i].boy);
+        }
+
+        for (int i = 0; i < k; i++) {
+            scanf("%d", &pairs[i].girl);
+        }
+
+        count_boys_and_girls(k);
+
+        long long answer = count_valid_pairs(k);
+        printf("%lld\n", answer);
+    }
+
+    return 0;
+}
 

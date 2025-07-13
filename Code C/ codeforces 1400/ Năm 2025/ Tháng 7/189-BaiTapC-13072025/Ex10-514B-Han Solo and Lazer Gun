@@ -1,1 +1,73 @@
+#include <stdio.h>
+
+#define MOD 1000003
+#define MAXN 1005
+
+int hash_table[MOD];
+
+int gcd(int a, int b) {
+    if (b == 0) return a > 0 ? a : -a;
+    return gcd(b, a % b);
+}
+
+void normalize(int *dx, int *dy) {
+    int g = gcd(*dx, *dy);
+    *dx /= g;
+    *dy /= g;
+    if (*dx < 0 || (*dx == 0 && *dy < 0)) {
+        *dx = -*dx;
+        *dy = -*dy;
+    }
+}
+
+int hash_pair(int dx, int dy) {
+    long long key = (1LL * dx * 30001 + dy);
+    key %= MOD;
+    if (key < 0) key += MOD;
+    return (int)key;
+}
+
+int exists(int dx, int dy) {
+    int h = hash_pair(dx, dy);
+    while (hash_table[h] != 0) {
+        int stored = hash_table[h];
+        int sdx = stored / 10000;
+        int sdy = stored % 10000;
+        if (sdx == dx && sdy == dy) return 1;
+        h = (h + 1) % MOD;
+    }
+    return 0;
+}
+
+void insert(int dx, int dy) {
+    int h = hash_pair(dx, dy);
+    while (hash_table[h] != 0) {
+        h = (h + 1) % MOD;
+    }
+    hash_table[h] = dx * 10000 + dy;
+}
+
+int main() {
+    int n, x0, y0;
+    scanf("%d%d%d", &n, &x0, &y0);
+
+    int shots = 0;
+
+    for (int i = 0; i < n; i++) {
+        int xi, yi;
+        scanf("%d%d", &xi, &yi);
+        int dx = xi - x0;
+        int dy = yi - y0;
+
+        normalize(&dx, &dy);
+
+        if (!exists(dx, dy)) {
+            insert(dx, dy);
+            shots++;
+        }
+    }
+
+    printf("%d\n", shots);
+    return 0;
+}
 

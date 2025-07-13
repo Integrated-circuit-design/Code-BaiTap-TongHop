@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAX 100005
+
+void insertion_sort(int a[], int n) {
+    for (int i = 1; i < n; i++) {
+        int tmp = a[i], j = i - 1;
+        while (j >= 0 && a[j] > tmp) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = tmp;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+
+        int a[MAX];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        insertion_sort(a, n);
+
+        int dem = 0;
+        int sl = 0;
+        int i = n - 1;
+
+        while (i >= 0) {
+            sl++;
+            int nhom_min = a[i];
+
+            if ((long long)nhom_min * sl >= x) {
+                dem++;
+                sl = 0;
+            }
+            i--;
+        }
+
+        printf("%d\n", dem);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+typedef unsigned long long ull;
+
+int popcount(ull x) {
+    int count = 0;
+    while (x) {
+        x &= (x - 1);
+        ++count;
+    }
+    return count;
+}
+
+int main(void) {
+    int t;
+    scanf("%d", &t);
+
+    for (int _ = 0; _ < t; ++_) {
+        ull n;
+        scanf("%llu", &n);
+        printf("%llu\n", (n << 1) - popcount(n));
+    }
+
+    return 0;
+}
 

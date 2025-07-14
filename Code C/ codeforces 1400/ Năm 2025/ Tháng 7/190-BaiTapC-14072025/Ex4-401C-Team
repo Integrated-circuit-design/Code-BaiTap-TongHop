@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 2000005
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    if (m > 2 * (n + 1) || n > m + 1) {
+        printf("-1\n");
+        return 0;
+    }
+
+    char result[MAXN];
+    int idx = 0;
+
+    while (n > 0 || m > 0) {
+        if (m > n) {
+            if (m >= 2) {
+                result[idx++] = '1';
+                result[idx++] = '1';
+                m -= 2;
+            } else {
+                result[idx++] = '1';
+                m--;
+            }
+            if (n > 0) {
+                result[idx++] = '0';
+                n--;
+            }
+        } else if (n > m) {
+            result[idx++] = '0';
+            n--;
+            if (m > 0) {
+                result[idx++] = '1';
+                m--;
+            }
+        } else {
+            if (m > 0) {
+                result[idx++] = '1';
+                result[idx++] = '0';
+                m--;
+                n--;
+            }
+        }
+    }
+
+    result[idx] = '\0';
+    printf("%s\n", result);
+    return 0;
+}
 

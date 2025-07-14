@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 105
+
+int n, m;
+int lang_parent[MAXN];
+int people[MAXN][MAXN];
+int person_used[MAXN];
+
+int find(int x) {
+    if (lang_parent[x] == x) return x;
+    return lang_parent[x] = find(lang_parent[x]);
+}
+
+void unite(int a, int b) {
+    int ra = find(a);
+    int rb = find(b);
+    if (ra != rb) lang_parent[ra] = rb;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= m; ++i)
+        lang_parent[i] = i;
+
+    for (int i = 1; i <= n; ++i) {
+        int k;
+        scanf("%d", &k);
+
+        if (k > 0) person_used[i] = 1;
+
+        for (int j = 0; j < k; ++j)
+            scanf("%d", &people[i][j]);
+
+        for (int j = 1; j < k; ++j)
+            unite(people[i][0], people[i][j]);
+    }
+
+    int used_components[MAXN] = {0};
+    int group_count = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        if (person_used[i]) {
+            int root = find(people[i][0]);
+            if (!used_components[root]) {
+                used_components[root] = 1;
+                group_count++;
+            }
+        }
+    }
+
+    if (group_count == 0)
+        printf("%d\n", n);
+    else
+        printf("%d\n", group_count - 1);
+
+    return 0;
+}
 

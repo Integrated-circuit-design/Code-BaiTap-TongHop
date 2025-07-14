@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int a, b;
+} Viewer;
+
+Viewer viewers[MAXN];
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, i;
+        int totalA = 0, totalB = 0;
+
+        scanf("%d", &n);
+
+        for (i = 0; i < n; ++i)
+            scanf("%d", &viewers[i].a);
+
+        for (i = 0; i < n; ++i)
+            scanf("%d", &viewers[i].b);
+
+        for (i = 0; i < n; ++i) {
+            totalA += viewers[i].a;
+            totalB += viewers[i].b;
+        }
+
+        int baseRating = min(totalA, totalB);
+        int bestRating = baseRating;
+
+        for (i = 0; i < n; ++i) {
+            int newA = totalA - viewers[i].a;
+            int newB = totalB + viewers[i].b;
+            int newRating = min(newA, newB);
+            if (newRating > bestRating)
+                bestRating = newRating;
+        }
+
+        printf("%d\n", bestRating);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,87 @@
+#include <stdio.h>
+
+#define MAXN 200005
+#define ll long long
+
+int a[MAXN];
+int sorted[MAXN];
+
+typedef struct {
+    int count;
+} Friend;
+
+Friend friends[MAXN];
+
+void selection_sort(int arr[], int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        int min_idx = i;
+        for (int j = i + 1; j < n; ++j) {
+            if (arr[j] < arr[min_idx])
+                min_idx = j;
+        }
+        if (min_idx != i) {
+            int temp = arr[i];
+            arr[i] = arr[min_idx];
+            arr[min_idx] = temp;
+        }
+    }
+}
+
+void sort_friends(Friend f[], int k) {
+    for (int i = 0; i < k - 1; ++i) {
+        for (int j = i + 1; j < k; ++j) {
+            if (f[i].count < f[j].count) {
+                Friend tmp = f[i];
+                f[i] = f[j];
+                f[j] = tmp;
+            }
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &a[i]);
+            sorted[i] = a[i];
+        }
+
+        for (int i = 0; i < k; ++i) {
+            scanf("%d", &friends[i].count);
+        }
+
+        selection_sort(sorted, n);
+        sort_friends(friends, k);
+
+        int left = 0, right = n - 1;
+        ll happiness = 0;
+
+        int idx = 0;
+        while (idx < k && friends[idx].count == 1) {
+            happiness += 2LL * sorted[right];
+            right--;
+            idx++;
+        }
+
+        for (int i = idx; i < k; ++i) {
+            happiness += sorted[right];
+            right--;
+        }
+
+        for (int i = idx; i < k; ++i) {
+            happiness += sorted[left];
+            left += friends[i].count - 1;
+        }
+
+        printf("%lld\n", happiness);
+    }
+
+    return 0;
+}
 

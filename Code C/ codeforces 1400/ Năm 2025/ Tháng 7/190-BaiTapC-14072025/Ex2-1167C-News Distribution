@@ -1,1 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 500005
+
+typedef struct Node {
+    int v;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+int visited[MAXN];
+int component_size[MAXN];
+int belong[MAXN];
+int current_component;
+int size;
+
+void add_edge(int u, int v) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->v = v;
+    node->next = adj[u];
+    adj[u] = node;
+}
+
+void dfs(int u) {
+    visited[u] = 1;
+    belong[u] = current_component;
+    size++;
+    for (Node* node = adj[u]; node != NULL; node = node->next) {
+        if (!visited[node->v]) {
+            dfs(node->v);
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; ++i) {
+        int k;
+        scanf("%d", &k);
+        int members[k];
+        for (int j = 0; j < k; ++j) {
+            scanf("%d", &members[j]);
+        }
+        for (int j = 1; j < k; ++j) {
+            add_edge(members[0], members[j]);
+            add_edge(members[j], members[0]);
+        }
+    }
+
+    int component_count = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        if (!visited[i]) {
+            size = 0;
+            current_component = component_count++;
+            dfs(i);
+            for (int j = 1; j <= n; ++j) {
+                if (belong[j] == current_component) {
+                    component_size[j] = size;
+                }
+            }
+        }
+    }
+
+    for (int i = 1; i <= n; ++i)
+        printf("%d ", component_size[i]);
+    printf("\n");
+
+    return 0;
+}
 

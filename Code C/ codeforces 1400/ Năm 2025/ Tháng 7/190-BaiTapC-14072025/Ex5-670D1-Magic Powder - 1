@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+#define MAXN 1000
+#define MAX_COOKIE 2000000000
+
+typedef struct {
+    int need;
+    int have;
+} Ingredient;
+
+Ingredient ingredients[MAXN];
+int n;
+long long magic_powder;
+
+int can_make(int x) {
+    long long used_powder = 0;
+
+    for (int i = 0; i < n; ++i) {
+        long long required = (long long)ingredients[i].need * x;
+
+        if (required > ingredients[i].have)
+            used_powder += required - ingredients[i].have;
+
+        if (used_powder > magic_powder)
+            return 0;
+    }
+    return 1;
+}
+
+int binary_search_max() {
+    int low = 0, high = MAX_COOKIE, best = 0;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (can_make(mid)) {
+            best = mid;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return best;
+}
+
+int main() {
+    scanf("%d %lld", &n, &magic_powder);
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &ingredients[i].need);
+    }
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &ingredients[i].have);
+    }
+
+    int result = binary_search_max();
+    printf("%d\n", result);
+
+    return 0;
+}
 

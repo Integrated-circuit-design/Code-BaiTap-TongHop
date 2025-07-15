@@ -1,1 +1,91 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int token[MAXN];
+int index_arr[MAXN];
+int result[MAXN];
+
+void swap(int *a, int *b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+void heapify(int n, int i) {
+    int largest = i;
+    int l = 2*i + 1;
+    int r = 2*i + 2;
+
+    if (l < n && token[l] > token[largest])
+        largest = l;
+    if (r < n && token[r] > token[largest])
+        largest = r;
+
+    if (largest != i) {
+        swap(&token[i], &token[largest]);
+        swap(&index_arr[i], &index_arr[largest]);
+        heapify(n, largest);
+    }
+}
+
+void heapSort(int n) {
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(n, i);
+    for (int i = n - 1; i >= 0; i--) {
+        swap(&token[0], &token[i]);
+        swap(&index_arr[0], &index_arr[i]);
+        heapify(i, 0);
+    }
+}
+
+void sort_result(int a[], int n) {
+    for (int i = 0; i < n - 1; ++i)
+        for (int j = 0; j < n - i - 1; ++j)
+            if (a[j] > a[j + 1])
+                swap(&a[j], &a[j + 1]);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &token[i]);
+            index_arr[i] = i + 1;
+        }
+
+        heapSort(n);
+
+        long long sum = 0;
+        int valid_pos = n - 1;
+
+        for (int i = 0; i < n; ++i) sum += token[i];
+
+        for (int i = 0; i < n - 1; ++i) {
+            sum -= token[i];
+            if (sum < token[i]) {
+                valid_pos = i;
+                break;
+            }
+        }
+
+        int cnt = 0;
+        for (int i = valid_pos; i < n; ++i) {
+            result[cnt++] = index_arr[i];
+        }
+
+        sort_result(result, cnt);
+
+        printf("%d\n", cnt);
+        for (int i = 0; i < cnt; ++i)
+            printf("%d%c", result[i], i == cnt - 1 ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

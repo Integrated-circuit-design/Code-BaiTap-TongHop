@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int arr[MAXN];
+
+int check_equal(int a[], int n) {
+    int group1 = 0, group2 = 0;
+    
+    for (int i = 0; i < n; ++i) {
+        int x = a[i];
+        if (x % 10 == 0 || x % 10 == 5)
+            group1++;
+        else
+            group2++;
+    }
+
+    if (group1 && group2) return 0;
+
+    if (group1) {
+        for (int i = 0; i < n; ++i) {
+            if (a[i] % 10 == 5) a[i] += 5;
+        }
+        for (int i = 1; i < n; ++i)
+            if (a[i] != a[0]) return 0;
+        return 1;
+    }
+
+    for (int i = 0; i < n; ++i) {
+        while (a[i] % 10 != 2)
+            a[i] += a[i] % 10;
+    }
+
+    for (int i = 1; i < n; ++i) {
+        if ((a[i] - a[0]) % 20 != 0) return 0;
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; ++i)
+            scanf("%d", &arr[i]);
+
+        if (check_equal(arr, n))
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+    return 0;
+}
 

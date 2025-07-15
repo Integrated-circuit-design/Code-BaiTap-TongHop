@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int digits[10];
+    int num_digits = 0;
+    int temp = n;
+
+    while (temp > 0) {
+        digits[num_digits++] = temp % 10;
+        temp /= 10;
+    }
+
+    int max_digit = 0;
+    for (int i = 0; i < num_digits; i++) {
+        if (digits[i] > max_digit)
+            max_digit = digits[i];
+    }
+
+    int result[10][10] = {0};
+
+    for (int i = 0; i < max_digit; i++) {
+        for (int j = 0; j < num_digits; j++) {
+            if (digits[j] > 0) {
+                result[i][j] = 1;
+                digits[j]--;
+            }
+        }
+    }
+
+    printf("%d\n", max_digit);
+
+    for (int i = 0; i < max_digit; i++) {
+        int val = 0;
+        for (int j = num_digits - 1; j >= 0; j--) {
+            val = val * 10 + result[i][j];
+        }
+        printf("%d ", val);
+    }
+
+    return 0;
+}
 

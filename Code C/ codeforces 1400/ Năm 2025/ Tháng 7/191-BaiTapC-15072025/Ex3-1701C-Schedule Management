@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int t, n, m;
+int freq[MAXN];
+
+int max(int a, int b) { return a > b ? a : b; }
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &m);
+
+        for (int i = 1; i <= n; i++) freq[i] = 0;
+
+        for (int i = 0, x; i < m; i++) {
+            scanf("%d", &x);
+            freq[x]++;
+        }
+
+        int low = 0, high = m * 2, res = 0;
+
+        for (int time = 1; time <= 2 * m; time++) {
+            long long total = 0;
+            for (int i = 1; i <= n; i++) {
+                int one = freq[i] < time ? freq[i] : time;
+                int two = (time - one) / 2;
+                total += one + two;
+            }
+            if (total >= m) {
+                res = time;
+                break;
+            }
+        }
+
+        printf("%d\n", res);
+    }
+    return 0;
+}
 

@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 1000000007
+#define MAX_LEN 100005
+
+char s[MAX_LEN];
+long long fib[MAX_LEN];
+
+void prepare_fibonacci() {
+    fib[0] = fib[1] = 1;
+    for (int i = 2; i < MAX_LEN; i++) {
+        fib[i] = (fib[i - 1] + fib[i - 2]) % MOD;
+    }
+}
+
+long long count_decodings(const char *s) {
+    long long result = 1;
+    const char *ptr = s;
+
+    while (*ptr) {
+        if (*ptr == 'u' || *ptr == 'n') {
+            char c = *ptr;
+            int count = 0;
+            while (*ptr == c) {
+                count++;
+                ptr++;
+            }
+            result = (result * fib[count]) % MOD;
+        } else {
+            ptr++;
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    scanf("%s", s);
+
+    if (strchr(s, 'm') || strchr(s, 'w')) {
+        printf("0\n");
+        return 0;
+    }
+
+    prepare_fibonacci();
+    long long answer = count_decodings(s);
+    printf("%lld\n", answer);
+
+    return 0;
+}
 

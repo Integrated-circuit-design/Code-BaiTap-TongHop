@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+void generate_array(int n, long long s, long long a[]) {
+    long long base = s / n;
+    int i;
+    for (i = 0; i < n; ++i)
+        a[i] = base;
+    long long remainder = s % n;
+    for (i = 0; i < remainder; ++i)
+        a[i]++;
+}
+
+long long choose_k(long long s) {
+    return s / 2 + 1;
+}
+
+int main() {
+    int n;
+    long long s;
+    scanf("%d %lld", &n, &s);
+
+    if (s < n) {
+        printf("NO\n");
+        return 0;
+    }
+
+    long long arr[n];
+    generate_array(n, s, arr);
+
+    printf("YES\n");
+    for (int i = 0; i < n; ++i)
+        printf("%lld ", arr[i]);
+    printf("\n");
+
+    long long k = choose_k(s);
+    printf("%lld\n", k);
+
+    return 0;
+}
 

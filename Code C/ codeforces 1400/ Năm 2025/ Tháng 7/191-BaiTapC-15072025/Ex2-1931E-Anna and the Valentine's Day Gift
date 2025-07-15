@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+void read_array(int n) {
+    int x;
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &x);
+    }
+}
+
+bool is_sasha_winner(int n) {
+    return n % 2 == 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        read_array(n);
+
+        if (is_sasha_winner(n)) {
+            printf("Sasha\n");
+        } else {
+            printf("Anna\n");
+        }
+    }
+
+    return 0;
+}
 

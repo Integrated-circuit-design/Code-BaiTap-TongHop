@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 110
+
+void hoan_doi(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sap_xep(int arr[], int n) {
+    int i, j;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                hoan_doi(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+}
+
+int main() {
+    int n, m, d;
+    scanf("%d %d %d", &n, &m, &d);
+
+    int a[MAX][MAX];
+    int b[MAX * MAX];
+    int i, j, k = 0;
+
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++) {
+            scanf("%d", &a[i][j]);
+            b[k++] = a[i][j];
+        }
+    }
+
+    int du_chia = b[0] % d;
+    for (i = 1; i < k; i++) {
+        if (b[i] % d != du_chia) {
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    sap_xep(b, k);
+    int median = b[k / 2];
+
+    int buoc = 0;
+    for (i = 0; i < k; i++) {
+        buoc += abs(b[i] - median) / d;
+    }
+
+    printf("%d\n", buoc);
+    return 0;
+}
 

@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAXN 3005
+
+int a[MAXN];
+
+int is_valid_partition(int n, int num_parts, int total_sum) {
+    if (total_sum % num_parts != 0)
+        return 0;
+
+    int target = total_sum / num_parts;
+    int temp_sum = 0;
+    int count_parts = 0;
+
+    for (int i = 0; i < n; ++i) {
+        temp_sum += a[i];
+        if (temp_sum > target)
+            return 0;
+        else if (temp_sum == target) {
+            temp_sum = 0;
+            count_parts++;
+        }
+    }
+
+    return (count_parts == num_parts);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, total = 0;
+        scanf("%d", &n);
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &a[i]);
+            total += a[i];
+        }
+
+        int min_op = n - 1;
+
+        for (int parts = 1; parts <= n; ++parts) {
+            if (is_valid_partition(n, parts, total)) {
+                int operations = n - parts;
+                if (operations < min_op)
+                    min_op = operations;
+            }
+        }
+
+        printf("%d\n", min_op);
+    }
+
+    return 0;
+}
 

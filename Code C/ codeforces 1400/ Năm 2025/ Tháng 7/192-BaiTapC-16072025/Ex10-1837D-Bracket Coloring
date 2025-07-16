@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s[MAXN];
+int color[MAXN];
+int stack[MAXN], top;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        top = 0;
+        int cur_color = 1;
+        int fail = 0;
+
+        for (int i = 0; i < n; ++i)
+            color[i] = 0;
+
+        for (int i = 0; i < n; ++i) {
+            if (s[i] == '(') {
+                stack[top++] = i;
+            } else {
+                if (top == 0) {
+                    fail = 1;
+                    break;
+                }
+                int match_index = stack[--top];
+                color[match_index] = color[i] = cur_color;
+                cur_color = 3 - cur_color;
+            }
+        }
+
+        if (fail || top != 0) {
+            printf("-1\n");
+        } else {
+            int max_color = 1;
+            for (int i = 0; i < n; ++i)
+                if (color[i] == 2)
+                    max_color = 2;
+
+            printf("%d\n", max_color);
+            for (int i = 0; i < n; ++i)
+                printf("%d ", color[i]);
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

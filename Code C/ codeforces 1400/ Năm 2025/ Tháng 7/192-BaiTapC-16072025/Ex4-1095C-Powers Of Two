@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 32
+#define MAXK 200005
+
+int freq[MAXN];
+int result[MAXK];
+int res_size = 0;
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int min_count = 0;
+
+    for (int i = 0; i < MAXN; ++i) {
+        if ((n >> i) & 1) {
+            freq[i]++;
+            min_count++;
+        }
+    }
+
+    if (k < min_count || k > n) {
+        printf("NO\n");
+        return 0;
+    }
+
+    while (min_count < k) {
+        for (int i = MAXN - 1; i >= 1; --i) {
+            if (freq[i] > 0) {
+                freq[i]--;
+                freq[i - 1] += 2;
+                min_count++;
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < MAXN; ++i) {
+        while (freq[i]--) {
+            result[res_size++] = 1 << i;
+        }
+    }
+
+    printf("YES\n");
+    for (int i = 0; i < res_size; ++i)
+        printf("%d ", result[i]);
+    printf("\n");
+
+    return 0;
+}
 

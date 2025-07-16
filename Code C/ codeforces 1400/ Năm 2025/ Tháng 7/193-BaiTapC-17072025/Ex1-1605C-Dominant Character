@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1000006
+
+char s[MAXN];
+
+int is_valid(int i, int j) {
+    int a = 0, b = 0, c = 0;
+    for (int k = i; k <= j; k++) {
+        if (s[k] == 'a') a++;
+        else if (s[k] == 'b') b++;
+        else if (s[k] == 'c') c++;
+    }
+    return (a > b && a > c);
+}
+
+int find_min_valid_substring(int n) {
+    int min_len = -1;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n && j - i < 7; j++) {
+            if (is_valid(i, j)) {
+                int len = j - i + 1;
+                if (min_len == -1 || len < min_len) {
+                    min_len = len;
+                }
+            }
+        }
+    }
+    return min_len;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        scanf("%s", s);
+        printf("%d\n", find_min_valid_substring(n));
+    }
+
+    return 0;
+}
 

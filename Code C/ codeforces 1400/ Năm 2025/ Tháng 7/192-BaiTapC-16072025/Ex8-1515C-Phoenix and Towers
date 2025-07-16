@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+#define MAXM 1005
+
+typedef struct {
+    int index;
+    int height;
+} Tower;
+
+typedef struct {
+    int height;
+    int id;
+} Block;
+
+Block blocks[MAXN];
+Tower towers[MAXM];
+int result[MAXN];
+
+int compare_blocks(const void *a, const void *b) {
+    return ((Block *)b)->height - ((Block *)a)->height;
+}
+
+int find_min_tower(int m) {
+    int min_index = 0;
+    for (int i = 1; i < m; i++) {
+        if (towers[i].height < towers[min_index].height)
+            min_index = i;
+    }
+    return min_index;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, x;
+        scanf("%d %d %d", &n, &m, &x);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &blocks[i].height);
+            blocks[i].id = i;
+        }
+
+        qsort(blocks, n, sizeof(Block), compare_blocks);
+
+        for (int i = 0; i < m; i++) {
+            towers[i].index = i + 1;
+            towers[i].height = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            int pos = find_min_tower(m);
+            towers[pos].height += blocks[i].height;
+            result[blocks[i].id] = towers[pos].index;
+        }
+
+        printf("YES\n");
+        for (int i = 0; i < n; i++) {
+            printf("%d ", result[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

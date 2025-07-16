@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+int main() {
+    int n, k1, k2;
+    int p1[MAX], p2[MAX];
+    int len1, len2;
+
+    scanf("%d", &n);
+    scanf("%d", &k1);
+    for (int i = 0; i < k1; i++) scanf("%d", &p1[i]);
+    scanf("%d", &k2);
+    for (int i = 0; i < k2; i++) scanf("%d", &p2[i]);
+
+    len1 = k1;
+    len2 = k2;
+
+    int rounds = 0;
+    int max_rounds = 100000;
+
+    while (len1 > 0 && len2 > 0 && rounds <= max_rounds) {
+        int a = p1[0];
+        int b = p2[0];
+
+        memmove(p1, p1 + 1, sizeof(int) * (len1 - 1));
+        memmove(p2, p2 + 1, sizeof(int) * (len2 - 1));
+        len1--;
+        len2--;
+
+        if (a > b) {
+            p1[len1++] = b;
+            p1[len1++] = a;
+        } else {
+            p2[len2++] = a;
+            p2[len2++] = b;
+        }
+
+        rounds++;
+    }
+
+    if (rounds > max_rounds) {
+        printf("-1\n");
+    } else if (len1 == 0) {
+        printf("%d 2\n", rounds);
+    } else {
+        printf("%d 1\n", rounds);
+    }
+
+    return 0;
+}
 

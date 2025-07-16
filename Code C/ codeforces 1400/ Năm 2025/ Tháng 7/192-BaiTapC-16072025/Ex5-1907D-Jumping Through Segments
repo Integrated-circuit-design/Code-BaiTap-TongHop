@@ -1,1 +1,66 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int left;
+    int right;
+} Segment;
+
+Segment segments[MAXN];
+
+void read_segments(int n) {
+    for (int i = 0; i < n; ++i) {
+        scanf("%d %d", &segments[i].left, &segments[i].right);
+    }
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int is_valid_k(int n, int k) {
+    int low = 0, high = 0;
+    for (int i = 0; i < n; ++i) {
+        int new_low = max(segments[i].left, low - k);
+        int new_high = min(segments[i].right, high + k);
+
+        if (new_low > new_high) return 0;
+        low = new_low;
+        high = new_high;
+    }
+    return 1;
+}
+
+int find_min_k(int n) {
+    int left = 0, right = 1000000000;
+    int result = -1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (is_valid_k(n, mid)) {
+            result = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        read_segments(n);
+        int answer = find_min_k(n);
+        printf("%d\n", answer);
+    }
+    return 0;
+}
 

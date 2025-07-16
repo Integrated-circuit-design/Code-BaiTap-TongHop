@@ -1,1 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 200005
+#define MAX_MAP 400000
+#define BASE 1000007
+
+typedef struct {
+    long long key;
+    int count;
+} Entry;
+
+int a[MAXN];
+Entry map[MAX_MAP];
+int map_size = 0;
+
+int get_count(long long key) {
+    for (int i = 0; i < map_size; i++) {
+        if (map[i].key == key)
+            return map[i].count;
+    }
+    return 0;
+}
+
+void add_key(long long key) {
+    for (int i = 0; i < map_size; i++) {
+        if (map[i].key == key) {
+            map[i].count++;
+            return;
+        }
+    }
+    map[map_size].key = key;
+    map[map_size].count = 1;
+    map_size++;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        map_size = 0;
+
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++)
+            scanf("%d", &a[i]);
+
+        int m = n - 2;
+        long long keys[MAXN];
+
+        for (int i = 0; i < m; i++) {
+            long long key = (long long)a[i] * BASE * BASE + a[i+1] * BASE + a[i+2];
+            keys[i] = key;
+            add_key(key);
+        }
+
+        long long result = 0;
+
+        for (int i = 0; i < m; i++) {
+            int x = a[i];
+            int y = a[i+1];
+            int z = a[i+2];
+
+            for (int d = -1; d <= 1; d++) {
+                if (d == 0) continue;
+
+                long long k1 = ((long long)(x + d)) * BASE * BASE + y * BASE + z;
+                long long k2 = (long long)x * BASE * BASE + (y + d) * BASE + z;
+                long long k3 = (long long)x * BASE * BASE + y * BASE + (z + d);
+
+                result += get_count(k1);
+                result += get_count(k2);
+                result += get_count(k3);
+            }
+        }
+
+        printf("%lld\n", result / 2);
+    }
+
+    return 0;
+}
 

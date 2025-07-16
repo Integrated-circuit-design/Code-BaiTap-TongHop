@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAXN 1005
+
+int a[MAXN];
+int color[MAXN];
+int group_rep[12];
+
+int gcd(int a, int b) {
+    while (b) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; ++i)
+            scanf("%d", &a[i]);
+
+        int group_count = 0;
+
+        for (int i = 0; i < n; ++i) {
+            int found = 0;
+            for (int j = 0; j < group_count; ++j) {
+                if (gcd(a[i], group_rep[j]) > 1) {
+                    color[i] = j + 1;
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found) {
+                group_rep[group_count] = a[i];
+                color[i] = group_count + 1;
+                group_count++;
+            }
+        }
+
+        printf("%d\n", group_count);
+
+        for (int i = 0; i < n; ++i)
+            printf("%d%c", color[i], i == n - 1 ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        long long k;
+        long long a[35];
+        scanf("%d %lld", &n, &k);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        unsigned long long mask = 0;
+        int valid = 1;
+
+        for (int i = 0; i < n && valid; i++) {
+            long long x = a[i];
+            int power = 0;
+
+            while (x > 0) {
+                int digit = x % k;
+
+                if (digit > 1) {
+                    valid = 0;
+                    break;
+                }
+
+                if (digit == 1) {
+                    if ((mask >> power) & 1) {
+                        valid = 0;
+                        break;
+                    }
+                    mask |= (1ULL << power);
+                }
+
+                x /= k;
+                power++;
+            }
+        }
+
+        printf(valid ? "YES\n" : "NO\n");
+    }
+
+    return 0;
+}
 

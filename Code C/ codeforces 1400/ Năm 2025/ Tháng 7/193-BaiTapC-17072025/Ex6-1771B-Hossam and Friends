@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int min_right[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 1; i <= n; ++i)
+            min_right[i] = n + 1;
+
+        for (int i = 0; i < m; ++i) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            if (u > v) {
+                int tmp = u;
+                u = v;
+                v = tmp;
+            }
+            if (v < min_right[u])
+                min_right[u] = v;
+        }
+
+        int lim = n + 1;
+        long long result = 0;
+
+        for (int i = n; i >= 1; --i) {
+            if (min_right[i] < lim)
+                lim = min_right[i];
+            result += (lim - i);
+        }
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s[MAXN];
+
+int can_be_alternating(char a, char b) {
+    if (a == '?' || b == '?') return 1;
+    return a != b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%s", s);
+        int n = strlen(s);
+        long long result = 0;
+
+        int start = 0;
+
+        for (int end = 0; end < n; ++end) {
+            if (end > 0 && !can_be_alternating(s[end - 1], s[end])) {
+                start = end;
+            }
+            result += (end - start + 1);
+        }
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

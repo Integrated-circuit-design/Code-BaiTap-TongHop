@@ -1,1 +1,85 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+#define MAXHASH 10000010
+
+int a[MAXN], b[MAXN];
+int countA[MAXHASH], countB[MAXHASH];
+
+int count_digits(int x) {
+    if (x < 10) return 1;
+    if (x < 100) return 2;
+    if (x < 1000) return 3;
+    if (x < 10000) return 4;
+    if (x < 100000) return 5;
+    if (x < 1000000) return 6;
+    if (x < 10000000) return 7;
+    if (x < 100000000) return 8;
+    return 9;
+}
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < MAXHASH; ++i) {
+            countA[i] = 0;
+            countB[i] = 0;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &a[i]);
+            countA[a[i]]++;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &b[i]);
+            countB[b[i]]++;
+        }
+
+        int operations = 0;
+
+        for (int i = 1; i < MAXHASH; ++i) {
+            int common = min(countA[i], countB[i]);
+            countA[i] -= common;
+            countB[i] -= common;
+        }
+
+        for (int i = MAXHASH - 1; i >= 10; --i) {
+            while (countA[i] > 0) {
+                countA[i]--;
+                countA[count_digits(i)]++;
+                operations++;
+            }
+            while (countB[i] > 0) {
+                countB[i]--;
+                countB[count_digits(i)]++;
+                operations++;
+            }
+        }
+
+        for (int i = 1; i < 10; ++i) {
+            int common = min(countA[i], countB[i]);
+            countA[i] -= common;
+            countB[i] -= common;
+        }
+
+        for (int i = 1; i < 10; ++i) {
+            operations += countA[i] + countB[i];
+        }
+
+        printf("%d\n", operations);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAXN 300005
+
+int c[MAXN];
+int diff[MAXN];
+int prefix_diff[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &c[i]);
+        }
+
+        diff[0] = 0;
+        for (int i = 2; i <= n; i++) {
+            diff[i] = (c[i] != c[i - 1]) ? 1 : 0;
+        }
+
+        prefix_diff[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            prefix_diff[i] = prefix_diff[i - 1] + diff[i];
+        }
+
+        for (int i = 0; i < q; i++) {
+            int l, r;
+            scanf("%d %d", &l, &r);
+
+            if (r - l + 1 == 1) {
+                printf("NO\n");
+                continue;
+            }
+
+            int num_diff = prefix_diff[r] - prefix_diff[l];
+            if (num_diff > 0) {
+                printf("YES\n");
+            } else {
+                printf("NO\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

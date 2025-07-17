@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+#define MAX 200005
+
+int friends_total[MAX];
+int friends_weaker_than[MAX];
+int total_vulnerable = 0;
+
+int is_vulnerable(int i) {
+    return (friends_total[i] > 0 && friends_weaker_than[i] == 0);
+}
+
+void update_friend(int u, int v, int delta) {
+    total_vulnerable -= is_vulnerable(u);
+    total_vulnerable -= is_vulnerable(v);
+
+    friends_total[u] += delta;
+    friends_total[v] += delta;
+
+    if (v < u) friends_weaker_than[u] += delta;
+    if (u < v) friends_weaker_than[v] += delta;
+
+    total_vulnerable += is_vulnerable(u);
+    total_vulnerable += is_vulnerable(v);
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        update_friend(u, v, 1);
+    }
+
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int type;
+        scanf("%d", &type);
+
+        if (type == 1) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            update_friend(u, v, 1);
+        } else if (type == 2) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            update_friend(u, v, -1);
+        } else if (type == 3) {
+            printf("%d\n", n - total_vulnerable);
+        }
+    }
+
+    return 0;
+}
 

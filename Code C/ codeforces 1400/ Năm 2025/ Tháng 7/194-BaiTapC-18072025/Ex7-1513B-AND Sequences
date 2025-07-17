@@ -1,1 +1,56 @@
+#include <stdio.h>
+#define MOD 1000000007
+#define MAXN 200005
+
+void tinh_giai_thua(long long fact[]) {
+    fact[0] = 1;
+    for (int i = 1; i < MAXN; i++) {
+        fact[i] = (fact[i - 1] * i) % MOD;
+    }
+}
+
+void giai_bai_toan(int n, int a[], long long fact[]) {
+    int and_tong = a[0];
+    for (int i = 1; i < n; i++) {
+        and_tong &= a[i];
+    }
+
+    int dem = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] == and_tong) {
+            dem++;
+        }
+    }
+
+    if (dem < 2) {
+        printf("0\n");
+        return;
+    }
+
+    long long kq = ((long long)dem * (dem - 1)) % MOD;
+    kq = (kq * fact[n - 2]) % MOD;
+    printf("%lld\n", kq);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    long long fact[MAXN];
+    tinh_giai_thua(fact);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[MAXN];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        giai_bai_toan(n, a, fact);
+    }
+
+    return 0;
+}
 

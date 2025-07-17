@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+#define MAX 100001
+
+int count[MAX];
+int count2 = 0;
+int count4 = 0;
+int count6 = 0;
+int count8 = 0;
+
+void update(int x, int delta) {
+    if (count[x] >= 2) count2--;
+    if (count[x] >= 4) count4--;
+    if (count[x] >= 6) count6--;
+    if (count[x] >= 8) count8--;
+
+    count[x] += delta;
+
+    if (count[x] >= 2) count2++;
+    if (count[x] >= 4) count4++;
+    if (count[x] >= 6) count6++;
+    if (count[x] >= 8) count8++;
+}
+
+int check() {
+    if (count8 >= 1) return 1;
+    if (count4 >= 2) return 1;
+    if (count4 >= 1 && count2 >= 3) return 1;
+    return 0;
+}
+
+int main() {
+    int n, q, x;
+    char op;
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &x);
+        update(x, 1);
+    }
+
+    scanf("%d", &q);
+    while (q--) {
+        scanf(" %c %d", &op, &x);
+        if (op == '+') {
+            update(x, 1);
+        } else {
+            update(x, -1);
+        }
+
+        if (check()) printf("YES\n");
+        else printf("NO\n");
+    }
+
+    return 0;
+}
 

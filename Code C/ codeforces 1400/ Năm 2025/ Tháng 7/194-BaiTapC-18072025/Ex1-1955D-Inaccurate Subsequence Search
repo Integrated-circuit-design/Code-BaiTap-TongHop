@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+int a[MAXN], b[MAXN], temp[MAXN];
+
+int cmp(const void *x, const void *y) {
+    int a = *(int*)x;
+    int b = *(int*)y;
+    return a - b;
+}
+
+int count_match(int *x, int *y, int len) {
+    int i = 0, j = 0, count = 0;
+    while (i < len && j < len) {
+        if (x[i] == y[j]) {
+            count++;
+            i++;
+            j++;
+        } else if (x[i] < y[j]) {
+            i++;
+        } else {
+            j++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+        for (int i = 0; i < m; i++) scanf("%d", &b[i]);
+
+        qsort(b, m, sizeof(int), cmp);
+
+        int result = 0;
+
+        for (int i = 0; i <= n - m; i++) {
+            for (int j = 0; j < m; j++) {
+                temp[j] = a[i + j];
+            }
+
+            qsort(temp, m, sizeof(int), cmp);
+
+            int matches = count_match(temp, b, m);
+
+            if (matches >= k) result++;
+        }
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+
+char s[21];
+int n;
+
+int evaluate(char *s, int mask) {
+    int numbers[20];
+    int ops[20];
+    int idx = 0;
+
+    numbers[idx++] = s[0] - '0';
+    for (int i = 1; i < n; i++) {
+        int digit = s[i] - '0';
+        if (mask & (1 << (i - 1))) {
+            ops[idx - 1] = 1;
+            numbers[idx++] = digit;
+        } else {
+            ops[idx - 1] = 0;
+            numbers[idx++] = digit;
+        }
+    }
+
+    int temp[20];
+    int len = 0;
+    int current = numbers[0];
+
+    for (int i = 0; i < idx - 1; i++) {
+        if (ops[i] == 1) {
+            current *= numbers[i + 1];
+        } else {
+            temp[len++] = current;
+            current = numbers[i + 1];
+        }
+    }
+    temp[len++] = current;
+
+    int sum = 0;
+    for (int i = 0; i < len; i++) {
+        sum += temp[i];
+    }
+
+    return sum;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        if (n == 2) {
+            printf("%d\n", atoi(s));
+            continue;
+        }
+
+        int min_result = INT_MAX;
+        int total_positions = n - 1;
+
+        for (int mask = 0; mask < (1 << total_positions); mask++) {
+            int count = 0;
+            for (int i = 0; i < total_positions; i++) {
+                if (mask & (1 << i)) count++;
+            }
+
+            if (count != n - 2) continue;
+
+            int result = evaluate(s, mask);
+            if (result < min_result) {
+                min_result = result;
+            }
+        }
+
+        printf("%d\n", min_result);
+    }
+
+    return 0;
+}
 

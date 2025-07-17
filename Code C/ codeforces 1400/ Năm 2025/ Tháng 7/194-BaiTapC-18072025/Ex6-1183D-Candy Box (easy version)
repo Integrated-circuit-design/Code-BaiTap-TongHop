@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int type;
+    int count;
+} Candy;
+
+int freq[MAXN];
+int bucket[MAXN];
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+
+        memset(freq, 0, (n + 1) * sizeof(int));
+        memset(bucket, 0, (n + 1) * sizeof(int));
+
+        for (int i = 0; i < n; ++i) {
+            int a;
+            scanf("%d", &a);
+            freq[a]++;
+        }
+
+        for (int i = 1; i <= n; ++i) {
+            if (freq[i])
+                bucket[freq[i]]++;
+        }
+
+        int total = 0;
+        int max_freq = n;
+
+        for (int i = max_freq; i >= 1; --i) {
+            while (bucket[i]) {
+                int take = min(i, max_freq);
+                total += take;
+                max_freq = take - 1;
+                bucket[i]--;
+                if (max_freq == 0)
+                    break;
+            }
+            if (max_freq == 0)
+                break;
+        }
+
+        printf("%d\n", total);
+    }
+
+    return 0;
+}
 

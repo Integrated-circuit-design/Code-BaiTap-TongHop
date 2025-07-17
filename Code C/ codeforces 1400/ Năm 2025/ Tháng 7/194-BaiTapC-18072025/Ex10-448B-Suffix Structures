@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 105
+
+void dem_ky_tu(const char *str, int freq[26]) {
+    for (int i = 0; str[i]; i++) {
+        freq[str[i] - 'a']++;
+    }
+}
+
+int la_subsequence(const char *s, const char *t) {
+    for (int i = 0, j = 0; s[i]; i++) {
+        if (s[i] == t[j]) j++;
+        if (t[j] == '\0') return 1;
+    }
+    return 0;
+}
+
+int la_hoan_vi(int a[26], int b[26]) {
+    for (int i = 0; i < 26; i++) {
+        if (a[i] != b[i]) return 0;
+    }
+    return 1;
+}
+
+int co_du_ky_tu(int a[26], int b[26]) {
+    for (int i = 0; i < 26; i++) {
+        if (a[i] < b[i]) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    char s[MAX], t[MAX];
+    int freq_s[26] = {0}, freq_t[26] = {0};
+
+    scanf("%s %s", s, t);
+
+    dem_ky_tu(s, freq_s);
+    dem_ky_tu(t, freq_t);
+
+    if (la_subsequence(s, t)) {
+        puts("automaton");
+    } else if ((int)strlen(s) == (int)strlen(t) && la_hoan_vi(freq_s, freq_t)) {
+        puts("array");
+    } else if (co_du_ky_tu(freq_s, freq_t)) {
+        puts("both");
+    } else {
+        puts("need tree");
+    }
+
+    return 0;
+}
 

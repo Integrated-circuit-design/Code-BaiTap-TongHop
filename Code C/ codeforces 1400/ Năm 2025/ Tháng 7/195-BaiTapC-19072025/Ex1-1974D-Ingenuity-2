@@ -1,1 +1,90 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int countN, countS, countE, countW;
+char s[MAXN], ans[MAXN];
+
+void solve() {
+    int n;
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    countN = countS = countE = countW = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'N') countN++;
+        if (s[i] == 'S') countS++;
+        if (s[i] == 'E') countE++;
+        if (s[i] == 'W') countW++;
+    }
+
+    if ((countN + countS) % 2 != 0 || (countE + countW) % 2 != 0 || n < 2) {
+        printf("NO\n");
+        return;
+    }
+
+    int roverN = countN / 2;
+    int roverS = countS / 2;
+    int roverE = countE / 2;
+    int roverW = countW / 2;
+
+    int usedR = 0, usedH = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'N') {
+            if (roverN > 0) {
+                ans[i] = 'R';
+                roverN--;
+                usedR = 1;
+            } else {
+                ans[i] = 'H';
+                usedH = 1;
+            }
+        } else if (s[i] == 'S') {
+            if (roverS > 0) {
+                ans[i] = 'R';
+                roverS--;
+                usedR = 1;
+            } else {
+                ans[i] = 'H';
+                usedH = 1;
+            }
+        } else if (s[i] == 'E') {
+            if (roverE > 0) {
+                ans[i] = 'R';
+                roverE--;
+                usedR = 1;
+            } else {
+                ans[i] = 'H';
+                usedH = 1;
+            }
+        } else if (s[i] == 'W') {
+            if (roverW > 0) {
+                ans[i] = 'R';
+                roverW--;
+                usedR = 1;
+            } else {
+                ans[i] = 'H';
+                usedH = 1;
+            }
+        }
+    }
+
+    ans[n] = '\0';
+    if (usedR && usedH) {
+        printf("%s\n", ans);
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

@@ -1,1 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 200005
+
+typedef struct Node {
+    int vertex;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+int visited[MAXN];
+int depth[MAXN];
+int queue[MAXN];
+int front, back;
+
+void add_edge(int u, int v) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->vertex = v;
+    newNode->next = adj[u];
+    adj[u] = newNode;
+}
+
+int bfs(int start) {
+    front = back = 0;
+    queue[back++] = start;
+    visited[start] = 1;
+    depth[start] = 0;
+
+    int max_depth = 0;
+
+    while (front < back) {
+        int u = queue[front++];
+        Node* temp = adj[u];
+        while (temp) {
+            int v = temp->vertex;
+            if (!visited[v]) {
+                visited[v] = 1;
+                depth[v] = depth[u] + 1;
+                if (depth[v] > max_depth)
+                    max_depth = depth[v];
+                queue[back++] = v;
+            }
+            temp = temp->next;
+        }
+    }
+
+    return max_depth;
+}
+
+void clear_graph(int n) {
+    for (int i = 1; i <= n; ++i) {
+        Node* current = adj[i];
+        while (current) {
+            Node* temp = current;
+            current = current->next;
+            free(temp);
+        }
+        adj[i] = NULL;
+        visited[i] = 0;
+        depth[i] = 0;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n - 1; ++i) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            add_edge(u, v);
+            add_edge(v, u);
+        }
+
+        int readings = bfs(1);
+        printf("%d\n", readings);
+
+        clear_graph(n);
+    }
+
+    return 0;
+}
 

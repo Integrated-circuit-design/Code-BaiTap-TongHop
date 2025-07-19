@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        unsigned int x;
+        scanf("%u", &x);
+
+        if (x & 1) {
+            printf("-1\n");
+            continue;
+        }
+
+        unsigned int d = x / 2;
+        unsigned int a = 0, b = 0;
+
+        for (int i = 31; i >= 0; --i) {
+            int xi = (x >> i) & 1;
+            int di = (d >> i) & 1;
+
+            if (xi == 1 && di == 0) {
+                a |= (1U << i);
+            } else if (xi == 1 && di == 1) {
+                printf("-1\n");
+                goto next_case;
+            } else if (xi == 0 && di == 1) {
+                a |= (1U << i);
+                b |= (1U << i);
+            }
+        }
+
+        printf("%u %u\n", a, b);
+
+        next_case: ;
+    }
+
+    return 0;
+}
 

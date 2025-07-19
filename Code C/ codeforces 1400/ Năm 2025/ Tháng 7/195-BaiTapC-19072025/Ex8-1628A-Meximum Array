@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+int freq[MAXN];
+int used[MAXN];
+int result[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            freq[a[i]]++;
+        }
+
+        int res_len = 0;
+        int i = 0;
+
+        while (i < n) {
+            for (int j = 0; j <= n + 1; j++) used[j] = 0;
+
+            int count = 0;
+            int mex = 0;
+            int j = i;
+
+            while (j < n) {
+                if (!used[a[j]]) {
+                    used[a[j]] = 1;
+                    count++;
+                }
+                freq[a[j]]--;
+
+                while (used[mex]) mex++;
+
+                if (count == mex) break;
+                j++;
+            }
+
+            result[res_len++] = mex;
+            i = j + 1;
+        }
+
+        printf("%d\n", res_len);
+        for (int i = 0; i < res_len; i++)
+            printf("%d%c", result[i], i == res_len - 1 ? '\n' : ' ');
+
+        for (int i = 0; i < n; i++)
+            freq[a[i]] = 0;
+    }
+
+    return 0;
+}
 

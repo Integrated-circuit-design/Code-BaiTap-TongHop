@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int count_zeros(ll x) {
+    int count = 0;
+    while (x % 10 == 0) {
+        count++;
+        x /= 10;
+    }
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        ll n, m;
+        scanf("%lld %lld", &n, &m);
+
+        ll best_result = n * m;
+        int max_zeros = count_zeros(best_result);
+
+        for (ll k = 1; k <= m; k++) {
+            ll current = n * k;
+            int zeros = count_zeros(current);
+
+            if (zeros > max_zeros || (zeros == max_zeros && current > best_result)) {
+                best_result = current;
+                max_zeros = zeros;
+            }
+        }
+
+        printf("%lld\n", best_result);
+    }
+
+    return 0;
+}
 

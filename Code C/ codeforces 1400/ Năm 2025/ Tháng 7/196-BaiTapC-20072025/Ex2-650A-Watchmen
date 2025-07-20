@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAXN 200005
 
+int find_idx(int *arr, int cnt, int val) {
+    for(int i=0;i<cnt;i++)
+        if(arr[i]==val) return i;
+    return -1;
+}
+
+int main() {
+    int n;
+    scanf("%d",&n);
+    int x[MAXN], y[MAXN];
+    int idx_x[MAXN], idx_y[MAXN];
+    int kx=0, ky=0;
+
+    int cnt_x[MAXN]={0}, cnt_y[MAXN]={0}, cnt_xy[MAXN]={0};
+    int px[MAXN], py[MAXN];
+
+    for(int i=0;i<n;i++) {
+        scanf("%d%d", &x[i], &y[i]);
+        int j = find_idx(idx_x, kx, x[i]);
+        if(j==-1) idx_x[kx]=x[i], px[i]=kx++;
+        else px[i]=j;
+        j = find_idx(idx_y, ky, y[i]);
+        if(j==-1) idx_y[ky]=y[i], py[i]=ky++;
+        else py[i]=j;
+    }
+    for(int i=0;i<n;i++) {
+        cnt_x[px[i]]++;
+        cnt_y[py[i]]++;
+    }
+    int cnt_point[MAXN]={0};
+    for(int i=0;i<n;i++) {
+        cnt_point[i]=0;
+        for(int j=0;j<i;j++)
+            if(x[j]==x[i] && y[j]==y[i]) cnt_point[i]++;
+    }
+    long long ans=0;
+    for(int i=0;i<kx;i++) ans += 1LL*cnt_x[i]*(cnt_x[i]-1)/2;
+    for(int i=0;i<ky;i++) ans += 1LL*cnt_y[i]*(cnt_y[i]-1)/2;
+    for(int i=0;i<n;i++) ans -= 1LL*cnt_point[i];
+    printf("%lld\n", ans);
+    return 0;
+}

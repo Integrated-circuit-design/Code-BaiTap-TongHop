@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
 
+#define MAX 200005
+
+int num[MAX];
+int color[MAX];
+int appear[MAX];
+int chosen[MAX];
+int candidate[MAX];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        for (int i = 1; i <= n; ++i) {
+            scanf("%d", &num[i]);
+            color[i] = 0;
+        }
+
+        for(int i = 1; i <= n; ++i) {
+            appear[i] = 0;
+            chosen[i] = 0;
+        }
+
+        for (int i = 1; i <= n; ++i)
+            appear[num[i]]++;
+
+        int dem = 0;
+        for (int i = 1; i <= n; ++i) {
+            if (chosen[num[i]] < k) {
+                candidate[dem++] = i;
+                chosen[num[i]]++;
+            }
+        }
+
+        int to_paint = (dem / k) * k;
+        int cur = 1;
+
+        for (int i = 0; i < to_paint; ++i) {
+            int idx = candidate[i];
+            color[idx] = cur;
+            cur++;
+            if (cur > k) cur = 1;
+        }
+
+        for (int i = 1; i <= n; ++i) {
+            printf("%d ", color[i]);
+        }
+        printf("\n");
+    }
+    return 0;
+}

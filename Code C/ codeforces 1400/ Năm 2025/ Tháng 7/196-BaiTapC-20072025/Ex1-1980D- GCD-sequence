@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
 
+int gcd(int a, int b) {
+    while (b) {
+        int t = a % b;
+        a = b;
+        b = t;
+    }
+    return a;
+}
+
+int isValid(int *a, int n, int pos) {
+    int first = 1, prev = 0, cur;
+    for (int i = 0; i < n-1; i++) {
+        if (i == pos || i+1 == pos) continue;
+        cur = gcd(a[i], a[i+1]);
+        if (!first && prev > cur) return 0;
+        prev = cur;
+        first = 0;
+    }
+    return 1;
+}
+
+int main() {
+    int t, n, i, j;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        int *a = (int*)malloc(n * sizeof(int));
+        for (i = 0; i < n; i++) scanf("%d", &a[i]);
+        int found = 0;
+        int ok = 1;
+        int pre = gcd(a[0], a[1]);
+        for (i = 1; i < n - 1; i++) {
+            int cur = gcd(a[i], a[i+1]);
+            if (pre > cur) {
+                ok = 0;
+                break;
+            }
+            pre = cur;
+        }
+        if (ok) {
+            printf("YES\n");
+            free(a);
+            continue;
+        }
+        for (j = 0; j < n; j++) {
+            if (isValid(a, n, j)) {
+                found = 1;
+                break;
+            }
+        }
+        printf(found ? "YES\n" : "NO\n");
+        free(a);
+    }
+    return 0;
+}

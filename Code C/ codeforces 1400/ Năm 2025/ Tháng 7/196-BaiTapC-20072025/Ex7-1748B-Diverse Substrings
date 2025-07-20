@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
 
+#define MAX_N 100005
+#define MAX_CHK 100
+
+int is_diverse(const char s[], int l, int r) {
+    int freq[10] = {0};
+    int distinct = 0;
+    int max_freq = 0;
+    for (int i = l; i <= r; i++) {
+        int d = s[i] - '0';
+        if (freq[d] == 0)
+            distinct++;
+        freq[d]++;
+        if (freq[d] > max_freq)
+            max_freq = freq[d];
+    }
+    return max_freq <= distinct;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        char s[MAX_N];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        int answer = 0;
+
+        for (int i = 0; i < n; i++) {
+            int last = i + MAX_CHK;
+            if (last > n) last = n;
+
+            for (int j = i; j < last; j++) {
+                if (is_diverse(s, i, j))
+                    answer++;
+                else
+                    break;
+            }
+        }
+        printf("%d\n", answer);
+    }
+    return 0;
+}

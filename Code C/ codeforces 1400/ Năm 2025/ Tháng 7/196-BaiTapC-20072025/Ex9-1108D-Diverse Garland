@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <string.h>
 
+char chon_mau(char a, char b) {
+    if (a != 'R' && b != 'R') return 'R';
+    if (a != 'G' && b != 'G') return 'G';
+    return 'B';
+}
+
+int main() {
+    int n, i, dem = 0;
+    char s[200005];
+
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    for (i = 0; i < n - 1; ++i) {
+        if (s[i] == s[i+1]) {
+            dem++;
+            char ben_phai = (i+2 < n) ? s[i+2] : 'X';
+            s[i+1] = chon_mau(s[i], ben_phai);
+        }
+    }
+
+    printf("%d\n%s\n", dem, s);
+    return 0;
+}

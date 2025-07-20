@@ -1,1 +1,26 @@
+#include <stdio.h>
+#include <math.h>
 
+#define PRECISION 9
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    while (testCases--) {
+        int nSides;
+        scanf("%d", &nSides);
+
+        if (nSides == 2) {
+            printf("%.*f\n", PRECISION, 1.0);
+        } else {
+            double piValue = 2 * acos(0.0);
+            double alpha = piValue / (2 * nSides);
+            double minLength = 1.0 / sin(alpha);
+
+            printf("%.*f\n", PRECISION, minLength);
+        }
+    }
+
+    return 0;
+}

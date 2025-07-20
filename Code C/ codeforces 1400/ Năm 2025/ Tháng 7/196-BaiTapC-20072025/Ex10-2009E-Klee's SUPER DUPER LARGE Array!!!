@@ -1,1 +1,27 @@
+#include <stdio.h>
+typedef long long ll;
 
+ll absll(ll x) { return x < 0 ? -x : x; }
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        ll n, k;
+        scanf("%lld %lld", &n, &k);
+
+        ll tong = n * k + n * (n - 1) / 2;
+
+        ll ans = -1;
+        for (int d = 0; d <= 1; ++d) {
+            ll i = n / 2 + d;
+            if (i < 1 || i > n) continue;
+            ll s1 = i * k + i * (i - 1) / 2;
+            ll x = absll(2 * s1 - tong);
+            if (ans == -1 || x < ans) ans = x;
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}

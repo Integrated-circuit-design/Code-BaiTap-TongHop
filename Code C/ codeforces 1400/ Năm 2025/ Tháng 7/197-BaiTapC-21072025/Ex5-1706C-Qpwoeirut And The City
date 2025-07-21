@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 100005
+#define max(a,b) ((a) > (b) ? (a) : (b))
+
+int h[MAXN];
+int temp[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &h[i]);
+            temp[i] = h[i];
+        }
+
+        long long cost = 0;
+
+        for (int i = 1; i < n - 1; i++) {
+            if (!(temp[i] > temp[i - 1] && temp[i] > temp[i + 1])) {
+                int target = max(temp[i - 1], temp[i + 1]) + 1;
+                if (temp[i] < target) {
+                    cost += (target - temp[i]);
+                    temp[i] = target;
+                }
+            }
+        }
+
+        printf("%lld\n", cost);
+    }
+
+    return 0;
+}
 

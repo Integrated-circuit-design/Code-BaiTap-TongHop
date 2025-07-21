@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll xor_distance(ll a, ll b, ll r) {
+    ll diff = a ^ b;
+    ll x = 0;
+
+    for (int i = 60; i >= 0; --i) {
+        ll bit = 1LL << i;
+        if ((diff & bit) == 0)
+            continue;
+        ll temp_x = x | bit;
+        if (temp_x <= r)
+            x = temp_x;
+    }
+
+    ll new_a = a ^ x;
+    ll new_b = b ^ x;
+    ll result = new_a - new_b;
+    if (result < 0) result = -result;
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        ll a, b, r;
+        scanf("%lld %lld %lld", &a, &b, &r);
+        printf("%lld\n", xor_distance(a, b, r));
+    }
+    return 0;
+}
 

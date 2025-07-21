@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1005
+#define int long long
+
+int a[MAX][MAX];
+int used[MAX][MAX];
+char path[MAX * 2];
+int n, m;
+
+void assign_path_values() {
+    int x = 0, y = 0;
+    int val = 1;
+    a[0][0] = val;
+    used[0][0] = 1;
+
+    for (int i = 0; path[i]; i++) {
+        if (path[i] == 'D') x++;
+        else y++;
+        val++;
+        a[x][y] = val;
+        used[x][y] = 1;
+    }
+}
+
+void solve() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &m);
+        scanf("%s", path);
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++) {
+                scanf("%lld", &a[i][j]);
+                used[i][j] = 0;
+            }
+
+        assign_path_values();
+
+        int row_total[MAX] = {0};
+        int col_total[MAX] = {0};
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++) {
+                row_total[i] += a[i][j];
+                col_total[j] += a[i][j];
+            }
+
+        int max_row = row_total[0];
+        for (int i = 1; i < n; i++)
+            if (row_total[i] > max_row)
+                max_row = row_total[i];
+
+        for (int i = 0; i < n; i++) {
+            int diff = max_row - row_total[i];
+            for (int j = 0; j < m; j++) {
+                if (used[i][j]) {
+                    a[i][j] += diff;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++)
+                printf("%lld ", a[i][j]);
+            printf("\n");
+        }
+    }
+}
+
+int main() {
+    solve();
+    return 0;
+}
 

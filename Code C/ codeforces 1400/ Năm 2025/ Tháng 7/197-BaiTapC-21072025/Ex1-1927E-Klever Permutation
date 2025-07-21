@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+void print_klever_permutation(int n, int k) {
+    int num = 1;
+    int toggle = 0;
+
+    while (num <= n) {
+        int block_size = (n - num + 1 >= k) ? k : (n - num + 1);
+        int temp[block_size];
+
+        for (int i = 0; i < block_size; i++) {
+            temp[i] = num++;
+        }
+
+        if (toggle % 2 == 0) {
+            for (int i = 0; i < block_size; i++) {
+                printf("%d ", temp[i]);
+            }
+        } else {
+            for (int i = block_size - 1; i >= 0; i--) {
+                printf("%d ", temp[i]);
+            }
+        }
+
+        toggle++;
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        print_klever_permutation(n, k);
+    }
+
+    return 0;
+}
 

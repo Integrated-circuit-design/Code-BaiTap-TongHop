@@ -1,1 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+int tmp[MAXN];
+int hash[MAXN];
+
+int cmp(const void *x, const void *y) {
+    int xx = *(int *)x;
+    int yy = *(int *)y;
+    return (xx > yy) - (xx < yy);
+}
+
+int discretize(int n) {
+    for (int i = 0; i < n; ++i)
+        tmp[i] = a[i];
+    qsort(tmp, n, sizeof(int), cmp);
+
+    int m = 0;
+    for (int i = 0; i < n; ++i)
+        if (i == 0 || tmp[i] != tmp[i - 1])
+            tmp[m++] = tmp[i];
+
+    for (int i = 0; i < n; ++i) {
+        int l = 0, r = m - 1, pos = 0;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (tmp[mid] == a[i]) {
+                pos = mid;
+                break;
+            } else if (tmp[mid] < a[i]) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        a[i] = pos;
+    }
+    return m;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; ++i)
+            scanf("%d", &a[i]);
+
+        int m = discretize(n);
+
+        for (int i = 0; i < m; ++i)
+            hash[i] = 0;
+        for (int i = 0; i < n; ++i)
+            ++hash[a[i]];
+
+        int cnt1 = 0, cnt2 = 0;
+        for (int i = 0; i < m; ++i) {
+            if (hash[i] >= 2) ++cnt2;
+            else ++cnt1;
+        }
+
+        int l = 1, r = n / 2 + 1, ans = 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (cnt2 >= mid || (cnt2 + cnt1 / 2) >= mid) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+
+        printf("%d\n", ans);
+    }
+
+    return 0;
+}
 

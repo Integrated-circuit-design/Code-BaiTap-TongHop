@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAX 300005
+
+int perm[MAX];
+
+int count_lucky_positions(int n) {
+    int lucky = 0;
+    int current_min = n + 1;
+
+    for (int i = n - 1; i >= 0; --i) {
+        if (perm[i] < current_min) {
+            lucky++;
+            current_min = perm[i];
+        }
+    }
+
+    return lucky;
+}
+
+int main() {
+    int testcases;
+    scanf("%d", &testcases);
+
+    while (testcases--) {
+        int length;
+        scanf("%d", &length);
+
+        for (int i = 0; i < length; ++i) {
+            scanf("%d", &perm[i]);
+        }
+
+        int result = count_lucky_positions(length);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

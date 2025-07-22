@@ -1,1 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+#define MAXE 200005
+
+int n;
+int parent[MAXN], c[MAXN];
+int head[MAXN], next[MAXE], to[MAXE], edge_cnt = 0;
+int deleted[MAXN], res[MAXN], res_cnt = 0;
+
+void add_edge(int u, int v) {
+    to[edge_cnt] = v;
+    next[edge_cnt] = head[u];
+    head[u] = edge_cnt++;
+}
+
+int can_delete(int u) {
+    if (parent[u] == -1 || c[u] == 0) return 0;
+    for (int e = head[u]; e != -1; e = next[e]) {
+        int v = to[e];
+        if (!deleted[v] && c[v] == 0) return 0;
+    }
+    return 1;
+}
+
+void reconnect(int u) {
+    int p = parent[u];
+    for (int e = head[u]; e != -1; e = next[e]) {
+        int v = to[e];
+        if (!deleted[v]) {
+            parent[v] = p;
+            add_edge(p, v);
+        }
+    }
+    head[u] = -1;
+}
+
+int main() {
+    for (int i = 0; i < MAXN; i++) head[i] = -1;
+
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d%d", &parent[i], &c[i]);
+        if (parent[i] != -1) {
+            add_edge(parent[i], i);
+        }
+    }
+
+    int changed = 1;
+    while (changed) {
+        changed = 0;
+        for (int i = 1; i <= n; i++) {
+            if (!deleted[i] && can_delete(i)) {
+                deleted[i] = 1;
+                res[res_cnt++] = i;
+                reconnect(i);
+                changed = 1;
+                break;
+            }
+        }
+    }
+
+    if (res_cnt == 0) {
+        printf("-1\n");
+    } else {
+        for (int i = 0; i < res_cnt; i++) {
+            printf("%d ", res[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

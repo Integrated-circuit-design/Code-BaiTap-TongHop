@@ -1,1 +1,68 @@
+#include <stdio.h>
+
+#define MAX 200005
+
+int data[MAX];
+
+void sort_array(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int current = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > current) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = current;
+    }
+}
+
+int check(int arr[], int n, int gap) {
+    int start = 0, groups = 0;
+    for (groups = 0; groups < 3 && start < n; groups++) {
+        int end = start;
+        while (end < n && arr[end] - arr[start] <= 2 * gap) {
+            end++;
+        }
+        start = end;
+    }
+    return start == n;
+}
+
+int find_min_gap(int arr[], int n) {
+    int low = 0, high = 1000000000, answer = high;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (check(arr, n, mid)) {
+            answer = mid;
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+    return answer;
+}
+
+void process() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &data[i]);
+
+    sort_array(data, n);
+
+    int result = find_min_gap(data, n);
+    printf("%d\n", result);
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    for (int t = 0; t < test_cases; t++) {
+        process();
+    }
+
+    return 0;
+}
 

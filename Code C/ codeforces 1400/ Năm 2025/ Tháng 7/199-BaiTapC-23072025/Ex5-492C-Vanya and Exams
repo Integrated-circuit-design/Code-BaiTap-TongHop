@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int a[MAXN], b[MAXN], idx[MAXN];
+
+int cmp(const void *x, const void *y) {
+    int i = *(int *)x;
+    int j = *(int *)y;
+    if (b[i] != b[j]) return b[i] - b[j];
+    return a[i] - a[j];
+}
+
+int main() {
+    int n, r, avg;
+    scanf("%d %d %d", &n, &r, &avg);
+
+    long long sum = 0;
+    for (int i = 0; i < n; ++i) {
+        scanf("%d %d", &a[i], &b[i]);
+        sum += a[i];
+        idx[i] = i;
+    }
+
+    long long need = (long long)avg * n;
+    if (sum >= need) {
+        printf("0\n");
+        return 0;
+    }
+
+    qsort(idx, n, sizeof(int), cmp);
+
+    long long res = 0;
+    for (int k = 0; k < n && sum < need; ++k) {
+        int i = idx[k];
+        long long can_add = r - a[i];
+        long long still_need = need - sum;
+        long long to_add = (can_add < still_need) ? can_add : still_need;
+        res += to_add * b[i];
+        sum += to_add;
+    }
+
+    printf("%lld\n", res);
+    return 0;
+}
 

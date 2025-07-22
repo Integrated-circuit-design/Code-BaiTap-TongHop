@@ -1,1 +1,43 @@
+#include <stdio.h>
+#define MAXN 200005
+#define INF 1000000000
+
+int a[MAXN], b[MAXN];
+int pos_a[MAXN], pos_b[MAXN];
+
+int min(int a, int b) { return a < b ? a : b; }
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &a[i]);
+            pos_a[a[i]] = i;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &b[i]);
+            pos_b[b[i]] = i;
+        }
+
+        int answer = INF;
+
+        for (int odd = 1; odd <= 2 * n; odd += 2) {
+            for (int even = 2; even <= 2 * n; even += 2) {
+                if (odd < even) {
+                    int moves = pos_a[odd] + pos_b[even];
+                    answer = min(answer, moves);
+                }
+            }
+        }
+
+        printf("%d\n", answer);
+    }
+    return 0;
+}
 

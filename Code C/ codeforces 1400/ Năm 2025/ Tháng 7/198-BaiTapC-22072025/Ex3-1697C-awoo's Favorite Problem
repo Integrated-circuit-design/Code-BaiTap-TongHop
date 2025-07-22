@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+char s[MAXN], t[MAXN];
+int posa[MAXN], posc[MAXN];
+int sa, sc, ta, tc;
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+        scanf("%s", s);
+        scanf("%s", t);
+
+        int freq_s[3] = {0}, freq_t[3] = {0};
+        for (int i = 0; i < n; ++i) {
+            freq_s[s[i] - 'a']++;
+            freq_t[t[i] - 'a']++;
+        }
+
+        if (memcmp(freq_s, freq_t, sizeof(freq_s)) != 0) {
+            puts("NO");
+            continue;
+        }
+
+        sa = sc = ta = tc = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'a') posa[sa++] = i;
+            else if (s[i] == 'c') posc[sc++] = i;
+        }
+        for (int i = 0; i < n; i++) {
+            if (t[i] == 'a') {
+                if (posa[ta] > i) {
+                    puts("NO");
+                    goto next;
+                }
+                ta++;
+            } else if (t[i] == 'c') {
+                if (posc[tc] < i) {
+                    puts("NO");
+                    goto next;
+                }
+                tc++;
+            }
+        }
+
+        puts("YES");
+    next:;
+    }
+
+    return 0;
+}
 

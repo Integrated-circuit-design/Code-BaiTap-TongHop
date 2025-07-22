@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 200005
+
+int result[MAX];
+
+bool build_funny_permutation(int n, int x) {
+    if (n % x != 0) return false;
+
+    for (int i = 1; i <= n; i++) {
+        result[i] = i;
+    }
+
+    result[1] = x;
+    result[n] = 1;
+
+    int current = x;
+    for (int i = x + 1; i < n; i++) {
+        if (i % current == 0 && n % i == 0) {
+            result[current] = i;
+            current = i;
+        }
+    }
+
+    result[current] = n;
+
+    return true;
+}
+
+void print_result(int n) {
+    for (int i = 1; i <= n; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+
+        if (build_funny_permutation(n, x)) {
+            print_result(n);
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAXN 25
+
+int a[MAXN];
+int op_i[60], op_j[60], op_cnt;
+
+void add_op(int i, int j) {
+    if (op_cnt < 50) {
+        a[i] += a[j];
+        op_i[op_cnt] = i + 1;
+        op_j[op_cnt] = j + 1;
+        op_cnt++;
+    }
+}
+
+void solve(int n) {
+    op_cnt = 0;
+
+    int min_idx = 0;
+    for (int i = 1; i < n; i++) {
+        if (a[i] < a[min_idx])
+            min_idx = i;
+    }
+
+    for (int i = n - 2; i >= 0 && op_cnt < 50; i--) {
+        while (a[i] > a[i + 1] && op_cnt < 50) {
+            add_op(i, min_idx);
+        }
+    }
+
+    printf("%d\n", op_cnt);
+    for (int i = 0; i < op_cnt; i++) {
+        printf("%d %d\n", op_i[i], op_j[i]);
+    }
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++)
+            scanf("%d", &a[i]);
+        solve(n);
+    }
+    return 0;
+}
 

@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 205
+#define MAXN 200005
+typedef long long ll;
+
+int impact2D[MAX][MAX];
+int flatImpact[MAXN];
+ll gorillas[MAXN];
+
+int cmp_int_desc(const void *a, const void *b) {
+    return (*(int*)b - *(int*)a);
+}
+
+int cmp_ll_desc(const void *a, const void *b) {
+    ll x = *(ll*)a, y = *(ll*)b;
+    return (x > y) ? -1 : (x < y) ? 1 : 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k, w;
+        scanf("%d %d %d", &n, &m, &k);
+        scanf("%d", &w);
+
+        for (int i = 0; i < w; ++i)
+            scanf("%lld", &gorillas[i]);
+
+        for (int i = 0; i <= n + 1; ++i)
+            for (int j = 0; j <= m + 1; ++j)
+                impact2D[i][j] = 0;
+
+        for (int i = 1; i <= n - k + 1; ++i) {
+            for (int j = 1; j <= m - k + 1; ++j) {
+                impact2D[i][j]++;
+                impact2D[i + k][j]--;
+                impact2D[i][j + k]--;
+                impact2D[i + k][j + k]++;
+            }
+        }
+
+        for (int i = 1; i <= n; ++i)
+            for (int j = 1; j <= m; ++j)
+                impact2D[i][j] += impact2D[i - 1][j] + impact2D[i][j - 1] - impact2D[i - 1][j - 1];
+
+        int idx = 0;
+        for (int i = 1; i <= n; ++i)
+            for (int j = 1; j <= m; ++j)
+                flatImpact[idx++] = impact2D[i][j];
+
+        qsort(flatImpact, n * m, sizeof(int), cmp_int_desc);
+        qsort(gorillas, w, sizeof(ll), cmp_ll_desc);
+
+        ll result = 0;
+        for (int i = 0; i < w; ++i)
+            result += (ll)flatImpact[i] * gorillas[i];
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

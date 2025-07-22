@@ -1,1 +1,79 @@
+#include <stdio.h>
+
+#define N 1005
+
+int mocha_set[N];
+int diana_set[N];
+
+void init_sets(int n) {
+    for (int i = 1; i <= n; i++) {
+        mocha_set[i] = i;
+        diana_set[i] = i;
+    }
+}
+
+int get_leader(int ds[], int x) {
+    if (ds[x] != x)
+        ds[x] = get_leader(ds, ds[x]);
+    return ds[x];
+}
+
+int connect(int ds[], int a, int b) {
+    int ra = get_leader(ds, a);
+    int rb = get_leader(ds, b);
+    if (ra != rb) {
+        ds[ra] = rb;
+        return 1;
+    }
+    return 0;
+}
+
+void load_edges(int ds[], int m) {
+    int a, b;
+    for (int i = 0; i < m; i++) {
+        scanf("%d%d", &a, &b);
+        connect(ds, a, b);
+    }
+}
+
+int added[N * N][2];
+int added_count = 0;
+
+void find_common_edges(int n) {
+    for (int x = 1; x <= n; x++) {
+        for (int y = x + 1; y <= n; y++) {
+            if (get_leader(mocha_set, x) != get_leader(mocha_set, y) &&
+                get_leader(diana_set, x) != get_leader(diana_set, y)) {
+                
+                connect(mocha_set, x, y);
+                connect(diana_set, x, y);
+                
+                added[added_count][0] = x;
+                added[added_count][1] = y;
+                added_count++;
+            }
+        }
+    }
+}
+
+void print_result() {
+    printf("%d\n", added_count);
+    for (int i = 0; i < added_count; i++) {
+        printf("%d %d\n", added[i][0], added[i][1]);
+    }
+}
+
+int main() {
+    int nodes, mocha_edges, diana_edges;
+    scanf("%d%d%d", &nodes, &mocha_edges, &diana_edges);
+
+    init_sets(nodes);
+    load_edges(mocha_set, mocha_edges);
+    load_edges(diana_set, diana_edges);
+
+    find_common_edges(nodes);
+    print_result();
+
+    return 0;
+}
 

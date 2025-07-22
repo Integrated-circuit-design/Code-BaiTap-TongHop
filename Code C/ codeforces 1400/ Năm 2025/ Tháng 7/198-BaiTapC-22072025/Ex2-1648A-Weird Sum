@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_COLOR 100005
+#define MAX_POS 100000
+#define ll long long
+
+int pos[MAX_COLOR][MAX_POS];
+int count[MAX_COLOR];
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+ll compute(int arr[], int n) {
+    qsort(arr, n, sizeof(int), cmp);
+    ll res = 0, prefix = 0;
+    for (int i = 0; i < n; ++i) {
+        res += (ll)arr[i] * i - prefix;
+        prefix += arr[i];
+    }
+    return res;
+}
+
+int tmp[MAX_POS];
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; ++i)
+        for (int j = 0, color; j < m; ++j) {
+            scanf("%d", &color);
+            int p = i * m + j;
+            pos[color][count[color]++] = p;
+        }
+
+    ll total = 0;
+
+    for (int c = 1; c < MAX_COLOR; ++c) {
+        int k = count[c];
+        if (k < 2) continue;
+
+        for (int i = 0; i < k; ++i)
+            tmp[i] = pos[c][i] / m;
+        total += compute(tmp, k);
+
+        for (int i = 0; i < k; ++i)
+            tmp[i] = pos[c][i] % m;
+        total += compute(tmp, k);
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define LIMIT 2000005
+
+int totient[LIMIT];
+
+void build_totient() {
+    for (int i = 1; i < LIMIT; ++i)
+        totient[i] = i;
+
+    for (int i = 2; i < LIMIT; ++i) {
+        if (totient[i] == i) {
+            for (int j = i; j < LIMIT; j += i)
+                totient[j] = totient[j] / i * (i - 1);
+        }
+    }
+}
+
+long long count_valid_pairs(int n, int m) {
+    if (n > m) {
+        int tmp = n;
+        n = m;
+        m = tmp;
+    }
+
+    long long total = 0;
+    for (int d = 1; d <= n; ++d) {
+        int count_a = n / d;
+        int count_b = m / d;
+        long long ways = (long long) count_a * count_b;
+        total += ways * totient[d];
+    }
+    return total;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    build_totient();
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        long long result = count_valid_pairs(n, m);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

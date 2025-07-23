@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int c;
+        scanf("%d", &c);
+        long long s = 0, x = 0, v;
+        int i = 0;
+        while (i < c) {
+            scanf("%lld", &v);
+            s += v;
+            x ^= v;
+            i++;
+        }
+        printf("2\n%lld %lld\n", x, s + x);
+    }
+    return 0;
+}
 

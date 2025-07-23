@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll max_just_play_turns(ll k, ll n, ll a, ll b) {
+    if (n * b >= k) return -1;
+
+    ll left_energy = k - n * b - 1;
+    ll diff = a - b;
+    ll max_x = left_energy / diff;
+
+    if (max_x > n) return n;
+    return max_x;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        ll k, n, a, b;
+        scanf("%lld %lld %lld %lld", &k, &n, &a, &b);
+        printf("%lld\n", max_just_play_turns(k, n, a, b));
+    }
+
+    return 0;
+}
 

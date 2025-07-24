@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MAXN 105000
+
+int day[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, d, k;
+        scanf("%d %d %d", &n, &d, &k);
+
+        for (int i = 1; i <= n; i++) day[i] = 0;
+
+        for (int i = 0; i < k; i++) {
+            int l, r;
+            scanf("%d %d", &l, &r);
+            for (int j = l; j <= r; j++) {
+                day[j]++;
+            }
+        }
+
+        int curr = 0;
+        for (int i = 1; i <= d; i++) {
+            curr += day[i];
+        }
+
+        int max_sum = curr, min_sum = curr;
+        int max_start = 1, min_start = 1;
+
+        for (int i = d + 1; i <= n; i++) {
+            curr = curr + day[i] - day[i - d];
+            if (curr > max_sum) {
+                max_sum = curr;
+                max_start = i - d + 1;
+            }
+            if (curr < min_sum) {
+                min_sum = curr;
+                min_start = i - d + 1;
+            }
+        }
+
+        printf("%d %d\n", max_start, min_start);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,69 @@
+#include <stdio.h>
+
+#define MAXN 300005
+
+int a[MAXN];
+int diff[MAXN];
+
+void heap_insert(int heap[], int *sz, int val) {
+    int i = (*sz)++;
+    heap[i] = val;
+    while (i > 0 && heap[(i - 1) / 2] > heap[i]) {
+        int tmp = heap[i];
+        heap[i] = heap[(i - 1) / 2];
+        heap[(i - 1) / 2] = tmp;
+        i = (i - 1) / 2;
+    }
+}
+
+int heap_pop(int heap[], int *sz) {
+    int res = heap[0];
+    heap[0] = heap[--(*sz)];
+    int i = 0;
+    while (1) {
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+        int smallest = i;
+
+        if (left < *sz && heap[left] < heap[smallest]) smallest = left;
+        if (right < *sz && heap[right] < heap[smallest]) smallest = right;
+
+        if (smallest == i) break;
+
+        int tmp = heap[i];
+        heap[i] = heap[smallest];
+        heap[smallest] = tmp;
+        i = smallest;
+    }
+    return res;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    for (int i = 1; i < n; i++)
+        diff[i - 1] = a[i] - a[i - 1];
+
+    int heap[MAXN], sz = 0;
+    for (int i = 0; i < n - 1; i++) {
+        if (sz < k - 1) {
+            heap_insert(heap, &sz, diff[i]);
+        } else if (k > 1 && diff[i] > heap[0]) {
+            heap_pop(heap, &sz);
+            heap_insert(heap, &sz, diff[i]);
+        }
+    }
+
+    long long cost = (long long)a[n - 1] - a[0];
+
+    for (int i = 0; i < sz; i++)
+        cost -= heap[i];
+
+    printf("%lld\n", cost);
+    return 0;
+}
 

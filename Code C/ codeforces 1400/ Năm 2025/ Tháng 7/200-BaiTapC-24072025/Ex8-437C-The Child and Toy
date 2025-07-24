@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAX_N 1000
+#define MAX_M 2000
+
+typedef struct {
+    int u, v;
+} Edge;
+
+int energy[MAX_N + 1];
+Edge edges[MAX_M];
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+long long calculate_total_energy(int m) {
+    long long total = 0;
+    for (int i = 0; i < m; i++) {
+        int a = edges[i].u;
+        int b = edges[i].v;
+        total += min(energy[a], energy[b]);
+    }
+    return total;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &energy[i]);
+    }
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &edges[i].u, &edges[i].v);
+    }
+
+    long long result = calculate_total_energy(m);
+    printf("%lld\n", result);
+
+    return 0;
+}
 

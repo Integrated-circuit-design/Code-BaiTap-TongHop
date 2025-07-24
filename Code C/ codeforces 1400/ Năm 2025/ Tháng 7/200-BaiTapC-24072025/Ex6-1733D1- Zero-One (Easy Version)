@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 3005
+
+long long solve_case(int n, int x, int y, char *a, char *b) {
+    int mismatch_positions[MAX_LEN];
+    int mismatch_count = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (a[i] != b[i]) {
+            mismatch_positions[mismatch_count++] = i;
+        }
+    }
+
+    if (mismatch_count % 2 != 0) {
+        return -1;
+    }
+
+    if (mismatch_count == 2) {
+        int i = mismatch_positions[0];
+        int j = mismatch_positions[1];
+        if (j == i + 1) {
+            return (x < 2 * y) ? x : 2 * y;
+        } else {
+            return 2LL * y;
+        }
+    }
+
+    return (mismatch_count / 2LL) * y;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x, y;
+        char a[MAX_LEN], b[MAX_LEN];
+
+        scanf("%d %d %d", &n, &x, &y);
+        scanf("%s", a);
+        scanf("%s", b);
+
+        long long result = solve_case(n, x, y, a, b);
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

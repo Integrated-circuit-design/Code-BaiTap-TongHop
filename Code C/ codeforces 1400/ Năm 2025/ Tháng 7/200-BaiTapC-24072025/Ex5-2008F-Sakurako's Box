@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+long long fast_pow(long long base, long long exp) {
+    long long result = 1;
+    while (exp) {
+        if (exp % 2)
+            result = (result * base) % MOD;
+        base = (base * base) % MOD;
+        exp /= 2;
+    }
+    return result;
+}
+
+long long mod_inverse(long long x) {
+    return fast_pow(x, MOD - 2);
+}
+
+void compute_sums(int n, long long arr[], long long* total, long long* total_square) {
+    *total = 0;
+    *total_square = 0;
+    for (int i = 0; i < n; ++i) {
+        *total = (*total + arr[i]) % MOD;
+        *total_square = (*total_square + (arr[i] * arr[i]) % MOD) % MOD;
+    }
+}
+
+long long expected_product(int n, long long sum, long long sum_sq) {
+    long long numerator = (sum * sum % MOD - sum_sq + MOD) % MOD;
+    long long denominator = ((long long)n * (n - 1)) % MOD;
+    long long result = (numerator * mod_inverse(denominator)) % MOD;
+    return result;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        long long arr[200005];
+        for (int i = 0; i < n; ++i) {
+            scanf("%lld", &arr[i]);
+        }
+
+        long long sum, sum_sq;
+        compute_sums(n, arr, &sum, &sum_sq);
+
+        long long result = expected_product(n, sum, sum_sq);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

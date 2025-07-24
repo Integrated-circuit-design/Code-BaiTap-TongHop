@@ -1,1 +1,33 @@
+#include <stdio.h>
+#define MAXN 100005
+typedef long long ll;
+
+int d[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; ++i)
+            scanf("%d", &d[i]);
+
+        ll cost = 0;
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int diff = d[j] - d[i];
+                if (diff < 0)
+                    cost += diff;
+            }
+        }
+
+        printf("%lld\n", cost);
+    }
+
+    return 0;
+}
 

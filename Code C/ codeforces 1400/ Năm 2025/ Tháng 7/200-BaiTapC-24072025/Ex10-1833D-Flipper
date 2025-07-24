@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 2005
+
+int t, n;
+int p[MAXN], result[MAXN], buffer[MAXN];
+
+int is_better(int *a, int *b, int len) {
+    for (int i = 0; i < len; ++i) {
+        if (a[i] > b[i]) return 1;
+        else if (a[i] < b[i]) return 0;
+    }
+    return 0;
+}
+
+void build(int l, int r) {
+    int idx = 0;
+    for (int i = r + 1; i < n; ++i)
+        buffer[idx++] = p[i];
+    for (int i = r; i >= l; --i)
+        buffer[idx++] = p[i];
+    for (int i = 0; i < l; ++i)
+        buffer[idx++] = p[i];
+    if (is_better(buffer, result, n)) {
+        memcpy(result, buffer, sizeof(int) * n);
+    }
+}
+
+void solve() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++i)
+        scanf("%d", &p[i]);
+    memcpy(result, p, sizeof(int) * n);
+    for (int r = n - 1; r >= 0; --r) {
+        for (int l = 0; l <= r; ++l) {
+            build(l, r);
+        }
+    }
+    for (int i = 0; i < n; ++i)
+        printf("%d%c", result[i], i == n - 1 ? '\n' : ' ');
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) solve();
+    return 0;
+}
 

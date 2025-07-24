@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+char s[MAXN], t[MAXN];
+char nhom_s[5][MAXN], nhom_t[5][MAXN];
+int len_nhom[5];
+
+int cmp_char(const void *a, const void *b) {
+    return *(char *)a - *(char *)b;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        scanf("%s", s);
+        scanf("%s", t);
+
+        for (int i = 0; i < 5; i++) {
+            len_nhom[i] = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            int id = i % 5;
+            nhom_s[id][len_nhom[id]] = s[i];
+            nhom_t[id][len_nhom[id]] = t[i];
+            len_nhom[id]++;
+        }
+
+        int dung = 1;
+        for (int i = 0; i < 5; i++) {
+            qsort(nhom_s[i], len_nhom[i], sizeof(char), cmp_char);
+            qsort(nhom_t[i], len_nhom[i], sizeof(char), cmp_char);
+            if (memcmp(nhom_s[i], nhom_t[i], len_nhom[i]) != 0) {
+                dung = 0;
+                break;
+            }
+        }
+
+        printf(dung ? "YES\n" : "NO\n");
+    }
+
+    return 0;
+}
 

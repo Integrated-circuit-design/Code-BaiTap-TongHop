@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+void solve(int n) {
+    int last = -1, count = 0;
+
+    for (int i = 1; i <= n; ) {
+        int val = n / i;
+        int next_i = n / val + 1;
+        count++;
+        i = next_i;
+    }
+
+    printf("%d\n", count + 1);
+    printf("0");
+
+    for (int i = 1; i <= n; ) {
+        int val = n / i;
+        int next_i = n / val + 1;
+        printf(" %d", val);
+        i = next_i;
+    }
+
+    printf("\n");
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+        solve(n);
+    }
+
+    return 0;
+}
 

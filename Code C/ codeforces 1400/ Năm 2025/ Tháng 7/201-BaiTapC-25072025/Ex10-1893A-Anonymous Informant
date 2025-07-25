@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int b[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        long long k;
+        scanf("%d %lld", &n, &k);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        int possible = 0;
+
+        if (k == 0) {
+            for (int i = 0; i < n; i++) {
+                if (b[i] == i + 1) {
+                    possible = 1;
+                    break;
+                }
+            }
+        } else {
+            for (int shift = 0; shift < n; shift++) {
+                int ok = 0;
+                for (int i = 0; i < n; i++) {
+                    int val = b[(i + shift) % n];
+                    if (val == i + 1) {
+                        ok = 1;
+                        break;
+                    }
+                }
+                if (ok) {
+                    possible = 1;
+                    break;
+                }
+            }
+        }
+
+        printf("%s\n", possible ? "Yes" : "No");
+    }
+
+    return 0;
+}
 

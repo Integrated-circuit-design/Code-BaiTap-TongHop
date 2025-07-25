@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+int min(int a, int b) { return a < b ? a : b; }
+
+int alice_thang(int a[], int n, int k) {
+    int used[105] = {0};
+    int i, j;
+
+    for (i = 0; i < k; i++) {
+        int muc = k - i;
+        int chon = -1;
+
+        for (j = 0; j < n; j++) {
+            if (!used[j] && a[j] <= muc) {
+                if (chon == -1 || a[j] < a[chon]) {
+                    chon = j;
+                }
+            }
+        }
+
+        if (chon == -1) return 0;
+
+        used[chon] = 1;
+
+        int max_val = -1, max_idx = -1;
+        for (j = 0; j < n; j++) {
+            if (!used[j] && a[j] > max_val) {
+                max_val = a[j];
+                max_idx = j;
+            }
+        }
+
+        if (max_idx != -1) {
+            a[max_idx] += muc;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t, n, a[105], backup[105];
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int res = 0;
+        for (int k = 0; k <= n; k++) {
+            for (int i = 0; i < n; i++) backup[i] = a[i];
+            if (alice_thang(backup, n, k)) {
+                res = k;
+            }
+        }
+
+        printf("%d\n", res);
+    }
+
+    return 0;
+}
 

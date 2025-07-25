@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAX 3000
+#define INF 1000000001
+
+int s[MAX], c[MAX];
+int min_left[MAX], min_right[MAX];
+
+int main() {
+    int n, ans = INF;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; ++i) scanf("%d", &s[i]);
+    for (int i = 0; i < n; ++i) scanf("%d", &c[i]);
+
+    for (int j = 0; j < n; ++j) {
+        min_left[j] = INF;
+        for (int i = 0; i < j; ++i) {
+            if (s[i] < s[j] && c[i] < min_left[j]) {
+                min_left[j] = c[i];
+            }
+        }
+    }
+
+    for (int j = 0; j < n; ++j) {
+        min_right[j] = INF;
+        for (int k = j + 1; k < n; ++k) {
+            if (s[k] > s[j] && c[k] < min_right[j]) {
+                min_right[j] = c[k];
+            }
+        }
+    }
+
+    for (int j = 0; j < n; ++j) {
+        if (min_left[j] < INF && min_right[j] < INF) {
+            int total = min_left[j] + c[j] + min_right[j];
+            if (total < ans) ans = total;
+        }
+    }
+
+    if (ans == INF) puts("-1");
+    else printf("%d\n", ans);
+
+    return 0;
+}
 

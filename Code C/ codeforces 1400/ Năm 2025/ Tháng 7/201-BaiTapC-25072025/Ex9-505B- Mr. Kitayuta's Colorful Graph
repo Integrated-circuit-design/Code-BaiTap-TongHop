@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 105
+#define MAXM 105
+
+int parent[MAXM][MAXN];
+
+int find(int color, int u) {
+    if (parent[color][u] != u)
+        parent[color][u] = find(color, parent[color][u]);
+    return parent[color][u];
+}
+
+void unite(int color, int u, int v) {
+    int ru = find(color, u);
+    int rv = find(color, v);
+    if (ru != rv)
+        parent[color][rv] = ru;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int c = 1; c <= m; c++)
+        for (int i = 1; i <= n; i++)
+            parent[c][i] = i;
+
+    for (int i = 0; i < m; i++) {
+        int u, v, c;
+        scanf("%d %d %d", &u, &v, &c);
+        unite(c, u, v);
+    }
+
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int u, v, count = 0;
+        scanf("%d %d", &u, &v);
+
+        for (int c = 1; c <= m; c++) {
+            if (find(c, u) == find(c, v))
+                count++;
+        }
+
+        printf("%d\n", count);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+typedef long long ll;
+
+ll a[MAXN];
+
+int cmp_desc(const void* x, const void* y) {
+    ll a = *(ll*)x, b = *(ll*)y;
+    return (a < b) - (a > b);
+}
+
+int check_possible(int n) {
+    ll total = 0;
+    for (int i = 0; i < n; i++) total += a[i];
+
+    int l = 0, r = 0;
+    a[n] = total;
+    r = n;
+
+    qsort(a, n, sizeof(ll), cmp_desc);
+
+    while (l < n) {
+        if (r == l) return 0;
+
+        ll x = a[r++];
+
+        if (x == a[l]) {
+            l++;
+        } else if (x < a[l]) {
+            return 0;
+        } else {
+            a[r++] = x / 2;
+            a[r++] = (x + 1) / 2;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        if (check_possible(n)) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

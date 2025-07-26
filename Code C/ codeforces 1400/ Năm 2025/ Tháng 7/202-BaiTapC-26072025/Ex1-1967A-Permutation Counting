@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll tinhTongCanMua(ll x, int n, ll a[]) {
+    ll tong = 0;
+    for (int i = 0; i < n; i++) {
+        ll thieu = x - a[i];
+        if (thieu > 0) tong += thieu;
+    }
+    return tong;
+}
+
+void giaiBai(int n, ll k, ll a[]) {
+    ll left = 0, right = 1e13, res = 0;
+    while (left <= right) {
+        ll mid = (left + right) / 2;
+        ll canMua = tinhTongCanMua(mid, n, a);
+
+        if (canMua <= k) {
+            res = mid;
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    printf("%lld\n", res);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        ll k;
+        scanf("%d %lld", &n, &k);
+
+        ll a[200005];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        giaiBai(n, k, a);
+    }
+
+    return 0;
+}
 

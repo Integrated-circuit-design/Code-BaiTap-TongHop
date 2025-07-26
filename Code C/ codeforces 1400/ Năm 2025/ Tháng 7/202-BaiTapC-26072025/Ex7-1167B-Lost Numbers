@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+#define N 6
+int values[N] = {4, 8, 15, 16, 23, 42};
+int a[N], used[100];
+
+void find_pair(int p, int *x, int *y) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (values[i] * values[j] == p) {
+                *x = values[i];
+                *y = values[j];
+                return;
+            }
+        }
+    }
+}
+
+int main() {
+    int p[4];
+    int x1, x2, y1, y2, z1, z2, w1, w2;
+
+    printf("? 1 2\n"); fflush(stdout); scanf("%d", &p[0]);
+    printf("? 2 3\n"); fflush(stdout); scanf("%d", &p[1]);
+    printf("? 3 4\n"); fflush(stdout); scanf("%d", &p[2]);
+    printf("? 4 5\n"); fflush(stdout); scanf("%d", &p[3]);
+
+    find_pair(p[0], &x1, &x2);
+    find_pair(p[1], &y1, &y2);
+    find_pair(p[2], &z1, &z2);
+    find_pair(p[3], &w1, &w2);
+
+    int perm[2] = {0, 1};
+    for (int i = 0; i < 2; i++) {
+        a[0] = perm[i] ? x2 : x1;
+        a[1] = perm[i] ? x1 : x2;
+
+        if ((a[1] == y1 && (a[2] = y2)) || (a[1] == y2 && (a[2] = y1))) {
+            if ((a[2] == z1 && (a[3] = z2)) || (a[2] == z2 && (a[3] = z1))) {
+                if ((a[3] == w1 && (a[4] = w2)) || (a[3] == w2 && (a[4] = w1))) {
+                    for (int j = 0; j < 100; j++) used[j] = 0;
+                    for (int j = 0; j < 5; j++) used[a[j]] = 1;
+
+                    for (int j = 0; j < N; j++) {
+                        if (!used[values[j]]) {
+                            a[5] = values[j];
+                            break;
+                        }
+                    }
+
+                    printf("! %d %d %d %d %d %d\n", a[0], a[1], a[2], a[3], a[4], a[5]);
+                    fflush(stdout);
+                    return 0;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
 

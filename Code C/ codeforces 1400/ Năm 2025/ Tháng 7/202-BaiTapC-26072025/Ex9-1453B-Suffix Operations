@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+typedef long long ll;
+
+ll absll(ll x) {
+    return x < 0 ? -x : x;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        static ll a[MAXN], d[MAXN];
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; ++i)
+            scanf("%lld", &a[i]);
+
+        d[1] = a[1];
+        for (int i = 2; i <= n; ++i)
+            d[i] = a[i] - a[i - 1];
+
+        ll base = 0;
+        for (int i = 1; i <= n; ++i)
+            base += absll(d[i]);
+
+        ll best_reduce = 0;
+
+        for (int i = 1; i <= n; ++i) {
+            ll before = 0, after = 0;
+
+            if (i > 1)
+                before += absll(d[i]);
+            if (i < n)
+                before += absll(d[i + 1]);
+
+            ll new_d_i = 0, new_d_ip1 = 0;
+
+            if (i > 1)
+                new_d_i = 0;
+            if (i < n)
+                new_d_ip1 = a[i + 1] - a[i - 1];
+
+            after = absll(new_d_i) + absll(new_d_ip1);
+
+            if (before - after > best_reduce)
+                best_reduce = before - after;
+        }
+
+        printf("%lld\n", base - best_reduce);
+    }
+    return 0;
+}
 

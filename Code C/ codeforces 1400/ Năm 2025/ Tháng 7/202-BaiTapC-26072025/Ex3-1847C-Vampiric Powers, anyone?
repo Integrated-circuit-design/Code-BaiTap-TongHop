@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+#define MAXN 100005
+#define MAXBIT 28
+
+int a[MAXN];
+int xor_suffix[MAXN];
+
+struct XORBasis {
+    int vec[MAXBIT];
+};
+
+void init_basis(struct XORBasis* b) {
+    for (int i = 0; i < MAXBIT; i++)
+        b->vec[i] = 0;
+}
+
+void add_to_basis(struct XORBasis* b, int x) {
+    for (int i = MAXBIT - 1; i >= 0; i--) {
+        if ((x >> i) & 1) {
+            if (b->vec[i] == 0) {
+                b->vec[i] = x;
+                break;
+            } else {
+                x ^= b->vec[i];
+            }
+        }
+    }
+}
+
+int query_max(struct XORBasis* b) {
+    int res = 0;
+    for (int i = MAXBIT - 1; i >= 0; i--) {
+        if ((res ^ b->vec[i]) > res)
+            res ^= b->vec[i];
+    }
+    return res;
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++)
+            scanf("%d", &a[i]);
+
+        xor_suffix[n] = 0;
+        for (int i = n - 1; i >= 0; i--)
+            xor_suffix[i] = xor_suffix[i + 1] ^ a[i];
+
+        struct XORBasis basis;
+        init_basis(&basis);
+
+        for (int i = 0; i <= n; i++)
+            add_to_basis(&basis, xor_suffix[i]);
+
+        printf("%d\n", query_max(&basis));
+    }
+    return 0;
+}
 

@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+#define MAXC 45
+
+typedef long long ll;
+
+typedef struct {
+    ll l, r;
+    ll start, end;
+} CopyOp;
+
+char s[MAXN];
+CopyOp ops[MAXC];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, c, q;
+        scanf("%d %d %d", &n, &c, &q);
+        scanf("%s", s);
+
+        ll current_length = n;
+
+        for (int i = 0; i < c; i++) {
+            scanf("%lld %lld", &ops[i].l, &ops[i].r);
+            ll len = ops[i].r - ops[i].l + 1;
+            ops[i].start = current_length + 1;
+            ops[i].end = current_length + len;
+            current_length += len;
+        }
+
+        while (q--) {
+            ll k;
+            scanf("%lld", &k);
+
+            for (int i = c - 1; i >= 0; i--) {
+                if (k >= ops[i].start && k <= ops[i].end) {
+                    k = ops[i].l + (k - ops[i].start);
+                }
+            }
+
+            printf("%c\n", s[k - 1]);
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,46 @@
+#include <stdio.h>
+#define MAXN 200005
+typedef long long ll;
+
+int a[MAXN], b[MAXN];
+
+ll sum_array(int arr[], int n) {
+    ll sum = 0;
+    for (int i = 0; i < n; ++i)
+        sum += arr[i];
+    return sum;
+}
+
+ll conflict_loss(int a[], int b[], int n) {
+    ll loss = 0;
+    for (int i = 0; i < n; ++i)
+        if (a[i] > 0 && b[i] > 0)
+            loss += (a[i] < b[i] ? a[i] : b[i]) + b[i];
+    return loss;
+}
+
+ll compute_score(int n) {
+    for (int i = 0; i < n; ++i)
+        scanf("%d", &a[i]);
+    for (int i = 0; i < n; ++i)
+        scanf("%d", &b[i]);
+
+    ll totalA = sum_array(a, n);
+    ll totalB = sum_array(b, n);
+    ll lost = conflict_loss(a, b, n);
+
+    return (totalA - lost + totalB - totalB);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        ll result = compute_score(n);
+        printf("%lld\n", result);
+    }
+    return 0;
+}
 

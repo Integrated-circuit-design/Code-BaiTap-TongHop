@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAXN 100005
+typedef long long ll;
+
+int broken[MAXN];
+char split[MAXN];
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    for (int i = 0; i < n; ++i)
+        scanf("%d", &broken[i]);
+
+    if (k >= n) {
+        printf("%d\n", n);
+        return 0;
+    }
+
+    for (int c = 0; c < k - 1; ++c) {
+        int max_gap = -1, pos = -1;
+        for (int i = 1; i < n; ++i) {
+            if (!split[i]) {
+                int gap = broken[i] - broken[i - 1] - 1;
+                if (gap > max_gap) {
+                    max_gap = gap;
+                    pos = i;
+                }
+            }
+        }
+        if (pos != -1)
+            split[pos] = 1;
+    }
+
+    ll total = 0;
+    int start = 0;
+    for (int i = 1; i <= n; ++i) {
+        if (i == n || split[i]) {
+            int length = broken[i - 1] - broken[start] + 1;
+            total += length;
+            start = i;
+        }
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

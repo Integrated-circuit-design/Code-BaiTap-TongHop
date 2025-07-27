@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 200005
+
+int is_valid(char *result, int len, char current) {
+    if (len >= 2 && result[len - 1] == result[len - 2] && result[len - 1] == current)
+        return 0;
+    if (len >= 3 && result[len - 3] == result[len - 2] && result[len - 1] == current)
+        return 0;
+    return 1;
+}
+
+int main() {
+    char s[MAX_LEN];
+    char cleaned[MAX_LEN];
+    int res_len = 0;
+
+    scanf("%s", s);
+    int i, n = strlen(s);
+
+    for (i = 0; i < n; i++) {
+        if (is_valid(cleaned, res_len, s[i])) {
+            cleaned[res_len++] = s[i];
+        }
+    }
+
+    cleaned[res_len] = '\0';
+    printf("%s\n", cleaned);
+
+    return 0;
+}
 

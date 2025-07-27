@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 100005
+
+bool lava[2][MAX];
+int conflicts[MAX];
+int total_conflict = 0;
+
+void update_conflict(int r, int c, int delta) {
+    for (int dc = -1; dc <= 1; dc++) {
+        int nc = c + dc;
+        if (nc >= 1 && nc < MAX) {
+            if (lava[r ^ 1][nc]) {
+                conflicts[nc] += delta;
+                total_conflict += delta;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    while (q--) {
+        int r, c;
+        scanf("%d %d", &r, &c);
+        r--;
+
+        if (lava[r][c]) {
+            update_conflict(r, c, -1);
+        } else {
+            update_conflict(r, c, 1);
+        }
+
+        lava[r][c] = !lava[r][c];
+
+        if (total_conflict == 0)
+            puts("Yes");
+        else
+            puts("No");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[105];
+        char used[105];
+        memset(used, 0, sizeof(used));
+
+        for (int i = 0; i < n; i++)
+            scanf("%d", &a[i]);
+
+        for (int val = 1; val <= n; val++) {
+            for (int i = 0; i < n; i++) {
+                if (a[i] == val) {
+                    while (i > 0 && a[i - 1] > a[i] && !used[i - 1]) {
+                        int temp = a[i];
+                        a[i] = a[i - 1];
+                        a[i - 1] = temp;
+                        used[i - 1] = 1;
+                        i--;
+                    }
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++)
+            printf("%d%c", a[i], i == n - 1 ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

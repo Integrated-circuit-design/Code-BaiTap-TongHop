@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 200005
+
+int la_tang_dan(char *s, int n) {
+    for (int i = 1; i < n; i++)
+        if (s[i] < s[i - 1]) return 0;
+    return 1;
+}
+
+int tinh_so_lan(char *s, int n) {
+    int dem = 0;
+    char a[MAX], tmp[MAX];
+    strcpy(a, s);
+
+    while (!la_tang_dan(a, n)) {
+        char maxc = 'a';
+        for (int i = 0; i < n; i++)
+            if (a[i] > maxc) maxc = a[i];
+
+        int idx = 0;
+        for (int i = 0; i < n; i++)
+            if (a[i] == maxc)
+                tmp[idx++] = a[i];
+        tmp[idx] = '\0';
+
+        int j = n - 1;
+        for (int i = idx - 1; i >= 0; i--) {
+            for (int k = j; k >= 0; k--) {
+                if (a[k] == tmp[i]) {
+                    for (int m = k; m < n - 1; m++)
+                        a[m] = a[m + 1];
+                    a[n - 1] = tmp[i];
+                    j = k - 1;
+                    break;
+                }
+            }
+        }
+        dem++;
+
+        if (dem > n) return -1;
+    }
+
+    return dem;
+}
+
+int main() {
+    int t, n;
+    char s[MAX];
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d %s", &n, s);
+        int kq = tinh_so_lan(s, n);
+        printf("%d\n", kq);
+    }
+
+    return 0;
+}
 

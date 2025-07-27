@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAX 1005
+
+int parent[MAX], size[MAX];
+int n, m;
+
+int find(int x) {
+    if (x != parent[x])
+        parent[x] = find(parent[x]);
+    return parent[x];
+}
+
+void unite(int x, int y) {
+    int fx = find(x);
+    int fy = find(y);
+    if (fx != fy) {
+        parent[fx] = fy;
+        size[fy] += size[fx];
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; ++i) {
+        parent[i] = i;
+        size[i] = 1;
+    }
+
+    for (int i = 0; i < m; ++i) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        unite(u, v);
+    }
+
+    long long danger = 1;
+
+    for (int i = 1; i <= n; ++i) {
+        if (parent[i] == i && size[i] > 1) {
+            for (int j = 1; j < size[i]; ++j)
+                danger *= 2;
+        }
+    }
+
+    printf("%lld\n", danger);
+    return 0;
+}
 

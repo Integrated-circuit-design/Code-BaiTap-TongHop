@@ -1,1 +1,73 @@
+#include <stdio.h>
+
+#define MAXN 6
+typedef long long ll;
+
+typedef struct {
+    ll a[MAXN];
+    ll b[MAXN];
+    int mask;
+    int turn;
+} State;
+
+ll max(ll a, ll b) { return a > b ? a : b; }
+ll min(ll a, ll b) { return a < b ? a : b; }
+
+ll total(ll arr[], int n) {
+    ll res = 0;
+    for (int i = 0; i < n; ++i) res += arr[i];
+    return res;
+}
+
+ll best_score(State s, int n) {
+    int canMove = 0;
+    ll res;
+
+    if (s.turn) res = -1e18;
+    else res = 1e18;
+
+    for (int i = 0; i < n; ++i) {
+        if ((s.mask >> i) & 1) {
+            if (s.a[i] > 0 && s.b[i] > 0) {
+                canMove = 1;
+                State next = s;
+                next.a[i]--;
+                next.b[i] = 0;
+                if (next.a[i] == 0 || next.b[i] == 0)
+                    next.mask &= ~(1 << i);
+                next.turn ^= 1;
+
+                ll subres = best_score(next, n);
+                if (s.turn) res = max(res, subres);
+                else res = min(res, subres);
+            }
+        }
+    }
+
+    if (!canMove) return total(s.a, n) - total(s.b, n);
+    return res;
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        State start;
+        start.mask = 0;
+        start.turn = 1;
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%lld", &start.a[i]);
+        }
+        for (int i = 0; i < n; ++i) {
+            scanf("%lld", &start.b[i]);
+            if (start.a[i] > 0 && start.b[i] > 0)
+                start.mask |= (1 << i);
+        }
+
+        printf("%lld\n", best_score(start, n));
+    }
+    return 0;
+}
 

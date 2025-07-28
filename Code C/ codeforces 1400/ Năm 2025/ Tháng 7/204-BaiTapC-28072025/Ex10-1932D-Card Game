@@ -1,1 +1,89 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 32
+
+typedef struct {
+    int a, b;
+} Pair;
+
+char cards[MAX][3];
+char trump;
+int rank_value[256];
+Pair valid_pairs[MAX * MAX];
+int total_pairs;
+int n;
+
+void init_rank() {
+    char *ranks = "23456789";
+    for (int i = 0; i < 8; ++i)
+        rank_value[ranks[i]] = i;
+}
+
+int can_beat(int i, int j) {
+    char *A = cards[i], *B = cards[j];
+    if (A[1] == B[1])
+        return rank_value[B[0]] > rank_value[A[0]];
+    return B[1] == trump && A[1] != trump;
+}
+
+int is_valid_set(Pair *set) {
+    int used[MAX] = {0};
+    for (int i = 0; i < n; ++i) {
+        if (used[set[i].a] || used[set[i].b]) return 0;
+        used[set[i].a] = used[set[i].b] = 1;
+    }
+    return 1;
+}
+
+void print_set(Pair *set) {
+    for (int i = 0; i < n; ++i)
+        printf("%s %s\n", cards[set[i].a], cards[set[i].b]);
+}
+
+int main() {
+    int t;
+    init_rank();
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %c", &n, &trump);
+        for (int i = 0; i < 2 * n; ++i)
+            scanf("%s", cards[i]);
+
+        total_pairs = 0;
+        for (int i = 0; i < 2 * n; ++i) {
+            for (int j = 0; j < 2 * n; ++j) {
+                if (i != j && can_beat(i, j)) {
+                    valid_pairs[total_pairs++] = (Pair){i, j};
+                }
+            }
+        }
+
+        int found = 0;
+        int comb[MAX];
+        for (int i = 0; i < n; ++i) comb[i] = i;
+
+        int limit = 1 << total_pairs;
+        for (int mask = 0; mask < limit; ++mask) {
+            if (__builtin_popcount(mask) != n) continue;
+
+            Pair temp[MAX];
+            int idx = 0;
+            for (int k = 0; k < total_pairs; ++k) {
+                if ((mask >> k) & 1) {
+                    temp[idx++] = valid_pairs[k];
+                }
+            }
+            if (is_valid_set(temp)) {
+                print_set(temp);
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found)
+            puts("IMPOSSIBLE");
+    }
+    return 0;
+}
 

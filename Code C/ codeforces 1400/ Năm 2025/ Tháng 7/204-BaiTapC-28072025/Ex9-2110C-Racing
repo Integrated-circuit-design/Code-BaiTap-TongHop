@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAX 200005
+
+int T, N;
+int delta[MAX];
+int low[MAX], high[MAX];
+
+int main() {
+    scanf("%d", &T);
+    while (T--) {
+        scanf("%d", &N);
+
+        for (int i = 0; i < N; i++)
+            scanf("%d", &delta[i]);
+
+        for (int i = 0; i < N; i++)
+            scanf("%d %d", &low[i], &high[i]);
+
+        int current_height = 0;
+        int valid = 1;
+
+        for (int i = 0; i < N; i++) {
+            int next_height;
+
+            if (delta[i] == -1) {
+                if (current_height >= low[i] && current_height <= high[i]) {
+                    delta[i] = 0;
+                    next_height = current_height;
+                } else if (current_height + 1 >= low[i] && current_height + 1 <= high[i]) {
+                    delta[i] = 1;
+                    next_height = current_height + 1;
+                } else {
+                    valid = 0;
+                    break;
+                }
+            } else {
+                next_height = current_height + delta[i];
+                if (next_height < low[i] || next_height > high[i]) {
+                    valid = 0;
+                    break;
+                }
+            }
+
+            current_height = next_height;
+        }
+
+        if (valid) {
+            for (int i = 0; i < N; i++)
+                printf("%d ", delta[i]);
+            printf("\n");
+        } else {
+            printf("-1\n");
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,69 @@
+#include <stdio.h>
+
+int countBits(unsigned int m) {
+    int total = 0;
+    while (m) {
+        if (m & 1) total++;
+        m >>= 1;
+    }
+    return total;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        unsigned int n, m;
+        scanf("%u%u", &n, &m);
+
+        if (n < m) {
+            puts("-1");
+            continue;
+        }
+
+        int bitsNeeded = countBits(m);
+        if (bitsNeeded > n) {
+            puts("-1");
+            continue;
+        }
+
+        int result = 0;
+        int remaining = n;
+        int used[64] = {0};
+
+        for (int i = 0; i < 32; ++i) {
+            if ((n >> i) & 1) {
+                used[i]++;
+            }
+        }
+
+        for (int i = 0; i < 32; ++i) {
+            if ((m >> i) & 1) {
+                if (used[i] > 0) {
+                    used[i]--;
+                } else {
+                    int k = i + 1;
+                    while (k < 32 && used[k] == 0) k++;
+                    if (k == 32) {
+                        result = -1;
+                        break;
+                    }
+                    while (k > i) {
+                        used[k]--;
+                        used[k - 1] += 2;
+                        result++;
+                        k--;
+                    }
+                    used[i]--;
+                }
+            }
+            if (used[i] >= 2) {
+                used[i + 1] += used[i] / 2;
+            }
+        }
+
+        printf("%d\n", result);
+    }
+    return 0;
+}
 

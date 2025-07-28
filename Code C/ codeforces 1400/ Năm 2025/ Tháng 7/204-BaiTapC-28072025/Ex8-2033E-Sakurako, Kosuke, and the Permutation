@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int count_operations(int* p, int n) {
+    int* visited = (int*)calloc(n, sizeof(int));
+    int ops = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            int len = 0;
+            int x = i;
+
+            while (!visited[x]) {
+                visited[x] = 1;
+                x = p[x] - 1;
+                len++;
+            }
+
+            if (len > 2)
+                ops += len / 2;
+        }
+    }
+
+    free(visited);
+    return ops;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int* p = (int*)malloc(n * sizeof(int));
+        for (int i = 0; i < n; i++)
+            scanf("%d", &p[i]);
+
+        int result = count_operations(p, n);
+        printf("%d\n", result);
+
+        free(p);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,74 @@
+#include <stdio.h>
+
+#define MAXN 105
+#define MAXM 200005
+
+int a[MAXN][MAXM];
+int n, m;
+
+int is_sorted(int row[]) {
+    for (int i = 1; i < m; i++) {
+        if (row[i] < row[i - 1])
+            return 0;
+    }
+    return 1;
+}
+
+void swap_columns(int col1, int col2) {
+    for (int i = 0; i < n; i++) {
+        int tmp = a[i][col1];
+        a[i][col1] = a[i][col2];
+        a[i][col2] = tmp;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d %d", &n, &m);
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                scanf("%d", &a[i][j]);
+
+        int col1 = -1, col2 = -1;
+
+        for (int i = 0; i < n && col1 == -1; i++) {
+            for (int j = 1; j < m; j++) {
+                if (a[i][j] < a[i][j - 1]) {
+                    for (int x = 0; x < m; x++) {
+                        for (int y = x; y < m; y++) {
+                            swap_columns(x, y);
+                            int valid = 1;
+                            for (int k = 0; k < n; k++) {
+                                if (!is_sorted(a[k])) {
+                                    valid = 0;
+                                    break;
+                                }
+                            }
+                            swap_columns(x, y);
+                            if (valid) {
+                                col1 = x;
+                                col2 = y;
+                                break;
+                            }
+                        }
+                        if (col1 != -1) break;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (col1 == -1) {
+            printf("1 1\n");
+        } else {
+            printf("%d %d\n", col1 + 1, col2 + 1);
+        }
+    }
+
+    return 0;
+}
 

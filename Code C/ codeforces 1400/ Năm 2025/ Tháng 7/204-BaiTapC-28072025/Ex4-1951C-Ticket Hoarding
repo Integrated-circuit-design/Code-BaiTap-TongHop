@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+#define MAXN 300005
+
+int a[MAXN], index[MAXN], buy[MAXN];
+
+int cmp(const void *x, const void *y) {
+    int i = *(int*)x;
+    int j = *(int*)y;
+    return a[i] - a[j];
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m, k;
+        scanf("%d%d%d", &n, &m, &k);
+        
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &a[i]);
+            index[i] = i;
+            buy[i] = 0;
+        }
+
+        qsort(index, n, sizeof(int), cmp);
+
+        for (int i = 0; i < n && k > 0; ++i) {
+            int id = index[i];
+            int take = k < m ? k : m;
+            buy[id] = take;
+            k -= take;
+        }
+
+        ll total = 0, inc = 0;
+        for (int i = 0; i < n; ++i) {
+            if (buy[i] > 0) {
+                total += (ll)(a[i] + inc) * buy[i];
+                inc += buy[i];
+            }
+        }
+
+        printf("%lld\n", total);
+    }
+    return 0;
+}
 

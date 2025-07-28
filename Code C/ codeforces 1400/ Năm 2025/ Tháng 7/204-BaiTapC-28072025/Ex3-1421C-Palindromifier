@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+int is_palindrome_ptr(char *s) {
+    char *left = s;
+    char *right = s + strlen(s) - 1;
+
+    while (left < right) {
+        if (*left != *right)
+            return 0;
+        left++;
+        right--;
+    }
+    return 1;
+}
+
+int main() {
+    char s[MAXN];
+    scanf("%s", s);
+
+    if (is_palindrome_ptr(s)) {
+        printf("0\n");
+    } else {
+        int len = strlen(s);
+        printf("2\n");
+        printf("L %d\n", len - 1);
+        printf("R %d\n", len);
+    }
+
+    return 0;
+}
 

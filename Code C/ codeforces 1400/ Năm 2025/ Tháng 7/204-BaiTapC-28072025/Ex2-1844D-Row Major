@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+#define N 1000005
+
+char letters[] = "xyzw";
+char output[N];
+
+void build(int len) {
+    for (int p = 0; p < len; ++p)
+        output[p] = letters[p & 3];
+    output[len] = 0;
+}
+
+int main() {
+    int cases;
+    scanf("%d", &cases);
+    while (cases--) {
+        int size;
+        scanf("%d", &size);
+        build(size);
+        puts(output);
+    }
+    return 0;
+}
 

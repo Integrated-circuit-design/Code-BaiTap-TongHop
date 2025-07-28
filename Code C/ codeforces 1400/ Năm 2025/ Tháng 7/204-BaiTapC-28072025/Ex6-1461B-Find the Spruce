@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 505
+
+char grid[MAX][MAX];
+
+int is_spruce(int x, int y, int n, int m) {
+    int height = 0;
+    while (1) {
+        int row = x + height;
+        if (row >= n) break;
+        int left = y - height;
+        int right = y + height;
+        if (left < 0 || right >= m) break;
+        for (int j = left; j <= right; j++) {
+            if (grid[row][j] != '*') return height;
+        }
+        height++;
+    }
+    return height;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m, total = 0;
+        scanf("%d %d", &n, &m);
+        for (int i = 0; i < n; ++i) {
+            scanf("%s", grid[i]);
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] == '*') {
+                    total += is_spruce(i, j, n, m);
+                }
+            }
+        }
+        printf("%d\n", total);
+    }
+    return 0;
+}
 

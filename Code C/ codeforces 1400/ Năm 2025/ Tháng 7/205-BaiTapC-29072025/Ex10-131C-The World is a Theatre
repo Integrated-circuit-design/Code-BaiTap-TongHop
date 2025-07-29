@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+#define MAX 61
+
+ll factorial[MAX];
+
+void build_factorial() {
+    factorial[0] = 1;
+    for (int i = 1; i < MAX; i++)
+        factorial[i] = factorial[i - 1] * i;
+}
+
+ll to_hop(int n, int k) {
+    if (k < 0 || k > n) return 0;
+    return factorial[n] / (factorial[k] * factorial[n - k]);
+}
+
+int main() {
+    int n, m, t;
+    scanf("%d%d%d", &n, &m, &t);
+
+    build_factorial();
+
+    ll tong = 0;
+
+    for (int boy = 4; boy <= n; boy++) {
+        int girl = t - boy;
+        if (girl >= 1 && girl <= m) {
+            tong += to_hop(n, boy) * to_hop(m, girl);
+        }
+    }
+
+    printf("%I64d\n", tong);
+    return 0;
+}
 

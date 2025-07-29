@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100005
+
+typedef struct {
+    int l, r, c;
+} Interval;
+
+int l[MAX], r[MAX], c[MAX];
+Interval intervals[MAX];
+int len[MAX];
+
+int cmp_len_desc(const void *a, const void *b) {
+    return *(int*)b - *(int*)a;
+}
+
+int cmp_interval_by_length(const void *a, const void *b) {
+    Interval *x = (Interval*)a;
+    Interval *y = (Interval*)b;
+    int len_x = x->r - x->l;
+    int len_y = y->r - y->l;
+    return len_x - len_y;
+}
+
+int cmp_cost_asc(const void *a, const void *b) {
+    return *(int*)a - *(int*)b;
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) scanf("%d", &l[i]);
+        for (int i = 0; i < n; i++) scanf("%d", &r[i]);
+        for (int i = 0; i < n; i++) scanf("%d", &c[i]);
+
+        for (int i = 0; i < n; i++) {
+            len[i] = r[i] - l[i];
+        }
+
+        qsort(len, n, sizeof(int), cmp_len_desc);
+        qsort(c, n, sizeof(int), cmp_cost_asc);
+
+        long long total = 0;
+        for (int i = 0; i < n; i++) {
+            total += 1LL * len[i] * c[i];
+        }
+
+        printf("%lld\n", total);
+    }
+
+    return 0;
+}
 

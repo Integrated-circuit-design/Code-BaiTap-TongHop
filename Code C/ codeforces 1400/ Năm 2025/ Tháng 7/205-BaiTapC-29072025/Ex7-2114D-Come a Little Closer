@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+#define MAXN 200005
+
+ll x[MAXN], y[MAXN];
+
+int cmp_ll(const void *a, const void *b) {
+    ll va = *(ll*)a, vb = *(ll*)b;
+    return (va > vb) - (va < vb);
+}
+
+ll get_area(ll *x_arr, ll *y_arr, int n, int skip_x, int skip_y) {
+    ll min_x = 1e18, max_x = -1, min_y = 1e18, max_y = -1;
+    for (int i = 0; i < n; i++) {
+        if (i != skip_x) {
+            if (x_arr[i] < min_x) min_x = x_arr[i];
+            if (x_arr[i] > max_x) max_x = x_arr[i];
+        }
+        if (i != skip_y) {
+            if (y_arr[i] < min_y) min_y = y_arr[i];
+            if (y_arr[i] > max_y) max_y = y_arr[i];
+        }
+    }
+    return (max_x - min_x + 1) * (max_y - min_y + 1);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%lld %lld", &x[i], &y[i]);
+        }
+
+        static ll xs[MAXN], ys[MAXN];
+        for (int i = 0; i < n; i++) {
+            xs[i] = x[i];
+            ys[i] = y[i];
+        }
+
+        qsort(xs, n, sizeof(ll), cmp_ll);
+        qsort(ys, n, sizeof(ll), cmp_ll);
+
+        ll res = (xs[n-1] - xs[0] + 1) * (ys[n-1] - ys[0] + 1);
+
+        for (int i = 0; i < n; i++) {
+            if (x[i] == xs[0] || x[i] == xs[n-1] || y[i] == ys[0] || y[i] == ys[n-1]) {
+                ll temp = get_area(x, y, n, i, i);
+                if (temp < res) res = temp;
+            }
+        }
+
+        printf("%lld\n", res);
+    }
+    return 0;
+}
 

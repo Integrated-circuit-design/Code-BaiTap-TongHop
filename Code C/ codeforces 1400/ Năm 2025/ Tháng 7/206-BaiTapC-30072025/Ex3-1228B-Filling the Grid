@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+#define MAX 1005
+
+int h, w;
+int r[MAX], c[MAX];
+
+long long modPow(long long base, long long exp) {
+    long long res = 1;
+    while (exp > 0) {
+        if (exp & 1) res = (res * base) % MOD;
+        base = (base * base) % MOD;
+        exp >>= 1;
+    }
+    return res;
+}
+
+int main() {
+    scanf("%d %d", &h, &w);
+    for (int i = 0; i < h; i++) scanf("%d", &r[i]);
+    for (int j = 0; j < w; j++) scanf("%d", &c[j]);
+
+    int free_cells = 0;
+
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w; j++) {
+            int mustFull = (j < r[i]) && (i < c[j]);
+            int mustEmpty = (j == r[i]) || (i == c[j]);
+
+            if (mustFull && mustEmpty) {
+                printf("0\n");
+                return 0;
+            }
+
+            if (!mustFull && !mustEmpty) {
+                free_cells++;
+            }
+        }
+    }
+
+    printf("%lld\n", modPow(2, free_cells));
+    return 0;
+}
 

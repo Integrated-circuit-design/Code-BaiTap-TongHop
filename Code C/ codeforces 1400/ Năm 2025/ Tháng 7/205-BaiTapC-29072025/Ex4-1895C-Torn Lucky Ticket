@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 6
+#define MAX_SUM 46
+
+typedef struct {
+    int len;
+    int sum;
+} Ticket;
+
+int freq[MAX_LEN][MAX_SUM];
+
+int calc_sum(char *s) {
+    int res = 0;
+    for (int i = 0; s[i]; i++) {
+        res += s[i] - '0';
+    }
+    return res;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    Ticket tickets[n];
+    char s[6];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", s);
+        tickets[i].len = strlen(s);
+        tickets[i].sum = calc_sum(s);
+        freq[tickets[i].len][tickets[i].sum]++;
+    }
+
+    long long total = 0;
+
+    for (int i = 0; i < n; i++) {
+        int len1 = tickets[i].len;
+        int sum1 = tickets[i].sum;
+
+        for (int len2 = 1; len2 <= 5; len2++) {
+            int total_len = len1 + len2;
+            if (total_len % 2 != 0) continue;
+
+            int half = total_len / 2;
+            int needed_sum = 2 * half - sum1;
+
+            if (needed_sum >= 0 && needed_sum < MAX_SUM) {
+                total += freq[len2][needed_sum];
+            }
+        }
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

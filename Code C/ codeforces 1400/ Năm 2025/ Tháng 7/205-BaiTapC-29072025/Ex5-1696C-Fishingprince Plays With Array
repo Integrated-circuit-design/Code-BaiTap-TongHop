@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+#define MAXN 100005
+typedef long long ll;
+
+ll a[MAXN], b[MAXN];
+ll a_val[MAXN], a_cnt[MAXN], b_val[MAXN], b_cnt[MAXN];
+int lenA, lenB;
+
+void rut_gon(ll *in, int n, int m, ll *val, ll *cnt, int *len) {
+    *len = 0;
+    for (int i = 0; i < n; i++) {
+        ll x = in[i], num = 1;
+        while (x % m == 0) {
+            x /= m;
+            num *= m;
+        }
+        if (*len > 0 && val[*len - 1] == x) {
+            cnt[*len - 1] += num;
+        } else {
+            val[*len] = x;
+            cnt[*len] = num;
+            (*len)++;
+        }
+    }
+}
+
+int so_sanh(ll *v1, ll *c1, int n1, ll *v2, ll *c2, int n2) {
+    if (n1 != n2) return 0;
+    for (int i = 0; i < n1; i++) {
+        if (v1[i] != v2[i] || c1[i] != c2[i]) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k;
+        scanf("%d %d", &n, &m);
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        scanf("%d", &k);
+        for (int i = 0; i < k; i++) scanf("%lld", &b[i]);
+
+        rut_gon(a, n, m, a_val, a_cnt, &lenA);
+        rut_gon(b, k, m, b_val, b_cnt, &lenB);
+
+        if (so_sanh(a_val, a_cnt, lenA, b_val, b_cnt, lenB)) {
+            printf("Yes\n");
+        } else {
+            printf("No\n");
+        }
+    }
+
+    return 0;
+}
 

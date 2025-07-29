@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 200005
+
+int prices[MAX];
+long long prefixSum[MAX];
+
+int cmp(const void *a, const void *b) {
+    int x = *(int*)a, y = *(int*)b;
+    return x - y;
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, p, k;
+        scanf("%d %d %d", &n, &p, &k);
+
+        for (int i = 0; i < n; i++)
+            scanf("%d", &prices[i]);
+
+        qsort(prices, n, sizeof(int), cmp);
+
+        prefixSum[0] = 0;
+        for (int i = 1; i <= n; i++)
+            prefixSum[i] = prefixSum[i - 1] + prices[i - 1];
+
+        int ans = 0;
+
+        for (int count = 1; count <= n; count++) {
+            long long cost;
+
+            if (count < k) {
+                cost = prefixSum[count];
+            } else {
+                int groups = count / k;
+                int remainder = count % k;
+                cost = prefixSum[remainder] + (prefixSum[count] - prefixSum[count - groups]);
+            }
+
+            if (cost <= p)
+                ans = count;
+        }
+
+        printf("%d\n", ans);
+    }
+
+    return 0;
+}
 

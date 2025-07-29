@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int a[MAXN], b[MAXN], position[MAXN], sent[MAXN];
+
+long long process_one_test(int n, int m) {
+    for (int i = 0; i < n; ++i) {
+        position[a[i]] = i;
+        sent[a[i]] = 0;
+    }
+
+    long long time = 0;
+    int processed = 0;
+
+    for (int i = 0; i < m; ++i) {
+        int gift = b[i];
+        int pos = position[gift];
+
+        if (sent[gift]) {
+            time += 1;
+        } else {
+            int above = pos - processed;
+            time += 2LL * above + 1;
+            processed++;
+            sent[gift] = 1;
+        }
+    }
+
+    return time;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 0; i < n; ++i)
+            scanf("%d", &a[i]);
+
+        for (int i = 0; i < m; ++i)
+            scanf("%d", &b[i]);
+
+        long long result = process_one_test(n, m);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

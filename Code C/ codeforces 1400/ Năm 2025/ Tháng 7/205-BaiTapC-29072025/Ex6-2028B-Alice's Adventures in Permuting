@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int is_permutation(ll start, ll step, ll len) {
+    ll max_val = start + (len - 1) * step;
+    return start >= 0 && max_val < len;
+}
+
+ll count_out_of_bound(ll s, ll d, ll l) {
+    if (s >= l) return l;
+    ll i = (l - s + d - 1) / d;
+    if (i >= l) return 0;
+    return l - i;
+}
+
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    while (tests--) {
+        ll size, step, start;
+        scanf("%lld %lld %lld", &size, &step, &start);
+
+        if (step == 0) {
+            if (start >= 0 && start < size) {
+                if (size == 1)
+                    puts("0");
+                else
+                    puts("-1");
+            } else {
+                puts("-1");
+            }
+            continue;
+        }
+
+        if (is_permutation(start, step, size)) {
+            puts("0");
+            continue;
+        }
+
+        ll steps_needed = count_out_of_bound(start, step, size);
+        printf("%lld\n", steps_needed);
+    }
+    return 0;
+}
 

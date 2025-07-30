@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int p[MAXN], s[MAXN];
+
+int gcd(int a, int b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
+
+int check(int n) {
+    for (int i = 0; i < n - 1; i++) {
+        if (p[i + 1] % p[i] != 0) return 0;
+    }
+    for (int i = n - 1; i > 0; i--) {
+        if (s[i - 1] % s[i] != 0) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) scanf("%d", &p[i]);
+        for (int i = 0; i < n; i++) scanf("%d", &s[i]);
+
+        if (check(n)) printf("YES\n");
+        else printf("NO\n");
+    }
+
+    return 0;
+}
 

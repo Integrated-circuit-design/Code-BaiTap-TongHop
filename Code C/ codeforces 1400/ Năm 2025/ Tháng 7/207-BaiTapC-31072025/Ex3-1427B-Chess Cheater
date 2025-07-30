@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int length;
+} Gap;
+
+int cmp(const void *a, const void *b) {
+    Gap *x = (Gap *)a;
+    Gap *y = (Gap *)b;
+    return x->length - y->length;
+}
+
+int main() {
+    int T; scanf("%d", &T);
+
+    while (T--) {
+        int n, k;
+        char s[MAXN];
+        scanf("%d %d %s", &n, &k, s);
+
+        int i, score = 0, totalW = 0;
+        int prevW = -1;
+        Gap gaps[MAXN];
+        int gapCount = 0;
+
+        for (i = 0; i < n; i++) {
+            if (s[i] == 'W') {
+                totalW++;
+                if (prevW == i - 1) score += 2;
+                else score += 1;
+
+                if (prevW != -1 && i - prevW > 1) {
+                    gaps[gapCount].length = i - prevW - 1;
+                    gapCount++;
+                }
+                prevW = i;
+            }
+        }
+
+        if (totalW == 0) {
+            if (k == 0) {
+                printf("0\n");
+            } else {
+                int maxWins = k > n ? n : k;
+                printf("%d\n", maxWins * 2 - 1);
+            }
+            continue;
+        }
+
+        qsort(gaps, gapCount, sizeof(Gap), cmp);
+
+        for (i = 0; i < gapCount && k >= gaps[i].length; i++) {
+            k -= gaps[i].length;
+            score += gaps[i].length * 2 + 1;
+        }
+
+        int leftL = prevW == -1 ? n : 0;
+        for (i = 0; i < n && s[i] == 'L'; i++) leftL++;
+
+        int rightL = 0;
+        for (i = n - 1; i >= 0 && s[i] == 'L'; i--) rightL++;
+
+        int fill = (k < leftL) ? k : leftL;
+        score += fill * 2;
+        k -= fill;
+
+        fill = (k < rightL) ? k : rightL;
+        score += fill * 2;
+
+        printf("%d\n", score);
+    }
+
+    return 0;
+}
 

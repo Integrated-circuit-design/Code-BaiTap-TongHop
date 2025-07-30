@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100005
+
+int cmp_desc(const void* a, const void* b) {
+    int x = *(int*)a;
+    int y = *(int*)b;
+    return y - x;
+}
+
+int main() {
+    int n, i, a[MAX];
+    long long total = 0;
+    int min_odd = 100000;
+
+    scanf("%d", &n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    qsort(a, n, sizeof(int), cmp_desc);
+
+    for (i = 0; i < n; i++) {
+        if (a[i] > 0) {
+            total += a[i];
+        }
+        if (a[i] % 2 != 0) {
+            int abs_val = abs(a[i]);
+            if (abs_val < min_odd)
+                min_odd = abs_val;
+        }
+    }
+
+    if (total % 2 == 0)
+        total -= min_odd;
+
+    printf("%lld\n", total);
+    return 0;
+}
 

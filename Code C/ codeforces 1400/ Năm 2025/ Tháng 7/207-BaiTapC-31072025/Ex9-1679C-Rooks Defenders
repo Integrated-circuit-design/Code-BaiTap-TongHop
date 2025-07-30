@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int row[MAXN] = {0};
+int col[MAXN] = {0};
+
+char rook[100000 + 5][100000 + 5];
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    while (q--) {
+        int t;
+        scanf("%d", &t);
+        if (t == 1) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            row[x]++;
+            col[y]++;
+        } else if (t == 2) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            row[x]--;
+            col[y]--;
+        } else if (t == 3) {
+            int x1, y1, x2, y2;
+            scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+            int ok = 0;
+
+            for (int i = x1; i <= x2; ++i) {
+                if (row[i] > 0) {
+                    ok = 1;
+                    break;
+                }
+            }
+
+            if (!ok) {
+                for (int j = y1; j <= y2; ++j) {
+                    if (col[j] > 0) {
+                        ok = 1;
+                        break;
+                    }
+                }
+            }
+
+            if (ok)
+                printf("Yes\n");
+            else
+                printf("No\n");
+        }
+    }
+
+    return 0;
+}
 

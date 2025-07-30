@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int freq[MAXN], a[MAXN], result[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i <= n; ++i) {
+            freq[i] = 0;
+            result[i] = 0;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &a[i]);
+            if (a[i] <= n) freq[a[i]]++;
+        }
+
+        int mex = 0;
+        long long total_removed = 0;
+
+        for (int k = 0; k <= n; ++k) {
+            if (k > 0 && freq[k - 1] == 0) break;
+
+            result[total_removed]++;
+            total_removed += freq[k];
+        }
+
+        int sum = 0;
+        for (int i = 0; i <= n; ++i) {
+            sum += result[i];
+            printf("%d ", sum);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

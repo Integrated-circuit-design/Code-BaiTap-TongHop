@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAX_VAL 5001
+
+int freq[MAX_VAL];
+
+int main() {
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < MAX_VAL; i++) freq[i] = 0;
+
+    for (int i = 0; i < n; i++) {
+        int x; scanf("%d", &x);
+        freq[x]++;
+    }
+
+    int ans = n;
+    int sum = 0, low = 1;
+
+    for (int high = 1; high < MAX_VAL; high++) {
+        sum += freq[high];
+
+        while (high > 2 * low) {
+            sum -= freq[low];
+            low++;
+        }
+
+        if (n - sum < ans) ans = n - sum;
+    }
+
+    printf("%d\n", ans);
+
+    return 0;
+}
 

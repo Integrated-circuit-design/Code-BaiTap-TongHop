@@ -1,1 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+#define MAXID 1000005
+
+int events[MAXN];
+int day_lengths[MAXN];
+
+int present[MAXID];
+int appeared[MAXID];
+int appeared_list[MAXN];
+int appear_count;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &events[i]);
+    }
+
+    int total_days = 0;
+    int idx = 0;
+
+    while (idx < n) {
+        appear_count = 0;
+        int inside_count = 0;
+        int length = 0;
+        int valid_day = 1;
+
+        while (idx < n) {
+            int x = events[idx];
+            int id = abs(x);
+
+            length++;
+
+            if (x > 0) {
+                if (present[id] == 1 || appeared[id] == 1) {
+                    valid_day = 0;
+                    break;
+                }
+                present[id] = 1;
+                appeared[id] = 1;
+                appeared_list[appear_count++] = id;
+                inside_count++;
+            } else {
+                if (present[id] == 0) {
+                    valid_day = 0;
+                    break;
+                }
+                present[id] = 0;
+                inside_count--;
+            }
+
+            idx++;
+
+            if (inside_count == 0) {
+                break;
+            }
+        }
+
+        if (inside_count != 0) valid_day = 0;
+
+        if (!valid_day) {
+            printf("-1\n");
+            return 0;
+        }
+
+        for (int i = 0; i < appear_count; i++) {
+            int id = appeared_list[i];
+            appeared[id] = 0;
+        }
+
+        day_lengths[total_days++] = length;
+    }
+
+    printf("%d\n", total_days);
+    for (int i = 0; i < total_days; i++) {
+        printf("%d%c", day_lengths[i], (i == total_days - 1) ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

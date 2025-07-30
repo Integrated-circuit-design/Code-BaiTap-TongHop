@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int a[MAXN];
+
+typedef struct {
+    int data[MAXN];
+    int front, back;
+} Deque;
+
+void init(Deque *q) {
+    q->front = 0;
+    q->back = -1;
+}
+
+int empty(Deque *q) {
+    return q->front > q->back;
+}
+
+void push_back(Deque *q, int x) {
+    q->back++;
+    q->data[q->back] = x;
+}
+
+void pop_back(Deque *q) {
+    q->back--;
+}
+
+void pop_front(Deque *q) {
+    q->front++;
+}
+
+int front(Deque *q) {
+    return q->data[q->front];
+}
+
+int back(Deque *q) {
+    return q->data[q->back];
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    for(int i=0; i<n; i++) scanf("%d", &a[i]);
+
+    Deque maxQ, minQ;
+    init(&maxQ);
+    init(&minQ);
+
+    int left = 0;
+    int ans = 1;
+
+    for(int right = 0; right < n; right++) {
+        while(!empty(&maxQ) && a[back(&maxQ)] <= a[right]) pop_back(&maxQ);
+        push_back(&maxQ, right);
+
+        while(!empty(&minQ) && a[back(&minQ)] >= a[right]) pop_back(&minQ);
+        push_back(&minQ, right);
+
+        while(a[front(&maxQ)] - a[front(&minQ)] > 1) {
+            if(front(&maxQ) == left) pop_front(&maxQ);
+            if(front(&minQ) == left) pop_front(&minQ);
+            left++;
+        }
+
+        int length = right - left + 1;
+        if(length > ans) ans = length;
+    }
+
+    printf("%d\n", ans);
+
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+int n, m;
+char names[105][105];
+char column[105];
+
+int is_unique(char *col, int len, char ch) {
+    for (int i = 0; i < len; ++i)
+        if (col[i] == ch) return 0;
+    return 1;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; ++i)
+        scanf("%s", names[i]);
+
+    long long total = 1;
+
+    for (int j = 0; j < m; ++j) {
+        int len = 0;
+
+        for (int i = 0; i < n; ++i) {
+            char c = names[i][j];
+            if (is_unique(column, len, c)) {
+                column[len++] = c;
+            }
+        }
+
+        total = (total * len) % MOD;
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

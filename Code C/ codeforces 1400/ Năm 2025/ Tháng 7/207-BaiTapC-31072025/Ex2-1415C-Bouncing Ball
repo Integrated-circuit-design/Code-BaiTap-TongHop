@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100005
+
+char level[MAX];
+int platformsNeeded[MAX];
+
+int main() {
+    int T; 
+    scanf("%d", &T);
+    while (T--) {
+        int cells, start, step;
+        scanf("%d %d %d", &cells, &start, &step);
+        scanf("%s", level + 1);
+
+        int timeAdd, timeRemove;
+        scanf("%d %d", &timeAdd, &timeRemove);
+
+        for (int i = cells; i >= 1; i--) {
+            int add_here = (level[i] == '0') ? 1 : 0;
+            if (i + step > cells) {
+                platformsNeeded[i] = add_here;
+            } else {
+                platformsNeeded[i] = add_here + platformsNeeded[i + step];
+            }
+        }
+
+        int min_time = 1000000000;
+
+        for (int removed = 0; removed <= cells - start; removed++) {
+            int pos = start + removed;
+            int cost = removed * timeRemove + platformsNeeded[pos] * timeAdd;
+            if (cost < min_time) {
+                min_time = cost;
+            }
+        }
+
+        printf("%d\n", min_time);
+    }
+    return 0;
+}
 

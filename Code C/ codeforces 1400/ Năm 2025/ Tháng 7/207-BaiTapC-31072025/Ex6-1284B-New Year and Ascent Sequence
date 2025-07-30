@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+
+typedef struct {
+    int min_val;
+    int max_val;
+} Sequence;
+
+Sequence bad[100005];
+int bad_count = 0;
+
+int compare_min(const void *a, const void *b) {
+    Sequence *s1 = (Sequence *)a;
+    Sequence *s2 = (Sequence *)b;
+    return s1->min_val - s2->min_val;
+}
+
+int upper_bound(int x) {
+    int l = 0, r = bad_count;
+    while (l < r) {
+        int m = (l + r) / 2;
+        if (bad[m].min_val <= x)
+            l = m + 1;
+        else
+            r = m;
+    }
+    return l;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int total_good = 0;
+
+    for (int i = 0; i < n; ++i) {
+        int len;
+        scanf("%d", &len);
+        int a[len];
+        for (int j = 0; j < len; ++j)
+            scanf("%d", &a[j]);
+
+        int good = 0;
+        for (int j = 1; j < len; ++j)
+            if (a[j - 1] < a[j])
+                good = 1;
+
+        if (good) {
+            total_good++;
+        } else {
+            int min = a[0], max = a[0];
+            for (int j = 1; j < len; ++j) {
+                if (a[j] < min) min = a[j];
+                if (a[j] > max) max = a[j];
+            }
+            bad[bad_count].min_val = min;
+            bad[bad_count].max_val = max;
+            bad_count++;
+        }
+    }
+
+    qsort(bad, bad_count, sizeof(Sequence), compare_min);
+
+    ll total_pairs = (ll)n * n;
+    ll bad_bad_no_ascent = 0;
+
+    for (int i = 0; i < bad_count; ++i) {
+        int pos = upper_bound(bad[i].max_val);
+        bad_bad_no_ascent += (bad_count - pos);
+    }
+
+    printf("%lld\n", total_pairs - bad_bad_no_ascent);
+    return 0;
+}
 

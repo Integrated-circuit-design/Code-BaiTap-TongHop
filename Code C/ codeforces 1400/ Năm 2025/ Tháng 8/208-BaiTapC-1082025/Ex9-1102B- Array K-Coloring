@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 5005
+
+int a[MAXN], color[MAXN], freq[MAXN];
+int pos[MAXN][MAXN];
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &a[i]);
+        int val = a[i];
+        pos[val][freq[val]++] = i;
+        if (freq[val] > k) {
+            printf("NO\n");
+            return 0;
+        }
+    }
+
+    int color_id = 1;
+
+    for (int val = 1; val < MAXN; ++val) {
+        for (int i = 0; i < freq[val]; ++i) {
+            int idx = pos[val][i];
+            color[idx] = color_id++;
+            if (color_id > k) color_id = 1;
+        }
+    }
+
+    printf("YES\n");
+    for (int i = 0; i < n; ++i)
+        printf("%d ", color[i]);
+    printf("\n");
+
+    return 0;
+}
 

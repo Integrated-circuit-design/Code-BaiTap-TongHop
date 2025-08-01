@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdint.h>
+
+typedef unsigned long long ull;
+
+ull get_number(int x, int y, int n) {
+    ull val = 0;
+    for (int i = n - 1; i >= 0; i--) {
+        int bit = 1 << i;
+        int quad = 0;
+        if ((x & bit) == 0 && (y & bit) == 0) quad = 0;
+        else if ((x & bit) && (y & bit)) quad = 1;
+        else if ((x & bit) && (y & bit) == 0) quad = 2;
+        else quad = 3;
+        val = val * 4 + quad;
+    }
+    static int offset[4] = {0, 1, 2, 3};
+    return val + 1;
+}
+
+void get_position(ull d, int n, int *rx, int *ry) {
+    d--;
+    int x = 0, y = 0;
+    for (int i = 0; i < n; i++) {
+        int shift = 2 * (n - i - 1);
+        int quad = (d >> shift) & 3;
+        int bit = 1 << (n - i - 1);
+        if (quad == 1) {
+            x |= bit;
+            y |= bit;
+        } else if (quad == 2) {
+            x |= bit;
+        } else if (quad == 3) {
+            y |= bit;
+        }
+    }
+    *rx = x + 1;
+    *ry = y + 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+        int size = 1 << n;
+        while (q--) {
+            char op[3];
+            scanf("%s", op);
+            if (op[0] == '-' && op[1] == '>') {
+                int x, y;
+                scanf("%d %d", &x, &y);
+                printf("%llu\n", get_number(x - 1, y - 1, n));
+            } else {
+                ull d;
+                scanf("%llu", &d);
+                int x, y;
+                get_position(d, n, &x, &y);
+                printf("%d %d\n", x, y);
+            }
+        }
+    }
+    return 0;
+}
 

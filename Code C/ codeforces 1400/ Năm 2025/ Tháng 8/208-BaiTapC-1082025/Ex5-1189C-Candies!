@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+#define MAXN 100005
+#define MAXLEVEL 17
+
+int s[MAXN];
+int buffer1[MAXN];
+int buffer2[MAXN];
+
+int get_candies(int l, int r) {
+    int len = r - l + 1;
+    int candies = 0;
+
+    for (int i = 0; i < len; ++i)
+        buffer1[i] = s[l + i];
+
+    int* cur = buffer1;
+    int* nxt = buffer2;
+
+    while (len > 1) {
+        int new_len = 0;
+        for (int i = 0; i < len; i += 2) {
+            int sum = cur[i] + cur[i + 1];
+            if (sum >= 10)
+                candies++;
+            nxt[new_len++] = sum % 10;
+        }
+        int* tmp = cur;
+        cur = nxt;
+        nxt = tmp;
+        len = new_len;
+    }
+
+    return candies;
+}
+
+int main() {
+    int n, q;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; ++i)
+        scanf("%d", &s[i]);
+
+    scanf("%d", &q);
+
+    while (q--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        l--; r--;
+        int ans = get_candies(l, r);
+        printf("%d\n", ans);
+    }
+
+    return 0;
+}
 

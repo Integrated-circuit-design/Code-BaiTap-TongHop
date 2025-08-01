@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+#define HASH_SIZE 262144
+
+typedef struct {
+    int key;
+    int value;
+} Entry;
+
+Entry hash[HASH_SIZE];
+int hash_time[HASH_SIZE], current_time = 1;
+
+int a[MAXN];
+
+int get_hash(int x) {
+    return ((unsigned int)x) & (HASH_SIZE - 1);
+}
+
+int map_get(int key) {
+    int h = get_hash(key);
+    while (hash_time[h] == current_time && hash[h].key != key)
+        h = (h + 1) & (HASH_SIZE - 1);
+    return (hash_time[h] == current_time) ? hash[h].value : 0;
+}
+
+void map_add(int key, int delta) {
+    int h = get_hash(key);
+    while (hash_time[h] == current_time && hash[h].key != key)
+        h = (h + 1) & (HASH_SIZE - 1);
+    if (hash_time[h] != current_time) {
+        hash_time[h] = current_time;
+        hash[h].key = key;
+        hash[h].value = 0;
+    }
+    hash[h].value += delta;
+}
+
+long long count_beautiful_subarrays(int n) {
+    long long res = 0;
+    int left = 0;
+    for (int right = 0; right < n; ++right) {
+        while (map_get(a[right]) == 1) {
+            map_add(a[left], -1);
+            left++;
+        }
+        map_add(a[right], 1);
+        res += (right - left + 1);
+    }
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; ++i)
+            scanf("%d", &a[i]);
+        current_time++;
+        printf("%lld\n", count_beautiful_subarrays(n));
+    }
+    return 0;
+}
 

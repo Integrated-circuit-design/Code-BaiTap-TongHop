@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int64_t remaining_sum;
+    int sequence_id;
+    int position;
+} Entry;
+
+Entry entries[MAXN];
+int entries_count = 0;
+
+int a[MAXN], start[MAXN], length[MAXN];
+int64_t sum[200005];
+
+int cmp(const void* x, const void* y) {
+    int64_t diff = ((Entry*)x)->remaining_sum - ((Entry*)y)->remaining_sum;
+    if (diff < 0) return -1;
+    if (diff > 0) return 1;
+    return 0;
+}
+
+int main() {
+    int k, total = 0;
+    scanf("%d", &k);
+
+    for (int i = 1; i <= k; ++i) {
+        int n;
+        scanf("%d", &n);
+        start[i] = total;
+        length[i] = n;
+        int64_t s = 0;
+        for (int j = 0; j < n; ++j) {
+            scanf("%d", &a[total + j]);
+            s += a[total + j];
+        }
+        sum[i] = s;
+        total += n;
+    }
+
+    for (int i = 1; i <= k; ++i) {
+        for (int j = 0; j < length[i]; ++j) {
+            int idx = start[i] + j;
+            int64_t remaining = sum[i] - a[idx];
+            entries[entries_count++] = (Entry){remaining, i, j + 1};
+        }
+    }
+
+    qsort(entries, entries_count, sizeof(Entry), cmp);
+
+    for (int i = 1; i < entries_count; ++i) {
+        if (entries[i].remaining_sum == entries[i - 1].remaining_sum &&
+            entries[i].sequence_id != entries[i - 1].sequence_id) {
+            printf("YES\n");
+            printf("%d %d\n", entries[i - 1].sequence_id, entries[i - 1].position);
+            printf("%d %d\n", entries[i].sequence_id, entries[i].position);
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

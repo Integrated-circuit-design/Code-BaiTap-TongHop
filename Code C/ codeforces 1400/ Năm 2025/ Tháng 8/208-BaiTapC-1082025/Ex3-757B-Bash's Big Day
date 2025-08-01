@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+#define LIM 100005
+
+int count[LIM];
+
+int main() {
+    int total;
+    scanf("%d", &total);
+
+    for (int i = 0; i < total; ++i) {
+        int strength;
+        scanf("%d", &strength);
+        count[strength]++;
+    }
+
+    int bestGroup = 1;
+
+    for (int factor = 2; factor < LIM; ++factor) {
+        int groupSize = 0;
+        for (int multiple = factor; multiple < LIM; multiple += factor) {
+            groupSize += count[multiple];
+        }
+        if (groupSize > bestGroup)
+            bestGroup = groupSize;
+    }
+
+    printf("%d\n", bestGroup);
+    return 0;
+}
 

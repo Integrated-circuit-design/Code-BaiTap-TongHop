@@ -1,1 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int val;
+    int idx;
+} Item;
+
+int a[MAXN];
+Item b[MAXN], sorted_a[MAXN], sorted_b[MAXN];
+int res[MAXN];
+
+int cmp_asc(const void *x, const void *y) {
+    return ((Item*)x)->val - ((Item*)y)->val;
+}
+
+int cmp_desc(const void *x, const void *y) {
+    return ((Item*)y)->val - ((Item*)x)->val;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            sorted_a[i].val = a[i];
+            sorted_a[i].idx = i;
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i].val);
+            b[i].idx = i;
+            sorted_b[i] = b[i];
+        }
+
+        qsort(sorted_a, n, sizeof(Item), cmp_asc);
+        qsort(sorted_b, n, sizeof(Item), cmp_desc);
+
+        int beauty = 0;
+        for (int i = 0; i < n; i++) {
+            if (sorted_a[i].val > sorted_b[i].val)
+                beauty++;
+        }
+
+        if (beauty < x) {
+            printf("NO\n");
+            continue;
+        }
+
+        for (int i = 0; i < n; i++) {
+            res[sorted_a[i].idx] = sorted_b[i].val;
+        }
+
+        for (int i = 0, j = n - 1; beauty > x && i < j; i++) {
+            int ai = a[i], bi = res[i];
+            if (ai > bi) {
+                while (j > i && a[j] > res[j]) j--;
+                if (j <= i) break;
+                int tmp = res[i];
+                res[i] = res[j];
+                res[j] = tmp;
+                beauty--;
+            }
+        }
+
+        printf("YES\n");
+        for (int i = 0; i < n; i++)
+            printf("%d ", res[i]);
+        printf("\n");
+    }
+
+    return 0;
+}
 

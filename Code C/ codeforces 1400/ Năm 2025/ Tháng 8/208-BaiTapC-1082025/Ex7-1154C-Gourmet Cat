@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+int food_per_day[7] = {0, 1, 2, 0, 2, 1, 0};
+
+int simulate(int start, int fish, int rabbit, int chicken) {
+    int day_count = 0;
+    for (int i = 0; i < 21; i++) {
+        int day = (start + i) % 7;
+        if (food_per_day[day] == 0 && fish > 0) {
+            fish--;
+        } else if (food_per_day[day] == 1 && rabbit > 0) {
+            rabbit--;
+        } else if (food_per_day[day] == 2 && chicken > 0) {
+            chicken--;
+        } else {
+            break;
+        }
+        day_count++;
+    }
+    return day_count;
+}
+
+int min(int x, int y) {
+    return x < y ? x : y;
+}
+
+int main() {
+    int a, b, c;
+    scanf("%d %d %d", &a, &b, &c);
+
+    int weeks = min(a / 3, min(b / 2, c / 2));
+
+    int ra = a - weeks * 3;
+    int rb = b - weeks * 2;
+    int rc = c - weeks * 2;
+
+    int best = 0;
+
+    for (int i = 0; i < 7; i++) {
+        int days = simulate(i, ra, rb, rc);
+        if (best < weeks * 7 + days)
+            best = weeks * 7 + days;
+    }
+
+    printf("%d\n", best);
+    return 0;
+}
 

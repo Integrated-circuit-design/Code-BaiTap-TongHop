@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+#define MAXA 1000005
+
+int a[MAXN];
+int count[MAXA];
+char seen[MAXA];
+int unique[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        memset(count, 0, sizeof(int) * MAXA);
+        memset(seen, 0, sizeof(char) * MAXA);
+
+        int max_h = 0;
+        int u_count = 0;
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &a[i]);
+            int h = a[i];
+            count[h]++;
+            if (!seen[h]) {
+                seen[h] = 1;
+                unique[u_count++] = h;
+            }
+            if (h > max_h) max_h = h;
+        }
+
+        int sorted[MAXN];
+        int sorted_size = 0;
+        for (int h = 1; h <= max_h; ++h) {
+            if (seen[h]) {
+                sorted[sorted_size++] = h;
+                seen[h] = 0;
+            }
+        }
+
+        long long total_edges = 0;
+        long long prefix_sum = 0;
+
+        for (int i = 0; i < sorted_size; ++i) {
+            int h = sorted[i];
+            long long cnt = count[h];
+
+            total_edges += cnt * (cnt - 1) / 2;
+            total_edges += cnt * prefix_sum;
+            prefix_sum += cnt;
+            count[h] = 0;
+        }
+
+        printf("%lld\n", total_edges);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int lonHon(int x, int y) {
+    return (x > y) ? x : y;
+}
+
+int nhoHon(int x, int y) {
+    return (x < y) ? x : y;
+}
+
+int main() {
+    int soLan;
+    scanf("%d", &soLan);
+
+    int truocX = 0, truocY = 0;
+    int demHoa = 1;
+
+    for (int i = 0; i < soLan; i++) {
+        int hienTaiX, hienTaiY;
+        scanf("%d %d", &hienTaiX, &hienTaiY);
+
+        int diemBatDau = lonHon(truocX, truocY);
+        int diemKetThuc = nhoHon(hienTaiX, hienTaiY);
+
+        if (diemKetThuc >= diemBatDau) {
+            int soHoaMoi = diemKetThuc - diemBatDau;
+            if (truocX != truocY) {
+                soHoaMoi += 1;
+            }
+            demHoa += soHoaMoi;
+        }
+
+        truocX = hienTaiX;
+        truocY = hienTaiY;
+    }
+
+    printf("%d\n", demHoa);
+
+    return 0;
+}
 

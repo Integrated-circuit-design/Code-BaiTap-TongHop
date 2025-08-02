@@ -1,1 +1,80 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+#define MAXN 200005
+#define MAXA 1000005
+
+int a[MAXN];
+bool isPrime[MAXA];
+
+void buildPrimeTable() {
+    for (int i = 0; i < MAXA; i++) {
+        isPrime[i] = true;
+    }
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i * i < MAXA; i++) {
+        if (isPrime[i]) {
+            for (int j = i * i; j < MAXA; j += i) {
+                isPrime[j] = false;
+            }
+        }
+    }
+}
+
+long long solveCase(int n, int e) {
+    long long count = 0;
+
+    for (int mod = 0; mod < e; mod++) {
+        int start = mod;
+
+        while (start < n) {
+            if (a[start] == 1) {
+                int oneStart = start;
+                while (start < n && a[start] == 1)
+                    start += e;
+                continue;
+            }
+
+            if (isPrime[a[start]]) {
+                int left = 0, right = 0;
+
+                int i = start - e;
+                while (i >= 0 && a[i] == 1)
+                    left++, i -= e;
+
+                int j = start + e;
+                while (j < n && a[j] == 1)
+                    right++, j += e;
+
+                count += (long long)(left + 1) * (right + 1) - 1;
+            }
+
+            start += e;
+        }
+    }
+
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    buildPrimeTable();
+
+    while (t--) {
+        int n, e;
+        scanf("%d %d", &n, &e);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        long long result = solveCase(n, e);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

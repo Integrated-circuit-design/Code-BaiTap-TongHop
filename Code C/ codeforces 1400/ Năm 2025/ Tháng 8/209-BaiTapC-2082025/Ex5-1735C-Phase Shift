@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char t_str[MAXN], s_str[MAXN];
+int map[26], rev[26], visited[26];
+
+int creates_cycle(int start, int end) {
+    int len = 1, cur = end;
+    while (map[cur] != -1 && cur != start) {
+        cur = map[cur];
+        len++;
+    }
+    return (cur == start && len < 26);
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n;
+        scanf("%d %s", &n, t_str);
+        
+        for (int i = 0; i < 26; i++) {
+            map[i] = rev[i] = visited[i] = -1;
+        }
+
+        for (int i = 0; i < n; i++) {
+            int target = t_str[i] - 'a';
+
+            if (rev[target] != -1) {
+                s_str[i] = rev[target] + 'a';
+                continue;
+            }
+
+            for (int j = 0; j < 26; j++) {
+                if (map[j] == -1 && j != target && !creates_cycle(target, j)) {
+                    map[j] = target;
+                    rev[target] = j;
+                    s_str[i] = j + 'a';
+                    break;
+                }
+            }
+        }
+
+        s_str[n] = '\0';
+        printf("%s\n", s_str);
+    }
+
+    return 0;
+}
 

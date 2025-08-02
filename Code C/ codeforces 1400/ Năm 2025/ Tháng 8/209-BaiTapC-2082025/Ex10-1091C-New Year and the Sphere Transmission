@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MAX 100005
+typedef long long ll;
+
+int mark[MAX] = {0};
+ll output[MAX];
+int pos = 0;
+
+int main() {
+    ll n;
+    scanf("%lld", &n);
+
+    for (ll i = 1; i * i <= n; ++i) {
+        if (n % i == 0) {
+            ll d1 = i;
+            ll m1 = n / d1;
+            ll f1 = m1 + d1 * m1 * (m1 - 1) / 2;
+
+            output[pos++] = f1;
+
+            if (d1 != n / i) {
+                ll d2 = n / i;
+                ll m2 = n / d2;
+                ll f2 = m2 + d2 * m2 * (m2 - 1) / 2;
+                output[pos++] = f2;
+            }
+        }
+    }
+
+    for (int i = 0; i < pos; ++i) {
+        for (int j = i + 1; j < pos; ++j) {
+            if (output[i] > output[j]) {
+                ll tmp = output[i];
+                output[i] = output[j];
+                output[j] = tmp;
+            }
+        }
+    }
+
+    for (int i = 0; i < pos; ++i) {
+        if (i == 0 || output[i] != output[i - 1]) {
+            printf("%lld ", output[i]);
+        }
+    }
+
+    printf("\n");
+    return 0;
+}
 

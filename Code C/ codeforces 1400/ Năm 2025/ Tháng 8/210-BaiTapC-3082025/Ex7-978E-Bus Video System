@@ -1,1 +1,37 @@
+#include <stdio.h>
+#define MAXN 1005
+
+int main() {
+    int n;
+    long long w;
+    long long a[MAXN];
+    long long prefix[MAXN];
+
+    scanf("%d %lld", &n, &w);
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    prefix[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        prefix[i] = prefix[i - 1] + a[i - 1];
+    }
+
+    long long min_val = prefix[0], max_val = prefix[0];
+    for (int i = 1; i <= n; i++) {
+        if (prefix[i] < min_val) min_val = prefix[i];
+        if (prefix[i] > max_val) max_val = prefix[i];
+    }
+
+    long long lower_bound = -min_val;
+    long long upper_bound = w - max_val;
+
+    if (lower_bound > upper_bound) {
+        printf("0\n");
+    } else {
+        printf("%lld\n", upper_bound - lower_bound + 1);
+    }
+
+    return 0;
+}
 

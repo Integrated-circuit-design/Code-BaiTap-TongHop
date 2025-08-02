@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_M 100005
+#define MAX_N 100005
+
+int classrooms[MAX_M];
+int schedule[MAX_N][6];
+
+int get_floor(int room_number) {
+    return room_number / 100;
+}
+
+int compare_by_floor(const void* a, const void* b) {
+    int floor_a = get_floor(*(int*)a);
+    int floor_b = get_floor(*(int*)b);
+    return floor_a - floor_b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 0; i < m; ++i) {
+            scanf("%d", &classrooms[i]);
+        }
+
+        qsort(classrooms, m, sizeof(int), compare_by_floor);
+
+        int ptr = 0;
+        for (int period = 0; period < 6; ++period) {
+            for (int group = 0; group < n; ++group) {
+                schedule[group][period] = classrooms[ptr++];
+            }
+        }
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                printf("%d", schedule[i][j]);
+                if (j < 5) printf(" ");
+            }
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

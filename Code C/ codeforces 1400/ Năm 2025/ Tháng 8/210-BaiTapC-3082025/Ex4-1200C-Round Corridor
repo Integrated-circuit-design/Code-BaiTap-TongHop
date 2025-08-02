@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+long long ucln(long long a, long long b) {
+    while (a != 0 && b != 0) {
+        if (a > b)
+            a %= b;
+        else
+            b %= a;
+    }
+    return a + b;
+}
+
+long long vi_tri(int vung, long long chi_so, long long g, long long trong, long long ngoai) {
+    if (vung == 1) {
+        return ((chi_so - 1) * g) / trong;
+    } else {
+        return ((chi_so - 1) * g) / ngoai;
+    }
+}
+
+int main() {
+    long long trong, ngoai;
+    int so_cau;
+    
+    scanf("%lld %lld %d", &trong, &ngoai, &so_cau);
+    
+    long long g = ucln(trong, ngoai);
+    
+    while (so_cau--) {
+        int vung_dau, vung_cuoi;
+        long long chi_so_dau, chi_so_cuoi;
+        
+        scanf("%d %lld %d %lld", &vung_dau, &chi_so_dau, &vung_cuoi, &chi_so_cuoi);
+        
+        long long vi_tri_1 = vi_tri(vung_dau, chi_so_dau, g, trong, ngoai);
+        long long vi_tri_2 = vi_tri(vung_cuoi, chi_so_cuoi, g, trong, ngoai);
+        
+        if (vi_tri_1 == vi_tri_2) {
+            puts("YES");
+        } else {
+            puts("NO");
+        }
+    }
+
+    return 0;
+}
 

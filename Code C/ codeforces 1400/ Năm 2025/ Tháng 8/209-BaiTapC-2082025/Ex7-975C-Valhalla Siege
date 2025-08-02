@@ -1,38 +1,45 @@
 #include <stdio.h>
-#include <string.h>
 
-char input[100005];
-char result[100005];
+#define MAX 200005
+typedef long long ll;
+
+ll a[MAX];
+ll k[MAX];
 
 int main() {
-    scanf("%s", input);
-    int n = strlen(input);
-
-    int k = 0;
-    int insert_pos = 0;
+    int n, q;
+    scanf("%d %d", &n, &q);
 
     for (int i = 0; i < n; i++) {
-        if (input[i] == '0') {
-            result[k++] = '0';
-            insert_pos++;
-        } else if (input[i] == '2') {
-            result[k++] = '2';
+        scanf("%lld", &a[i]);
+    }
+
+    for (int i = 0; i < q; i++) {
+        scanf("%lld", &k[i]);
+    }
+
+    int pos = 0;
+    ll remain = a[0];
+
+    for (int i = 0; i < q; i++) {
+        ll arrows = k[i];
+
+        while (pos < n && arrows >= remain) {
+            arrows -= remain;
+            pos++;
+            if (pos < n)
+                remain = a[pos];
+        }
+
+        if (pos == n) {
+            printf("%d\n", n);
+            pos = 0;
+            remain = a[0];
+        } else {
+            remain -= arrows;
+            printf("%d\n", n - pos);
         }
     }
 
-    int count1 = 0;
-    for (int i = 0; i < n; i++)
-        if (input[i] == '1') count1++;
-
-    memmove(result + insert_pos + count1, result + insert_pos, k - insert_pos);
-
-    for (int i = 0; i < count1; i++)
-        result[insert_pos + i] = '1';
-
-    k += count1;
-    result[k] = '\0';
-
-    printf("%s\n", result);
     return 0;
 }
-

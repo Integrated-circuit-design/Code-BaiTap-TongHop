@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAX_HASH 4000007
+#define OFFSET 1000000000
+#define SCALE 2000000001LL
+
+typedef long long ll;
+
+int hash_table[MAX_HASH];
+ll hash_key[MAX_HASH];
+
+ll encode(int x, int y) {
+    return (ll)x * SCALE + (y + OFFSET);
+}
+
+int get_hash_pos(ll key) {
+    int h = (int)(key % MAX_HASH);
+    if (h < 0) h += MAX_HASH;
+    while (hash_key[h] != -1 && hash_key[h] != key) {
+        h++;
+        if (h == MAX_HASH) h = 0;
+    }
+    return h;
+}
+
+void reset_hash() {
+    for (int i = 0; i < MAX_HASH; i++) {
+        hash_key[i] = -1;
+        hash_table[i] = 0;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int x[n], r[n];
+        for (int i = 0; i < n; ++i) scanf("%d", &x[i]);
+        for (int i = 0; i < n; ++i) scanf("%d", &r[i]);
+
+        reset_hash();
+
+        int total = 0;
+
+        for (int i = 0; i < n; ++i) {
+            int cx = x[i], rad = r[i];
+            for (int dx = -rad; dx <= rad; ++dx) {
+                int px = cx + dx;
+                int dy = (int)(sqrt((ll)rad * rad - (ll)dx * dx));
+                for (int y = -dy; y <= dy; ++y) {
+                    ll key = encode(px, y);
+                    int pos = get_hash_pos(key);
+                    if (!hash_table[pos]) {
+                        hash_table[pos] = 1;
+                        hash_key[pos] = key;
+                        total++;
+                    }
+                }
+            }
+        }
+
+        printf("%d\n", total);
+    }
+    return 0;
+}
 

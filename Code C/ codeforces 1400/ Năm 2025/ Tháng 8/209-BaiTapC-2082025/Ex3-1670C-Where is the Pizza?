@@ -1,1 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 200005
+#define MOD 1000000007
+
+int visited[MAXN];
+int locked[MAXN];
+int a[MAXN], b[MAXN], d[MAXN];
+int adj[MAXN][2];
+int degree[MAXN];
+
+void dfs(int u, int *has_locked) {
+    visited[u] = 1;
+    if (d[u] != 0) *has_locked = 1;
+
+    for (int i = 0; i < degree[u]; i++) {
+        int v = adj[u][i];
+        if (!visited[v]) {
+            dfs(v, has_locked);
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &d[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            degree[i] = 0;
+        }
+        for (int i = 0; i < n; i++) {
+            if (a[i] != b[i]) {
+                adj[a[i] - 1][degree[a[i] - 1]++] = b[i] - 1;
+                adj[b[i] - 1][degree[b[i] - 1]++] = a[i] - 1;
+            }
+        }
+
+        memset(visited, 0, n * sizeof(int));
+
+        long long result = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (!visited[i] && a[i] != b[i]) {
+                int has_locked = 0;
+                dfs(i, &has_locked);
+                if (!has_locked) {
+                    result = (result * 2) % MOD;
+                }
+            }
+        }
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

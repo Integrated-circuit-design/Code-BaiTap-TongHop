@@ -1,1 +1,88 @@
+#include <stdio.h>
+
+#define MAX 505
+
+char grid[MAX][MAX], result[MAX][MAX];
+int id[MAX][MAX];
+int blackRow[MAX], whiteRow[MAX], blackCol[MAX], whiteCol[MAX];
+
+typedef struct {
+    int r1, c1, r2, c2;
+} Domino;
+
+Domino dominos[MAX * MAX / 2];
+int dominoCount = 0;
+
+void reset(int n, int m) {
+    dominoCount = 0;
+    for (int i = 0; i < n; i++) {
+        blackRow[i] = whiteRow[i] = 0;
+        for (int j = 0; j < m; j++) {
+            result[i][j] = '.';
+            id[i][j] = -1;
+            if (i == 0) blackCol[j] = whiteCol[j] = 0;
+        }
+    }
+}
+
+void solve() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", grid[i]);
+    }
+
+    reset(n, m);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == 'U' && id[i][j] == -1) {
+                id[i][j] = id[i+1][j] = dominoCount;
+                dominos[dominoCount++] = (Domino){i, j, i+1, j};
+            }
+            if (grid[i][j] == 'L' && id[i][j] == -1) {
+                id[i][j] = id[i][j+1] = dominoCount;
+                dominos[dominoCount++] = (Domino){i, j, i, j+1};
+            }
+        }
+    }
+
+    for (int k = 0; k < dominoCount; k++) {
+        Domino d = dominos[k];
+        int r1 = d.r1, c1 = d.c1;
+        int r2 = d.r2, c2 = d.c2;
+
+        if (k % 2 == 0) {
+            result[r1][c1] = 'B'; result[r2][c2] = 'W';
+            blackRow[r1]++; blackCol[c1]++;
+            whiteRow[r2]++; whiteCol[c2]++;
+        } else {
+            result[r1][c1] = 'W'; result[r2][c2] = 'B';
+            whiteRow[r1]++; whiteCol[c1]++;
+            blackRow[r2]++; blackCol[c2]++;
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+        if (blackRow[i] != whiteRow[i]) {
+            puts("-1");
+            return;
+        }
+    for (int j = 0; j < m; j++)
+        if (blackCol[j] != whiteCol[j]) {
+            puts("-1");
+            return;
+        }
+
+    for (int i = 0; i < n; i++)
+        puts(result[i]);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) solve();
+    return 0;
+}
 

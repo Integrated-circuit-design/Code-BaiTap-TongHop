@@ -1,1 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 105
+
+int n;
+char b[MAXN][MAXN];
+int index_order[MAXN];
+int sets[MAXN][MAXN];
+int set_size[MAXN];
+int cur_value = 1;
+
+int count_ones(char* row) {
+    int cnt = 0;
+    for (int i = 0; row[i]; ++i)
+        if (row[i] == '1') cnt++;
+    return cnt;
+}
+
+int cmp(const void* a, const void* b) {
+    int i = *(int*)a;
+    int j = *(int*)b;
+    int ci = count_ones(b[i]);
+    int cj = count_ones(b[j]);
+    return ci - cj;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; ++i)
+            scanf("%s", b[i]);
+
+        for (int i = 0; i < n; ++i) {
+            index_order[i] = i;
+            set_size[i] = 0;
+        }
+
+        qsort(index_order, n, sizeof(int), cmp);
+
+        for (int p = 0; p < n; ++p) {
+            int i = index_order[p];
+
+            for (int j = 0; j < n; ++j) {
+                if (b[i][j] == '1') {
+                    for (int k = 0; k < set_size[j]; ++k) {
+                        int val = sets[j][k];
+                        int exists = 0;
+                        for (int z = 0; z < set_size[i]; ++z)
+                            if (sets[i][z] == val) exists = 1;
+                        if (!exists)
+                            sets[i][set_size[i]++] = val;
+                    }
+                }
+            }
+
+            sets[i][set_size[i]++] = cur_value++;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            printf("%d", set_size[i]);
+            for (int j = 0; j < set_size[i]; ++j)
+                printf(" %d", sets[i][j]);
+            printf("\n");
+        }
+    }
+    return 0;
+}
 

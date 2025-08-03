@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+int main() {
+    char s[1000005];
+    scanf("%s", s);
+
+    long long res = 0, count_a = 0;
+
+    for (int i = 0; s[i]; ++i) {
+        if (s[i] == 'a') {
+            count_a++;
+        } else if (s[i] == 'b') {
+            res = (res + count_a) % MOD;
+            count_a = (count_a * 2) % MOD;
+        }
+    }
+
+    printf("%lld\n", res);
+    return 0;
+}
 

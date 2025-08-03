@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+typedef struct {
+    long long num;
+    long long den;
+} Fraction;
+
+long long gcd(long long a, long long b) {
+    while (b) {
+        long long r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+Fraction reduce(Fraction f) {
+    long long g = gcd(f.num, f.den);
+    f.num /= g;
+    f.den /= g;
+    return f;
+}
+
+int main() {
+    int a, b, c, d;
+    scanf("%d %d %d %d", &a, &b, &c, &d);
+
+    long long screen_area = 1LL * a * b;
+    long long used_area;
+
+    if (1LL * a * d < 1LL * b * c) {
+        long long h = 1LL * a * d / c;
+        used_area = 1LL * a * h;
+    } else {
+        long long w = 1LL * b * c / d;
+        used_area = 1LL * b * w;
+    }
+
+    Fraction result;
+    result.num = screen_area - used_area;
+    result.den = screen_area;
+
+    result = reduce(result);
+
+    printf("%lld/%lld\n", result.num, result.den);
+    return 0;
+}
 

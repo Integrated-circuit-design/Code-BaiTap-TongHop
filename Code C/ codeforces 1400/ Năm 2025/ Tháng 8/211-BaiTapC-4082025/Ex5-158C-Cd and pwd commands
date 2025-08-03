@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PATH 10000
+
+char current_path[MAX_PATH] = "/";
+
+void append_directory(const char *dir) {
+    int len = strlen(current_path);
+    if (len > 1) {
+        current_path[len] = '/';
+        current_path[len + 1] = '\0';
+    }
+    strcat(current_path, dir);
+}
+
+void go_back() {
+    int len = strlen(current_path);
+    if (len <= 1) return;
+    len--;
+    while (len > 0 && current_path[len] != '/') {
+        len--;
+    }
+    current_path[len + 1] = '\0';
+}
+
+void cd(const char *path) {
+    if (path[0] == '/') {
+        strcpy(current_path, "/");
+    }
+
+    char temp[210];
+    strcpy(temp, path);
+
+    char *token = strtok(temp, "/");
+    while (token) {
+        if (strcmp(token, "..") == 0) {
+            go_back();
+        } else {
+            if (strcmp(current_path, "/") != 0)
+                strcat(current_path, "/");
+            strcat(current_path, token);
+        }
+        token = strtok(NULL, "/");
+    }
+}
+
+void pwd() {
+    printf("%s/\n", strcmp(current_path, "/") == 0 ? "/" : current_path);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char cmd[10], arg[210];
+    for (int i = 0; i < n; i++) {
+        scanf("%s", cmd);
+        if (strcmp(cmd, "pwd") == 0) {
+            pwd();
+        } else {
+            scanf("%s", arg);
+            cd(arg);
+        }
+    }
+
+    return 0;
+}
 

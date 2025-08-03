@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+#define ll long long
+#define MAXN 1000005
+
+int parent[MAXN];
+ll div_sum[MAXN];
+
+void solve() {
+    int n;
+    ll m;
+    scanf("%d %lld", &n, &m);
+
+    ll max_sum = (ll)n * (n + 1) / 2;
+    if (m < n || m > max_sum) {
+        printf("-1\n");
+        return;
+    }
+
+    for (int i = 2; i <= n; i++) {
+        parent[i] = i - 1;
+        div_sum[i] = i;
+    }
+    div_sum[1] = 1;
+    ll cur_sum = max_sum;
+
+    for (int i = n; i >= 2 && cur_sum > m; i--) {
+        int best_parent = 1;
+        ll new_div = 1;
+        ll old_div = div_sum[i];
+
+        ll decrease = old_div - new_div;
+        if (cur_sum - decrease >= m) {
+            parent[i] = best_parent;
+            div_sum[i] = new_div;
+            cur_sum -= decrease;
+        }
+    }
+
+    printf("1\n");
+    for (int i = 2; i <= n; i++) {
+        printf("%d %d\n", parent[i], i);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) solve();
+    return 0;
+}
 

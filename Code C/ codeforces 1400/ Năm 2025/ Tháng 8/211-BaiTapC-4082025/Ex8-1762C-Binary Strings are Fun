@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+#define MOD 998244353
+#define MAXN 200005
+
+int pow2[MAXN];
+
+void build_pow2() {
+    pow2[0] = 1;
+    for (int i = 1; i < MAXN; i++) {
+        pow2[i] = (2 * pow2[i - 1]) % MOD;
+    }
+}
+
+int is_good(char *s, int len) {
+    int count_1 = 0, count_0 = 0;
+    for (int i = 0; i < len; i++) {
+        if ((i % 2) == 0) {
+            if (s[i] == '1') count_1++;
+            else count_0++;
+
+            int prefix_len = (i / 2) + 1;
+            int median_need = (prefix_len + 1) / 2;
+
+            if (s[i] == '1' && count_1 < median_need) return 0;
+            if (s[i] == '0' && count_0 < median_need) return 0;
+        }
+    }
+    return 1;
+}
+
+int count_total(char *s, int n) {
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        if (is_good(s, i)) {
+            sum = (sum + pow2[i - 1]) % MOD;
+        }
+    }
+    return sum;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    build_pow2();
+
+    while (t--) {
+        int n;
+        char s[MAXN];
+        scanf("%d", &n);
+        scanf("%s", s);
+        int result = count_total(s, n);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1000005
+
+int encode(char c) {
+    switch(c) {
+        case '(': return 0;
+        case ')': return 1;
+        case '[': return 2;
+        case ']': return 3;
+        case '{': return 4;
+        case '}': return 5;
+        case '<': return 6;
+        case '>': return 7;
+    }
+    return -1;
+}
+
+int main() {
+    char str[MAX];
+    int stk[MAX], top = 0, rep = 0;
+    scanf("%s", str);
+    int n = strlen(str);
+
+    for (int i = 0; i < n; ++i) {
+        int x = encode(str[i]);
+        if (x % 2 == 0) {
+            stk[top++] = x;
+        } else {
+            if (top == 0) {
+                puts("Impossible");
+                return 0;
+            }
+            int last = stk[--top];
+            if (last + 1 != x) rep++;
+        }
+    }
+
+    if (top > 0) puts("Impossible");
+    else printf("%d\n", rep);
+    return 0;
+}
 

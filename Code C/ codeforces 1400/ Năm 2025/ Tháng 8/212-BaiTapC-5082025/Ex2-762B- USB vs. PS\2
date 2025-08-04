@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 300005
+
+typedef struct {
+    int price;
+    int type;
+} Mouse;
+
+Mouse mice[MAX];
+int total = 0;
+long long cost = 0;
+
+int cmp(const void* a, const void* b) {
+    Mouse* m1 = (Mouse*)a;
+    Mouse* m2 = (Mouse*)b;
+    return m1->price - m2->price;
+}
+
+int main() {
+    int a, b, c, m;
+    char port[10];
+
+    scanf("%d %d %d", &a, &b, &c);
+    scanf("%d", &m);
+
+    for (int i = 0; i < m; i++) {
+        int price;
+        scanf("%d %s", &price, port);
+        mice[i].price = price;
+        mice[i].type = (port[0] == 'U') ? 0 : 1;
+    }
+
+    qsort(mice, m, sizeof(Mouse), cmp);
+
+    for (int i = 0; i < m; i++) {
+        if (mice[i].type == 0) {
+            if (a > 0) {
+                a--; total++; cost += mice[i].price;
+            } else if (c > 0) {
+                c--; total++; cost += mice[i].price;
+            }
+        } else {
+            if (b > 0) {
+                b--; total++; cost += mice[i].price;
+            } else if (c > 0) {
+                c--; total++; cost += mice[i].price;
+            }
+        }
+    }
+
+    printf("%d %lld\n", total, cost);
+    return 0;
+}
 

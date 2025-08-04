@@ -1,1 +1,68 @@
+#include <stdio.h>
+
+#define MAXN 200005
+#define INF 1000000001
+
+int n, m;
+int p[MAXN], a[MAXN], b[MAXN], c[MAXN];
+int sold[MAXN];
+
+int color_list[4][MAXN];
+int color_size[4];
+
+void remove_from_color_lists(int id) {
+    for (int col = 1; col <= 3; col++) {
+        for (int i = 0; i < color_size[col]; i++) {
+            if (color_list[col][i] == id) {
+                color_list[col][i] = -1;
+                break;
+            }
+        }
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%d", &p[i]);
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+    for (int i = 0; i < n; i++) scanf("%d", &b[i]);
+
+    for (int i = 0; i < n; i++) {
+        int front = a[i];
+        int back = b[i];
+
+        color_list[front][color_size[front]++] = i;
+        if (front != back) {
+            color_list[back][color_size[back]++] = i;
+        }
+    }
+
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) scanf("%d", &c[i]);
+
+    for (int i = 0; i < m; i++) {
+        int fav = c[i];
+        int min_price = INF;
+        int chosen_id = -1;
+
+        for (int j = 0; j < color_size[fav]; j++) {
+            int id = color_list[fav][j];
+            if (id != -1 && !sold[id] && p[id] < min_price) {
+                min_price = p[id];
+                chosen_id = id;
+            }
+        }
+
+        if (chosen_id == -1) {
+            printf("-1 ");
+        } else {
+            printf("%d ", p[chosen_id]);
+            sold[chosen_id] = 1;
+            remove_from_color_lists(chosen_id);
+        }
+    }
+
+    printf("\n");
+    return 0;
+}
 

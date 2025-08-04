@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+#define int long long
+
+int p[100005];
+
+int main() {
+    int n, m, k;
+    scanf("%lld %lld %lld", &n, &m, &k);
+
+    for (int i = 0; i < m; i++) {
+        scanf("%lld", &p[i]);
+    }
+
+    int res = 0;
+    int cnt = 0;
+    int idx = 0;
+
+    while (idx < m) {
+        int first_pos = p[idx] - cnt;
+        int page_limit = ((first_pos - 1) / k + 1) * k;
+
+        int removed_this_round = 0;
+
+        while (idx < m && p[idx] - cnt <= page_limit) {
+            idx++;
+            removed_this_round++;
+        }
+
+        cnt += removed_this_round;
+        res++;
+    }
+
+    printf("%lld\n", res);
+    return 0;
+}
 

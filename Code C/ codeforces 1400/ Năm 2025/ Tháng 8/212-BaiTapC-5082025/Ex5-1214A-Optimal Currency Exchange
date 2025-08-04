@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int n, d, e;
+    scanf("%d%d%d", &n, &d, &e);
+
+    int euro_price = e * 5;
+    int answer = n;
+
+    int max_euro_bills = n / euro_price;
+
+    for (int euro_bills = max_euro_bills; euro_bills >= 0; euro_bills--) {
+        int money_spent_on_euro = euro_bills * euro_price;
+        int remaining_rubles = n - money_spent_on_euro;
+
+        int leftover = remaining_rubles % d;
+
+        if (leftover < answer) {
+            answer = leftover;
+        }
+
+        if (answer == 0) break;
+    }
+
+    printf("%d\n", answer);
+    return 0;
+}
 

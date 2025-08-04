@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll tinh_phi(ll x, ll k, ll a, ll b) {
+    if (x == 1) return 0;
+    if (k == 1) return (x - 1) * a;
+    if (x < k) return (x - 1) * a;
+
+    if (x % k == 0) {
+        ll chi_phi_chia = b;
+        ll chi_phi_tru = (x - x / k) * a;
+        return (chi_phi_chia < chi_phi_tru ? chi_phi_chia : chi_phi_tru) + tinh_phi(x / k, k, a, b);
+    } else {
+        ll phan_du = x % k;
+        return phan_du * a + tinh_phi(x - phan_du, k, a, b);
+    }
+}
+
+int main() {
+    ll x, k, a, b;
+    scanf("%lld%lld%lld%lld", &x, &k, &a, &b);
+    printf("%lld\n", tinh_phi(x, k, a, b));
+    return 0;
+}
 

@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAXN 500005
+
+int queue[MAXN];
+int front = 0, rear = 0;
+
+int money[MAXN];
+bool served[MAXN];
+
+int arrival[MAXN];
+int total = 0;
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    int id = 1;
+
+    while (q--) {
+        int type;
+        scanf("%d", &type);
+
+        if (type == 1) {
+            int m;
+            scanf("%d", &m);
+            money[id] = m;
+            queue[rear++] = id;
+            arrival[total++] = id;
+            id++;
+        } else if (type == 2) {
+            while (served[queue[front]]) front++;
+            int x = queue[front++];
+            served[x] = true;
+            printf("%d\n", x);
+        } else if (type == 3) {
+            int best_id = -1;
+            for (int i = 0; i < total; i++) {
+                int x = arrival[i];
+                if (!served[x]) {
+                    if (best_id == -1 || money[x] > money[best_id] ||
+                       (money[x] == money[best_id] && x < best_id)) {
+                        best_id = x;
+                    }
+                }
+            }
+            served[best_id] = true;
+            printf("%d\n", best_id);
+        }
+    }
+
+    return 0;
+}
 

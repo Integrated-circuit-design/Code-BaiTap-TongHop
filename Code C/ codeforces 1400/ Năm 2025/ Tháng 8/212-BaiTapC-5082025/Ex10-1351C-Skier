@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+#define OFFSET 200
+#define SIZE 405
+char vis[SIZE][SIZE][SIZE][SIZE];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    char s[100005];
+
+    while (t--) {
+        scanf("%s", s);
+        int x = OFFSET, y = OFFSET;
+        int time = 0;
+
+        memset(vis, 0, sizeof(vis));
+
+        for (int i = 0; s[i]; i++) {
+            int nx = x, ny = y;
+            if (s[i] == 'N') ny++;
+            else if (s[i] == 'S') ny--;
+            else if (s[i] == 'E') nx++;
+            else if (s[i] == 'W') nx--;
+
+            if (!vis[x][y][nx][ny] && !vis[nx][ny][x][y]) {
+                time += 5;
+                vis[x][y][nx][ny] = 1;
+                vis[nx][ny][x][y] = 1;
+            } else {
+                time += 1;
+            }
+
+            x = nx;
+            y = ny;
+        }
+
+        printf("%d\n", time);
+    }
+
+    return 0;
+}
 

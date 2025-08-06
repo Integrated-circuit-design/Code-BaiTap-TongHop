@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100005
+
+typedef struct {
+    int balance;
+    int min_balance;
+} BracketInfo;
+
+int left[MAX], right[MAX], zero = 0;
+
+BracketInfo analyze(const char *s) {
+    int bal = 0, min_bal = 0;
+    for (int i = 0; s[i]; ++i) {
+        if (s[i] == '(') ++bal;
+        else --bal;
+        if (bal < min_bal) min_bal = bal;
+    }
+    BracketInfo info = {bal, min_bal};
+    return info;
+}
+
+void add_bracket(const BracketInfo *info) {
+    if (info->balance == 0 && info->min_balance >= 0) {
+        ++zero;
+    } else if (info->balance > 0 && info->min_balance >= 0) {
+        ++left[info->balance];
+    } else if (info->balance < 0 && info->min_balance >= info->balance) {
+        ++right[-info->balance];
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    char s[500005];
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%s", s);
+        BracketInfo info = analyze(s);
+        add_bracket(&info);
+    }
+
+    int result = zero / 2;
+    for (int i = 1; i < MAX; ++i) {
+        if (left[i] && right[i]) {
+            result += left[i] < right[i] ? left[i] : right[i];
+        }
+    }
+
+    printf("%d\n", result);
+    return 0;
+}
 

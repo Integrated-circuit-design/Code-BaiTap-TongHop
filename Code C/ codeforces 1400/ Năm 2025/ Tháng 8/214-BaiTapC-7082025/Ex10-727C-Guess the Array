@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define MAXN 5000
+
+int a[MAXN];
+int n;
+
+int get_sum(int i, int j) {
+    int sum;
+    printf("? %d %d\n", i + 1, j + 1);
+    fflush(stdout);
+    scanf("%d", &sum);
+    return sum;
+}
+
+void compute_first_three() {
+    int s01 = get_sum(0, 1);
+    int s02 = get_sum(0, 2);
+    int s12 = get_sum(1, 2);
+
+    a[0] = (s01 + s02 - s12) / 2;
+    a[1] = s01 - a[0];
+    a[2] = s02 - a[0];
+}
+
+void compute_rest() {
+    for (int i = 3; i < n; ++i) {
+        int sum = get_sum(0, i);
+        a[i] = sum - a[0];
+    }
+}
+
+void print_result() {
+    printf("!");
+    for (int i = 0; i < n; ++i) {
+        printf(" %d", a[i]);
+    }
+    printf("\n");
+    fflush(stdout);
+}
+
+int main() {
+    scanf("%d", &n);
+    compute_first_three();
+    compute_rest();
+    print_result();
+    return 0;
+}
 

@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int s[MAXN];
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int timKichThuocHopToiThieu(int n, int k) {
+    if (n <= k) {
+        return s[n - 1];
+    }
+
+    int soCap = n - k;
+    int ketQua = 0;
+
+    for (int i = 0; i < soCap; i++) {
+        int tong = s[i] + s[2 * soCap - 1 - i];
+        ketQua = max(ketQua, tong);
+    }
+
+    ketQua = max(ketQua, s[n - 1]);
+
+    return ketQua;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &s[i]);
+    }
+
+    int ketQua = timKichThuocHopToiThieu(n, k);
+    printf("%d\n", ketQua);
+
+    return 0;
+}
 

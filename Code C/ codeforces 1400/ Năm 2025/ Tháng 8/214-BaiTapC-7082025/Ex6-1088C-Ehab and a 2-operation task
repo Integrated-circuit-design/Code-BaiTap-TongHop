@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int op_type;
+    int index;
+    int value;
+} Operation;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int *a = (int*)malloc(n * sizeof(int));
+    Operation *ops = (Operation*)malloc((n + 1) * sizeof(Operation));
+    int op_cnt = 0;
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    for (int i = n - 2; i >= 0; i--) {
+        if (a[i] < a[i + 1])
+            continue;
+
+        int mod_val = a[i] - a[i + 1] + 1;
+
+        for (int j = 0; j <= i; j++)
+            a[j] %= mod_val;
+
+        ops[op_cnt].op_type = 2;
+        ops[op_cnt].index = i + 1;
+        ops[op_cnt].value = mod_val;
+        op_cnt++;
+    }
+
+    printf("%d\n", op_cnt);
+    for (int i = 0; i < op_cnt; i++)
+        printf("%d %d %d\n", ops[i].op_type, ops[i].index, ops[i].value);
+
+    free(a);
+    free(ops);
+    return 0;
+}
 

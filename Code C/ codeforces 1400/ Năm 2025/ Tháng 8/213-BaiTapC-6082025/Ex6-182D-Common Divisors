@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+int ucln(int a, int b) {
+    while (b) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+int is_divisor(const char *s, int len_s, int len_div) {
+    for (int i = len_div; i < len_s; ++i) {
+        if (s[i] != s[i % len_div]) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    char s1[100005], s2[100005];
+    scanf("%s %s", s1, s2);
+
+    int len1 = strlen(s1);
+    int len2 = strlen(s2);
+    int g = ucln(len1, len2);
+
+    int count = 0;
+
+    for (int i = 1; i <= g; ++i) {
+        if (g % i != 0) continue;
+
+        int match = 1;
+        for (int j = 0; j < i; ++j) {
+            if (s1[j] != s2[j]) {
+                match = 0;
+                break;
+            }
+        }
+
+        if (!match) continue;
+
+        if (is_divisor(s1, len1, i) && is_divisor(s2, len2, i)) {
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+    return 0;
+}
 

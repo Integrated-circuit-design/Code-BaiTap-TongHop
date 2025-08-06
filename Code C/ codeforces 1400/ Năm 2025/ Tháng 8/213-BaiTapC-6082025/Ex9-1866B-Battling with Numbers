@@ -1,1 +1,67 @@
+#include <stdio.h>
+#define MAXP 2000005
+#define MOD 998244353
+
+int expX[MAXP] = {0};
+int expY[MAXP] = {0};
+
+long long powmod(long long a, long long b) {
+    long long res = 1;
+    while(b > 0) {
+        if (b % 2 == 1) res = res * a % MOD;
+        a = a * a % MOD;
+        b /= 2;
+    }
+    return res;
+}
+
+int main() {
+    int N, M, i, p, e;
+
+    scanf("%d", &N);
+    for (i = 0; i < N; i++) {
+        scanf("%d", &p);
+        expX[p] = 1;
+    }
+    for (i = 0; i < N; i++) {
+        scanf("%d", &e);
+        for (p = 2; p < MAXP; p++) {
+            if (expX[p] == 1) {
+                expX[p] = e;
+                break;
+            }
+        }
+    }
+
+    scanf("%d", &M);
+    for (i = 0; i < M; i++) {
+        scanf("%d", &p);
+        expY[p] = 1;
+    }
+    for (i = 0; i < M; i++) {
+        scanf("%d", &e);
+        for (p = 2; p < MAXP; p++) {
+            if (expY[p] == 1) {
+                expY[p] = e;
+                break;
+            }
+        }
+    }
+
+    for (i = 2; i < MAXP; i++) {
+        if (expY[i] > 0 && expY[i] > expX[i]) {
+            printf("0\n");
+            return 0;
+        }
+    }
+
+    int count = 0;
+    for (i = 2; i < MAXP; i++) {
+        if (expX[i] > expY[i])
+            count++;
+    }
+
+    printf("%lld\n", powmod(2, count));
+    return 0;
+}
 

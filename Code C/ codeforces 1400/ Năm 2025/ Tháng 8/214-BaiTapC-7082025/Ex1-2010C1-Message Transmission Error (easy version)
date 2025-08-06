@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int so_sanh(const char *a, const char *b, int length) {
+    for (int i = 0; i < length; i++) {
+        if (a[i] != b[i])
+            return 0;
+    }
+    return 1;
+}
+
+int main() {
+    char t[105];
+    scanf("%s", t);
+    int n = strlen(t);
+
+    for (int len_s = 1; len_s < n; len_s++) {
+        char s[105];
+        strncpy(s, t, len_s);
+        s[len_s] = '\0';
+
+        for (int overlap = 1; overlap < len_s; overlap++) {
+            if (so_sanh(s + len_s - overlap, s, overlap)) {
+                char ketqua[205];
+                strcpy(ketqua, s);
+                strcat(ketqua, s + overlap);
+
+                if (strcmp(ketqua, t) == 0) {
+                    printf("YES\n%s\n", s);
+                    return 0;
+                }
+            }
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

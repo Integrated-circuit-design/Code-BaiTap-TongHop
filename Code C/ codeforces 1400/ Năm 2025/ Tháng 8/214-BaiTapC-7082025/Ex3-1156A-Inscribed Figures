@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+int get_touch_points(int a, int b) {
+    if ((a == 2 && b == 3) || (a == 3 && b == 2)) {
+        return -1;
+    }
+    if ((a == 1 && b == 2) || (a == 2 && b == 1)) {
+        return 3;
+    }
+    if ((a == 1 && b == 3) || (a == 3 && b == 1)) {
+        return 4;
+    }
+    return 0;
+}
+
+int main() {
+    int n, a[105];
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int total = 0;
+    int infinite = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        int t = get_touch_points(a[i], a[i + 1]);
+
+        if (t == -1) {
+            infinite = 1;
+            break;
+        }
+
+        total += t;
+    }
+
+    for (int i = 0; i < n - 2; i++) {
+        if (a[i] == 3 && a[i + 1] == 1 && a[i + 2] == 2) {
+            total -= 1;
+        }
+    }
+
+    if (infinite) {
+        printf("Infinite\n");
+    } else {
+        printf("Finite\n%d\n", total);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+void hoan_vi(int *x, int *y) {
+    int tam = *x;
+    *x = *y;
+    *y = tam;
+}
+
+int main() {
+    int n, k;
+    scanf("%d%d", &n, &k);
+
+    int a[100005];
+    int i;
+
+    for (i = 0; i < 2 * n; i++) {
+        a[i] = i + 1;
+    }
+
+    for (i = 0; i < 2 * k; i += 2) {
+        hoan_vi(&a[i], &a[i + 1]);
+    }
+
+    for (i = 0; i < 2 * n; i++) {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}
 

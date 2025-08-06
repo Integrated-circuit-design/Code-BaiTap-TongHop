@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+
+#define MAXN 100005
+#define ALPHABET 26
+
+int positions[MAXN];
+
+int find_k_for_char(char *s, int n, char c) {
+    int count = 0;
+    positions[count++] = -1;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == c)
+            positions[count++] = i;
+    }
+    positions[count++] = n;
+
+    int max_gap = 0;
+    for (int i = 1; i < count; i++) {
+        int gap = positions[i] - positions[i - 1];
+        if (gap > max_gap)
+            max_gap = gap;
+    }
+
+    return max_gap;
+}
+
+int main() {
+    char s[MAXN];
+    scanf("%s", s);
+    int n = strlen(s);
+    int result = INT_MAX;
+
+    for (char c = 'a'; c <= 'z'; c++) {
+        int k = find_k_for_char(s, n, c);
+        if (k < result)
+            result = k;
+    }
+
+    printf("%d\n", result);
+    return 0;
+}
 

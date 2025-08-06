@@ -1,1 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_LEN 18
+
+typedef struct TrieNode {
+    int count;
+    struct TrieNode *child[2];
+} TrieNode;
+
+TrieNode* createNode() {
+    TrieNode* node = (TrieNode*)malloc(sizeof(TrieNode));
+    node->count = 0;
+    node->child[0] = node->child[1] = NULL;
+    return node;
+}
+
+void to_parity_string(long long x, char *s) {
+    for (int i = MAX_LEN - 1; i >= 0; i--) {
+        s[i] = ((x % 10) % 2) + '0';
+        x /= 10;
+    }
+    s[MAX_LEN] = '\0';
+}
+
+void insert(TrieNode* root, char *s) {
+    TrieNode* node = root;
+    for (int i = 0; s[i]; i++) {
+        int bit = s[i] - '0';
+        if (!node->child[bit])
+            node->child[bit] = createNode();
+        node = node->child[bit];
+    }
+    node->count++;
+}
+
+void remove_once(TrieNode* root, char *s) {
+    TrieNode* node = root;
+    for (int i = 0; s[i]; i++) {
+        int bit = s[i] - '0';
+        node = node->child[bit];
+    }
+    node->count--;
+}
+
+int query(TrieNode* root, char *s) {
+    TrieNode* node = root;
+    for (int i = 0; s[i]; i++) {
+        int bit = s[i] - '0';
+        if (!node->child[bit])
+            return 0;
+        node = node->child[bit];
+    }
+    return node->count;
+}
+
+void pad_pattern(char *input, char *output) {
+    int len = strlen(input);
+    int pad = MAX_LEN - len;
+    for (int i = 0; i < pad; i++)
+        output[i] = '0';
+    strcpy(output + pad, input);
+    output[MAX_LEN] = '\0';
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    TrieNode* root = createNode();
+    char cmd[2], s[20], parity[20];
+    long long x;
+
+    while (t--) {
+        scanf("%s", cmd);
+        if (cmd[0] == '+') {
+            scanf("%lld", &x);
+            to_parity_string(x, parity);
+            insert(root, parity);
+        } else if (cmd[0] == '-') {
+            scanf("%lld", &x);
+            to_parity_string(x, parity);
+            remove_once(root, parity);
+        } else if (cmd[0] == '?') {
+            scanf("%s", s);
+            pad_pattern(s, parity);
+            printf("%d\n", query(root, parity));
+        }
+    }
+
+    return 0;
+}
 

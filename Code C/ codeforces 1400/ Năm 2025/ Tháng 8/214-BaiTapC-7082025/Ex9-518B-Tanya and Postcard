@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 200005
+
+int s_upper[26], s_lower[26];
+int t_upper[26], t_lower[26];
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+int main() {
+    char s[MAX_LEN], t[MAX_LEN];
+    scanf("%s", s);
+    scanf("%s", t);
+
+    for (int i = 0; s[i]; ++i) {
+        if (s[i] >= 'A' && s[i] <= 'Z')
+            s_upper[s[i] - 'A']++;
+        else
+            s_lower[s[i] - 'a']++;
+    }
+
+    for (int i = 0; t[i]; ++i) {
+        if (t[i] >= 'A' && t[i] <= 'Z')
+            t_upper[t[i] - 'A']++;
+        else
+            t_lower[t[i] - 'a']++;
+    }
+
+    int yay = 0, whoops = 0;
+
+    for (int i = 0; i < 26; ++i) {
+        int match_upper = min(s_upper[i], t_upper[i]);
+        int match_lower = min(s_lower[i], t_lower[i]);
+        yay += match_upper + match_lower;
+        s_upper[i] -= match_upper;
+        t_upper[i] -= match_upper;
+        s_lower[i] -= match_lower;
+        t_lower[i] -= match_lower;
+    }
+
+    for (int i = 0; i < 26; ++i) {
+        int mismatch1 = min(s_upper[i], t_lower[i]);
+        int mismatch2 = min(s_lower[i], t_upper[i]);
+        whoops += mismatch1 + mismatch2;
+    }
+
+    printf("%d %d\n", yay, whoops);
+    return 0;
+}
 

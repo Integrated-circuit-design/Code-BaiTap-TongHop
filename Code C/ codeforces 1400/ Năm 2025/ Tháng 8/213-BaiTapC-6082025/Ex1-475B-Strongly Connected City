@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 25
+#define MAXN (MAX * MAX)
+
+int n, m;
+char row[MAX], col[MAX];
+int adj[MAXN][MAXN];
+
+int node_id(int i, int j) {
+    return i * m + j;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    scanf("%s", row);
+    scanf("%s", col);
+
+    int total = n * m;
+
+    memset(adj, 0, sizeof(adj));
+
+    for (int i = 0; i < n; i++) {
+        if (row[i] == '>') {
+            for (int j = 0; j < m - 1; j++) {
+                int u = node_id(i, j);
+                int v = node_id(i, j + 1);
+                adj[u][v] = 1;
+            }
+        } else {
+            for (int j = m - 1; j > 0; j--) {
+                int u = node_id(i, j);
+                int v = node_id(i, j - 1);
+                adj[u][v] = 1;
+            }
+        }
+    }
+
+    for (int j = 0; j < m; j++) {
+        if (col[j] == 'v') {
+            for (int i = 0; i < n - 1; i++) {
+                int u = node_id(i, j);
+                int v = node_id(i + 1, j);
+                adj[u][v] = 1;
+            }
+        } else {
+            for (int i = n - 1; i > 0; i--) {
+                int u = node_id(i, j);
+                int v = node_id(i - 1, j);
+                adj[u][v] = 1;
+            }
+        }
+    }
+
+    for (int k = 0; k < total; k++)
+        for (int i = 0; i < total; i++)
+            for (int j = 0; j < total; j++)
+                if (adj[i][k] && adj[k][j])
+                    adj[i][j] = 1;
+
+    for (int i = 0; i < total; i++)
+        for (int j = 0; j < total; j++)
+            if (i != j && !adj[i][j]) {
+                printf("NO\n");
+                return 0;
+            }
+
+    printf("YES\n");
+    return 0;
+}
 

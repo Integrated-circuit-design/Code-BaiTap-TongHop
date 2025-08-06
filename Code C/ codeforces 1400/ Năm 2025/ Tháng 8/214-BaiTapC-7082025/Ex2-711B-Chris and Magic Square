@@ -1,1 +1,94 @@
+#include <stdio.h>
+
+#define N 510
+typedef long long ll;
+
+ll mat[N][N];
+int n, x, y;
+
+ll get_row_sum(int r) {
+    ll sum = 0;
+    for (int j = 0; j < n; j++)
+        sum += mat[r][j];
+    return sum;
+}
+
+ll get_col_sum(int c) {
+    ll sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += mat[i][c];
+    return sum;
+}
+
+ll get_diag1_sum() {
+    ll sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += mat[i][i];
+    return sum;
+}
+
+ll get_diag2_sum() {
+    ll sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += mat[i][n - 1 - i];
+    return sum;
+}
+
+int check_all(ll target) {
+    for (int i = 0; i < n; i++) {
+        if (get_row_sum(i) != target)
+            return 0;
+        if (get_col_sum(i) != target)
+            return 0;
+    }
+    if (get_diag1_sum() != target)
+        return 0;
+    if (get_diag2_sum() != target)
+        return 0;
+    return 1;
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++) {
+            scanf("%lld", &mat[i][j]);
+            if (mat[i][j] == 0) {
+                x = i;
+                y = j;
+            }
+        }
+
+    if (n == 1) {
+        printf("1\n");
+        return 0;
+    }
+
+    ll ref = -1;
+    for (int i = 0; i < n; i++) {
+        if (i != x) {
+            ref = get_row_sum(i);
+            break;
+        }
+    }
+
+    ll sum_x = get_row_sum(x);
+    ll value = ref - sum_x;
+
+    if (value <= 0) {
+        printf("-1\n");
+        return 0;
+    }
+
+    mat[x][y] = value;
+
+    if (check_all(ref)) {
+        printf("%lld\n", value);
+    } else {
+        printf("-1\n");
+    }
+
+    return 0;
+}
 

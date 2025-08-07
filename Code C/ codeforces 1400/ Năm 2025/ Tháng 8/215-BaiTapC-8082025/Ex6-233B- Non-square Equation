@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+typedef unsigned long long ull;
+
+int sum_digits(ull x) {
+    int s = 0;
+    while (x) {
+        s += x % 10;
+        x /= 10;
+    }
+    return s;
+}
+
+int main() {
+    ull n;
+    scanf("%llu", &n);
+
+    for (ull x = 1; x <= 1000000; ++x) {
+        int s = sum_digits(x);
+        ull val = x * x + s * x;
+        if (val == n) {
+            printf("%llu\n", x);
+            return 0;
+        }
+        if (val > n) break;
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

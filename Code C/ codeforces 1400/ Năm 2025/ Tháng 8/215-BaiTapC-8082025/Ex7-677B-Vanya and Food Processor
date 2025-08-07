@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int main() {
+    int n;
+    long long h, k;
+    int a[MAXN];
+
+    scanf("%d %lld %lld", &n, &h, &k);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    long long time = 0;
+    long long height = 0;
+    int index = 0;
+
+    while (index < n) {
+        if (height + a[index] <= h) {
+            height += a[index];
+            index++;
+        } else {
+            long long remove = height / k;
+            if (remove == 0) remove = 1;
+            time += remove;
+            height -= remove * k;
+            if (height < 0) height = 0;
+        }
+    }
+
+    if (height > 0) {
+        time += (height + k - 1) / k;
+    }
+
+    printf("%lld\n", time);
+    return 0;
+}
 

@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 105
+#define MAXK 1005
+
+typedef struct {
+    int height;
+    int index;
+} Tower;
+
+typedef struct {
+    int from, to;
+} Move;
+
+Tower towers[MAXN];
+Move moves[MAXK];
+int n, k;
+
+int cmp(const void *a, const void *b) {
+    Tower *x = (Tower *)a;
+    Tower *y = (Tower *)b;
+    return x->height - y->height;
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &towers[i].height);
+        towers[i].index = i + 1;
+    }
+
+    int step = 0;
+
+    while (step < k) {
+        qsort(towers, n, sizeof(Tower), cmp);
+
+        int diff = towers[n - 1].height - towers[0].height;
+        if (diff <= 1) break;
+
+        towers[n - 1].height--;
+        towers[0].height++;
+        moves[step].from = towers[n - 1].index;
+        moves[step].to = towers[0].index;
+        step++;
+    }
+
+    qsort(towers, n, sizeof(Tower), cmp);
+    int instability = towers[n - 1].height - towers[0].height;
+
+    printf("%d %d\n", instability, step);
+    for (int i = 0; i < step; ++i)
+        printf("%d %d\n", moves[i].from, moves[i].to);
+
+    return 0;
+}
 

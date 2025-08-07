@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+char input[12];
+int min_delete = -1;
+int length;
+
+int is_perfect_square(long long x) {
+    long long root = sqrt(x);
+    return root * root == x;
+}
+
+void try_build(int pos, char* built, int built_len) {
+    if (pos == length) {
+        if (built_len == 0) return;
+        if (built[0] == '0') return;
+
+        built[built_len] = '\0';
+        long long num = atoll(built);
+        if (is_perfect_square(num)) {
+            int deleted = length - built_len;
+            if (min_delete == -1 || deleted < min_delete)
+                min_delete = deleted;
+        }
+        return;
+    }
+
+    try_build(pos + 1, built, built_len);
+
+    built[built_len] = input[pos];
+    try_build(pos + 1, built, built_len + 1);
+}
+
+int main() {
+    scanf("%s", input);
+    length = strlen(input);
+    char current[12];
+
+    try_build(0, current, 0);
+
+    printf("%d\n", min_delete);
+    return 0;
+}
 

@@ -1,1 +1,97 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1001
+
+int t, n, m;
+char maze[MAX][MAX];
+int visited[MAX][MAX];
+int trapped[MAX][MAX];
+
+int dx[4] = {-1, 1, 0, 0};
+int dy[4] = {0, 0, -1, 1};
+char dirChar[4] = {'U', 'D', 'L', 'R'};
+
+int valid(int x, int y) {
+    return x >= 0 && x < n && y >= 0 && y < m;
+}
+
+void getDir(char d, int *dx_out, int *dy_out) {
+    if (d == 'U') { *dx_out = -1; *dy_out = 0; }
+    if (d == 'D') { *dx_out = 1;  *dy_out = 0; }
+    if (d == 'L') { *dx_out = 0;  *dy_out = -1; }
+    if (d == 'R') { *dx_out = 0;  *dy_out = 1; }
+}
+
+int dfs(int x, int y) {
+    if (visited[x][y] == 1) return 1;
+    if (visited[x][y] == 2) return trapped[x][y];
+
+    visited[x][y] = 1;
+    int tx, ty;
+    int res = 0;
+
+    if (maze[x][y] == '?') {
+        for (int d = 0; d < 4; ++d) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+            if (valid(nx, ny)) {
+                if (dfs(nx, ny)) {
+                    maze[x][y] = dirChar[d];
+                    res = 1;
+                    break;
+                }
+            }
+        }
+        if (!res) {
+            for (int d = 0; d < 4; ++d) {
+                int nx = x + dx[d];
+                int ny = y + dy[d];
+                if (!valid(nx, ny)) {
+                    maze[x][y] = dirChar[d];
+                    res = 0;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (maze[x][y] != '?') {
+        getDir(maze[x][y], &tx, &ty);
+        int nx = x + tx, ny = y + ty;
+        if (valid(nx, ny)) {
+            res = dfs(nx, ny);
+        } else {
+            res = 0;
+        }
+    }
+
+    visited[x][y] = 2;
+    return trapped[x][y] = res;
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &m);
+        for (int i = 0; i < n; ++i) {
+            scanf("%s", maze[i]);
+        }
+
+        memset(visited, 0, sizeof(visited));
+        memset(trapped, 0, sizeof(trapped));
+
+        int ans = 0;
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < m; ++j)
+                if (!visited[i][j]) {
+                    ans += dfs(i, j);
+                } else {
+                    ans += trapped[i][j];
+                }
+
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

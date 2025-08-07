@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
 
+#define MAX_K 1005
+#define MAX_N 40005
+#define MAX_M 40005
+
+int waste_row[MAX_K], waste_col[MAX_K];
+char *crops[] = {"Carrots", "Kiwis", "Grapes"};
+
+int is_waste_cell(int r, int c, int k) {
+    for (int i = 0; i < k; i++) {
+        if (waste_row[i] == r && waste_col[i] == c)
+            return 1;
+    }
+    return 0;
+}
+
+int count_waste_before(int r, int c, int m, int k) {
+    int current_pos = (r - 1) * m + (c - 1);
+    int count = 0;
+    for (int i = 0; i < k; i++) {
+        int waste_pos = (waste_row[i] - 1) * m + (waste_col[i] - 1);
+        if (waste_pos < current_pos)
+            count++;
+    }
+    return count;
+}
+
+int main() {
+    int n, m, k, t;
+    scanf("%d %d %d %d", &n, &m, &k, &t);
+
+    for (int i = 0; i < k; i++) {
+        scanf("%d %d", &waste_row[i], &waste_col[i]);
+    }
+
+    for (int i = 0; i < t; i++) {
+        int r, c;
+        scanf("%d %d", &r, &c);
+
+        if (is_waste_cell(r, c, k)) {
+            printf("Waste\n");
+        } else {
+            int waste_before = count_waste_before(r, c, m, k);
+            int pos = (r - 1) * m + (c - 1) - waste_before;
+            printf("%s\n", crops[pos % 3]);
+        }
+    }
+
+    return 0;
+}

@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define MAXN 1005
+
+typedef struct {
+    int left;
+    int right;
+} Segment;
+
+Segment make_segment(int x1, int x2) {
+    Segment s;
+    if (x1 < x2) {
+        s.left = x1;
+        s.right = x2;
+    } else {
+        s.left = x2;
+        s.right = x1;
+    }
+    return s;
+}
+
+int is_crossing(Segment a, Segment b) {
+    return (a.left < b.left && b.left < a.right && a.right < b.right) ||
+           (b.left < a.left && a.left < b.right && b.right < a.right);
+}
+
+int main() {
+    int n, x[MAXN];
+    Segment arcs[MAXN];
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &x[i]);
+    }
+
+    for (int i = 0; i < n - 1; ++i) {
+        arcs[i] = make_segment(x[i], x[i + 1]);
+    }
+
+    for (int i = 0; i < n - 2; ++i) {
+        for (int j = i + 1; j < n - 1; ++j) {
+            if (j == i + 1) continue;
+            if (is_crossing(arcs[i], arcs[j])) {
+                printf("yes\n");
+                return 0;
+            }
+        }
+    }
+
+    printf("no\n");
+    return 0;
+}
 

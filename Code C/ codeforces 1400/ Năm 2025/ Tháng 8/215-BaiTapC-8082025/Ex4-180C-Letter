@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 100005
+
+char s[MAX];
+
+int main() {
+    scanf("%s", s);
+    int n = strlen(s);
+
+    int totalLower = 0;
+    for (int i = 0; i < n; ++i)
+        if (islower(s[i]))
+            totalLower++;
+
+    int minOps = totalLower;
+    int upperLeft = 0, lowerRight = totalLower;
+
+    for (int i = 0; i < n; ++i) {
+        int ops = upperLeft + lowerRight;
+        if (ops < minOps)
+            minOps = ops;
+
+        if (isupper(s[i]))
+            upperLeft++;
+        else
+            lowerRight--;
+    }
+
+    if (upperLeft < minOps)
+        minOps = upperLeft;
+
+    printf("%d\n", minOps);
+    return 0;
+}
 

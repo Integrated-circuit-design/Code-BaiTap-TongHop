@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[110], target[] = "CODEFORCES";
+    scanf("%s", s);
+    int n = strlen(s), m = strlen(target);
+
+    if (n < m) {
+        puts("NO");
+        return 0;
+    }
+
+    for (int i = 0; i <= n; i++) {
+        for (int j = i; j <= n; j++) {
+            char temp[110];
+            int pos = 0;
+            for (int k = 0; k < i; k++)
+                temp[pos++] = s[k];
+            for (int k = j; k < n; k++)
+                temp[pos++] = s[k];
+            temp[pos] = '\0';
+            if (strcmp(temp, target) == 0) {
+                puts("YES");
+                return 0;
+            }
+        }
+    }
+
+    puts("NO");
+    return 0;
+}
 

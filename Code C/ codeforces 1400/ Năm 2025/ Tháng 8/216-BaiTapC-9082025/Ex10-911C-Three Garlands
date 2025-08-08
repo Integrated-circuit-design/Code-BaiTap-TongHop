@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int gcd(int a,int b){return b?gcd(b,a%b):a;}
+int lcm(int a,int b){return a/gcd(a,b)*b;}
+
+int main(){
+    int k1,k2,k3;
+    scanf("%d%d%d",&k1,&k2,&k3);
+
+    int L = lcm(lcm(k1,k2),k3);
+    int mark[5000];
+    int found = 0;
+
+    for(int x1=1; x1<=k1 && !found; x1++){
+        for(int i=0;i<L;i++) mark[i]=0;
+        for(int t=x1; t<L+x1; t+=k1) mark[t%L]=1;
+
+        for(int x2=1; x2<=k2 && !found; x2++){
+            for(int t=x2; t<L+x2; t+=k2) mark[t%L]=1;
+
+            for(int x3=1; x3<=k3 && !found; x3++){
+                for(int t=x3; t<L+x3; t+=k3) mark[t%L]=1;
+
+                int ok=1;
+                for(int i=0;i<L;i++)
+                    if(mark[i]==0){ ok=0; break; }
+
+                if(ok) found=1;
+
+                for(int t=x3; t<L+x3; t+=k3) mark[t%L]=1;
+            }
+
+            for(int i=0;i<L;i++) mark[i] = ((i - x1 + L)%k1==0);
+        }
+    }
+
+    puts(found?"YES":"NO");
+}
 

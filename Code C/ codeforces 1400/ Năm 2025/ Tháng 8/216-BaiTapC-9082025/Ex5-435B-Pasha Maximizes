@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char num[32];
+    long long a;
+    int k;
+    scanf("%lld %d", &a, &k);
+
+    sprintf(num, "%lld", a);
+    int n = strlen(num);
+
+    for (int i = 0; i < n && k > 0; i++) {
+        int best = i;
+        for (int j = i + 1; j < n && j - i <= k; j++)
+            if (num[j] > num[best])
+                best = j;
+        if (best != i) {
+            char ch = num[best];
+            memmove(num + i + 1, num + i, best - i);
+            num[i] = ch;
+            k -= (best - i);
+        }
+    }
+    printf("%s\n", num);
+    return 0;
+}
 

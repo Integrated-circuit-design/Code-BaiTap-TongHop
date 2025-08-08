@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+long long min_ll(long long a, long long b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    long long tong_khoi = 0;
+    long long khoi_can_giu = 0;
+    int cao_nhat = 0;
+    int x;
+
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x);
+        arr[i] = x;
+        tong_khoi += x;
+        if (x > cao_nhat) cao_nhat = x;
+    }
+
+    for (int i = 0; i < n; i++) {
+        khoi_can_giu += min_ll(arr[i], cao_nhat);
+    }
+
+    printf("%lld\n", tong_khoi - khoi_can_giu);
+    return 0;
+}
 

@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+#define MAX_DAY 3005
+
+int main() {
+    int n, v;
+    int ripen[MAX_DAY] = {0};
+    int harvest[MAX_DAY] = {0};
+
+    scanf("%d %d", &n, &v);
+
+    int a, b, maxDay = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &a, &b);
+        ripen[a] += b;
+        if (a > maxDay) maxDay = a;
+    }
+
+    int total = 0;
+    for (int day = 1; day <= maxDay + 1; day++) {
+        harvest[day] += ripen[day];
+        harvest[day] += harvest[day - 1] > 0 ? harvest[day - 1] - v : 0;
+        if (harvest[day] >= v) {
+            total += v;
+            harvest[day] -= v;
+        } else {
+            total += harvest[day];
+            harvest[day] = 0;
+        }
+    }
+
+    printf("%d\n", total);
+    return 0;
+}
 

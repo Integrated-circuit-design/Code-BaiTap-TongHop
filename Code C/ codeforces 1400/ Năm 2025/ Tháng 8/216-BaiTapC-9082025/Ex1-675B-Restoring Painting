@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+#define max(a,b) ((a)>(b)?(a):(b))
+#define min(a,b) ((a)<(b)?(a):(b))
+
+int main() {
+    int n, a, b, c, d;
+    scanf("%d %d %d %d %d", &n, &a, &b, &c, &d);
+
+    int low = 1;
+    int high = n;
+
+    low = max(low, 1 - a + d);
+    high = min(high, n - a + d);
+
+    low = max(low, 1 - b + c);
+    high = min(high, n - b + c);
+
+    low = max(low, 1 - a - b + c + d);
+    high = min(high, n - a - b + c + d);
+
+    long long ans = 0;
+    if (low <= high) ans = high - low + 1;
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

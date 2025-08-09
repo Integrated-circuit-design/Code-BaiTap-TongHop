@@ -1,1 +1,26 @@
+#include <stdio.h>
+#include <math.h>
+
+long long p, y;
+
+int is_safe(long long branch) {
+    long long max_d = p < (long long)sqrt(branch) ? p : (long long)sqrt(branch);
+    for (long long d = 2; d <= max_d; d++)
+        if (branch % d == 0) return 0;
+    return 1;
+}
+
+int main() {
+    scanf("%lld %lld", &p, &y);
+    long long candidate = y;
+    while (candidate > p) {
+        if (is_safe(candidate)) {
+            printf("%lld\n", candidate);
+            return 0;
+        }
+        candidate--;
+    }
+    puts("-1");
+    return 0;
+}
 

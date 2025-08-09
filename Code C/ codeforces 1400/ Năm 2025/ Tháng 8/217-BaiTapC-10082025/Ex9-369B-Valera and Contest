@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int n, k, l, r, sall, sk;
+    scanf("%d %d %d %d %d %d", &n, &k, &l, &r, &sall, &sk);
+
+    int a[1005], i;
+
+    int base_top = sk / k;
+    int extra_top = sk % k;
+
+    for (i = 0; i < k; i++) {
+        a[i] = base_top + (i < extra_top);
+    }
+
+    int rest_sum = sall - sk;
+    int rest_count = n - k;
+    if (rest_count > 0) {
+        int base_rest = rest_sum / rest_count;
+        int extra_rest = rest_sum % rest_count;
+
+        for (i = k; i < n; i++) {
+            a[i] = base_rest + ((i - k) < extra_rest);
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        printf("%d%c", a[i], (i == n - 1) ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

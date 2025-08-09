@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int can18 = n, can21 = n, can25 = n;
+    int soVan = 0;
+
+    while (can18 > 0 || can21 > 0 || can25 > 0) {
+        int dai = 60;
+        soVan++;
+
+        if (can25 > 0 && dai >= 25) {
+            dai -= 25;
+            can25--;
+        }
+        if (can21 > 0 && dai >= 21) {
+            dai -= 21;
+            can21--;
+        }
+        if (can18 > 0 && dai >= 18) {
+            dai -= 18;
+            can18--;
+        }
+    }
+
+    printf("%d\n", soVan);
+    return 0;
+}
 

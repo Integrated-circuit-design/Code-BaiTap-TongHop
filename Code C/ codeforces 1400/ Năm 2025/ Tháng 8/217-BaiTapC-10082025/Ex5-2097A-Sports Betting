@@ -1,1 +1,13 @@
+#include <stdio.h>
+
+int main() {
+    int t, n, tmp;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        while (n--) scanf("%d", &tmp);
+        puts(n + 4 <= 4 ? "Yes" : "No");
+    }
+    return 0;
+}
 

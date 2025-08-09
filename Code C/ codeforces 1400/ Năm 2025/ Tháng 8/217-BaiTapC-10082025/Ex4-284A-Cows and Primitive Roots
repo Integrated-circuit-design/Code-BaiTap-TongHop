@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+long long powmod(long long a, long long b, long long mod) {
+    long long res = 1 % mod;
+    while (b > 0) {
+        if (b & 1) res = (res * a) % mod;
+        a = (a * a) % mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+int main() {
+    int p;
+    scanf("%d", &p);
+    int n = p - 1;
+
+    int factors[32], cnt = 0, temp = n;
+    for (int i = 2; i * i <= temp; i++) {
+        if (temp % i == 0) {
+            factors[cnt++] = i;
+            while (temp % i == 0) temp /= i;
+        }
+    }
+    if (temp > 1) factors[cnt++] = temp;
+
+    int count = 0;
+    for (int g = 1; g < p; g++) {
+        int ok = 1;
+        for (int i = 0; i < cnt; i++) {
+            if (powmod(g, n / factors[i], p) == 1) {
+                ok = 0;
+                break;
+            }
+        }
+        if (ok) count++;
+    }
+
+    printf("%d\n", count);
+    return 0;
+}
 

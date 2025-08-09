@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <stdint.h>
+
+uint64_t greedy_game(uint64_t n) {
+    uint64_t chanek = 0;
+    int turn = 0;
+
+    while (n > 0) {
+        uint64_t take;
+        if (n % 2 == 0) {
+            if ((n / 2) >= 1) take = n / 2;
+            else take = 1;
+        } else {
+            take = 1;
+        }
+
+        if (turn == 0) chanek += take;
+        n -= take;
+        turn ^= 1;
+    }
+    return chanek;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        uint64_t N;
+        scanf("%llu", &N);
+        printf("%llu\n", greedy_game(N));
+    }
+    return 0;
+}
 

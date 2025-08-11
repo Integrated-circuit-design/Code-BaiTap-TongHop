@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n], b[n], c[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d%d%d", &a[i], &b[i], &c[i]);
+    }
+
+    int cost_clockwise = 0;
+    int cost_counter = 0;
+
+    int pos[n+1];
+    for (int i = 1; i <= n; i++) pos[i] = -1;
+
+    pos[a[0]] = 0;
+    int current = b[0];
+    for (int i = 1; i < n; i++) {
+        pos[current] = i;
+        for (int j = 0; j < n; j++) {
+            if (a[j] == current) {
+                current = b[j];
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        int from = a[i], to = b[i];
+        if ((pos[from] + 1) % n == pos[to]) {
+            cost_clockwise += 0;
+            cost_counter += c[i];
+        } else {
+            cost_clockwise += c[i];
+            cost_counter += 0;
+        }
+    }
+
+    int ans = cost_clockwise < cost_counter ? cost_clockwise : cost_counter;
+    printf("%d\n", ans);
+
+    return 0;
+}
 

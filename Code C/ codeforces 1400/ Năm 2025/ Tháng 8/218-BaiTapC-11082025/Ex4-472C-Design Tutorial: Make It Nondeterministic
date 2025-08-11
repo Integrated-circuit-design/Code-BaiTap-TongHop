@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100000
+#define MAXLEN 51
+
+char first[MAXN][MAXLEN], last[MAXN][MAXLEN];
+int order[MAXN];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s %s", first[i], last[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &order[i]);
+        order[i]--;
+    }
+
+    char prev[MAXLEN] = "";
+    int ok = 1;
+
+    for (int i = 0; i < n && ok; i++) {
+        int idx = order[i];
+
+        char *name1 = first[idx];
+        char *name2 = last[idx];
+        if (strcmp(name1, name2) > 0) {
+            char *tmp = name1;
+            name1 = name2;
+            name2 = tmp;
+        }
+
+        if (strcmp(name1, prev) > 0) {
+            strcpy(prev, name1);
+        }
+        else if (strcmp(name2, prev) > 0) {
+            strcpy(prev, name2);
+        }
+        else {
+            ok = 0;
+        }
+    }
+
+    printf(ok ? "YES\n" : "NO\n");
+    return 0;
+}
 

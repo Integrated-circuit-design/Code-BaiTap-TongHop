@@ -1,1 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 1003
+
+int N, M;
+int grid[MAXN][MAXN];
+int visited[MAXN][MAXN];
+
+int dx[4] = {-1, 0, 1, 0};
+int dy[4] = {0, 1, 0, -1};
+
+int can_move(int x, int y, int dir) {
+    return ((grid[x][y] & (1 << (3 - dir))) == 0);
+}
+
+typedef struct {
+    int x, y;
+} Point;
+
+int bfs(int sx, int sy) {
+    int queue_size = N * M;
+    Point *queue = (Point*) malloc(sizeof(Point) * queue_size);
+    int head = 0, tail = 0;
+
+    queue[tail++] = (Point){sx, sy};
+    visited[sx][sy] = 1;
+
+    int room_size = 0;
+
+    while (head < tail) {
+        Point p = queue[head++];
+        room_size++;
+
+        for (int dir = 0; dir < 4; dir++) {
+            int nx = p.x + dx[dir];
+            int ny = p.y + dy[dir];
+
+            if (nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
+            if (visited[nx][ny]) continue;
+
+            if (can_move(p.x, p.y, dir)) {
+                visited[nx][ny] = 1;
+                queue[tail++] = (Point){nx, ny};
+            }
+        }
+    }
+
+    free(queue);
+    return room_size;
+}
+
+int cmp_desc(const void *a, const void *b) {
+    return (*(int*)b) - (*(int*)a);
+}
+
+int main() {
+    scanf("%d%d", &N, &M);
+
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < M; j++) {
+            scanf("%d", &grid[i][j]);
+            visited[i][j] = 0;
+        }
+
+    int *room_sizes = (int*) malloc(sizeof(int) * N * M);
+    int count = 0;
+
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < M; j++)
+            if (!visited[i][j]) {
+                room_sizes[count++] = bfs(i, j);
+            }
+
+    qsort(room_sizes, count, sizeof(int), cmp_desc);
+
+    for (int i = 0; i < count; i++) {
+        printf("%d", room_sizes[i]);
+        if (i < count - 1) printf(" ");
+    }
+    printf("\n");
+
+    free(room_sizes);
+    return 0;
+}
 

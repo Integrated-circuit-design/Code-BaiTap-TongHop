@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// So sánh giảm dần
+int cmp_desc(const void *a, const void *b) {
+    return (*(int*)b) - (*(int*)a);
+}
+
+int main() {
+    int m;
+    scanf("%d", &m);
+
+    int *q = (int*)malloc(m * sizeof(int));
+    int max_q = 0;
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &q[i]);
+        if (q[i] > max_q) max_q = q[i];
+    }
+
+    int n;
+    scanf("%d", &n);
+
+    int *prices = (int*)malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &prices[i]);
+    }
+
+    qsort(prices, n, sizeof(int), cmp_desc);
+
+    long long total = 0;
+    int group_size = max_q + 2;
+
+    int i = 0;
+    while (i < n) {
+        // Trong mỗi nhóm, trả tiền cho max_q món hàng
+        for (int j = 0; j < max_q && i < n; j++, i++) {
+            total += prices[i];
+        }
+        // Bỏ qua tối đa 2 món hàng miễn phí (nếu còn)
+        for (int j = 0; j < 2 && i < n; j++, i++) {
+            // Miễn phí, không cộng tiền
+        }
+    }
+
+    printf("%lld\n", total);
+
+    free(q);
+    free(prices);
+    return 0;
+}
 

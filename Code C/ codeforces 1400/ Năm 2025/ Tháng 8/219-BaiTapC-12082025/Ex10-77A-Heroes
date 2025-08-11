@@ -1,1 +1,83 @@
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+
+#define N 7
+#define INF 1000000000
+
+const char *hero_names[N] = {
+    "Anka", "Chapay", "Cleo", "Troll", "Dracul", "Snowy", "Hexadecimal"
+};
+
+int liking[N][N];
+int exp_for_boss[3];
+
+int hero_id(const char *s) {
+    for (int i=0; i<N; i++) {
+        if (strcmp(hero_names[i], s) == 0) return i;
+    }
+    return -1;
+}
+
+int main() {
+    int n;
+    scanf("%d\n", &n);
+
+    memset(liking, 0, sizeof(liking));
+
+    for (int i=0; i<n; i++) {
+        char p[20], tmp[10], q[20];
+        scanf("%s %s %s\n", p, tmp, q);
+        int u = hero_id(p);
+        int v = hero_id(q);
+        if (u != -1 && v != -1) liking[u][v] = 1;
+    }
+
+    scanf("%d %d %d", &exp_for_boss[0], &exp_for_boss[1], &exp_for_boss[2]);
+
+    int group[N];
+    int best_diff = INF;
+    int best_liking = -1;
+
+    for (int mask=0; mask<2187; mask++) {
+        int tmp = mask;
+        int count[3] = {0,0,0};
+        for (int i=0; i<N; i++) {
+            group[i] = tmp % 3;
+            count[group[i]]++;
+            tmp /= 3;
+        }
+        if (count[0] == 0 || count[1] == 0 || count[2] == 0) continue;
+
+        int exp_hero[N];
+        for (int i=0; i<N; i++) {
+            exp_hero[i] = exp_for_boss[group[i]] / count[group[i]];
+        }
+
+        int max_exp = 0, min_exp = INF;
+        for (int i=0; i<N; i++) {
+            if (exp_hero[i] > max_exp) max_exp = exp_hero[i];
+            if (exp_hero[i] < min_exp) min_exp = exp_hero[i];
+        }
+
+        int diff = max_exp - min_exp;
+
+        int liking_sum = 0;
+        for (int p=0; p<N; p++) {
+            for (int q=0; q<N; q++) {
+                if (p != q && group[p] == group[q] && liking[p][q]) {
+                    liking_sum++;
+                }
+            }
+        }
+
+        if (diff < best_diff || (diff == best_diff && liking_sum > best_liking)) {
+            best_diff = diff;
+            best_liking = liking_sum;
+        }
+    }
+
+    printf("%d %d\n", best_diff, best_liking);
+    return 0;
+}
 

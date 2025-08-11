@@ -1,1 +1,86 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+char leftWall[MAXN], rightWall[MAXN];
+int n, k;
+
+int visited[2][MAXN];
+
+int q_wall[MAXN * 4], q_pos[MAXN * 4], q_time[MAXN * 4];
+
+int bfs() {
+    int front = 0, back = 0;
+
+    q_wall[back] = 0;
+    q_pos[back] = 1;
+    q_time[back] = 0;
+    back++;
+    visited[0][1] = 1;
+
+    while (front < back) {
+        int wall = q_wall[front];
+        int pos = q_pos[front];
+        int t = q_time[front];
+        front++;
+
+        if (pos > n) return 1;
+
+        int nt = t + 1;
+
+        int np = pos + 1;
+        if (np <= n && !visited[wall][np]) {
+            char c = (wall == 0) ? leftWall[np - 1] : rightWall[np - 1];
+            if (c == '-' && np > nt) {
+                visited[wall][np] = 1;
+                q_wall[back] = wall;
+                q_pos[back] = np;
+                q_time[back] = nt;
+                back++;
+            }
+        }
+
+        np = pos - 1;
+        if (np > 0 && !visited[wall][np]) {
+            char c = (wall == 0) ? leftWall[np - 1] : rightWall[np - 1];
+            if (c == '-' && np > nt) {
+                visited[wall][np] = 1;
+                q_wall[back] = wall;
+                q_pos[back] = np;
+                q_time[back] = nt;
+                back++;
+            }
+        }
+
+        np = pos + k;
+        int nw = 1 - wall;
+        if (np > n) return 1;
+        if (np <= n && !visited[nw][np]) {
+            char c = (nw == 0) ? leftWall[np - 1] : rightWall[np - 1];
+            if (c == '-' && np > nt) {
+                visited[nw][np] = 1;
+                q_wall[back] = nw;
+                q_pos[back] = np;
+                q_time[back] = nt;
+                back++;
+            }
+        }
+    }
+
+    return 0;
+}
+
+int main() {
+    scanf("%d%d", &n, &k);
+    scanf("%s%s", leftWall, rightWall);
+
+    memset(visited, 0, sizeof(visited));
+    visited[0][1] = 1;
+
+    if (bfs()) printf("YES\n");
+    else printf("NO\n");
+
+    return 0;
+}
 

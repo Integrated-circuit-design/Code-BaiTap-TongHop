@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int count_pieces(int stripes[], int n, int length) {
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        total += stripes[i] / length;
+    }
+    return total;
+}
+
+int main() {
+    int n, min_length;
+    scanf("%d %d", &n, &min_length);
+
+    int stripes[100];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &stripes[i]);
+    }
+
+    int max_area = 0;
+
+    for (int len = min_length; len <= 100; len++) {
+        int pieces = count_pieces(stripes, n, len);
+        int area = pieces * len;
+        if (area > max_area) {
+            max_area = area;
+        }
+    }
+
+    printf("%d\n", max_area);
+
+    return 0;
+}
 

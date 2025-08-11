@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int N;
+    scanf("%d", &N);
+
+    int pair_sum[1005];
+    int result[1005];
+
+    for (int i = 1; i < N; i++) {
+        printf("? %d %d\n", i, i+1);
+        fflush(stdout);
+        scanf("%d", &pair_sum[i]);
+    }
+
+    int total;
+    printf("? 1 %d\n", N);
+    fflush(stdout);
+    scanf("%d", &total);
+
+    int tmp[1005];
+    tmp[1] = 0;
+    tmp[2] = pair_sum[1];
+    for (int i = 3; i <= N; i++) {
+        tmp[i] = pair_sum[i-1] - tmp[i-1];
+    }
+
+    int sum_tmp = 0;
+    for (int i = 1; i <= N; i++) sum_tmp += tmp[i];
+    int x = (total - sum_tmp) / N;
+
+    for (int i = 1; i <= N; i++) {
+        if (i % 2 == 1) result[i] = tmp[i] + x;
+        else result[i] = tmp[i] - x;
+    }
+
+    printf("!");
+    for (int i = 1; i <= N; i++) printf(" %d", result[i]);
+    printf("\n");
+    fflush(stdout);
+
+    return 0;
+}
 

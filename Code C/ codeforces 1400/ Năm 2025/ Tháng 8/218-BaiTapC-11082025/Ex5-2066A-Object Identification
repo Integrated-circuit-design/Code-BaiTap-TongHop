@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define QUERY(i, j, res) do { \
+    printf("? %d %d\n", (i), (j)); \
+    fflush(stdout); \
+    if (scanf("%d", &(res)) != 1 || (res) == -1) return 0; \
+} while(0)
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        int *X = malloc((n + 1) * sizeof(int));
+        for (int i = 1; i <= n; i++) scanf("%d", &X[i]);
+
+        int ans1, ans2;
+        QUERY(1, 2, ans1);
+        QUERY(2, 3, ans2);
+
+        auto checkB = [](int dist, int dx) {
+            return (dist >= dx) && ((dist - dx) % 2 == 0);
+        };
+
+        int ok1 = checkB(ans1, abs(X[1] - X[2]));
+        int ok2 = checkB(ans2, abs(X[2] - X[3]));
+
+        if (ok1 && ok2) {
+            printf("! B\n");
+        } else {
+            printf("! A\n");
+        }
+        fflush(stdout);
+
+        free(X);
+    }
+    return 0;
+}
 

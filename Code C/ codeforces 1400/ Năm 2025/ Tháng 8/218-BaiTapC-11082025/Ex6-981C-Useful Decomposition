@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int n, deg[MAXN], adj[MAXN][MAXN/2];
+int ans_u[MAXN], ans_v[MAXN], m;
+
+int find_leaf(int u, int parent) {
+    if (deg[u] == 1) return u;
+    for (int i = 0; i < deg[u]; i++) {
+        int v = adj[u][i];
+        if (v != parent) return find_leaf(v, u);
+    }
+    return u;
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) deg[i] = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        adj[a][deg[a]++] = b;
+        adj[b][deg[b]++] = a;
+    }
+
+    int big_nodes = 0, center = 1;
+    for (int i = 1; i <= n; i++) {
+        if (deg[i] >= 3) {
+            big_nodes++;
+            center = i;
+        }
+    }
+
+    if (big_nodes >= 2) {
+        printf("No\n");
+        return 0;
+    }
+
+    if (big_nodes == 0) {
+        for (int i = 1; i <= n; i++) if (deg[i] > 0) { center = i; break; }
+    }
+
+    m = 0;
+    for (int i = 0; i < deg[center]; i++) {
+        int leaf = find_leaf(adj[center][i], center);
+        ans_u[m] = center;
+        ans_v[m] = leaf;
+        m++;
+    }
+
+    printf("Yes\n");
+    printf("%d\n", m);
+    for (int i = 0; i < m; i++) {
+        printf("%d %d\n", ans_u[i], ans_v[i]);
+    }
+
+    return 0;
+}
 

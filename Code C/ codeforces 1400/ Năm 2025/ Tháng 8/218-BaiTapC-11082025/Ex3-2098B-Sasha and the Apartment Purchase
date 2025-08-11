@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int cmp_ll(const void *a, const void *b) {
+    ll x = *(ll*)a, y = *(ll*)b;
+    return (x < y) ? -1 : (x > y);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        ll a[100005];
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        qsort(a, n, sizeof(ll), cmp_ll);
+
+        int w = n - k;
+        ll ans = 0;
+
+        ll prevL = -1, prevR = -1;
+
+        for (int start = 0; start <= k; start++) {
+            ll L = a[start + (w - 1) / 2];
+            ll R = a[start + w / 2];
+
+            if (prevL == -1) {
+                prevL = L;
+                prevR = R;
+            } else if (L <= prevR + 1) {
+                if (R > prevR) prevR = R;
+            } else {
+                ans += prevR - prevL + 1;
+                prevL = L;
+                prevR = R;
+            }
+        }
+        ans += prevR - prevL + 1;
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

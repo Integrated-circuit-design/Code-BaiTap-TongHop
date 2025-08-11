@@ -1,22 +1,29 @@
 #include <stdio.h>
-#define ll long long
 
-ll a[100005];
+int count_trailing_nines(long long x) {
+    int cnt = 0;
+    while (x % 10 == 9) {
+        cnt++;
+        x /= 10;
+    }
+    return cnt;
+}
 
 int main() {
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+    long long p, d;
+    scanf("%lld %lld", &p, &d);
 
-    ll ans = 0;
-    for (int i = 1; i < n; i++) {
-        if (a[i] < a[i - 1]) { 
-            ans += a[i - 1] - a[i];
-            a[i] = a[i - 1];
+    long long best_price = p;
+    int best_nines = count_trailing_nines(p);
+
+    for (long long price = p; price >= p - d; price--) {
+        int nines = count_trailing_nines(price);
+        if (nines > best_nines || (nines == best_nines && price > best_price)) {
+            best_price = price;
+            best_nines = nines;
         }
     }
 
-    printf("%lld\n", ans);
+    printf("%lld\n", best_price);
     return 0;
 }
-

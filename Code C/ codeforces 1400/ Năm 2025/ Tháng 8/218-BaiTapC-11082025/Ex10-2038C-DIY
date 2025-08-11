@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef long long ll;
+
+int cmp_ll(const void *a, const void *b) {
+    ll x = *(ll*)a;
+    ll y = *(ll*)b;
+    return (x > y) - (x < y);
+}
+
+void find_best_pair(ll cand[], int csz, ll *p1, ll *p2) {
+    if (csz < 2) { *p1 = *p2 = cand[0]; return; }
+    *p1 = cand[0];
+    *p2 = cand[csz - 1];
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        ll *a = (ll*)malloc(n * sizeof(ll));
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+        qsort(a, n, sizeof(ll), cmp_ll);
+
+        ll cand[200005];
+        int csz = 0;
+        for (int i = 0; i < n;) {
+            int j = i;
+            while (j < n && a[j] == a[i]) j++;
+            if (j - i >= 2) cand[csz++] = a[i];
+            i = j;
+        }
+
+        if (csz < 2) {
+            printf("NO\n");
+            free(a);
+            continue;
+        }
+
+        ll x1, x2, y1, y2;
+        find_best_pair(cand, csz, &x1, &x2);
+        find_best_pair(cand, csz, &y1, &y2);
+
+        printf("YES\n");
+        printf("%lld %lld %lld %lld %lld %lld %lld %lld\n",
+               x1, y1, x1, y2, x2, y1, x2, y2);
+
+        free(a);
+    }
+    return 0;
+}
 

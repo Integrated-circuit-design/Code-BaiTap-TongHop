@@ -1,1 +1,110 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmpPower(const void *a, const void *b) {
+    int *x = (int*)a;
+    int *y = (int*)b;
+    if (*x < *y) return -1;
+    else if (*x > *y) return 1;
+    else return 0;
+}
+
+void sortByPower(int *power, long long *coins, int *index, int n) {
+    int *order = (int*)malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) order[i] = i;
+
+    int cmpOrder(const void *a, const void *b) {
+        int x = *(int*)a;
+        int y = *(int*)b;
+        if (power[x] < power[y]) return -1;
+        else if (power[x] > power[y]) return 1;
+        else return 0;
+    }
+
+    qsort(order, n, sizeof(int), cmpOrder);
+
+    int *power_tmp = (int*)malloc(n * sizeof(int));
+    long long *coins_tmp = (long long*)malloc(n * sizeof(long long));
+    int *index_tmp = (int*)malloc(n * sizeof(int));
+
+    for (int i = 0; i < n; i++) {
+        power_tmp[i] = power[order[i]];
+        coins_tmp[i] = coins[order[i]];
+        index_tmp[i] = index[order[i]];
+    }
+
+    for (int i = 0; i < n; i++) {
+        power[i] = power_tmp[i];
+        coins[i] = coins_tmp[i];
+        index[i] = index_tmp[i];
+    }
+
+    free(power_tmp);
+    free(coins_tmp);
+    free(index_tmp);
+    free(order);
+}
+
+int main() {
+    int n, k;
+    scanf("%d%d", &n, &k);
+
+    int *power = (int*)malloc(n * sizeof(int));
+    long long *coins = (long long*)malloc(n * sizeof(long long));
+    int *index = (int*)malloc(n * sizeof(int));
+    long long *result = (long long*)malloc(n * sizeof(long long));
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &power[i]);
+        index[i] = i;
+    }
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &coins[i]);
+    }
+
+    sortByPower(power, coins, index, n);
+
+    long long topK[11];
+    int topSize = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long sum = coins[i];
+        for (int j = 0; j < topSize; j++) {
+            sum += topK[j];
+        }
+        result[index[i]] = sum;
+
+        if (topSize < k) {
+            topK[topSize++] = coins[i];
+            int pos = topSize - 1;
+            while (pos > 0 && topK[pos] > topK[pos - 1]) {
+                long long tmp = topK[pos];
+                topK[pos] = topK[pos - 1];
+                topK[pos - 1] = tmp;
+                pos--;
+            }
+        } else if (k > 0 && coins[i] > topK[topSize - 1]) {
+            topK[topSize - 1] = coins[i];
+            int pos = topSize - 1;
+            while (pos > 0 && topK[pos] > topK[pos - 1]) {
+                long long tmp = topK[pos];
+                topK[pos] = topK[pos - 1];
+                topK[pos - 1] = tmp;
+                pos--;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%lld ", result[i]);
+    }
+    printf("\n");
+
+    free(power);
+    free(coins);
+    free(index);
+    free(result);
+
+    return 0;
+}
 

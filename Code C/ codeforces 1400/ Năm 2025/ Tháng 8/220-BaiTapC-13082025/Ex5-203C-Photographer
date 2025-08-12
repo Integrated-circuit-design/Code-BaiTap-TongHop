@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Client {
+    int idx;
+    long long mem;
+};
+
+int compare(const void *p1, const void *p2) {
+    struct Client *c1 = (struct Client *)p1;
+    struct Client *c2 = (struct Client *)p2;
+    return (c1->mem > c2->mem) - (c1->mem < c2->mem);
+}
+
+int main() {
+    int n;
+    long long d;
+    scanf("%d %lld", &n, &d);
+
+    int a, b;
+    scanf("%d %d", &a, &b);
+
+    struct Client clients[n];
+    long long *memories = (long long *)malloc(n * sizeof(long long));
+
+    for (int i = 0; i < n; i++) {
+        long long x, y;
+        scanf("%lld %lld", &x, &y);
+        clients[i].idx = i + 1;
+        clients[i].mem = x * (long long)a + y * (long long)b;
+        memories[i] = clients[i].mem;
+    }
+
+    qsort(clients, n, sizeof(struct Client), compare);
+
+    long long total = 0;
+    int served = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (total + clients[i].mem <= d) {
+            total += clients[i].mem;
+            served++;
+        } else {
+            break;
+        }
+    }
+
+    printf("%d\n", served);
+    for (int i = 0; i < served; i++) {
+        printf("%d ", clients[i].idx);
+    }
+    if (served > 0) printf("\n");
+
+    free(memories);
+    return 0;
+}
 

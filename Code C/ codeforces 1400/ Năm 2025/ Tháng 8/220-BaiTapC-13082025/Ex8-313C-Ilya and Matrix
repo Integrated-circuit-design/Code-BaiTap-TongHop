@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int compare_ll(const void *p1, const void *p2) {
+    ll a = *(ll*)p1;
+    ll b = *(ll*)p2;
+    return (a > b) - (a < b);
+}
+
+int main() {
+    int total;
+    scanf("%d", &total);
+
+    ll *arr = malloc(sizeof(ll) * total);
+    for (int i = 0; i < total; i++) {
+        scanf("%lld", &arr[i]);
+    }
+
+    qsort(arr, total, sizeof(ll), compare_ll);
+
+    ll sum = 0;
+    for (int i = 0; i < total; i++) {
+        sum += arr[i];
+    }
+
+    int size = 1;
+    while (size * size < total) {
+        size++;
+    }
+
+    ll corner_vals[4];
+    corner_vals[0] = arr[0];
+    corner_vals[1] = arr[size - 1];
+    corner_vals[2] = arr[total - size];
+    corner_vals[3] = arr[total - 1];
+
+    ll max_corner = corner_vals[0];
+    for (int i = 1; i < 4; i++) {
+        if (corner_vals[i] > max_corner) {
+            max_corner = corner_vals[i];
+        }
+    }
+
+    printf("%lld\n", sum + max_corner);
+
+    free(arr);
+    return 0;
+}
 

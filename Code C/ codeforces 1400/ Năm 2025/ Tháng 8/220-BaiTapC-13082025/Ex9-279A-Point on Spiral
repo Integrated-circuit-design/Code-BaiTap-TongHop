@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int is_target(int cx, int cy, int tx, int ty) {
+    return (cx == tx && cy == ty);
+}
+
+int main() {
+    int targetX, targetY;
+    scanf("%d %d", &targetX, &targetY);
+
+    if (targetX == 0 && targetY == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    int moveX[4] = {1, 0, -1, 0};
+    int moveY[4] = {0, 1, 0, -1};
+
+    int posX = 0, posY = 0;
+    int direction = 0;
+    int lengthStep = 1;
+    int countTurns = 0;
+
+    while (1) {
+        for (int i = 0; i < lengthStep; i++) {
+            posX += moveX[direction];
+            posY += moveY[direction];
+            if (is_target(posX, posY, targetX, targetY)) {
+                printf("%d\n", countTurns);
+                return 0;
+            }
+        }
+        countTurns++;
+        direction = (direction + 1) % 4;
+
+        for (int i = 0; i < lengthStep; i++) {
+            posX += moveX[direction];
+            posY += moveY[direction];
+            if (is_target(posX, posY, targetX, targetY)) {
+                printf("%d\n", countTurns);
+                return 0;
+            }
+        }
+        countTurns++;
+        direction = (direction + 1) % 4;
+
+        lengthStep++;
+    }
+
+    return 0;
+}
 

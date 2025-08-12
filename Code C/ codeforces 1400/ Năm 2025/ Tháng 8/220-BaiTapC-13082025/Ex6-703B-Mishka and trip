@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MAX 100000
+
+int main() {
+    int n, k;
+    scanf("%d%d", &n, &k);
+
+    int beauty[MAX + 1];
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &beauty[i]);
+    }
+
+    int capitals[MAX];
+    for (int i = 0; i < k; i++) {
+        scanf("%d", &capitals[i]);
+    }
+
+    long long total = 0;
+    for (int i = 1; i <= n; i++) {
+        total += beauty[i];
+    }
+
+    long long cycle_cost = 0;
+    for (int i = 1; i < n; i++) {
+        cycle_cost += (long long)beauty[i] * beauty[i+1];
+    }
+    cycle_cost += (long long)beauty[n] * beauty[1];
+
+    long long capital_sum = 0, capital_sum_sq = 0;
+    for (int i = 0; i < k; i++) {
+        int city = capitals[i];
+        capital_sum += beauty[city];
+        capital_sum_sq += (long long)beauty[city] * beauty[city];
+    }
+
+    long long capital_edges = 0;
+    for (int i = 0; i < k; i++) {
+        int city = capitals[i];
+        capital_edges += (long long)beauty[city] * (total - beauty[city]);
+    }
+
+    long long capital_pairs = (capital_sum * capital_sum - capital_sum_sq) / 2;
+
+    long long result = cycle_cost + capital_edges - capital_pairs;
+
+    printf("%lld\n", result);
+    return 0;
+}
 

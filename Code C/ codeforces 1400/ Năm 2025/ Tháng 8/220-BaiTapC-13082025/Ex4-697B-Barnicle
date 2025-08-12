@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[210];
+    scanf("%s", s);
+
+    char *dot = strchr(s, '.');
+    char *e = strchr(s, 'e');
+
+    int exp = 0;
+    for (char *p = e + 1; *p; p++) {
+        exp = exp * 10 + (*p - '0');
+    }
+
+    char res[310];
+    int res_len = 0;
+
+    res[res_len++] = s[0];
+
+    int frac_len = e - dot - 1;
+
+    if (exp >= frac_len) {
+        for (char *p = dot + 1; p < e; p++) {
+            res[res_len++] = *p;
+        }
+        for (int i = 0; i < exp - frac_len; i++) {
+            res[res_len++] = '0';
+        }
+        res[res_len] = 0;
+        int start = 0;
+        while (start < res_len - 1 && res[start] == '0') start++;
+        for (int i = start; i < res_len; i++) putchar(res[i]);
+        putchar('\n');
+    } else {
+        for (int i = 0; i < exp; i++) {
+            res[res_len++] = *(dot + 1 + i);
+        }
+        res[res_len] = 0;
+
+        char frac[210];
+        int frac_len_new = frac_len - exp;
+        for (int i = 0; i < frac_len_new; i++) {
+            frac[i] = *(dot + 1 + exp + i);
+        }
+        frac[frac_len_new] = 0;
+
+        while (frac_len_new > 0 && frac[frac_len_new - 1] == '0') frac_len_new--;
+
+        int start = 0;
+        while (start < res_len - 1 && res[start] == '0') start++;
+        for (int i = start; i < res_len; i++) putchar(res[i]);
+
+        if (frac_len_new > 0) {
+            putchar('.');
+            for (int i = 0; i < frac_len_new; i++) putchar(frac[i]);
+        }
+        putchar('\n');
+    }
+
+    return 0;
+}
 

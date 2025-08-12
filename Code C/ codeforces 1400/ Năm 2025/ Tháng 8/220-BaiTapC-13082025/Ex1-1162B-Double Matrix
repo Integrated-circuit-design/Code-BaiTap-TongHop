@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 50
+
+int n, m;
+int mat1[MAX][MAX], mat2[MAX][MAX];
+
+void swap_if_needed(int r, int c) {
+    if (mat1[r][c] > mat2[r][c]) {
+        int tmp = mat1[r][c];
+        mat1[r][c] = mat2[r][c];
+        mat2[r][c] = tmp;
+    }
+}
+
+bool check_rows(int matrix[MAX][MAX]) {
+    for (int i = 0; i < n; i++)
+        for (int j = 1; j < m; j++)
+            if (matrix[i][j] <= matrix[i][j - 1])
+                return false;
+    return true;
+}
+
+bool check_cols(int matrix[MAX][MAX]) {
+    for (int j = 0; j < m; j++)
+        for (int i = 1; i < n; i++)
+            if (matrix[i][j] <= matrix[i - 1][j])
+                return false;
+    return true;
+}
+
+bool is_increasing(int matrix[MAX][MAX]) {
+    return check_rows(matrix) && check_cols(matrix);
+}
+
+int main() {
+    scanf("%d%d", &n, &m);
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            scanf("%d", &mat1[i][j]);
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            scanf("%d", &mat2[i][j]);
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            swap_if_needed(i, j);
+
+    if (is_increasing(mat1) && is_increasing(mat2))
+        printf("Possible\n");
+    else
+        printf("Impossible\n");
+
+    return 0;
+}
 

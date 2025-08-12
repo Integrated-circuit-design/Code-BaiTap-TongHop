@@ -1,1 +1,68 @@
+#include <stdio.h>
+
+#define MAX 100000
+
+typedef struct {
+    int defPower;
+    int gold;
+} Base;
+
+int main() {
+    int s, b;
+    scanf("%d %d", &s, &b);
+    
+    int ships[MAX];
+    for (int i = 0; i < s; i++) {
+        scanf("%d", &ships[i]);
+    }
+    
+    Base bases[MAX];
+    for (int i = 0; i < b; i++) {
+        scanf("%d %d", &bases[i].defPower, &bases[i].gold);
+    }
+    
+    for (int i = 1; i < b; i++) {
+        Base key = bases[i];
+        int j = i - 1;
+        while (j >= 0 && bases[j].defPower > key.defPower) {
+            bases[j + 1] = bases[j];
+            j--;
+        }
+        bases[j + 1] = key;
+    }
+    
+    long long prefixSum[MAX];
+    prefixSum[0] = bases[0].gold;
+    for (int i = 1; i < b; i++) {
+        prefixSum[i] = prefixSum[i - 1] + bases[i].gold;
+    }
+    
+    for (int i = 0; i < s; i++) {
+        int power = ships[i];
+        int left = 0, right = b - 1, idx = -1;
+        
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (bases[mid].defPower <= power) {
+                idx = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        
+        if (idx == -1) {
+            printf("0");
+        } else {
+            printf("%lld", prefixSum[idx]);
+        }
+        
+        if (i < s - 1) {
+            printf(" ");
+        }
+    }
+    printf("\n");
+    
+    return 0;
+}
 

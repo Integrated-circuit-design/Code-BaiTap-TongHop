@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <math.h>
+
+#define EPS 1e-9
+
+double dist2(double x1, double y1, double x2, double y2) {
+    double dx = x1 - x2, dy = y1 - y2;
+    return dx*dx + dy*dy;
+}
+
+double angle(double x, double y) {
+    return atan2(y, x);
+}
+
+int main() {
+    double ax, ay, bx, by, cx, cy;
+    scanf("%lf %lf %lf %lf %lf %lf", &ax, &ay, &bx, &by, &cx, &cy);
+
+    double A1 = 2*(bx - ax);
+    double B1 = 2*(by - ay);
+    double C1 = ax*ax + ay*ay - bx*bx - by*by;
+
+    double A2 = 2*(cx - bx);
+    double B2 = 2*(cy - by);
+    double C2 = bx*bx + by*by - cx*cx - cy*cy;
+
+    double det = A1*B2 - A2*B1;
+    if (fabs(det) < EPS) {
+        printf("No\n");
+        return 0;
+    }
+
+    double x = (C1*B2 - C2*B1)/det;
+    double y = (A1*C2 - A2*C1)/det;
+
+    double va_x = ax - x;
+    double va_y = ay - y;
+    double vb_x = bx - x;
+    double vb_y = by - y;
+    double vc_x = cx - x;
+    double vc_y = cy - y;
+
+    double angle_ab = angle(vb_x, vb_y) - angle(va_x, va_y);
+    while (angle_ab > M_PI) angle_ab -= 2*M_PI;
+    while (angle_ab < -M_PI) angle_ab += 2*M_PI;
+
+    double angle_bc = angle(vc_x, vc_y) - angle(vb_x, vb_y);
+    while (angle_bc > M_PI) angle_bc -= 2*M_PI;
+    while (angle_bc < -M_PI) angle_bc += 2*M_PI;
+
+    if (fabs(angle_ab - angle_bc) < 1e-8) {
+        double da = sqrt(dist2(x, y, ax, ay));
+        double db = sqrt(dist2(x, y, bx, by));
+        double dc = sqrt(dist2(x, y, cx, cy));
+
+        if (fabs(angle_ab) < EPS) {
+            printf("No\n");
+            return 0;
+        }
+
+        if (fabs(da - db) < EPS && fabs(db - dc) < EPS) {
+            printf("Yes\n");
+            return 0;
+        }
+    }
+
+    printf("No\n");
+    return 0;
+}
 

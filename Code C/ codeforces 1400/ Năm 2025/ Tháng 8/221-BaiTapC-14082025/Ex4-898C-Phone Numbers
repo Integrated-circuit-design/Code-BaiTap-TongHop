@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXF 25
+#define MAXNAME 15
+#define MAXNUM 15
+#define MAXPH 250
+
+typedef struct {
+    char name[MAXNAME];
+    char *phones[MAXPH];
+    int cnt;
+} Friend;
+
+Friend fr[MAXF];
+int fcnt = 0;
+char pool[MAXF * MAXPH][MAXNUM];
+int poolIdx = 0;
+
+int findFriend(char *name) {
+    for (int i = 0; i < fcnt; i++)
+        if (strcmp(fr[i].name, name) == 0) return i;
+    return -1;
+}
+
+int isSuffix(char *a, char *b) {
+    int la = strlen(a), lb = strlen(b);
+    return lb >= la && strcmp(b + lb - la, a) == 0;
+}
+
+void addPhone(Friend *f, char *num) {
+    for (int i = 0; i < f->cnt; i++)
+        if (strcmp(f->phones[i], num) == 0) return;
+    strcpy(pool[poolIdx], num);
+    f->phones[f->cnt++] = pool[poolIdx++];
+}
+
+void filterSuffix(Friend *f) {
+    int keep[MAXPH] = {0};
+    for (int i = 0; i < f->cnt; i++) {
+        int bad = 0;
+        for (int j = 0; j < f->cnt; j++)
+            if (i != j && isSuffix(f->phones[i], f->phones[j])) { bad = 1; break; }
+        if (!bad) keep[i] = 1;
+    }
+    int tcnt = 0;
+    for (int i = 0; i < f->cnt; i++)
+        if (keep[i]) f->phones[tcnt++] = f->phones[i];
+    f->cnt = tcnt;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    while (n--) {
+        char name[MAXNAME]; int m;
+        scanf("%s %d", name, &m);
+        int idx = findFriend(name);
+        if (idx == -1) {
+            idx = fcnt++;
+            strcpy(fr[idx].name, name);
+            fr[idx].cnt = 0;
+        }
+        while (m--) {
+            char num[MAXNUM];
+            scanf("%s", num);
+            addPhone(&fr[idx], num);
+        }
+    }
+    for (int i = 0; i < fcnt; i++) filterSuffix(&fr[i]);
+
+    printf("%d\n", fcnt);
+    for (int i = 0; i < fcnt; i++) {
+        printf("%s %d", fr[i].name, fr[i].cnt);
+        for (int j = 0; j < fr[i].cnt; j++) printf(" %s", fr[i].phones[j]);
+        printf("\n");
+    }
+}
 

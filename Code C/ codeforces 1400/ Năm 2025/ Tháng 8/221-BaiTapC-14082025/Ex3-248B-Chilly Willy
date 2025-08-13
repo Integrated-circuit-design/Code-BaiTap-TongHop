@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+    if (n < 3) {
+        printf("-1\n");
+        return 0;
+    }
+    if (n == 3) {
+        printf("210\n");
+        return 0;
+    }
+    char s[100005];
+    s[0] = '1';
+    for (long long i = 1; i < n; i++) s[i] = '0';
+    s[n] = '\0';
+    int last3 = 0;
+    int add = (210 - (last3 % 210)) % 210;
+    s[n-3] = (add / 100) + '0';
+    s[n-2] = ((add / 10) % 10) + '0';
+    s[n-1] = (add % 10) + '0';
+    printf("%s\n", s);
+    return 0;
+}
 

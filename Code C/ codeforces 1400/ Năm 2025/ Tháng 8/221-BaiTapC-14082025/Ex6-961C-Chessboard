@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+#define INF 1000000000
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    getchar();
+
+    long long cost0[4] = {0}, cost1[4] = {0};
+    char s[110];
+    
+    for (int piece = 0; piece < 4; piece++) {
+        for (int i = 0; i < n; i++) {
+            do {
+                if (!fgets(s, sizeof(s), stdin)) return 0;
+            } while (s[0] == '\n' || s[0] == '\r');
+            
+            for (int j = 0; j < n; j++) {
+                int color = (s[j] == '1');
+                int expected0 = ((i + j) & 1);
+                int expected1 = expected0 ^ 1;
+                if (color != expected0) cost0[piece]++;
+                if (color != expected1) cost1[piece]++;
+            }
+        }
+    }
+
+    long long base = 0, diff[4];
+    for (int i = 0; i < 4; i++) {
+        base += cost0[i];
+        diff[i] = cost1[i] - cost0[i];
+    }
+
+    for (int a = 0; a < 4; a++) {
+        for (int b = a + 1; b < 4; b++) {
+            if (diff[b] < diff[a]) {
+                long long tmp = diff[a];
+                diff[a] = diff[b];
+                diff[b] = tmp;
+            }
+        }
+    }
+
+    printf("%lld\n", base + diff[0] + diff[1]);
+    return 0;
+}
 

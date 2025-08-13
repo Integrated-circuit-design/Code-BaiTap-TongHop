@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define MAXN 1005
+#define INF 1000000000
+
+typedef struct {
+    int to;
+    int diam;
+} Pipe;
+
+Pipe from[MAXN];
+int has_in[MAXN];
+int visited[MAXN];
+
+int main() {
+    int n, p;
+    scanf("%d %d", &n, &p);
+
+    for (int i = 0; i < p; i++) {
+        int a, b, d;
+        scanf("%d %d %d", &a, &b, &d);
+        from[a].to = b;
+        from[a].diam = d;
+        has_in[b] = 1;
+    }
+
+    int tanks[MAXN], taps[MAXN], flows[MAXN], count = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (!has_in[i] && from[i].to != 0) {
+            int cur = i;
+            int min_diam = INF;
+
+            while (from[cur].to != 0) {
+                if (from[cur].diam < min_diam)
+                    min_diam = from[cur].diam;
+                cur = from[cur].to;
+            }
+
+            tanks[count] = i;
+            taps[count] = cur;
+            flows[count] = min_diam;
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("%d %d %d\n", tanks[i], taps[i], flows[i]);
+    }
+
+    return 0;
+}
 

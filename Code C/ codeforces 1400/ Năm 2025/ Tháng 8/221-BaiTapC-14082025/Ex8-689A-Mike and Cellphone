@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    char s[16];
+    scanf("%d %s", &n, s);
+
+    int x[10] = {1,0,1,2,0,1,2,0,1,2};
+    int y[10] = {3,0,0,0,1,1,1,2,2,2};
+
+    int key[3][4] = {0};
+    int kx[] = {0,1,2,0,1,2,0,1,2,1};
+    int ky[] = {0,0,0,1,1,1,2,2,2,3};
+    for (int i=0; i<10; i++) key[kx[i]][ky[i]] = 1;
+
+    int px[16], py[16];
+    for (int i=0; i<n; i++) {
+        int d = s[i] - '0';
+        px[i] = x[d];
+        py[i] = y[d];
+    }
+
+    for (int dx=-2; dx<=2; dx++) {
+        for (int dy=-3; dy<=3; dy++) {
+            if (dx==0 && dy==0) continue;
+            int ok = 1;
+            for (int i=0; i<n; i++) {
+                int nx = px[i] + dx;
+                int ny = py[i] + dy;
+                if (nx<0 || nx>=3 || ny<0 || ny>=4 || !key[nx][ny]) {
+                    ok = 0;
+                    break;
+                }
+            }
+            if (ok) {
+                printf("NO\n");
+                return 0;
+            }
+        }
+    }
+    printf("YES\n");
+    return 0;
+}
 

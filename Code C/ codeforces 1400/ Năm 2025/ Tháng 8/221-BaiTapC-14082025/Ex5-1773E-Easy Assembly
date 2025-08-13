@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 10005
+
+typedef struct {
+    long long val;
+    int id;
+} Block;
+
+Block all_blocks[MAXN];
+long long sorted_vals[MAXN];
+int rank_of[MAXN];
+long long towers[MAXN][MAXN];
+int tower_size[MAXN];
+
+int cmp_block_val(const void *a, const void *b) {
+    long long x = ((Block*)a)->val;
+    long long y = ((Block*)b)->val;
+    return (x > y) - (x < y);
+}
+
+int cmp_ll(const void *a, const void *b) {
+    long long x = *(long long*)a;
+    long long y = *(long long*)b;
+    return (x > y) - (x < y);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &tower_size[i]);
+        for (int j = 0; j < tower_size[i]; j++) {
+            scanf("%lld", &towers[i][j]);
+            all_blocks[total].val = towers[i][j];
+            all_blocks[total].id = total;
+            sorted_vals[total] = towers[i][j];
+            total++;
+        }
+    }
+
+    qsort(sorted_vals, total, sizeof(long long), cmp_ll);
+
+    for (int i = 0; i < total; i++) {
+        long long v = all_blocks[i].val;
+        int l = 0, r = total - 1;
+        while (l <= r) {
+            int m = (l + r) >> 1;
+            if (sorted_vals[m] == v) {
+                rank_of[i] = m;
+                break;
+            } else if (sorted_vals[m] < v) l = m + 1;
+            else r = m - 1;
+        }
+    }
+
+    int splits = 0;
+    int idx = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 1; j < tower_size[i]; j++) {
+            int prev_rank = rank_of[idx];
+            int curr_rank = rank_of[idx + 1];
+            if (curr_rank != prev_rank + 1) splits++;
+            idx++;
+        }
+        idx++;
+    }
+
+    int combines = n + splits - 1;
+    printf("%d %d\n", splits, combines);
+    return 0;
+}
 

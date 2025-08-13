@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int k, a, b;
+    char s[205];
+    scanf("%d %d %d", &k, &a, &b);
+    scanf("%s", s);
+
+    int n = strlen(s);
+
+    if (n < k * a || n > k * b) {
+        printf("No solution\n");
+        return 0;
+    }
+
+    int len[205];
+    for (int i = 0; i < k; i++) {
+        len[i] = a;
+    }
+
+    int du = n - k * a;
+
+    for (int i = 0; i < k && du > 0; i++) {
+        int them = b - len[i];
+        if (them > du) them = du;
+        len[i] += them;
+        du -= them;
+    }
+
+    int pos = 0;
+    for (int i = 0; i < k; i++) {
+        for (int j = 0; j < len[i]; j++) {
+            putchar(s[pos++]);
+        }
+        putchar('\n');
+    }
+
+    return 0;
+}
 

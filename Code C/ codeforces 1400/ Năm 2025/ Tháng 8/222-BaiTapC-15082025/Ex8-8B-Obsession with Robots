@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    int x, y;
+} Point;
+
+int main() {
+    char path[110];
+    scanf("%s", path);
+    int len = strlen(path);
+
+    Point visited[110];
+    int count = 1;
+
+    visited[0].x = 0;
+    visited[0].y = 0;
+
+    int x = 0, y = 0;
+
+    for (int i = 0; i < len; i++) {
+        if (path[i] == 'L') x--;
+        else if (path[i] == 'R') x++;
+        else if (path[i] == 'U') y++;
+        else if (path[i] == 'D') y--;
+
+        int flag = 0;
+        for (int j = 0; j < count; j++) {
+            if (visited[j].x == x && visited[j].y == y) {
+                flag = 1;
+                break;
+            }
+        }
+
+        if (flag) {
+            printf("BUG\n");
+            return 0;
+        }
+
+        visited[count].x = x;
+        visited[count].y = y;
+        count++;
+    }
+
+    printf("OK\n");
+    return 0;
+}
 

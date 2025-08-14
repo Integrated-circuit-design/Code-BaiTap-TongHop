@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int h1, h2;
+    int a, b;
+    scanf("%d %d", &h1, &h2);
+    scanf("%d %d", &a, &b);
+
+    int current_height = h1;
+    int day = 0;
+
+    current_height += 8 * a;
+    if (current_height >= h2) {
+        printf("0\n");
+        return 0;
+    }
+
+    if (a <= b) {
+        printf("-1\n");
+        return 0;
+    }
+
+    while (current_height < h2) {
+        day++;
+        current_height += 12 * a;
+        if (current_height >= h2) break;
+        current_height -= 12 * b;
+    }
+
+    printf("%d\n", day);
+
+    return 0;
+}
 

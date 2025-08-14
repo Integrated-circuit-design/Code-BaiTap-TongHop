@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    if (k > n - 1) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int matches[1000000][2];
+    int matchCount = 0;
+
+    for (int i = 1; i <= n; i++) {
+        int wins = 0;
+        int j = i + 1;
+        while (wins < k) {
+            if (j > n) j = 1;
+            if (j != i) {
+                matches[matchCount][0] = i;
+                matches[matchCount][1] = j;
+                matchCount++;
+                wins++;
+            }
+            j++;
+        }
+    }
+
+    printf("%d\n", matchCount);
+    for (int i = 0; i < matchCount; i++) {
+        printf("%d %d\n", matches[i][0], matches[i][1]);
+    }
+
+    return 0;
+}
 

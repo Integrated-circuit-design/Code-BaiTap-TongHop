@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    long long n, x, y;
+    scanf("%lld %lld %lld", &n, &x, &y);
+
+    long long base = (long long) ceil(sqrt((double)x / n));
+
+    long long totalSum = base * n;
+
+    if (totalSum > y) {
+        printf("-1\n");
+        return 0;
+    }
+
+    long long result[n];
+    for (long long i = 0; i < n; i++) {
+        result[i] = base;
+    }
+
+    long long remaining = y - totalSum;
+    for (long long i = 0; i < n && remaining > 0; i++) {
+        result[i]++;
+        remaining--;
+    }
+
+    for (long long i = 0; i < n; i++) {
+        printf("%lld\n", result[i]);
+    }
+
+    return 0;
+}
 

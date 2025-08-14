@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int n;
+int a[1024];
+int pathSum[1024];
+
+int main() {
+    scanf("%d", &n);
+    int totalNodes = (1 << (n + 1)) - 1;
+    int totalEdges = totalNodes - 1;
+
+    for (int i = 0; i < totalEdges; i++)
+        scanf("%d", &a[i]);
+
+    long long added = 0;
+
+    for (int node = totalNodes; node >= 1; node--) {
+        int leftChild = 2 * node;
+        int rightChild = 2 * node + 1;
+
+        if (leftChild > totalNodes && rightChild > totalNodes) {
+            pathSum[node] = 0;
+        } else {
+            int leftSum = (leftChild <= totalNodes) ? pathSum[leftChild] + a[leftChild - 2] : 0;
+            int rightSum = (rightChild <= totalNodes) ? pathSum[rightChild] + a[rightChild - 2] : 0;
+
+            if (leftSum > rightSum)
+                added += (leftSum - rightSum);
+            else
+                added += (rightSum - leftSum);
+
+            pathSum[node] = (leftSum > rightSum) ? leftSum : rightSum;
+        }
+    }
+
+    printf("%lld\n", added);
+    return 0;
+}
 

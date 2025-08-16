@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+long long power(int X, int n) {
+    long long result = 1;
+    for (int i = 0; i < n; i++)
+        result *= X;
+    return result;
+}
+
+int integer_nth_root(int y, int n) {
+    int low = -1000, high = 1000;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        long long p = power(mid, n);
+        if (p == y) return mid;
+        else if (p < y) low = mid + 1;
+        else high = mid - 1;
+    }
+    return 0;
+}
+
+int main() {
+    int A, B, n;
+    scanf("%d %d %d", &A, &B, &n);
+
+    if (A == 0) {
+        if (B == 0) {
+            printf("5\n");
+        } else {
+            printf("No solution\n");
+        }
+        return 0;
+    }
+
+    if (B % A != 0) {
+        printf("No solution\n");
+        return 0;
+    }
+
+    int target = B / A;
+    int X = integer_nth_root(target, n);
+
+    if (power(X, n) == target) {
+        printf("%d\n", X);
+    } else {
+        printf("No solution\n");
+    }
+
+    return 0;
+}
 

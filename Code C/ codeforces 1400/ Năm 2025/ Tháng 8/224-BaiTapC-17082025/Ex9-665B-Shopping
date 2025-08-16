@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int row[101];
+    int position[101];
+
+    for (int i = 0; i < k; i++) {
+        scanf("%d", &row[i]);
+        position[row[i]] = i;
+    }
+
+    int totalTime = 0;
+
+    for (int i = 0; i < n; i++) {
+        int order[101];
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &order[j]);
+        }
+
+        for (int j = 0; j < m; j++) {
+            int item = order[j];
+            int pos = position[item];
+            totalTime += pos + 1;
+
+            for (int t = pos; t > 0; t--) {
+                int tempItem = row[t - 1];
+                row[t] = tempItem;
+                position[tempItem] = t;
+            }
+            row[0] = item;
+            position[item] = 0;
+        }
+    }
+
+    printf("%d\n", totalTime);
+    return 0;
+}
 

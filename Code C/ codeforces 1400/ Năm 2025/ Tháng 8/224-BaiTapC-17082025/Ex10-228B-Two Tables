@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 50
+
+int table1[MAX][MAX];
+int table2[MAX][MAX];
+
+int computeOverlap(int n1, int m1, int n2, int m2, int dx, int dy) {
+    int sum = 0;
+    for (int i = 0; i < n1; i++) {
+        int ii = i + dx;
+        if (ii < 0 || ii >= n2) continue;
+        for (int j = 0; j < m1; j++) {
+            int jj = j + dy;
+            if (jj < 0 || jj >= m2) continue;
+            sum += table1[i][j] * table2[ii][jj];
+        }
+    }
+    return sum;
+}
+
+int main() {
+    int n1, m1, n2, m2;
+    
+    scanf("%d %d", &n1, &m1);
+    for (int i = 0; i < n1; i++) {
+        char row[MAX+1];
+        scanf("%s", row);
+        for (int j = 0; j < m1; j++)
+            table1[i][j] = row[j] - '0';
+    }
+
+    scanf("%d %d", &n2, &m2);
+    for (int i = 0; i < n2; i++) {
+        char row[MAX+1];
+        scanf("%s", row);
+        for (int j = 0; j < m2; j++)
+            table2[i][j] = row[j] - '0';
+    }
+
+    int bestX = 0, bestY = 0;
+    int maxOverlap = -1;
+
+    for (int dx = -n2 + 1; dx < n1; dx++) {
+        for (int dy = -m2 + 1; dy < m1; dy++) {
+            int current = computeOverlap(n1, m1, n2, m2, dx, dy);
+            if (current > maxOverlap) {
+                maxOverlap = current;
+                bestX = dx;
+                bestY = dy;
+            }
+        }
+    }
+
+    printf("%d %d\n", bestX, bestY);
+    return 0;
+}
 

@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    long long n, m;
+    scanf("%lld %lld", &n, &m);
+
+    long long base = 3 % m;
+    long long result = 1 % m;
+    long long exp = n;
+
+    while (exp > 0) {
+        if (exp & 1) {
+            result = (result * base) % m;
+        }
+        base = (base * base) % m;
+        exp >>= 1;
+    }
+
+    long long answer = (result - 1 + m) % m;
+    printf("%lld\n", answer);
+    return 0;
+}
 

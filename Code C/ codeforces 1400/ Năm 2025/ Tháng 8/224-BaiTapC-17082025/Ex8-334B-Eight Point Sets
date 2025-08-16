@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+int main() {
+    int x[8], y[8];
+    int minX = 1000001, midX = -1, maxX = -1;
+    int minY = 1000001, midY = -1, maxY = -1;
+
+    for(int i = 0; i < 8; i++) {
+        scanf("%d %d", &x[i], &y[i]);
+        if(x[i] < minX) minX = x[i];
+        if(x[i] > maxX) maxX = x[i];
+        if(y[i] < minY) minY = y[i];
+        if(y[i] > maxY) maxY = y[i];
+    }
+
+    for(int i = 0; i < 8; i++) {
+        if(x[i] != minX && x[i] != maxX) midX = x[i];
+        if(y[i] != minY && y[i] != maxY) midY = y[i];
+    }
+
+    if(midX == -1 || midY == -1) {
+        printf("ugly\n");
+        return 0;
+    }
+
+    int grid[3][3] = {0};
+    for(int i = 0; i < 8; i++) {
+        int xi, yi;
+        if(x[i] == minX) xi = 0;
+        else if(x[i] == midX) xi = 1;
+        else xi = 2;
+
+        if(y[i] == minY) yi = 0;
+        else if(y[i] == midY) yi = 1;
+        else yi = 2;
+
+        if(xi == 1 && yi == 1) {
+            printf("ugly\n");
+            return 0;
+        }
+
+        grid[xi][yi] = 1;
+    }
+
+    for(int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+            if(i == 1 && j == 1) continue;
+            if(grid[i][j] == 0) {
+                printf("ugly\n");
+                return 0;
+            }
+        }
+    }
+
+    printf("respectable\n");
+    return 0;
+}
 

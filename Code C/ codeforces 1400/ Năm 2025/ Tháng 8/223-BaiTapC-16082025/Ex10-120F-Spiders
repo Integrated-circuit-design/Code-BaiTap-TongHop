@@ -1,1 +1,78 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 105
+
+int adj[MAXN][MAXN], deg[MAXN];
+int visited[MAXN], bestNode, bestDist;
+
+void dfs(int u, int d) {
+    visited[u] = 1;
+    if (d > bestDist) {
+        bestDist = d;
+        bestNode = u;
+    }
+    for (int i = 0; i < deg[u]; i++) {
+        int v = adj[u][i];
+        if (!visited[v]) dfs(v, d + 1);
+    }
+}
+
+int get_diameter(int v) {
+    memset(visited, 0, sizeof(visited));
+    bestDist = -1;
+    dfs(1, 0);
+    int start = bestNode;
+
+    memset(visited, 0, sizeof(visited));
+    bestDist = -1;
+    dfs(start, 0);
+    return bestDist;
+}
+
+int main() {
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+
+    int n;
+    scanf("%d", &n);
+
+    int max_diam = 0;
+    int radii[105], rc = 0;
+
+    for (int i = 0; i < n; i++) {
+        int v;
+        scanf("%d", &v);
+
+        for (int j = 1; j <= v; j++) deg[j] = 0;
+
+        for (int j = 0; j < v - 1; j++) {
+            int a, b;
+            scanf("%d%d", &a, &b);
+            adj[a][deg[a]++] = b;
+            adj[b][deg[b]++] = a;
+        }
+
+        int d = get_diameter(v);
+        if (d > max_diam) max_diam = d;
+        radii[rc++] = (d + 1) / 2;
+    }
+
+    int r1 = 0, r2 = 0;
+    for (int i = 0; i < rc; i++) {
+        if (radii[i] > r1) {
+            r2 = r1;
+            r1 = radii[i];
+        } else if (radii[i] > r2) {
+            r2 = radii[i];
+        }
+    }
+
+    int ans = max_diam;
+    if (rc >= 2 && r1 + r2 + 1 > ans)
+        ans = r1 + r2 + 1;
+
+    printf("%d\n", ans);
+    return 0;
+}
 

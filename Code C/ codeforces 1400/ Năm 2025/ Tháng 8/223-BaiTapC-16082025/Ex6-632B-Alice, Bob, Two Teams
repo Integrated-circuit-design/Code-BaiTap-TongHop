@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    ll p[n+1];
+    for (int i = 1; i <= n; i++) {
+        scanf("%lld", &p[i]);
+    }
+
+    char s[n+5];
+    scanf("%s", s+1);
+
+    ll sumB = 0;
+    for (int i = 1; i <= n; i++) {
+        if (s[i] == 'B') sumB += p[i];
+    }
+
+    ll prefixChange[n+1];
+    prefixChange[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        if (s[i] == 'A') prefixChange[i] = prefixChange[i-1] + p[i];
+        else prefixChange[i] = prefixChange[i-1] - p[i];
+    }
+
+    ll suffixChange[n+2];
+    suffixChange[n+1] = 0;
+    for (int i = n; i >= 1; i--) {
+        if (s[i] == 'A') suffixChange[i] = suffixChange[i+1] + p[i];
+        else suffixChange[i] = suffixChange[i+1] - p[i];
+    }
+
+    ll ans = sumB;
+    for (int i = 1; i <= n; i++) {
+        if (sumB + prefixChange[i] > ans) ans = sumB + prefixChange[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        if (sumB + suffixChange[i] > ans) ans = sumB + suffixChange[i];
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

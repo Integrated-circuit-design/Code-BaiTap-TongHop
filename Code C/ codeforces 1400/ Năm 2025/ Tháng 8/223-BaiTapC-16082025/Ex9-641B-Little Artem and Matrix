@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+#define MAXN 105
+#define MAXQ 10005
+
+long long mat[MAXN][MAXN];
+
+void shiftRowRight(int row, int m) {
+    long long last = mat[row][m-1];
+    for (int j = m-1; j > 0; j--) {
+        mat[row][j] = mat[row][j-1];
+    }
+    mat[row][0] = last;
+}
+
+void shiftColDown(int col, int n) {
+    long long last = mat[n-1][col];
+    for (int i = n-1; i > 0; i--) {
+        mat[i][col] = mat[i-1][col];
+    }
+    mat[0][col] = last;
+}
+
+int main() {
+    int n, m, q;
+    scanf("%d %d %d", &n, &m, &q);
+
+    int type[MAXQ], row[MAXQ], col[MAXQ];
+    long long val[MAXQ];
+
+    for (int i = 0; i < q; i++) {
+        scanf("%d", &type[i]);
+        if (type[i] == 1) {
+            scanf("%d", &row[i]);
+        } else if (type[i] == 2) {
+            scanf("%d", &col[i]);
+        } else {
+            scanf("%d %d %lld", &row[i], &col[i], &val[i]);
+        }
+    }
+
+    for (int i = q-1; i >= 0; i--) {
+        if (type[i] == 1) {
+            shiftRowRight(row[i]-1, m);
+        } else if (type[i] == 2) {
+            shiftColDown(col[i]-1, n);
+        } else {
+            mat[row[i]-1][col[i]-1] = val[i];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            printf("%lld ", mat[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

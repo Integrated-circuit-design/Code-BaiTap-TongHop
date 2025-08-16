@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+#define MAXN 100005
+#define MAXM 400005
+
+int n, m;
+int likes[MAXM];
+int feed[MAXN];
+int where[MAXN];
+int minPos[MAXN], maxPos[MAXN];
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 1; i <= m; i++) {
+        scanf("%d", &likes[i]);
+    }
+
+    for (int i = 1; i <= n; i++) {
+        feed[i] = i;
+        where[i] = i;
+        minPos[i] = i;
+        maxPos[i] = i;
+    }
+
+    for (int j = 1; j <= m; j++) {
+        int post = likes[j];
+        int p = where[post];
+
+        if (p == 1) continue;
+
+        int above = feed[p - 1];
+
+        feed[p - 1] = post;
+        feed[p] = above;
+
+        where[post] = p - 1;
+        where[above] = p;
+
+        if (where[post] < minPos[post]) minPos[post] = where[post];
+        if (where[post] > maxPos[post]) maxPos[post] = where[post];
+
+        if (where[above] < minPos[above]) minPos[above] = where[above];
+        if (where[above] > maxPos[above]) maxPos[above] = where[above];
+    }
+
+    for (int i = 1; i <= n; i++) {
+        printf("%d %d\n", minPos[i], maxPos[i]);
+    }
+
+    return 0;
+}
 

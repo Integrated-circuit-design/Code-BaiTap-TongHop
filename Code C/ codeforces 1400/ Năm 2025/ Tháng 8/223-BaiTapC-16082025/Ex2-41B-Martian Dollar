@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n, b;
+    scanf("%d %d", &n, &b);
+
+    int a[2001];
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+    int max_money = b;
+    int min_price = a[0];
+
+    for (int j = 1; j < n; j++) {
+        int dollars = b / min_price;
+        int leftover = b % min_price;
+        int total = dollars * a[j] + leftover;
+        if (total > max_money) max_money = total;
+
+        if (a[j] < min_price) min_price = a[j];
+    }
+
+    printf("%d\n", max_money);
+    return 0;
+}
 

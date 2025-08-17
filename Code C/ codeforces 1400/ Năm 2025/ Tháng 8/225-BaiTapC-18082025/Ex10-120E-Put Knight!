@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int winner(int n) {
+    return (n % 2 == 0);
+}
+
+int main(void) {
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+
+    int T, i;
+    int n;
+    int result[105];
+
+    scanf("%d", &T);
+    for (i = 0; i < T; i++) {
+        scanf("%d", &n);
+        result[i] = winner(n);
+    }
+
+    for (i = 0; i < T; i++) {
+        printf("%d\n", result[i]);
+    }
+
+    return 0;
+}
 

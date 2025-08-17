@@ -1,1 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 200005
+
+typedef struct Node {
+    int pos;
+    struct Node *next;
+} Node;
+
+Node *head[26];
+int deleted[MAXN];
+
+int main() {
+    int k, n;
+    char s[105];
+    scanf("%d", &k);
+    scanf("%s", s);
+
+    int len = strlen(s);
+    static char t[MAXN];
+    int tot = 0;
+
+    for (int i = 0; i < k; i++) {
+        for (int j = 0; j < len; j++) {
+            t[tot] = s[j];
+            int c = s[j] - 'a';
+
+            Node *node = (Node*)malloc(sizeof(Node));
+            node->pos = tot;
+            node->next = NULL;
+            if (!head[c]) {
+                head[c] = node;
+            } else {
+                Node *cur = head[c];
+                while (cur->next) cur = cur->next;
+                cur->next = node;
+            }
+            tot++;
+        }
+    }
+    t[tot] = '\0';
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        int p;
+        char c;
+        scanf("%d %c", &p, &c);
+        int id = c - 'a';
+
+        Node *cur = head[id], *prev = NULL;
+        for (int step = 1; step < p; step++) {
+            prev = cur;
+            cur = cur->next;
+        }
+
+        deleted[cur->pos] = 1;
+
+        if (prev == NULL) {
+            head[id] = cur->next;
+        } else {
+            prev->next = cur->next;
+        }
+        free(cur);
+    }
+
+    for (int i = 0; i < tot; i++) {
+        if (!deleted[i]) putchar(t[i]);
+    }
+    putchar('\n');
+
+    return 0;
+}
 

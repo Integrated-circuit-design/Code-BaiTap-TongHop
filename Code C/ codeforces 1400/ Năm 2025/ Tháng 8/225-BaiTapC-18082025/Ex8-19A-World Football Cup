@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define NMAX 55
+#define LMAX 35
+
+typedef struct {
+    char name[LMAX];
+    int pts, gf, ga;
+} Team;
+
+int n;
+Team T[NMAX];
+
+int id(char *s) {
+    for (int i = 0; i < n; i++)
+        if (strcmp(T[i].name, s) == 0) return i;
+    return -1;
+}
+
+int cmpRank(const void *A, const void *B) {
+    Team *x = (Team*)A, *y = (Team*)B;
+    if (x->pts != y->pts) return y->pts - x->pts;
+    int dx = x->gf - x->ga, dy = y->gf - y->ga;
+    if (dx != dy) return dy - dx;
+    return y->gf - x->gf;
+}
+
+int cmpName(const void *A, const void *B) {
+    return strcmp(*(char**)A, *(char**)B);
+}
+
+void update(int i, int j, int g1, int g2) {
+    T[i].gf += g1; T[i].ga += g2;
+    T[j].gf += g2; T[j].ga += g1;
+    if (g1 > g2) T[i].pts += 3;
+    else if (g1 < g2) T[j].pts += 3;
+    else { T[i].pts++; T[j].pts++; }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%s", T[i].name);
+        T[i].pts = T[i].gf = T[i].ga = 0;
+    }
+
+    int games = n*(n-1)/2;
+    for (int k = 0; k < games; k++) {
+        char s[100], a[LMAX], b[LMAX];
+        int g1, g2;
+        scanf("%s", s);
+        char *p = strchr(s, '-'); *p = '\0';
+        strcpy(a, s); strcpy(b, p+1);
+        scanf("%d:%d", &g1, &g2);
+        update(id(a), id(b), g1, g2);
+    }
+
+    qsort(T, n, sizeof(Team), cmpRank);
+
+    int m = n/2;
+    char *ans[NMAX];
+    for (int i = 0; i < m; i++) ans[i] = T[i].name;
+    qsort(ans, m, sizeof(char*), cmpName);
+
+    for (int i = 0; i < m; i++) puts(ans[i]);
+    return 0;
+}
 

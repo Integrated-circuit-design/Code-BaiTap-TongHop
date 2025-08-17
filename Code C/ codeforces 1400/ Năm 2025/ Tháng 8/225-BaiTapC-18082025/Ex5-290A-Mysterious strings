@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+int main() {
+    int a;
+    scanf("%d", &a);
+
+    switch(a) {
+        case 1:  printf("Washington\n"); break;
+        case 2:  printf("Adams\n"); break;
+        case 3:  printf("Jefferson\n"); break;
+        case 4:  printf("Madison\n"); break;
+        case 5:  printf("Monroe\n"); break;
+        case 6:  printf("Adams\n"); break;
+        case 7:  printf("Jackson\n"); break;
+        case 8:  printf("Van Buren\n"); break;
+        case 9:  printf("Harrison\n"); break;
+        case 10: printf("Tyler\n"); break;
+        case 11: printf("Polk\n"); break;
+        case 12: printf("Taylor\n"); break;
+        case 13: printf("Fillmore\n"); break;
+        case 14: printf("Pierce\n"); break;
+        case 15: printf("Buchanan\n"); break;
+        case 16: printf("Lincoln\n"); break;
+        case 17: printf("Johnson\n"); break;
+        case 18: printf("Grant\n"); break;
+        case 19: printf("Hayes\n"); break;
+        case 20: printf("Garfield\n"); break;
+        case 21: printf("Arthur\n"); break;
+        case 22: printf("Cleveland\n"); break;
+        case 23: printf("Harrison\n"); break;
+        case 24: printf("Cleveland\n"); break;
+        case 25: printf("McKinley\n"); break;
+        case 26: printf("Roosevelt\n"); break;
+        case 27: printf("Taft\n"); break;
+        case 28: printf("Wilson\n"); break;
+        case 29: printf("Harding\n"); break;
+        case 30: printf("Coolidge\n"); break;
+        case 31: printf("Hoover\n"); break;
+        case 32: printf("Roosevelt\n"); break;
+        case 33: printf("Truman\n"); break;
+        case 34: printf("Eisenhower\n"); break;
+        case 35: printf("Kennedy\n"); break;
+        case 36: printf("Johnson\n"); break;
+        case 37: printf("Nixon\n"); break;
+        case 38: printf("Ford\n"); break;
+        case 39: printf("Carter\n"); break;
+        case 40: printf("Reagan\n"); break;
+        default: break;
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,18 @@
+#include <stdio.h>
+
+void convert(int n, int *feet, int *inch) {
+    int inches = n / 3;
+    int r = n % 3;
+    if (r == 2) inches++;
+    *feet = inches / 12;
+    *inch = inches % 12;
+}
+
+int main() {
+    int n, feet, inch;
+    scanf("%d", &n);
+    convert(n, &feet, &inch);
+    printf("%d %d\n", feet, inch);
+    return 0;
+}
 

@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1005
+
+int ceilDiv(int a, int b) {
+    return (a + b - 1) / b;
+}
+
+int main() {
+    char s[MAXN];
+    int n;
+    scanf("%s", s);
+    scanf("%d", &n);
+
+    int freq[26] = {0};
+    int len = strlen(s);
+
+    for (int i = 0; i < len; i++) {
+        freq[s[i] - 'a']++;
+    }
+
+    int distinct = 0, maxFreq = 0;
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > 0) {
+            distinct++;
+            if (freq[i] > maxFreq) maxFreq = freq[i];
+        }
+    }
+
+    if (n < distinct) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int bestSheets = -1;
+    for (int k = 1; k <= maxFreq; k++) {
+        int need = 0;
+        for (int i = 0; i < 26; i++) {
+            if (freq[i]) need += ceilDiv(freq[i], k);
+        }
+        if (need <= n) {
+            bestSheets = k;
+            break;
+        }
+    }
+
+    printf("%d\n", bestSheets);
+
+    char sheet[MAXN];
+    int idx = 0;
+    for (int i = 0; i < 26; i++) {
+        if (freq[i]) {
+            int cnt = ceilDiv(freq[i], bestSheets);
+            for (int j = 0; j < cnt && idx < n; j++) {
+                sheet[idx++] = 'a' + i;
+            }
+        }
+    }
+    while (idx < n) sheet[idx++] = 'a';
+    sheet[idx] = '\0';
+
+    printf("%s\n", sheet);
+    return 0;
+}
 

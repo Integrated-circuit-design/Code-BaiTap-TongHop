@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 1000
+#define MAXLEN 21
+#define MAXUSERS (2*MAXN)
+
+char users[MAXUSERS][MAXLEN];
+int userCount = 0;
+
+int getId(char *name) {
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(users[i], name) == 0) return i;
+    }
+    strcpy(users[userCount], name);
+    return userCount++;
+}
+
+int last_time[MAXUSERS][MAXUSERS];
+int friend_flag[MAXUSERS][MAXUSERS];
+
+int main() {
+    int n, d;
+    scanf("%d %d", &n, &d);
+
+    for (int i = 0; i < MAXUSERS; i++)
+        for (int j = 0; j < MAXUSERS; j++)
+            last_time[i][j] = -1;
+
+    char A[MAXLEN], B[MAXLEN];
+    int t;
+    for (int i = 0; i < n; i++) {
+        scanf("%s %s %d", A, B, &t);
+        int idA = getId(A);
+        int idB = getId(B);
+        if (last_time[idB][idA] != -1) {
+            int diff = t - last_time[idB][idA];
+            if (diff > 0 && diff <= d) {
+                friend_flag[idA][idB] = friend_flag[idB][idA] = 1;
+            }
+        }
+        last_time[idA][idB] = t;
+    }
+
+    int count = 0;
+    for (int i = 0; i < userCount; i++) {
+        for (int j = i+1; j < userCount; j++) {
+            if (friend_flag[i][j]) count++;
+        }
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < userCount; i++) {
+        for (int j = i+1; j < userCount; j++) {
+            if (friend_flag[i][j]) {
+                printf("%s %s\n", users[i], users[j]);
+            }
+        }
+    }
+
+    return 0;
+}
 

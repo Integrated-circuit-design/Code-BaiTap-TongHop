@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MAXN 100000
+
+int n, k;
+int a[MAXN + 1];
+int done[MAXN + 1];
+long long ans[MAXN + 1];
+int L[MAXN + 1], R[MAXN + 1];
+
+long long dfs(int x) {
+    if (x == 0) return 0;
+    if (done[x]) return ans[x];
+    int l = L[x], r = R[x];
+    int cur = a[x];
+    while (cur > 0) {
+        if (!done[cur]) dfs(cur);
+        if (L[cur] < l) l = L[cur];
+        if (R[cur] > r) r = R[cur];
+        cur = a[cur];
+    }
+    done[x] = 1;
+    ans[x] = r - l + 1;
+    L[x] = l;
+    R[x] = r;
+    return ans[x];
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+        int l = i - k; if (l < 1) l = 1;
+        int r = i + k; if (r > n) r = n;
+        L[i] = l; R[i] = r;
+    }
+    for (int i = 1; i <= n; i++) {
+        if (!done[i]) dfs(i);
+    }
+    for (int i = 1; i <= n; i++) {
+        printf("%lld%c", ans[i], (i == n ? '\n' : ' '));
+    }
+    return 0;
+}
 

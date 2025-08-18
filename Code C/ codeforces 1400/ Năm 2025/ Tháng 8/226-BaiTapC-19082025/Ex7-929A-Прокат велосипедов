@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int x[1005];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x[i]);
+    }
+
+    for (int i = 1; i < n; i++) {
+        if (x[i] - x[i - 1] > k) {
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    int bikes = 1;
+    int last = 0;
+
+    for (int i = 1; i < n; i++) {
+        if (x[i] - x[last] > k) {
+            bikes++;
+            last = i - 1;
+        }
+    }
+
+    printf("%d\n", bikes);
+    return 0;
+}
 

@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_SCORE 1000000
+
+long long toNumber(char str[], int start, int end) {
+    if (start >= end) return -1;
+    if (str[start] == '0' && (end - start) > 1) return -1;
+
+    long long num = 0;
+    int k = start;
+    while (k < end) {
+        num = num * 10 + (str[k] - '0');
+        if (num > MAX_SCORE) return -1;
+        k++;
+    }
+    return num;
+}
+
+int main() {
+    char s[40];
+    scanf("%s", s);
+
+    int len = strlen(s);
+    long long maxSum = -1;
+
+    int i = 1;
+    while (i < len) {
+        int j = i + 1;
+        while (j < len) {
+            long long x = toNumber(s, 0, i);
+            long long y = toNumber(s, i, j);
+            long long z = toNumber(s, j, len);
+
+            if (x != -1 && y != -1 && z != -1) {
+                long long total = x + y + z;
+                if (total > maxSum) maxSum = total;
+            }
+            j++;
+        }
+        i++;
+    }
+
+    printf("%lld\n", maxSum);
+    return 0;
+}
 

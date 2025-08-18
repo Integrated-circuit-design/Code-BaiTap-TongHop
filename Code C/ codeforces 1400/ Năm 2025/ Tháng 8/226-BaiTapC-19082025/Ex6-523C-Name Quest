@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXS 1005
+#define MAXT 1000005
+
+char s[MAXS], t[MAXT];
+int left_ok[MAXT], right_ok[MAXT];
+
+int main() {
+    scanf("%s %s", s, t);
+
+    int m = strlen(s);
+    int n = strlen(t);
+
+    int p = 0;
+    for (int i = 0; i <= n; i++) {
+        left_ok[i] = (p == m);
+        if (i < n && p < m && t[i] == s[p]) p++;
+    }
+
+    int q = m - 1;
+    for (int i = n; i >= 0; i--) {
+        right_ok[i] = (q < 0);
+        if (i > 0 && q >= 0 && t[i - 1] == s[q]) q--;
+    }
+
+    long long ans = 0;
+    for (int i = 0; i <= n; i++) {
+        if (left_ok[i] && right_ok[i]) ans++;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

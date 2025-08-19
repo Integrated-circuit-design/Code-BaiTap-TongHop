@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAXM 200000
+
+int ans[MAXM];
+long double vals[MAXM];
+long double uniq[MAXM];
+
+int main() {
+    int m;
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) {
+        int a, b, c;
+        scanf("(%d+%d)/%d", &a, &b, &c);
+        vals[i] = (long double)(a + b) / c;
+        uniq[i] = vals[i];
+    }
+
+    for (int i = 0; i < m; i++) {
+        for (int j = i+1; j < m; j++) {
+            if (uniq[j] < uniq[i]) {
+                long double tmp = uniq[i];
+                uniq[i] = uniq[j];
+                uniq[j] = tmp;
+            }
+        }
+    }
+
+    int u = 0;
+    for (int i = 0; i < m; i++) {
+        if (i == 0 || fabsl(uniq[i] - uniq[i-1]) > 1e-12)
+            uniq[u++] = uniq[i];
+    }
+
+    int cnt[MAXM] = {0};
+    for (int i = 0; i < m; i++) {
+        int pos = -1;
+        for (int j = 0; j < u; j++) {
+            if (fabsl(vals[i] - uniq[j]) < 1e-12) {
+                pos = j;
+                break;
+            }
+        }
+        cnt[pos]++;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int pos = -1;
+        for (int j = 0; j < u; j++) {
+            if (fabsl(vals[i] - uniq[j]) < 1e-12) {
+                pos = j;
+                break;
+            }
+        }
+        ans[i] = cnt[pos];
+    }
+
+    for (int i = 0; i < m; i++)
+        printf("%d%c", ans[i], (i == m-1 ? '\n' : ' '));
+
+    return 0;
+}
 

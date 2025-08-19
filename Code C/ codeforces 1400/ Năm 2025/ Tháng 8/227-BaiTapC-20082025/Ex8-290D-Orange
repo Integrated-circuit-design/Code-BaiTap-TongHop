@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    char s[55];
+    int k;
+    scanf("%s", s);
+    scanf("%d", &k);
+
+    if (k < 0 || k > 26) return 0;
+
+    char lower = 'a' + k;
+    char upper = 'A' + k;
+
+    for (int i = 0; s[i] != '\0'; i++) {
+        if (s[i] == lower) {
+            s[i] = s[i] - 'a' + 'A';
+        } else if (s[i] == upper) {
+        }
+    }
+
+    printf("%s\n", s);
+    return 0;
+}
 

@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+#define LIM 100000
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    static int maxSeen[LIM + 1] = {0};
+
+    int ok = 1;
+
+    while (n--) {
+        int x, k;
+        scanf("%d %d", &x, &k);
+
+        if (x == 0) {
+            if (maxSeen[k] == 0) maxSeen[k] = 0;
+        } else {
+            if (maxSeen[k] < x - 1) {
+                ok = 0;
+                break;
+            }
+            if (x > maxSeen[k]) maxSeen[k] = x;
+        }
+    }
+
+    if (ok) printf("YES\n");
+    else printf("NO\n");
+
+    return 0;
+}
 

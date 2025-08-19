@@ -1,1 +1,99 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100000
+
+typedef struct {
+    int d[MAXN + 50];
+    int len;
+} BigInt;
+
+void initBig(BigInt *a, int v) {
+    a->len = 0;
+    if (v == 0) {
+        a->d[a->len++] = 0;
+        return;
+    }
+    while (v > 0) {
+        a->d[a->len++] = v % 10;
+        v /= 10;
+    }
+}
+
+void mulSmall(BigInt *a, int m) {
+    if (m == 1) return;
+    if (m == 0) {
+        initBig(a, 0);
+        return;
+    }
+    long long carry = 0;
+    for (int i = 0; i < a->len; i++) {
+        long long cur = (long long)a->d[i] * m + carry;
+        a->d[i] = cur % 10;
+        carry = cur / 10;
+    }
+    while (carry > 0) {
+        a->d[a->len++] = carry % 10;
+        carry /= 10;
+    }
+}
+
+void printBig(const BigInt *a) {
+    for (int i = a->len - 1; i >= 0; i--) {
+        putchar(a->d[i] + '0');
+    }
+    putchar('\n');
+}
+
+int main() {
+    static char s[MAXN + 5];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    int seen[10] = {0}, letterCount = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] >= 'A' && s[i] <= 'J') {
+            int id = s[i] - 'A';
+            if (!seen[id]) {
+                seen[id] = 1;
+                letterCount++;
+            }
+        }
+    }
+
+    BigInt ans;
+    initBig(&ans, 1);
+
+    if (s[0] == '?') {
+        mulSmall(&ans, 9);
+        int m = 10;
+        while (letterCount > 0) {
+            mulSmall(&ans, m--);
+            letterCount--;
+        }
+    } else if (s[0] >= 'A' && s[0] <= 'J') {
+        mulSmall(&ans, 9);
+        letterCount--;
+        int m = 9;
+        while (letterCount > 0) {
+            mulSmall(&ans, m--);
+            letterCount--;
+        }
+    } else {
+        int m = 10;
+        while (letterCount > 0) {
+            mulSmall(&ans, m--);
+            letterCount--;
+        }
+    }
+
+    for (int i = 1; i < n; i++) {
+        if (s[i] == '?') {
+            mulSmall(&ans, 10);
+        }
+    }
+
+    printBig(&ans);
+    return 0;
+}
 

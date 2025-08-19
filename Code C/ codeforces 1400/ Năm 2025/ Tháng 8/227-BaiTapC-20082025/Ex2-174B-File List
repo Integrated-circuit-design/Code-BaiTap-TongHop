@@ -1,1 +1,78 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 400005
+
+char s[MAXN];
+int dot[MAXN];
+int ext_len[MAXN];
+
+int main() {
+    scanf("%s", s);
+    int n = strlen(s);
+
+    int m = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '.') dot[m++] = i;
+    }
+
+    if (m == 0) {
+        printf("NO\n");
+        return 0;
+    }
+
+    int first_len = dot[0];
+    if (first_len < 1 || first_len > 8) {
+        printf("NO\n");
+        return 0;
+    }
+
+    int last_len = n - (dot[m-1] + 1);
+    if (last_len < 1 || last_len > 3) {
+        printf("NO\n");
+        return 0;
+    }
+
+    for (int i = 0; i < m-1; i++) {
+        int block_start = dot[i] + 1;
+        int block_end   = dot[i+1] - 1;
+        int block_len   = block_end - block_start + 1;
+
+        if (block_len <= 0) {
+            printf("NO\n");
+            return 0;
+        }
+
+        int need = block_len - 8;
+        if (need < 1) need = 1;
+        if (need > 3 || need >= block_len) {
+            printf("NO\n");
+            return 0;
+        }
+        ext_len[i] = need;
+    }
+    ext_len[m-1] = last_len;
+
+    printf("YES\n");
+
+    int name_start = 0;
+    int name_len = first_len;
+
+    for (int i = 0; i < m; i++) {
+        int ext_start = dot[i] + 1;
+        int elen = ext_len[i];
+
+        for (int j = 0; j < name_len; j++) putchar(s[name_start + j]);
+        putchar('.');
+        for (int j = 0; j < elen; j++) putchar(s[ext_start + j]);
+        putchar('\n');
+
+        if (i < m-1) {
+            name_start = ext_start + elen;
+            name_len = dot[i+1] - name_start;
+        }
+    }
+
+    return 0;
+}
 

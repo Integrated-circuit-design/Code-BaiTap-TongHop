@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int n, T;
+    scanf("%d", &n);
+    int t[105];
+    for (int i = 0; i < n; i++) scanf("%d", &t[i]);
+    scanf("%d", &T);
+
+    qsort(t, n, sizeof(int), cmp);
+
+    int ans = 1;
+    for (int i = 0; i < n; i++) {
+        int count = 0;
+        for (int j = i; j < n; j++) {
+            if (t[j] - t[i] <= T) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        if (count > ans) ans = count;
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

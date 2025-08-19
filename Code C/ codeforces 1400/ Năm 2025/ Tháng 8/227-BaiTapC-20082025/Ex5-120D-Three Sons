@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int n, m;
+int a[55][55];
+ll A, B, C;
+
+void sort3(ll *x, ll *y, ll *z) {
+    ll t;
+    if (*x > *y) { t = *x; *x = *y; *y = t; }
+    if (*y > *z) { t = *y; *y = *z; *z = t; }
+    if (*x > *y) { t = *x; *x = *y; *y = t; }
+}
+
+int check3(ll x, ll y, ll z) {
+    ll a1=A, b1=B, c1=C;
+    sort3(&x,&y,&z);
+    sort3(&a1,&b1,&c1);
+    return (x==a1 && y==b1 && z==c1);
+}
+
+ll countCuts(ll sum[], int L) {
+    ll pref[55];
+    pref[0]=0;
+    for (int i=1;i<=L;i++) pref[i]=pref[i-1]+sum[i];
+    ll total=pref[L], res=0;
+
+    for (int i=1;i<=L-2;i++) {
+        for (int j=i+1;j<=L-1;j++) {
+            ll s1=pref[i];
+            ll s2=pref[j]-pref[i];
+            ll s3=total-pref[j];
+            if (check3(s1,s2,s3)) res++;
+        }
+    }
+    return res;
+}
+
+int main() {
+    scanf("%d %d",&n,&m);
+    for (int i=1;i<=n;i++)
+        for (int j=1;j<=m;j++)
+            scanf("%d",&a[i][j]);
+    scanf("%lld %lld %lld",&A,&B,&C);
+
+    ll row[55]={0}, col[55]={0};
+    for (int i=1;i<=n;i++)
+        for (int j=1;j<=m;j++) {
+            row[i]+=a[i][j];
+            col[j]+=a[i][j];
+        }
+
+    ll ans=0;
+    if (n>=3) ans+=countCuts(row,n);
+    if (m>=3) ans+=countCuts(col,m);
+
+    printf("%lld\n",ans);
+    return 0;
+}
 

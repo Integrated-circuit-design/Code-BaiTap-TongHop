@@ -1,1 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 110
+#define MAXP 60
+#define MAXW (MAXP*5)
+#define MAXH (2*MAXP+1)
+
+char s[MAXN];
+char canvas[MAXH][MAXW+1];
+
+int leftPos[MAXP], rightPos[MAXP], depth[MAXP];
+int stack[MAXP], top;
+int pairCount;
+int maxDepth, W, H;
+
+int main() {
+    int n; 
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    pairCount = 0;
+    top = 0;
+    int curCol = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '[') {
+            depth[pairCount] = top + 1;
+            leftPos[pairCount] = curCol;
+            stack[top++] = pairCount;
+            pairCount++;
+            curCol += 0;
+        } else {
+            int id = stack[--top];
+            if (i>0 && s[i-1]=='[') {
+                rightPos[id] = leftPos[id] + 4;
+                curCol = rightPos[id] + 1;
+            } else {
+                rightPos[id] = curCol - 1;
+            }
+            if (depth[id] > maxDepth) maxDepth = depth[id];
+        }
+    }
+
+    W = curCol;
+    H = 2*maxDepth + 1;
+
+    for (int r=0;r<H;r++){
+        for (int c=0;c<W;c++) canvas[r][c] = ' ';
+        canvas[r][W] = '\0';
+    }
+
+    for (int id=0; id<pairCount; id++) {
+        int d = depth[id];
+        int topRow = d-1;
+        int botRow = H-d;
+        int L = leftPos[id];
+        int R = rightPos[id];
+
+        canvas[topRow][L] = '+';
+        canvas[topRow][L+1] = '-';
+        canvas[topRow][R-1] = '-';
+        canvas[topRow][R] = '+';
+
+        canvas[botRow][L] = '+';
+        canvas[botRow][L+1] = '-';
+        canvas[botRow][R-1] = '-';
+        canvas[botRow][R] = '+';
+
+        for (int r=topRow+1; r<botRow; r++) {
+            canvas[r][L] = '|';
+            canvas[r][R] = '|';
+        }
+    }
+
+    for (int r=0;r<H;r++){
+        int end=W-1;
+        while(end>=0 && canvas[r][end]==' ') end--;
+        canvas[r][end+1]='\0';
+        puts(canvas[r]);
+    }
+    return 0;
+}
 

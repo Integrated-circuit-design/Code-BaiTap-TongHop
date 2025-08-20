@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int Solve(int qubit) {
+    if (qubit == 1) {
+        return 1;
+    } else {
+        return -1;
+    }
+}
+
+int main() {
+    int qubit;
+    printf("Nhap trang thai qubit (1 cho |+>, -1 cho |->): ");
+    scanf("%d", &qubit);
+
+    int result = Solve(qubit);
+    printf("Ket qua: %d\n", result);
+
+    return 0;
+}
 

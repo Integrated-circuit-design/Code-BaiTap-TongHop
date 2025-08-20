@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        long long k, m;
+        scanf("%lld %lld", &k, &m);
+
+        long long full_cycles = m / (3 * k);
+        long long start_of_cycle = full_cycles * 3 * k;
+
+        long long pos_in_cycle = m - start_of_cycle;
+
+        if(pos_in_cycle < 2 * k) {
+            printf("%lld\n", 2 * k - pos_in_cycle);
+        } else {
+            printf("0\n");
+        }
+    }
+
+    return 0;
+}
 

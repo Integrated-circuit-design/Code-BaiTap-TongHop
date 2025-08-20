@@ -1,1 +1,15 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int total = 1;
+    for (int i = 1; i <= n; i++) {
+        total += 6 * i;
+    }
+
+    printf("%d\n", total);
+    return 0;
+}
 

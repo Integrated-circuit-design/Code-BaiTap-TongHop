@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <math.h>
+
+void Solve(double bell[4], int index) {
+    for (int i = 0; i < 4; i++) bell[i] = 0;
+    
+    double invSqrt2 = 1.0 / sqrt(2.0);
+
+    switch (index) {
+        case 0:
+            bell[0] = invSqrt2;
+            bell[3] = invSqrt2;
+            break;
+        case 1:
+            bell[0] = invSqrt2;
+            bell[3] = -invSqrt2;
+            break;
+        case 2:
+            bell[1] = invSqrt2;
+            bell[2] = invSqrt2;
+            break;
+        case 3:
+            bell[1] = invSqrt2;
+            bell[2] = -invSqrt2;
+            break;
+        default:
+            printf("Invalid index!\n");
+    }
+}
+
+void printBell(double bell[4]) {
+    char *labels[4] = {"|00>", "|01>", "|10>", "|11>"};
+    for (int i = 0; i < 4; i++) {
+        if (bell[i] != 0)
+            printf("%s : %.3f\n", labels[i], bell[i]);
+    }
+}
+
+int main() {
+    double bell[4];
+    int index;
+    printf("Enter Bell state index (0-3): ");
+    scanf("%d", &index);
+
+    Solve(bell, index);
+    printBell(bell);
+
+    return 0;
+}
 

@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAX 100005
+
+long long max_points(int n, int arr[]) {
+    long long count[MAX] = {0};
+    long long dp[MAX] = {0};
+    int maxVal = 0;
+
+    for(int i = 0; i < n; i++) {
+        count[arr[i]]++;
+        if(arr[i] > maxVal) maxVal = arr[i];
+    }
+
+    dp[0] = 0;
+    dp[1] = count[1] * 1;
+
+    for(int i = 2; i <= maxVal; i++) {
+        long long take = dp[i-2] + count[i]*i;
+        long long skip = dp[i-1];
+        dp[i] = (take > skip) ? take : skip;
+    }
+
+    return dp[maxVal];
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int arr[n];
+
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("%lld\n", max_points(n, arr));
+
+    return 0;
+}
 

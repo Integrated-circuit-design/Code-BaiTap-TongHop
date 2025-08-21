@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <math.h>
+
+void generateGHZ(int N) {
+    int dim = 1 << N;
+    double amp0 = 1.0 / sqrt(2);
+    double amp1 = 1.0 / sqrt(2);
+
+    printf("GHZ state:\n");
+
+    printf("|");
+    for(int i=0;i<N;i++) printf("0");
+    printf("> : %.3f\n", amp0);
+
+    printf("|");
+    for(int i=0;i<N;i++) printf("1");
+    printf("> : %.3f\n", amp1);
+}
+
+int main() {
+    int N;
+    printf("Nhap so luong qubit (1-8): ");
+    scanf("%d", &N);
+    if(N<1 || N>8){
+        printf("Chi ho tro N tu 1 den 8.\n");
+        return 1;
+    }
+
+    generateGHZ(N);
+    return 0;
+}
 

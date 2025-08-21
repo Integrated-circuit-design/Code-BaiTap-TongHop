@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+void Solve(int x[], int n, int *y, int k) {
+    if (k < 0 || k >= n) {
+        printf("Index k out of range!\n");
+        return;
+    }
+
+    *y = *y ^ x[k];
+}
+
+int main() {
+    int n = 5;
+    int x[5] = {1, 0, 1, 0, 1};
+    int y = 0;
+    int k = 2;
+
+    printf("Input qubits: ");
+    for (int i = 0; i < n; i++)
+        printf("%d ", x[i]);
+    printf("\n");
+
+    Solve(x, n, &y, k);
+
+    printf("Output qubit y = %d (giá trị của qubit thứ %d)\n", y, k);
+
+    return 0;
+}
 

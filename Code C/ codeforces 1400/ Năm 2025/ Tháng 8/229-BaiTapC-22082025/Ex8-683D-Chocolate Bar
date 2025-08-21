@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n, m, p;
+        scanf("%d %d %d", &n, &m, &p);
+
+        int found = 0;
+
+        for (int rows = 1; rows <= n && !found; rows++) {
+            if (p % rows == 0) {
+                int cols = p / rows;
+                if (cols >= 1 && cols <= m) {
+                    found = 1;
+                }
+            }
+        }
+
+        if (found) {
+            printf("Yes\n");
+        } else {
+            printf("No\n");
+        }
+    }
+
+    return 0;
+}
 

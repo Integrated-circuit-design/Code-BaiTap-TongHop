@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, m, k;
+    int a, b;
+
+    scanf("%d %d %d", &n, &m, &k);
+    scanf("%d %d", &a, &b);
+
+    int per_building = m * k;
+
+    int a_building = (a - 1) / per_building;
+    int b_building = (b - 1) / per_building;
+    int a_floor = ((a - 1) % per_building) / k;
+    int b_floor = ((b - 1) % per_building) / k;
+
+    int time = 0;
+
+    if(a_building == b_building) {
+        time = abs(a_floor - b_floor) * 5;
+    } else {
+        int lift_time = 10 + a_floor;
+        int clockwise = (b_building - a_building + n) % n;
+        int counterclockwise = (a_building - b_building + n) % n;
+        int hallway_time = (clockwise < counterclockwise ? clockwise : counterclockwise) * 15;
+        lift_time += b_floor;
+        time = lift_time + hallway_time;
+    }
+
+    printf("%d\n", time);
+
+    return 0;
+}
 

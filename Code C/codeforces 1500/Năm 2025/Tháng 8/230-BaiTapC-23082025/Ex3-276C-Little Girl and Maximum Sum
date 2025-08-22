@@ -1,1 +1,46 @@
+#include <stdio.h>
+#define MAXN 200005
+typedef long long ll;
+
+ll a[MAXN], cnt[MAXN], tmp[MAXN];
+
+void merge_sort(ll arr[], int l, int r) {
+    if (l >= r) return;
+    int m = (l + r) / 2;
+    merge_sort(arr, l, m);
+    merge_sort(arr, m+1, r);
+    int i = l, j = m+1, k = l;
+    while (i <= m && j <= r) {
+        if (arr[i] <= arr[j]) tmp[k++] = arr[i++];
+        else tmp[k++] = arr[j++];
+    }
+    while (i <= m) tmp[k++] = arr[i++];
+    while (j <= r) tmp[k++] = arr[j++];
+    for (i = l; i <= r; i++) arr[i] = tmp[i];
+}
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+    for (int i = 0; i < q; i++) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        cnt[l-1]++;
+        if (r < n) cnt[r]--;
+    }
+
+    for (int i = 1; i < n; i++) cnt[i] += cnt[i-1];
+
+    merge_sort(a, 0, n-1);
+    merge_sort(cnt, 0, n-1);
+
+    ll ans = 0;
+    for (int i = 0; i < n; i++) ans += a[i] * cnt[i];
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

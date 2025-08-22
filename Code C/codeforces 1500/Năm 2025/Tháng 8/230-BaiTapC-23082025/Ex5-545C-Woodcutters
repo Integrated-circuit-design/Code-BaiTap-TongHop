@@ -1,1 +1,46 @@
+#include <stdio.h>
+#define MAXN 100000
+typedef long long ll;
+
+ll x[MAXN+5], h[MAXN+5];
+
+int can_fell_left(int i, ll occupied) {
+    return (x[i] - h[i] > occupied);
+}
+
+int can_fell_right(int i, int n) {
+    return (i == n-1 || x[i] + h[i] < x[i+1]);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld %lld", &x[i], &h[i]);
+    }
+
+    if (n == 1) {
+        printf("1\n");
+        return 0;
+    }
+
+    int ans = 0;
+    ll occupied = -1000000000000000000LL;
+
+    for (int i = 0; i < n; i++) {
+        if (can_fell_left(i, occupied)) {
+            ans++;
+            occupied = x[i];
+        } else if (can_fell_right(i, n)) {
+            ans++;
+            occupied = x[i] + h[i];
+        } else {
+            occupied = x[i];
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

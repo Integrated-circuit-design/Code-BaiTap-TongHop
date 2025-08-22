@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int minSeconds(int n, long long a[]) {
+    long long need = 0, max_seen = a[0];
+
+    for (int i = 1; i < n; i++) {
+        if (a[i] < max_seen) {
+            long long diff = max_seen - a[i];
+            if (diff > need) need = diff;
+        } else {
+            max_seen = a[i];
+        }
+    }
+
+    if (need == 0) return 0;
+
+    int T = 0;
+    for (long long val = 1; val - 1 < need; val <<= 1) {
+        T++;
+    }
+    return T;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        long long arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &arr[i]);
+        }
+        printf("%d\n", minSeconds(n, arr));
+    }
+    return 0;
+}
 

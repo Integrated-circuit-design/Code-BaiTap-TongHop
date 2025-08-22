@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[100005];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    int posAB = -1, posBA = -1;
+
+    for (int i = 0; i < n - 1; i++) {
+        if (s[i]=='A' && s[i+1]=='B') {
+            posAB = i;
+            break;
+        }
+    }
+    if (posAB != -1) {
+        for (int i = posAB + 2; i < n - 1; i++) {
+            if (s[i]=='B' && s[i+1]=='A') {
+                printf("YES\n");
+                return 0;
+            }
+        }
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        if (s[i]=='B' && s[i+1]=='A') {
+            posBA = i;
+            break;
+        }
+    }
+    if (posBA != -1) {
+        for (int i = posBA + 2; i < n - 1; i++) {
+            if (s[i]=='A' && s[i+1]=='B') {
+                printf("YES\n");
+                return 0;
+            }
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

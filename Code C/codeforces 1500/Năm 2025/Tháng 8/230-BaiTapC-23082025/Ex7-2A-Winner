@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1005
+#define MAXLEN 35
+
+typedef struct {
+    char name[MAXLEN];
+    int score;
+} Log;
+
+Log logs[MAXN];
+char names[MAXN][MAXLEN];
+int totals[MAXN], temp[MAXN];
+int playerCount = 0;
+
+int findPlayer(const char *name) {
+    for (int i = 0; i < playerCount; i++)
+        if (strcmp(names[i], name) == 0)
+            return i;
+    return -1;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s %d", logs[i].name, &logs[i].score);
+        int idx = findPlayer(logs[i].name);
+        if (idx == -1) {
+            strcpy(names[playerCount], logs[i].name);
+            totals[playerCount] = logs[i].score;
+            playerCount++;
+        } else {
+            totals[idx] += logs[i].score;
+        }
+    }
+
+    int maxScore = totals[0];
+    for (int i = 1; i < playerCount; i++)
+        if (totals[i] > maxScore)
+            maxScore = totals[i];
+
+    for (int i = 0; i < n; i++) {
+        int idx = findPlayer(logs[i].name);
+        temp[idx] += logs[i].score;
+        if (temp[idx] >= maxScore && totals[idx] == maxScore) {
+            printf("%s\n", logs[i].name);
+            return 0;
+        }
+    }
+
+    return 0;
+}
 

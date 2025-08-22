@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+int isSubsequence(const char *s, const char *t) {
+    int i = 0, j = 0;
+    while (s[i] && t[j]) {
+        if (s[i] == t[j]) j++;
+        i++;
+    }
+    return (t[j] == '\0');
+}
+
+int main() {
+    char s[105];
+    scanf("%s", s);
+
+    for (int x = 0; x < 1000; x += 8) {
+        char buf[5];
+        sprintf(buf, "%d", x);
+
+        if (isSubsequence(s, buf)) {
+            printf("YES\n%s\n", buf);
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

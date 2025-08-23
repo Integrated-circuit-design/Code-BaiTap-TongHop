@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAXN 8000
+
+int a[MAXN+5], prefix[MAXN+5];
+char canMake[MAXN+5];
+
+int countSpecial(int n) {
+    prefix[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        prefix[i] = prefix[i-1] + a[i];
+    }
+
+    for (int i = 1; i <= n; i++) canMake[i] = 0;
+
+    for (int len = 2; len <= n; len++) {
+        for (int l = 1; l + len - 1 <= n; l++) {
+            int r = l + len - 1;
+            int sum = prefix[r] - prefix[l-1];
+            if (sum <= n) canMake[sum] = 1;
+        }
+    }
+
+    int count = 0;
+    for (int i = 1; i <= n; i++) {
+        if (canMake[a[i]]) count++;
+    }
+    return count;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+        printf("%d\n", countSpecial(n));
+    }
+    return 0;
+}
 

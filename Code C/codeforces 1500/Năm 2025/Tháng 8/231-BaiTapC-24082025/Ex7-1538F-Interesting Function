@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int digits(long long x) {
+    int cnt = 0;
+    while (x > 0) {
+        cnt++;
+        x /= 10;
+    }
+    return cnt;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long l, r;
+        scanf("%lld %lld", &l, &r);
+
+        int dL = digits(l);
+        int dR = digits(r);
+
+        long long ans = 0;
+
+        if (dL == dR) {
+            ans = (r - l) * dL;
+        } else {
+            long long lim = 1;
+            for (int i = 1; i < dL; i++) lim *= 10;
+            lim = lim * 10 - 1;
+
+            ans += (lim - l + 1) * dL;
+            ans += (r - lim) * dR;
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

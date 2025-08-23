@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+long long max_val(long long a[], int n) {
+    long long m = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] > m) m = a[i];
+    }
+    return m;
+}
+
+long long sum_val(long long a[], int n) {
+    long long s = 0;
+    for (int i = 0; i < n; i++) s += a[i];
+    return s;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long a[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    long long sum = sum_val(a, n);
+    long long mx  = max_val(a, n);
+
+    if (sum % 2 == 0 && mx * 2 <= sum)
+        printf("YES\n");
+    else
+        printf("NO\n");
+
+    return 0;
+}
 

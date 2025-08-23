@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define INF 1000000000
+#define MAXN 200000
+
+int a[MAXN + 5];
+
+int min(int x, int y) { return x < y ? x : y; }
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        int dpF1 = 0, dpF2 = 0;
+        int dpY1 = 0, dpY2 = 0;
+        int dpF, dpY;
+
+        for (int i = n - 1; i >= 0; i--) {
+            int take1 = a[i] + dpY1;
+            int take2 = INF;
+            if (i + 1 < n) take2 = a[i] + a[i + 1] + dpY2;
+            dpF = min(take1, take2);
+
+            int kill1 = dpF1;
+            int kill2 = (i + 1 < n) ? dpF2 : INF;
+            dpY = min(kill1, kill2);
+
+            dpF2 = dpF1; dpF1 = dpF;
+            dpY2 = dpY1; dpY1 = dpY;
+        }
+
+        printf("%d\n", dpF);
+    }
+    return 0;
+}
 

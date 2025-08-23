@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    unsigned long long k;
+    scanf("%llu", &k);
+
+    char word[] = "codeforces";
+    int repeat[10];
+    for (int i = 0; i < 10; i++) repeat[i] = 1;
+
+    unsigned long long product = 1;
+
+    while (product < k) {
+        int minIndex = 0;
+        for (int i = 1; i < 10; i++) {
+            if (repeat[i] < repeat[minIndex]) {
+                minIndex = i;
+            }
+        }
+        product /= repeat[minIndex];
+        repeat[minIndex]++;
+        product *= repeat[minIndex];
+    }
+
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < repeat[i]; j++) {
+            putchar(word[i]);
+        }
+    }
+    putchar('\n');
+
+    return 0;
+}
 

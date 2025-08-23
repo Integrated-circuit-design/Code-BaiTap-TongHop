@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+long long lines_written(long long v, int k) {
+    if (v == 0) return 0;
+    return v + lines_written(v / k, k);
+}
+
+int main() {
+    long long n;
+    int k;
+    scanf("%lld %d", &n, &k);
+
+    long long low = 1, high = n, result = n;
+
+    while (low <= high) {
+        long long mid = (low + high) / 2;
+        if (lines_written(mid, k) >= n) {
+            result = mid;
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

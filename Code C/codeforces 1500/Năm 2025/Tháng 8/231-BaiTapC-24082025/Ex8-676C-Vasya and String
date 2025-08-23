@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+int n, k;
+char s[MAXN];
+
+int countDiff(int l, int r, char c) {
+    int cnt = 0;
+    for (int i = l; i <= r; i++) {
+        if (s[i] != c) cnt++;
+    }
+    return cnt;
+}
+
+int canDo(int len, char c) {
+    for (int i = 0; i + len - 1 < n; i++) {
+        if (countDiff(i, i + len - 1, c) <= k) return 1;
+    }
+    return 0;
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+    scanf("%s", s);
+
+    int low = 1, high = n, ans = 1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (canDo(mid, 'a') || canDo(mid, 'b')) {
+            ans = mid;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

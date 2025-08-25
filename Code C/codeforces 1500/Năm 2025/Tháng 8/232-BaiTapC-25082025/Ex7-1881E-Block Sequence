@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+#define NMAX 200005
+
+int a[NMAX];
+int dp[NMAX];
+
+void solve_case() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    dp[n] = 0;
+
+    int i = n - 1;
+    while (i >= 0) {
+        int skip = dp[i + 1];
+        int take = -1;
+
+        int L = a[i];
+        if (i + L <= n - 1) {
+            take = (L + 1) + dp[i + L + 1];
+        }
+
+        if (skip > take) dp[i] = skip;
+        else dp[i] = take;
+
+        i--;
+    }
+
+    int keep = dp[0];
+    int deletions = n - keep;
+    printf("%d\n", deletions);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        solve_case();
+    }
+
+    return 0;
+}
 

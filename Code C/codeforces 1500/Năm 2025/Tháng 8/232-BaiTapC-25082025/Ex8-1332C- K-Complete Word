@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int max(int a, int b) { return a > b ? a : b; }
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        char s[MAXN];
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+
+        int m = n / k;
+        long long ans = 0;
+        int visited[205] = {0};
+
+        for (int i = 0; i < k; i++) {
+            if (visited[i]) continue;
+
+            int j = k - 1 - i;
+            int cnt[26] = {0};
+            int total = 0;
+
+            for (int r = 0; r < m; r++) {
+                cnt[s[i + r * k] - 'a']++;
+                total++;
+            }
+
+            if (i != j) {
+                for (int r = 0; r < m; r++) {
+                    cnt[s[j + r * k] - 'a']++;
+                    total++;
+                }
+            }
+
+            int best = 0;
+            for (int c = 0; c < 26; c++) best = max(best, cnt[c]);
+
+            ans += total - best;
+
+            visited[i] = 1;
+            visited[j] = 1;
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

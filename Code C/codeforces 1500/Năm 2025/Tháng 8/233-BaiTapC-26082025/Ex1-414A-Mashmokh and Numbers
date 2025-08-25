@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+
+    if (n == 1) {
+        if (k == 0) {
+            printf("1\n");
+        } else {
+            printf("-1\n");
+        }
+        return 0;
+    }
+
+    if (k > 0 && n + k*2 > 1000000000) {
+        printf("-1\n");
+        return 0;
+    }
+
+    long long first = k;
+    long long second = k + 1;
+
+    long long used[100005] = {0};
+    long long a[100005];
+    int idx = 0;
+
+    a[idx++] = first;
+    a[idx++] = first * 2;
+
+    used[first] = 1;
+    used[first*2] = 1;
+
+    long long num = 1;
+    while (idx < n) {
+        if (!used[num]) {
+            a[idx++] = num;
+            used[num] = 1;
+        }
+        num++;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (i) printf(" ");
+        printf("%lld", a[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

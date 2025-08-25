@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int n;
+int deg[MAXN];
+int adj[MAXN][20];
+double ans = 0.0;
+
+void dfs(int u, int parent, int depth, double prob) {
+    int childCount = 0;
+    for (int i = 0; i < deg[u]; i++) {
+        int v = adj[u][i];
+        if (v == parent) continue;
+        childCount++;
+    }
+
+    if (childCount == 0) {
+        ans += prob * depth;
+        return;
+    }
+
+    for (int i = 0; i < deg[u]; i++) {
+        int v = adj[u][i];
+        if (v == parent) continue;
+        dfs(v, u, depth + 1, prob / childCount);
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj[u][deg[u]++] = v;
+        adj[v][deg[v]++] = u;
+    }
+
+    dfs(1, 0, 0, 1.0);
+
+    printf("%.15f\n", ans);
+    return 0;
+}
 

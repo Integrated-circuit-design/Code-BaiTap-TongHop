@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long absll(long long x) {
+    return x < 0 ? -x : x;
+}
+
+int lower_bound(long long arr[], int size, long long value) {
+    int l = 0, r = size; 
+    while (l < r) {
+        int mid = (l + r) / 2;
+        if (arr[mid] < value)
+            l = mid + 1;
+        else
+            r = mid;
+    }
+    return l;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    long long cities[100005], towers[100005];
+
+    for (int i = 0; i < n; i++) scanf("%lld", &cities[i]);
+    for (int j = 0; j < m; j++) scanf("%lld", &towers[j]);
+
+    long long answer = 0;
+
+    for (int i = 0; i < n; i++) {
+        int pos = lower_bound(towers, m, cities[i]);
+        long long dist = 1e18;
+
+        if (pos < m) {
+            long long d = absll(towers[pos] - cities[i]);
+            if (d < dist) dist = d;
+        }
+        if (pos > 0) {
+            long long d = absll(towers[pos-1] - cities[i]);
+            if (d < dist) dist = d;
+        }
+
+        if (dist > answer) answer = dist;
+    }
+
+    printf("%lld\n", answer);
+    return 0;
+}
 

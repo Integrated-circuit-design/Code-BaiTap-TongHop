@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int ans[MAXN];
+int q0[MAXN], q1[MAXN];
+int front0, rear0, front1, rear1;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        char s[MAXN];
+        scanf("%s", s);
+
+        front0 = rear0 = front1 = rear1 = 0;
+        int total = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '0') {
+                if (front1 < rear1) {
+                    int id = q1[front1++];
+                    ans[i] = id;
+                    q0[rear0++] = id;
+                } else {
+                    ans[i] = ++total;
+                    q0[rear0++] = total;
+                }
+            } else {
+                if (front0 < rear0) {
+                    int id = q0[front0++];
+                    ans[i] = id;
+                    q1[rear1++] = id;
+                } else {
+                    ans[i] = ++total;
+                    q1[rear1++] = total;
+                }
+            }
+        }
+
+        printf("%d\n", total);
+        for (int i = 0; i < n; i++) {
+            printf("%d%c", ans[i], (i == n - 1 ? '\n' : ' '));
+        }
+    }
+    return 0;
+}
 

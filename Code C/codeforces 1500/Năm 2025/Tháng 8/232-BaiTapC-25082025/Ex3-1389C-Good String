@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        char s[200005];
+        scanf("%s", s);
+        int n = strlen(s);
+
+        int best = 0;
+
+        int freq[10] = {0};
+        for (int i = 0; i < n; i++) {
+            freq[s[i]-'0']++;
+        }
+        for (int d = 0; d < 10; d++) {
+            if (freq[d] > best) best = freq[d];
+        }
+
+        for (int a = 0; a < 10; a++) {
+            for (int b = 0; b < 10; b++) {
+                if (a == b) continue;
+
+                int cnt = 0;
+                int need = a;
+                for (int i = 0; i < n; i++) {
+                    if (s[i] - '0' == need) {
+                        cnt++;
+                        need = (need == a ? b : a);
+                    }
+                }
+                if (cnt % 2 == 1) cnt--;
+                if (cnt > best) best = cnt;
+            }
+        }
+
+        printf("%d\n", n - best);
+    }
+    return 0;
+}
 

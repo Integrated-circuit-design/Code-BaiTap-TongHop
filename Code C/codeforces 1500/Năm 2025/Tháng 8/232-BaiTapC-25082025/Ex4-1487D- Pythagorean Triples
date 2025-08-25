@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <stdint.h>
+
+long long isqrt(long long x) {
+    long long lo = 0, hi = x, ans = 0;
+    while (lo <= hi) {
+        long long mid = (lo + hi) / 2;
+        if (mid <= x / mid) {
+            ans = mid;
+            lo = mid + 1;
+        } else {
+            hi = mid - 1;
+        }
+    }
+    return ans;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+
+        long long A = isqrt(2 * n - 1);
+        long long ans = 0;
+        if (A >= 3) ans = (A - 1) / 2;
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

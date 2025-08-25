@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAXN 100005
+
+char s[MAXN];
+char t[MAXN];
+bool present[26];
+char letters[26];
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    scanf("%s", s);
+
+    memset(present, 0, sizeof(present));
+    for (int i = 0; i < n; i++)
+        present[s[i]-'a'] = true;
+
+    int m = 0;
+    for (int i = 0; i < 26; i++)
+        if (present[i])
+            letters[m++] = 'a' + i;
+
+    for (int i = 0; i < k; i++)
+        t[i] = (i < n) ? s[i] : letters[0];
+    t[k] = '\0';
+
+    int last_pos = k - 1;
+    while (last_pos >= 0) {
+        for (int i = 0; i < m; i++) {
+            if (letters[i] > t[last_pos]) {
+                t[last_pos] = letters[i];
+                for (int j = last_pos + 1; j < k; j++)
+                    t[j] = letters[0];
+                printf("%s\n", t);
+                return 0;
+            }
+        }
+        last_pos--;
+    }
+
+    return 0;
+}
 

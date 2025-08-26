@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    char s[100005];
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    int lastPos[256];
+    memset(lastPos, -1, sizeof(lastPos));
+
+    int distinct = 0;
+    int typeExist[256] = {0};
+    for (int i = 0; i < n; i++) {
+        unsigned char c = s[i];
+        if (!typeExist[c]) {
+            typeExist[c] = 1;
+            distinct++;
+        }
+    }
+
+    int minLen = n;
+    int left = 0;
+
+    for (int right = 0; right < n; right++) {
+        unsigned char c = s[right];
+        lastPos[c] = right;
+
+        int curMin = n;
+        int count = 0;
+        for (int i = 0; i < 256; i++) {
+            if (typeExist[i]) {
+                count++;
+                if (lastPos[i] < curMin) curMin = lastPos[i];
+            }
+        }
+
+        if (count == distinct) {
+            int len = right - curMin + 1;
+            if (len < minLen) minLen = len;
+        }
+    }
+
+    printf("%d\n", minLen);
+    return 0;
+}
 

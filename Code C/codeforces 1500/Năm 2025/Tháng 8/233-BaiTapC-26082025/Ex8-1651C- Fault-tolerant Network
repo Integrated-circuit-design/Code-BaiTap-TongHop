@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+ll absll(ll x) { return x < 0 ? -x : x; }
+
+ll minCost(ll x, ll *arr, int n) {
+    ll minv = 1e18;
+    for (int i = 0; i < n; i++) {
+        ll cost = absll(x - arr[i]);
+        if (cost < minv) minv = cost;
+    }
+    return minv;
+}
+
+ll solve(int n, ll *a, ll *b) {
+    ll costA0 = minCost(a[0], b, n);
+    ll costAn = minCost(a[n-1], b, n);
+    ll costB0 = minCost(b[0], a, n);
+    ll costBn = minCost(b[n-1], a, n);
+
+    ll d00 = absll(a[0]-b[0]);
+    ll d0n = absll(a[0]-b[n-1]);
+    ll dn0 = absll(a[n-1]-b[0]);
+    ll dnn = absll(a[n-1]-b[n-1]);
+
+    ll ans = costA0 + costAn + costB0 + costBn;
+    if (d00 + dnn < ans) ans = d00 + dnn;
+    if (d0n + dn0 < ans) ans = d0n + dn0;
+
+    return ans;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        ll a[n], b[n];
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        for (int i = 0; i < n; i++) scanf("%lld", &b[i]);
+
+        printf("%lld\n", solve(n, a, b));
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+int arr[MAXN];
+int freq[MAXN];
+
+int maxMinMEX(int n, int k) {
+    for(int i = 0; i <= n; i++) freq[i] = 0;
+
+    for(int i = 0; i < n; i++) {
+        if(arr[i] <= n) freq[arr[i]]++;
+    }
+
+    int mex = 0;
+
+    while(1) {
+        if(freq[mex] == 0) {
+            k--;
+            if(k < 0) break;
+        }
+        mex++;
+    }
+
+    return mex - 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        for(int i = 0; i < n; i++) scanf("%d", &arr[i]);
+
+        int result = maxMinMEX(n, k);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

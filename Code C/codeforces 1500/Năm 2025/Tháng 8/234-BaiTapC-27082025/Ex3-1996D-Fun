@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+        ll ans = 0;
+
+        for(int a = 1; a <= x-2; a++) {
+            for(int b = 1; b <= x-a-1; b++) {
+                int max_c1 = x - a - b;
+                int max_c2 = n - (ll)a*b;
+                if(max_c2 < 1) continue;
+                int max_c = max_c1;
+                if(max_c > max_c2 / (a + b)) max_c = max_c2 / (a + b);
+                if(max_c >= 1) ans += max_c;
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAXN 300005
+
+int t, n;
+int a[MAXN];
+int ans[MAXN];
+int last_seen[MAXN];
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &a[i]);
+            last_seen[i] = 0;
+            ans[i] = INT_MAX;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            int x = a[i];
+            int gap = (last_seen[x] == 0) ? i : i - last_seen[x];
+            if (gap > ans[x]) ans[x] = gap;
+            last_seen[x] = i;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if (last_seen[i] != 0) {
+                int gap = n + 1 - last_seen[i];
+                if (gap > ans[i]) ans[i] = gap;
+            }
+        }
+
+        int final_ans[MAXN];
+        for (int i = 1; i <= n; i++) final_ans[i] = INT_MAX;
+
+        for (int i = 1; i <= n; i++) {
+            if (last_seen[i] != 0 && ans[i] <= n) {
+                if (final_ans[ans[i]] > i)
+                    final_ans[ans[i]] = i;
+            }
+        }
+
+        for (int k = 2; k <= n; k++) {
+            if (final_ans[k] > final_ans[k-1])
+                final_ans[k] = final_ans[k-1];
+        }
+
+        for (int k = 1; k <= n; k++) {
+            if (final_ans[k] == INT_MAX) printf("-1 ");
+            else printf("%d ", final_ans[k]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
 

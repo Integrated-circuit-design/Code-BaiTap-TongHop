@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int *l = (int *)malloc(n * sizeof(int));
+    int *r = (int *)malloc(n * sizeof(int));
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &l[i], &r[i]);
+    }
+
+    for (int i = 0; i < n-1; i++) {
+        for (int j = i+1; j < n; j++) {
+            if (l[i] > l[j]) {
+                int tmp = l[i]; l[i] = l[j]; l[j] = tmp;
+                tmp = r[i]; r[i] = r[j]; r[j] = tmp;
+            }
+        }
+    }
+
+    int tv[2] = {0, 0};
+    for (int i = 0; i < n; i++) {
+        int assigned = 0;
+        for (int j = 0; j < 2; j++) {
+            if (tv[j] <= l[i]) {
+                tv[j] = r[i];
+                assigned = 1;
+                break;
+            }
+        }
+        if (!assigned) {
+            printf("NO\n");
+            free(l); free(r);
+            return 0;
+        }
+    }
+
+    printf("YES\n");
+    free(l); free(r);
+    return 0;
+}
 

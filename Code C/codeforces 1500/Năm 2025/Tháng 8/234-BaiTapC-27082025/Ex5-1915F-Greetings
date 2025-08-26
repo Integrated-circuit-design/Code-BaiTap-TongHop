@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 400005
+typedef long long ll;
+
+typedef struct {
+    int pos;
+    int type;
+} Event;
+
+Event events[MAXN];
+
+int cmpEvent(const void *x, const void *y) {
+    Event *a = (Event*)x, *b = (Event*)y;
+    if (a->pos != b->pos) return (a->pos < b->pos) ? -1 : 1;
+    return a->type - b->type;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            int a, b;
+            scanf("%d %d", &a, &b);
+            events[2*i] = (Event){a, 0};
+            events[2*i+1] = (Event){b, 1};
+        }
+
+        qsort(events, 2*n, sizeof(Event), cmpEvent);
+
+        ll ans = 0;
+        int active = 0;
+        for (int i = 0; i < 2*n; i++) {
+            if (events[i].type == 0) {
+                ans += active;
+                active++;
+            } else {
+                active--;
+            }
+        }
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

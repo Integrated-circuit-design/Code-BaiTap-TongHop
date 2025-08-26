@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        long long x[1005], y[1005];
+        for (int i = 0; i < n; i++) scanf("%lld %lld", &x[i], &y[i]);
+
+        for (int i = 0; i < n-1; i++) {
+            for (int j = i+1; j < n; j++) {
+                if (x[i] > x[j]) { long long tmp = x[i]; x[i] = x[j]; x[j] = tmp; }
+                if (y[i] > y[j]) { long long tmp = y[i]; y[i] = y[j]; y[j] = tmp; }
+            }
+        }
+
+        long long ans;
+        if (n % 2 == 1) {
+            ans = 1;
+        } else {
+            long long dx = x[n/2] - x[n/2 - 1] + 1;
+            long long dy = y[n/2] - y[n/2 - 1] + 1;
+            ans = dx * dy;
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

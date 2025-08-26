@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+#define MAXN 200005
+typedef long long ll;
+
+ll a[MAXN];
+ll c[MAXN];
+ll cd[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        ll h;
+        int n;
+        scanf("%lld %d", &h, &n);
+
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        for (int i = 0; i < n; i++) scanf("%lld", &c[i]);
+
+        for (int i = 0; i < n; i++) cd[i] = 0;
+
+        ll turn = 0;
+
+        while (h > 0) {
+            ll damage = 0;
+            for (int i = 0; i < n; i++) {
+                if (cd[i] == 0) {
+                    damage += a[i];
+                    cd[i] = c[i];
+                }
+            }
+
+            h -= damage;
+            turn++;
+
+            for (int i = 0; i < n; i++) {
+                if (cd[i] > 0) cd[i]--;
+            }
+        }
+
+        printf("%lld\n", turn);
+    }
+
+    return 0;
+}
 

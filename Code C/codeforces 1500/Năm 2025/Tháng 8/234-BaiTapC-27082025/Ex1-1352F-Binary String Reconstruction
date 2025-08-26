@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void buildBinaryString(int n0, int n1, int n2) {
+    char result[300];
+    int idx = 0;
+
+    if (n0 > 0) {
+        for (int i = 0; i <= n0; i++)
+            result[idx++] = '0';
+    }
+
+    if (n1 > 0) {
+        char startChar = (n0 > 0) ? '1' : '0';
+        for (int i = 0; i <= n1; i++) {
+            result[idx++] = startChar;
+            startChar = (startChar == '0') ? '1' : '0';
+        }
+    }
+
+    if (n2 > 0) {
+        if (idx > 0 && result[idx-1] == '1') idx--;
+        for (int i = 0; i <= n2; i++)
+            result[idx++] = '1';
+    }
+
+    result[idx] = '\0';
+    printf("%s\n", result);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n0, n1, n2;
+        scanf("%d %d %d", &n0, &n1, &n2);
+        buildBinaryString(n0, n1, n2);
+    }
+    return 0;
+}
 

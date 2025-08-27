@@ -1,1 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+typedef struct Node {
+    int val;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+int visited[MAXN];
+int ans[MAXN], cnt = 0;
+
+void add_edge(int u, int v) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->val = v;
+    node->next = adj[u];
+    adj[u] = node;
+}
+
+int find_min(int* q, int qsize) {
+    int minv = 0;
+    for (int i = 1; i < qsize; i++) {
+        if (q[i] < q[minv]) minv = i;
+    }
+    return minv;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        add_edge(u, v);
+        if (u != v) add_edge(v, u);
+    }
+
+    int queue[MAXN];
+    int qsize = 0;
+
+    visited[1] = 1;
+    ans[cnt++] = 1;
+    queue[qsize++] = 1;
+
+    while (cnt < n) {
+        int idx = find_min(queue, qsize);
+        int u = queue[idx];
+
+        for (int i = idx; i < qsize - 1; i++) queue[i] = queue[i + 1];
+        qsize--;
+
+        Node* p = adj[u];
+        while (p) {
+            int v = p->val;
+            if (!visited[v]) {
+                visited[v] = 1;
+                ans[cnt++] = v;
+                queue[qsize++] = v;
+            }
+            p = p->next;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (i > 0) putchar(' ');
+        printf("%d", ans[i]);
+    }
+    putchar('\n');
+    return 0;
+}
 

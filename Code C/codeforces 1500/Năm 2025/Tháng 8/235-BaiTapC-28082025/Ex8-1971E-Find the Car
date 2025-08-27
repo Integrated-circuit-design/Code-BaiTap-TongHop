@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define ll long long
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k, q;
+        scanf("%d %d %d", &n, &k, &q);
+
+        int a[100005], b[100005];
+        for (int i = 0; i < k; i++) scanf("%d", &a[i]);
+        for (int i = 0; i < k; i++) scanf("%d", &b[i]);
+
+        while (q--) {
+            int d;
+            scanf("%d", &d);
+
+            if (d == 0) {
+                printf("0 ");
+                continue;
+            }
+
+            int segment = 0;
+            for (int i = 0; i < k; i++) {
+                if (a[i] == d) {
+                    segment = i;
+                    break;
+                }
+                if (i < k-1 && a[i] < d && d < a[i+1]) {
+                    segment = i;
+                    break;
+                }
+            }
+
+            if (a[segment] == d) {
+                printf("%d ", b[segment]);
+            } else {
+                ll dist = d - a[segment];
+                ll len = a[segment+1] - a[segment];
+                ll time = b[segment+1] - b[segment];
+                ll result = b[segment] + (dist * time) / len;
+                printf("%lld ", result);
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

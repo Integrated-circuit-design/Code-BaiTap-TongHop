@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 300005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        char s[MAXN];
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+
+        int zero[k], one[k];
+        memset(zero, 0, sizeof(zero));
+        memset(one, 0, sizeof(one));
+        int possible = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '0') zero[i % k]++;
+            else if (s[i] == '1') one[i % k]++;
+        }
+
+        for (int i = 0; i < k; i++) {
+            if (zero[i] > 0 && one[i] > 0) {
+                possible = 0;
+                break;
+            }
+        }
+
+        if (!possible) {
+            printf("NO\n");
+            continue;
+        }
+
+        int sum0 = 0, sum1 = 0;
+        for (int i = 0; i < k; i++) {
+            if (zero[i] > 0) sum0++;
+            else if (one[i] > 0) sum1++;
+        }
+
+        if (sum0 > k / 2 || sum1 > k / 2)
+            printf("NO\n");
+        else
+            printf("YES\n");
+    }
+
+    return 0;
+}
 

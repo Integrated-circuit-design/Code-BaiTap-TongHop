@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long k;
+    scanf("%d %lld", &n, &k);
+
+    long long a[100000], b[100000];
+    for(int i = 0; i < n; i++) scanf("%lld", &a[i]);
+    for(int i = 0; i < n; i++) scanf("%lld", &b[i]);
+
+    long long left = 0, right = 2000000000LL * 1000000000LL;
+
+    while(left < right) {
+        long long mid = left + (right - left + 1) / 2;
+        long long needed = 0;
+        int possible = 1;
+
+        for(int i = 0; i < n; i++) {
+            long long total = a[i] * mid;
+            if(total < 0 || total - b[i] > k - needed) {
+                possible = 0;
+                break;
+            }
+            if(total > b[i]) needed += total - b[i];
+        }
+
+        if(possible && needed <= k) left = mid;
+        else right = mid - 1;
+    }
+
+    printf("%lld\n", left);
+    return 0;
+}
 

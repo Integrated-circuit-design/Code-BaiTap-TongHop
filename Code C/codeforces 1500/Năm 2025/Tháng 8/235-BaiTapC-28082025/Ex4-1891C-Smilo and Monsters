@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        long long a[n];
+        long long attacks = 0;
+        long long combo = 0;
+        
+        for(int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+        
+        for(int i = 0; i < n; i++) {
+            while(a[i] > 0) {
+                if(combo > 0 && a[i] >= combo) {
+                    a[i] -= combo;
+                    attacks += 1;
+                    combo = 0;
+                } else {
+                    a[i] -= 1;
+                    combo += 1;
+                    attacks += 1;
+                }
+            }
+        }
+        printf("%lld\n", attacks);
+    }
+    return 0;
+}
 

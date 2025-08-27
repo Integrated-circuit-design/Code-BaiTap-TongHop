@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        ll initial;
+        scanf("%d %lld", &n, &initial);
+
+        ll temp = initial;
+        ll minTemp = initial, maxTemp = initial;
+        ll prevTime = 0;
+        int ok = 1;
+
+        for (int i = 0; i < n; i++) {
+            ll t, l, h;
+            scanf("%lld %lld %lld", &t, &l, &h);
+
+            ll dt = t - prevTime;
+
+            ll neededMin = l;
+            ll neededMax = h;
+
+            minTemp -= dt;
+            maxTemp += dt;
+
+            if (maxTemp < neededMin || minTemp > neededMax) {
+                ok = 0;
+            }
+
+            if (minTemp < neededMin) minTemp = neededMin;
+            if (maxTemp > neededMax) maxTemp = neededMax;
+
+            prevTime = t;
+        }
+
+        if (ok) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+    return 0;
+}
 

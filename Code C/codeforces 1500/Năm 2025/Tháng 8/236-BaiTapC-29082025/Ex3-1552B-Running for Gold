@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAXN 50005
+
+typedef struct {
+    int r[5];
+} Athlete;
+
+Athlete A[MAXN];
+
+int better(Athlete *a, Athlete *b) {
+    int cnt = 0;
+    for (int j = 0; j < 5; j++) {
+        if (a->r[j] < b->r[j]) cnt++;
+    }
+    return cnt >= 3;
+}
+
+int findCandidate(int n) {
+    int cand = 0;
+    for (int i = 1; i < n; i++) {
+        if (better(&A[i], &A[cand])) {
+            cand = i;
+        }
+    }
+    return cand;
+}
+
+int verifyCandidate(int cand, int n) {
+    for (int i = 0; i < n; i++) {
+        if (i == cand) continue;
+        if (!better(&A[cand], &A[i])) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < 5; j++) {
+                scanf("%d", &A[i].r[j]);
+            }
+        }
+
+        int cand = findCandidate(n);
+        if (verifyCandidate(cand, n)) {
+            printf("%d\n", cand + 1);
+        } else {
+            printf("-1\n");
+        }
+    }
+    return 0;
+}
 

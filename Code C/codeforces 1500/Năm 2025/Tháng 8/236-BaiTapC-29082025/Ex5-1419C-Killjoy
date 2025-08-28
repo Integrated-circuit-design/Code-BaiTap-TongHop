@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+void solveOneTest() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+
+    int rating[1005];
+    long long total = 0;
+    int sameAsX = 0;
+    int allSame = 1;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &rating[i]);
+        total += rating[i];
+        if (rating[i] == x) sameAsX = 1;
+        if (rating[i] != x) allSame = 0;
+    }
+
+    if (allSame) {
+        printf("0\n");
+    } else if (sameAsX || total == 1LL * n * x) {
+        printf("1\n");
+    } else {
+        printf("2\n");
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solveOneTest();
+    }
+    return 0;
+}
 

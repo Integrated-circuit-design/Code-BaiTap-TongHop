@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int p[MAXN], pos[MAXN];
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &p[i]);
+            pos[p[i]] = i;
+        }
+
+        int best = 1;
+        int len[MAXN];
+
+        len[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            if (pos[i-1] < pos[i])
+                len[i] = len[i-1] + 1;
+            else
+                len[i] = 1;
+            if (len[i] > best) best = len[i];
+        }
+
+        int ans = n - best;
+        printf("%d\n", ans);
+    }
+
+    return 0;
+}
 

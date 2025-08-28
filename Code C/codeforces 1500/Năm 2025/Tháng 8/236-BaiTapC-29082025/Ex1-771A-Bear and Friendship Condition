@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 150005
+
+int parent[MAXN], sz[MAXN];
+long long edgeCount[MAXN];
+long long nodeCount[MAXN];
+
+int find(int x) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]);
+}
+
+void unite(int a, int b) {
+    a = find(a);
+    b = find(b);
+    if (a == b) {
+        edgeCount[a]++;
+        return;
+    }
+    if (sz[a] < sz[b]) {
+        int tmp = a; a = b; b = tmp;
+    }
+    parent[b] = a;
+    sz[a] += sz[b];
+    nodeCount[a] += nodeCount[b];
+    edgeCount[a] += edgeCount[b] + 1;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) {
+        parent[i] = i;
+        sz[i] = 1;
+        nodeCount[i] = 1;
+        edgeCount[i] = 0;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        unite(a, b);
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (parent[i] == i) {
+            long long nodes = nodeCount[i];
+            long long edges = edgeCount[i];
+            long long need = nodes * (nodes - 1LL) / 2LL;
+            if (edges != need) {
+                printf("NO\n");
+                return 0;
+            }
+        }
+    }
+
+    printf("YES\n");
+    return 0;
+}
 

@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        int ans = n;
+
+        for (int d = 1; d * d <= n; d++) {
+            if (n % d == 0) {
+                int mism = 0;
+                for (int i = 0; i < n && mism <= 1; i++) {
+                    if (s[i] != s[i % d]) mism++;
+                }
+                if (mism <= 1) { ans = d; break; }
+
+                if (d != n / d) {
+                    mism = 0;
+                    int dd = n / d;
+                    for (int i = 0; i < n && mism <= 1; i++) {
+                        if (s[i] != s[i % dd]) mism++;
+                    }
+                    if (mism <= 1) ans = dd;
+                }
+            }
+        }
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

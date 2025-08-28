@@ -1,1 +1,65 @@
+#include <stdio.h>
+
+#define ll long long
+#define MAXN 100005
+
+int N;
+ll S, base[MAXN], price[MAXN];
+
+void swap(ll *x, ll *y) {
+    ll t = *x; *x = *y; *y = t;
+}
+
+void quicksort(ll arr[], int l, int r) {
+    if (l >= r) return;
+    ll pivot = arr[(l + r) / 2];
+    int i = l, j = r;
+    while (i <= j) {
+        while (arr[i] < pivot) i++;
+        while (arr[j] > pivot) j--;
+        if (i <= j) {
+            swap(&arr[i], &arr[j]);
+            i++; j--;
+        }
+    }
+    if (l < j) quicksort(arr, l, j);
+    if (i < r) quicksort(arr, i, r);
+}
+
+ll totalCost(int k) {
+    for (int i = 0; i < N; i++) {
+        price[i] = base[i] + (ll)(i+1) * k;
+    }
+    quicksort(price, 0, N-1);
+
+    ll sum = 0;
+    for (int i = 0; i < k; i++) {
+        sum += price[i];
+        if (sum > S) return -1;
+    }
+    return sum;
+}
+
+int main() {
+    scanf("%d %lld", &N, &S);
+    for (int i = 0; i < N; i++) scanf("%lld", &base[i]);
+
+    int low = 0, high = N, bestK = 0;
+    ll bestSum = 0;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        ll cost = totalCost(mid);
+        if (cost != -1) {
+            bestK = mid;
+            bestSum = cost;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    printf("%d %lld\n", bestK, bestSum);
+    return 0;
+}
 

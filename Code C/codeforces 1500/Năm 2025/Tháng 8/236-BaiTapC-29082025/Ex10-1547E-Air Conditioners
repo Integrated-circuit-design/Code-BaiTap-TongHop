@@ -1,1 +1,46 @@
+#include <stdio.h>
+#define INF 1000000000000000000LL
+#define MAXN 300000
+
+long long leftT[MAXN+5], rightT[MAXN+5], base[MAXN+5];
+
+int main() {
+    int q; 
+    scanf("%d",&q);
+    while(q--) {
+        int n,k;
+        scanf("%d%d",&n,&k);
+
+        for(int i=1;i<=n;i++) base[i]=INF;
+
+        int pos[k];
+        for(int i=0;i<k;i++) scanf("%d",&pos[i]);
+
+        for(int i=0;i<k;i++) {
+            long long t;
+            scanf("%lld",&t);
+            base[pos[i]]=t;
+        }
+
+        long long cur=INF;
+        for(int i=1;i<=n;i++){
+            if(cur<INF) cur++;
+            if(base[i]<cur) cur=base[i];
+            leftT[i]=cur;
+        }
+
+        cur=INF;
+        for(int i=n;i>=1;i--){
+            if(cur<INF) cur++;
+            if(base[i]<cur) cur=base[i];
+            rightT[i]=cur;
+        }
+
+        for(int i=1;i<=n;i++){
+            long long ans = leftT[i]<rightT[i]? leftT[i]:rightT[i];
+            printf("%lld%c", ans, (i==n?'\n':' '));
+        }
+    }
+    return 0;
+}
 

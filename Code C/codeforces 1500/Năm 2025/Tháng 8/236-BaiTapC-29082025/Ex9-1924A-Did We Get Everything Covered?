@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXM 1000005
+#define MAXK 27
+
+int *pos[MAXK], cnt[MAXK];
+char s[MAXM], ans[30];
+
+int upper_bound(int *arr, int n, int x) {
+    int l=0, r=n;
+    while(l<r){
+        int mid=(l+r)/2;
+        if(arr[mid] > x) r=mid;
+        else l=mid+1;
+    }
+    return l;
+}
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+    while(t--) {
+        int n,k,m;
+        scanf("%d %d %d", &n, &k, &m);
+        scanf("%s", s+1);
+
+        for(int c=0;c<k;c++){ cnt[c]=0; if(pos[c]) free(pos[c]); }
+
+        for(int i=1;i<=m;i++) cnt[s[i]-'a']++;
+
+        for(int c=0;c<k;c++) {
+            pos[c]=(int*)malloc(cnt[c]*sizeof(int));
+            cnt[c]=0;
+        }
+        for(int i=1;i<=m;i++) {
+            int c=s[i]-'a';
+            pos[c][cnt[c]++]=i;
+        }
+
+        int cur=0, bad=0;
+        for(int i=0;i<n;i++){
+            int found=0;
+            for(int c=0;c<k;c++){
+                int id=upper_bound(pos[c], cnt[c], cur);
+                if(id==cnt[c]){
+                    printf("NO\n");
+                    for(int j=0;j<i;j++) putchar(ans[j]);
+                    putchar('a'+c);
+                    for(int j=i+1;j<n;j++) putchar('a');
+                    putchar('\n');
+                    bad=1; break;
+                }
+                if(!found){
+                    ans[i]='a'+c;
+                    cur=pos[c][id];
+                    found=1;
+                }
+            }
+            if(bad) break;
+        }
+        if(!bad) printf("YES\n");
+
+        for(int c=0;c<k;c++) { free(pos[c]); pos[c]=NULL; }
+    }
+    return 0;
+}
 

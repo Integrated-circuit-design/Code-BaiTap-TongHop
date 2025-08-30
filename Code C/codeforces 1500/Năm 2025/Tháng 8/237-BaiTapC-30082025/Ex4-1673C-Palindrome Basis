@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 1000000007
+#define MAXN 40000
+
+int pal[50000], pc = 0;
+int memo[50001][600];
+
+int is_pal(int x) {
+    int rev = 0, tmp = x;
+    while (tmp > 0) {
+        rev = rev * 10 + tmp % 10;
+        tmp /= 10;
+    }
+    return rev == x;
+}
+
+int solve(int sum, int idx) {
+    if (sum == 0) return 1;
+    if (idx >= pc || sum < 0) return 0;
+    if (memo[sum][idx] != -1) return memo[sum][idx];
+
+    long long ways = 0;
+    for (int k = 0; k * pal[idx] <= sum; k++) {
+        ways += solve(sum - k * pal[idx], idx + 1);
+        if (ways >= MOD) ways -= MOD;
+    }
+    return memo[sum][idx] = (int)ways;
+}
+
+int main() {
+    int t, n, maxn = 0;
+    int queries[10005];
+
+    scanf("%d", &t);
+    for (int i = 0; i < t; i++) {
+        scanf("%d", &queries[i]);
+        if (queries[i] > maxn) maxn = queries[i];
+    }
+
+    for (int x = 1; x <= maxn; x++) {
+        if (is_pal(x)) pal[pc++] = x;
+    }
+
+    memset(memo, -1, sizeof(memo));
+
+    for (int i = 0; i < t; i++) {
+        n = queries[i];
+        printf("%d\n", solve(n, 0));
+    }
+
+    return 0;
+}
 

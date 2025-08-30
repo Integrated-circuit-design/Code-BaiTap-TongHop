@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int l[300005], r[300005];
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &l[i], &r[i]);
+    }
+
+    int best = 0;
+    for (int i = 1; i < n; i++) {
+        if (l[i] < l[best] || (l[i] == l[best] && r[i] > r[best])) {
+            best = i;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (i == best) continue;
+        if (l[i] >= l[best] && r[i] <= r[best]) {
+            printf("%d %d\n", i + 1, best + 1);
+            return 0;
+        }
+    }
+
+    printf("-1 -1\n");
+    return 0;
+}
 

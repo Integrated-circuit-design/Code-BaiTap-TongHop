@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 1000000007
+
+long long countSequences(const char *str) {
+    long long total = 0;
+    long long buffer = 0;
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        char c = str[i];
+        if (c == 'a') {
+            total = (total + buffer + 1) % MOD;
+        } else if (c == 'b') {
+            buffer = total;
+        }
+    }
+    return total;
+}
+
+int main() {
+    char input[100005];
+    scanf("%s", input);
+
+    long long result = countSequences(input);
+    printf("%lld\n", result);
+
+    return 0;
+}
 

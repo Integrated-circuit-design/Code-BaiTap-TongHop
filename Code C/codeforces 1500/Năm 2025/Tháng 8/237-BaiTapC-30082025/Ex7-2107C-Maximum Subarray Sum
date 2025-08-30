@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define NEG_INF 1000000000000000000LL
+
+long long kadane_known(int n, char s[], long long a[]) {
+    long long best = LLONG_MIN, sum = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '1') {
+            if (sum > 0) sum += a[i];
+            else sum = a[i];
+            if (sum > best) best = sum;
+        } else {
+            if (sum < 0) sum = 0;
+        }
+    }
+    if (best == LLONG_MIN) return 0;
+    return best;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        long long k;
+        scanf("%d %lld", &n, &k);
+
+        char s[n + 1];
+        long long a[n];
+        scanf("%s", s);
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+        long long best = kadane_known(n, s, a);
+
+        if (best > k) {
+            printf("No\n");
+            continue;
+        }
+
+        printf("Yes\n");
+
+        if (best == k) {
+            for (int i = 0; i < n; i++) {
+                if (s[i] == '0') a[i] = -NEG_INF;
+            }
+        } else {
+            int placed = 0;
+            for (int i = 0; i < n; i++) {
+                if (s[i] == '0') {
+                    if (!placed) {
+                        a[i] = k - best;
+                        placed = 1;
+                    } else {
+                        a[i] = -NEG_INF;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%lld%c", a[i], (i == n - 1 ? '\n' : ' '));
+        }
+    }
+    return 0;
+}
 

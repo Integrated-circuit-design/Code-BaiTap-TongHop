@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b){
+    return *(int*)b - *(int*)a;
+}
+
+int main(){
+    int n, k1, k2;
+    scanf("%d %d %d", &n, &k1, &k2);
+    int a[1005], b[1005], d[1005];
+
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    for(int i=0;i<n;i++) scanf("%d",&b[i]);
+
+    for(int i=0;i<n;i++){
+        int diff=a[i]-b[i];
+        if(diff<0) diff=-diff;
+        d[i]=diff;
+    }
+
+    int K = k1 + k2;
+
+    while(K--){
+        qsort(d, n, sizeof(int), cmp);
+        if(d[0]>0) d[0]--;
+        else d[0]=1;
+    }
+
+    long long ans=0;
+    for(int i=0;i<n;i++) ans += 1LL*d[i]*d[i];
+    printf("%lld\n",ans);
+
+    return 0;
+}
 

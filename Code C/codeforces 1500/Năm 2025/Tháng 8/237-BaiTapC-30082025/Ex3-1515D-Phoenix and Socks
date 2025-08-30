@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int leftCnt[MAXN], rightCnt[MAXN];
+
+int min(int a, int b) { return a < b ? a : b; }
+
+void match_free_pairs(int n, int *l, int *r) {
+    for (int i = 1; i <= n; i++) {
+        int take = min(leftCnt[i], rightCnt[i]);
+        leftCnt[i] -= take;
+        rightCnt[i] -= take;
+        *l -= take;
+        *r -= take;
+    }
+}
+
+int reduce_with_double(int n, int *bigCnt, int diff) {
+    int cost = 0;
+    for (int i = 1; i <= n && diff > 0; i++) {
+        int can = bigCnt[i] / 2;
+        int use = min(can, diff);
+        bigCnt[i] -= 2 * use;
+        diff -= use;
+        cost += use;
+    }
+    return cost + diff;
+}
+
+int main() {
+    int t; scanf("%d", &t);
+    while (t--) {
+        int n, l, r;
+        scanf("%d %d %d", &n, &l, &r);
+
+        for (int i = 1; i <= n; i++) leftCnt[i] = rightCnt[i] = 0;
+
+        for (int i = 0; i < l; i++) {
+            int c; scanf("%d", &c);
+            leftCnt[c]++;
+        }
+        for (int i = 0; i < r; i++) {
+            int c; scanf("%d", &c);
+            rightCnt[c]++;
+        }
+
+        match_free_pairs(n, &l, &r);
+
+        int ans = 0;
+        if (l > r) {
+            ans += reduce_with_double(n, leftCnt, (l - r) / 2);
+        } else if (r > l) {
+            ans += reduce_with_double(n, rightCnt, (r - l) / 2);
+        }
+
+        ans += (l + r) / 2;
+
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

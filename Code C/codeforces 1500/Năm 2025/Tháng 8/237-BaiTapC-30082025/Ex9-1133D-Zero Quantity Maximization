@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef long long ll;
+
+ll gcd(ll a, ll b) {
+    return b ? gcd(b, a % b) : (a >= 0 ? a : -a);
+}
+
+void makeFractionStr(char *buf, ll num, ll den) {
+    ll g = gcd(num, den);
+    num /= g; den /= g;
+    if (den < 0) { num = -num; den = -den; }
+    sprintf(buf, "%lld/%lld", num, den);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    ll a[n], b[n];
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+    for (int i = 0; i < n; i++) scanf("%lld", &b[i]);
+
+    char frac[n][50];
+    int sz = 0, base = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 0) {
+            if (b[i] == 0) base++;
+        } else {
+            makeFractionStr(frac[sz], -b[i], a[i]);
+            sz++;
+        }
+    }
+
+    int maxCnt = 0;
+    for (int i = 0; i < sz; i++) {
+        int cnt = 1;
+        for (int j = i + 1; j < sz; j++) {
+            if (strcmp(frac[i], frac[j]) == 0) cnt++;
+        }
+        if (cnt > maxCnt) maxCnt = cnt;
+    }
+
+    printf("%d\n", base + maxCnt);
+    return 0;
+}
 

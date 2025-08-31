@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+#define HASH 400009
+
+int t, n;
+char s[MAXN];
+int head[HASH], posX[MAXN], posY[MAXN];
+int nextNode[MAXN], keyX[MAXN], keyY[MAXN], val[MAXN], tot;
+
+int hash(int x, int y) {
+    long long h = (1LL * (x + 200000) * 911382323 + (y + 200000));
+    if (h < 0) h = -h;
+    return (int)(h % HASH);
+}
+
+int find(int x, int y) {
+    int h = hash(x,y);
+    for (int i = head[h]; i; i = nextNode[i]) {
+        if (keyX[i] == x && keyY[i] == y) return val[i];
+    }
+    return -1;
+}
+
+void insert(int x, int y, int v) {
+    int h = hash(x,y);
+    ++tot;
+    keyX[tot] = x; keyY[tot] = y; val[tot] = v;
+    nextNode[tot] = head[h];
+    head[h] = tot;
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        memset(head, 0, sizeof(head));
+        tot = 0;
+
+        int x = 0, y = 0;
+        int bestL = -1, bestR = n+1;
+
+        insert(0, 0, 0);
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'L') x--;
+            else if (s[i] == 'R') x++;
+            else if (s[i] == 'U') y++;
+            else y--;
+
+            int prev = find(x,y);
+            if (prev != -1) {
+                int l = prev+1, r = i+1;
+                if (r-l < bestR-bestL) {
+                    bestL = l;
+                    bestR = r;
+                }
+            }
+            insert(x,y,i+1);
+        }
+
+        if (bestL == -1) printf("-1\n");
+        else printf("%d %d\n", bestL, bestR);
+    }
+    return 0;
+}
 

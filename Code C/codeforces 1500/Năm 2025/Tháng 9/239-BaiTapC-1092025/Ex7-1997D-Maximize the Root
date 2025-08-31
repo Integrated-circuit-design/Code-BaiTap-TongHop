@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+typedef struct Node {
+    int vertex;
+    struct Node* next;
+} Node;
+
+Node* tree[MAXN];
+long long a[MAXN];
+
+void addChild(int u, int v) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->vertex = v;
+    node->next = tree[u];
+    tree[u] = node;
+}
+
+long long dfs(int u) {
+    if(tree[u] == NULL) return a[u];
+    long long sum = 0;
+    for(Node* p = tree[u]; p != NULL; p = p->next) {
+        sum += dfs(p->vertex);
+    }
+    return (sum < a[u]) ? sum : a[u];
+}
+
+void freeTree(int n) {
+    for(int i = 1; i <= n; i++) {
+        Node* p = tree[i];
+        while(p) {
+            Node* tmp = p;
+            p = p->next;
+            free(tmp);
+        }
+        tree[i] = NULL;
+    }
+}
+
+int main() {
+    int t, n;
+    scanf("%d", &t);
+    while(t--) {
+        scanf("%d", &n);
+        for(int i = 1; i <= n; i++) {
+            scanf("%lld", &a[i]);
+            tree[i] = NULL;
+        }
+
+        for(int i = 2; i <= n; i++) {
+            int p;
+            scanf("%d", &p);
+            addChild(p, i);
+        }
+
+        printf("%lld\n", dfs(1));
+
+        freeTree(n);
+    }
+    return 0;
+}
 

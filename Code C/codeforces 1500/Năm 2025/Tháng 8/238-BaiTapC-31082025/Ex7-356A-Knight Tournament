@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+#define MAXN 300005
+
+int n, m;
+int ans[MAXN];
+int nxt[MAXN];
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) nxt[i] = i + 1;
+
+    while (m--) {
+        int l, r, x;
+        scanf("%d %d %d", &l, &r, &x);
+
+        int k = l;
+        while (k <= r) {
+            if (k == x) {
+                k = nxt[k];
+                continue;
+            }
+            ans[k] = x;
+            int tmp = nxt[k];
+            nxt[k] = (r < tmp ? tmp : r + 1);
+            k = tmp;
+        }
+    }
+
+    for (int i = 1; i <= n; i++)
+        printf("%d ", ans[i]);
+
+    return 0;
+}
 

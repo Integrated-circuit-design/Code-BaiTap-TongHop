@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+int freq[MAXN];
+
+long long comb3(long long x) {
+    if (x < 3) return 0;
+    return x * (x - 1) * (x - 2) / 6;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) freq[i] = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            freq[a[i]]++;
+        }
+
+        long long ans = 0;
+
+        for (int val = 1; val <= n; val++) {
+            long long sum = freq[val] + freq[val+1] + freq[val+2];
+            ans += comb3(sum) - comb3(freq[val+1] + freq[val+2]) - comb3(freq[val] + freq[val+2]) - comb3(freq[val] + freq[val+1])
+                   + comb3(freq[val]) + comb3(freq[val+1]) + comb3(freq[val+2]);
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

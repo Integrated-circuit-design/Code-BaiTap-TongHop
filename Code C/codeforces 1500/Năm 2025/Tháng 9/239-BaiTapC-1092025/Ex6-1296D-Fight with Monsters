@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long a, b, k;
+    scanf("%d %lld %lld %lld", &n, &a, &b, &k);
+
+    long long h;
+    int points = 0;
+    long long skip_counts[32] = {0};
+
+    for(int i = 0; i < n; i++) {
+        scanf("%lld", &h);
+
+        long long cycle = a + b;
+        long long rem = h % cycle;
+        if(rem == 0) rem = cycle;
+
+        long long t = (rem + a - 1) / a - 1;
+
+        if(t <= 0) {
+            points++;
+        } else if(t < 32) {
+            skip_counts[t]++;
+        } else {
+            skip_counts[31]++;
+        }
+    }
+
+    for(int t = 1; t < 32; t++) {
+        while(skip_counts[t] > 0 && k >= t) {
+            k -= t;
+            points++;
+            skip_counts[t]--;
+        }
+    }
+
+    printf("%d\n", points);
+    return 0;
+}
 

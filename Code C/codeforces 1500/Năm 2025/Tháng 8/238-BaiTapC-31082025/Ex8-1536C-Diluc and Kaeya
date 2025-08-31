@@ -1,1 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 500005
+
+typedef struct {
+    int a, b;
+} Pair;
+
+Pair ratios[MAXN];
+int freq[MAXN];
+int ids[MAXN];
+
+int gcd(int a, int b) {
+    while (b) {
+        int t = a % b;
+        a = b;
+        b = t;
+    }
+    return a;
+}
+
+int cmp(const void *x, const void *y) {
+    Pair *p = (Pair*)x;
+    Pair *q = (Pair*)y;
+    if (p->a != q->a) return p->a - q->a;
+    return p->b - q->b;
+}
+
+int findID(Pair *arr, int size, int a, int b) {
+    int l = 0, r = size - 1;
+    while (l <= r) {
+        int m = (l + r) / 2;
+        if (arr[m].a == a && arr[m].b == b) return m;
+        if (arr[m].a < a || (arr[m].a == a && arr[m].b < b)) l = m + 1;
+        else r = m - 1;
+    }
+    return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        char s[MAXN];
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        int d = 0, k = 0;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'D') d++;
+            else k++;
+            int g = gcd(d, k);
+            ratios[i].a = d / g;
+            ratios[i].b = k / g;
+        }
+
+        Pair copy[MAXN];
+        for (int i = 0; i < n; i++) copy[i] = ratios[i];
+        qsort(copy, n, sizeof(Pair), cmp);
+
+        int m = 0;
+        for (int i = 0; i < n; i++) {
+            if (i == 0 || copy[i].a != copy[i-1].a || copy[i].b != copy[i-1].b) {
+                copy[m++] = copy[i];
+            }
+        }
+
+        for (int i = 0; i < m; i++) freq[i] = 0;
+
+        for (int i = 0; i < n; i++) {
+            int id = findID(copy, m, ratios[i].a, ratios[i].b);
+            freq[id]++;
+            printf("%d%c", freq[id], (i == n-1 ? '\n' : ' '));
+        }
+    }
+    return 0;
+}
 

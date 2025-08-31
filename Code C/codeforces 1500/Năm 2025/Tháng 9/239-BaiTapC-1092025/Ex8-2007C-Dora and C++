@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll findMax(ll arr[], int n) {
+    ll mx = arr[0];
+    for (int i = 1; i < n; i++)
+        if (arr[i] > mx) mx = arr[i];
+    return mx;
+}
+
+ll findMin(ll arr[], int n) {
+    ll mn = arr[0];
+    for (int i = 1; i < n; i++)
+        if (arr[i] < mn) mn = arr[i];
+    return mn;
+}
+
+ll gcd(ll a, ll b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        ll a, b;
+        scanf("%d %lld %lld", &n, &a, &b);
+
+        ll arr[n];
+        for (int i = 0; i < n; i++)
+            scanf("%lld", &arr[i]);
+
+        ll mn = findMin(arr, n);
+        ll mx = findMax(arr, n);
+
+        ll g = gcd(a, b);
+
+        ll range = mx - mn;
+        ll minRange = range % g;
+
+        printf("%lld\n", minRange);
+    }
+
+    return 0;
+}
 

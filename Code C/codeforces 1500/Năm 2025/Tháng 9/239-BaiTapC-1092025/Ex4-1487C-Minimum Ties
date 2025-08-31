@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+void solve(int n) {
+    int games = n * (n - 1) / 2;
+    int results[5050];
+    int idx = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int distance = j - i;
+            if (n % 2 == 1) {
+                results[idx++] = (distance <= n / 2) ? 1 : -1;
+            } else {
+                if (distance < n / 2) results[idx++] = 1;
+                else if (distance == n / 2) results[idx++] = 0;
+                else results[idx++] = -1;
+            }
+        }
+    }
+
+    for (int i = 0; i < games; i++) {
+        printf("%d", results[i]);
+        if (i < games - 1) printf(" ");
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        solve(n);
+    }
+    return 0;
+}
 

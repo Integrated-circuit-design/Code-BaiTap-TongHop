@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        char s[MAXN], t[MAXN];
+        scanf("%s %s", s, t);
+
+        int n = strlen(s);
+        char stack[MAXN];
+        int top = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (top >= 0 && s[i] != t[0]) {
+                top--;
+            } else {
+                stack[++top] = s[i];
+            }
+        }
+
+        stack[top + 1] = '\0';
+
+        if (strcmp(stack, t) == 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

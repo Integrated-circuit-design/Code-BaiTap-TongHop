@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+long long find_card(long long n, long long k) {
+    if (k == 1) return 1;
+
+    long long group = 0;
+    long long remaining = k;
+    
+    while (1) {
+        long long cnt = (n >> group) - (n >> (group + 1));
+        if (remaining <= cnt) break;
+        remaining -= cnt;
+        group++;
+    }
+    
+    long long index = remaining;
+    return ((index * 2 - 1) << group);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+        printf("%lld\n", find_card(n, k));
+    }
+    return 0;
+}
 

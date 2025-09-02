@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int n, k;
+char s[MAXN], t[MAXN];
+int visited[MAXN];
+int queue[MAXN];
+int cntS[26], cntT[26];
+
+void bfs(int start, int *ok) {
+    int front = 0, back = 0;
+    queue[back++] = start;
+    visited[start] = 1;
+
+    memset(cntS, 0, sizeof(cntS));
+    memset(cntT, 0, sizeof(cntT));
+
+    while (front < back) {
+        int u = queue[front++];
+
+        cntS[s[u] - 'a']++;
+        cntT[t[u] - 'a']++;
+
+        int v;
+
+        v = u + k;
+        if (v < n && !visited[v]) { visited[v] = 1; queue[back++] = v; }
+        v = u - k;
+        if (v >= 0 && !visited[v]) { visited[v] = 1; queue[back++] = v; }
+
+        v = u + k + 1;
+        if (v < n && !visited[v]) { visited[v] = 1; queue[back++] = v; }
+        v = u - k - 1;
+        if (v >= 0 && !visited[v]) { visited[v] = 1; queue[back++] = v; }
+    }
+
+    for (int c = 0; c < 26; c++) {
+        if (cntS[c] != cntT[c]) {
+            *ok = 0;
+            return;
+        }
+    }
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        scanf("%d %d", &n, &k);
+        scanf("%s %s", s, t);
+
+        memset(visited, 0, n * sizeof(int));
+
+        int ok = 1;
+        for (int i = 0; i < n && ok; i++) {
+            if (!visited[i]) {
+                bfs(i, &ok);
+            }
+        }
+        printf(ok ? "YES\n" : "NO\n");
+    }
+    return 0;
+}
 

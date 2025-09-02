@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int t, n;
+int q[MAXN], minp[MAXN], maxp[MAXN];
+int usedMin[MAXN], usedMax[MAXN];
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &q[i]);
+            minp[i] = maxp[i] = 0;
+            usedMin[i+1] = usedMax[i+1] = 0;
+        }
+
+        int nextMin = 1;
+        for (int i = 0; i < n; i++) {
+            if (i == 0 || q[i] != q[i-1]) {
+                minp[i] = q[i];
+                usedMin[q[i]] = 1;
+                if (nextMin == q[i]) nextMin++;
+            } else {
+                while (usedMin[nextMin]) nextMin++;
+                minp[i] = nextMin;
+                usedMin[nextMin] = 1;
+            }
+        }
+
+        int nextMax = n;
+        for (int i = 0; i < n; i++) {
+            if (i == 0 || q[i] != q[i-1]) {
+                maxp[i] = q[i];
+                usedMax[q[i]] = 1;
+            } else {
+                for (int x = q[i]-1; x >= 1; x--) {
+                    if (!usedMax[x]) {
+                        maxp[i] = x;
+                        usedMax[x] = 1;
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) printf("%d ", minp[i]);
+        printf("\n");
+        for (int i = 0; i < n; i++) printf("%d ", maxp[i]);
+        printf("\n");
+    }
+    return 0;
+}
 

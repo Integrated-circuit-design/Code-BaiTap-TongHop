@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        long long a[n];
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+        long long score = 0;
+        int i = 0;
+
+        while (i < n) {
+            if ((i + 1) % 2 == 1 && a[i] > 0) {
+                score += a[i];
+                i++;
+            } else {
+                i++;
+            }
+        }
+
+        printf("%lld\n", score);
+    }
+    return 0;
+}
 

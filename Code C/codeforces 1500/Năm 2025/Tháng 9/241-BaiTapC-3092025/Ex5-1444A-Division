@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <stdint.h>
+
+int64_t max_divisor(int64_t p, int64_t q) {
+    if (p % q != 0) return p;
+
+    int64_t x = p;
+    
+    while (x % q == 0) {
+        x /= 2;
+    }
+
+    for (int64_t d = 2; d <= q; d++) {
+        if (q % d == 0) {
+            int64_t temp = p;
+            while (temp % q == 0) temp /= d;
+            if (temp > x) x = temp;
+        }
+    }
+
+    return x;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    for (int i = 0; i < t; i++) {
+        int64_t p, q;
+        scanf("%lld %lld", &p, &q);
+        printf("%lld\n", max_divisor(p, q));
+    }
+    return 0;
+}
 

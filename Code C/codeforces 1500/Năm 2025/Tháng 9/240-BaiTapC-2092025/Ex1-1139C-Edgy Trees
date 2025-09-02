@@ -1,1 +1,65 @@
+#include <stdio.h>
+
+#define MOD 1000000007LL
+
+int n, k;
+int head[100005], to[200005], nxt[200005], color[200005], edge_cnt;
+int visited[100005];
+
+void add_edge(int u, int v, int c) {
+    to[++edge_cnt] = v;
+    color[edge_cnt] = c;
+    nxt[edge_cnt] = head[u];
+    head[u] = edge_cnt;
+}
+
+long long modpow(long long a, int e) {
+    long long res = 1;
+    a %= MOD;
+    while (e) {
+        if (e & 1) res = (res * a) % MOD;
+        a = (a * a) % MOD;
+        e >>= 1;
+    }
+    return res;
+}
+
+int dfs(int u) {
+    visited[u] = 1;
+    int cnt = 1;
+    for (int e = head[u]; e; e = nxt[e]) {
+        int v = to[e];
+        if (!visited[v] && color[e] == 0) {
+            cnt += dfs(v);
+        }
+    }
+    return cnt;
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+
+    for (int i = 1; i < n; i++) {
+        int u, v, c;
+        scanf("%d %d %d", &u, &v, &c);
+        add_edge(u, v, c);
+        add_edge(v, u, c);
+    }
+
+    long long total = modpow(n, k);
+    long long bad = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i]) {
+            int sz = dfs(i);
+            bad = (bad + modpow(sz, k)) % MOD;
+        }
+    }
+
+    long long ans = (total - bad) % MOD;
+    if (ans < 0) ans += MOD;
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

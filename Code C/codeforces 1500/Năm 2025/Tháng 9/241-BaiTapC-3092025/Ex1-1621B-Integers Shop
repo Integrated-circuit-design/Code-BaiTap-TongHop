@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <limits.h>
+
+typedef long long ll;
+
+typedef struct {
+    ll l, r, c;
+} Segment;
+
+ll min(ll a, ll b) {
+    return a < b ? a : b;
+}
+
+void solve(int n, Segment seg[]) {
+    ll min_left = LLONG_MAX;
+    ll max_right = LLONG_MIN;
+    ll cost_left = LLONG_MAX;
+    ll cost_right = LLONG_MAX;
+    ll full_segment_cost = LLONG_MAX;
+
+    for(int i = 0; i < n; i++) {
+        ll l = seg[i].l, r = seg[i].r, c = seg[i].c;
+
+        if(l < min_left) {
+            min_left = l;
+            cost_left = c;
+        } else if(l == min_left) {
+            cost_left = min(cost_left, c);
+        }
+
+        if(r > max_right) {
+            max_right = r;
+            cost_right = c;
+        } else if(r == max_right) {
+            cost_right = min(cost_right, c);
+        }
+
+        if(l == min_left && r == max_right) {
+            full_segment_cost = min(full_segment_cost, c);
+        }
+
+        ll total = min(cost_left + cost_right, full_segment_cost);
+        printf("%lld%c", total, i == n-1 ? '\n' : ' ');
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        Segment seg[n];
+        for(int i = 0; i < n; i++) {
+            scanf("%lld %lld %lld", &seg[i].l, &seg[i].r, &seg[i].c);
+        }
+        solve(n, seg);
+    }
+
+    return 0;
+}
 

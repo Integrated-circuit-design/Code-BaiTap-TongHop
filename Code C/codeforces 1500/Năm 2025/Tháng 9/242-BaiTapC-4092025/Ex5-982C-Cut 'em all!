@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int n, m;
+int adj[MAXN][2];
+int deg[MAXN];
+int sz[MAXN];
+int ans = 0;
+
+int edgesU[MAXN], edgesV[MAXN];
+
+void buildGraph() {
+    for (int i = 0; i < n - 1; i++) {
+        int u = edgesU[i], v = edgesV[i];
+        adj[u][deg[u]++] = v;
+        adj[v][deg[v]++] = u;
+    }
+}
+
+int dfs(int u, int p) {
+    sz[u] = 1;
+    for (int i = 0; i < deg[u]; i++) {
+        int v = adj[u][i];
+        if (v == p) continue;
+        sz[u] += dfs(v, u);
+    }
+    if (p != -1 && sz[u] % 2 == 0) ans++;
+    return sz[u];
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n - 1; i++) {
+        scanf("%d %d", &edgesU[i], &edgesV[i]);
+    }
+    if (n % 2 == 1) {
+        printf("-1\n");
+        return 0;
+    }
+    buildGraph();
+    dfs(1, -1);
+    printf("%d\n", ans);
+    return 0;
+}
 

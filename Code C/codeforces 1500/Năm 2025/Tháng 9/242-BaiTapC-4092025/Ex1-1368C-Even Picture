@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int k = 3 * (n + 1);
+    printf("%d\n", k);
+
+    printf("0 -1\n");
+    printf("0  0\n");
+    printf("0  1\n");
+
+    for (int i = 1; i <= n; i++) {
+        printf("%d -1\n", i);
+        printf("%d  0\n", i);
+        printf("%d  1\n", i);
+    }
+
+    return 0;
+}
 

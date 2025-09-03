@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        ll a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        ll ans = 0;
+        ll limit = a[n - 1];
+
+        for (int i = n - 2; i >= 0; i--) {
+            if (a[i] <= limit) {
+                limit = a[i];
+            } else {
+                ll parts = a[i] / limit;
+                if (a[i] % limit != 0) parts++;
+                ans += (parts - 1);
+                limit = a[i] / parts;
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int mapDigit(int d) {
+    return (d < 4) ? d : d + 1;
+}
+
+void printLiving(long long k) {
+    if (k == 0) return;
+    printLiving(k / 9);
+    int d = k % 9;
+    putchar('0' + mapDigit(d));
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long k;
+        scanf("%lld", &k);
+        if (k == 0) {
+            printf("0\n");
+            continue;
+        }
+        printLiving(k);
+        putchar('\n');
+    }
+    return 0;
+}
 

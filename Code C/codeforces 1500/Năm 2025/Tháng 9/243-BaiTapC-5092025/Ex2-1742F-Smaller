@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int q;
+        scanf("%d", &q);
+
+        char max_s = 'a';
+        char max_t = 'a';
+
+        while (q--) {
+            int d, k;
+            char x[105];
+            scanf("%d %d %s", &d, &k, x);
+
+            char max_x = x[0];
+            for (int i = 1; x[i]; i++) {
+                if (x[i] > max_x) max_x = x[i];
+            }
+
+            if (d == 1) {
+                if (max_x > max_s) max_s = max_x;
+            } else {
+                if (max_x > max_t) max_t = max_x;
+            }
+
+            if (max_s < max_t) {
+                printf("YES\n");
+            } else if (max_s == max_t) {
+                if (max_s == 'a' && max_t > 'a') printf("YES\n");
+                else printf("NO\n");
+            } else {
+                printf("NO\n");
+            }
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    if (n == 1) {
+        printf("-1\n");
+        return 0;
+    }
+
+    long long a = n;
+    long long b, c;
+
+    if (a % 2 == 1) {
+        b = (a * a - 1) / 2;
+        c = b + 1;
+    } else {
+        long long half = a / 2;
+        b = half * half - 1;
+        c = b + 2;
+    }
+
+    printf("%lld %lld\n", b, c);
+    return 0;
+}
 

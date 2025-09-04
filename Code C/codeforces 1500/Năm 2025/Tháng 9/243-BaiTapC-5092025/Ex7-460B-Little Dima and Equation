@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int digit_sum(long long n) {
+    int sum = 0;
+    while (n) {
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+
+long long power(int base, int exp) {
+    long long result = 1;
+    for (int i = 0; i < exp; i++) {
+        result *= base;
+    }
+    return result;
+}
+
+int main() {
+    int a, b, c;
+    scanf("%d %d %d", &a, &b, &c);
+
+    int found = 0;
+    long long x;
+
+    for (int s = 1; s <= 81; s++) {
+        long long s_a = power(s, a);
+        x = (long long)b * s_a + c;
+
+        if (x > 0 && x < 1000000000 && digit_sum(x) == s) {
+            if (found) printf(" ");
+            printf("%lld", x);
+            found++;
+        }
+    }
+
+    if (found == 0) printf("0");
+    printf("\n");
+
+    return 0;
+}
 

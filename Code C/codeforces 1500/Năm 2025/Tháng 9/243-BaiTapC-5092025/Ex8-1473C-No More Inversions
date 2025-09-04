@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int p[100005];
+        int incPart = k - (n - k);
+        int decPart = n - k;
+
+        int small = 1;
+        int large = k;
+        int idx = 0;
+
+        for(int i = 0; i < incPart; i++) {
+            p[idx++] = small++;
+        }
+
+        for(int i = 0; i < decPart; i++) {
+            p[idx++] = large--;
+        }
+
+        for(int i = 0; i < k; i++) {
+            if(i == k-1)
+                printf("%d\n", p[i]);
+            else
+                printf("%d ", p[i]);
+        }
+    }
+
+    return 0;
+}
 

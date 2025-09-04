@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+long long min(long long a, long long b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+
+        long long c[n];
+        for(int i = 0; i < n; i++) scanf("%lld", &c[i]);
+
+        long long sumOdd = c[0];
+        long long sumEven = c[1];
+        long long minOdd = c[0];
+        long long minEven = c[1];
+
+        long long remainingOdd = n - 1;
+        long long remainingEven = n - 1;
+
+        long long ans = sumOdd + sumEven + minOdd * remainingOdd + minEven * remainingEven;
+
+        for(int i = 2; i < n; i++) {
+            if(i % 2 == 0) {
+                sumOdd += c[i];
+                if(c[i] < minOdd) minOdd = c[i];
+                remainingOdd--;
+            } else {
+                sumEven += c[i];
+                if(c[i] < minEven) minEven = c[i];
+                remainingEven--;
+            }
+
+            long long total = sumOdd + sumEven + minOdd * remainingOdd + minEven * remainingEven;
+            if(total < ans) ans = total;
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

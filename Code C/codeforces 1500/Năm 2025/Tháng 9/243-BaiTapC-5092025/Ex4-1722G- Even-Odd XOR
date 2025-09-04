@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n];
+
+        int xor_odd = 0;
+        int xor_even = 0;
+
+        for(int i = 0; i < n-1; i++){
+            a[i] = i;
+            if(i % 2 == 0) xor_odd ^= a[i];
+            else xor_even ^= a[i];
+        }
+
+        a[n-1] = xor_odd ^ xor_even;
+
+        for(int i = 0; i < n; i++){
+            printf("%d%c", a[i], i == n-1 ? '\n' : ' ');
+        }
+    }
+    return 0;
+}
 

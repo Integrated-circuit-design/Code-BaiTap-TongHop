@@ -1,1 +1,33 @@
+#include <stdio.h>
+#define ll long long
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        ll a, b;
+        scanf("%d %lld %lld", &n, &a, &b);
+
+        static ll x[200005], pref[200005];
+        for (int i = 1; i <= n; i++) {
+            scanf("%lld", &x[i]);
+            pref[i] = pref[i-1] + x[i];
+        }
+
+        ll ans = b * x[1];
+        ll cur = ans;
+
+        for (int i = 2; i <= n; i++) {
+            ll dist = x[i] - x[i-1];
+            cur += b * dist * (n - i + 1);
+            ll moveCost = ans + a * dist + b * dist * (n - i + 1);
+            if (moveCost < cur) cur = moveCost;
+            ans = cur;
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

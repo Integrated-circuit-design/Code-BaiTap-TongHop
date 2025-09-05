@@ -1,1 +1,53 @@
+#include <stdio.h>
+#define MOD 1000000007
+
+long long modpow(long long a, long long e) {
+    long long res = 1;
+    while (e > 0) {
+        if (e & 1) res = (res * a) % MOD;
+        a = (a * a) % MOD;
+        e >>= 1;
+    }
+    return res;
+}
+
+long long nCk(int n, int k) {
+    if (k < 0 || k > n) return 0;
+    long long num = 1;
+    long long den = 1;
+    for (int i = 0; i < k; i++) {
+        num = num * (n - i) % MOD;
+        den = den * (i + 1) % MOD;
+    }
+    return num * modpow(den, MOD - 2) % MOD;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int cnt1 = 0, x;
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &x);
+            if (x == 1) cnt1++;
+        }
+        int cnt0 = n - cnt1;
+
+        int need = (k + 1) / 2;
+        long long ans = 0;
+
+        for (int ones = need; ones <= k && ones <= cnt1; ones++) {
+            int zeros = k - ones;
+            if (zeros > cnt0) continue;
+            long long ways = nCk(cnt1, ones) * nCk(cnt0, zeros) % MOD;
+            ans = (ans + ways) % MOD;
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1005
+#define INF 1000000000
+
+char a[MAX], b[MAX], c[2*MAX];
+int memo[MAX][MAX];
+int n, m;
+
+int min(int x, int y) { return x < y ? x : y; }
+
+int dfs(int i, int j) {
+    if (i == n && j == m) return 0;
+    if (memo[i][j] != -1) return memo[i][j];
+
+    int pos = i + j;
+    int res = INF;
+
+    if (i < n) {
+        int cost = dfs(i+1, j) + (a[i] != c[pos]);
+        res = min(res, cost);
+    }
+    if (j < m) {
+        int cost = dfs(i, j+1) + (b[j] != c[pos]);
+        res = min(res, cost);
+    }
+
+    memo[i][j] = res;
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%s %s %s", a, b, c);
+        n = strlen(a);
+        m = strlen(b);
+
+        for (int i = 0; i <= n; i++)
+            for (int j = 0; j <= m; j++)
+                memo[i][j] = -1;
+
+        printf("%d\n", dfs(0,0));
+    }
+    return 0;
+}
 

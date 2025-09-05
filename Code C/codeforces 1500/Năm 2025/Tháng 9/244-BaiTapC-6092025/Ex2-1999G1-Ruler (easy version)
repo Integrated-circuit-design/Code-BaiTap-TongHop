@@ -1,1 +1,16 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t > 0) {
+        int missingNumber;
+        scanf("%d", &missingNumber);
+        printf("! %d\n", missingNumber);
+        t--;
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    if (n == 1) {
+        printf("-1\n");
+    } else {
+        long long a = n;
+        long long b = n + 1;
+        long long c = n * (n + 1);
+
+        printf("%lld %lld %lld\n", a, b, c);
+    }
+
+    return 0;
+}
 

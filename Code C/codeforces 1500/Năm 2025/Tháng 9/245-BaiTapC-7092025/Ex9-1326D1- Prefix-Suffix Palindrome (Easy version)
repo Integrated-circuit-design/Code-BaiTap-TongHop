@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 6005
+
+int check(char *s, int l, int r) {
+    for (; l < r; l++, r--)
+        if (s[l] != s[r]) return 0;
+    return 1;
+}
+
+void solve(char *s) {
+    int n = strlen(s);
+    int L = 0, R = n - 1;
+
+    while (L < R && s[L] == s[R]) L++, R--;
+
+    if (L >= R) {
+        puts(s);
+        return;
+    }
+
+    int len1 = 0, len2 = 0;
+
+    for (int i = R; i >= L; i--)
+        if (check(s, L, i)) { len1 = i - L + 1; break; }
+
+    for (int i = L; i <= R; i++)
+        if (check(s, i, R)) { len2 = R - i + 1; break; }
+
+    fwrite(s, 1, L, stdout);
+
+    if (len1 >= len2) fwrite(s + L, 1, len1, stdout);
+    else fwrite(s + (R - len2 + 1), 1, len2, stdout);
+
+    fwrite(s + R + 1, 1, n - R - 1, stdout);
+
+    putchar('\n');
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    char s[MAXN];
+    while (t--) {
+        scanf("%s", s);
+        solve(s);
+    }
+    return 0;
+}
 

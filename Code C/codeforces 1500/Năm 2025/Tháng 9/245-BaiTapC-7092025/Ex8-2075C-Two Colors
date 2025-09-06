@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &a[i]);
+            if (a[i] > n) a[i] = n;
+        }
+
+        long long ans = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) if (i != j) {
+                int L = 1;
+                if (n - a[j] > L) L = n - a[j];
+
+                int R = a[i];
+                if (n - 1 < R) R = n - 1;
+
+                if (L <= R) ans += (R - L + 1);
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

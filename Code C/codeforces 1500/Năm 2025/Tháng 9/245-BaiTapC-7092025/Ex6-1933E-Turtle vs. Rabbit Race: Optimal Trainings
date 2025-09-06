@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAXN 200005
+typedef long long ll;
+
+int a[MAXN];
+ll pref[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+        pref[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            pref[i] = pref[i-1] + a[i];
+        }
+
+        int q;
+        scanf("%d", &q);
+        while (q--) {
+            int l;
+            ll u;
+            scanf("%d %lld", &l, &u);
+
+            ll base = pref[l-1];
+            ll target = base + u;
+
+            int lo = l, hi = n+1;
+            while (lo < hi) {
+                int mid = (lo + hi) / 2;
+                if (pref[mid] >= target) hi = mid;
+                else lo = mid + 1;
+            }
+            int r0 = lo;
+
+            int best_r = l;
+            ll best_val = LLONG_MIN;
+
+            for (int d = -1; d <= 1; d++) {
+                int r = r0 + d;
+                if (r < l || r > n) continue;
+                ll S = pref[r] - base;
+                ll val = S * (u + 1) - (S * (S + 1) / 2);
+                if (val > best_val || (val == best_val && r < best_r)) {
+                    best_val = val;
+                    best_r = r;
+                }
+            }
+
+            if (r0 == n+1) {
+                int r = n;
+                ll S = pref[r] - base;
+                ll val = S * (u + 1) - (S * (S + 1) / 2);
+                if (val > best_val || (val == best_val && r < best_r)) {
+                    best_val = val;
+                    best_r = r;
+                }
+            }
+
+            printf("%d\n", best_r);
+        }
+    }
+    return 0;
+}
 

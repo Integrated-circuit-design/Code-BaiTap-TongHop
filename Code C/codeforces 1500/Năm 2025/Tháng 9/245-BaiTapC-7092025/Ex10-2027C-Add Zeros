@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+#define ll long long
+#define MAXN 300005
+
+ll arr[MAXN];
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &arr[i]);
+        }
+
+        ll answer = n;
+
+        for (int i = n - 1; i > 0; i--) {
+            if (arr[i] == (ll)(n - i)) {
+                ll candidate = (ll)n + i;
+                if (candidate > answer) answer = candidate;
+            }
+        }
+
+        printf("%lld\n", answer);
+    }
+    return 0;
+}
 

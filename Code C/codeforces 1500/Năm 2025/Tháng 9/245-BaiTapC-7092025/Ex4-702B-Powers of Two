@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef long long ll;
+
+#define MAXN 100000
+#define MAXA 1000000000
+#define HASH 131071
+
+typedef struct {
+    int key;
+    int cnt;
+} Node;
+
+Node table[HASH];
+
+int h(int x) {
+    return (x % HASH + HASH) % HASH;
+}
+
+void add(int x) {
+    int idx = h(x);
+    while (table[idx].cnt && table[idx].key != x) {
+        idx = (idx + 1) % HASH;
+    }
+    if (table[idx].cnt == 0) table[idx].key = x;
+    table[idx].cnt++;
+}
+
+int get(int x) {
+    int idx = h(x);
+    while (table[idx].cnt) {
+        if (table[idx].key == x) return table[idx].cnt;
+        idx = (idx + 1) % HASH;
+    }
+    return 0;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[MAXN];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        add(a[i]);
+    }
+
+    ll ans = 0;
+    for (int i = 0; i < n; i++) {
+        int idx = h(a[i]);
+        while (table[idx].key != a[i]) idx = (idx + 1) % HASH;
+        table[idx].cnt--;
+
+        for (ll p = 1; p <= (1LL << 31); p <<= 1) {
+            int need = p - a[i];
+            if (need <= 0) continue;
+            ans += get(need);
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

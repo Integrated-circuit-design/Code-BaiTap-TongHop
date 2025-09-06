@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+long long value(long long a, long long b, long long c) {
+    return (a ^ b) + (b ^ c) + (a ^ c);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long l, r;
+        scanf("%lld %lld", &l, &r);
+
+        long long best_val = -1, A = l, B = l+1, C = l+2;
+
+        if (r - l <= 60) {
+            for (long long i = l; i <= r; i++) {
+                for (long long j = i+1; j <= r; j++) {
+                    for (long long k = j+1; k <= r; k++) {
+                        long long cur = value(i,j,k);
+                        if (cur > best_val) {
+                            best_val = cur;
+                            A=i; B=j; C=k;
+                        }
+                    }
+                }
+            }
+        } else {
+            long long try_a[6] = {l, l+1, l+2, r, r-1, r-2};
+            for (int i = 0; i < 6; i++) {
+                for (int j = i+1; j < 6; j++) {
+                    for (int k = j+1; k < 6; k++) {
+                        long long x = try_a[i], y = try_a[j], z = try_a[k];
+                        if (x < l || x > r || y < l || y > r || z < l || z > r) continue;
+                        long long cur = value(x,y,z);
+                        if (cur > best_val) {
+                            best_val = cur;
+                            A=x; B=y; C=z;
+                        }
+                    }
+                }
+            }
+        }
+
+        printf("%lld %lld %lld\n", A, B, C);
+    }
+    return 0;
+}
 

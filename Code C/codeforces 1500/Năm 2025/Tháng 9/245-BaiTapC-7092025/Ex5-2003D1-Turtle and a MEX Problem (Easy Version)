@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+#define MAXL 200005
+
+int used[MAXL + 10];
+int timer = 1;
+
+int find_mex2(int l) {
+    int mex1 = 0;
+    while (used[mex1] == timer) mex1++;
+
+    used[mex1] = timer;
+
+    int mex2 = mex1;
+    while (used[mex2] == timer) mex2++;
+
+    return mex2;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        long long m;
+        scanf("%d %lld", &n, &m);
+
+        long long K = 0;
+
+        for (int i = 0; i < n; i++) {
+            int l;
+            scanf("%d", &l);
+
+            timer++;
+            for (int j = 0; j < l; j++) {
+                long long x;
+                scanf("%lld", &x);
+                if (x >= 0 && x <= l + 5) {
+                    used[x] = timer;
+                }
+            }
+
+            int mex2 = find_mex2(l);
+            if (mex2 > K) K = mex2;
+        }
+
+        long long ans;
+        if (K >= m) {
+            ans = (m + 1) * K;
+        } else {
+            long long cnt = m - K + 1;
+            ans = (long long)K * K + (m + K) * cnt / 2;
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

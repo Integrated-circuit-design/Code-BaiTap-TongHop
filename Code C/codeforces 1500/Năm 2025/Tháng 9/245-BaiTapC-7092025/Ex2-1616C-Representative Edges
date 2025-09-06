@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int count_in_ap(int a[], int n, int i, int j) {
+    int cnt = 0;
+    int dx = j - i;
+    int dy = a[j] - a[i];
+
+    for (int k = 0; k < n; k++) {
+        long long left = (long long)(a[k] - a[i]) * dx;
+        long long right = (long long)dy * (k - i);
+        if (left == right) cnt++;
+    }
+    return cnt;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[75];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        if (n <= 2) {
+            printf("0\n");
+            continue;
+        }
+
+        int best = 2;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int cnt = count_in_ap(a, n, i, j);
+                if (cnt > best) best = cnt;
+            }
+        }
+
+        printf("%d\n", n - best);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1000005
+
+char s[MAXN];
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        long long k;
+        scanf("%d %lld", &n, &k);
+        scanf("%s", s);
+
+        int zeros = 0;
+        int used = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '0') {
+                long long dist = i - used;
+
+                if (dist <= k) {
+                    putchar('0');
+                    used++;
+                    k -= dist;
+                } else {
+                    int pos = i - (int)k;
+                    while (used < pos) {
+                        putchar('1');
+                        used++;
+                    }
+                    putchar('0');
+                    used++;
+                    k = 0;
+                }
+            }
+        }
+
+        while (used < n) {
+            putchar('1');
+            used++;
+        }
+        putchar('\n');
+    }
+    return 0;
+}
 

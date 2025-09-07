@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+
+ll totalCookies(ll *pos, int m, ll d) {
+    ll sum = 0;
+    for (int i = 0; i <= m; i++) {
+        sum += (pos[i+1] - pos[i]) / d;
+    }
+    return sum;
+}
+
+ll afterRemove(ll *pos, int m, ll d, ll base, int index) {
+    ll left = pos[index] - pos[index-1];
+    ll right = pos[index+1] - pos[index];
+    ll merged = pos[index+1] - pos[index-1];
+    ll delta = merged / d - (left / d + right / d);
+    return base - delta;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        ll n, d;
+        int m;
+        scanf("%lld %d %lld", &n, &m, &d);
+
+        ll *pos = (ll*)malloc((m+2) * sizeof(ll));
+        pos[0] = 1;
+        for (int i = 1; i <= m; i++) scanf("%lld", &pos[i]);
+        pos[m+1] = n+1;
+
+        ll base = totalCookies(pos, m, d);
+
+        ll best = 1e18;
+        int ways = 0;
+
+        for (int i = 1; i <= m; i++) {
+            ll now = afterRemove(pos, m, d, base, i);
+            if (now < best) {
+                best = now;
+                ways = 1;
+            } else if (now == best) {
+                ways++;
+            }
+        }
+
+        printf("%lld %d\n", best, ways);
+        free(pos);
+    }
+    return 0;
+}
 

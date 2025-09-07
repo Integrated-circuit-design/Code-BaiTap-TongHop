@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+const char* winner(int n, int arr[]) {
+    int hasEven = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] % 2 == 0) {
+            hasEven = 1;
+            break;
+        }
+    }
+    if (hasEven || (n % 2 == 0)) {
+        return "Alice";
+    } else {
+        return "Bob";
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[105];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        printf("%s\n", winner(n, arr));
+    }
+
+    return 0;
+}
 

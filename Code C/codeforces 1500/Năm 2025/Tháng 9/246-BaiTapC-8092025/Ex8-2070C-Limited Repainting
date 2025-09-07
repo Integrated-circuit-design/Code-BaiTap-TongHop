@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAXN 300005
+#define INF 1000000000
+
+int n, k;
+char s[MAXN];
+int a[MAXN];
+
+int feasible(int limit) {
+    int used = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'B' && a[i] > limit) {
+            used++;
+            if (used > k) return 0;
+            while (i < n && !(s[i] == 'R' && a[i] > limit)) {
+                i++;
+            }
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        int left = 0, right = INF, answer = INF;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (feasible(mid)) {
+                answer = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        printf("%d\n", answer);
+    }
+    return 0;
+}
 

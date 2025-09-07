@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+long long maxll(long long a, long long b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    char s[MAXN];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    long long ans = 0;
+    long long count[26] = {0};
+
+    for (int i = 0; i < n; i++) {
+        int c = s[i] - 'a';
+        count[c]++;
+        ans = maxll(ans, count[c]);
+    }
+
+    long long prefix[26] = {0};
+    for (int i = 0; i < n; i++) {
+        int y = s[i] - 'a';
+        for (int x = 0; x < 26; x++) {
+            long long pairs = prefix[x];
+            ans = maxll(ans, pairs);
+        }
+        prefix[y]++;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

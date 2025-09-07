@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+#define NMAX 200005
+
+int arr[NMAX];
+int sum[NMAX];
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    sum[1] = 0;
+    sum[2] = 0;
+    for (int i = 3; i <= n; i++) {
+        int isBad = (arr[i-2] >= arr[i-1] && arr[i-1] >= arr[i]) ? 1 : 0;
+        sum[i] = sum[i-1] + isBad;
+    }
+
+    while (q--) {
+        int L, R;
+        scanf("%d %d", &L, &R);
+        int length = R - L + 1;
+
+        if (length < 3) {
+            printf("%d\n", length);
+        } else {
+            int badCount = sum[R] - sum[L+1];
+            printf("%d\n", length - badCount);
+        }
+    }
+
+    return 0;
+}
 

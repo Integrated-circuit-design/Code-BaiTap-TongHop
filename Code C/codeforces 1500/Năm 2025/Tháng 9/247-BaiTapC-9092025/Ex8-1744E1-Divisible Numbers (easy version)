@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int a, b, c, d;
+        scanf("%d %d %d %d", &a, &b, &c, &d);
+
+        int x = ((a + 1 + a - 1) / a) * a;
+        if(x <= a) x += a;
+
+        int y = ((b + 1 + b - 1) / b) * b;
+        if(y <= b) y += b;
+
+        if(x > c || y > d) {
+            printf("-1 -1\n");
+        } else {
+            printf("%d %d\n", x, y);
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int q[n-1];
+    for (int i = 0; i < n-1; i++) scanf("%d", &q[i]);
+
+    long long min_val = 0;
+    long long max_val = 0;
+    long long p[n];
+    p[0] = 0;
+
+    for (int i = 1; i < n; i++) {
+        p[i] = p[i-1] + q[i-1];
+        if (p[i] < min_val) min_val = p[i];
+        if (p[i] > max_val) max_val = p[i];
+    }
+
+    long long shift = 1 - min_val;
+
+    int used[n+1];
+    for (int i = 1; i <= n; i++) used[i] = 0;
+    int valid = 1;
+
+    for (int i = 0; i < n; i++) {
+        p[i] += shift;
+        if (p[i] < 1 || p[i] > n || used[p[i]]) {
+            valid = 0;
+            break;
+        }
+        used[p[i]] = 1;
+    }
+
+    if (!valid) printf("-1\n");
+    else {
+        for (int i = 0; i < n; i++)
+            printf("%lld%c", p[i], i==n-1?'\n':' ');
+    }
+
+    return 0;
+}
 

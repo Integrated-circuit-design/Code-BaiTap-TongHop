@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void sortAscending(long long *arr, int n) {
+    for(int i = 0; i < n - 1; i++) {
+        int minIdx = i;
+        for(int j = i + 1; j < n; j++) {
+            if(arr[j] < arr[minIdx]) minIdx = j;
+        }
+        if(minIdx != i) {
+            long long temp = arr[i];
+            arr[i] = arr[minIdx];
+            arr[minIdx] = temp;
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        long long h;
+        scanf("%d %lld", &n, &h);
+
+        long long *astronaut = (long long*)malloc(n * sizeof(long long));
+        for(int i = 0; i < n; i++) {
+            scanf("%lld", &astronaut[i]);
+        }
+
+        sortAscending(astronaut, n);
+
+        int absorbed = 0;
+        int green = 2, blue = 1;
+        int i = 0;
+
+        while(1) {
+            int canAbsorb = 0;
+
+            for(; i < n; i++) {
+                if(astronaut[i] < h) {
+                    h += astronaut[i] / 2;
+                    absorbed++;
+                    canAbsorb = 1;
+                } else {
+                    break;
+                }
+            }
+
+            if(canAbsorb) continue;
+
+            if(green > 0) {
+                h *= 2;
+                green--;
+            } else if(blue > 0) {
+                h *= 3;
+                blue--;
+            } else {
+                break;
+            }
+        }
+
+        printf("%d\n", absorbed);
+        free(astronaut);
+    }
+
+    return 0;
+}
 

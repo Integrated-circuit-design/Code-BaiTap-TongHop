@@ -1,1 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 50
+#define MAX_STEPS 20
+
+typedef struct {
+    int value;
+    int steps;
+} Node;
+
+int cmp_node(const void *a, const void *b) {
+    return ((Node*)a)->steps - ((Node*)b)->steps;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[MAX_N];
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+    int min_ops = 1e9;
+
+    for (int i = 0; i < n; i++) {
+        Node transforms[MAX_STEPS];
+        int count = 0;
+        int x = a[i], step = 0;
+
+        while (x > 0) {
+            transforms[count].value = x;
+            transforms[count].steps = step;
+            count++;
+            x /= 2;
+            step++;
+        }
+
+        transforms[count].value = 0;
+        transforms[count].steps = step;
+        count++;
+
+        for (int j = 0; j < count; j++) {
+            int target = transforms[j].value;
+            int all_steps[MAX_N];
+            int idx = 0;
+
+            for (int p = 0; p < n; p++) {
+                int val = a[p], s = 0;
+                while (val > target) {
+                    val /= 2;
+                    s++;
+                }
+                if (val == target) all_steps[idx++] = s;
+            }
+
+            if (idx >= k) {
+                qsort(all_steps, idx, sizeof(int), cmp_node);
+                int sum = 0;
+                for (int t = 0; t < k; t++) sum += all_steps[t];
+                if (sum < min_ops) min_ops = sum;
+            }
+        }
+    }
+
+    printf("%d\n", min_ops);
+    return 0;
+}
 

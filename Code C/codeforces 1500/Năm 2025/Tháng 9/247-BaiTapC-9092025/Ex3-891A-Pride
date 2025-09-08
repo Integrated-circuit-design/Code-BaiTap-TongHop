@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    while(b) {
+        int t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int a[n];
+    int prefixGCD[n];
+    int ones = 0;
+
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        if(a[i] == 1) ones++;
+        prefixGCD[i] = a[i];
+        if(i > 0) prefixGCD[i] = gcd(prefixGCD[i], prefixGCD[i-1]);
+    }
+
+    if(ones > 0) {
+        printf("%d\n", n - ones);
+        return 0;
+    }
+
+    int minLen = n + 1;
+
+    for(int i = 0; i < n; i++) {
+        int g = a[i];
+        for(int j = i; j < n; j++) {
+            g = (i == j ? a[i] : gcd(g, a[j]));
+            if(g == 1) {
+                if(j - i + 1 < minLen) minLen = j - i + 1;
+                break;
+            }
+        }
+    }
+
+    if(minLen == n + 1) {
+        printf("-1\n");
+    } else {
+        printf("%d\n", minLen + n - 2);
+    }
+
+    return 0;
+}
 

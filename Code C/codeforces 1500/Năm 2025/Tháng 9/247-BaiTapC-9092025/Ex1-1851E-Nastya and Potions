@@ -1,1 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+#define MAXN 200005
+
+typedef long long ll;
+
+typedef struct {
+    int* arr;
+    int size;
+} Recipe;
+
+Recipe recipes[MAXN];
+ll buyCost[MAXN];
+ll minCost[MAXN];
+int has[MAXN];
+int visited[MAXN];
+
+ll dfs(int u) {
+    if (visited[u]) return minCost[u];
+    visited[u] = 1;
+
+    if (has[u]) {
+        minCost[u] = 0;
+    } else {
+        minCost[u] = buyCost[u];
+        for (int i = 0; i < recipes[u].size; i++) {
+            int v = recipes[u].arr[i];
+            minCost[u] = minCost[u] + dfs(v);
+        }
+    }
+    return minCost[u];
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%lld", &buyCost[i]);
+            recipes[i].size = 0;
+            visited[i] = 0;
+            has[i] = 0;
+        }
+
+        for (int i = 0; i < k; i++) {
+            int p;
+            scanf("%d", &p);
+            has[p] = 1;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            int m;
+            scanf("%d", &m);
+            recipes[i].size = m;
+            recipes[i].arr = (int*)malloc(m * sizeof(int));
+            for (int j = 0; j < m; j++)
+                scanf("%d", &recipes[i].arr[j]);
+        }
+
+        for (int i = 1; i <= n; i++)
+            dfs(i);
+
+        for (int i = 1; i <= n; i++) {
+            printf("%lld%c", minCost[i], i == n ? '\n' : ' ');
+            free(recipes[i].arr);
+        }
+    }
+    return 0;
+}
 

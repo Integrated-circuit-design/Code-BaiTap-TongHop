@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int total = n * m;
+    int printed = 0;
+    int used = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (i % 2 == 1) {
+            for (int j = 1; j <= m; j++) {
+                if (used < k - 1 && printed % 2 == 0) {
+                    printf("2 %d %d ", i, j);
+                } else if (used < k - 1 && printed % 2 == 1) {
+                    printf("%d %d\n", i, j);
+                    used++;
+                } else {
+                    if (printed == 2 * (k - 1)) {
+                        printf("%d", total - printed);
+                    }
+                    printf(" %d %d", i, j);
+                }
+                printed++;
+            }
+        } else {
+            for (int j = m; j >= 1; j--) {
+                if (used < k - 1 && printed % 2 == 0) {
+                    printf("2 %d %d ", i, j);
+                } else if (used < k - 1 && printed % 2 == 1) {
+                    printf("%d %d\n", i, j);
+                    used++;
+                } else {
+                    if (printed == 2 * (k - 1)) {
+                        printf("%d", total - printed);
+                    }
+                    printf(" %d %d", i, j);
+                }
+                printed++;
+            }
+        }
+    }
+    printf("\n");
+    return 0;
+}
 

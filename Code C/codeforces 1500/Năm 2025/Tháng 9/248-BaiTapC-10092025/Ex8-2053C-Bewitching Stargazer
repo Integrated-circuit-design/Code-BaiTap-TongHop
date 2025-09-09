@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdint.h>
+
+typedef long long ll;
+
+struct Segment {
+    ll l, r;
+};
+
+#define MAXQ 70
+
+ll lucky(ll n, ll k) {
+    if (k == 1) return n * (n + 1) / 2;
+
+    struct Segment q[MAXQ];
+    int front = 0, back = 0;
+
+    q[back++] = (struct Segment){1, n};
+    ll ans = 0;
+
+    while (front < back) {
+        struct Segment cur = q[front++];
+        ll l = cur.l, r = cur.r;
+        ll len = r - l + 1;
+        if (len < k) continue;
+
+        ll m = (l + r) / 2;
+        if (len % 2 == 1) {
+            ans += m;
+            if (l < m) q[back++] = (struct Segment){l, m - 1};
+            if (m < r) q[back++] = (struct Segment){m + 1, r};
+        } else {
+            q[back++] = (struct Segment){l, m};
+            q[back++] = (struct Segment){m + 1, r};
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        ll n, k;
+        scanf("%lld %lld", &n, &k);
+        printf("%lld\n", lucky(n, k));
+    }
+    return 0;
+}
 

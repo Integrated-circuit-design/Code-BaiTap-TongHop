@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int x, y;
+} Pair;
+
+int main() {
+    int n;
+    char s[MAXN], t[MAXN];
+    int ab[MAXN], ba[MAXN];
+    int ca = 0, cb = 0;
+
+    scanf("%d", &n);
+    scanf("%s", s);
+    scanf("%s", t);
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] != t[i]) {
+            if (s[i] == 'a') ab[ca++] = i + 1;
+            else ba[cb++] = i + 1;
+        }
+    }
+
+    if ((ca + cb) % 2) {
+        printf("-1\n");
+        return 0;
+    }
+
+    Pair ans[MAXN];
+    int k = 0;
+
+    for (int i = 0; i + 1 < ca; i += 2) {
+        ans[k++] = (Pair){ab[i], ab[i + 1]};
+    }
+    for (int i = 0; i + 1 < cb; i += 2) {
+        ans[k++] = (Pair){ba[i], ba[i + 1]};
+    }
+
+    if (ca % 2 && cb % 2) {
+        int x = ab[ca - 1], y = ba[cb - 1];
+        ans[k++] = (Pair){x, x};
+        ans[k++] = (Pair){x, y};
+    }
+
+    printf("%d\n", k);
+    for (int i = 0; i < k; i++) {
+        printf("%d %d\n", ans[i].x, ans[i].y);
+    }
+
+    return 0;
+}
 

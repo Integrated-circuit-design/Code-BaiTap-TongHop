@@ -1,1 +1,25 @@
+#include <stdio.h>
+#define MOD 1000000007LL
+typedef long long ll;
+
+ll mod_pow(ll a, ll b) {
+    if (b == 0) return 1;
+    ll half = mod_pow(a, b / 2);
+    half = (half * half) % MOD;
+    if (b % 2 == 1)
+        half = (half * (a % MOD)) % MOD;
+    return half;
+}
+
+int main() {
+    ll n, m;
+    scanf("%lld %lld", &n, &m);
+
+    ll pow2m = mod_pow(2, m);
+    ll base = (pow2m - 1 + MOD) % MOD;
+    ll answer = mod_pow(base, n);
+
+    printf("%lld\n", answer);
+    return 0;
+}
 

@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        long long k;
+        char s[MAXN];
+        scanf("%d %lld", &n, &k);
+        scanf("%s", s);
+
+        int left = 25;  
+        int limit[26];
+        for (int i = 0; i < 26; i++) limit[i] = i;
+
+        for (int i = 0; i < n; i++) {
+            int c = s[i] - 'a';
+
+            if (limit[c] != c) {
+                s[i] = 'a' + limit[c];
+                continue;
+            }
+
+            int target = c;
+            while (target > 0 && (c - target) <= k) target--;
+
+            if (target < c) {
+                if (c - target > k) target = c - k;
+                k -= (c - target);
+
+                for (int j = target + 1; j <= c; j++) 
+                    if (limit[j] > target) limit[j] = target;
+
+                s[i] = 'a' + target;
+            } else {
+                s[i] = 'a' + limit[c];
+            }
+        }
+        printf("%s\n", s);
+    }
+    return 0;
+}
 

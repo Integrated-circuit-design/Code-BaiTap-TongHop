@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    ll *a = (ll*)malloc(sizeof(ll) * n);
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+    ll max_val = a[0];
+    for (int i = 1; i < n; i++) if (a[i] > max_val) max_val = a[i];
+
+    ll *firstA = (ll*)malloc(sizeof(ll) * n);
+    ll *firstB = (ll*)malloc(sizeof(ll) * n);
+    int steps = 0;
+
+    int l = 0, r = n - 1;
+    ll *queue = (ll*)malloc(sizeof(ll) * (2 * n));
+    for (int i = 0; i < n; i++) queue[i] = a[i];
+    r = n - 1;
+
+    while (queue[l] != max_val) {
+        ll A = queue[l++];
+        ll B = queue[l++];
+        firstA[steps] = A;
+        firstB[steps] = B;
+        steps++;
+
+        if (A > B) {
+            queue[--l] = A;
+            queue[++r] = B;
+        } else {
+            queue[--l] = B;
+            queue[++r] = A;
+        }
+    }
+
+    int cycle_len = n - 1;
+    ll *cycle = (ll*)malloc(sizeof(ll) * cycle_len);
+    for (int i = 0; i < cycle_len; i++) {
+        cycle[i] = queue[l + 1 + i];
+    }
+
+    while (q--) {
+        ll m; 
+        scanf("%lld", &m);
+        if (m <= steps) {
+            printf("%lld %lld\n", firstA[m - 1], firstB[m - 1]);
+        } else {
+            ll idx = (m - steps - 1) % cycle_len;
+            printf("%lld %lld\n", max_val, cycle[idx]);
+        }
+    }
+
+    free(a);
+    free(firstA);
+    free(firstB);
+    free(queue);
+    free(cycle);
+    return 0;
+}
 

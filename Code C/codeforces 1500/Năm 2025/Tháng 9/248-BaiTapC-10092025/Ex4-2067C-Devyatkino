@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAXQ 100000
+
+int has7(long long x) {
+    while (x > 0) {
+        if (x % 10 == 7) return 1;
+        x /= 10;
+    }
+    return 0;
+}
+
+long long nine[11];
+
+int bfs(long long start) {
+    if (has7(start)) return 0;
+
+    nine[0] = 9;
+    for (int i = 1; i < 10; i++) nine[i] = nine[i-1]*10 + 9;
+
+    long long q[MAXQ];
+    int dist[MAXQ];
+    int front = 0, back = 0;
+
+    q[back] = start;
+    dist[back++] = 0;
+
+    while (front < back) {
+        long long cur = q[front];
+        int d = dist[front];
+        front++;
+
+        for (int i = 0; i < 10; i++) {
+            long long nxt = cur + nine[i];
+            if (has7(nxt)) return d+1;
+            if (back < MAXQ) {
+                q[back] = nxt;
+                dist[back++] = d+1;
+            }
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        printf("%d\n", bfs(n));
+    }
+    return 0;
+}
 

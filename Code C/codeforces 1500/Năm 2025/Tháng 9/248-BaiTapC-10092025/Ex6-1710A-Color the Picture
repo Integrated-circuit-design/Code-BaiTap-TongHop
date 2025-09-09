@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int check(long long stripe_len, long long stripe_need, int k, long long a[]) {
+    long long total = 0;
+    int has3 = 0;
+
+    for (int i = 0; i < k; i++) {
+        long long cnt = a[i] / stripe_len;
+        if (cnt >= 2) {
+            total += cnt;
+            if (cnt >= 3) has3 = 1;
+        }
+    }
+
+    if (total < stripe_need) return 0;
+    if (stripe_need % 2 == 1 && !has3) return 0;
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, m;
+        int k;
+        scanf("%lld %lld %d", &n, &m, &k);
+
+        long long a[k];
+        for (int i = 0; i < k; i++) scanf("%lld", &a[i]);
+
+        int ok = 0;
+        if (check(m, n, k, a)) ok = 1;
+        if (check(n, m, k, a)) ok = 1;
+
+        if (ok) printf("Yes\n");
+        else printf("No\n");
+    }
+
+    return 0;
+}
 

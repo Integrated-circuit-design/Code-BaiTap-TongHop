@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAXV 100005
+
+int n;
+int a[MAXV];
+int best[MAXV];
+
+int max(int x, int y) { return x > y ? x : y; }
+
+int main() {
+    scanf("%d", &n);
+    for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+    int ans = 0;
+    for(int i = 0; i < n; i++) {
+        int x = a[i];
+        int length = 1;
+
+        for(int d = 2; d*d <= x; d++) {
+            if(x % d == 0) {
+                length = max(length, best[d] + 1);
+                if(d != x/d) length = max(length, best[x/d] + 1);
+            }
+        }
+
+        best[x] = max(best[x], length);
+
+        for(int d = 2; d*d <= x; d++) {
+            if(x % d == 0) {
+                best[d] = max(best[d], length);
+                if(d != x/d) best[x/d] = max(best[x/d], length);
+            }
+        }
+
+        ans = max(ans, length);
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

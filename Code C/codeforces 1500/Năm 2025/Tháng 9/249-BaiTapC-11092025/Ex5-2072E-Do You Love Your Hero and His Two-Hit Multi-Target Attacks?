@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int k;
+        scanf("%d", &k);
+
+        if(k == 0) {
+            printf("5\n");
+            printf("0 0\n1 2\n2 3\n3 5\n4 7\n");
+            continue;
+        }
+
+        int m = 1;
+        while(m*(m-1)/2 <= k) m++;
+        m--;
+        int pairs = m*(m-1)/2;
+        int extra = k - pairs;
+
+        int n = m + extra;
+        printf("%d\n", n);
+
+        for(int i = 0; i < m; i++) {
+            printf("0 %d\n", i);
+        }
+
+        for(int i = 0; i < extra; i++) {
+            printf("1 %d\n", i);
+        }
+    }
+
+    return 0;
+}
 

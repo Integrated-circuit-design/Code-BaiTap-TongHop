@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+int b[MAXN];
+int p[MAXN];
+int dist[MAXN];
+int w[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) scanf("%d", &b[i]);
+        for (int i = 1; i <= n; i++) scanf("%d", &p[i]);
+
+        int root = 0;
+        for (int i = 1; i <= n; i++) {
+            if (b[i] == i) {
+                root = i;
+                break;
+            }
+        }
+
+        for (int i = 1; i <= n; i++) dist[i] = -1;
+        dist[root] = 0;
+
+        int impossible = 0;
+
+        for (int i = 1; i <= n; i++) {
+            int node = p[i];
+
+            if (node == root) continue;
+
+            int parent = b[node];
+
+            if (dist[parent] == -1) {
+                impossible = 1;
+                break;
+            }
+
+            w[node] = i - dist[parent];
+
+            if (w[node] <= 0) {
+                impossible = 1;
+                break;
+            }
+
+            dist[node] = dist[parent] + w[node];
+        }
+
+        if (impossible) {
+            printf("-1\n");
+        } else {
+            w[root] = 0;
+            for (int i = 1; i <= n; i++) {
+                printf("%d", w[i]);
+                if (i < n) printf(" ");
+                else printf("\n");
+            }
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        int left[n], right[n];
+        int seg_count = 0;
+        int possible = 1;
+
+        for (int i = 0; i < n;) {
+            if (a[i] == 0) {
+                left[seg_count] = i + 1;
+                right[seg_count] = i + 1;
+                seg_count++;
+                i++;
+            } else {
+                if (i + 1 < n) {
+                    left[seg_count] = i + 1;
+                    right[seg_count] = i + 2;
+                    seg_count++;
+                    i += 2;
+                } else {
+                    possible = 0;
+                    break;
+                }
+            }
+        }
+
+        if (!possible) {
+            printf("-1\n");
+        } else {
+            printf("%d\n", seg_count);
+            for (int i = 0; i < seg_count; i++) {
+                printf("%d %d\n", left[i], right[i]);
+            }
+        }
+    }
+
+    return 0;
+}
 

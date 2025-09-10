@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+char s[2005];
+char pattern[3] = {'R','G','B'};
+
+int min(int a, int b){
+    return a < b ? a : b;
+}
+
+int changes_needed(int l, int r, int start){
+    int count = 0;
+    for(int i = l; i <= r; i++){
+        if(s[i] != pattern[(start + i - l) % 3]) count++;
+    }
+    return count;
+}
+
+int main(){
+    int q;
+    scanf("%d", &q);
+    while(q--){
+        int n, k;
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+
+        int ans = k;
+
+        for(int i = 0; i <= n - k; i++){
+            for(int start = 0; start < 3; start++){
+                int c = changes_needed(i, i+k-1, start);
+                ans = min(ans, c);
+            }
+        }
+
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

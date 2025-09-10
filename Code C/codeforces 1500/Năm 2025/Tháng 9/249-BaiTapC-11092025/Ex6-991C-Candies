@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <stdint.h>
+
+int64_t vasyaEats(int64_t k, int64_t total) {
+    int64_t vasya = 0;
+    int64_t remaining = total;
+
+    while (remaining > 0) {
+        if (remaining < k) {
+            vasya += remaining;
+            remaining = 0;
+        } else {
+            vasya += k;
+            remaining -= k;
+        }
+        remaining -= remaining / 10;
+    }
+
+    return vasya;
+}
+
+int main() {
+    int64_t n;
+    scanf("%lld", &n);
+
+    int64_t low = 1, high = n, answer = n;
+
+    while (low <= high) {
+        int64_t mid = (low + high) / 2;
+
+        if (vasyaEats(mid, n) * 2 >= n) {
+            answer = mid;
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    printf("%lld\n", answer);
+    return 0;
+}
 

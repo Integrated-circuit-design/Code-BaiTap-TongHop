@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    char a, b;
+    int aHasOne = 0, bHasOne = 0;
+    int lenA = 0, lenB = 0;
+
+    while ((a = getchar()) != '\n' && a != EOF) {
+        lenA++;
+        if (a == '1') aHasOne = 1;
+    }
+
+    while ((b = getchar()) != '\n' && b != EOF) {
+        lenB++;
+        if (b == '1') bHasOne = 1;
+    }
+
+    if (lenA != lenB) {
+        printf("NO\n");
+        return 0;
+    }
+
+    if (bHasOne && !aHasOne) {
+        printf("NO\n");
+    } else {
+        printf("YES\n");
+    }
+
+    return 0;
+}
 

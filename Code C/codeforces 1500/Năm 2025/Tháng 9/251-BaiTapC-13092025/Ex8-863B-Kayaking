@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int total = 2 * n;
+    int w[MAX];
+    for(int i = 0; i < total; i++)
+        scanf("%d", &w[i]);
+
+    qsort(w, total, sizeof(int), cmp);
+
+    int ans = 1000000000;
+
+    for(int i = 0; i < total; i++) {
+        for(int j = i+1; j < total; j++) {
+            int instability = 0;
+            int prev = -1;
+            for(int k = 0; k < total; k++) {
+                if(k == i || k == j) continue;
+                if(prev == -1) {
+                    prev = k;
+                } else {
+                    instability += abs(w[prev] - w[k]);
+                    prev = -1;
+                }
+            }
+            ans = min(ans, instability);
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

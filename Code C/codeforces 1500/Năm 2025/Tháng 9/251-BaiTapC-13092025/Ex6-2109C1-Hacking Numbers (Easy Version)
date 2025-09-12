@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+
+        int response;
+
+        printf("digit\n");
+        fflush(stdout);
+        scanf("%d", &response);
+
+        if (n <= 9) {
+            printf("digit\n");
+            fflush(stdout);
+            scanf("%d", &response);
+        }
+
+        if (n > 1) {
+            printf("mul %lld\n", n);
+            fflush(stdout);
+            scanf("%d", &response);
+        }
+
+        if (n != 1) {
+            printf("div %lld\n", n);
+            fflush(stdout);
+            scanf("%d", &response);
+        }
+
+        printf("!\n");
+        fflush(stdout);
+        scanf("%d", &response);
+    }
+
+    return 0;
+}
 

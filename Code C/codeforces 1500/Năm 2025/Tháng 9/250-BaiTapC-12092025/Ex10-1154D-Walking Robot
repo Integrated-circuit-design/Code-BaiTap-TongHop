@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, b, a;
+    scanf("%d %d %d", &n, &b, &a);
+
+    int maxa = a;
+    int dist = 0;
+
+    for (int i = 0; i < n; i++) {
+        int sun; 
+        scanf("%d", &sun);
+
+        if (b == 0 && a == 0) break;
+
+        if (sun) {
+            if (a > 0 && (b == 0 || a == maxa)) {
+                a--;
+            } else if (b > 0) {
+                b--;
+                if (a < maxa) a++;
+            } else {
+                a--;
+            }
+        } else {
+            if (a > 0) a--;
+            else b--;
+        }
+        dist++;
+    }
+
+    printf("%d\n", dist);
+    return 0;
+}
 

@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+#define MAXM 400005
+
+int head[MAXN], to[MAXM], nxt[MAXM], edgeCnt;
+int visited[MAXN];
+
+void initGraph(int n) {
+    for (int i = 1; i <= n; i++) head[i] = -1;
+    edgeCnt = 0;
+}
+
+void addEdge(int u, int v) {
+    to[edgeCnt] = v;
+    nxt[edgeCnt] = head[u];
+    head[u] = edgeCnt++;
+}
+
+void dfs(int u) {
+    visited[u] = 1;
+    for (int e = head[u]; e != -1; e = nxt[e]) {
+        int v = to[e];
+        if (!visited[v]) dfs(v);
+    }
+}
+
+int countComponents(int n) {
+    int comp = 0;
+    for (int i = 1; i <= n; i++) visited[i] = 0;
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i]) {
+            comp++;
+            dfs(i);
+        }
+    }
+    return comp;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m1, m2;
+        scanf("%d %d %d", &n, &m1, &m2);
+
+        initGraph(n);
+        for (int i = 0; i < m1; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            addEdge(u, v);
+            addEdge(v, u);
+        }
+        int compF = countComponents(n);
+
+        initGraph(n);
+        for (int i = 0; i < m2; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            addEdge(u, v);
+            addEdge(v, u);
+        }
+        int compG = countComponents(n);
+
+        int removals = m1 - (n - compF);
+        int additions = n - compG;
+        printf("%d\n", removals + additions);
+    }
+    return 0;
+}
 

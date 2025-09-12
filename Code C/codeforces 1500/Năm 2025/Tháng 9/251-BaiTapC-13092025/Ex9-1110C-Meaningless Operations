@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int maxGCD(int a) {
+    int highestBit = 0;
+    int temp = a;
+    
+    while (temp > 0) {
+        highestBit++;
+        temp /= 2;
+    }
+    
+    int mask = (1 << highestBit) - 1;
+    
+    if (mask == a) mask >>= 1;
+    
+    return mask;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    
+    for (int i = 0; i < q; i++) {
+        int a;
+        scanf("%d", &a);
+        printf("%d\n", maxGCD(a));
+    }
+    
+    return 0;
+}
 

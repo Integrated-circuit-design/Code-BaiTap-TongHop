@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define N 1005
+typedef long long ll;
+
+int n;
+ll m[N], res[N];
+
+ll build(int peak) {
+    ll a[N], sum = 0;
+    a[peak] = m[peak];
+    for (int i = peak - 1; i >= 1; i--) {
+        a[i] = m[i];
+        if (a[i] > a[i+1]) a[i] = a[i+1];
+    }
+    for (int i = peak + 1; i <= n; i++) {
+        a[i] = m[i];
+        if (a[i] > a[i-1]) a[i] = a[i-1];
+    }
+    for (int i = 1; i <= n; i++) sum += a[i];
+    static ll best = -1;
+    if (sum > best) {
+        best = sum;
+        for (int i = 1; i <= n; i++) res[i] = a[i];
+    }
+    return sum;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) scanf("%lld", &m[i]);
+    for (int peak = 1; peak <= n; peak++) build(peak);
+    for (int i = 1; i <= n; i++) {
+        printf("%lld", res[i]);
+        if (i < n) printf(" ");
+    }
+    printf("\n");
+    return 0;
+}
 

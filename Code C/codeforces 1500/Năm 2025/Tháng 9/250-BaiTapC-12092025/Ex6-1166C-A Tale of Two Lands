@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int cmp_ll(const void *a, const void *b) {
+    ll x = *(const ll*)a;
+    ll y = *(const ll*)b;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int upper_bound(ll arr[], int n, ll value) {
+    int l = 0, r = n - 1, ans = -1;
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (arr[mid] <= value) {
+            ans = mid;
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return ans;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    ll arr[n];
+    for (int i = 0; i < n; i++) {
+        ll x;
+        scanf("%lld", &x);
+        if (x < 0) x = -x;
+        arr[i] = x;
+    }
+
+    qsort(arr, n, sizeof(ll), cmp_ll);
+
+    ll ans = 0;
+    for (int i = 0; i < n; i++) {
+        int j = upper_bound(arr, n, 2 * arr[i]);
+        if (j > i) {
+            ans += (j - i);
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

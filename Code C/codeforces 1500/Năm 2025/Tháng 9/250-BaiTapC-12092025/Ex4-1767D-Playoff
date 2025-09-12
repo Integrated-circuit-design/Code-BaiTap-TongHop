@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    char s[20];
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    int total = 1 << n;
+    int L[1<<18], R[1<<18];
+
+    for (int i = 0; i < total; i++) {
+        L[i] = 1;
+        R[i] = total;
+    }
+
+    int size = total;
+    for (int round = 0; round < n; round++) {
+        int newSize = size / 2;
+        for (int i = 0; i < newSize; i++) {
+            if (s[round] == '0') {
+                L[i] = (L[2*i] < L[2*i+1] ? L[2*i] : L[2*i+1]);
+                R[i] = (R[2*i] < R[2*i+1] ? R[2*i] : R[2*i+1]);
+            } else {
+                L[i] = (L[2*i] > L[2*i+1] ? L[2*i] : L[2*i+1]);
+                R[i] = (R[2*i] > R[2*i+1] ? R[2*i] : R[2*i+1]);
+            }
+        }
+        size = newSize;
+    }
+
+    for (int x = L[0]; x <= R[0]; x++) {
+        printf("%d ", x);
+    }
+    printf("\n");
+    return 0;
+}
 

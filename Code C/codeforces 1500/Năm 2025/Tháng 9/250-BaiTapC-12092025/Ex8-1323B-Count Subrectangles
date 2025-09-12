@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef long long ll;
+
+#define MAXN 40005
+
+int n, m;
+ll k;
+int a[MAXN], b[MAXN];
+int runsA[MAXN], runsB[MAXN];
+int lenA = 0, lenB = 0;
+
+ll count_segments(int runs[], int len, int L) {
+    ll res = 0;
+    for (int i = 0; i < len; i++) {
+        if (runs[i] >= L) res += (ll)(runs[i] - L + 1);
+    }
+    return res;
+}
+
+int main() {
+    scanf("%d %d %lld", &n, &m, &k);
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+    for (int j = 0; j < m; j++) scanf("%d", &b[j]);
+
+    for (int i = 0; i < n; ) {
+        if (a[i] == 1) {
+            int j = i;
+            while (j < n && a[j] == 1) j++;
+            runsA[lenA++] = j - i;
+            i = j;
+        } else i++;
+    }
+    for (int i = 0; i < m; ) {
+        if (b[i] == 1) {
+            int j = i;
+            while (j < m && b[j] == 1) j++;
+            runsB[lenB++] = j - i;
+            i = j;
+        } else i++;
+    }
+
+    ll ans = 0;
+    for (ll d = 1; d * d <= k; d++) {
+        if (k % d == 0) {
+            ll h = d, w = k / d;
+            if (h <= n && w <= m)
+                ans += count_segments(runsA, lenA, (int)h) * count_segments(runsB, lenB, (int)w);
+            if (h != w && w <= n && h <= m)
+                ans += count_segments(runsA, lenA, (int)w) * count_segments(runsB, lenB, (int)h);
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

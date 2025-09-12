@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAXN 105
+
+int parent[MAXN];
+int n, m;
+
+int find(int x) {
+    if (parent[x] != x) parent[x] = find(parent[x]);
+    return parent[x];
+}
+
+int unite(int x, int y) {
+    int px = find(x);
+    int py = find(y);
+    if (px == py) return 0;
+    parent[py] = px;
+    return 1;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    if (m != n) {
+        printf("NO\n");
+        return 0;
+    }
+
+    for (int i = 1; i <= n; i++) parent[i] = i;
+
+    int cycle = 0;
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        if (!unite(u, v)) cycle = 1;
+    }
+
+    int root = find(1);
+    for (int i = 2; i <= n; i++) {
+        if (find(i) != root) {
+            printf("NO\n");
+            return 0;
+        }
+    }
+
+    if (cycle && n >= 3) printf("FHTAGN!\n");
+    else printf("NO\n");
+
+    return 0;
+}
 

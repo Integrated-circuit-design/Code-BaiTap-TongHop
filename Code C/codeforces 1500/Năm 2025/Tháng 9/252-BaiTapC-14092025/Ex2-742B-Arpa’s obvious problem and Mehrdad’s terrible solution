@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+#define MAXV 100005
+
+long long countPairs(int n, int x) {
+    static int freq[MAXV + 1];
+    for (int i = 0; i <= MAXV; i++) freq[i] = 0;
+
+    long long ans = 0;
+    for (int i = 0; i < n; i++) {
+        int val;
+        scanf("%d", &val);
+        int partner = val ^ x;
+        if (partner <= MAXV) {
+            ans += freq[partner];
+        }
+        freq[val]++;
+    }
+    return ans;
+}
+
+int main() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+    long long result = countPairs(n, x);
+    printf("%lld\n", result);
+    return 0;
+}
 

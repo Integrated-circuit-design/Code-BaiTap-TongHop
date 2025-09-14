@@ -1,46 +1,88 @@
 #include <stdio.h>
 
-#define LIMIT 400005
+#define MOD 998244353
+#define MAXN 100005
+typedef long long ll;
 
-static long long cnt[LIMIT];
+int n;
+ll a[MAXN], M[MAXN], Ms[MAXN], vals[MAXN], pow2[MAXN];
 
-int main(void) {
-    int T;
-    scanf("%d", &T);
-
-    while (T--) {
-        int n, m;
-        scanf("%d %d", &n, &m);
-
-        int total = n + m;
-
-        for (int i = 1; i <= total; i++) cnt[i] = 0;
-
-        for (int i = 1; i <= n; i++) {
-            int x;
-            scanf("%d", &x);
-            cnt[x]++;
+void quicksort(ll arr[], int l, int r) {
+    if (l >= r) return;
+    ll pivot = arr[(l+r)/2];
+    int i=l, j=r;
+    while (i <= j) {
+        while (arr[i] < pivot) i++;
+        while (arr[j] > pivot) j--;
+        if (i <= j) {
+            ll tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+            i++; j--;
         }
-
-        for (int i = 0; i < m; i++) {
-            int pos, val;
-            scanf("%d %d", &pos, &val);
-            cnt[val]++;
-        }
-
-        long long pairs = 1LL * (m + 1) * m / 2;
-        long long baseSum = pairs * (2LL * n);
-
-        long long inter = 0;
-        for (int v = 1; v <= total; v++) {
-            if (cnt[v] >= 2) {
-                long long f = cnt[v];
-                inter += f * (f - 1) / 2;
-            }
-        }
-
-        printf("%lld\n", baseSum - inter);
     }
-    return 0;
+    if (l < j) quicksort(arr, l, j);
+    if (i < r) quicksort(arr, i, r);
 }
 
+int upper_bound(ll arr[], int n, ll x) {
+    int l = 0, r = n;
+    while (l < r) {
+        int mid = (l+r)/2;
+        if (arr[mid] <= x) l = mid+1;
+        else r = mid;
+    }
+    return l;
+}
+
+void build_pow2(int n) {
+    pow2[0] = 1;
+    for (int i=1; i<=n; i++) {
+        pow2[i] = (pow2[i-1] * 2) % MOD;
+    }
+}
+
+int unique_vals(ll arr[], int n) {
+    if (n==0) return 0;
+    int m = 1;
+    for (int i=1;i<n;i++) {
+        if (arr[i] != arr[m-1]) arr[m++] = arr[i];
+    }
+    return m;
+}
+
+int main() {
+    scanf("%d",&n);
+    for (int i=1;i<=n;i++) scanf("%lld",&a[i]);
+
+    for (int b=1;b<=n;b++) {
+        ll mx = 0;
+        for (int j=b;j<=n;j+=b) {
+            if (a[j] > mx) mx = a[j];
+        }
+        M[b] = mx;
+    }
+
+    for (int i=1;i<=n;i++) Ms[i-1] = M[i];
+    quicksort(Ms,0,n-1);
+
+    for (int i=1;i<=n;i++) vals[i-1] = a[i];
+    quicksort(vals,0,n-1);
+    int m = unique_vals(vals,n);
+
+    build_pow2(n);
+
+    ll ans = 0;
+    int prev_allowed = 0;
+    for (int i=0;i<m;i++) {
+        ll v = vals[i];
+        int allowed = upper_bound(Ms,n,v);
+
+        ll cnt = (pow2[allowed] - pow2[prev_allowed]) % MOD;
+        if (cnt < 0) cnt += MOD;
+
+        ans = (ans + (v % MOD) * cnt) % MOD;
+        prev_allowed = allowed;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}

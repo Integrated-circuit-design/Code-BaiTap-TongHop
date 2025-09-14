@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+#define LIM 100000
+
+void update(int x, int y, int f1, int f2, int f3, int f4,
+            int *xmin, int *xmax, int *ymin, int *ymax) {
+    if (f1 == 0 && x > *xmin) *xmin = x;
+    if (f3 == 0 && x < *xmax) *xmax = x;
+    if (f4 == 0 && y > *ymin) *ymin = y;
+    if (f2 == 0 && y < *ymax) *ymax = y;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n;
+        scanf("%d", &n);
+
+        int xmin = -LIM, xmax = LIM;
+        int ymin = -LIM, ymax = LIM;
+
+        for (int i = 0; i < n; i++) {
+            int x, y, f1, f2, f3, f4;
+            scanf("%d %d %d %d %d %d", &x, &y, &f1, &f2, &f3, &f4);
+            update(x, y, f1, f2, f3, f4, &xmin, &xmax, &ymin, &ymax);
+        }
+
+        if (xmin <= xmax && ymin <= ymax) {
+            printf("1 %d %d\n", xmin, ymin);
+        } else {
+            printf("0\n");
+        }
+    }
+    return 0;
+}
 

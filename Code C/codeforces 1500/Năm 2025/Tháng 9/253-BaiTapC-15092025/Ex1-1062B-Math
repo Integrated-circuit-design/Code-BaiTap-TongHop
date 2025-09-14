@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAXN 1000001
+
+int memo_ops[MAXN];
+int computed[MAXN];
+long long n;
+
+void dfs(long long val, long long *minVal, int *minOps, int ops) {
+    if (val < *minVal) {
+        *minVal = val;
+        *minOps = ops;
+    } else if (val == *minVal && ops < *minOps) {
+        *minOps = ops;
+    }
+
+    if (val <= MAXN) {
+        if (computed[val] && memo_ops[val] <= ops) return;
+        computed[val] = 1;
+        memo_ops[val] = ops;
+    }
+
+    long long r = (long long)(sqrt(val) + 0.5);
+    if (r * r == val) {
+        dfs(r, minVal, minOps, ops + 1);
+    }
+
+    for (long long x = 2; x <= 10; x++) {
+        dfs(val * x, minVal, minOps, ops + 1);
+    }
+}
+
+int main() {
+    scanf("%lld", &n);
+
+    for (int i = 0; i < MAXN; i++) {
+        memo_ops[i] = 0;
+        computed[i] = 0;
+    }
+
+    long long minVal = n;
+    int minOps = 0;
+
+    dfs(n, &minVal, &minOps, 0);
+
+    printf("%lld %d\n", minVal, minOps);
+    return 0;
+}
 

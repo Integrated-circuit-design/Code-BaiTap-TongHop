@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+#define MOD 998244353LL
+#define MAXN 60
+
+typedef long long ll;
+
+ll fact[MAXN+1];
+ll invfact[MAXN+1];
+ll A[MAXN+1];
+ll B[MAXN+1];
+
+ll modpow(ll a, ll e) {
+    ll res = 1;
+    while (e > 0) {
+        if (e & 1) res = (res * a) % MOD;
+        a = (a * a) % MOD;
+        e >>= 1;
+    }
+    return res;
+}
+
+ll nCr(int n, int r) {
+    if (r < 0 || r > n) return 0;
+    return fact[n] * invfact[r] % MOD * invfact[n-r] % MOD;
+}
+
+void precompute() {
+    fact[0] = 1;
+    for (int i = 1; i <= MAXN; i++) fact[i] = fact[i-1] * i % MOD;
+    invfact[MAXN] = modpow(fact[MAXN], MOD-2);
+    for (int i = MAXN; i >= 1; i--) invfact[i-1] = invfact[i] * i % MOD;
+    for (int i = 0; i <= MAXN; i++) { A[i] = B[i] = 0; }
+    A[2] = 1;
+    B[2] = 0;
+    for (int n = 4; n <= MAXN; n += 2) {
+        A[n] = (nCr(n-1, n/2 - 1) + B[n-2]) % MOD;
+        B[n] = (nCr(n-2, n/2 - 2) + A[n-2]) % MOD;
+    }
+}
+
+void solve_case(int n) {
+    printf("%lld %lld 1\n", A[n], B[n]);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    precompute();
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        solve_case(n);
+    }
+    return 0;
+}
 

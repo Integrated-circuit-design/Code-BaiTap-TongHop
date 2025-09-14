@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+#define MAXN 105
+#define MAXV 101
+
+int n, a[MAXN], freq[MAXV];
+char ans[MAXN];
+
+int countNice() {
+    int c = 0;
+    for (int v = 1; v < MAXV; v++) 
+        if (freq[v] == 1) c++;
+    return c;
+}
+
+int findBig() {
+    for (int v = 1; v < MAXV; v++) 
+        if (freq[v] >= 3) return v;
+    return -1;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        freq[a[i]]++;
+    }
+
+    int nice = countNice();
+    int big = findBig();
+
+    if (nice % 2 == 1 && big == -1) {
+        printf("NO\n");
+        return 0;
+    }
+
+    printf("YES\n");
+
+    int quota = nice / 2;
+    int usedBig = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (freq[a[i]] == 1) {
+            if (quota > 0) {
+                ans[i] = 'B';
+                quota--;
+            } else ans[i] = 'A';
+        } else ans[i] = 'A';
+    }
+
+    if (nice % 2 == 1) {
+        for (int i = 0; i < n; i++) {
+            if (a[i] == big && !usedBig) {
+                ans[i] = 'B';
+                usedBig = 1;
+            }
+        }
+    }
+
+    ans[n] = '\0';
+    printf("%s\n", ans);
+    return 0;
+}
 

@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAXN 1505
+#define MAXK 35
+
+int n, k;
+int card[MAXN];
+int exist[16000000];
+
+int cv(char c) {
+    if (c == 'S') return 0;
+    if (c == 'E') return 1;
+    return 2;
+}
+
+int encode(char *s, int k) {
+    int val = 0;
+    for (int i = 0; i < k; i++) {
+        val = val * 3 + cv(s[i]);
+    }
+    return val;
+}
+
+int third(int a, int b) {
+    if (a == b) return a;
+    return 3 - a - b;
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+    char buf[MAXK];
+    for (int i = 0; i < n; i++) {
+        scanf("%s", buf);
+        card[i] = encode(buf, k);
+        exist[card[i]] = i+1;
+    }
+
+    long long ans = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i+1; j < n; j++) {
+            int a = card[i], b = card[j], c = 0;
+            int ai = a, bi = b;
+            for (int t = 0; t < k; t++) {
+                int x = ai % 3, y = bi % 3;
+                int z = third(x, y);
+                c = c * 3 + z;
+                ai /= 3;
+                bi /= 3;
+            }
+            if (exist[c] > j+1) ans++;
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

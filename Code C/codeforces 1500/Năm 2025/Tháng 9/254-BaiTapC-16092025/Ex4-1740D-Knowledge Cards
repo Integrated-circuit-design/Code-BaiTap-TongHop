@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXK 100005
+
+int a[MAXK];
+
+void solve() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    for (int i = 1; i <= k; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int good = 0;
+    for (int i = k; i >= 1; i--) {
+        if (a[i] == good + 1) {
+            good++;
+        }
+    }
+
+    int need = k - good;
+    long long free_cells = 1LL * n * m - 2;
+
+    if (free_cells >= need)
+        printf("YA\n");
+    else
+        printf("TIDAK\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
 

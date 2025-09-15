@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int n, k;
+int skill[MAXN], ans[MAXN];
+int idx[MAXN];
+
+void swap(int *a, int *b) {
+    int tmp = *a; *a = *b; *b = tmp;
+}
+
+void quicksort(int l, int r) {
+    if (l >= r) return;
+    int i = l, j = r, pivot = skill[idx[(l+r)/2]];
+    while (i <= j) {
+        while (skill[idx[i]] < pivot) i++;
+        while (skill[idx[j]] > pivot) j--;
+        if (i <= j) {
+            swap(&idx[i], &idx[j]);
+            i++; j--;
+        }
+    }
+    if (l < j) quicksort(l, j);
+    if (i < r) quicksort(i, r);
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &skill[i]);
+        idx[i] = i;
+    }
+
+    quicksort(0, n-1);
+
+    int smaller[MAXN];
+    int cnt = 0; 
+    for (int i = 0; i < n; i++) {
+        if (i > 0 && skill[idx[i]] != skill[idx[i-1]]) {
+            cnt = i;
+        }
+        smaller[idx[i]] = cnt;
+    }
+
+    for (int i = 0; i < n; i++) ans[i] = smaller[i];
+
+    for (int i = 0; i < k; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        x--; y--;
+        if (skill[x] > skill[y]) ans[x]--;
+        else if (skill[y] > skill[x]) ans[y]--;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", ans[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

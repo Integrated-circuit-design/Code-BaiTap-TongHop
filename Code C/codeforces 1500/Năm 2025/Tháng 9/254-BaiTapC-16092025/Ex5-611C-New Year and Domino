@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+#define MAX 505
+
+char grid[MAX][MAX];
+int domino[MAX][MAX];
+int pref[MAX][MAX];
+
+int getSum(int r1, int c1, int r2, int c2) {
+    if (r1 > r2 || c1 > c2) return 0;
+    return pref[r2][c2] - pref[r1-1][c2] - pref[r2][c1-1] + pref[r1-1][c1-1];
+}
+
+int main() {
+    int h, w;
+    scanf("%d %d", &h, &w);
+
+    for (int i = 1; i <= h; i++) {
+        scanf("%s", grid[i] + 1);
+    }
+
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            if (grid[i][j] == '.') {
+                if (j < w && grid[i][j+1] == '.') domino[i][j]++;
+                if (i < h && grid[i+1][j] == '.') domino[i][j]++;
+            }
+        }
+    }
+
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            pref[i][j] = pref[i-1][j] + pref[i][j-1] - pref[i-1][j-1] + domino[i][j];
+        }
+    }
+
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int r1, c1, r2, c2;
+        scanf("%d %d %d %d", &r1, &c1, &r2, &c2);
+
+        int total = getSum(r1, c1, r2, c2);
+
+        for (int i = r1; i <= r2; i++) {
+            if (grid[i][c2] == '.' && c2 < w && grid[i][c2+1] == '.') {
+                total--; 
+            }
+        }
+        for (int j = c1; j <= c2; j++) {
+            if (grid[r2][j] == '.' && r2 < h && grid[r2+1][j] == '.') {
+                total--;
+            }
+        }
+
+        printf("%d\n", total);
+    }
+
+    return 0;
+}
 

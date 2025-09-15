@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 150005
+#define ALPHA 26
+
+typedef struct { int left, right; } Pair;
+
+int main() {
+    int n;
+    char L[MAXN], R[MAXN];
+    int lList[ALPHA][MAXN], rList[ALPHA][MAXN];
+    int lCnt[ALPHA] = {0}, rCnt[ALPHA] = {0};
+    int lQ[MAXN], rQ[MAXN], lQcnt = 0, rQcnt = 0;
+    Pair ans[MAXN];
+    int k = 0;
+
+    scanf("%d", &n);
+    scanf("%s", L+1);
+    scanf("%s", R+1);
+
+    for (int i = 1; i <= n; i++) {
+        if (L[i] == '?') lQ[lQcnt++] = i;
+        else lList[L[i]-'a'][lCnt[L[i]-'a']++] = i;
+
+        if (R[i] == '?') rQ[rQcnt++] = i;
+        else rList[R[i]-'a'][rCnt[R[i]-'a']++] = i;
+    }
+
+    for (int c = 0; c < ALPHA; c++) {
+        int m = (lCnt[c] < rCnt[c]) ? lCnt[c] : rCnt[c];
+        for (int i = 0; i < m; i++) {
+            ans[k++] = (Pair){ lList[c][i], rList[c][i] };
+        }
+        lCnt[c] -= m;
+        rCnt[c] -= m;
+    }
+
+    for (int c = 0; c < ALPHA; c++) {
+        while (lCnt[c] > 0 && rQcnt > 0) {
+            ans[k++] = (Pair){ lList[c][--lCnt[c]], rQ[--rQcnt] };
+        }
+    }
+
+    for (int c = 0; c < ALPHA; c++) {
+        while (rCnt[c] > 0 && lQcnt > 0) {
+            ans[k++] = (Pair){ lQ[--lQcnt], rList[c][--rCnt[c]] };
+        }
+    }
+
+    while (lQcnt > 0 && rQcnt > 0) {
+        ans[k++] = (Pair){ lQ[--lQcnt], rQ[--rQcnt] };
+    }
+
+    printf("%d\n", k);
+    for (int i = 0; i < k; i++) {
+        printf("%d %d\n", ans[i].left, ans[i].right);
+    }
+
+    return 0;
+}
 

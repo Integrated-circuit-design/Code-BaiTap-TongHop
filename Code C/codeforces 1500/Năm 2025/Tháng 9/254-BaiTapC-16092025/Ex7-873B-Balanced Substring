@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100000
+
+int main() {
+    int n;
+    char s[MAXN + 5];
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    static int prefix[MAXN + 5];
+    prefix[0] = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (s[i - 1] == '1')
+            prefix[i] = prefix[i - 1] + 1;
+        else
+            prefix[i] = prefix[i - 1] - 1;
+    }
+
+    static int first[2 * MAXN + 5];
+    for (int i = 0; i <= 2 * MAXN; i++)
+        first[i] = -1;
+
+    int shift = MAXN;
+    int ans = 0;
+
+    for (int i = 0; i <= n; i++) {
+        int idx = prefix[i] + shift;
+        if (first[idx] == -1) {
+            first[idx] = i;
+        } else {
+            int len = i - first[idx];
+            if (len > ans) ans = len;
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

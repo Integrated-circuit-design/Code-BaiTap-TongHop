@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp_int(const void *a, const void *b) {
+    int x = *(int*)a;
+    int y = *(int*)b;
+    return x - y;
+}
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    long long a[n];
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+    int selected_idx[m*k];
+    long long copy[n];
+    for (int i = 0; i < n; i++) copy[i] = a[i];
+
+    for (int t = 0; t < m*k; t++) {
+        int max_i = 0;
+        for (int i = 1; i < n; i++) {
+            if (copy[i] > copy[max_i]) max_i = i;
+        }
+        selected_idx[t] = max_i;
+        copy[max_i] = -1e18;
+    }
+
+    long long sum = 0;
+    for (int i = 0; i < m*k; i++) sum += a[selected_idx[i]];
+
+    qsort(selected_idx, m*k, sizeof(int), cmp_int);
+
+    int partition[k-1];
+    for (int i = 0; i < k-1; i++) {
+        partition[i] = selected_idx[(i+1)*m - 1] + 1;
+    }
+
+    printf("%lld\n", sum);
+    for (int i = 0; i < k-1; i++) {
+        printf("%d%c", partition[i], i == k-2 ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

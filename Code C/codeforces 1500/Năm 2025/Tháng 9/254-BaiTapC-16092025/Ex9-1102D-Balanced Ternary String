@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    char s[n + 1];
+    scanf("%s", s);
+
+    int need = n / 3;
+    int count[3] = {0};
+
+    for (int i = 0; i < n; i++) {
+        count[s[i] - '0']++;
+    }
+
+    int excess[3], lack[3];
+    for (int i = 0; i < 3; i++) {
+        excess[i] = (count[i] > need) ? (count[i] - need) : 0;
+        lack[i]   = (count[i] < need) ? (need - count[i]) : 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int d = s[i] - '0';
+        if (excess[d] > 0) {
+            if (lack[0] > 0 && d != 0) {
+                s[i] = '0';
+                excess[d]--; lack[0]--;
+            }
+            else if (lack[1] > 0 && d > 1) {
+                s[i] = '1';
+                excess[d]--; lack[1]--;
+            }
+            else if (lack[2] > 0 && d > 2) {
+                s[i] = '2';
+                excess[d]--; lack[2]--;
+            }
+        }
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        int d = s[i] - '0';
+        if (excess[d] > 0) {
+            if (lack[2] > 0 && d != 2) {
+                s[i] = '2';
+                excess[d]--; lack[2]--;
+            }
+            else if (lack[1] > 0 && d < 1) {
+                s[i] = '1';
+                excess[d]--; lack[1]--;
+            }
+        }
+    }
+
+    printf("%s\n", s);
+    return 0;
+}
 

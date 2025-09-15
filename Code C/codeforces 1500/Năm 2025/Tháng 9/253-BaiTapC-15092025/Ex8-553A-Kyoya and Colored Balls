@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 1000000007
+#define MAXK 1005
+#define MAXTOTAL 1005
+
+int k;
+int c[MAXK];
+long long memo[MAXK][MAXTOTAL];
+
+long long solve(int i, int sum) {
+    if(i == k) return 1;
+    if(memo[i][sum] != -1) return memo[i][sum];
+
+    long long res = 1;
+    int ways = 1;
+    for(int j = 1; j < c[i]; j++) {
+        ways = (long long)ways * (sum + j) % MOD;
+    }
+    res = ways * solve(i + 1, sum + c[i]) % MOD;
+    return memo[i][sum] = res;
+}
+
+int main() {
+    scanf("%d", &k);
+    int total = 0;
+    for(int i = 0; i < k; i++) {
+        scanf("%d", &c[i]);
+        total += c[i];
+    }
+
+    memset(memo, -1, sizeof(memo));
+    printf("%lld\n", solve(0, 0));
+    return 0;
+}
 

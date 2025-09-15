@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+#define MAXN 200005
+#define ll long long
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    static ll a[MAXN], pref[MAXN], w[MAXN];
+    for (int i = 1; i <= n; i++) {
+        scanf("%lld", &a[i]);
+        pref[i] = pref[i-1] + a[i];
+    }
+
+    int m = n - k + 1;
+    for (int i = 1; i <= m; i++) {
+        w[i] = pref[i+k-1] - pref[i-1];
+    }
+
+    static int bestIdx[MAXN];
+    bestIdx[1] = 1;
+    for (int i = 2; i <= m; i++) {
+        if (w[i] > w[bestIdx[i-1]])
+            bestIdx[i] = i;
+        else
+            bestIdx[i] = bestIdx[i-1];
+    }
+
+    ll bestTotal = -1;
+    int besta = 1, bestb = k+1;
+
+    for (int j = k+1; j <= m; j++) {
+        int i = bestIdx[j-k];
+        ll total = w[i] + w[j];
+        if (total > bestTotal ||
+            (total == bestTotal && (i < besta || (i == besta && j < bestb)))) {
+            bestTotal = total;
+            besta = i;
+            bestb = j;
+        }
+    }
+
+    printf("%d %d\n", besta, bestb);
+    return 0;
+}
 

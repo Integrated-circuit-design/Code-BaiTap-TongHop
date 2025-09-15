@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        long long l;
+        scanf("%d %lld", &n, &l);
+
+        long long flags[n+2];
+        for(int i = 0; i < n; i++) scanf("%lld", &flags[i]);
+
+        long long leftFlags[n+2], rightFlags[n+2];
+        leftFlags[0] = 0;
+        for(int i = 1; i <= n; i++) leftFlags[i] = flags[i-1];
+        rightFlags[n+1] = l;
+        for(int i = 1; i <= n; i++) rightFlags[i] = flags[n-i];
+
+        int li = 0, ri = 0;
+        double pos1 = 0, pos2 = l;
+        double speed1 = 1, speed2 = 1;
+        double time = 0;
+
+        while(li <= n && ri <= n) {
+            double dist1 = leftFlags[li+1] - pos1;
+            double dist2 = pos2 - rightFlags[ri+1];
+            double t1 = dist1 / speed1;
+            double t2 = dist2 / speed2;
+
+            if(t1 < t2) {
+                time += t1;
+                pos1 += dist1;
+                pos2 -= speed2 * t1;
+                speed1 += 1;
+                li++;
+            } else {
+                time += t2;
+                pos2 -= dist2;
+                pos1 += speed1 * t2;
+                speed2 += 1;
+                ri++;
+            }
+            if(pos1 >= pos2) break;
+        }
+
+        if(pos1 < pos2) time += (pos2 - pos1) / (speed1 + speed2);
+
+        printf("%.12f\n", time);
+    }
+    return 0;
+}
 

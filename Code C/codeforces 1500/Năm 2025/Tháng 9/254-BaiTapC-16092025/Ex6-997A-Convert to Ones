@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+long long mymin(long long a, long long b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int n;
+    long long x, y;
+    scanf("%d %lld %lld", &n, &x, &y);
+
+    char s[n + 2];
+    scanf("%s", s);
+
+    int zeroBlocks = 0;
+
+    if (s[0] == '0') zeroBlocks++;
+
+    for (int i = 1; i < n; i++) {
+        if (s[i] == '0' && s[i - 1] == '1') {
+            zeroBlocks++;
+        }
+    }
+
+    if (zeroBlocks == 0) {
+        printf("0\n");
+    } else {
+        long long ans = (zeroBlocks - 1) * mymin(x, y) + y;
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

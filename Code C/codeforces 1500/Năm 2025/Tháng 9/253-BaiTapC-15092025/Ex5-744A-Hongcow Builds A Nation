@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1005
+
+int n, m, k;
+int gov[MAXN];
+int parent[MAXN];
+int size[MAXN];
+
+int find(int x) {
+    if (parent[x] != x)
+        parent[x] = find(parent[x]);
+    return parent[x];
+}
+
+void unite(int x, int y) {
+    x = find(x);
+    y = find(y);
+    if (x != y) {
+        parent[y] = x;
+        size[x] += size[y];
+    }
+}
+
+int main() {
+    scanf("%d %d %d", &n, &m, &k);
+
+    memset(gov, 0, sizeof(gov));
+    for (int i = 0; i < k; i++) {
+        int x;
+        scanf("%d", &x);
+        gov[x] = 1;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        parent[i] = i;
+        size[i] = 1;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        unite(u, v);
+    }
+
+    int largest_gov_component = 0;
+    int sum_edges_max = 0;
+    int extra_nodes = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (parent[i] == i) {
+            int has_gov = 0;
+            for (int j = 1; j <= n; j++) {
+                if (find(j) == i && gov[j]) {
+                    has_gov = 1;
+                    break;
+                }
+            }
+            if (has_gov) {
+                if (size[i] > largest_gov_component)
+                    largest_gov_component = size[i];
+                sum_edges_max += size[i] * (size[i] - 1) / 2;
+            } else {
+                extra_nodes += size[i];
+            }
+        }
+    }
+
+    sum_edges_max -= largest_gov_component * (largest_gov_component - 1) / 2;
+    largest_gov_component += extra_nodes;
+    sum_edges_max += largest_gov_component * (largest_gov_component - 1) / 2;
+
+    printf("%d\n", sum_edges_max - m);
+    return 0;
+}
 

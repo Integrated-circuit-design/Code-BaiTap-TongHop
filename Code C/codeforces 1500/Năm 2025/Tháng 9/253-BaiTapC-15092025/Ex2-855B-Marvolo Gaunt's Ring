@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int n;
+    ll p, q, r;
+    scanf("%d %lld %lld %lld", &n, &p, &q, &r);
+
+    ll max_p = -1000000000000000000LL;
+    ll max_pq = -1000000000000000000LL;
+    ll max_pqr = -1000000000000000000LL;
+
+    for(int i = 0; i < n; i++) {
+        ll ai;
+        scanf("%lld", &ai);
+
+        if (p * ai > max_p) {
+            max_p = p * ai;
+        }
+
+        if (max_p + q * ai > max_pq) {
+            max_pq = max_p + q * ai;
+        }
+
+        if (max_pq + r * ai > max_pqr) {
+            max_pqr = max_pq + r * ai;
+        }
+    }
+
+    printf("%lld\n", max_pqr);
+    return 0;
+}
 

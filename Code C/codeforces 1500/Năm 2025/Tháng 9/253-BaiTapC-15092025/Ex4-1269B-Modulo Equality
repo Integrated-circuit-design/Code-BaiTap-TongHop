@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long m;
+    scanf("%d %lld", &n, &m);
+
+    int a[n], b[n];
+    for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+    for(int i = 0; i < n; i++) scanf("%d", &b[i]);
+
+    int min_x = -1;
+
+    for(int i = 0; i < n; i++) {
+        long long x = (b[i] - a[0] + m) % m;
+
+        int freq[n];
+        for(int j = 0; j < n; j++) freq[j] = 0;
+
+        for(int j = 0; j < n; j++) {
+            int val = (a[j] + x) % m;
+            int found = 0;
+            for(int k = 0; k < n; k++) {
+                if(b[k] == val && freq[k] == 0) {
+                    freq[k] = 1;
+                    found = 1;
+                    break;
+                }
+            }
+            if(!found) {
+                x = -1;
+                break;
+            }
+        }
+
+        if(x != -1) {
+            if(min_x == -1 || x < min_x) min_x = x;
+        }
+    }
+
+    printf("%d\n", min_x);
+    return 0;
+}
 

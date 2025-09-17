@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MAXN 100000
+
+int n;
+int parent[MAXN + 1];
+int depth[MAXN + 1];
+int cnt[MAXN + 1];
+
+void computeDepths() {
+    depth[1] = 0;
+    for (int i = 2; i <= n; i++) {
+        depth[i] = depth[parent[i]] + 1;
+    }
+}
+
+int countApples() {
+    for (int i = 1; i <= n; i++) {
+        cnt[ depth[i] ]++;
+    }
+    int res = 0;
+    for (int d = 0; d <= n; d++) {
+        if (cnt[d] % 2 == 1) res++;
+    }
+    return res;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 2; i <= n; i++) {
+        scanf("%d", &parent[i]);
+    }
+
+    computeDepths();
+    int ans = countApples();
+
+    printf("%d\n", ans);
+    return 0;
+}
 

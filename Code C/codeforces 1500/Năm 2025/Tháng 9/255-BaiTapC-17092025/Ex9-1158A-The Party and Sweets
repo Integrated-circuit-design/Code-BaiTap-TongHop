@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int boys[n], girls[m];
+    ll sumBoys = 0, sumGirls = 0;
+
+    int max1 = 0, max2 = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &boys[i]);
+        sumBoys += boys[i];
+
+        if (boys[i] > max1) {
+            max2 = max1;
+            max1 = boys[i];
+        } else if (boys[i] > max2) {
+            max2 = boys[i];
+        }
+    }
+
+    int minGirl = 1000000009;
+    for (int j = 0; j < m; j++) {
+        scanf("%d", &girls[j]);
+        sumGirls += girls[j];
+        if (girls[j] < minGirl) minGirl = girls[j];
+    }
+
+    for (int j = 0; j < m; j++) {
+        if (girls[j] < max1) {
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    ll result;
+    if (minGirl == max1) {
+        result = (ll)(m - 1) * sumBoys + sumGirls;
+    } else {
+        result = (ll)(m - 2) * sumBoys + sumGirls + max2;
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

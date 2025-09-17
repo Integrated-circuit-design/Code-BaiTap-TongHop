@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+#define MAX 1000006
+
+long long freq[MAX+10];
+
+int main() {
+    int n, w, maxw = 0;
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &w);
+        freq[w]++;
+        if (w > maxw) maxw = w;
+    }
+    
+    for (int i = 0; i <= maxw; i++) {
+        while (freq[i] >= 2) {
+            freq[i] -= 2;
+            freq[i+1]++;
+            if (i+1 > maxw) maxw = i+1;
+        }
+    }
+    
+    int ans = 0;
+    for (int i = 0; i <= maxw; i++) {
+        if (freq[i] > 0) ans++;
+    }
+    
+    printf("%d\n", ans);
+    return 0;
+}
 

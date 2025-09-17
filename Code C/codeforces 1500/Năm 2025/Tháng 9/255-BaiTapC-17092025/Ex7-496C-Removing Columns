@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+#define N 105
+
+int n, m;
+char grid[N][N];
+int decided[N];
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) scanf("%s", grid[i]);
+
+    int removeCount = 0;
+
+    for (int col = 0; col < m; col++) {
+        int mustDelete = 0;
+        for (int r = 0; r < n - 1; r++) {
+            if (!decided[r] && grid[r][col] > grid[r + 1][col]) {
+                mustDelete = 1;
+                break;
+            }
+        }
+        if (mustDelete) {
+            removeCount++;
+        } else {
+            for (int r = 0; r < n - 1; r++) {
+                if (!decided[r] && grid[r][col] < grid[r + 1][col]) {
+                    decided[r] = 1;
+                }
+            }
+        }
+    }
+
+    printf("%d\n", removeCount);
+    return 0;
+}
 

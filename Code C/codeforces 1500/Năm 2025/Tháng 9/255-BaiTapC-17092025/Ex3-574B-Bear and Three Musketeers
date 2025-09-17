@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 4005
+
+int n, m;
+char g[MAXN][MAXN];
+int deg[MAXN];
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        g[a][b] = g[b][a] = 1;
+        deg[a]++, deg[b]++;
+    }
+
+    int ans = 1000000000, found = 0;
+
+    for (int u = 1; u <= n; u++) {
+        for (int v = u + 1; v <= n; v++) {
+            if (!g[u][v]) continue;
+            for (int w = v + 1; w <= n; w++) {
+                if (g[u][w] && g[v][w]) {
+                    int sum = deg[u] + deg[v] + deg[w] - 6;
+                    if (sum < ans) ans = sum;
+                    found = 1;
+                }
+            }
+        }
+    }
+
+    if (!found) printf("-1\n");
+    else printf("%d\n", ans);
+
+    return 0;
+}
 

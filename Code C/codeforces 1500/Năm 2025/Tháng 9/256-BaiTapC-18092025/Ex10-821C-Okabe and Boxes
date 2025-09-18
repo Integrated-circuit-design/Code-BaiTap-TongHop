@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 300005
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int stack[MAXN];
+    int top = 0;
+
+    int reorder = 0;
+    int last_removed = 0;
+
+    char op[10];
+    int x;
+
+    for (int i = 0; i < 2 * n; i++) {
+        scanf("%s", op);
+
+        if (op[0] == 'a') {
+            scanf("%d", &x);
+            stack[++top] = x;
+        } else {
+            if (stack[top] != last_removed + 1) {
+                reorder++;
+                top = 0;
+            } else {
+                top--;
+            }
+            last_removed++;
+        }
+    }
+
+    printf("%d\n", reorder);
+
+    return 0;
+}
 

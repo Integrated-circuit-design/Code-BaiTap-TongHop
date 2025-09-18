@@ -1,1 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAXN 105
+
+typedef struct {
+    int start;
+    int end;
+} Interval;
+
+Interval intervals[MAXN];
+int adj[MAXN][MAXN];
+int deg[MAXN];
+int total = 0;
+bool visited[MAXN];
+
+bool canMove(Interval i1, Interval i2) {
+    return (i2.start < i1.start && i1.start < i2.end) || 
+           (i2.start < i1.end && i1.end < i2.end);
+}
+
+bool dfs(int u, int target) {
+    if (u == target) return true;
+    visited[u] = true;
+    for (int i = 0; i < deg[u]; i++) {
+        int v = adj[u][i];
+        if (!visited[v]) {
+            if (dfs(v, target)) return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int q = 0; q < n; q++) {
+        int type;
+        scanf("%d", &type);
+
+        if (type == 1) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            intervals[total].start = x;
+            intervals[total].end = y;
+            deg[total] = 0;
+
+            for (int i = 0; i < total; i++) {
+                if (canMove(intervals[i], intervals[total])) {
+                    adj[i][deg[i]++] = total;
+                }
+                if (canMove(intervals[total], intervals[i])) {
+                    adj[total][deg[total]++] = i;
+                }
+            }
+
+            total++;
+        } else if (type == 2) {
+            int a, b;
+            scanf("%d %d", &a, &b);
+            a--; b--;
+
+            for (int i = 0; i < total; i++) visited[i] = false;
+
+            if (dfs(a, b)) printf("YES\n");
+            else printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long start[n], end[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld %lld", &start[i], &end[i]);
+    }
+
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-1-i; j++) {
+            if (start[j] > start[j+1]) {
+                long long tmp;
+                tmp = start[j]; start[j] = start[j+1]; start[j+1] = tmp;
+                tmp = end[j];   end[j]   = end[j+1];   end[j+1]   = tmp;
+            }
+        }
+    }
+
+    int count = 0;
+    long long max_end = -1;
+
+    for (int i = 0; i < n; i++) {
+        if (end[i] < max_end) {
+            count++;
+        } else {
+            if (end[i] > max_end) max_end = end[i];
+        }
+    }
+
+    printf("%d\n", count);
+    return 0;
+}
 

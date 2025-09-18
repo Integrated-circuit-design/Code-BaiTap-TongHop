@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int n;
+int a[MAXN];
+int deg[MAXN];
+int visited[MAXN];
+
+int main() {
+    scanf("%d", &n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    for(int i=1;i<=n;i++) deg[i]=0, visited[i]=0;
+
+    int swapped;
+    do {
+        swapped=0;
+        for(int i=0;i<n-1;i++){
+            if(a[i]>a[i+1]){
+                deg[a[i]]++;
+                deg[a[i+1]]++;
+                int tmp=a[i]; a[i]=a[i+1]; a[i+1]=tmp;
+                swapped=1;
+            }
+        }
+    } while(swapped);
+
+    int res=0;
+    for(int i=1;i<=n;i++){
+        if(!visited[i]){
+            res++;
+            visited[i]=1;
+            for(int j=1;j<=n;j++){
+                if(deg[j]>0 && (i==j || deg[j]>0)) visited[j]=1;
+            }
+        }
+    }
+
+    printf("%d\n",res);
+    return 0;
+}
 

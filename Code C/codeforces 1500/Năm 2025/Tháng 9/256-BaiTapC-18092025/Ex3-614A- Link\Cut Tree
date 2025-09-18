@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    long long l, r, k;
+    scanf("%lld %lld %lld", &l, &r, &k);
+
+    int found = 0;
+
+    for (long long power = 1; ; power *= k) {
+        if (power > r) break;
+        if (power >= l) {
+            printf("%lld ", power);
+            found = 1;
+        }
+        if (power > r / k) break;
+    }
+
+    if (!found) printf("-1");
+    printf("\n");
+    return 0;
+}
 

@@ -1,1 +1,68 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1005
+
+int n;
+int adj[MAXN][MAXN];
+int deg[MAXN];
+int is_prime[MAXN*MAXN/2];
+
+void sieve(int limit){
+    memset(is_prime,1,sizeof(is_prime));
+    is_prime[0]=is_prime[1]=0;
+    for(int i=2;i*i<=limit;i++){
+        if(is_prime[i]){
+            for(int j=i*i;j<=limit;j+=i)
+                is_prime[j]=0;
+        }
+    }
+}
+
+int main(){
+    scanf("%d",&n);
+    int max_edges = n*(n-1)/2;
+    sieve(max_edges);
+
+    memset(adj,0,sizeof(adj));
+    memset(deg,0,sizeof(deg));
+
+    int m = 0;
+
+    for(int i=2;i<=n;i++){
+        adj[1][i] = adj[i][1] = 1;
+        deg[1]++; deg[i]++;
+        m++;
+    }
+
+    for(int i=2;i<=n;i++){
+        for(int j=i+1;j<=n;j++){
+            if(is_prime[deg[i]] && is_prime[deg[j]]) continue;
+            if(!adj[i][j]){
+                adj[i][j] = adj[j][i] = 1;
+                deg[i]++; deg[j]++;
+                m++;
+            }
+            if(is_prime[m]) goto done;
+        }
+    }
+
+done:
+    for(int i=1;i<=n;i++){
+        if(!is_prime[deg[i]]){
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    printf("%d\n", m);
+    for(int i=1;i<=n;i++){
+        for(int j=i+1;j<=n;j++){
+            if(adj[i][j])
+                printf("%d %d\n", i,j);
+        }
+    }
+
+    return 0;
+}
 

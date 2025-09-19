@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+#define MAXW 200005
+#define MAXH 200005
+
+int main() {
+    int w, h, n;
+    scanf("%d %d %d", &w, &h, &n);
+
+    int *hCut = (int*)calloc(h+1, sizeof(int));
+    int *vCut = (int*)calloc(w+1, sizeof(int));
+
+    hCut[0] = 1; hCut[h] = 1;
+    vCut[0] = 1; vCut[w] = 1;
+
+    for(int i=0;i<n;i++){
+        char type;
+        int pos;
+        scanf(" %c %d", &type, &pos);
+        if(type == 'H') hCut[pos] = 1;
+        else vCut[pos] = 1;
+
+        int maxH=0, len=0;
+        for(int y=0;y<=h;y++){
+            if(hCut[y]) {if(len>maxH) maxH=len; len=0;}
+            else len++;
+        }
+        if(len>maxH) maxH=len;
+
+        int maxW=0;
+        len=0;
+        for(int x=0;x<=w;x++){
+            if(vCut[x]) {if(len>maxW) maxW=len; len=0;}
+            else len++;
+        }
+        if(len>maxW) maxW=len;
+
+        printf("%lld\n", (ll)(maxH+1)*(ll)(maxW+1));
+    }
+
+    free(hCut);
+    free(vCut);
+    return 0;
+}
 

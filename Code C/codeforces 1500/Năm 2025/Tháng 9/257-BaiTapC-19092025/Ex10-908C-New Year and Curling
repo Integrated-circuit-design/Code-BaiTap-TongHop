@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAXN 1000
+
+int n;
+double r;
+int x[MAXN];
+double y[MAXN];
+
+double compute_y(int i) {
+    double yi = r;
+    for (int j = 0; j < i; j++) {
+        double dx = x[i] - x[j];
+        if (fabs(dx) <= 2*r) {
+            double dy = sqrt(4*r*r - dx*dx);
+            if (y[j] + dy > yi) yi = y[j] + dy;
+        }
+    }
+    return yi;
+}
+
+int main() {
+    scanf("%d %lf", &n, &r);
+
+    for (int i = 0; i < n; i++) scanf("%d", &x[i]);
+
+    for (int i = 0; i < n; i++) {
+        y[i] = compute_y(i);
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%.10lf", y[i]);
+        if (i != n-1) printf(" ");
+    }
+    printf("\n");
+
+    return 0;
+}
 

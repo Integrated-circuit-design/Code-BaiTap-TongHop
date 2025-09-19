@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 200005
+
+char a[MAX], b[MAX];
+
+int main() {
+    scanf("%s", a);
+    scanf("%s", b);
+
+    int n = strlen(a);
+    int m = strlen(b);
+    long long total = 0;
+
+    for(int i = 0; i < n; i++) {
+        int l = i;
+        int r = i + m - n;
+        long long ones = 0;
+
+        for(int j = l; j <= r; j++) {
+            if(b[j] == '1') ones++;
+        }
+
+        long long substrCount = m - n + 1;
+
+        if(a[i] == '0') {
+            total += ones;
+        } else {
+            total += substrCount - ones;
+        }
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

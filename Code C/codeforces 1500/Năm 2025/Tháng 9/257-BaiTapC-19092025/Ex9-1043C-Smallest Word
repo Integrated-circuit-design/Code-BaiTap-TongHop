@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[1005];
+    int n;
+
+    scanf("%s", s);
+    n = strlen(s);
+
+    int flips[1005];
+    int flipped = 0;
+
+    for(int i = 0; i < n; i++) {
+        char effectiveChar = s[i];
+        if(flipped) {
+            effectiveChar = (s[i] == 'a') ? 'b' : 'a';
+        }
+
+        if(effectiveChar == 'b') {
+            flips[i] = 1;
+            flipped = !flipped;
+        } else {
+            flips[i] = 0;
+        }
+    }
+
+    for(int i = 0; i < n; i++) {
+        printf("%d", flips[i]);
+        if(i < n-1) printf(" ");
+    }
+    printf("\n");
+
+    return 0;
+}
 

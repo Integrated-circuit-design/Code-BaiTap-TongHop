@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    char s[200005], t[200005];
+    int balance = 0;
+
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    for(int i = 0; i < n; i++) {
+        if(s[i] == '(') {
+            t[i] = (balance & 1) + '0';
+            balance++;
+        } else {
+            balance--;
+            t[i] = (balance & 1) + '0';
+        }
+    }
+
+    t[n] = '\0';
+    printf("%s\n", t);
+    return 0;
+}
 

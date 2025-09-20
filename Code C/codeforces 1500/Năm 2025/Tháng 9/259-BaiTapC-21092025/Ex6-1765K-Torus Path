@@ -1,1 +1,61 @@
+#include <stdio.h>
+#define MAXN 205
+#define LL long long
+#define NEG -4000000000000000000LL
+
+static LL grid[MAXN][MAXN];
+static LL dp[2*MAXN][MAXN][MAXN];
+int n;
+
+inline LL maxLL(LL a, LL b) { return a > b ? a : b; }
+
+void readInput() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            scanf("%lld", &grid[i][j]);
+}
+
+LL solve() {
+    int total = 2 * n - 2;
+    for (int k = 0; k <= total; k++)
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= n; j++)
+                dp[k][i][j] = NEG;
+
+    dp[0][1][1] = grid[1][1];
+
+    for (int step = 1; step <= total; step++) {
+        for (int x1 = 1; x1 <= n; x1++) {
+            int y1 = step - (x1 - 1);
+            if (y1 < 1 || y1 > n) continue;
+
+            for (int x2 = 1; x2 <= n; x2++) {
+                int y2 = step - (x2 - 1);
+                if (y2 < 1 || y2 > n) continue;
+
+                LL best = NEG;
+                if (x1 > 1 && x2 > 1) best = maxLL(best, dp[step-1][x1-1][x2-1]);
+                if (x1 > 1 && y2 > 1) best = maxLL(best, dp[step-1][x1-1][x2]);
+                if (y1 > 1 && x2 > 1) best = maxLL(best, dp[step-1][x1][x2-1]);
+                if (y1 > 1 && y2 > 1) best = maxLL(best, dp[step-1][x1][x2]);
+
+                if (best == NEG) continue;
+
+                LL val = best + grid[x1][y1];
+                if (!(x1 == x2 && y1 == y2))
+                    val += grid[x2][y2];
+
+                dp[step][x1][x2] = val;
+            }
+        }
+    }
+    return dp[total][n][n];
+}
+
+int main() {
+    readInput();
+    printf("%lld\n", solve());
+    return 0;
+}
 

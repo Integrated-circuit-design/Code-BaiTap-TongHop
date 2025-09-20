@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+#define MAXE 60000
+typedef unsigned long long ULL;
+
+ULL ea[MAXE], eb[MAXE];
+long long ew[MAXE];
+int ecnt = 0;
+
+void norm(ULL *a, ULL *b) {
+    if (*a > *b) {
+        ULL t = *a; *a = *b; *b = t;
+    }
+}
+
+void add(ULL a, ULL b, long long w) {
+    norm(&a, &b);
+    for (int i = 0; i < ecnt; i++) {
+        if (ea[i] == a && eb[i] == b) {
+            ew[i] += w;
+            return;
+        }
+    }
+    ea[ecnt] = a; eb[ecnt] = b; ew[ecnt] = w;
+    ecnt++;
+}
+
+long long get(ULL a, ULL b) {
+    norm(&a, &b);
+    for (int i = 0; i < ecnt; i++) {
+        if (ea[i] == a && eb[i] == b) return ew[i];
+    }
+    return 0;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    while (q--) {
+        int type;
+        scanf("%d", &type);
+        if (type == 1) {
+            ULL v, u; long long w;
+            scanf("%llu %llu %lld", &v, &u, &w);
+            while (v != u) {
+                if (v > u) { add(v, v/2, w); v /= 2; }
+                else       { add(u, u/2, w); u /= 2; }
+            }
+        } else {
+            ULL v, u; 
+            scanf("%llu %llu", &v, &u);
+            long long ans = 0;
+            while (v != u) {
+                if (v > u) { ans += get(v, v/2); v /= 2; }
+                else       { ans += get(u, u/2); u /= 2; }
+            }
+            printf("%lld\n", ans);
+        }
+    }
+    return 0;
+}
 

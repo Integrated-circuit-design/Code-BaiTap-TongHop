@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 50
+
+int n, m;
+int want[MAXN][MAXN];
+int group[MAXN];
+int group_size[MAXN];
+int group_count;
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    memset(want, 0, sizeof(want));
+    memset(group, -1, sizeof(group));
+
+    for (int i = 0; i < m; i++) {
+        int a, b; 
+        scanf("%d %d", &a, &b);
+        want[a][b] = want[b][a] = 1;
+    }
+
+    group_count = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (group[i] == -1) {
+            group[i] = group_count;
+            group_size[group_count] = 1;
+
+            for (int j = 1; j <= n; j++) {
+                if (want[i][j]) {
+                    if (group[j] == -1) {
+                        group[j] = group_count;
+                        group_size[group_count]++;
+                    }
+                }
+            }
+
+            if (group_size[group_count] > 3) {
+                printf("-1\n");
+                return 0;
+            }
+            group_count++;
+        }
+    }
+
+    int ones[MAXN], twos[MAXN];
+    int o = 0, t = 0;
+
+    for (int g = 0; g < group_count; g++) {
+        if (group_size[g] == 3) {
+            for (int i = 1; i <= n; i++) if (group[i] == g) printf("%d ", i);
+            printf("\n");
+        } else if (group_size[g] == 2) {
+            for (int i = 1; i <= n; i++) if (group[i] == g) twos[t++] = i;
+        } else if (group_size[g] == 1) {
+            for (int i = 1; i <= n; i++) if (group[i] == g) ones[o++] = i;
+        }
+    }
+
+    if (t > o) { printf("-1\n"); return 0; }
+    for (int i = 0; i < t; i++) {
+        printf("%d %d %d\n", twos[i*2], twos[i*2+1], ones[i]);
+    }
+
+    int remaining = o - t;
+    if (remaining % 3 != 0) { printf("-1\n"); return 0; }
+    for (int i = t; i < o; i += 3) {
+        printf("%d %d %d\n", ones[i], ones[i+1], ones[i+2]);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define ll long long
+#define MAXN 100005
+
+int n, m;
+int a[MAXN];
+int c[MAXN];
+int cheapestIdx;
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+    for (int i = 1; i <= n; i++) scanf("%d", &c[i]);
+
+    cheapestIdx = 1;
+    for (int i = 2; i <= n; i++)
+        if (c[i] < c[cheapestIdx]) cheapestIdx = i;
+
+    for (int customer = 0; customer < m; customer++) {
+        int t, d;
+        scanf("%d %d", &t, &d);
+        ll cost = 0;
+
+        int serve = (a[t] < d) ? a[t] : d;
+        cost += (ll)serve * c[t];
+        a[t] -= serve;
+        d -= serve;
+
+        while (d > 0 && a[cheapestIdx] > 0) {
+            int take = (a[cheapestIdx] < d) ? a[cheapestIdx] : d;
+            cost += (ll)take * c[cheapestIdx];
+            a[cheapestIdx] -= take;
+            d -= take;
+
+            if (a[cheapestIdx] == 0) {
+                int nextCheap = -1;
+                for (int i = 1; i <= n; i++) {
+                    if (a[i] > 0) {
+                        if (nextCheap == -1 || c[i] < c[nextCheap]) nextCheap = i;
+                    }
+                }
+                if (nextCheap == -1) break;
+                cheapestIdx = nextCheap;
+            }
+        }
+
+        if (d > 0) cost = 0;
+        printf("%lld\n", cost);
+    }
+
+    return 0;
+}
 

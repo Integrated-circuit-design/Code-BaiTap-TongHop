@@ -1,1 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int tasks[n];
+    long long seconds = 0;
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &tasks[i]);
+
+    qsort(tasks, n, sizeof(int), cmp);
+
+    int i = 0, j = n - 1;
+    while (i < j) {
+        int diff = tasks[j] - tasks[i];
+        if (diff == 0) break;
+
+        seconds += diff / 2;
+        tasks[i] += diff / 2;
+        tasks[j] -= diff / 2;
+
+        if (tasks[i] == tasks[i+1]) i++;
+        if (tasks[j] == tasks[j-1]) j--;
+    }
+
+    printf("%lld\n", seconds);
+    return 0;
+}
 

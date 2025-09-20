@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAXN 200005
+typedef long long ll;
+
+ll a[MAXN];
+int n;
+
+void swap(ll *x, ll *y) {
+    ll tmp = *x; *x = *y; *y = tmp;
+}
+
+void quicksort(ll arr[], int l, int r) {
+    if (l >= r) return;
+    ll pivot = arr[(l + r) / 2];
+    int i = l, j = r;
+    while (i <= j) {
+        while (arr[i] < pivot) i++;
+        while (arr[j] > pivot) j--;
+        if (i <= j) {
+            swap(&arr[i], &arr[j]);
+            i++; j--;
+        }
+    }
+    if (l < j) quicksort(arr, l, j);
+    if (i < r) quicksort(arr, i, r);
+}
+
+int main() {
+    scanf("%d", &n);
+    int m = 2 * n;
+
+    for (int i = 0; i < m; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    quicksort(a, 0, m - 1);
+
+    ll total = a[m - 1] - a[0];
+    ll ans = total * (a[n - 1] - a[0]);
+
+    for (int i = 1; i <= n; i++) {
+        ll span = a[i + n - 1] - a[i];
+        ll area = total * span;
+        if (area < ans) ans = area;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

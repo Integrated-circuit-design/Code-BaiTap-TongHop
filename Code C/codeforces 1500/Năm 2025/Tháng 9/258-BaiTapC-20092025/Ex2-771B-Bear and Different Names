@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    char s[50][5];
+    for (int i = 0; i < n - k + 1; i++) {
+        scanf("%s", s[i]);
+    }
+
+    int name_id[50];
+    for (int i = 0; i < n; i++) name_id[i] = i;
+
+    for (int i = 0; i < n - k + 1; i++) {
+        if (s[i][0] == 'N') {
+            name_id[i + k - 1] = name_id[i];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        int id = name_id[i];
+        char name[12];
+        if (id < 26) {
+            name[0] = 'A' + id;
+            name[1] = '\0';
+        } else {
+            int first = (id - 26) / 26;
+            int second = (id - 26) % 26;
+            name[0] = 'A' + first;
+            name[1] = 'a' + second;
+            name[2] = '\0';
+        }
+        printf("%s%c", name, (i == n - 1 ? '\n' : ' '));
+    }
+
+    return 0;
+}
 

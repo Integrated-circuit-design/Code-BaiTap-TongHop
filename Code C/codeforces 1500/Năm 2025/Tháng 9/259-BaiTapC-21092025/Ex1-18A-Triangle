@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+int nonDeg(int x1,int y1,int x2,int y2,int x3,int y3) {
+    long long area = 1LL*(x2-x1)*(y3-y1) - 1LL*(y2-y1)*(x3-x1);
+    return area != 0;
+}
+
+int isRight(int x1,int y1,int x2,int y2,int x3,int y3) {
+    int abx = x2 - x1, aby = y2 - y1;
+    int acx = x3 - x1, acy = y3 - y1;
+    int bcx = x1 - x2, bcy = y1 - y2;
+    int bcx2 = x3 - x2, bcy2 = y3 - y2;
+    int cax = x1 - x3, cay = y1 - y3;
+    int cbx = x2 - x3, cby = y2 - y3;
+
+    if (abx*acx + aby*acy == 0) return 1;
+    if (bcx*bcx2 + bcy*bcy2 == 0) return 1;
+    if (cax*cbx + cay*cby == 0) return 1;
+    return 0;
+}
+
+int main() {
+    int x1,y1,x2,y2,x3,y3;
+    scanf("%d %d %d %d %d %d",&x1,&y1,&x2,&y2,&x3,&y3);
+
+    if (isRight(x1,y1,x2,y2,x3,y3)) {
+        printf("RIGHT\n");
+        return 0;
+    }
+
+    int dx[4] = {1,-1,0,0};
+    int dy[4] = {0,0,1,-1};
+
+    for (int i=0;i<4;i++) {
+        if (nonDeg(x1+dx[i],y1+dy[i],x2,y2,x3,y3) &&
+            isRight(x1+dx[i],y1+dy[i],x2,y2,x3,y3)) {
+            printf("ALMOST\n");
+            return 0;
+        }
+        if (nonDeg(x1,y1,x2+dx[i],y2+dy[i],x3,y3) &&
+            isRight(x1,y1,x2+dx[i],y2+dy[i],x3,y3)) {
+            printf("ALMOST\n");
+            return 0;
+        }
+        if (nonDeg(x1,y1,x2,y2,x3+dx[i],y3+dy[i]) &&
+            isRight(x1,y1,x2,y2,x3+dx[i],y3+dy[i])) {
+            printf("ALMOST\n");
+            return 0;
+        }
+    }
+
+    printf("NEITHER\n");
+    return 0;
+}
 

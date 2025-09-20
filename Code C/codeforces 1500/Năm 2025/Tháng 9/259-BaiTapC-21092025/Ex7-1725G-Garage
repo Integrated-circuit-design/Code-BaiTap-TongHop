@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    long long N;
+    scanf("%lld", &N);
+
+    long long count = 0;
+    long long x = 3;
+
+    while (1) {
+        if (x % 4 != 2) {
+            count++;
+            if (count == N) {
+                printf("%lld\n", x);
+                break;
+            }
+        }
+        x++;
+    }
+
+    return 0;
+}
 

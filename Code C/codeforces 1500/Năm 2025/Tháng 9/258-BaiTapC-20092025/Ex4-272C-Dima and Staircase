@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+long long stairs[MAXN];
+
+long long drop_box(int width, long long height, long long *currentHeight) {
+    long long bottom = (*currentHeight > stairs[width]) ? *currentHeight : stairs[width];
+    *currentHeight = bottom + height;
+    return bottom;
+}
+
+int main() {
+    int n, m;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &stairs[i]);
+    }
+
+    scanf("%d", &m);
+    long long currentHeight = 0;
+
+    for (int i = 0; i < m; i++) {
+        int w;
+        long long h;
+        scanf("%d %lld", &w, &h);
+        w--;
+        long long bottom = drop_box(w, h, &currentHeight);
+        printf("%lld\n", bottom);
+    }
+
+    return 0;
+}
 

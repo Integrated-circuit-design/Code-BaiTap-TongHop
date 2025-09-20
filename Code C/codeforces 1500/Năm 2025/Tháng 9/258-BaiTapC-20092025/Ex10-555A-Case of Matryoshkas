@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAX 100005
+
+int chain[MAX];
+int n, k;
+
+int main() {
+    scanf("%d %d", &n, &k);
+
+    int total_remove = 0;
+    int longest_prefix = 0;
+
+    for (int i = 0; i < k; i++) {
+        int m;
+        scanf("%d", &m);
+
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &chain[j]);
+        }
+
+        int prefix = 0;
+        if (chain[0] == 1) {
+            prefix = 1;
+            for (int j = 1; j < m; j++) {
+                if (chain[j] == chain[j-1] + 1) prefix++;
+                else break;
+            }
+            if (prefix > longest_prefix) longest_prefix = prefix;
+        }
+
+        total_remove += m - prefix;
+    }
+
+    printf("%d\n", (n - 1) + total_remove);
+
+    return 0;
+}
 

@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+long long pow10[20];
+
+int numlen(long long n) {
+    int len = 0;
+    while (n > 0) {
+        len++;
+        n /= 10;
+    }
+    return len;
+}
+
+int first_digit(long long n) {
+    while (n >= 10) n /= 10;
+    return (int)n;
+}
+
+long long count_valid(long long n) {
+    if (n <= 0) return 0;
+    if (n < 10) return n;
+
+    int len = numlen(n);
+    int first = first_digit(n);
+    int last = n % 10;
+
+    long long res = 9;
+
+    for (int d = 2; d < len; d++) {
+        res += 9 * pow10[d - 2];
+    }
+
+    res += (first - 1) * pow10[len - 2];
+
+    long long candidate = first * pow10[len - 1] + first;
+    long long middle = n / 10 % pow10[len - 2];
+    candidate = first * pow10[len - 1] + middle * 10 + first;
+
+    if (candidate <= n) res++;
+
+    return res;
+}
+
+int main() {
+    long long l, r;
+    scanf("%lld %lld", &l, &r);
+
+    pow10[0] = 1;
+    for (int i = 1; i < 20; i++) pow10[i] = pow10[i - 1] * 10;
+
+    printf("%lld\n", count_valid(r) - count_valid(l - 1));
+    return 0;
+}
 

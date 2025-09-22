@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int n;
+    ll M;
+    scanf("%d %lld", &n, &M);
+
+    ll a[100005];
+    for(int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+    ll segments[100005][2];
+    int seg_count = 0;
+
+    ll last = 0;
+    for(int i = 0; i < n; i++) {
+        if(i % 2 == 0) {
+            segments[seg_count][0] = last;
+            segments[seg_count][1] = a[i];
+            seg_count++;
+        }
+        last = a[i];
+    }
+    if(n % 2 == 0) {
+        segments[seg_count][0] = a[n-1];
+        segments[seg_count][1] = M;
+        seg_count++;
+    }
+
+    ll total_on = 0;
+    for(int i = 0; i < seg_count; i++) {
+        total_on += segments[i][1] - segments[i][0];
+    }
+
+    ll max_total = total_on;
+
+    for(int i = 0; i < seg_count; i++) {
+        ll length = segments[i][1] - segments[i][0];
+        if(length > 1) {
+            ll new_total = total_on + 1;
+            if(new_total > max_total) max_total = new_total;
+        }
+    }
+
+    printf("%lld\n", max_total);
+    return 0;
+}
 

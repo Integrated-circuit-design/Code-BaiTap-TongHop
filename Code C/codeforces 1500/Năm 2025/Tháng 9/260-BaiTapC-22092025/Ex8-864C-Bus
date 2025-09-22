@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int minRefuels(int a, long long b, int f, int k) {
+    long long fuel = b;
+    int count = 0;
+
+    for (int i = 1; i <= k; i++) {
+        int toStation = (i % 2 ? f : a - f);
+        int toEnd     = (i % 2 ? a - f : f);
+
+        if (b < toStation || b < toEnd) return -1;
+
+        if (fuel < toStation) {
+            count++;
+            fuel = b;
+        }
+        fuel -= toStation;
+
+        if (i != k && fuel < toEnd) {
+            count++;
+            fuel = b;
+        }
+        fuel -= toEnd;
+    }
+
+    return count;
+}
+
+int main() {
+    int a, f, k;
+    long long b;
+    scanf("%d %lld %d %d", &a, &b, &f, &k);
+
+    int result = minRefuels(a, b, f, k);
+    printf("%d\n", result);
+
+    return 0;
+}
 

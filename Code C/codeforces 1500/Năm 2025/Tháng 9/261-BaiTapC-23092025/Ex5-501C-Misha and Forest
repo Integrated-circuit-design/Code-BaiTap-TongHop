@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAXN 216
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int deg[MAXN], xorSum[MAXN];
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &deg[i], &xorSum[i]);
+    }
+
+    int edges[MAXN][2];
+    int edgeCount = 0;
+
+    int hasLeaf = 1;
+
+    while (hasLeaf) {
+        hasLeaf = 0;
+
+        for (int u = 0; u < n; u++) {
+            if (deg[u] == 1) {
+                int v = xorSum[u];
+
+                edges[edgeCount][0] = u;
+                edges[edgeCount][1] = v;
+                edgeCount++;
+
+                deg[u] = 0;
+                deg[v]--;
+                xorSum[v] ^= u;
+
+                hasLeaf = 1;
+            }
+        }
+    }
+
+    printf("%d\n", edgeCount);
+    for (int i = 0; i < edgeCount; i++) {
+        printf("%d %d\n", edges[i][0], edges[i][1]);
+    }
+
+    return 0;
+}
 

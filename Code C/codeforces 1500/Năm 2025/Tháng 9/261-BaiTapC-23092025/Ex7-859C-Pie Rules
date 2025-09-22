@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 55
+
+int slices[MAXN];
+int N;
+int memo[MAXN][2];
+
+int solve(int i, int decider) {
+    if (i == N) return 0;
+    if (memo[i][decider] != -1) return memo[i][decider];
+
+    int takeSelf = slices[i] + solve(i + 1, 1 - decider);
+    int giveOther = solve(i + 1, 1 - decider);
+
+    int result;
+    if (decider == 1) result = takeSelf > giveOther ? takeSelf : giveOther;
+    else result = takeSelf < giveOther ? takeSelf : giveOther;
+
+    memo[i][decider] = result;
+    return result;
+}
+
+int main() {
+    scanf("%d", &N);
+    for (int i = 0; i < N; i++) scanf("%d", &slices[i]);
+
+    for (int i = 0; i <= N; i++)
+        memo[i][0] = memo[i][1] = -1;
+
+    int alice = solve(0, 0);
+    int total = 0;
+    for (int i = 0; i < N; i++) total += slices[i];
+    int bob = total - alice;
+
+    printf("%d %d\n", alice, bob);
+    return 0;
+}
 

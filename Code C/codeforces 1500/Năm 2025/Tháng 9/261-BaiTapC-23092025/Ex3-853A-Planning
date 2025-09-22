@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int original;
+    int cost;
+    int index;
+} Flight;
+
+int cmp(const void *a, const void *b) {
+    Flight *f1 = (Flight*)a;
+    Flight *f2 = (Flight*)b;
+    if (f2->cost != f1->cost) return f2->cost - f1->cost;
+    return f1->original - f2->original;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    Flight flights[n];
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &flights[i].cost);
+        flights[i].original = i + 1;
+        flights[i].index = i;
+    }
+
+    qsort(flights, n, sizeof(Flight), cmp);
+
+    int assigned_time[n];
+    int used_time = k + n;
+
+    long long total_cost = 0;
+
+    for(int i = 0; i < n; i++) {
+        if(used_time > flights[i].original)
+            assigned_time[flights[i].index] = used_time;
+        else
+            assigned_time[flights[i].index] = flights[i].original;
+
+        total_cost += (long long)(assigned_time[flights[i].index] - flights[i].original) * flights[i].cost;
+        used_time--;
+    }
+
+    printf("%lld\n", total_cost);
+    for(int i = 0; i < n; i++) {
+        printf("%d%c", assigned_time[i], (i == n-1) ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

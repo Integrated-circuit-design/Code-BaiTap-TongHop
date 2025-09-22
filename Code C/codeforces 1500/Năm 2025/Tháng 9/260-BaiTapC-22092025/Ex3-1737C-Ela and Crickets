@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int majority(int a, int b, int c) {
+    if (a == b || a == c) return a;
+    return b;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        int r1, c1, r2, c2, r3, c3;
+        scanf("%d %d %d %d %d %d", &r1, &c1, &r2, &c2, &r3, &c3);
+
+        int targetRow, targetCol;
+        scanf("%d %d", &targetRow, &targetCol);
+
+        int rowCorner = majority(r1, r2, r3);
+        int colCorner = majority(c1, c2, c3);
+
+        int ok = 0;
+
+        if ((rowCorner == 1 || rowCorner == n) &&
+            (colCorner == 1 || colCorner == n)) {
+            if (targetRow == rowCorner || targetCol == colCorner)
+                ok = 1;
+        } else {
+            if (((rowCorner + colCorner) % 2) == ((targetRow + targetCol) % 2))
+                ok = 1;
+        }
+
+        printf(ok ? "YES\n" : "NO\n");
+    }
+    return 0;
+}
 

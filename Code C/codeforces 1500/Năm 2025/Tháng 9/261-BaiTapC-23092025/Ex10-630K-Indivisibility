@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+long long count_divisible(long long n, int x) {
+    return n / x;
+}
+
+long long lcm(long long a, long long b) {
+    long long temp_a = a, temp_b = b;
+    while (temp_b) {
+        long long t = temp_b;
+        temp_b = temp_a % temp_b;
+        temp_a = t;
+    }
+    long long gcd = temp_a;
+    return a / gcd * b;
+}
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    int nums[9] = {2,3,4,5,6,7,8,9,10};
+    long long ans = n;
+    
+    int subsets = 1 << 9;
+    for (int mask = 1; mask < subsets; mask++) {
+        long long curr_lcm = 1;
+        int bits = 0;
+        for (int i = 0; i < 9; i++) {
+            if (mask & (1 << i)) {
+                curr_lcm = lcm(curr_lcm, nums[i]);
+                bits++;
+            }
+        }
+        long long divisible = n / curr_lcm;
+        if (bits % 2 == 1) {
+            ans -= divisible;
+        } else {
+            ans += divisible;
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

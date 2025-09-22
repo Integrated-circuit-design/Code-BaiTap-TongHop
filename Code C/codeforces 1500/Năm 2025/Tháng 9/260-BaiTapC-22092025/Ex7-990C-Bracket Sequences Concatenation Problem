@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 300005
+
+int freqLeft[MAXN];
+int freqRight[MAXN];
+
+int analyze(char *s) {
+    int bal = 0;
+    int minBal = 0;
+    for (int i = 0; s[i]; i++) {
+        if (s[i] == '(') bal++;
+        else bal--;
+        if (bal < minBal) minBal = bal;
+    }
+    if (bal >= 0 && minBal >= 0) {
+        freqLeft[bal]++;
+    } else if (bal < 0 && minBal >= bal) {
+        freqRight[-bal]++;
+    }
+    return bal;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char str[MAXN];
+    for (int i = 0; i < n; i++) {
+        scanf("%s", str);
+        analyze(str);
+    }
+
+    long long ans = 0;
+    for (int b = 0; b < MAXN; b++) {
+        ans += 1LL * freqLeft[b] * freqRight[b];
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

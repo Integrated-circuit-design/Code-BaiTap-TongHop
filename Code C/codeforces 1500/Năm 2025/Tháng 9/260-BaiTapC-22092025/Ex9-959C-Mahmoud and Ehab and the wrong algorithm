@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+void printWrongTree(int n) {
+    if (n == 2) {
+        printf("-1\n");
+        return;
+    }
+    int u = 1, v = 2;
+    while (v <= n) {
+        printf("%d %d\n", u, v);
+        u = v;
+        v++;
+    }
+}
+
+void printCorrectTree(int n) {
+    for (int v = 2; v <= n; v++) {
+        printf("1 %d\n", v);
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    printWrongTree(n);
+    printCorrectTree(n);
+
+    return 0;
+}
 

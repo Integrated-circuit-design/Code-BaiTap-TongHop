@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAXN 3005
+
+bool isVowel(char c) {
+    return c=='a'||c=='e'||c=='i'||c=='o'||c=='u';
+}
+
+int main() {
+    char s[MAXN];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    char result[MAXN*2];
+    int k = 0;
+
+    char consonantGroup[MAXN];
+    int groupSize = 0;
+
+    for (int i = 0; i < n; i++) {
+        char c = s[i];
+
+        if (!isVowel(c)) {
+            consonantGroup[groupSize++] = c;
+
+            if (groupSize >= 3) {
+                if (!(consonantGroup[groupSize-1] == consonantGroup[groupSize-2] &&
+                      consonantGroup[groupSize-1] == consonantGroup[groupSize-3])) {
+                    result[k++] = consonantGroup[groupSize-3];
+                    result[k++] = consonantGroup[groupSize-2];
+                    result[k++] = ' ';
+                    consonantGroup[0] = consonantGroup[groupSize-1];
+                    groupSize = 1;
+                }
+            }
+        } else {
+            for (int j = 0; j < groupSize; j++) result[k++] = consonantGroup[j];
+            groupSize = 0;
+            result[k++] = c;
+        }
+    }
+
+    for (int j = 0; j < groupSize; j++) result[k++] = consonantGroup[j];
+
+    result[k] = '\0';
+    printf("%s\n", result);
+
+    return 0;
+}
 

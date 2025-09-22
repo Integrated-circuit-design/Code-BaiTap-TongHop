@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *a, const void *b) {
+    long long x = *(long long*)a;
+    long long y = *(long long*)b;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int main() {
+    int n, k;
+    long long l;
+    scanf("%d %d %lld", &n, &k, &l);
+
+    int m = n * k;
+    long long a[m];
+    for (int i = 0; i < m; i++) scanf("%lld", &a[i]);
+
+    qsort(a, m, sizeof(long long), cmp);
+
+    long long min_val = a[0];
+    long long max_allowed = min_val + l;
+
+    int valid = 0;
+    for (int i = 0; i < m; i++) {
+        if (a[i] <= max_allowed) valid++;
+        else break;
+    }
+
+    if (valid < n) {
+        printf("0\n");
+        return 0;
+    }
+
+    long long total = 0;
+    int barrels = 0;
+
+    for (int i = 0; i < m && barrels < n; i++) {
+        if (a[i] <= max_allowed) {
+            total += a[i];
+            barrels++;
+            i += k - 1;
+        }
+    }
+
+    printf("%lld\n", total);
+
+    return 0;
+}
 

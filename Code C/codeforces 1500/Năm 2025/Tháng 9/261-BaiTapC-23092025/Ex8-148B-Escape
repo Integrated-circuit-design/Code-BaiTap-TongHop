@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int vp, vd, t, f, c;
+    scanf("%d %d %d %d %d", &vp, &vd, &t, &f, &c);
+
+    int bijous = 0;
+    int princess = vp * t;
+
+    if (vp >= vd) {
+        printf("0\n");
+        return 0;
+    }
+
+    while (princess < c) {
+        double dt = (double)princess / (vd - vp);
+        double next_pos = princess + vp * dt;
+
+        if (next_pos >= c) break;
+
+        bijous++;
+
+        princess = next_pos + vp * f;
+    }
+
+    printf("%d\n", bijous);
+    return 0;
+}
 

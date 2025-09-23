@@ -1,1 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+typedef struct {
+    ll color;
+    int front, back;
+} CardCount;
+
+CardCount arr[200000];
+int m = 0;
+
+int cmp(const void *a, const void *b) {
+    ll x = ((CardCount*)a)->color;
+    ll y = ((CardCount*)b)->color;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int find(ll x) {
+    int l = 0, r = m-1;
+    while (l <= r) {
+        int mid = (l+r)/2;
+        if (arr[mid].color == x) return mid;
+        if (arr[mid].color < x) l = mid+1;
+        else r = mid-1;
+    }
+    return -1;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int need = (n+1)/2;
+
+    ll f, b;
+    ll temp[200000];
+    int tot = 0;
+
+    for (int i=0; i<n; i++) {
+        scanf("%lld %lld", &f, &b);
+        temp[tot++] = f;
+        temp[tot++] = b;
+    }
+
+    for (int i=0; i<tot; i++) {
+        arr[i].color = temp[i];
+        arr[i].front = arr[i].back = 0;
+    }
+    m = tot;
+
+    qsort(arr, m, sizeof(CardCount), cmp);
+    int k = 0;
+    for (int i=0; i<m; i++) {
+        if (i==0 || arr[i].color != arr[i-1].color) {
+            arr[k].color = arr[i].color;
+            arr[k].front = arr[k].back = 0;
+            k++;
+        }
+    }
+    m = k;
+
+    fseek(stdin, 0, SEEK_SET); 
+    scanf("%d", &n); need = (n+1)/2;
+
+    for (int i=0; i<n; i++) {
+        scanf("%lld %lld", &f, &b);
+        int idA = find(f);
+        arr[idA].front++;
+        if (f != b) {
+            int idB = find(b);
+            arr[idB].back++;
+        }
+    }
+
+    int ans = n+5;
+    for (int i=0; i<m; i++) {
+        int F = arr[i].front, B = arr[i].back;
+        if (F >= need) { ans = 0; break; }
+        if (F + B >= need) {
+            int flips = need - F;
+            if (flips < ans) ans = flips;
+        }
+    }
+
+    if (ans > n) ans = -1;
+    printf("%d\n", ans);
+    return 0;
+}
 

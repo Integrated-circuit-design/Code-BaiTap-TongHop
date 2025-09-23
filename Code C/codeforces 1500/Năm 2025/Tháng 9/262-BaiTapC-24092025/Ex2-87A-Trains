@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    long long a, b;
+    scanf("%lld %lld", &a, &b);
+
+    long long dasha = 0, masha = 0;
+    long long nextD = a, nextM = b;
+    long long limit = a * b;
+
+    while (nextD <= limit || nextM <= limit) {
+        if (nextD < nextM) {
+            dasha++;
+            nextD += a;
+        } else if (nextM < nextD) {
+            masha++;
+            nextM += b;
+        } else {
+            if (a > b) dasha++;
+            else masha++;
+            nextD += a;
+            nextM += b;
+        }
+    }
+
+    if (dasha > masha) printf("Dasha\n");
+    else if (masha > dasha) printf("Masha\n");
+    else printf("Equal\n");
+
+    return 0;
+}
 

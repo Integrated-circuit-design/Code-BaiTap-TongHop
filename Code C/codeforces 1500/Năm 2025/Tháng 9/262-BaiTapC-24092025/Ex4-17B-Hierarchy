@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAXN 1005
+#define MAXM 10005
+
+typedef struct {
+    int to, cost;
+} Offer;
+
+Offer offers[MAXM];
+int head[MAXN], next[MAXM]; 
+int n, m;
+int q[MAXN];
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) scanf("%d", &q[i]);
+
+    scanf("%d", &m);
+    for (int i = 1; i <= n; i++) head[i] = -1;
+
+    int u, v, c;
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d %d", &u, &v, &c);
+        offers[i].to = v;
+        offers[i].cost = c;
+        next[i] = head[u];
+        head[u] = i;
+    }
+
+    int maxq = -1, root = -1, cntroot = 0;
+    for (int i = 1; i <= n; i++) {
+        if (q[i] > maxq) {
+            maxq = q[i];
+            root = i;
+            cntroot = 1;
+        } else if (q[i] == maxq) {
+            cntroot++;
+        }
+    }
+    if (cntroot > 1) {
+        printf("-1\n");
+        return 0;
+    }
+
+    long long total = 0;
+    for (int i = 1; i <= n; i++) {
+        if (i == root) continue;
+        int best = INT_MAX;
+        for (int j = 0; j < m; j++) {
+            if (offers[j].to == i) {
+                if (offers[j].cost < best) best = offers[j].cost;
+            }
+        }
+        if (best == INT_MAX) {
+            printf("-1\n");
+            return 0;
+        }
+        total += best;
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

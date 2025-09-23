@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n, l, r, Ql, Qr;
+    scanf("%d %d %d %d %d", &n, &l, &r, &Ql, &Qr);
+
+    int w[100005];
+    long long total = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &w[i]);
+        total += w[i];
+    }
+
+    long long ans = 1000000000000000LL;
+    long long left_sum = 0;
+
+    for (int k = 0; k <= n; k++) {
+        long long right_sum = total - left_sum;
+        long long cost = left_sum * l + right_sum * r;
+
+        if (k > n - k) {
+            cost += (long long)(k - (n - k) - 1) * Ql;
+        } else if (n - k > k) {
+            cost += (long long)((n - k) - k - 1) * Qr;
+        }
+
+        if (cost < ans) ans = cost;
+
+        if (k < n) left_sum += w[k];
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

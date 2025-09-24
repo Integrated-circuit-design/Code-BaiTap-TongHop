@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[100005][5];
+    for (int i = 0; i < n; i++) {
+        int allzero = 1;
+        for (int j = 0; j < k; j++) {
+            scanf("%d", &a[i][j]);
+            if (a[i][j] == 1) allzero = 0;
+        }
+        if (allzero) {
+            printf("YES\n");
+            return 0;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int ok = 1;
+            for (int t = 0; t < k; t++) {
+                if (a[i][t] == 1 && a[j][t] == 1) {
+                    ok = 0;
+                    break;
+                }
+            }
+            if (ok) {
+                printf("YES\n");
+                return 0;
+            }
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

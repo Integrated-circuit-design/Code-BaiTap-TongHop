@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAX 200005
+
+int h;
+int a[MAX];
+int par1[MAX], par2[MAX];
+
+void buildTrees(int amb) {
+    int idx = 1;
+    par1[1] = par2[1] = 0;
+
+    int levelStart[MAX];
+    levelStart[0] = 1;
+
+    for (int level = 1; level <= h; level++) {
+        levelStart[level] = idx + 1;
+        for (int j = 0; j < a[level]; j++) {
+            idx++;
+            par1[idx] = levelStart[level - 1];
+            par2[idx] = levelStart[level - 1];
+        }
+        if (level == amb) {
+            par2[levelStart[level]] = levelStart[level - 1] + 1;
+        }
+    }
+
+    for (int i = 1; i <= idx; i++) {
+        printf("%d ", par1[i]);
+    }
+    printf("\n");
+    for (int i = 1; i <= idx; i++) {
+        printf("%d ", par2[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    scanf("%d", &h);
+    for (int i = 0; i <= h; i++) scanf("%d", &a[i]);
+
+    int amb = -1;
+    for (int i = 1; i <= h; i++) {
+        if (a[i] > 1 && a[i - 1] > 1) {
+            amb = i;
+            break;
+        }
+    }
+
+    if (amb == -1) {
+        printf("perfect\n");
+    } else {
+        printf("ambiguous\n");
+        buildTrees(amb);
+    }
+    return 0;
+}
 

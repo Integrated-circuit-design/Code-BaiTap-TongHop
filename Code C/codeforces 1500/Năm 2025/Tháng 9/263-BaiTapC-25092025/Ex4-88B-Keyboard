@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <ctype.h>
+
+#define MAXN 35
+#define MAXM 35
+#define MAXQ 500005
+
+int posCount[26];
+int pos[26][900][2];
+int shiftCount;
+int shiftPos[900][2];
+
+int main() {
+    int n, m, x;
+    scanf("%d %d %d", &n, &m, &x);
+
+    for (int i = 0; i < n; i++) {
+        char row[MAXM];
+        scanf("%s", row);
+        for (int j = 0; j < m; j++) {
+            if (row[j] == 'S') {
+                shiftPos[shiftCount][0] = i;
+                shiftPos[shiftCount][1] = j;
+                shiftCount++;
+            } else {
+                int id = row[j] - 'a';
+                pos[id][posCount[id]][0] = i;
+                pos[id][posCount[id]][1] = j;
+                posCount[id]++;
+            }
+        }
+    }
+
+    int q;
+    scanf("%d", &q);
+    char text[MAXQ + 5];
+    scanf("%s", text);
+
+    int ans = 0;
+
+    for (int k = 0; k < q; k++) {
+        char c = text[k];
+        if (islower(c)) {
+            int id = c - 'a';
+            if (posCount[id] == 0) {
+                printf("-1\n");
+                return 0;
+            }
+        } else {
+            int id = tolower(c) - 'a';
+            if (posCount[id] == 0 || shiftCount == 0) {
+                printf("-1\n");
+                return 0;
+            }
+            int ok = 0;
+            for (int i = 0; i < posCount[id] && !ok; i++) {
+                for (int j = 0; j < shiftCount && !ok; j++) {
+                    int dx = pos[id][i][0] - shiftPos[j][0];
+                    int dy = pos[id][i][1] - shiftPos[j][1];
+                    if (dx*dx + dy*dy <= x*x) {
+                        ok = 1;
+                    }
+                }
+            }
+            if (!ok) ans++;
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

@@ -1,1 +1,13 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int T, S, q;
+    scanf("%d %d %d", &T, &S, &q);
+
+    int count = (int)ceil(log((double)T / S) / log((double)q));
+
+    printf("%d\n", count);
+    return 0;
+}
 

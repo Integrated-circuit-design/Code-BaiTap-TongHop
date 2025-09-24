@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MAXN 4005
+
+int a[MAXN], vals[MAXN];
+int n, uniq;
+
+int check(int x, int y) {
+    int len = 0, turn = -1;
+    for (int i = 0; i < n; i++) {
+        if (a[i] == x || a[i] == y) {
+            if (turn == -1) {
+                len = 1;
+                turn = a[i];
+            } else if (a[i] != turn) {
+                len++;
+                turn = a[i];
+            }
+        }
+    }
+    return len;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        vals[i] = a[i];
+    }
+
+    uniq = 0;
+    for (int i = 0; i < n; i++) {
+        int seen = 0;
+        for (int j = 0; j < uniq; j++)
+            if (vals[j] == a[i]) { seen = 1; break; }
+        if (!seen) vals[uniq++] = a[i];
+    }
+
+    int ans = 1;
+    for (int i = 0; i < uniq; i++) {
+        for (int j = i; j < uniq; j++) {
+            int cur = check(vals[i], vals[j]);
+            if (cur > ans) ans = cur;
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

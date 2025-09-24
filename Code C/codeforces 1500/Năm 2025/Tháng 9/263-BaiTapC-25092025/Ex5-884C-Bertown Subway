@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAXN 100000
+
+int n;
+int p[MAXN + 1];
+int mark[MAXN + 1];
+int cycle[MAXN + 1];
+int ccount = 0;
+
+int exploreCycle(int start) {
+    int len = 0, u = start;
+    while (!mark[u]) {
+        mark[u] = 1;
+        u = p[u];
+        len++;
+    }
+    return len;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &p[i]);
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (!mark[i]) {
+            cycle[ccount++] = exploreCycle(i);
+        }
+    }
+
+    long long sum = 0;
+    for (int i = 0; i < ccount; i++) {
+        sum += 1LL * cycle[i] * cycle[i];
+    }
+
+    int max1 = 0, max2 = 0;
+    for (int i = 0; i < ccount; i++) {
+        if (cycle[i] > max1) {
+            max2 = max1;
+            max1 = cycle[i];
+        } else if (cycle[i] > max2) {
+            max2 = cycle[i];
+        }
+    }
+
+    if (ccount >= 2) {
+        sum += 2LL * max1 * max2;
+    }
+
+    printf("%lld\n", sum);
+    return 0;
+}
 

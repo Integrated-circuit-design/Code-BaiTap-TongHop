@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+int main() {
+    int n, k, a, b;
+    scanf("%d %d %d %d", &n, &k, &a, &b);
+
+    char ans[MAXN];
+    int pos = 0;
+
+    char g = 'G', bl = 'B';
+
+    if (b > a) {
+        int tmp = a; a = b; b = tmp;
+        char tmpc = g; g = bl; bl = tmpc;
+    }
+
+    if ((long long)(b + 1) * k < a) {
+        printf("NO\n");
+        return 0;
+    }
+
+    while (a > 0 || b > 0) {
+        int take = 0;
+
+        if (a > b) {
+            take = (a - b > k ? k : a - b);
+        } else {
+            take = 1;
+        }
+
+        for (int i = 0; i < take && a > 0; i++) {
+            ans[pos++] = g;
+            a--;
+        }
+
+        if (b > 0) {
+            ans[pos++] = bl;
+            b--;
+        }
+    }
+
+    ans[pos] = '\0';
+    printf("%s\n", ans);
+    return 0;
+}
 

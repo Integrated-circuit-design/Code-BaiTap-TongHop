@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 2005
+
+char s[MAXN];
+int n;
+int p[MAXN * 2];
+long long palCountStart[MAXN];
+long long palCountEnd[MAXN];
+
+void preprocess(char t[], char s[]) {
+    int len = 0;
+    t[len++] = '^';
+    for (int i = 1; i <= n; i++) {
+        t[len++] = '#';
+        t[len++] = s[i];
+    }
+    t[len++] = '#';
+    t[len++] = '$';
+    t[len] = 0;
+}
+
+int main() {
+    scanf("%s", s + 1);
+    n = strlen(s + 1);
+
+    char t[MAXN * 2];
+    preprocess(t, s);
+
+    int len = strlen(t);
+    int center = 0, right = 0;
+
+    for (int i = 1; i < len - 1; i++) {
+        int mirror = 2 * center - i;
+        if (i < right)
+            p[i] = (p[mirror] < (right - i)) ? p[mirror] : (right - i);
+        else
+            p[i] = 0;
+
+        while (t[i + 1 + p[i]] == t[i - 1 - p[i]])
+            p[i]++;
+
+        if (i + p[i] > right) {
+            center = i;
+            right = i + p[i];
+        }
+    }
+
+    for (int i = 1; i < len - 1; i++) {
+        int start = (i - p[i]) / 2;
+        int end = (i + p[i]) / 2 - 1;
+        if (start >= 0 && end >= start) {
+            palCountStart[start + 1]++;
+            palCountEnd[end + 1]++;
+        }
+    }
+
+    long long prefix[MAXN] = {0};
+    for (int i = 1; i <= n; i++)
+        prefix[i] = prefix[i - 1] + palCountEnd[i];
+
+    long long ans = 0;
+    for (int i = 1; i <= n; i++) {
+        if (palCountStart[i] > 0)
+            ans += palCountStart[i] * prefix[i - 1];
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

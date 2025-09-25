@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    char room[25][26];
+    for (int i = 0; i < n; i++)
+        scanf("%s", room[i]);
+
+    int maxPerimeter = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (room[i][j] == '1') continue;
+
+            int maxWidth = m - j;
+
+            for (int row = i; row < n; row++) {
+                if (room[row][j] == '1') break;
+
+                int width = 0;
+                for (int col = j; col < j + maxWidth; col++) {
+                    if (room[row][col] == '1') break;
+                    width++;
+                }
+
+                if (width < maxWidth)
+                    maxWidth = width;
+
+                int height = row - i + 1;
+                int perimeter = 2 * (height + maxWidth);
+
+                if (perimeter > maxPerimeter)
+                    maxPerimeter = perimeter;
+            }
+        }
+    }
+
+    printf("%d\n", maxPerimeter);
+    return 0;
+}
 

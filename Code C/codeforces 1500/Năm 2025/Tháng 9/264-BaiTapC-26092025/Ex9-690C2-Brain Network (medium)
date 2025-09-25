@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100001
+
+typedef struct {
+    int* adj;
+    int size;
+    int capacity;
+} Brain;
+
+Brain graph[MAXN];
+int n, m;
+
+void addEdge(int a, int b) {
+    if(graph[a].size == graph[a].capacity) {
+        graph[a].capacity = graph[a].capacity ? graph[a].capacity * 2 : 2;
+        graph[a].adj = (int*)realloc(graph[a].adj, sizeof(int) * graph[a].capacity);
+    }
+    graph[a].adj[graph[a].size++] = b;
+}
+
+int bfs(int start, int* dist) {
+    for(int i = 1; i <= n; i++) dist[i] = -1;
+
+    int* queue = (int*)malloc(sizeof(int) * n);
+    int front = 0, back = 0;
+    queue[back++] = start;
+    dist[start] = 0;
+    int farthest = start;
+
+    while(front < back) {
+        int u = queue[front++];
+        for(int i = 0; i < graph[u].size; i++) {
+            int v = graph[u].adj[i];
+            if(dist[v] == -1) {
+                dist[v] = dist[u] + 1;
+                queue[back++] = v;
+                if(dist[v] > dist[farthest]) farthest = v;
+            }
+        }
+    }
+
+    free(queue);
+    return farthest;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for(int i = 1; i <= n; i++) {
+        graph[i].adj = NULL;
+        graph[i].size = 0;
+        graph[i].capacity = 0;
+    }
+
+    for(int i = 0; i < m; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        addEdge(a, b);
+        addEdge(b, a);
+    }
+
+    int dist[MAXN];
+    int u = bfs(1, dist);
+    int v = bfs(u, dist);
+
+    int brain_latency = 0;
+    for(int i = 1; i <= n; i++) if(dist[i] > brain_latency) brain_latency = dist[i];
+
+    printf("%d\n", brain_latency);
+
+    for(int i = 1; i <= n; i++) free(graph[i].adj);
+
+    return 0;
+}
 

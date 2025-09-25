@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 205
+
+char s[MAX];
+int n;
+int found = 0;
+
+void solve(int pos) {
+    if (found) return;
+    if (pos == n) {
+        found = 1;
+        printf("\n");
+        return;
+    }
+
+    for (int i = pos + 1; i < n; i++) {
+        if (s[i] == '@') {
+            for (int j = i + 1; j <= n; j++) {
+                if (j - i - 1 < 1) continue;
+                for (int k = pos; k < j; k++)
+                    putchar(s[k]);
+                if (j < n) putchar(',');
+                solve(j);
+                if (found) return;
+            }
+        }
+    }
+
+    if (!found && pos == 0)
+        printf("No solution\n");
+}
+
+int main() {
+    scanf("%s", s);
+    n = strlen(s);
+    solve(0);
+    return 0;
+}
 

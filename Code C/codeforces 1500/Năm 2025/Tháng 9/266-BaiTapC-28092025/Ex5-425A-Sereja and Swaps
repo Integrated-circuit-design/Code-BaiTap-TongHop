@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+#define MAXN 205
+
+int n, k;
+int a[MAXN];
+
+int findMaxIndex(int arr[], int l, int r) {
+    int idx = l;
+    for(int i = l+1; i <= r; i++) {
+        if(arr[i] > arr[idx]) idx = i;
+    }
+    return idx;
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+    for(int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+    int swaps = 0;
+
+    for(int i = 2; i <= n && swaps < k; i += 2) {
+        int idx = findMaxIndex(a, i, n);
+        if(idx != i) {
+            int tmp = a[i];
+            a[i] = a[idx];
+            a[idx] = tmp;
+            swaps++;
+        }
+    }
+
+    int sum = 0;
+    for(int i = 2; i <= n; i += 2) sum += a[i];
+
+    printf("%d\n", sum);
+    return 0;
+}
 

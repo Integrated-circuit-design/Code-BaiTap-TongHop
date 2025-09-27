@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int min(int a, int b) { return a < b ? a : b; }
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int cnt[10];
+        for (int i = 0; i < 10; i++) scanf("%d", &cnt[i]);
+
+        int d;
+        for (d = 1; d <= 9; d++) {
+            if (cnt[d] == 0) {
+                printf("%d\n", d);
+                break;
+            }
+        }
+        if (d <= 9 && cnt[d] == 0) continue;
+
+        int best = 1;
+        for (int i = 2; i <= 9; i++)
+            if (cnt[i] < cnt[best]) best = i;
+
+        int lenA = cnt[best] + 1;
+        int lenB = cnt[0] + 2;
+
+        if (lenA < lenB) {
+            while (lenA--) putchar('0' + best);
+            putchar('\n');
+        } else {
+            putchar('1');
+            for (int i = 0; i <= cnt[0]; i++) putchar('0');
+            putchar('\n');
+        }
+    }
+    return 0;
+}
 

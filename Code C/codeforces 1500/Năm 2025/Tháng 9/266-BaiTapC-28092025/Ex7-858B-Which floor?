@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int known[101][2];
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &known[i][0], &known[i][1]);
+    }
+
+    int possible_floor = -1;
+
+    for (int flats = 1; flats <= 100; flats++) {
+        int valid = 1;
+        for (int i = 0; i < m; i++) {
+            int flat_number = known[i][0];
+            int floor_number = known[i][1];
+            if ((flat_number + flats - 1) / flats != floor_number) {
+                valid = 0;
+                break;
+            }
+        }
+        if (valid) {
+            int floor_n = (n + flats - 1) / flats;
+            if (possible_floor == -1) {
+                possible_floor = floor_n;
+            } else if (possible_floor != floor_n) {
+                possible_floor = -1;
+                break;
+            }
+        }
+    }
+
+    printf("%d\n", possible_floor);
+    return 0;
+}
 

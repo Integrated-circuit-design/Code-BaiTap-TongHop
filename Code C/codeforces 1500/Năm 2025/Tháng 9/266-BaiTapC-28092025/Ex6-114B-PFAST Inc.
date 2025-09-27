@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 16
+
+int n, m;
+char names[MAXN][12];
+int conflict[MAXN][MAXN];
+int best_team[MAXN], curr_team[MAXN];
+int best_size = 0;
+
+int can_add(int idx, int team_size) {
+    for (int i = 0; i < team_size; i++) {
+        if (conflict[idx][curr_team[i]]) return 0;
+    }
+    return 1;
+}
+
+void dfs(int idx, int team_size) {
+    if (idx == n) {
+        if (team_size > best_size) {
+            best_size = team_size;
+            for (int i = 0; i < team_size; i++) best_team[i] = curr_team[i];
+        }
+        return;
+    }
+
+    if (can_add(idx, team_size)) {
+        curr_team[team_size] = idx;
+        dfs(idx + 1, team_size + 1);
+    }
+
+    dfs(idx + 1, team_size);
+}
+
+int cmp(const void *a, const void *b) {
+    return strcmp((char*)a, (char*)b);
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) scanf("%s", names[i]);
+
+    memset(conflict, 0, sizeof(conflict));
+
+    for (int i = 0; i < m; i++) {
+        char a[12], b[12];
+        scanf("%s %s", a, b);
+        int x = -1, y = -1;
+        for (int j = 0; j < n; j++) {
+            if (strcmp(names[j], a) == 0) x = j;
+            if (strcmp(names[j], b) == 0) y = j;
+        }
+        conflict[x][y] = conflict[y][x] = 1;
+    }
+
+    dfs(0, 0);
+
+    char team[MAXN][12];
+    for (int i = 0; i < best_size; i++) {
+        strcpy(team[i], names[best_team[i]]);
+    }
+    qsort(team, best_size, sizeof(team[0
 

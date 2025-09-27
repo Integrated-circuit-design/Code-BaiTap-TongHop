@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+int mymax(int a, int b) {
+    return a > b ? a : b;
+}
+
+long long fastpow(long long a, int b) {
+    if (b == 0) return 1;
+    long long half = fastpow(a, b / 2);
+    long long result = (half * half) % MOD;
+    if (b % 2) result = (result * a) % MOD;
+    return result;
+}
+
+int main() {
+    int n;
+    char s[100005];
+    int cnt[256] = {0};
+
+    scanf("%d", &n);
+    scanf("%s", s);
+
+    for (int i = 0; i < n; i++) {
+        cnt[(int)s[i]]++;
+    }
+
+    int maxCount = 0;
+    maxCount = mymax(maxCount, cnt['A']);
+    maxCount = mymax(maxCount, cnt['C']);
+    maxCount = mymax(maxCount, cnt['G']);
+    maxCount = mymax(maxCount, cnt['T']);
+
+    int m = 0;
+    if (cnt['A'] == maxCount) m++;
+    if (cnt['C'] == maxCount) m++;
+    if (cnt['G'] == maxCount) m++;
+    if (cnt['T'] == maxCount) m++;
+
+    long long ans = fastpow(m, n);
+    printf("%lld\n", ans);
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int max(int x, int y) {
+    return (x > y) ? x : y;
+}
+
+int ceil_div(int x, int y) {
+    return (x + y - 1) / y;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++) {
+        int a, b, c;
+        scanf("%d %d %d", &a, &b, &c);
+
+        int total = a + b + c;
+
+        int by_average = ceil_div(total, 3);
+
+        int by_conflict = max(a, c);
+
+        int result = max(by_average, by_conflict);
+
+        printf("%d\n", result);
+    }
+    return 0;
+}
 

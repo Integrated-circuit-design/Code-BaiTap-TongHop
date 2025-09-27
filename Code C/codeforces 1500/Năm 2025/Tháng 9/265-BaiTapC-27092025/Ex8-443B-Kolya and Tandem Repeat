@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[405];
+    int k;
+    scanf("%s", s);
+    scanf("%d", &k);
+
+    int n = strlen(s);
+    int total = n + k;
+    int ans = 0;
+
+    for (int L = 2; L <= total; L += 2) {
+        int half = L / 2;
+        for (int start = 0; start + L <= total; start++) {
+            int ok = 1;
+            for (int i = 0; i < half; i++) {
+                int a = start + i;
+                int b = start + half + i;
+
+                char c1 = (a < n ? s[a] : '#');
+                char c2 = (b < n ? s[b] : '#');
+
+                if (c1 != c2) {
+                    if (a >= n || b >= n) continue;
+                    ok = 0;
+                    break;
+                }
+            }
+            if (ok && L > ans) ans = L;
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

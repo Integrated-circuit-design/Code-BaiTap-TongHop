@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+char s[MAXN], p[MAXN];
+int need[26];
+int pref[26][MAXN];
+int prefQ[MAXN];
+
+int main() {
+    scanf("%s", s);
+    scanf("%s", p);
+
+    int n = strlen(s);
+    int m = strlen(p);
+
+    if (m > n) {
+        printf("0\n");
+        return 0;
+    }
+
+    for (int i = 0; p[i]; i++) need[p[i] - 'a']++;
+
+    for (int i = 0; i < n; i++) {
+        for (int c = 0; c < 26; c++)
+            pref[c][i + 1] = pref[c][i];
+        prefQ[i + 1] = prefQ[i];
+
+        if (s[i] == '?') prefQ[i + 1]++;
+        else pref[s[i] - 'a'][i + 1]++;
+    }
+
+    int ans = 0;
+
+    for (int i = 0; i + m <= n; i++) {
+        int ques = prefQ[i + m] - prefQ[i];
+        int miss = 0, ok = 1;
+
+        for (int c = 0; c < 26; c++) {
+            int cnt = pref[c][i + m] - pref[c][i];
+            if (cnt > need[c]) { ok = 0; break; }
+            miss += (need[c] - cnt);
+        }
+
+        if (ok && miss == ques) ans++;
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

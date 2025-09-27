@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define N 5005
+
+int color[N], freq[N], res[N];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &color[i]);
+    }
+
+    for (int l = 1; l <= n; l++) {
+        for (int i = 1; i <= n; i++) freq[i] = 0;
+
+        int bestColor = 0;
+        int bestFreq  = 0;
+
+        for (int r = l; r <= n; r++) {
+            int c = color[r];
+            freq[c]++;
+
+            if (freq[c] > bestFreq || (freq[c] == bestFreq && c < bestColor)) {
+                bestColor = c;
+                bestFreq = freq[c];
+            }
+
+            res[bestColor]++;
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (i > 1) putchar(' ');
+        printf("%d", res[i]);
+    }
+    putchar('\n');
+
+    return 0;
+}
 

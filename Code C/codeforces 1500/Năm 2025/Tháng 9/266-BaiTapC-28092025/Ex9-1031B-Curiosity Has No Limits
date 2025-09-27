@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int n;
+int a[100005], b[100005];
+int t[100005];
+int found = 0;
+
+int check(int x, int y, int orv, int andv) {
+    return ((x | y) == orv) && ((x & y) == andv);
+}
+
+void dfs(int pos) {
+    if(found) return;
+    if(pos == n + 1) {
+        found = 1;
+        printf("YES\n");
+        for(int i = 1; i <= n; i++) printf("%d%c", t[i], i == n ? '\n' : ' ');
+        return;
+    }
+
+    for(int val = 0; val <= 3; val++) {
+        if(pos == 1 || check(t[pos-1], val, a[pos-1], b[pos-1])) {
+            t[pos] = val;
+            dfs(pos + 1);
+        }
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for(int i = 1; i < n; i++) scanf("%d", &a[i]);
+    for(int i = 1; i < n; i++) scanf("%d", &b[i]);
+
+    dfs(1);
+
+    if(!found) printf("NO\n");
+    return 0;
+}
 

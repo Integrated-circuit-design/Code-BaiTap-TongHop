@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+typedef struct {
+    long long t;
+    int l, r;
+} Watch;
+
+int main() {
+    int n, m, s, f;
+    scanf("%d %d %d %d", &n, &m, &s, &f);
+
+    Watch w[100005];
+    for(int i=0;i<m;i++) {
+        scanf("%lld %d %d",&w[i].t,&w[i].l,&w[i].r);
+    }
+
+    int cur = s;
+    int step = 1;
+    int wi = 0;
+    char ans[200005];
+    int idx = 0;
+
+    int dir = (s < f) ? 1 : -1;
+
+    while(cur != f) {
+        int blocked = 0;
+
+        if(wi < m && w[wi].t == step) {
+            if(cur >= w[wi].l && cur <= w[wi].r)
+                blocked = 1;
+        }
+
+        if(blocked) ans[idx++] = 'X';
+        else {
+            if(dir == 1) { ans[idx++] = 'R'; cur++; }
+            else { ans[idx++] = 'L'; cur--; }
+        }
+
+        if(wi < m && w[wi].t == step) wi++;
+        step++;
+    }
+
+    ans[idx] = '\0';
+    printf("%s\n", ans);
+
+    return 0;
+}
 

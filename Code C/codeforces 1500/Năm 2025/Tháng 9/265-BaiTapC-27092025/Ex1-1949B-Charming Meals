@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+
+int cmp(const void *x, const void *y) {
+    ll a = *(ll*)x, b = *(ll*)y;
+    return (a > b) - (a < b);
+}
+
+ll tinhMin(ll *a, ll *b, int n, int kieu) {
+    ll minVal = 1e18;
+    for (int i = 0; i < n; i++) {
+        ll diff;
+        if (kieu == 1) diff = llabs(a[i] - b[i]);
+        else diff = llabs(a[i] - b[n - 1 - i]);
+        if (diff < minVal) minVal = diff;
+    }
+    return minVal;
+}
+
+int main() {
+    int t; 
+    scanf("%d", &t);
+
+    while (t--) {
+        int n; 
+        scanf("%d", &n);
+        ll *a = (ll*)malloc(n * sizeof(ll));
+        ll *b = (ll*)malloc(n * sizeof(ll));
+
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        for (int i = 0; i < n; i++) scanf("%lld", &b[i]);
+
+        qsort(a, n, sizeof(ll), cmp);
+        qsort(b, n, sizeof(ll), cmp);
+
+        ll ans1 = tinhMin(a, b, n, 1);
+        ll ans2 = tinhMin(a, b, n, 2);
+
+        ll ans = (ans1 > ans2 ? ans1 : ans2);
+        printf("%lld\n", ans);
+
+        free(a);
+        free(b);
+    }
+    return 0;
+}
 

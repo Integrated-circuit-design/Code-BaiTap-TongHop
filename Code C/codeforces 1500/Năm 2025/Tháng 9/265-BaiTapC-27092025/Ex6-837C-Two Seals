@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n, a, b;
+    int x[105], y[105];
+    scanf("%d %d %d", &n, &a, &b);
+
+    for (int i = 0; i < n; i++) scanf("%d %d", &x[i], &y[i]);
+
+    int ans = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            for (int r1 = 0; r1 < 2; r1++) {
+                for (int r2 = 0; r2 < 2; r2++) {
+                    int w1 = (r1 ? y[i] : x[i]);
+                    int h1 = (r1 ? x[i] : y[i]);
+                    int w2 = (r2 ? y[j] : x[j]);
+                    int h2 = (r2 ? x[j] : y[j]);
+
+                    if (w1 + w2 <= a && (h1 > h2 ? h1 : h2) <= b)
+                        if (w1 * h1 + w2 * h2 > ans) ans = w1 * h1 + w2 * h2;
+
+                    if (w1 + w2 <= b && (h1 > h2 ? h1 : h2) <= a)
+                        if (w1 * h1 + w2 * h2 > ans) ans = w1 * h1 + w2 * h2;
+
+                    if (h1 + h2 <= b && (w1 > w2 ? w1 : w2) <= a)
+                        if (w1 * h1 + w2 * h2 > ans) ans = w1 * h1 + w2 * h2;
+
+                    if (h1 + h2 <= a && (w1 > w2 ? w1 : w2) <= b)
+                        if (w1 * h1 + w2 * h2 > ans) ans = w1 * h1 + w2 * h2;
+                }
+            }
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

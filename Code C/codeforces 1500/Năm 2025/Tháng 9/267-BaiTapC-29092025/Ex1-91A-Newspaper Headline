@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 10005
+#define MAXM 1000005
+
+int nextPos[MAXN+1][26];
+
+int main() {
+    static char s1[MAXN], s2[MAXM];
+    scanf("%s %s", s1, s2);
+
+    int n = strlen(s1), m = strlen(s2);
+
+    for (int c = 0; c < 26; c++) nextPos[n][c] = -1;
+    for (int i = n-1; i >= 0; i--) {
+        for (int c = 0; c < 26; c++) nextPos[i][c] = nextPos[i+1][c];
+        nextPos[i][s1[i]-'a'] = i;
+    }
+
+    for (int i = 0; i < m; i++) {
+        if (nextPos[0][s2[i]-'a'] == -1) {
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    int ans = 1, pos = 0;
+    for (int i = 0; i < m; i++) {
+        int c = s2[i] - 'a';
+        if (pos >= n || nextPos[pos][c] == -1) {
+            ans++;
+            pos = 0;
+        }
+        pos = nextPos[pos][c] + 1;
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

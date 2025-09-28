@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXN 10000
+#define MAXLEN 9
+#define MAXSUB (MAXN * 36)
+
+typedef struct {
+    char sub[MAXLEN];
+    char example[MAXLEN];
+} Entry;
+
+Entry arr[MAXSUB];
+int arrSize = 0;
+
+int cmp(const void *a, const void *b) {
+    return strcmp(((Entry*)a)->sub, ((Entry*)b)->sub);
+}
+
+int countMatches(const char *key, char *exampleOut) {
+    int lo = 0, hi = arrSize;
+    while (lo < hi) {
+        int mid = (lo + hi) / 2;
+        if (strcmp(arr[mid].sub, key) < 0) lo = mid + 1;
+        else hi = mid;
+    }
+    int start = lo;
+
+    lo = 0; hi = arrSize;
+    while (lo < hi) {
+        int mid = (lo + hi) / 2;
+        if (strcmp(arr[mid].sub, key) <= 0) lo = mid + 1;
+        else hi = mid;
+    }
+    int end = lo;
+
+    int cnt = end - start;
+    if (cnt > 0) strcpy(exampleOut, arr[start].example);
+    return cnt;
+}
+
+int main() {
+    int n, q;
+    char fname[MAXLEN], query[MAXLEN];
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%s", fname);
+        int len = strlen(fname);
+        for (int l = 0; l < len; l++) {
+            for (int r = l; r < len; r++) {
+                char sub[MAXLEN];
+                int sublen = r - l + 1;
+                strncpy(sub, fname + l, sublen);
+                sub[sublen] = '\0';
+                strcpy(arr[arrSize].sub, sub);
+                strcpy(arr[arrSize].example, fname);
+                arrSize++;
+            }
+        }
+    }
+
+    qsort(arr, arrSize, sizeof(Entry), cmp);
+
+    scanf("%d", &q);
+    while (q--) {
+        scanf("%s", query);
+        char example[MAXLEN];
+        int cnt = countMatches(query, example);
+        if (cnt == 0) printf("0 -\n");
+        else printf("%d %s\n", cnt, example);
+    }
+    return 0;
+}
 

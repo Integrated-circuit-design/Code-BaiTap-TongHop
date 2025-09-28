@@ -1,1 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 2005
+
+typedef struct {
+    int h, m;
+} Candy;
+
+Candy caramel[MAXN], fruit[MAXN];
+int n, x, cnt0 = 0, cnt1 = 0;
+
+int cmp(const void *a, const void *b) {
+    Candy *c1 = (Candy*)a, *c2 = (Candy*)b;
+    return c1->h - c2->h;
+}
+
+int simulate(int startType) {
+    int eaten = 0, jump = x;
+    int used0[MAXN] = {0}, used1[MAXN] = {0};
+    int turn = startType;
+
+    while (1) {
+        int best = -1, idx = -1;
+        if (turn == 0) {
+            for (int i = 0; i < cnt0; i++) {
+                if (!used0[i] && caramel[i].h <= jump) {
+                    if (caramel[i].m > best) {
+                        best = caramel[i].m;
+                        idx = i;
+                    }
+                }
+            }
+            if (idx == -1) break;
+            used0[idx] = 1;
+            jump += caramel[idx].m;
+        } else {
+            for (int i = 0; i < cnt1; i++) {
+                if (!used1[i] && fruit[i].h <= jump) {
+                    if (fruit[i].m > best) {
+                        best = fruit[i].m;
+                        idx = i;
+                    }
+                }
+            }
+            if (idx == -1) break;
+            used1[idx] = 1;
+            jump += fruit[idx].m;
+        }
+        eaten++;
+        turn ^= 1;
+    }
+    return eaten;
+}
+
+int main() {
+    scanf("%d %d", &n, &x);
+    for (int i = 0; i < n; i++) {
+        int t, h, m;
+        scanf("%d %d %d", &t, &h, &m);
+        if (t == 0) {
+            caramel[cnt0].h = h;
+            caramel[cnt0].m = m;
+            cnt0++;
+        } else {
+            fruit[cnt1].h = h;
+            fruit[cnt1].m = m;
+            cnt1++;
+        }
+    }
+    qsort(caramel, cnt0, sizeof(Candy), cmp);
+    qsort(fruit, cnt1, sizeof(Candy), cmp);
+
+    int ans1 = simulate(0);
+    int ans2 = simulate(1);
+
+    printf("%d\n", ans1 > ans2 ? ans1 : ans2);
+    return 0;
+}
 

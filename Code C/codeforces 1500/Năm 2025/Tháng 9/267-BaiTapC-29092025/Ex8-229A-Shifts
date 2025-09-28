@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+
+#define MAXN 105
+#define MAXM 10005
+
+char row[MAXN][MAXM];
+int dist[MAXN][MAXM];
+int ones[MAXM];
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", row[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        int cnt = 0;
+        for (int j = 0; j < m; j++) {
+            if (row[i][j] == '1') ones[cnt++] = j;
+        }
+
+        if (cnt == 0) {
+            printf("-1\n");
+            return 0;
+        }
+
+        for (int j = 0; j < m; j++) {
+            int best = INT_MAX;
+            for (int k = 0; k < cnt; k++) {
+                int pos = ones[k];
+                int d1 = (j - pos + m) % m;
+                int d2 = (pos - j + m) % m;
+                int d = d1 < d2 ? d1 : d2;
+                if (d < best) best = d;
+            }
+            dist[i][j] = best;
+        }
+    }
+
+    int ans = INT_MAX;
+    for (int j = 0; j < m; j++) {
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += dist[i][j];
+        }
+        if (sum < ans) ans = sum;
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

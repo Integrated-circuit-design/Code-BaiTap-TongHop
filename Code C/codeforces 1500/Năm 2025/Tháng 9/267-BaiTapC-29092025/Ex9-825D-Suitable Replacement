@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <string.h>
+
+#define N 1000005
+
+char s[N], t[N];
+int fS[26], fT[26];
+int need[26];
+
+int min(int a, int b) { return a < b ? a : b; }
+
+int main() {
+    scanf("%s", s);
+    scanf("%s", t);
+
+    int n = strlen(s), m = strlen(t);
+    int q = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '?') q++;
+        else fS[s[i]-'a']++;
+    }
+    for (int i = 0; i < m; i++) fT[t[i]-'a']++;
+
+    int low = 0, high = n/m + 1, ans = 0;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        long long needQ = 0;
+        for (int c = 0; c < 26; c++) {
+            int req = fT[c] * mid - fS[c];
+            if (req > 0) needQ += req;
+        }
+        if (needQ <= q) { ans = mid; low = mid + 1; }
+        else high = mid - 1;
+    }
+
+    for (int c = 0; c < 26; c++) {
+        int req = fT[c] * ans - fS[c];
+        need[c] = (req > 0 ? req : 0);
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '?') {
+            int done = 0;
+            for (int c = 0; c < 26; c++) {
+                if (need[c] > 0) {
+                    s[i] = 'a' + c;
+                    need[c]--;
+                    done = 1;
+                    break;
+                }
+            }
+            if (!done) s[i] = 'a';
+        }
+    }
+
+    printf("%s\n", s);
+    return 0;
+}
 

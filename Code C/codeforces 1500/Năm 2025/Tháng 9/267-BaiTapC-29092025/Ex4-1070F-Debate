@@ -1,1 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 400005
+
+int cmp(const void *a, const void *b) {
+    return *(int*)b - *(int*)a;
+}
+
+typedef struct {
+    int val;
+    int alice, bob;
+} Person;
+
+int cmpPerson(const void *x, const void *y) {
+    return ((Person*)y)->val - ((Person*)x)->val;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a11[MAXN], a10[MAXN], a01[MAXN], a00[MAXN];
+    int c11=0, c10=0, c01=0, c00=0;
+
+    for (int i=0;i<n;i++) {
+        char s[3];
+        int x;
+        scanf("%s %d", s, &x);
+        if (s[0]=='1' && s[1]=='1') a11[c11++] = x;
+        else if (s[0]=='1' && s[1]=='0') a10[c10++] = x;
+        else if (s[0]=='0' && s[1]=='1') a01[c01++] = x;
+        else a00[c00++] = x;
+    }
+
+    qsort(a11,c11,sizeof(int),cmp);
+    qsort(a10,c10,sizeof(int),cmp);
+    qsort(a01,c01,sizeof(int),cmp);
+    qsort(a00,c00,sizeof(int),cmp);
+
+    long long pref10[MAXN]={0}, pref01[MAXN]={0};
+    for (int i=0;i<c10;i++) pref10[i+1]=pref10[i]+a10[i];
+    for (int i=0;i<c01;i++) pref01[i+1]=pref01[i]+a01[i];
+
+    long long sum11=0;
+    for (int i=0;i<c11;i++) sum11+=a11[i];
+
+    long long ans=0;
+    int maxPair = (c10<c01?c10:c01);
+
+    for (int k=0;k<=maxPair;k++) {
+        long long sum = sum11 + pref10[k] + pref01[k];
+        int alice = c11 + k;
+        int bob   = c11 + k;
+        int total = c11 + 2*k;
+
+        Person extra[MAXN];
+        int ce=0;
+        for (int i=k;i<c10;i++) { extra[ce].val=a10[i]; extra[ce].alice=1; extra[ce].bob=0; ce++; }
+        for (int i=k;i<c01;i++) { extra[ce].val=a01[i]; extra[ce].alice=0; extra[ce].bob=1; ce++; }
+        for (int i=0;i<c00;i++) { extra[ce].val=a00[i]; extra[ce].alice=0; extra[ce].bob=0; ce++; }
+
+        qsort(extra, ce, sizeof(Person), cmpPerson);
+
+        for (int i=0;i<ce;i++) {
+            int newTotal = total+1;
+            int newAlice = alice+extra[i].alice;
+            int newBob   = bob+extra[i].bob;
+            if (2*newAlice>=newTotal && 2*newBob>=newTotal) {
+                sum += extra[i].val;
+                total=newTotal;
+                alice=newAlice;
+                bob=newBob;
+            } else break;
+        }
+
+        if (total>0 && sum>ans) ans=sum;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

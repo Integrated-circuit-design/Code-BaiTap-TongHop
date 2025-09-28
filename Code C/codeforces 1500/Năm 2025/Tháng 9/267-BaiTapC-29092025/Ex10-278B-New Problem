@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAXN 30
+#define MAXLEN 25
+
+int n;
+char titles[MAXN][MAXLEN];
+char answer[5];
+bool found = false;
+
+bool in_titles(const char *cand) {
+    int L = strlen(cand);
+    for (int i = 0; i < n; i++) {
+        int len = strlen(titles[i]);
+        for (int j = 0; j + L <= len; j++) {
+            if (strncmp(titles[i] + j, cand, L) == 0) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void dfs(char *cur, int pos, int length) {
+    if (found) return;
+    if (pos == length) {
+        cur[pos] = '\0';
+        if (!in_titles(cur)) {
+            strcpy(answer, cur);
+            found = true;
+        }
+        return;
+    }
+    for (char c = 'a'; c <= 'z'; c++) {
+        cur[pos] = c;
+        dfs(cur, pos + 1, length);
+        if (found) return;
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%s", titles[i]);
+    }
+
+    char cand[5];
+    for (int len = 1; len <= 3 && !found; len++) {
+        dfs(cand, 0, len);
+    }
+
+    printf("%s\n", answer);
+    return 0;
+}
 

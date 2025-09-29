@@ -1,1 +1,98 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXN 205
+
+char names[MAXN][15];
+int score[MAXN];
+int cnt = 0;
+char me[15];
+
+int get_id(char *s) {
+    for (int i = 0; i < cnt; i++) {
+        if (strcmp(names[i], s) == 0) return i;
+    }
+    strcpy(names[cnt], s);
+    score[cnt] = 0;
+    return cnt++;
+}
+
+int cmp(const void *a, const void *b) {
+    int i = *(int*)a, j = *(int*)b;
+    if (score[i] != score[j]) return score[j] - score[i];
+    return strcmp(names[i], names[j]);
+}
+
+int main() {
+    int n;
+    scanf("%s", me);
+    scanf("%d", &n);
+    getchar();
+
+    char line[120];
+    for (int k = 0; k < n; k++) {
+        fgets(line, sizeof(line), stdin);
+        int len = strlen(line);
+        if (line[len - 1] == '\n') line[len - 1] = 0;
+
+        char *tok = strtok(line, " ");
+        char x[15], y[15];
+        strcpy(x, tok);
+
+        char action[15];
+        tok = strtok(NULL, " ");
+        strcpy(action, tok);
+
+        if (strcmp(action, "posted") == 0) {
+            strtok(NULL, " ");
+            tok = strtok(NULL, "'");
+            strcpy(y, tok);
+
+            get_id(x); get_id(y);
+            if (strcmp(x, me) == 0 || strcmp(y, me) == 0) {
+                char other[15];
+                if (strcmp(x, me) == 0) strcpy(other, y);
+                else strcpy(other, x);
+                score[get_id(other)] += 15;
+            }
+        } else if (strcmp(action, "commented") == 0) {
+            strtok(NULL, " ");
+            tok = strtok(NULL, "'");
+            strcpy(y, tok);
+
+            get_id(x); get_id(y);
+            if (strcmp(x, me) == 0 || strcmp(y, me) == 0) {
+                char other[15];
+                if (strcmp(x, me) == 0) strcpy(other, y);
+                else strcpy(other, x);
+                score[get_id(other)] += 10;
+            }
+        } else if (strcmp(action, "likes") == 0) {
+            tok = strtok(NULL, "'");
+            strcpy(y, tok);
+
+            get_id(x); get_id(y);
+            if (strcmp(x, me) == 0 || strcmp(y, me) == 0) {
+                char other[15];
+                if (strcmp(x, me) == 0) strcpy(other, y);
+                else strcpy(other, x);
+                score[get_id(other)] += 5;
+            }
+        }
+    }
+
+    int idx[MAXN], m = 0;
+    for (int i = 0; i < cnt; i++) {
+        if (strcmp(names[i], me) != 0) idx[m++] = i;
+    }
+
+    qsort(idx, m, sizeof(int), cmp);
+
+    for (int i = 0; i < m; i++) {
+        printf("%s\n", names[idx[i]]);
+    }
+
+    return 0;
+}
 

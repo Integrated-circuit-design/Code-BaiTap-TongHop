@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int n;
+int type[MAXN], parent[MAXN];
+int child[MAXN];
+int path[MAXN], bestPath[MAXN];
+int bestLen = 0;
+
+void dfs(int u, int len) {
+    path[len] = u;
+
+    if (type[u] == 1) {
+        if (len + 1 > bestLen) {
+            bestLen = len + 1;
+            for (int i = 0; i <= len; i++) bestPath[i] = path[i];
+        }
+    }
+
+    if (child[u] != 0) {
+        dfs(child[u], len + 1);
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) scanf("%d", &type[i]);
+    for (int i = 1; i <= n; i++) scanf("%d", &parent[i]);
+
+    for (int v = 1; v <= n; v++) {
+        if (parent[v] != 0) {
+            child[parent[v]] = v;
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (parent[i] == 0) {
+            dfs(i, 0);
+        }
+    }
+
+    printf("%d\n", bestLen);
+    for (int i = 0; i < bestLen; i++) {
+        printf("%d%c", bestPath[i], (i + 1 == bestLen) ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define N 8
+
+char board[N][N+1];
+int dp[N][N][N+2];
+
+int safe(int r, int c, int t) {
+    if (r < 0 || r >= N || c < 0 || c >= N) return 0;
+    if (r - t >= 0 && board[r - t][c] == 'S') return 0;
+    if (r - t - 1 >= 0 && board[r - t - 1][c] == 'S') return 0;
+    return 1;
+}
+
+int dfs(int r, int c, int t) {
+    if (r == 0 && c == 7) return 1;
+    if (t > 8) return 1;
+    if (!safe(r, c, t)) return 0;
+    if (dp[r][c][t] != -1) return dp[r][c][t];
+
+    for (int dr = -1; dr <= 1; dr++) {
+        for (int dc = -1; dc <= 1; dc++) {
+            int nr = r + dr, nc = c + dc;
+            if (safe(nr, nc, t) && safe(nr, nc, t+1)) {
+                if (dfs(nr, nc, t+1)) return dp[r][c][t] = 1;
+            }
+        }
+    }
+    return dp[r][c][t] = 0;
+}
+
+int main() {
+    for (int i = 0; i < N; i++) scanf("%s", board[i]);
+
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
+            for (int k = 0; k <= N; k++)
+                dp[i][j][k] = -1;
+
+    if (dfs(7, 0, 0)) printf("WIN\n");
+    else printf("LOSE\n");
+
+    return 0;
+}
 

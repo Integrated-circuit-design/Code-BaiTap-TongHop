@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int min(int a, int b) { return a < b ? a : b; }
+
+int main() {
+    int c, d, n, m, k;
+    scanf("%d %d", &c, &d, &n, &m);
+    scanf("%d", &k);
+
+    int need = n * m - k;
+    if (need <= 0) {
+        puts("0");
+        return 0;
+    }
+
+    int ans = need * d;
+
+    int max_rounds = (need + n - 1) / n;
+    for (int x = 1; x <= max_rounds; x++) {
+        int remain = need - x * n;
+        if (remain < 0) remain = 0;
+        int cost = x * c + remain * d;
+        ans = min(ans, cost);
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

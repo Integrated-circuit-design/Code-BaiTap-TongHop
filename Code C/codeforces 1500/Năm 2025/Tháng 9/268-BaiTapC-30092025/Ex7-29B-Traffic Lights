@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int L, D, V, G, R;
+    scanf("%d %d %d %d %d", &L, &D, &V, &G, &R);
+
+    double t_light = 1.0 * D / V;
+    int T = G + R;
+    double pos = t_light - (int)(t_light / T) * T;
+
+    double extra = 0.0;
+    if (pos >= G) {
+        extra = T - pos;
+    }
+
+    double result = t_light + extra + 1.0 * (L - D) / V;
+    printf("%.9f\n", result);
+
+    return 0;
+}
 

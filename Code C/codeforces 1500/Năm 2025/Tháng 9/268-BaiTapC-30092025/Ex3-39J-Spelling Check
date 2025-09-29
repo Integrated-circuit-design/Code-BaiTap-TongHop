@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1000005
+
+char a[MAXN], b[MAXN];
+int pos[2];
+
+int main() {
+    scanf("%s %s", a, b);
+    int n = strlen(a), m = strlen(b);
+
+    if (n != m + 1) {
+        printf("0\n");
+        return 0;
+    }
+
+    int i = 0, j = 0;
+    while (i < n && j < m && a[i] == b[j]) {
+        i++; j++;
+    }
+
+    int count = 0;
+
+    int x = i + 1, y = j;
+    while (x < n && y < m && a[x] == b[y]) {
+        x++; y++;
+    }
+    if (x == n && y == m) pos[count++] = i + 1;
+
+    if (j == m) pos[count++] = n;
+
+    if (count == 0) {
+        printf("0\n");
+    } else {
+        printf("%d\n", count);
+        for (i = 0; i < count; i++) {
+            if (i) printf(" ");
+            printf("%d", pos[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+
+typedef struct {
+    ll cost;
+    int day;
+} Drink;
+
+int cmp(const void *a, const void *b) {
+    ll x = ((Drink*)a)->cost;
+    ll y = ((Drink*)b)->cost;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int main() {
+    int N;
+    ll K, A;
+    scanf("%d %lld", &N, &K);
+
+    ll *X = (ll*)malloc(N * sizeof(ll));
+    for (int i = 0; i < N; i++) scanf("%lld", &X[i]);
+
+    scanf("%lld", &A);
+
+    ll *C = (ll*)malloc(N * sizeof(ll));
+    for (int i = 0; i < N; i++) scanf("%lld", &C[i]);
+
+    Drink *drinks = (Drink*)malloc(N * sizeof(Drink));
+    for (int i = 0; i < N; i++) {
+        drinks[i].cost = C[i];
+        drinks[i].day = i;
+    }
+    qsort(drinks, N, sizeof(Drink), cmp);
+
+    int ptr = 0;
+    int available = 0;
+    ll ans = 0;
+
+    for (int i = 0; i < N; i++) {
+        available = i;
+        while (K < X[i]) {
+            while (ptr < N && drinks[ptr].day > i) ptr++;
+            if (ptr >= N) {
+                printf("-1\n");
+                return 0;
+            }
+            ans += drinks[ptr].cost;
+            K += A;
+            ptr++;
+        }
+    }
+
+    printf("%lld\n", ans);
+
+    free(X);
+    free(C);
+    free(drinks);
+    return 0;
+}
 

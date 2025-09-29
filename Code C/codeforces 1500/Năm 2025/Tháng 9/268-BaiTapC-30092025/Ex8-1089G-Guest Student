@@ -1,1 +1,47 @@
+#include <stdio.h>
+#define INF 1000000000000000000LL
+
+long long min(long long a, long long b) { return a < b ? a : b; }
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long k;
+        int a[14];
+        scanf("%lld", &k);
+        int sumWeek = 0;
+        for (int i = 0; i < 7; i++) {
+            scanf("%d", &a[i]);
+            sumWeek += a[i];
+            a[i + 7] = a[i];
+        }
+
+        long long ans = INF;
+
+        for (int start = 0; start < 7; start++) {
+            long long need = k;
+            long long days = 0;
+
+            if (need > sumWeek) {
+                long long fullWeeks = (need - 1) / sumWeek;
+                need -= fullWeeks * sumWeek;
+                days += fullWeeks * 7;
+            }
+
+            int cnt = 0;
+            for (int d = start; d < start + 14; d++) {
+                days++;
+                if (a[d]) cnt++;
+                if (cnt == need) {
+                    ans = min(ans, days);
+                    break;
+                }
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

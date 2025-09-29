@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+long long countWays(const char *s) {
+    int n = strlen(s);
+    long long ans = 1;
+    int i = 0;
+
+    while (i < n - 1) {
+        int j = i;
+        while (j < n - 1 && (s[j]-'0') + (s[j+1]-'0') == 9) {
+            j++;
+        }
+        int len = j - i + 1;
+        if (len > 1) {
+            if (len % 2 == 1) {
+                ans *= 2;
+            }
+            i = j;
+        } else {
+            i++;
+        }
+    }
+    return ans;
+}
+
+int main() {
+    static char s[1000005];
+    scanf("%s", s);
+    printf("%lld\n", countWays(s));
+    return 0;
+}
 

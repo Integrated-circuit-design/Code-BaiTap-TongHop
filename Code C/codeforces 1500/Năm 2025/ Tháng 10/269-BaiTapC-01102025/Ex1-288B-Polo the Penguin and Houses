@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+const long long MOD = 1000000007;
+
+long long modexp(long long base, long long exp) {
+    if (exp == 0) return 1;
+    long long half = modexp(base, exp / 2);
+    long long result = (half * half) % MOD;
+    if (exp % 2) result = (result * base) % MOD;
+    return result;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    long long A = modexp(k, k - 1);
+    long long B = modexp(n - k, n - k);
+
+    long long answer = (A * B) % MOD;
+    printf("%lld\n", answer);
+    return 0;
+}
 

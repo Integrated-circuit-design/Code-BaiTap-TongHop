@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+#define MAXLEN 2000005
+
+char words[MAXN][10];
+int need[MAXN];
+int top = -1;
+char result[MAXLEN];
+
+int main() {
+    int n, m = 0;
+    scanf("%d", &n);
+
+    while (scanf("%s", words[m]) == 1) m++;
+
+    int countInt = 0;
+    char *p = result;
+
+    for (int i = 0; i < m; i++) {
+        if (strcmp(words[i], "int") == 0) {
+            countInt++;
+            p += sprintf(p, "int");
+            while (top >= 0) {
+                if (--need[top] == 1) {
+                    p += sprintf(p, ",");
+                    break;
+                } else if (need[top] == 0) {
+                    p += sprintf(p, ">");
+                    top--;
+                } else break;
+            }
+        } else {
+            p += sprintf(p, "pair<");
+            need[++top] = 2;
+        }
+    }
+
+    if (top != -1 || countInt != n) {
+        printf("Error occurred\n");
+    } else {
+        printf("%s\n", result);
+    }
+
+    return 0;
+}
 

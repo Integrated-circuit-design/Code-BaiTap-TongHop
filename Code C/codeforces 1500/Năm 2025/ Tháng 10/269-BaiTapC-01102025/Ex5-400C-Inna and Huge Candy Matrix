@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+void rotate90CW(ll *r, ll *c, ll *n, ll *m) {
+    ll nr = *c;
+    ll nc = *n - *r + 1;
+    *r = nr; *c = nc;
+    ll tmp = *n; *n = *m; *m = tmp;
+}
+
+void rotate90CCW(ll *r, ll *c, ll *n, ll *m) {
+    ll nr = *m - *c + 1;
+    ll nc = *r;
+    *r = nr; *c = nc;
+    ll tmp = *n; *n = *m; *m = tmp;
+}
+
+void flipH(ll *r, ll *c, ll m) {
+    *c = m - *c + 1;
+}
+
+int main() {
+    ll n, m;
+    int x, y, z, p;
+    scanf("%lld %lld %d %d %d %d", &n, &m, &x, &y, &z, &p);
+
+    x %= 4;
+    y %= 2;
+    z %= 4;
+
+    int rot = (x - z) % 4;
+    if (rot < 0) rot += 4;
+
+    for (int k = 0; k < p; k++) {
+        ll r, c;
+        scanf("%lld %lld", &r, &c);
+
+        ll N = n, M = m;
+
+        if (rot == 1) {
+            rotate90CW(&r, &c, &N, &M);
+        } else if (rot == 2) {
+            rotate90CW(&r, &c, &N, &M);
+            rotate90CW(&r, &c, &N, &M);
+        } else if (rot == 3) {
+            rotate90CCW(&r, &c, &N, &M);
+        }
+
+        if (y == 1) {
+            flipH(&r, &c, M);
+        }
+
+        printf("%lld %lld\n", r, c);
+    }
+
+    return 0;
+}
 

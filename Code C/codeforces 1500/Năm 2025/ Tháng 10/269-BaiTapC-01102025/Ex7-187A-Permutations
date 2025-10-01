@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+#define N 200005
+
+int a[N], b[N];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int k = 0; k < n; k++) scanf("%d", &a[k]);
+    for (int k = 0; k < n; k++) scanf("%d", &b[k]);
+
+    int idxB = n - 1;
+    int match = 0;
+
+    for (int idxA = n - 1; idxA >= 0; idxA--) {
+        if (idxB >= 0 && a[idxA] == b[idxB]) {
+            match++;
+            idxB--;
+        }
+    }
+
+    int result = n - match;
+    printf("%d\n", result);
+    return 0;
+}
 

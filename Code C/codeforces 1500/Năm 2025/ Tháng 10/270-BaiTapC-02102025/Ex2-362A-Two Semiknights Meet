@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+#define N 8
+
+int dx[4] = {2, 2, -2, -2};
+int dy[4] = {2, -2, 2, -2};
+
+char board[N][N];
+int vis1[N][N], vis2[N][N];
+
+typedef struct { int x, y; } Point;
+
+void dfs(int x, int y, int vis[N][N]) {
+    vis[x][y] = 1;
+    for(int i=0;i<4;i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if(nx>=0 && nx<N && ny>=0 && ny<N && board[nx][ny]!='#' && !vis[nx][ny]) {
+            dfs(nx, ny, vis);
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d",&t);
+    while(t--) {
+        Point knights[2];
+        int k = 0;
+
+        for(int i=0;i<N;i++) {
+            scanf("%s", board[i]);
+            for(int j=0;j<N;j++) {
+                if(board[i][j]=='K') knights[k++] = (Point){i, j};
+            }
+        }
+
+        memset(vis1,0,sizeof(vis1));
+        memset(vis2,0,sizeof(vis2));
+
+        dfs(knights[0].x, knights[0].y, vis1);
+        dfs(knights[1].x, knights[1].y, vis2);
+
+        int canMeet = 0;
+        for(int i=0;i<N;i++)
+            for(int j=0;j<N;j++)
+                if(board[i][j]!='#' && vis1[i][j] && vis2[i][j])
+                    canMeet = 1;
+
+        printf("%s\n", canMeet ? "YES" : "NO");
+
+        if(t) scanf("\n");
+    }
+    return 0;
+}
 

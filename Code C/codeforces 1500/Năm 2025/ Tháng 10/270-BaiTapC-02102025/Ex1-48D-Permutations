@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+typedef struct {
+    int pos[MAXN];
+    int cnt;
+} NumPositions;
+
+NumPositions nums[MAXN];
+int a[MAXN];
+int res[MAXN];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for(int i = 0; i < MAXN; i++) nums[i].cnt = 0;
+
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        int x = a[i];
+        nums[x].pos[nums[x].cnt++] = i;
+    }
+
+    int maxFreq = 0;
+    for(int i = 0; i < MAXN; i++) {
+        if(nums[i].cnt > maxFreq) maxFreq = nums[i].cnt;
+    }
+
+    for(int i = 0; i < MAXN; i++) {
+        if(nums[i].cnt > maxFreq) {
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    for(int i = 0; i < MAXN; i++) {
+        for(int j = 0; j < nums[i].cnt; j++) {
+            res[nums[i].pos[j]] = j + 1;
+        }
+    }
+
+    printf("%d\n", maxFreq);
+    for(int i = 0; i < n; i++) {
+        printf("%d%c", res[i], i == n-1 ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

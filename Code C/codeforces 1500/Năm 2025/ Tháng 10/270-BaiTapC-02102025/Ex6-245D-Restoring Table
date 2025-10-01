@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int b[100][100];
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &b[i][j]);
+
+    for (int i = 0; i < n; i++) {
+        int ai = 0;
+        int j = 0;
+        while (j < n) {
+            if (i != j) {
+                ai = ai | b[i][j];
+            }
+            j++;
+        }
+        printf("%d%c", ai, (i == n-1) ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

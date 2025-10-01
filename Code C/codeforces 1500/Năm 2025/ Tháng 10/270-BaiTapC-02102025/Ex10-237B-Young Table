@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int c[50], table[50][50];
+    int total = 0;
+
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &c[i]);
+        total += c[i];
+    }
+
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < c[i]; j++)
+            scanf("%d", &table[i][j]);
+
+    int swaps[2500][4], m = 0;
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < c[i]; j++) {
+            int min_i = i, min_j = j;
+            for(int x = i; x < n; x++) {
+                for(int y = 0; y < c[x]; y++) {
+                    if(x == i && y <= j) continue;
+                    if(table[x][y] < table[min_i][min_j])
+                        min_i = x, min_j = y;
+                }
+            }
+            if(min_i != i || min_j != j) {
+                int tmp = table[i][j];
+                table[i][j] = table[min_i][min_j];
+                table[min_i][min_j] = tmp;
+
+                swaps[m][0] = i+1;
+                swaps[m][1] = j+1;
+                swaps[m][2] = min_i+1;
+                swaps[m][3] = min_j+1;
+                m++;
+            }
+        }
+    }
+
+    printf("%d\n", m);
+    for(int i = 0; i < m; i++)
+        printf("%d %d %d %d\n", swaps[i][0], swaps[i][1], swaps[i][2], swaps[i][3]);
+
+    return 0;
+}
 

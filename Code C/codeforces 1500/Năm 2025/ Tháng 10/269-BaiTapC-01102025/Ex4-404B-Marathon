@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <math.h>
+
+void get_position(double a, double distance, double *x, double *y) {
+    double per = 4 * a;
+    distance = fmod(distance, per);
+
+    int side = (int)(distance / a);
+    double offset = distance - side * a;
+
+    switch (side) {
+        case 0:
+            *x = offset;
+            *y = 0;
+            break;
+        case 1:
+            *x = a;
+            *y = offset;
+            break;
+        case 2:
+            *x = a - offset;
+            *y = a;
+            break;
+        case 3:
+            *x = 0;
+            *y = a - offset;
+            break;
+    }
+}
+
+int main() {
+    double a, d;
+    int n;
+    scanf("%lf %lf", &a, &d);
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+        double x, y;
+        get_position(a, i * d, &x, &y);
+        printf("%.10f %.10f\n", x, y);
+    }
+    return 0;
+}
 

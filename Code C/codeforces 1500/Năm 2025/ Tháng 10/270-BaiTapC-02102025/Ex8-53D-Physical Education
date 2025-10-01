@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+#define MAXN 305
+
+int a[MAXN], b[MAXN];
+int n;
+
+void swapToPosition(int from, int to) {
+    for (int i = from; i > to; i--) {
+        int tmp = b[i];
+        b[i] = b[i - 1];
+        b[i - 1] = tmp;
+        printf("%d %d\n", i, i + 1);
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+    for (int i = 0; i < n; i++) scanf("%d", &b[i]);
+
+    int totalSwaps = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (b[i] == a[i]) continue;
+        int pos = i;
+        while (b[pos] != a[i]) pos++;
+        swapToPosition(pos, i);
+        totalSwaps += pos - i;
+    }
+
+    printf("%d\n", totalSwaps);
+
+    return 0;
+}
 

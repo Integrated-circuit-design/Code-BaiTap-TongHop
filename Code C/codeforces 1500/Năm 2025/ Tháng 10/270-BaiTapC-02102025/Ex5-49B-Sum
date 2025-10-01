@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+int max_digit_str(char *s) {
+    int max = 0;
+    for (int i = 0; s[i]; i++) {
+        if (s[i] - '0' > max) max = s[i] - '0';
+    }
+    return max;
+}
+
+int sum_length_str(char *a_str, char *b_str, int base) {
+    int len_a = strlen(a_str);
+    int len_b = strlen(b_str);
+    int i = len_a - 1;
+    int j = len_b - 1;
+    int carry = 0, len = 0;
+
+    while (i >= 0 || j >= 0 || carry) {
+        int digit_a = (i >= 0) ? a_str[i] - '0' : 0;
+        int digit_b = (j >= 0) ? b_str[j] - '0' : 0;
+        int sum = digit_a + digit_b + carry;
+        carry = sum / base;
+        len++;
+        i--; j--;
+    }
+    return len;
+}
+
+int main() {
+    char a_str[10], b_str[10];
+    scanf("%s %s", a_str, b_str);
+
+    int max_digit_a = max_digit_str(a_str);
+    int max_digit_b = max_digit_str(b_str);
+    int min_base = (max_digit_a > max_digit_b ? max_digit_a : max_digit_b) + 1;
+
+    int max_len = 0;
+
+    for (int base = min_base; base <= 1000; base++) {
+        int len = sum_length_str(a_str, b_str, base);
+        if (len > max_len) max_len = len;
+    }
+
+    printf("%d\n", max_len);
+    return 0;
+}
 

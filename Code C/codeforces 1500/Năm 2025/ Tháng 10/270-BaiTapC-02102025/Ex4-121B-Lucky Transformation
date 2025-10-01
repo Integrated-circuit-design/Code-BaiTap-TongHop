@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+char d[MAXN];
+
+int main() {
+    int n;
+    long long k;
+    scanf("%d %lld", &n, &k);
+    scanf("%s", d);
+
+    long long ops = 0;
+    int i;
+
+    while (ops < k) {
+        i = 0;
+        while (i < n - 1) {
+            if (d[i] == '4' && d[i+1] == '7') {
+                if ((i + 1) % 2 == 1) {
+                    d[i+1] = '4';
+                } else {
+                    d[i] = '7';
+                }
+                ops++;
+                break;
+            }
+            i++;
+        }
+
+        if (i == n - 1) break;
+    }
+
+    printf("%s\n", d);
+    return 0;
+}
 

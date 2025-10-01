@@ -1,1 +1,9 @@
+#include <stdio.h>
+
+int main() {
+    int a1, a2;
+    scanf("%d %d", &a1, &a2);
+    a1 + a2 & 1 ? printf("1\n") : printf("0\n");
+    return 0;
+}
 

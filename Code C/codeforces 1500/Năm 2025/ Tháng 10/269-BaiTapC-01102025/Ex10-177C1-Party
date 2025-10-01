@@ -1,1 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 2005
+
+int n, k, m;
+int friends[MAXN][MAXN];
+int dislikes[MAXN][MAXN];
+int visited[MAXN];
+int queue[MAXN];
+
+int bfs(int start, int id) {
+    int front = 0, back = 0;
+    queue[back++] = start;
+    visited[start] = id;
+    int count = 1;
+
+    while (front < back) {
+        int u = queue[front++];
+        for (int v = 1; v <= n; v++) {
+            if (friends[u][v] && !visited[v]) {
+                visited[v] = id;
+                queue[back++] = v;
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+int main() {
+    scanf("%d", &n);
+
+    scanf("%d", &k);
+    for (int i = 0; i < k; i++) {
+        int u, v; scanf("%d %d", &u, &v);
+        friends[u][v] = friends[v][u] = 1;
+    }
+
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) {
+        int u, v; scanf("%d %d", &u, &v);
+        dislikes[u][v] = dislikes[v][u] = 1;
+    }
+
+    int compID = 0;
+    int compSize[MAXN];
+    memset(visited, 0, sizeof(visited));
+
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i]) {
+            compID++;
+            compSize[compID] = bfs(i, compID);
+        }
+    }
+
+    int ans = 0;
+    for (int id = 1; id <= compID; id++) {
+        int ok = 1;
+        for (int u = 1; u <= n && ok; u++) {
+            if (visited[u] != id) continue;
+            for (int v = 1; v <= n; v++) {
+                if (visited[v] == id && dislikes[u][v]) {
+                    ok = 0;
+                    break;
+                }
+            }
+        }
+        if (ok && compSize[id] > ans) ans = compSize[id];
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

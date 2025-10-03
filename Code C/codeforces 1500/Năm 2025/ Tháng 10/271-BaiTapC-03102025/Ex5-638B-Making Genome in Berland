@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 105
+#define ALPH 26
+
+int n;
+char frag[MAXN][MAXN];
+
+int graph[ALPH][ALPH];
+int visited[ALPH];
+int appear[ALPH];
+char result[ALPH+1];
+int pos = 0;
+
+void dfs(int u) {
+    visited[u] = 1;
+    for (int v = 0; v < ALPH; v++) {
+        if (graph[u][v] && visited[v] == 0) {
+            dfs(v);
+        }
+    }
+    visited[u] = 2;
+    result[pos++] = 'a' + u;
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", frag[i]);
+        int len = strlen(frag[i]);
+        for (int j = 0; j < len; j++) {
+            appear[frag[i][j]-'a'] = 1;
+            if (j + 1 < len) {
+                int u = frag[i][j] - 'a';
+                int v = frag[i][j+1] - 'a';
+                graph[u][v] = 1;
+            }
+        }
+    }
+
+    for (int i = 0; i < ALPH; i++) {
+        if (appear[i] && visited[i] == 0) {
+            dfs(i);
+        }
+    }
+
+    for (int i = pos - 1; i >= 0; i--) {
+        putchar(result[i]);
+    }
+    putchar('\n');
+
+    return 0;
+}
 

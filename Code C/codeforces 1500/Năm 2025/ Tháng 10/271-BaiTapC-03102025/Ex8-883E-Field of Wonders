@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 55
+#define MAXM 1005
+
+int n, m;
+char pattern[MAXN];
+char words[MAXM][MAXN];
+int valid[MAXM];
+
+int matchPattern(char *w, char *pat, int len) {
+    for (int i = 0; i < len; i++) {
+        if (pat[i] != '*' && pat[i] != w[i]) return 0;
+    }
+    return 1;
+}
+
+int isSureLetter(char c) {
+    for (int i = 0; i < m; i++) {
+        if (!valid[i]) continue;
+        int ok = 0;
+        for (int j = 0; j < n; j++) {
+            if (pattern[j] == '*' && words[i][j] == c) {
+                ok = 1;
+                break;
+            }
+        }
+        if (!ok) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    scanf("%d", &n);
+    scanf("%s", pattern);
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) scanf("%s", words[i]);
+
+    for (int i = 0; i < m; i++) {
+        valid[i] = matchPattern(words[i], pattern, n);
+    }
+
+    int revealed[26] = {0};
+    for (int i = 0; i < n; i++) {
+        if (pattern[i] != '*') revealed[pattern[i]-'a'] = 1;
+    }
+
+    int ans = 0;
+    for (char c = 'a'; c <= 'z'; c++) {
+        if (revealed[c-'a']) continue;
+        if (isSureLetter(c)) ans++;
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

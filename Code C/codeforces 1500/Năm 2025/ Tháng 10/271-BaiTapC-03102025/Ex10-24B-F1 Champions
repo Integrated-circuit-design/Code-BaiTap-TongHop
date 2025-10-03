@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXD 55
+#define MAXLEN 55
+
+int pts[10] = {25,18,15,12,10,8,6,4,2,1};
+
+typedef struct {
+    char name[MAXLEN];
+    int points;
+    int place[55];
+    int active;
+} Driver;
+
+Driver d[MAXD];
+int dcnt = 0;
+
+int findID(char *s) {
+    for (int i = 0; i < dcnt; i++)
+        if (strcmp(d[i].name, s) == 0) return i;
+    strcpy(d[dcnt].name, s);
+    d[dcnt].points = 0;
+    for (int j = 0; j < 55; j++) d[dcnt].place[j] = 0;
+    d[dcnt].active = 1;
+    return dcnt++;
+}
+
+int championOriginal() {
+    int best = 0;
+    for (int i = 1; i < dcnt; i++) {
+        if (d[i].points > d[best].points) best = i;
+        else if (d[i].points == d[best].points) {
+            for (int j = 0; j < 55; j++) {
+                if (d[i].place[j] > d[best].place[j]) { best = i; break; }
+                if (d[i].place[j] < d[best].place[j]) break;
+            }
+        }
+    }
+    return best;
+}
+
+int championAlternative() {
+    int best = 0;
+    for (int i = 1; i < dcnt; i++) {
+        if (d[i].place[0] > d[best].place[0]) best = i;
+        else if (d[i].place[0] == d[best].place[0]) {
+            if (d[i].points > d[best].points) best = i;
+            else if (d[i].points == d[best].points) {
+                for (int j = 1; j < 55; j++) {
+                    if (d[i].place[j] > d[best].place[j]) { best = i; break; }
+                    if (d[i].place[j] < d[best].place[j]) break;
+                }
+            }
+        }
+    }
+    return best;
+}
+
+int main() {
+    int t; scanf("%d", &t);
+    while (t--) {
+        int n; scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            char s[MAXLEN]; scanf("%s", s);
+            int id = findID(s);
+            if (i < 10) d[id].points += pts[i];
+            d[id].place[i]++;
+        }
+    }
+    int champ1 = championOriginal();
+    int champ2 = championAlternative();
+    printf("%s\n", d[champ1].name);
+    printf("%s\n", d[champ2].name);
+    return 0;
+}
 

@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 20000
+
+long long dp[MAXN + 5];
+long long newdp[MAXN + 5];
+
+int main() {
+    int n, a, b, c;
+    scanf("%d %d %d %d", &n, &a, &b, &c);
+
+    int target = n * 2;
+
+    memset(dp, 0, sizeof(dp));
+    dp[0] = 1;
+
+    memset(newdp, 0, sizeof(newdp));
+    for (int use = 0; use <= a; use++) {
+        for (int v = 0; v + use <= target; v++) {
+            newdp[v + use] += dp[v];
+        }
+    }
+    memcpy(dp, newdp, sizeof(dp));
+
+    memset(newdp, 0, sizeof(newdp));
+    for (int use = 0; use <= b; use++) {
+        int add = use * 2;
+        for (int v = 0; v + add <= target; v++) {
+            newdp[v + add] += dp[v];
+        }
+    }
+    memcpy(dp, newdp, sizeof(dp));
+
+    memset(newdp, 0, sizeof(newdp));
+    for (int use = 0; use <= c; use++) {
+        int add = use * 4;
+        for (int v = 0; v + add <= target; v++) {
+            newdp[v + add] += dp[v];
+        }
+    }
+    memcpy(dp, newdp, sizeof(dp));
+
+    printf("%lld\n", dp[target]);
+    return 0;
+}
 

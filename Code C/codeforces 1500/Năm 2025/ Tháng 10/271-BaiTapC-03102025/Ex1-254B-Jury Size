@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+int days_in_month[13] = {
+    0,
+    31,28,31,30,31,30,
+    31,31,30,31,30,31
+};
+
+int day_of_year(int m, int d) {
+    int res = 0;
+    for (int i = 1; i < m; i++) res += days_in_month[i];
+    return res + d;
+}
+
+typedef struct {
+    int start, end, p;
+} Task;
+
+int main() {
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+
+    int n;
+    scanf("%d", &n);
+
+    Task tasks[105];
+    int tcount = 0;
+
+    for (int i = 0; i < n; i++) {
+        int m, d, p, t;
+        scanf("%d %d %d %d", &m, &d, &p, &t);
+        int contest = day_of_year(m, d);
+        int end = contest - 1;
+        int start = end - t + 1;
+        tasks[tcount].start = start;
+        tasks[tcount].end = end;
+        tasks[tcount].p = p;
+        tcount++;
+    }
+
+    int ans = 0;
+
+    for (int day = -100; day <= 365; day++) {
+        int cur = 0;
+        for (int i = 0; i < tcount; i++) {
+            if (day >= tasks[i].start && day <= tasks[i].end) {
+                cur += tasks[i].p;
+            }
+        }
+        if (cur > ans) ans = cur;
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

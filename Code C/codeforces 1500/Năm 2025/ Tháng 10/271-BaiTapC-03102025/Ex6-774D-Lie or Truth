@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *x, const void *y) {
+    return (*(int*)x - *(int*)y);
+}
+
+int main() {
+    int n, l, r;
+    scanf("%d %d %d", &n, &l, &r);
+
+    int a[100005], b[100005];
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+    for (int i = 1; i <= n; i++) scanf("%d", &b[i]);
+
+    for (int i = 1; i < l; i++) {
+        if (a[i] != b[i]) {
+            printf("LIE\n");
+            return 0;
+        }
+    }
+    for (int i = r + 1; i <= n; i++) {
+        if (a[i] != b[i]) {
+            printf("LIE\n");
+            return 0;
+        }
+    }
+
+    int len = r - l + 1;
+    int *subA = (int*)malloc(len * sizeof(int));
+    int *subB = (int*)malloc(len * sizeof(int));
+    for (int i = 0; i < len; i++) {
+        subA[i] = a[l + i];
+        subB[i] = b[l + i];
+    }
+
+    qsort(subA, len, sizeof(int), cmp);
+    qsort(subB, len, sizeof(int), cmp);
+
+    for (int i = 0; i < len; i++) {
+        if (subA[i] != subB[i]) {
+            printf("LIE\n");
+            free(subA); free(subB);
+            return 0;
+        }
+    }
+
+    printf("TRUTH\n");
+    free(subA);
+    free(subB);
+    return 0;
+}
 

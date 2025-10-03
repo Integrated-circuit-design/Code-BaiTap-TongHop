@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXK 105
+#define INF 1000000000
+
+int N, K;
+int requests[1005];
+int hall[MAXK][MAXK];
+int centerRow, centerCol;
+
+int is_free(int row, int l, int r) {
+    for (int j = l; j <= r; j++)
+        if (hall[row][j]) return 0;
+    return 1;
+}
+
+int dist_segment(int row, int l, int r) {
+    int sum = 0;
+    for (int j = l; j <= r; j++) {
+        sum += abs(row - centerRow) + abs(j - centerCol);
+    }
+    return sum;
+}
+
+void occupy(int row, int l, int r) {
+    for (int j = l; j <= r; j++) hall[row][j] = 1;
+}
+
+int main() {
+    scanf("%d %d", &N, &K);
+    for (int i = 0; i < N; i++) scanf("%d", &requests[i]);
+
+    centerRow = (K + 1) / 2;
+    centerCol = (K + 1) / 2;
+
+    for (int i = 0; i < N; i++) {
+        int m = requests[i];
+
+        int bestRow = -1, bestL = -1, bestR = -1, bestDist = INF;
+
+        for (int row = 1; row <= K; row++) {
+            for (int l = 1; l + m - 1 <= K; l++) {
+                int r = l + m - 1;
+                if (!is_free(row, l, r)) continue;
+
+                int d = dist_segment(row, l, r);
+
+                if (d < bestDist ||
+                   (d == bestDist && row < bestRow) ||
+                   (d == bestDist && row == bestRow && l < bestL)) {
+                    bestDist = d;
+                    bestRow = row;
+                    bestL = l;
+                    bestR = r;
+                }
+            }
+        }
+
+        if (bestRow == -1) {
+            printf("-1\n");
+        } else {
+            printf("%d %d %d\n", bestRow, bestL, bestR);
+            occupy(bestRow, bestL, bestR);
+        }
+    }
+    return 0;
+}
 

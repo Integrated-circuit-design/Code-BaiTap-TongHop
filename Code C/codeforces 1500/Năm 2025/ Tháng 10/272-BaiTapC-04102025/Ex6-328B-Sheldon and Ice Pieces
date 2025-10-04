@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char t[6], pieces[201];
+    int freq[10] = {0};
+    int i, j, len_t, max_instances = 1000;
+
+    scanf("%s", t);
+    scanf("%s", pieces);
+
+    for (i = 0; pieces[i]; i++) {
+        freq[pieces[i] - '0']++;
+    }
+
+    freq[6] += freq[9];
+    freq[9] = 0;
+    freq[2] += freq[5];
+    freq[5] = 0;
+
+    len_t = strlen(t);
+
+    for (i = 0; i < 10; i++) {
+        int needed = 0;
+        for (j = 0; j < len_t; j++) {
+            int d = t[j] - '0';
+            if ((d == 6 || d == 9) && i == 6) needed++;
+            else if ((d == 2 || d == 5) && i == 2) needed++;
+            else if (d == i) needed++;
+        }
+        if (needed > 0) {
+            int possible = freq[i] / needed;
+            if (possible < max_instances) max_instances = possible;
+        }
+    }
+
+    printf("%d\n", max_instances);
+    return 0;
+}
 

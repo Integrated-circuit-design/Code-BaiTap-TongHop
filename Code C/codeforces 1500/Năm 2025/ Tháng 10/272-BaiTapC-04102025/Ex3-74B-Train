@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAXN 51
+#define MAXT 201
+
+int main() {
+    int n, s, c;
+    char dir[10], train[MAXT];
+    
+    scanf("%d %d %d", &n, &s, &c);
+    scanf("%s", dir);
+    scanf("%s", train);
+
+    bool possible[MAXN];
+    bool temp[MAXN];
+    for(int i=1; i<=n; i++) possible[i] = false;
+    possible[s] = true;
+
+    int controller = c;
+    int move = (dir[3] == 'h') ? -1 : 1;
+
+    int t = 0;
+    while(train[t] != '\0') t++;
+
+    for(int minute=0; minute<t; minute++){
+        for(int i=1; i<=n; i++) temp[i] = false;
+
+        if(train[minute] == '0'){
+            for(int i=1; i<=n; i++){
+                if(!possible[i]) continue;
+                if(i>1) temp[i-1] = true;
+                if(i<n) temp[i+1] = true;
+                temp[i] = true;
+            }
+        } else {
+            for(int i=1; i<=n; i++) temp[i] = true;
+        }
+
+        controller += move;
+        if(controller == 1 || controller == n) move = -move;
+
+        if(temp[controller]){
+            printf("Controller %d\n", minute+1);
+            return 0;
+        }
+
+        for(int i=1; i<=n; i++) possible[i] = temp[i];
+    }
+
+    printf("Stowaway\n");
+    return 0;
+}
 

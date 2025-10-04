@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int colors[100];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &colors[i]);
+    }
+
+    int k[100];
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &k[i]);
+    }
+
+    int prefix[101][100] = {0};
+    for (int i = 1; i <= n; i++) {
+        for (int c = 0; c < m; c++) {
+            prefix[i][c] = prefix[i-1][c];
+        }
+        prefix[i][colors[i-1]-1]++;
+    }
+
+    for (int l = 0; l < n; l++) {
+        for (int r = l; r < n; r++) {
+            int match = 1;
+            for (int c = 0; c < m; c++) {
+                int count = prefix[r+1][c] - prefix[l][c];
+                if (count != k[c]) {
+                    match = 0;
+                    break;
+                }
+            }
+            if (match) {
+                printf("YES\n");
+                return 0;
+            }
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

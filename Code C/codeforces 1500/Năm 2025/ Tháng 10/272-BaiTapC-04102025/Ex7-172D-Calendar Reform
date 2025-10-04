@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int max_square_divisor(int year_days) {
+    int largest = 1;
+    for (int i = 1; i * i <= year_days; i++) {
+        if (year_days % (i * i) == 0) {
+            largest = i * i;
+        }
+    }
+    return largest;
+}
+
+int main() {
+    int a, n;
+    scanf("%d %d", &a, &n);
+
+    long long total_sheets = 0;
+
+    for (int i = 0; i < n; i++) {
+        int current_year = a + i;
+        int month_days = max_square_divisor(current_year);
+        int months = current_year / month_days;
+        total_sheets += months;
+    }
+
+    printf("%lld\n", total_sheets);
+    return 0;
+}
 

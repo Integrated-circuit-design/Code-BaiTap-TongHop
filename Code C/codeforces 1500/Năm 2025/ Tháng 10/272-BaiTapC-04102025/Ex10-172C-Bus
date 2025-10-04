@@ -1,1 +1,70 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+typedef struct {
+    int time;
+    int dest;
+    int idx;
+} Student;
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    Student students[MAXN];
+    int result[MAXN];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &students[i].time, &students[i].dest);
+        students[i].idx = i;
+    }
+
+    int front = 0, rear = 0;
+    int currentTime = 0;
+
+    while (front < n) {
+        int tripCount = 0;
+        int maxDest = 0;
+        int departTime = 0;
+
+        while (front < n && tripCount < m) {
+            Student s = students[front++];
+            departTime = s.time > departTime ? s.time : departTime;
+            if (s.dest > maxDest) maxDest = s.dest;
+
+            students[rear++] = s;
+            tripCount++;
+        }
+
+        currentTime = currentTime > departTime ? currentTime : departTime;
+
+        int dropCount[MAXN] = {0};
+        for (int i = rear - tripCount; i < rear; i++) {
+            dropCount[students[i].dest]++;
+        }
+
+        for (int pos = 1; pos <= maxDest; pos++) {
+            if (dropCount[pos] > 0) {
+                currentTime += 1 * (pos - (pos-1));
+
+                for (int i = rear - tripCount; i < rear; i++) {
+                    if (students[i].dest == pos) {
+                        result[students[i].idx] = currentTime;
+                    }
+                }
+
+                currentTime += 1 + dropCount[pos] / 2;
+            }
+        }
+
+        currentTime += maxDest;
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d%c", result[i], i == n-1 ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

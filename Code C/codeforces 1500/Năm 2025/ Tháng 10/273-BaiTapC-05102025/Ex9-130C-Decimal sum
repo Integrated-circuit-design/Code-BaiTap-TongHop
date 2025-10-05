@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int a[100];
+    int i;
+    int sum = 0;
+
+    printf("Nhap so luong phan tu: ");
+    scanf("%d", &n);
+
+    printf("Nhap cac phan tu cua mang:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    for (i = 0; i < n; i++) {
+        sum += a[i];
+    }
+
+    printf("Tong cua cac phan tu la: %d\n", sum);
+
+    return 0;
+}
 

@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    char expr[5];
+    int n, m, ans;
+    
+    scanf("%s", expr);
+
+    n = expr[0] - '0';
+    m = expr[2] - '0';
+
+    switch (expr[1]) {
+        case '+':
+            ans = n + m;
+            break;
+        case '-':
+            ans = n - m;
+            break;
+        default:
+            ans = 0;
+    }
+
+    printf("%d\n", ans);
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int A, B, C;
+    scanf("%d %d %d", &A, &B, &C);
+
+    int n = 0;
+
+    for (int X = 1; X <= C; X++) {
+        for (int Y = 1; Y <= C; Y++) {
+            if (A * X + B * Y == C) {
+                if (n == 0)
+                    printf("");
+                n++;
+                printf("%d %d\n", X, Y);
+            }
+            if (A * X + B * Y > C) break;
+        }
+    }
+
+    if (n == 0) {
+        printf("0\n");
+        return 0;
+    } else {
+        printf("%d\n", n);
+        for (int X = 1; X <= C; X++) {
+            for (int Y = 1; Y <= C; Y++) {
+                if (A * X + B * Y == C)
+                    printf("%d %d\n", X, Y);
+                if (A * X + B * Y > C) break;
+            }
+        }
+    }
+
+    return 0;
+}
 

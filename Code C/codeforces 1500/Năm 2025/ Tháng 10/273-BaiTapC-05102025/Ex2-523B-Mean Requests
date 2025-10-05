@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAX 200005
+
+typedef long long ll;
+
+int main() {
+    int n, T, m;
+    double c;
+    static int a[MAX], p[MAX];
+    static ll sum[MAX];
+    static double approx_val[MAX];
+
+    scanf("%d %d %lf", &n, &T, &c);
+
+    sum[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+        sum[i] = sum[i - 1] + a[i];
+    }
+
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) scanf("%d", &p[i]);
+
+    double mean_now = 0.0;
+    int next = 0;
+
+    for (int t = 1; t <= n; t++) {
+        mean_now = (mean_now + (double)a[t] / T) / c;
+        if (next < m && t == p[next]) {
+            approx_val[t] = mean_now;
+            next++;
+        }
+    }
+
+    for (int j = 0; j < m; j++) {
+        int pos = p[j];
+        double real = (sum[pos] - sum[pos - T]) / (double)T;
+        double approx = approx_val[pos];
+        double err = fabs(real - approx) / real;
+        printf("%.6f %.6f %.6f\n", real, approx, err);
+    }
+
+    return 0;
+}
 

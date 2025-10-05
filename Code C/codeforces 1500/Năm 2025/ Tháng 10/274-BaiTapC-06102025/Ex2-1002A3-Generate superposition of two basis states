@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAXN 8
+
+void printBits(int N, int bits[]) {
+    for (int i = 0; i < N; i++) {
+        printf("%d", bits[i]);
+    }
+}
+
+void superpose(int N, int bits0[], int bits1[]) {
+    double amp = 1.0 / sqrt(2);
+
+    printf("Superposition of two basis states:\n");
+    printf("|");
+    printBits(N, bits0);
+    printf("> : %.4f\n", amp);
+
+    printf("|");
+    printBits(N, bits1);
+    printf("> : %.4f\n", amp);
+}
+
+int main() {
+    int N;
+    int bits0[MAXN], bits1[MAXN];
+
+    printf("Nhap so qubits N (1-8): ");
+    scanf("%d", &N);
+
+    printf("Nhap bits0: ");
+    for (int i = 0; i < N; i++) scanf("%d", &bits0[i]);
+
+    printf("Nhap bits1: ");
+    for (int i = 0; i < N; i++) scanf("%d", &bits1[i]);
+
+    superpose(N, bits0, bits1);
+
+    return 0;
+}
 

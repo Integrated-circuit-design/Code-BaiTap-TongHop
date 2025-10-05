@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int arr[1000];
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        if (i == n - 1)
+            scanf("%d", &arr[i]);
+        else
+            scanf("%d,", &arr[i]);
+    }
+
+    int friendly = 1;
+
+    for (int i = 0; i < n && friendly; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int x = arr[i];
+            int y = arr[j];
+            if (x % y != 0 && y % x != 0) {
+                friendly = 0;
+                break;
+            }
+        }
+    }
+
+    if (friendly)
+        printf("FRIENDS");
+    else
+        printf("NOT FRIENDS");
+
+    return 0;
+}
 

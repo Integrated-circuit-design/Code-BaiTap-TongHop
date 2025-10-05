@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    long long x, y;
+    scanf("%d %lld %lld", &n, &x, &y);
+
+    int *pages = (int*)malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &pages[i]);
+    }
+
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        int needed = pages[i];
+        int two_sided = needed / 2;
+        if (two_sided > x) two_sided = x;
+        int remaining = needed - 2 * two_sided;
+
+        if (remaining <= y) {
+            x -= two_sided;
+            y -= remaining;
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+
+    free(pages);
+    return 0;
+}
 

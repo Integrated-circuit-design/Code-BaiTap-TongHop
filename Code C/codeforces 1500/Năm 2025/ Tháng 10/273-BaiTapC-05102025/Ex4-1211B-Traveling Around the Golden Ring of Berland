@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    ll a[200005];
+    for (int i = 0; i < n; i++)
+        scanf("%lld", &a[i]);
+
+    int first = -1, last = -1;
+    for (int i = 0; i < n; i++) {
+        if (a[i] > 0) {
+            if (first == -1) first = i;
+            last = i;
+        }
+    }
+
+    ll total = 0;
+    for (int i = 0; i < n; i++)
+        total += a[i];
+
+    ll visits = total;
+    if (first != -1) {
+        visits += (last - first);
+        if (first > 0) visits++;
+    }
+
+    printf("%lld\n", visits);
+    return 0;
+}
 

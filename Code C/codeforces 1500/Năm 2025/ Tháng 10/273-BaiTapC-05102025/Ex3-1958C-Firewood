@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+
+        int count_ones = 0;
+        long long temp = k;
+        while (temp > 0) {
+            if (temp & 1) count_ones++;
+            temp >>= 1;
+        }
+
+        int msb_position = 0;
+        long long value = 1;
+        while (value * 2 <= k) {
+            value *= 2;
+            msb_position++;
+        }
+
+        long long minutes = (n - msb_position) + count_ones - 1;
+        printf("%lld\n", minutes);
+    }
+    return 0;
+}
 

@@ -1,1 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 100005
+
+typedef struct Node {
+    long long key;
+    long long val;
+    struct Node* next;
+} Node;
+
+#define HASH_SIZE 131071
+
+Node* hashTable[HASH_SIZE];
+
+unsigned int hash(long long x) {
+    return (unsigned int)((x ^ (x >> 16)) % HASH_SIZE);
+}
+
+void add(long long key) {
+    unsigned int h = hash(key);
+    Node* node = hashTable[h];
+    while (node) {
+        if (node->key == key) {
+            node->val++;
+            return;
+        }
+        node = node->next;
+    }
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->key = key;
+    newNode->val = 1;
+    newNode->next = hashTable[h];
+    hashTable[h] = newNode;
+}
+
+long long get(long long key) {
+    unsigned int h = hash(key);
+    Node* node = hashTable[h];
+    while (node) {
+        if (node->key == key) return node->val;
+        node = node->next;
+    }
+    return 0;
+}
+
+void clearHash() {
+    for (int i = 0; i < HASH_SIZE; i++) {
+        Node* node = hashTable[i];
+        while (node) {
+            Node* tmp = node;
+            node = node->next;
+            free(tmp);
+        }
+        hashTable[i] = NULL;
+    }
+}
+
+int main() {
+    int t, n;
+    char s[MAXN];
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        clearHash();
+
+        long long prefixSum = 0;
+        long long ans = 0;
+
+        add(0);
+
+        for (int i = 0; i < n; i++) {
+            int x = s[i] - '0' - 1;
+            prefixSum += x;
+            ans += get(prefixSum);
+            add(prefixSum);
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

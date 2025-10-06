@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+#define MAXN 8
+
+int oracle(int x, int a[], int N) {
+    int sum = 0;
+    for (int i = 0; i < N; i++) {
+        int bitX = (x >> i) & 1;
+        sum += bitX * a[i];
+    }
+    return sum % 2;
+}
+
+void bernsteinVazirani(int N, int hidden[], int result[]) {
+    for (int i = 0; i < N; i++) {
+        int mask = 1 << i;
+        result[i] = oracle(mask, hidden, N);
+    }
+}
+
+int main() {
+    int N;
+    printf("Nhap so luong bit N (1-8): ");
+    scanf("%d", &N);
+
+    int hidden[MAXN];
+    printf("Nhap day bit an (0 hoac 1):\n");
+    for (int i = 0; i < N; i++)
+        scanf("%d", &hidden[i]);
+
+    int result[MAXN];
+    bernsteinVazirani(N, hidden, result);
+
+    printf("Ket qua: ");
+    for (int i = 0; i < N; i++)
+        printf("%d", result[i]);
+    printf("\n");
+
+    return 0;
+}
 

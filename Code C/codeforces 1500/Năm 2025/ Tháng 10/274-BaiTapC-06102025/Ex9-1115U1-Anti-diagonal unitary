@@ -1,1 +1,26 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int N;
+    printf("Nhap N (2 <= N <= 5): ");
+    scanf("%d", &N);
+
+    int dim = 1 << N;
+
+    for(int idx = 0; idx < dim * dim; idx++) {
+        int row = idx / dim;
+        int col = idx % dim;
+
+        if(row + col == dim - 1)
+            printf("X");
+        else
+            printf(".");
+
+        if(col == dim - 1)
+            printf("\n");
+    }
+
+    return 0;
+}
 

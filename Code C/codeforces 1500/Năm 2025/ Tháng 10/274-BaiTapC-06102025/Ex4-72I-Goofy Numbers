@@ -1,1 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[20];
+    scanf("%s", s);
+
+    long long n = 0;
+    for (int i = 0; s[i]; i++) {
+        n = n * 10 + (s[i] - '0');
+    }
+
+    int divisible_by_some = 0;
+    int divisible_by_all = 1;
+
+    int len = strlen(s);
+    for (int i = 0; i < len; i++) {
+        int digit = s[i] - '0';
+
+        if (digit == 0) {
+            divisible_by_all = 0;
+            continue;
+        }
+
+        if (n % digit == 0) divisible_by_some = 1;
+        else divisible_by_all = 0;
+    }
+
+    if (divisible_by_all) printf("happier\n");
+    else if (divisible_by_some) printf("happy\n");
+    else printf("upset\n");
+
+    return 0;
+}
 

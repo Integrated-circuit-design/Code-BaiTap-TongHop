@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    long long n;
+    char start[10000010], end[10000010];
+    
+    scanf("%lld", &n);
+    scanf("%s", start);
+    scanf("%s", end);
+    
+    long long len_start = strlen(start);
+    long long len_end = strlen(end);
+    long long diff = len_end - len_start;
+    
+    if ((n + diff) % 2 != 0) {
+        printf("No\n");
+        return 0;
+    }
+    
+    long long add = (n + diff) / 2;
+    long long remove = n - add;
+    
+    if (add < 0 || remove < 0 || add > n || remove > n || remove > len_start || add > len_end) {
+        printf("No\n");
+        return 0;
+    }
+    
+    long long remaining = len_start - remove;
+    int possible = 1;
+    for (long long i = 0; i < remaining; i++) {
+        if (start[i] != end[i]) {
+            possible = 0;
+            break;
+        }
+    }
+    
+    if (possible) {
+        printf("Yes\n");
+    } else {
+        printf("No\n");
+    }
+    
+    return 0;
+}
 

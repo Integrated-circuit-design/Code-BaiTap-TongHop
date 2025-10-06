@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int mod_pow(int a, int b, int c) {
+    if (b == 0) return 1;
+    if (b % 2 == 0) {
+        int half = mod_pow(a, b/2, c);
+        return (half * half) % c;
+    } else {
+        return (a * mod_pow(a, b-1, c)) % c;
+    }
+}
+
+int main() {
+    int a, b, c;
+    printf("Nhap a: ");
+    scanf("%d", &a);
+    printf("Nhap b: ");
+    scanf("%d", &b);
+    printf("Nhap c: ");
+    scanf("%d", &c);
+    
+    int result = mod_pow(a, b, c);
+    printf("Ket qua: %d\n", result);
+    return 0;
+}
 

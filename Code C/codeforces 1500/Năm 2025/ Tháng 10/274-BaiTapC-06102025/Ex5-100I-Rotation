@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int k, x, y;
+    scanf("%d", &k);
+    scanf("%d %d", &x, &y);
+
+    int mod = k % 360;
+    double nx, ny;
+
+    if(mod == 0) {
+        nx = x;
+        ny = y;
+    } else if(mod == 90) {
+        nx = -y;
+        ny = x;
+    } else if(mod == 180) {
+        nx = -x;
+        ny = -y;
+    } else if(mod == 270) {
+        nx = y;
+        ny = -x;
+    } else {
+        double rad = mod * 3.141592653589793 / 180.0;
+        nx = x * cos(rad) - y * sin(rad);
+        ny = x * sin(rad) + y * cos(rad);
+    }
+
+    printf("%.8lf %.8lf\n", nx, ny);
+
+    return 0;
+}
 

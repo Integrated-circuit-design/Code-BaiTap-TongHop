@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef long long ll;
+
+int can_make(ll x, ll nb, ll ns, ll nc, ll pb, ll ps, ll pc, ll r,
+              ll needB, ll needS, ll needC) {
+    ll buyB = 0, buyS = 0, buyC = 0;
+
+    if (x * needB > nb) buyB = x * needB - nb;
+    if (x * needS > ns) buyS = x * needS - ns;
+    if (x * needC > nc) buyC = x * needC - nc;
+
+    __int128 total = 0;
+    total += (__int128)buyB * pb;
+    total += (__int128)buyS * ps;
+    total += (__int128)buyC * pc;
+
+    return (total <= r);
+}
+
+int main() {
+    char recipe[105];
+    ll nb, ns, nc, pb, ps, pc, r;
+    ll needB = 0, needS = 0, needC = 0;
+
+    scanf("%s", recipe);
+    scanf("%lld %lld %lld", &nb, &ns, &nc);
+    scanf("%lld %lld %lld", &pb, &ps, &pc);
+    scanf("%lld", &r);
+
+    for (int i = 0; recipe[i]; i++) {
+        if (recipe[i] == 'B') needB++;
+        else if (recipe[i] == 'S') needS++;
+        else if (recipe[i] == 'C') needC++;
+    }
+
+    if (needB == 0 && needS == 0 && needC == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    ll low = 0, high = 10000000000000LL, mid, ans = 0;
+
+    while (low <= high) {
+        mid = (low + high) / 2;
+        if (can_make(mid, nb, ns, nc, pb, ps, pc, r, needB, needS, needC)) {
+            ans = mid;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n+2];
+        for(int i = 1; i <= n; i++) a[i] = 0;
+
+        int start = 1, end = n;
+        int cnt = 1;
+
+        int seg_start[n+1], seg_end[n+1];
+        int seg_count = 0;
+        seg_start[seg_count] = 1;
+        seg_end[seg_count] = n;
+        seg_count++;
+
+        while (cnt <= n) {
+            int max_len = -1, idx = -1;
+            for(int i = 0; i < seg_count; i++) {
+                int l = seg_start[i], r = seg_end[i];
+                if(l <= r && r-l+1 > max_len) {
+                    max_len = r-l+1;
+                    idx = i;
+                }
+            }
+
+            int l = seg_start[idx], r = seg_end[idx];
+            int mid = (l + r) / 2;
+            a[mid] = cnt++;
+            
+            seg_start[idx] = seg_end[idx] = 0;
+
+            if(mid-1 >= l) {
+                seg_start[seg_count] = l;
+                seg_end[seg_count] = mid-1;
+                seg_count++;
+            }
+            if(mid+1 <= r) {
+                seg_start[seg_count] = mid+1;
+                seg_end[seg_count] = r;
+                seg_count++;
+            }
+        }
+
+        for(int i = 1; i <= n; i++)
+            printf("%d%c", a[i], i==n?'\n':' ');
+    }
+    return 0;
+}
 

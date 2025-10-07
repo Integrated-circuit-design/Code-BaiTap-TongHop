@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int a[MAXN];
+int tmp[MAXN];
+
+int get_divisors(int n, int divisors[]) {
+    int count = 0;
+    for (int i = 1; i * i <= n; i++) {
+        if (n % i == 0) {
+            divisors[count++] = i;
+            if (i != n / i) divisors[count++] = n / i;
+        }
+    }
+    return count;
+}
+
+int check_k(int n, int k, int a[]) {
+    if (k == n) return 1;
+
+    int m = 2;
+    while (m <= n) {
+        int valid = 1;
+        for (int start = 0; start < k; start++) {
+            int val = a[start] % m;
+            for (int i = start; i < n; i += k) {
+                if (a[i] % m != val) {
+                    valid = 0;
+                    break;
+                }
+            }
+            if (!valid) break;
+        }
+        if (valid) return 1;
+        m++;
+    }
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        int divisors[MAXN], dcount;
+        dcount = get_divisors(n, divisors);
+
+        int points = 0;
+        for (int i = 0; i < dcount; i++) {
+            int k = divisors[i];
+            if (check_k(n, k, a)) points++;
+        }
+
+        printf("%d\n", points);
+    }
+    return 0;
+}
 

@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+#define MAXN 105
+
+long long memo[MAXN][2];
+int n, k, d;
+
+long long dfs(int sum, int used) {
+    if (sum == 0)
+        return used;
+    if (sum < 0)
+        return 0;
+    if (memo[sum][used] != -1)
+        return memo[sum][used];
+    long long ways = 0;
+    for (int i = 1; i <= k; i++) {
+        int next_used = used || (i >= d);
+        ways = (ways + dfs(sum - i, next_used)) % MOD;
+    }
+    return memo[sum][used] = ways;
+}
+
+int main() {
+    scanf("%d %d %d", &n, &k, &d);
+    for (int i = 0; i <= n; i++)
+        memo[i][0] = memo[i][1] = -1;
+    printf("%lld\n", dfs(n, 0));
+    return 0;
+}
 

@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        int d[n];
+
+        for(int i = 0; i < n; i++) {
+            scanf("%d", &d[i]);
+        }
+
+        int min = d[0], max = d[0];
+        for(int i = 1; i < n; i++) {
+            if(d[i] < min) min = d[i];
+            if(d[i] > max) max = d[i];
+        }
+
+        long long candidate = (long long)min * max;
+        int valid = 1;
+
+        for(int i = 0; i < n; i++) {
+            if(candidate % d[i] != 0) {
+                valid = 0;
+                break;
+            }
+        }
+
+        int count = 0;
+        for(long long i = 2; i*i <= candidate; i++) {
+            if(candidate % i == 0) {
+                count++;
+                if(i*i != candidate) count++;
+            }
+        }
+
+        if(valid && count == n) {
+            printf("%lld\n", candidate);
+        } else {
+            printf("-1\n");
+        }
+    }
+
+    return 0;
+}
 

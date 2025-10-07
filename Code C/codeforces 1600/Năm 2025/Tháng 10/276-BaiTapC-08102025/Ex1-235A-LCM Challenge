@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+long long gcd(long long a, long long b) {
+    while (b) {
+        long long t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+long long lcm(long long a, long long b) {
+    return a / gcd(a, b) * b;
+}
+
+int main() {
+    long long n;
+    printf("Nhap n: ");
+    scanf("%lld", &n);
+
+    if (n <= 2) {
+        printf("%lld\n", n);
+        return 0;
+    }
+    if (n == 3) {
+        printf("6\n");
+        return 0;
+    }
+
+    long long ans = 0;
+
+    for (long long i = n; i >= n-50 && i > 0; i--) {
+        for (long long j = i; j >= n-50 && j > 0; j--) {
+            for (long long k = j; k >= n-50 && k > 0; k--) {
+                long long l = lcm(lcm(i, j), k);
+                if (l > ans) ans = l;
+            }
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

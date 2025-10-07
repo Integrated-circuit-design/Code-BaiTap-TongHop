@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef unsigned long long ull;
+
+ull findGCD(ull a, ull b) {
+    return (b == 0) ? a : findGCD(b, a % b);
+}
+
+ull computeDiffGCD(ull *arr, int n) {
+    ull base = arr[0];
+    ull g = 0;
+    for (int i = 1; i < n; i++) {
+        ull diff = (arr[i] > base) ? (arr[i] - base) : (base - arr[i]);
+        g = findGCD(g, diff);
+    }
+    return g;
+}
+
+ull queryResult(ull a1, ull b, ull g) {
+    return findGCD(a1 + b, g);
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    ull *a = (ull*)malloc(n * sizeof(ull));
+    ull *b = (ull*)malloc(m * sizeof(ull));
+
+    for (int i = 0; i < n; i++)
+        scanf("%llu", &a[i]);
+    for (int j = 0; j < m; j++)
+        scanf("%llu", &b[j]);
+
+    ull g = computeDiffGCD(a, n);
+
+    for (int j = 0; j < m; j++) {
+        ull res = queryResult(a[0], b[j], g);
+        printf("%llu%c", res, (j == m - 1) ? '\n' : ' ');
+    }
+
+    free(a);
+    free(b);
+    return 0;
+}
 

@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+#define MAX 1005
+
+int degree[MAX];
+
+void read_tree(int n) {
+    for (int i = 1; i <= n; i++) degree[i] = 0;
+    for (int i = 0; i < n - 1; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        degree[u]++;
+        degree[v]++;
+    }
+}
+
+const char* find_winner(int n, int x) {
+    if (degree[x] <= 1 || n % 2 == 0)
+        return "Ayush";
+    else
+        return "Ashish";
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+        read_tree(n);
+        printf("%s\n", find_winner(n, x));
+    }
+    return 0;
+}
 

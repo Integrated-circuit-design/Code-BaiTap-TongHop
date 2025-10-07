@@ -1,1 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+typedef long long ll;
+
+int n, k;
+int head[MAXN], to[MAXN * 2], nxt[MAXN * 2], ecnt = 0;
+int depth[MAXN], parent[MAXN], subtree[MAXN];
+ll value[MAXN];
+
+void addEdge(int u, int v) {
+    to[ecnt] = v;
+    nxt[ecnt] = head[u];
+    head[u] = ecnt++;
+}
+
+void bfs() {
+    static int queue[MAXN];
+    int front = 0, back = 0;
+    queue[back++] = 1;
+    parent[1] = 0;
+    depth[1] = 0;
+
+    while (front < back) {
+        int u = queue[front++];
+        for (int e = head[u]; e != -1; e = nxt[e]) {
+            int v = to[e];
+            if (v == parent[u]) continue;
+            parent[v] = u;
+            depth[v] = depth[u] + 1;
+            queue[back++] = v;
+        }
+    }
+}
+
+void computeSubtree() {
+    static int stack[MAXN];
+    int top = 0;
+    stack[top++] = 1;
+
+    static int order[MAXN];
+    int ord_size = 0;
+
+    while (top) {
+        int u = stack[--top];
+        order[ord_size++] = u;
+        for (int e = head[u]; e != -1; e = nxt[e]) {
+            int v = to[e];
+            if (v == parent[u]) continue;
+            stack[top++] = v;
+        }
+    }
+
+    for (int i = ord_size - 1; i >= 0; i--) {
+        int u = order[i];
+        subtree[u] = 1;
+        for (int e = head[u]; e != -1; e = nxt[e]) {
+            int v = to[e];
+            if (v == parent[u]) continue;
+            subtree[u] += subtree[v];
+        }
+    }
+}
+
+int cmpDesc(const void *a, const void *b) {
+    ll x = *(ll*)a, y = *(ll*)b;
+    return (x < y) ? 1 : (x > y) ? -1 : 0;
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+
+    for (int i = 1; i <= n; i++) head[i] = -1;
+
+    for (int i = 0; i < n - 1; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        addEdge(u, v);
+        addEdge(v, u);
+    }
+
+    bfs();
+    computeSubtree();
+
+    for (int i = 1; i <= n; i++) {
+        value[i] = (ll)depth[i] - (ll)(subtree[i] - 1);
+    }
+
+    qsort(value + 1, n, sizeof(ll), cmpDesc);
+
+    ll ans = 0;
+    for (int i = 1; i <= k; i++) ans += value[i];
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 105
+#define MAXC 26
+
+int n;
+char names[MAXN][105];
+int graph[MAXC][MAXC];
+int visited[MAXC];
+char result[MAXC + 1];
+int pos = 25;
+int impossible = 0;
+
+void dfs(int u) {
+    visited[u] = 1;
+    for (int v = 0; v < MAXC; v++) {
+        if (graph[u][v]) {
+            if (visited[v] == 1) {
+                impossible = 1;
+                return;
+            }
+            if (visited[v] == 0)
+                dfs(v);
+        }
+    }
+    visited[u] = 2;
+    result[pos--] = u + 'a';
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+        scanf("%s", names[i]);
+
+    for (int i = 0; i < n - 1; i++) {
+        char *a = names[i];
+        char *b = names[i + 1];
+        int lenA = strlen(a);
+        int lenB = strlen(b);
+        int found = 0;
+
+        for (int j = 0; j < lenA && j < lenB; j++) {
+            if (a[j] != b[j]) {
+                int u = a[j] - 'a';
+                int v = b[j] - 'a';
+                graph[u][v] = 1;
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found && lenA > lenB) {
+            printf("Impossible\n");
+            return 0;
+        }
+    }
+
+    for (int i = 0; i < MAXC; i++) {
+        if (visited[i] == 0)
+            dfs(i);
+        if (impossible) {
+            printf("Impossible\n");
+            return 0;
+        }
+    }
+
+    result[26] = '\0';
+    printf("%s\n", result);
+    return 0;
+}
 

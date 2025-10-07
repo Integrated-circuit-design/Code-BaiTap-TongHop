@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+void solve_case(long long n, long long k) {
+    long long arr[k];
+
+    for (long long i = 0; i < k; i++) arr[i] = 1;
+
+    long long sum = k;
+    long long left = n - sum;
+
+    if (k >= 3) {
+        long long idx = k - 3;
+
+        if (left % 2 == 0) {
+            arr[idx] += left / 2;
+            arr[idx + 1] += left / 2 - 1;
+            arr[idx + 2] += 1;
+        } else {
+            arr[idx] += left / 2;
+            arr[idx + 1] += left / 2;
+            arr[idx + 2] += 1;
+        }
+    }
+
+    for (long long i = 0; i < k; i++) {
+        printf("%lld ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+        solve_case(n, k);
+    }
+    return 0;
+}
 

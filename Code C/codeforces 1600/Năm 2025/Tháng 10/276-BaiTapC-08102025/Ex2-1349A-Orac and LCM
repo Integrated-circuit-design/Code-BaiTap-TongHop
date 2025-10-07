@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int tmp = a % b;
+        a = b;
+        b = tmp;
+    }
+    return a;
+}
+
+long long lcm(long long a, long long b) {
+    return a / gcd(a, b) * b;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int a[n];
+    for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+    int min_val = a[0];
+    for(int i = 1; i < n; i++)
+        if(a[i] < min_val) min_val = a[i];
+
+    long long result = 0;
+    for(int i = 0; i < n; i++) {
+        for(int j = i+1; j < n; j++) {
+            long long val = lcm(a[i], a[j]);
+            if(result == 0) result = val;
+            else result = gcd(result, val);
+        }
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

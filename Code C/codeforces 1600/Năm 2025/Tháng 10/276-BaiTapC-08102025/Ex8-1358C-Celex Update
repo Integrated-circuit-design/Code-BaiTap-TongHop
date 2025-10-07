@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+long long distinctSums(long long x1, long long y1, long long x2, long long y2) {
+    if(x1 == x2 || y1 == y2) {
+        return 1;
+    }
+    return (x2 - x1) + (y2 - y1);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        long long x1, y1, x2, y2;
+        scanf("%lld %lld %lld %lld", &x1, &y1, &x2, &y2);
+
+        long long result = distinctSums(x1, y1, x2, y2);
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

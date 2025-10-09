@@ -1,1 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+int t, n, k;
+char s[MAXN];
+
+int char_to_int(char c) {
+    return c - 'a';
+}
+
+char int_to_char(int x) {
+    return x + 'a';
+}
+
+int find_min_char(char *arr, int len) {
+    char min_c = 'z'+1;
+    for (int i = 0; i < len; i++) {
+        if (arr[i] < min_c) min_c = arr[i];
+    }
+    return min_c;
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+
+        int count[26] = {0};
+        for (int i = 0; i < n; i++) count[char_to_int(s[i])]++;
+
+        char sorted[MAXN];
+        int idx = 0;
+        for (int i = 0; i < 26; i++) {
+            while (count[i]--) {
+                sorted[idx++] = int_to_char(i);
+            }
+        }
+
+        if (sorted[0] != sorted[k-1]) {
+            putchar(sorted[k-1]);
+            putchar('\n');
+        } else if (sorted[k] == '\0') {
+            putchar(sorted[0]);
+            putchar('\n');
+        } else {
+            putchar(sorted[0]);
+            int all_same = 1;
+            for (int i = k; i < n; i++) {
+                if (sorted[i] != sorted[k]) {
+                    all_same = 0;
+                    break;
+                }
+            }
+            if (!all_same) {
+                for (int i = k; i < n; i++) putchar(sorted[i]);
+                putchar('\n');
+            } else {
+                int rem = (n - k + k - 1) / k;
+                for (int i = 0; i < rem; i++) putchar(sorted[k]);
+                putchar('\n');
+            }
+        }
+    }
+    return 0;
+}
 

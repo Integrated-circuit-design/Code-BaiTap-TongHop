@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        long long b[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &b[i]);
+        }
+
+        int isPossible = 1;
+
+        int checked[n];
+        for (int i = 0; i < n; i++) checked[i] = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (checked[i]) continue;
+
+            long long val = b[i];
+            int count = 1;
+            for (int j = i+1; j < n; j++) {
+                if (b[j] == val) {
+                    count++;
+                    checked[j] = 1;
+                }
+            }
+
+            if (count > 2) {
+                isPossible = 0;
+                break;
+            }
+        }
+
+        if (isPossible) printf("YES\n");
+        else printf("NO\n");
+    }
+
+    return 0;
+}
 

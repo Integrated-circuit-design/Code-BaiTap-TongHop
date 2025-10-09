@@ -1,1 +1,41 @@
+#include <stdio.h>
+#define ll long long
+#define MAXN 5005
+#define max(a,b) ((a)>(b)?(a):(b))
+
+ll a[MAXN], b[MAXN];
+ll preA[MAXN], preB[MAXN], base[MAXN];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i) scanf("%lld", &a[i]);
+    for (int i = 1; i <= n; ++i) scanf("%lld", &b[i]);
+
+    ll baseSum = 0;
+    for (int i = 1; i <= n; ++i) baseSum += a[i] * b[i];
+
+    ll ans = baseSum;
+
+    for (int l = 1; l <= n; ++l) {
+        ll curSum = baseSum;
+        for (int r = l + 1; r <= n; ++r) {
+            curSum -= a[l] * b[l] + a[r] * b[r];
+            curSum += a[l] * b[r] + a[r] * b[l];
+
+            ll temp = a[l];
+            a[l] = a[r];
+            a[r] = temp;
+
+            ans = max(ans, curSum);
+
+            temp = a[l];
+            a[l] = a[r];
+            a[r] = temp;
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

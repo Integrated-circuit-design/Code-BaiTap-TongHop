@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int neighbor[MAXN];
+int visited[MAXN];
+
+int dfs(int u) {
+    visited[u] = 1;
+    int next = neighbor[u];
+    if (!visited[next])
+        return 1 + dfs(next);
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &neighbor[i]);
+            visited[i] = 0;
+        }
+
+        int minDances = 0;
+        int maxDances = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (!visited[i]) {
+                int len = dfs(i);
+                minDances++;
+                maxDances += (len + 1)/2;
+            }
+        }
+
+        printf("%d %d\n", minDances, maxDances);
+    }
+
+    return 0;
+}
 

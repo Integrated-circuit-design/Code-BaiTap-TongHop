@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int testCases;
+    scanf("%d", &testCases);
+
+    for (int t = 0; t < testCases; t++) {
+        int n;
+        scanf("%d", &n);
+
+        long long positions[n];
+        long long dressTime[n];
+
+        for (int i = 0; i < n; i++) scanf("%lld", &positions[i]);
+        for (int i = 0; i < n; i++) scanf("%lld", &dressTime[i]);
+
+        long long maxStart = -1e18;
+        long long minEnd = 1e18;
+
+        for (int i = 0; i < n; i++) {
+            long long start = positions[i] - dressTime[i];
+            long long end = positions[i] + dressTime[i];
+
+            if (start > maxStart) maxStart = start;
+            if (end < minEnd) minEnd = end;
+        }
+
+        double optimalPoint = (maxStart + minEnd) / 2.0;
+        printf("%.10lf\n", optimalPoint);
+    }
+
+    return 0;
+}
 

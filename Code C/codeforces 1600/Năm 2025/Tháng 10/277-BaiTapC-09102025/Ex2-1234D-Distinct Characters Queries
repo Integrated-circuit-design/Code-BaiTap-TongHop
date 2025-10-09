@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+int n, q;
+int seg[2 * MAXN];
+char s[MAXN];
+
+int merge(int a, int b) {
+    return a | b;
+}
+
+void build() {
+    for (int i = 0; i < n; i++)
+        seg[n + i] = 1 << (s[i] - 'a');
+    for (int i = n - 1; i > 0; i--)
+        seg[i] = merge(seg[i << 1], seg[i << 1 | 1]);
+}
+
+void update(int pos, char c) {
+    pos += n - 1;
+    seg[pos] = 1 << (c - 'a');
+    while (pos > 1) {
+        pos >>= 1;
+        seg[pos] = merge(seg[pos << 1], seg[pos << 1 | 1]);
+    }
+}
+
+int query(int l, int r) {
+    int res = 0;
+    for (l += n - 1, r += n - 1; l <= r; l >>= 1, r >>= 1) {
+        if (l & 1) res = merge(res, seg[l++]);
+        if (!(r & 1)) res = merge(res, seg[r--]);
+    }
+    return res;
+}
+
+int main() {
+    scanf("%s", s);
+    n = strlen(s);
+    scanf("%d", &q);
+    build();
+    while (q--) {
+        int type;
+        scanf("%d", &type);
+        if (type == 1) {
+            int pos; char c;
+            scanf("%d %c", &pos, &c);
+            update(pos, c);
+            s[pos - 1] = c;
+        } else {
+            int l, r;
+            scanf("%d %d", &l, &r);
+            int mask = query(l, r);
+            int ans = __builtin_popcount(mask);
+            printf("%d\n", ans);
+        }
+    }
+    return 0;
+}
 

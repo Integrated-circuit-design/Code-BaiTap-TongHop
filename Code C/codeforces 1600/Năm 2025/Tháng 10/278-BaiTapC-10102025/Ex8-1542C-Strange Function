@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdint.h>
+
+#define MOD 1000000007ULL
+typedef unsigned long long ull;
+
+ull gcd(ull a, ull b) {
+    while (b != 0) {
+        ull tmp = b;
+        b = a % b;
+        a = tmp;
+    }
+    return a;
+}
+
+ull lcm(ull a, ull b) {
+    return a / gcd(a, b) * b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        ull n;
+        scanf("%llu", &n);
+
+        ull ans = 0;
+        ull k = 2;
+        ull current_lcm = 1;
+
+        while (current_lcm <= n) {
+            ull next_lcm = lcm(current_lcm, k);
+            ull end = (next_lcm <= n) ? next_lcm - 1 : n;
+
+            ull count = end - current_lcm + 1;
+            ans = (ans + (count % MOD) * (k % MOD) % MOD) % MOD;
+
+            current_lcm = next_lcm;
+            k++;
+        }
+
+        printf("%llu\n", ans);
+    }
+
+    return 0;
+}
 

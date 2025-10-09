@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int used[MAXN];
+long long a[MAXN];
+
+int check_hilbert(int n) {
+    for (int i = 0; i < n; i++)
+        used[i] = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long move = a[i] % n;
+        long long new_pos = (i + move + n) % n;
+        if (used[new_pos]) return 0;
+        used[new_pos] = 1;
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++)
+            scanf("%lld", &a[i]);
+        if (check_hilbert(n))
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+    return 0;
+}
 

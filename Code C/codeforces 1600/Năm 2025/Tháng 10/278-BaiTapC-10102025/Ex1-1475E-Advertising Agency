@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp_asc(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+long long C(int n, int k) {
+    if (k > n) return 0;
+    if (k > n - k) k = n - k;
+    long long res = 1;
+    for (int i = 1; i <= k; i++) {
+        res = res * (n - i + 1) / i;
+    }
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        int a[n];
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+        qsort(a, n, sizeof(int), cmp_asc);
+        int threshold = a[n - k];
+        int total = 0;
+        for (int i = 0; i < n; i++)
+            if (a[i] == threshold) total++;
+        int selected = 0;
+        for (int i = n - k; i < n; i++)
+            if (a[i] == threshold) selected++;
+        printf("%lld\n", C(total, selected));
+    }
+    return 0;
+}
 

@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define MAXN 200005
+#define ll long long
+#define max(a,b) ((a) > (b) ? (a) : (b))
+
+int n;
+int l[MAXN], r[MAXN];
+int head[MAXN], to[MAXN * 2], nxt[MAXN * 2], edge_cnt;
+ll dp[MAXN][2];
+
+void add_edge(int u, int v) {
+    to[++edge_cnt] = v;
+    nxt[edge_cnt] = head[u];
+    head[u] = edge_cnt;
+}
+
+void dfs(int v, int parent) {
+    dp[v][0] = dp[v][1] = 0;
+    for (int e = head[v]; e; e = nxt[e]) {
+        int u = to[e];
+        if (u == parent) continue;
+        dfs(u, v);
+        ll left_best = max(
+            dp[u][0] + llabs(l[v] - l[u]),
+            dp[u][1] + llabs(l[v] - r[u])
+        );
+        ll right_best = max(
+            dp[u][0] + llabs(r[v] - l[u]),
+            dp[u][1] + llabs(r[v] - r[u])
+        );
+        dp[v][0] += left_best;
+        dp[v][1] += right_best;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++) {
+            scanf("%d %d", &l[i], &r[i]);
+            head[i] = 0;
+        }
+        edge_cnt = 0;
+        for (int i = 1; i < n; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            add_edge(u, v);
+            add_edge(v, u);
+        }
+        dfs(1, 0);
+        printf("%lld\n", max(dp[1][0], dp[1][1]));
+    }
+    return 0;
+}
 

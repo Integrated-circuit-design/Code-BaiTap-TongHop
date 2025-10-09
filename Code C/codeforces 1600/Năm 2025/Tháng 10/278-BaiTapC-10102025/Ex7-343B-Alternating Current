@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    char wire;
+    int prev = -1;
+    int changes = 0;
+
+    while ((wire = getchar()) != '\n' && wire != EOF) {
+        int current = (wire == '+') ? 1 : 0;
+
+        if (prev != -1 && current != prev) {
+            changes++;
+        }
+        prev = current;
+    }
+
+    puts((changes % 2 == 0) ? "Yes" : "No");
+
+    return 0;
+}
 

@@ -1,1 +1,39 @@
+#include <stdio.h>
+#define ll long long
+#define max(a,b) ((a)>(b)?(a):(b))
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        ll a[n];
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+        ll base = 0;
+        for (int i = 0; i < n; i += 2) base += a[i];
+
+        ll best_gain = 0;
+        ll cur_gain = 0;
+
+        for (int i = 0; i + 1 < n; i += 2) {
+            ll diff = a[i + 1] - a[i];
+            cur_gain += diff;
+            if (cur_gain < 0) cur_gain = 0;
+            if (cur_gain > best_gain) best_gain = cur_gain;
+        }
+
+        cur_gain = 0;
+        for (int i = 1; i + 1 < n; i += 2) {
+            ll diff = a[i] - a[i + 1];
+            cur_gain += diff;
+            if (cur_gain < 0) cur_gain = 0;
+            if (cur_gain > best_gain) best_gain = cur_gain;
+        }
+
+        printf("%lld\n", base + best_gain);
+    }
+    return 0;
+}
 

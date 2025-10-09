@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAXN 200005
+#define MAXE 400010
+
+int head[MAXN], to[MAXE], nxt[MAXE], ecnt;
+int color[MAXN];
+bool used[MAXN];
+int q[MAXN];
+
+void addEdge(int u, int v) {
+    to[++ecnt] = v;
+    nxt[ecnt] = head[u];
+    head[u] = ecnt;
+}
+
+void resetGraph(int n) {
+    for (int i = 1; i <= n; ++i) {
+        head[i] = 0;
+        used[i] = false;
+        color[i] = -1;
+    }
+    ecnt = 0;
+}
+
+bool isBipartite(int start) {
+    int front = 0, back = 0;
+    q[back++] = start;
+    used[start] = true;
+    color[start] = 0;
+    while (front < back) {
+        int u = q[front++];
+        for (int e = head[u]; e; e = nxt[e]) {
+            int v = to[e];
+            if (!used[v]) {
+                used[v] = true;
+                color[v] = 1 - color[u];
+                q[back++] = v;
+            } else if (color[v] == color[u]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        resetGraph(n);
+        bool ok = true;
+        for (int i = 0; i < n; ++i) {
+            int a, b;
+            scanf("%d %d", &a, &b);
+            if (a == b) ok = false;
+            addEdge(a, b);
+            addEdge(b, a);
+        }
+        if (!ok) {
+            printf("NO\n");
+            continue;
+        }
+        for (int i = 1; i <= n && ok; ++i) {
+            if (!used[i]) {
+                if (!isBipartite(i)) {
+                    ok = false;
+                    break;
+                }
+            }
+        }
+        printf(ok ? "YES\n" : "NO\n");
+    }
+    return 0;
+}
 

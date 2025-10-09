@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define ll long long
+#define MAXN 100005
+
+ll a[MAXN];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) scanf("%lld", &a[i]);
+
+    if (n == 1) {
+        printf("1 1\n%lld\n", -a[1]);
+        printf("1 1\n0\n");
+        printf("1 1\n0\n");
+        return 0;
+    }
+
+    printf("1 1\n");
+    ll t = -a[1];
+    printf("%lld\n", t);
+    a[1] = 0;
+
+    printf("2 %d\n", n);
+    for (int i = 2; i <= n; i++) {
+        ll len = n - 1;
+        ll remainder = a[i] % len;
+        if (remainder < 0) remainder += len;
+        ll value = remainder * len;
+        a[i] += value;
+        printf("%lld%c", value, i == n ? '\n' : ' ');
+    }
+
+    printf("1 %d\n", n);
+    for (int i = 1; i <= n; i++) {
+        printf("%lld%c", -a[i], i == n ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

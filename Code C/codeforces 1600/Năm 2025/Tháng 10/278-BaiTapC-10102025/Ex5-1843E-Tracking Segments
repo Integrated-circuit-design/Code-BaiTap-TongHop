@@ -1,1 +1,82 @@
+#include <stdio.h>
+
+#define MAX_N 100005
+
+typedef struct {
+    int l, r;
+} Segment;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        Segment seg[MAX_N];
+        for (int i = 0; i < m; i++) {
+            scanf("%d %d", &seg[i].l, &seg[i].r);
+        }
+
+        int q;
+        scanf("%d", &q);
+
+        int changeTime[MAX_N];
+        for (int i = 1; i <= n; i++) changeTime[i] = 0;
+
+        int x;
+        for (int i = 1; i <= q; i++) {
+            scanf("%d", &x);
+            changeTime[x] = i;
+        }
+
+        int earliest = q + 1;
+
+        for (int i = 0; i < m; i++) {
+            int l = seg[i].l;
+            int r = seg[i].r;
+            int len = r - l + 1;
+            int need = len / 2 + 1;
+
+            int maxTimes[need];
+            for (int j = 0; j < need; j++) maxTimes[j] = 0;
+
+            int count = 0;
+            for (int j = l; j <= r; j++) {
+                if (changeTime[j] > 0) {
+                    if (count < need) {
+                        maxTimes[count++] = changeTime[j];
+                        for (int p = count - 1; p > 0; p--) {
+                            if (maxTimes[p] < maxTimes[p - 1]) {
+                                int tmp = maxTimes[p];
+                                maxTimes[p] = maxTimes[p - 1];
+                                maxTimes[p - 1] = tmp;
+                            } else break;
+                        }
+                    } else if (changeTime[j] < maxTimes[need - 1]) {
+                        maxTimes[need - 1] = changeTime[j];
+                        for (int p = need - 1; p > 0; p--) {
+                            if (maxTimes[p] < maxTimes[p - 1]) {
+                                int tmp = maxTimes[p];
+                                maxTimes[p] = maxTimes[p - 1];
+                                maxTimes[p - 1] = tmp;
+                            } else break;
+                        }
+                    }
+                }
+            }
+
+            if (count == need) {
+                int segmentTime = maxTimes[need - 1];
+                if (segmentTime < earliest) earliest = segmentTime;
+            }
+        }
+
+        if (earliest > q) printf("-1\n");
+        else printf("%d\n", earliest);
+    }
+
+    return 0;
+}
 

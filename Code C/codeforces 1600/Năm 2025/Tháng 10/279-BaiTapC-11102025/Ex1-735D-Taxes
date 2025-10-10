@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+long long smallest_divisor(long long n) {
+    if (n % 2 == 0) return 2;
+    for (long long i = 3; i * i <= n; i += 2) {
+        if (n % i == 0)
+            return i;
+    }
+    return n;
+}
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    if (n % 2 == 0) {
+        printf("%lld\n", n / 2);
+        return 0;
+    }
+
+    long long p = smallest_divisor(n);
+
+    if (p == n) {
+        printf("%lld\n", n - 1);
+    } else {
+        long long result = (n - p) / 2 + 1;
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

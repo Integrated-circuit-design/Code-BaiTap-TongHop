@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+#define INF 1000000000000000LL
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int n, k;
+    scanf("%d%d", &n, &k);
+
+    int *both = malloc(n * sizeof(int));
+    int *onlyA = malloc(n * sizeof(int));
+    int *onlyB = malloc(n * sizeof(int));
+    int nb = 0, na = 0, nc = 0;
+
+    for (int i = 0; i < n; i++) {
+        int t, a, b;
+        scanf("%d%d%d", &t, &a, &b);
+        if (a && b) both[nb++] = t;
+        else if (a) onlyA[na++] = t;
+        else if (b) onlyB[nc++] = t;
+    }
+
+    if (nb + (na < nc ? na : nc) < k) {
+        printf("-1\n");
+        free(both); free(onlyA); free(onlyB);
+        return 0;
+    }
+
+    qsort(both, nb, sizeof(int), cmp);
+    qsort(onlyA, na, sizeof(int), cmp);
+    qsort(onlyB, nc, sizeof(int), cmp);
+
+    int pairs = (na < nc ? na : nc);
+    int *combine = malloc(pairs * sizeof(int));
+    for (int i = 0; i < pairs; i++)
+        combine[i] = onlyA[i] + onlyB[i];
+
+    qsort(combine, pairs, sizeof(int), cmp);
+
+    ll *sumBoth = calloc(nb + 1, sizeof(ll));
+    ll *sumComb = calloc(pairs + 1, sizeof(ll));
+
+    for (int i = 1; i <= nb; i++) sumBoth[i] = sumBoth[i - 1] + both[i - 1];
+    for (int i = 1; i <= pairs; i++) sumComb[i] = sumComb[i - 1] + combine[i - 1];
+
+    ll ans = INF;
+    for (int x = 0; x <= k && x <= nb; x++) {
+        int need = k - x;
+        if (need <= pairs) {
+            ll total = sumBoth[x] + sumComb[need];
+            if (total < ans) ans = total;
+        }
+    }
+
+    if (ans == INF) printf("-1\n");
+    else printf("%lld\n", ans);
+
+    free(both); free(onlyA); free(onlyB);
+    free(combine); free(sumBoth); free(sumComb);
+    return 0;
+}
 

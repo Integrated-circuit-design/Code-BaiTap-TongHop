@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+#define min(a,b) ((a)<(b)?(a):(b))
+
+int cmp_ll(const void *x, const void *y) {
+    ll a = *(ll*)x, b = *(ll*)y;
+    return (a > b) - (a < b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        ll k;
+        scanf("%d %lld", &n, &k);
+
+        ll *a = (ll*)malloc(sizeof(ll) * n);
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+        qsort(a, n, sizeof(ll), cmp_ll);
+
+        ll total = 0;
+        for (int i = 0; i < n; i++) total += a[i];
+
+        if (total <= k) {
+            puts("0");
+            free(a);
+            continue;
+        }
+
+        ll suffix[200005];
+        suffix[n] = 0;
+        for (int i = n - 1; i >= 0; i--)
+            suffix[i] = suffix[i + 1] + a[i];
+
+        ll best = total - k;
+        for (int take = 1; take < n; take++) {
+            ll remain_sum = total - suffix[n - take];
+            ll equal_value = a[0];
+            ll new_sum = remain_sum + (ll)take * equal_value;
+
+            if (new_sum <= k) {
+                if (take < best) best = take;
+            } else {
+                ll over = new_sum - k;
+                ll reduce_each = (over + (take + 1) - 1) / (take + 1);
+                ll steps = take + reduce_each;
+                if (steps < best) best = steps;
+            }
+        }
+
+        printf("%lld\n", best);
+        free(a);
+    }
+    return 0;
+}
 

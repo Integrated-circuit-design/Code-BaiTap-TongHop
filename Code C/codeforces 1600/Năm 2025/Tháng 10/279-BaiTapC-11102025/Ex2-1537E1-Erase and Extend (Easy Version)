@@ -1,1 +1,23 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, k;
+    char str[5005];
+    scanf("%d %d %s", &n, &k, str);
+
+    int prefix = 1;
+    for (int i = 1; i < n; i++) {
+        char a = str[i];
+        char b = str[i % prefix];
+        if (a > b) break;
+        if (a < b) prefix = i + 1;
+    }
+
+    for (int i = 0; i < k; i++) {
+        printf("%c", str[i % prefix]);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+void build_pattern(int a, int b, int pattern[], ll prefix[]) {
+    ll len = (ll)a * b;
+    prefix[0] = 0;
+    for (ll i = 0; i < len; i++) {
+        int cond = ((i % a) % b != (i % b) % a);
+        pattern[i] = cond;
+        prefix[i + 1] = prefix[i] + cond;
+    }
+}
+
+ll get_count(ll x, ll len, ll prefix[]) {
+    if (x < 0) return 0;
+    ll full = x / len;
+    ll rem = x % len;
+    return full * prefix[len] + prefix[rem + 1];
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a, b, q;
+        scanf("%d %d %d", &a, &b, &q);
+        ll len = (ll)a * b;
+
+        int pattern[40010];
+        ll prefix[40011];
+
+        build_pattern(a, b, pattern, prefix);
+
+        for (int i = 0; i < q; i++) {
+            ll l, r;
+            scanf("%lld %lld", &l, &r);
+            ll res = get_count(r, len, prefix) - get_count(l - 1, len, prefix);
+            printf("%lld%c", res, (i == q - 1) ? '\n' : ' ');
+        }
+    }
+
+    return 0;
+}
 

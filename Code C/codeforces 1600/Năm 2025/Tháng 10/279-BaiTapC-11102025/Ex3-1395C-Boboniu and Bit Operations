@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int n, m;
+int a[205], b[205];
+
+int canAchieve(int limit) {
+    for (int i = 0; i < n; i++) {
+        int ok = 0;
+        for (int j = 0; j < m; j++) {
+            int value = a[i] & b[j];
+            if (((value | limit) == limit)) {
+                ok = 1;
+                break;
+            }
+        }
+        if (!ok) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+    for (int j = 0; j < m; j++) scanf("%d", &b[j]);
+
+    int ans = 0;
+    for (int mask = 0; mask < 512; mask++) {
+        if (canAchieve(mask)) {
+            ans = mask;
+            break;
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

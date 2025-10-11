@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char a[MAXN], b[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[MAXN];
+        scanf("%d %s", &n, s);
+
+        int ones = 0;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '1') ones++;
+        }
+
+        if (ones % 2 != 0 || s[0] != '1' || s[n-1] != '1') {
+            printf("NO\n");
+            continue;
+        }
+
+        printf("YES\n");
+
+        int half = ones / 2;
+        int ones_seen = 0;
+        int toggle = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '1') {
+                if (ones_seen < half) {
+                    a[i] = b[i] = '(';
+                } else {
+                    a[i] = b[i] = ')';
+                }
+                ones_seen++;
+            } else {
+                if (toggle) {
+                    a[i] = '('; b[i] = ')';
+                } else {
+                    a[i] = ')'; b[i] = '(';
+                }
+                toggle ^= 1;
+            }
+        }
+
+        a[n] = b[n] = '\0';
+
+        printf("%s\n%s\n", a, b);
+    }
+    return 0;
+}
 

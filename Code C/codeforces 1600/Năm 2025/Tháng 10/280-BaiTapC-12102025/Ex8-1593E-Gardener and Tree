@@ -1,1 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 400005
+
+int n, k;
+int adj[MAXN][20];
+int neighbor_count[MAXN];
+int level[MAXN];
+int visited[MAXN];
+
+void dfs(int u, int parent) {
+    visited[u] = 1;
+    int max_lvl = 0;
+
+    for (int i = 0; i < neighbor_count[u]; i++) {
+        int v = adj[u][i];
+        if (v != parent) {
+            dfs(v, u);
+            if (level[v] > max_lvl) max_lvl = level[v];
+        }
+    }
+
+    if (neighbor_count[u] == 1 && parent != 0) {
+        level[u] = 1;
+    } else {
+        level[u] = max_lvl + 1;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d %d", &n, &k);
+
+        for (int i = 1; i <= n; i++) {
+            neighbor_count[i] = 0;
+            visited[i] = 0;
+            level[i] = 0;
+        }
+
+        for (int i = 0; i < n-1; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            adj[u][neighbor_count[u]++] = v;
+            adj[v][neighbor_count[v]++] = u;
+        }
+
+        if (n == 1) {
+            printf("0\n");
+            continue;
+        }
+
+        dfs(1, 0);
+
+        int remaining = 0;
+        for (int i = 1; i <= n; i++) {
+            if (level[i] > k) remaining++;
+        }
+
+        printf("%d\n", remaining);
+    }
+
+    return 0;
+}
 

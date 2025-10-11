@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int a, b;
+} Friend;
+
+int cmp(const void *p1, const void *p2) {
+    Friend *f1 = (Friend*)p1;
+    Friend *f2 = (Friend*)p2;
+    int sum1 = f1->a + f1->b;
+    int sum2 = f2->a + f2->b;
+    return sum1 - sum2;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        Friend f[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &f[i].a, &f[i].b);
+        }
+
+        qsort(f, n, sizeof(Friend), cmp);
+
+        int invited = 0;
+        for (int i = 0; i < n; i++) {
+            if (invited >= f[i].b && invited <= f[i].a) {
+                invited++;
+            }
+        }
+
+        printf("%d\n", invited);
+    }
+
+    return 0;
+}
 

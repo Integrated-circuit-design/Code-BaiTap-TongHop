@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+typedef struct {
+    int value;
+    int last_index;
+    ll sum;
+} Element;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n];
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        Element *map = (Element*)malloc(n * sizeof(Element));
+        int m = 0;
+        ll ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            int found = 0;
+            for (int j = 0; j < m; j++) {
+                if (map[j].value == a[i]) {
+                    ans += map[j].sum * (n - i);
+                    map[j].sum += (i + 1);
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found) {
+                map[m].value = a[i];
+                map[m].last_index = i;
+                map[m].sum = i + 1;
+                m++;
+            }
+        }
+
+        printf("%lld\n", ans);
+        free(map);
+    }
+    return 0;
+}
 

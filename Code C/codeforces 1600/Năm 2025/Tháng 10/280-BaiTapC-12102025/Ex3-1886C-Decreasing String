@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+
+char s[1000005];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        scanf("%s", s);
+        long long pos;
+        scanf("%lld", &pos);
+        int n = strlen(s);
+
+        int removed[1000005];
+        int removed_count = 0;
+
+        int len = n;
+
+        while(len > 0) {
+            if(pos <= len) {
+                int idx = 0, skipped = 0;
+                for(int i = 0; i < n; i++) {
+                    int is_removed = 0;
+                    for(int j = 0; j < removed_count; j++) {
+                        if(removed[j] == i) { is_removed = 1; break; }
+                    }
+                    if(is_removed) continue;
+
+                    skipped++;
+                    if(skipped == pos) {
+                        printf("%c", s[i]);
+                        break;
+                    }
+                }
+                break;
+            } else {
+                pos -= len;
+
+                int min_idx = -1;
+                for(int i = 0; i < n; i++) {
+                    int is_removed = 0;
+                    for(int j = 0; j < removed_count; j++)
+                        if(removed[j] == i) { is_removed = 1; break; }
+                    if(is_removed) continue;
+
+                    if(min_idx == -1 || s[i] < s[min_idx])
+                        min_idx = i;
+                }
+
+                removed[removed_count++] = min_idx;
+                len--;
+            }
+        }
+    }
+    return 0;
+}
 

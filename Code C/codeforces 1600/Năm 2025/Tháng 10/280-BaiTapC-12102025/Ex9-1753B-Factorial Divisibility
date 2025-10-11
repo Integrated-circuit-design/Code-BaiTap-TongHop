@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll factorial(int k) {
+    ll res = 1;
+    for (int i = 2; i <= k; i++) res *= i;
+    return res;
+}
+
+int main() {
+    int n, x;
+    scanf("%d %d", &n, &x);
+
+    int hasLarge = 0;
+    ll sum = 0;
+    int ai;
+
+    int xSmall = (x <= 20);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &ai);
+
+        if (ai >= x) hasLarge = 1;
+
+        if (xSmall) sum += factorial(ai);
+    }
+
+    if (hasLarge) {
+        printf("Yes\n");
+        return 0;
+    }
+
+    if (!xSmall) {
+        printf("No\n");
+        return 0;
+    }
+
+    if (sum % factorial(x) == 0) printf("Yes\n");
+    else printf("No\n");
+
+    return 0;
+}
 

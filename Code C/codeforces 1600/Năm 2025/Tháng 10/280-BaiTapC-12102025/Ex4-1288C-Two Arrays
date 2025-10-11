@@ -1,1 +1,29 @@
+#include <stdio.h>
+#define MOD 1000000007
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    long long dpA[11][1001] = {0};
+    long long sum[1001];
+
+    for (int i = 1; i <= n; i++) dpA[1][i] = 1;
+
+    for (int len = 2; len <= m; len++) {
+        sum[0] = 0;
+        for (int i = 1; i <= n; i++) sum[i] = (sum[i-1] + dpA[len-1][i]) % MOD;
+        for (int i = 1; i <= n; i++) dpA[len][i] = sum[i];
+    }
+
+    long long result = 0;
+    for (int aVal = 1; aVal <= n; aVal++) {
+        long long ways = dpA[m][aVal];
+        ways = (ways * (n - aVal + 1)) % MOD;
+        result = (result + ways) % MOD;
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

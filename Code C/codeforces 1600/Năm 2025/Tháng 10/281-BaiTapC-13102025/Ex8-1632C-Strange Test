@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int min(int a, int b) { return a < b ? a : b; }
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        int ans = b - a;
+        for (int nb = b; nb <= b + 32; nb++) {
+            int costB = nb - b;
+            int costA = 0;
+            int tempA = a;
+            while ((tempA | nb) != nb && costA <= nb - a) {
+                tempA++;
+                costA++;
+            }
+            int total = costA + costB;
+            if ((a + costA) != nb) total++;
+            ans = min(ans, total);
+        }
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

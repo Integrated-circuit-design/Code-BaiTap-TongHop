@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int check_possible(ll arr[], int n, ll target) {
+    ll temp[200005];
+    for (int i = 0; i < n; ++i) temp[i] = arr[i];
+    for (int i = n - 1; i >= 2; --i) {
+        if (temp[i] < target) return 0;
+        ll move = (temp[i] - target) / 3;
+        temp[i - 1] += move;
+        temp[i - 2] += move * 2;
+    }
+    return (temp[0] >= target && temp[1] >= target);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        ll h[200005];
+        scanf("%d", &n);
+        for (int i = 0; i < n; ++i) scanf("%lld", &h[i]);
+        ll low = 0, high = 1000000000;
+        ll result = 0;
+        while (low <= high) {
+            ll mid = (low + high) / 2;
+            if (check_possible(h, n, mid)) {
+                result = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        printf("%lld\n", result);
+    }
+    return 0;
+}
 

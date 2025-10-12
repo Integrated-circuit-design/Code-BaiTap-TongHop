@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+char s[MAXN], t[MAXN];
+int exist[26];
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        scanf("%s", s);
+        scanf("%s", t);
+        int n = strlen(s), m = strlen(t);
+        for (int i = 0; i < 26; i++) exist[i] = 0;
+        for (int i = 0; i < n; i++) exist[s[i] - 'a'] = 1;
+        int j = 0;
+        int count = 0;
+        while (j < m) {
+            int start = j;
+            for (int i = 0; i < n && j < m; i++) {
+                if (s[i] == t[j]) j++;
+            }
+            if (j == start) {
+                if (!exist[t[j] - 'a']) {
+                    count = -1;
+                    break;
+                }
+            }
+            count++;
+        }
+        printf("%d\n", count);
+    }
+    return 0;
+}
 

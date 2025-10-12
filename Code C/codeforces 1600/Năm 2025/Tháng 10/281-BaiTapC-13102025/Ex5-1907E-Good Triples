@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef long long ll;
+
+ll memo[12][100];
+int seen[12][100];
+int digits[12];
+int len, vis_id = 1;
+
+ll dfs(int pos, int carry) {
+    if (pos == len)
+        return (carry == 0);
+
+    if (seen[pos][carry] == vis_id)
+        return memo[pos][carry];
+    seen[pos][carry] = vis_id;
+
+    ll res = 0;
+    int need = digits[pos];
+
+    for (int a = 0; a < 10; a++)
+        for (int b = 0; b < 10; b++)
+            for (int c = 0; c < 10; c++) {
+                int sum = a + b + c + carry;
+                if (sum % 10 == need) {
+                    res += dfs(pos + 1, sum / 10);
+                }
+            }
+
+    memo[pos][carry] = res;
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        ll n;
+        scanf("%lld", &n);
+
+        if (n == 0) {
+            puts("1");
+            continue;
+        }
+
+        len = 0;
+        while (n > 0) {
+            digits[len++] = n % 10;
+            n /= 10;
+        }
+
+        vis_id++;
+        printf("%lld\n", dfs(0, 0));
+    }
+    return 0;
+}
 

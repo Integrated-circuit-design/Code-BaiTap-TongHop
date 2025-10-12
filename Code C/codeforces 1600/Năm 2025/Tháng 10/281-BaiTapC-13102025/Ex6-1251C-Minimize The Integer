@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 300005
+
+int isEven(int x) {
+    return (x % 2 == 0);
+}
+
+void mergeAndPrint(int even[], int eSize, int odd[], int oSize) {
+    int i = 0, j = 0;
+    while (i < eSize || j < oSize) {
+        if (i == eSize) {
+            printf("%d", odd[j++]);
+        } else if (j == oSize) {
+            printf("%d", even[i++]);
+        } else if (even[i] < odd[j]) {
+            printf("%d", even[i++]);
+        } else {
+            printf("%d", odd[j++]);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        char s[MAXN];
+        int even[MAXN], odd[MAXN];
+        int e = 0, o = 0;
+
+        scanf("%s", s);
+        int n = strlen(s);
+
+        for (int i = 0; i < n; i++) {
+            int d = s[i] - '0';
+            if (isEven(d)) even[e++] = d;
+            else odd[o++] = d;
+        }
+
+        mergeAndPrint(even, e, odd, o);
+    }
+    return 0;
+}
 

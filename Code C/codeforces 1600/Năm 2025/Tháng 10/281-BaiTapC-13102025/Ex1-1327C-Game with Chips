@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 40005
+
+void add_moves(char *res, int *len, char c, int times) {
+    while (times-- > 0)
+        res[(*len)++] = c;
+}
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int x, y;
+    for (int i = 0; i < k; i++) scanf("%d %d", &x, &y);
+    for (int i = 0; i < k; i++) scanf("%d %d", &x, &y);
+
+    char path[MAX];
+    int len = 0;
+
+    add_moves(path, &len, 'U', n - 1);
+    add_moves(path, &len, 'L', m - 1);
+
+    for (int row = 0; row < n; row++) {
+        if (row % 2 == 0)
+            add_moves(path, &len, 'R', m - 1);
+        else
+            add_moves(path, &len, 'L', m - 1);
+
+        if (row != n - 1)
+            add_moves(path, &len, 'D', 1);
+    }
+
+    printf("%d\n", len);
+    for (int i = 0; i < len; i++)
+        putchar(path[i]);
+    putchar('\n');
+
+    return 0;
+}
 

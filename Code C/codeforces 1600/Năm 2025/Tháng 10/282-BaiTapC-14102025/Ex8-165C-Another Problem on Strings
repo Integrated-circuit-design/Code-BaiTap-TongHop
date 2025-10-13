@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LENGTH 1000005
+
+int main() {
+    int k;
+    char s[MAX_LENGTH];
+    scanf("%d", &k);
+    scanf("%s", s);
+
+    int n = strlen(s);
+    int onesPos[MAX_LENGTH];
+    int onesCount = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '1') {
+            onesPos[onesCount++] = i;
+        }
+    }
+
+    long long result = 0;
+
+    if (k == 0) {
+        int prev = -1;
+        for (int i = 0; i <= onesCount; i++) {
+            int next = (i < onesCount) ? onesPos[i] : n;
+            int len = next - prev - 1;
+            result += (long long)len * (len + 1) / 2;
+            prev = next;
+        }
+    } else {
+        for (int i = 0; i + k - 1 < onesCount; i++) {
+            int leftZeros = (i == 0) ? onesPos[i] : onesPos[i] - onesPos[i - 1] - 1;
+            int rightZeros = (i + k - 1 == onesCount - 1) ? n - onesPos[i + k - 1] - 1 : onesPos[i + k] - onesPos[i + k - 1] - 1;
+            result += (long long)(leftZeros + 1) * (rightZeros + 1);
+        }
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

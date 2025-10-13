@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int deg[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) {
+            deg[i] = 0;
+        }
+
+        for (int i = 0; i < n - 1; i++) {
+            int a, b;
+            scanf("%d %d", &a, &b);
+            deg[a]++;
+            deg[b]++;
+        }
+
+        if (n == 2) {
+            printf("0\n");
+            continue;
+        }
+
+        int firstMax = -1, secondMax = -1;
+        for (int i = 1; i <= n; i++) {
+            if (firstMax == -1 || deg[i] > deg[firstMax]) {
+                secondMax = firstMax;
+                firstMax = i;
+            } else if (secondMax == -1 || deg[i] > deg[secondMax]) {
+                secondMax = i;
+            }
+        }
+
+        int result = deg[firstMax] + deg[secondMax] - 2;
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

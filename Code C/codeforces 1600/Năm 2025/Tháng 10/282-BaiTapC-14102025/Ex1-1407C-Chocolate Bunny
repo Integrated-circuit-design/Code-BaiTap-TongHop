@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int p[n+1];
+    for(int i = 1; i <= n; i++) p[i] = 0;
+
+    int largestPos = 1;
+
+    for(int i = 2; i <= n; i++) {
+        int rem1, rem2;
+        printf("? %d %d\n", largestPos, i);
+        fflush(stdout);
+        scanf("%d", &rem1);
+        printf("? %d %d\n", i, largestPos);
+        fflush(stdout);
+        scanf("%d", &rem2);
+        if(rem1 < rem2) {
+            p[largestPos] = rem2;
+            largestPos = i;
+        } else {
+            p[i] = rem1;
+        }
+    }
+
+    p[largestPos] = n;
+
+    printf("!");
+    for(int i = 1; i <= n; i++) {
+        printf(" %d", p[i]);
+    }
+    printf("\n");
+    fflush(stdout);
+
+    return 0;
+}
 

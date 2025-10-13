@@ -1,1 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 405
+#define INF 1000000000
+
+typedef struct Node {
+    int to;
+    struct Node* next;
+} Node;
+
+Node* rail_adj[MAXN];
+int n, m;
+int dist[MAXN];
+int queue[MAXN*MAXN];
+
+void add_edge(Node* adj[], int u, int v) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->to = v;
+    node->next = adj[u];
+    adj[u] = node;
+}
+
+int bfs(Node* adj[], int start, int end) {
+    for (int i = 1; i <= n; i++) dist[i] = INF;
+    int front = 0, back = 0;
+    queue[back++] = start;
+    dist[start] = 0;
+
+    while (front < back) {
+        int u = queue[front++];
+        Node* cur = adj[u];
+        while (cur) {
+            int v = cur->to;
+            if (dist[v] == INF) {
+                dist[v] = dist[u] + 1;
+                queue[back++] = v;
+            }
+            cur = cur->next;
+        }
+    }
+
+    return dist[end] == INF ? -1 : dist[end];
+}
+
+void build_road(Node* road_adj[]) {
+    for (int i = 1; i <= n; i++) {
+        road_adj[i] = NULL;
+        for (int j = 1; j <= n; j++) {
+            if (i != j) {
+                Node* cur = rail_adj[i];
+                int hasRail = 0;
+                while (cur) {
+                    if (cur->to == j) { hasRail = 1; break; }
+                    cur = cur->next;
+                }
+                if (!hasRail) add_edge(road_adj, i, j);
+            }
+        }
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) rail_adj[i] = NULL;
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        add_edge(rail_adj, u, v);
+        add_edge(rail_adj, v, u);
+    }
+
+    int train_time = bfs(rail_adj, 1, n);
+
+    Node* road_adj[MAXN];
+    build_road(road_adj);
+
+    int bus_time = bfs(road_adj, 1, n);
+
+    if (train_time == -1 || bus_time == -1) printf("-1\n");
+    else printf("%d\n", train_time > bus_time ? train_time : bus_time);
+
+    return 0;
+}
 

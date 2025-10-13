@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        char grid[305][305];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = '0';
+            }
+        }
+
+        int filled = 0;
+        for (int start_col = 0; filled < k && start_col < n; start_col++) {
+            for (int i = 0; i < n && filled < k; i++) {
+                int row = i;
+                int col = (i + start_col) % n;
+                grid[row][col] = '1';
+                filled++;
+            }
+        }
+
+        int rem = k % n;
+        int f = (rem == 0) ? 0 : 2;
+
+        printf("%d\n", f);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                printf("%c", grid[i][j]);
+            }
+            printf("\n");
+        }
+    }
+    return 0;
+}
 

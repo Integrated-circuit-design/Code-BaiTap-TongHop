@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        long long c;
+        scanf("%d %lld", &n, &c);
+
+        long long a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            long long votes_i = a[i];
+            if (i == 0) votes_i += c;
+
+            int remove_count = 0;
+
+            for (int j = 0; j < n; j++) {
+                if (j == i) continue;
+                if (a[j] >= votes_i) {
+                    remove_count++;
+                }
+            }
+
+            printf("%d", remove_count);
+            if (i != n - 1) printf(" ");
+            else printf("\n");
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+long long sum_falling_cans(long long n) {
+    long long sum = 0;
+    for(long long i = 1; i * i <= n; i++) {
+        if(n % i == 0) {
+            long long j = n / i;
+            sum += i * i;
+            if(i != j) {
+                sum += j * j;
+            }
+        }
+    }
+    return sum;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        long long n;
+        scanf("%lld", &n);
+        long long result = sum_falling_cans(n);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

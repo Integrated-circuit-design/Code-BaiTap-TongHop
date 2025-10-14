@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+long long max(long long a, long long b) {
+    return (a > b) ? a : b;
+}
+
+long long count_bouquets(long long r, long long g, long long b, int mix) {
+    if (r < mix || g < mix || b < mix) return -1;
+    r -= mix;
+    g -= mix;
+    b -= mix;
+    return mix + (r / 3) + (g / 3) + (b / 3);
+}
+
+int main() {
+    long long r, g, b;
+    scanf("%lld %lld %lld", &r, &g, &b);
+    long long answer = 0;
+    long long temp;
+    temp = count_bouquets(r, g, b, 0);
+    if (temp > answer) answer = temp;
+    temp = count_bouquets(r, g, b, 1);
+    if (temp > answer) answer = temp;
+    temp = count_bouquets(r, g, b, 2);
+    if (temp > answer) answer = temp;
+    printf("%lld\n", answer);
+    return 0;
+}
 

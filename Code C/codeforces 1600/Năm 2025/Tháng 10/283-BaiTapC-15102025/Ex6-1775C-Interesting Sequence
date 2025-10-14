@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+long long smallest_m(long long n, long long x) {
+    if (x > n || (n & x) != x) return -1;
+    if (n == x) return n;
+    long long m = n;
+    while (1) {
+        if ((n & m) == x) return m;
+        if (m > 5000000000000000000LL) break;
+        m = (m | (m + 1));
+    }
+    return -1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long n, x;
+        scanf("%lld %lld", &n, &x);
+        printf("%lld\n", smallest_m(n, x));
+    }
+    return 0;
+}
 

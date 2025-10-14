@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int n, k;
+int g[MAXN][105];
+int deg[MAXN];
+int used[MAXN];
+int cuts;
+
+int dfs(int u, int x) {
+    used[u] = 1;
+    int size = 1;
+    for (int i = 0; i < deg[u]; i++) {
+        int v = g[u][i];
+        if (!used[v]) {
+            size += dfs(v, x);
+        }
+    }
+    if (size >= x) {
+        cuts++;
+        return 0;
+    }
+    return size;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &k);
+        for (int i = 1; i <= n; i++) {
+            deg[i] = 0;
+            used[i] = 0;
+        }
+        for (int i = 1; i < n; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            g[u][deg[u]++] = v;
+            g[v][deg[v]++] = u;
+        }
+        int l = 1, r = n, ans = 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            cuts = 0;
+            for (int i = 1; i <= n; i++) used[i] = 0;
+            dfs(1, mid);
+            if (cuts >= k + 1) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

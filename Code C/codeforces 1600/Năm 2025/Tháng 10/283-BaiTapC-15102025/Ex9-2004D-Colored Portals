@@ -1,1 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define INF 1000000000
+#define min(a,b) ((a)<(b)?(a):(b))
+#define abs(x) ((x)>=0?(x):-(x))
+
+int colorIndex(char c) {
+    if (c == 'B') return 0;
+    if (c == 'G') return 1;
+    if (c == 'R') return 2;
+    return 3;
+}
+
+void buildDistances(int n, int c1[], int c2[], int dist[4][4]) {
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            dist[i][j] = (i == j ? 0 : INF);
+    int lastLeft[4], lastRight[4];
+    for (int i = 0; i < 4; i++) {
+        lastLeft[i] = -1;
+        lastRight[i] = -1;
+    }
+    for (int i = 1; i <= n; i++) {
+        int a = c1[i], b = c2[i];
+        dist[a][b] = dist[b][a] = 0;
+        for (int c = 0; c < 4; c++) {
+            if (lastLeft[c] != -1) {
+                int d = abs(i - lastLeft[c]);
+                if (d < dist[a][c]) dist[a][c] = dist[c][a] = d;
+                if (d < dist[b][c]) dist[b][c] = dist[c][b] = d;
+            }
+        }
+        lastLeft[a] = i;
+        lastLeft[b] = i;
+    }
+    for (int i = 0; i < 4; i++) lastRight[i] = -1;
+    for (int i = n; i >= 1; i--) {
+        int a = c1[i], b = c2[i];
+        for (int c = 0; c < 4; c++) {
+            if (lastRight[c] != -1) {
+                int d = abs(i - lastRight[c]);
+                if (d < dist[a][c]) dist[a][c] = dist[c][a] = d;
+                if (d < dist[b][c]) dist[b][c] = dist[c][b] = d;
+            }
+        }
+        lastRight[a] = i;
+        lastRight[b] = i;
+    }
+}
+
+int queryDistance(int x, int y, int c1[], int c2[], int dist[4][4]) {
+    if (x == y) return 0;
+    int a1 = c1[x], a2 = c2[x];
+    int b1 = c1[y], b2 = c2[y];
+    int ans = INF;
+    if (a1 == b1 || a1 == b2 || a2 == b1 || a2 == b2)
+        ans = abs(x - y);
+    int ca[2] = {a1, a2};
+    int cb[2] = {b1, b2};
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
+            if (dist[ca[i]][cb[j]] < INF)
+                ans = min(ans, abs(x - y) + dist[ca[i]][cb[j]]);
+    return (ans >= INF) ? -1 : ans;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+        int c1[n + 1], c2[n + 1];
+        char s[3];
+        for (int i = 1; i <= n; i++) {
+            scanf("%s", s);
+            c1[i] = colorIndex(s[0]);
+            c2[i] = colorIndex(s[1]);
+        }
+        int dist[4][4];
+        buildDistances(n, c1, c2, dist);
+        while (q--) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            int res = queryDistance(x, y, c1, c2, dist);
+            printf("%d\n", res);
+        }
+    }
+    return 0;
+}
 

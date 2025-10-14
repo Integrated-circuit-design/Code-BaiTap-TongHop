@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long n;
+        scanf("%lld", &n);
+        int digits[20];
+        int len = 0;
+        while (n > 0) {
+            digits[len++] = n % 10;
+            n /= 10;
+        }
+        long long even = 0, odd = 0;
+        long long base_even = 1, base_odd = 1;
+        for (int i = 0; i < len; i++) {
+            if (i % 2 == 0) {
+                even += digits[i] * base_even;
+                base_even *= 10;
+            } else {
+                odd += digits[i] * base_odd;
+                base_odd *= 10;
+            }
+        }
+        long long ans = (even + 1) * (odd + 1) - 2;
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

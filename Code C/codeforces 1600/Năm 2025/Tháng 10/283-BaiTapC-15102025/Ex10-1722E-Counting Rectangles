@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1001
+typedef long long ll;
+
+ll area[MAX][MAX];
+ll sum[MAX][MAX];
+
+void build_prefix_sum() {
+    for (int i = 1; i < MAX; i++) {
+        for (int j = 1; j < MAX; j++) {
+            sum[i][j] = area[i][j]
+                       + sum[i - 1][j]
+                       + sum[i][j - 1]
+                       - sum[i - 1][j - 1];
+        }
+    }
+}
+
+ll query_area(int hs, int ws, int hb, int wb) {
+    if (hb - 1 <= hs || wb - 1 <= ws) return 0;
+    return sum[hb - 1][wb - 1]
+         - sum[hs][wb - 1]
+         - sum[hb - 1][ws]
+         + sum[hs][ws];
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, q;
+        scanf("%d%d", &n, &q);
+        memset(area, 0, sizeof(area));
+        memset(sum, 0, sizeof(sum));
+        for (int i = 0; i < n; i++) {
+            int h, w;
+            scanf("%d%d", &h, &w);
+            area[h][w] += (ll)h * w;
+        }
+        build_prefix_sum();
+        while (q--) {
+            int hs, ws, hb, wb;
+            scanf("%d%d%d%d", &hs, &ws, &hb, &wb);
+            printf("%lld\n", query_area(hs, ws, hb, wb));
+        }
+    }
+    return 0;
+}
 

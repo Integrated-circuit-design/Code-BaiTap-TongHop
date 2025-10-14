@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 300005
+
+int g[MAXN][3];
+int deg[MAXN];
+int depth[MAXN];
+int cnt[MAXN];
+int levels[MAXN];
+int n, t;
+
+void dfs(int u, int p, int d) {
+    depth[u] = d;
+    if (d > 0) cnt[d]++;
+    for (int i = 0; i < deg[u]; i++) {
+        int v = g[u][i];
+        if (v == p) continue;
+        dfs(v, u, d + 1);
+    }
+}
+
+int cmp_desc(const void *a, const void *b) {
+    return (*(int*)b) - (*(int*)a);
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++) {
+            deg[i] = 0;
+            depth[i] = 0;
+            cnt[i] = 0;
+        }
+        for (int i = 1; i < n; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            g[u][deg[u]++] = v;
+            g[v][deg[v]++] = u;
+        }
+        dfs(1, 0, 0);
+        int maxd = 0;
+        for (int i = 1; i <= n; i++)
+            if (depth[i] > maxd) maxd = depth[i];
+        int len = 0;
+        for (int i = 1; i <= maxd; i++)
+            if (cnt[i]) levels[len++] = cnt[i];
+        qsort(levels, len, sizeof(int), cmp_desc);
+        long long infected = 1;
+        long long saved = 0;
+        for (int i = 0; i < len; i++) {
+            long long remain = levels[i] - infected;
+            if (remain > 0) saved += remain;
+            infected++;
+        }
+        printf("%lld\n", saved);
+    }
+    return 0;
+}
 

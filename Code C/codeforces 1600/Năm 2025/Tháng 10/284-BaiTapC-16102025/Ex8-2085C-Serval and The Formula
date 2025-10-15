@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int valid(ll x, ll y, ll k) {
+    return ((x + k) & (y + k)) == 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        ll x, y;
+        scanf("%lld %lld", &x, &y);
+
+        if (x == y) {
+            printf("-1\n");
+            continue;
+        }
+
+        if ((x & y) == 0) {
+            printf("0\n");
+            continue;
+        }
+
+        ll ans = -1;
+        for (int bit = 0; bit < 60; ++bit) {
+            ll k = 1LL << bit;
+            if (valid(x, y, k)) {
+                ans = k;
+                break;
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

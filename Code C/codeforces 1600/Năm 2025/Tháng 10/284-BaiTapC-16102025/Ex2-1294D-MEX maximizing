@@ -1,1 +1,22 @@
+#include <stdio.h>
+
+#define MAXN 400005
+
+int main() {
+    int q, x;
+    scanf("%d %d", &q, &x);
+    int freq[MAXN] = {0};
+    int answer = 0;
+    for (int i = 0; i < q; i++) {
+        int y;
+        scanf("%d", &y);
+        int remainder = y % x;
+        freq[remainder]++;
+        while (freq[answer % x] > answer / x) {
+            answer++;
+        }
+        printf("%d\n", answer);
+    }
+    return 0;
+}
 

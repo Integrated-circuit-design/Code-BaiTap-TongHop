@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+void sort_tang(int a[], int n) { 
+    for (int i = 0; i < n - 1; i++) {
+        int min = i;
+        for (int j = i + 1; j < n; j++)
+            if (a[j] < a[min])
+                min = j;
+        int tmp = a[i];
+        a[i] = a[min];
+        a[min] = tmp;
+    }
+}
+
+void sort_giam(int a[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int max = i;
+        for (int j = i + 1; j < n; j++)
+            if (a[j] > a[max])
+                max = j;
+        int tmp = a[i];
+        a[i] = a[max];
+        a[max] = tmp;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[300005];
+        long long sum = 0;
+        int maxv = -1000000000, minv = 1000000000;
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            sum += a[i];
+            if (a[i] > maxv) maxv = a[i];
+            if (a[i] < minv) minv = a[i];
+        }
+        if (maxv == 0 && minv == 0) {
+            printf("No\n");
+            continue;
+        }
+        int pos[300005], neg[300005];
+        int p = 0, q = 0;
+        for (int i = 0; i < n; i++) {
+            if (a[i] > 0)
+                pos[p++] = a[i];
+            else if (a[i] < 0)
+                neg[q++] = a[i];
+        }
+        sort_tang(neg, q);
+        sort_giam(pos, p);
+        printf("Yes\n");
+        for (int i = 0; i < q; i++) printf("%d ", neg[i]);
+        for (int i = 0; i < p; i++) printf("%d ", pos[i]);
+        if (p + q < n) printf("0");
+        printf("\n");
+    }
+    return 0;
+}
 

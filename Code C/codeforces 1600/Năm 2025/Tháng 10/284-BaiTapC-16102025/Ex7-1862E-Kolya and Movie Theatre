@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *x, const void *y) {
+    long long a = *(long long*)x;
+    long long b = *(long long*)y;
+    if (a > b) return -1;
+    if (a < b) return 1;
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m;
+        long long d;
+        scanf("%d %d %lld", &n, &m, &d);
+        long long a[n], b[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+            b[i] = a[i] - d * (i + 1);
+        }
+        qsort(b, n, sizeof(long long), cmp);
+        long long total = 0;
+        int cnt = 0;
+        for (int i = 0; i < n && cnt < m; i++) {
+            if (b[i] > 0) {
+                total += b[i];
+                cnt++;
+            }
+        }
+        printf("%lld\n", total);
+    }
+    return 0;
+}
 

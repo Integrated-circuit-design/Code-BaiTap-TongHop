@@ -1,1 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int a[MAXN], b[MAXN], c[MAXN];
+int ans[MAXN];
+int needCount[MAXN];
+int lastOfColor[MAXN];
+int needList[MAXN];
+int needTop[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+        for (int i = 1; i <= n; i++) scanf("%d", &b[i]);
+        for (int i = 1; i <= m; i++) scanf("%d", &c[i]);
+
+        for (int i = 1; i <= n; i++) {
+            needCount[i] = 0;
+            lastOfColor[i] = 0;
+            needTop[i] = 0;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            lastOfColor[b[i]] = i;
+            if (a[i] != b[i]) {
+                needList[++needTop[b[i]]] = i;
+            }
+        }
+
+        int lastPainted = 0;
+        int possible = 1;
+
+        for (int i = m; i >= 1; i--) {
+            int color = c[i];
+
+            if (needTop[color] > 0) {
+                ans[i] = needList[needTop[color]--];
+                lastPainted = ans[i];
+            } else if (lastPainted) {
+                ans[i] = lastPainted;
+            } else if (lastOfColor[color]) {
+                ans[i] = lastOfColor[color];
+                lastPainted = ans[i];
+            } else {
+                possible = 0;
+                break;
+            }
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if (a[i] != b[i]) {
+                int found = 0;
+                for (int j = 1; j <= m; j++) {
+                    if (ans[j] == i) { found = 1; break; }
+                }
+                if (!found) { possible = 0; break; }
+            }
+        }
+
+        if (!possible) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+            for (int i = 1; i <= m; i++) {
+                printf("%d ", ans[i]);
+            }
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

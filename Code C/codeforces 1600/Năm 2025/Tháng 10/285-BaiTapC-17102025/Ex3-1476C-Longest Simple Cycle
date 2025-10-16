@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long max_val(long long x, long long y) {
+    return (x > y) ? x : y;
+}
+
+int main() {
+    int test_cases;
+    scanf("%d", &test_cases);
+
+    while (test_cases--) {
+        int chains;
+        scanf("%d", &chains);
+
+        long long vertices[chains + 2];
+        long long start[chains + 2];
+        long long end[chains + 2];
+
+        for (int i = 1; i <= chains; i++) {
+            scanf("%lld", &vertices[i]);
+        }
+
+        for (int i = 1; i <= chains; i++) {
+            scanf("%lld", &start[i]);
+        }
+
+        for (int i = 1; i <= chains; i++) {
+            scanf("%lld", &end[i]);
+        }
+
+        long long longest_cycle = 0;
+        long long chain_cycle = 0;
+
+        for (int i = 2; i <= chains; i++) {
+            long long gap = llabs(start[i] - end[i]);
+            long long new_cycle = max_val(gap + 1, chain_cycle - gap + vertices[i]);
+            longest_cycle = max_val(longest_cycle, new_cycle);
+            chain_cycle = new_cycle;
+        }
+
+        printf("%lld\n", longest_cycle);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAXM 200005
+
+typedef struct {
+    int l, r, zeros;
+} Operation;
+
+Operation ops[MAXM];
+char s[MAXM];
+
+int is_same(Operation a, Operation b) {
+    if (a.zeros != b.zeros) return 0;
+    if (a.l != b.l || a.r != b.r) return 0;
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        scanf("%s", s);
+
+        int distinct = 0;
+        int count = 0;
+
+        for (int i = 0; i < m; i++) {
+            int l, r;
+            scanf("%d %d", &l, &r);
+            l--; r--;
+
+            int zeros = 0;
+            for (int j = l; j <= r; j++)
+                if (s[j] == '0') zeros++;
+
+            ops[count].l = l;
+            ops[count].r = r;
+            ops[count].zeros = zeros;
+
+            int is_new = 1;
+            for (int k = 0; k < count; k++) {
+                if (is_same(ops[count], ops[k])) {
+                    is_new = 0;
+                    break;
+                }
+            }
+
+            if (is_new) distinct++;
+            count++;
+        }
+
+        printf("%d\n", distinct);
+    }
+    return 0;
+}
 

@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define MAX_N 200005
+#define MAX_VAL 200005
+
+int n, k;
+int a[MAX_N];
+int count[MAX_VAL];
+long long sum[MAX_VAL];
+
+int main() {
+    scanf("%d %d", &n, &k);
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+    for (int i = 0; i < MAX_VAL; i++) {
+        count[i] = 0;
+        sum[i] = 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int val = a[i];
+        int steps = 0;
+        while (1) {
+            count[val]++;
+            sum[val] += steps;
+            if (val == 0) break;
+            val /= 2;
+            steps++;
+        }
+    }
+
+    long long answer = 1LL << 60;
+
+    for (int i = 0; i < MAX_VAL; i++) {
+        if (count[i] >= k) {
+            long long temp = sum[i];
+            int extra = count[i] - k;
+            if (extra > 0) temp -= extra;
+            if (temp < answer) answer = temp;
+        }
+    }
+
+    printf("%lld\n", answer);
+    return 0;
+}
 

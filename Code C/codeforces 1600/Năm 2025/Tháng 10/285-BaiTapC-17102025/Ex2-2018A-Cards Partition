@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdint.h>
+
+#define MAXN 200005
+
+int64_t cards[MAXN];
+
+int64_t totalDecks(int n, int64_t deckSize, int64_t k) {
+    int64_t extraNeeded = 0;
+    int64_t decks = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (cards[i] < deckSize) {
+            extraNeeded += (deckSize - cards[i]);
+        }
+    }
+
+    if (extraNeeded > k) return -1;
+    return deckSize;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        int64_t k;
+        scanf("%d %lld", &n, &k);
+
+        int64_t maxCard = 0;
+        int64_t sumCards = 0;
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &cards[i]);
+            sumCards += cards[i];
+            if (cards[i] > maxCard) maxCard = cards[i];
+        }
+
+        int64_t ans = 0;
+
+        for (int64_t deckSize = 1; deckSize <= maxCard + k; deckSize++) {
+            if (totalDecks(n, deckSize, k) != -1) {
+                ans = deckSize;
+            } else {
+                break;
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

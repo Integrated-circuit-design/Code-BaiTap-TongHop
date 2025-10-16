@@ -1,1 +1,60 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n, m;
+        scanf("%d %d", &n, &m);
+        int total = n + m + 1;
+        ll prog[total], test[total];
+
+        for(int i=0;i<total;i++) scanf("%lld", &prog[i]);
+        for(int i=0;i<total;i++) scanf("%lld", &test[i]);
+
+        ll res[total];
+
+        for(int skip=0; skip<total; skip++){
+            int prog_slots = n;
+            int test_slots = m;
+            ll totalSkill = 0;
+            int used[total];
+            for(int i=0;i<total;i++) used[i] = 0;
+            used[skip] = 1;
+
+            for(int i=0;i<total;i++){
+                if(used[i]) continue;
+                if(prog[i] >= test[i] && prog_slots>0){
+                    totalSkill += prog[i];
+                    prog_slots--;
+                    used[i] = 1;
+                } else if(prog[i] < test[i] && test_slots>0){
+                    totalSkill += test[i];
+                    test_slots--;
+                    used[i] = 1;
+                }
+            }
+
+            for(int i=0;i<total;i++){
+                if(used[i]) continue;
+                if(prog_slots>0){
+                    totalSkill += prog[i];
+                    prog_slots--;
+                } else {
+                    totalSkill += test[i];
+                    test_slots--;
+                }
+            }
+
+            res[skip] = totalSkill;
+        }
+
+        for(int i=0;i<total;i++){
+            printf("%lld%c", res[i], i==total-1?'\n':' ');
+        }
+    }
+    return 0;
+}
 

@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll effective_coins(ll value, int bad_used) {
+    while (bad_used > 0 && value > 0) {
+        value /= 2;
+        bad_used--;
+    }
+    return value;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        ll k;
+        scanf("%d %lld", &n, &k);
+        ll a[n];
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+        ll coins = 0;
+        int bad_used = 0;
+
+        for (int i = 0; i < n; i++) {
+            ll current = effective_coins(a[i], bad_used);
+
+            if (current > k) {
+                coins += current - k;
+            } else {
+                coins += current;
+                bad_used++;
+            }
+        }
+
+        printf("%lld\n", coins);
+    }
+
+    return 0;
+}
 

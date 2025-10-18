@@ -1,1 +1,47 @@
+#include <stdio.h>
+#define MOD 998244353LL
+typedef long long ll;
+
+int calc_max_pow(ll l, ll r) {
+    int m = 0;
+    ll val = l;
+    while (val * 2 <= r) {
+        val *= 2;
+        m++;
+    }
+    return m;
+}
+
+void solve_case(ll l, ll r) {
+    int m = calc_max_pow(l, r);
+    int size = m + 1;
+
+    if (m == 0) {
+        ll count = (r - l + 1) % MOD;
+        printf("%d %lld\n", size, count);
+        return;
+    }
+
+    ll cnt_double = (r / (1LL << m)) - l + 1;
+    if (cnt_double < 0) cnt_double = 0;
+
+    ll denom = 3LL * (1LL << (m - 1));
+    ll cnt_triple = (r / denom) - l + 1;
+    if (cnt_triple < 0) cnt_triple = 0;
+
+    ll total = (cnt_double + (m * cnt_triple) % MOD) % MOD;
+
+    printf("%d %lld\n", size, total);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        ll l, r;
+        scanf("%lld %lld", &l, &r);
+        solve_case(l, r);
+    }
+    return 0;
+}
 

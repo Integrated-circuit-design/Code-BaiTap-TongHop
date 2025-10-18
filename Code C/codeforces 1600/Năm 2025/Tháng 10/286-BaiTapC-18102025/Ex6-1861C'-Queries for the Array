@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        char s[200005];
+        scanf("%s", s);
+
+        int len = 0;
+        int sorted = 1;
+        int valid = 1;
+
+        for (int i = 0; s[i] && valid; i++) {
+            switch (s[i]) {
+                case '+':
+                    len++;
+                    break;
+
+                case '-':
+                    len--;
+                    if (len < 0) valid = 0;
+                    else if (len <= 1) sorted = 1;
+                    break;
+
+                case '1':
+                    if (!sorted) valid = 0;
+                    sorted = 1;
+                    break;
+
+                case '0':
+                    if (len < 2) valid = 0;
+                    else sorted = 0;
+                    break;
+            }
+        }
+
+        printf(valid ? "YES\n" : "NO\n");
+    }
+    return 0;
+}
 

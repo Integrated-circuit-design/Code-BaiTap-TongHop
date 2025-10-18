@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MOD 1000000007
+#define MAXN 300005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int* row_used = (int*)calloc(n+1, sizeof(int));
+        int* col_used = (int*)calloc(n+1, sizeof(int));
+
+        int r, c;
+        for (int i = 0; i < k; i++) {
+            scanf("%d %d", &r, &c);
+            row_used[r] = 1;
+            col_used[c] = 1;
+            if (r != c) {
+                row_used[c] = 1;
+                col_used[r] = 1;
+            }
+        }
+
+        int free_row = 0, free_col = 0;
+        for (int i = 1; i <= n; i++) {
+            if (!row_used[i]) free_row++;
+            if (!col_used[i]) free_col++;
+        }
+
+        int moves_left = free_row < free_col ? free_row : free_col;
+
+        long long ans = 1;
+        while (moves_left--) {
+            ans = (ans * 2) % MOD;
+        }
+
+        printf("%lld\n", ans);
+
+        free(row_used);
+        free(col_used);
+    }
+
+    return 0;
+}
 

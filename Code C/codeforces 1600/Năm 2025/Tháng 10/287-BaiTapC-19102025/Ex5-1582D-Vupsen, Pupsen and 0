@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int a[MAXN], b[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int half = n / 2;
+        if (n % 2 == 0) {
+            for (int i = 0; i < half; i++) b[i] = a[i + half];
+            for (int i = half; i < n; i++) b[i] = -a[i - half];
+        } else {
+            for (int i = 0; i < half; i++) b[i] = a[i + half];
+            for (int i = half; i < n - 1; i++) b[i] = -a[i - half];
+            int sum_first = 0, sum_second = 0;
+            for (int i = 0; i < n - 1; i++) {
+                if (i < half) sum_first += a[i] * b[i];
+                else sum_second += a[i] * b[i];
+            }
+            b[n - 1] = -(sum_first + sum_second) / a[n - 1];
+            if (b[n - 1] == 0) b[n - 1] = 1;
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (i) printf(" ");
+            printf("%d", b[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

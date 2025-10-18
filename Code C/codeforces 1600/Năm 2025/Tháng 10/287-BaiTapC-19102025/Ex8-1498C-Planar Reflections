@@ -1,1 +1,51 @@
+#include <stdio.h>
+#define MOD 1000000007
+#define MAX 1001
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    int n[MAX], k[MAX];
+    int maxN = 0, maxK = 0;
+
+    for (int i = 0; i < t; i++) {
+        scanf("%d %d", &n[i], &k[i]);
+        if (n[i] > maxN) maxN = n[i];
+        if (k[i] > maxK) maxK = k[i];
+    }
+
+    long long dp[MAX];
+    long long new_dp[MAX];
+
+    for (int i = 0; i < t; i++) {
+        int planes = n[i];
+        int decay = k[i];
+
+        for (int j = 0; j <= decay; j++) dp[j] = 0;
+        dp[decay] = 1;
+
+        for (int p = 0; p < planes; p++) {
+            for (int j = 0; j <= decay; j++) new_dp[j] = 0;
+
+            for (int j = 1; j <= decay; j++) {
+                if (dp[j] == 0) continue;
+                new_dp[j] = (new_dp[j] + dp[j]) % MOD;
+                if (j > 1) {
+                    new_dp[j-1] = (new_dp[j-1] + dp[j]) % MOD;
+                }
+            }
+
+            for (int j = 0; j <= decay; j++) dp[j] = new_dp[j];
+        }
+
+        long long ans = 0;
+        for (int j = 1; j <= decay; j++)
+            ans = (ans + dp[j]) % MOD;
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

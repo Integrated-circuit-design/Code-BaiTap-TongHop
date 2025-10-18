@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        long long k;
+        scanf("%d %lld", &n, &k);
+
+        long long h[n];
+        for (int i = 0; i < n; i++) scanf("%lld", &h[i]);
+
+        long long low = h[n-1];
+        long long high = h[n-1] + k - 1;
+        int possible = 1;
+
+        for (int i = n - 2; i >= 0; i--) {
+            long long newLow = (low - (k - 1) > h[i] ? low - (k - 1) : h[i]);
+            long long newHigh = (high + (k - 1) < h[i] + k - 1 ? high + (k - 1) : h[i] + k - 1);
+
+            if (newLow > newHigh) {
+                possible = 0;
+                break;
+            }
+
+            low = newLow;
+            high = newHigh;
+        }
+
+        if (possible && h[0] >= low && h[0] <= high)
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+
+    return 0;
+}
 

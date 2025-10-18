@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int cmp(const void *p, const void *q) {
+    ll x = *(ll*)p, y = *(ll*)q;
+    return (x < y) ? -1 : (x > y);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        ll a[n], b[n];
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        for (int i = 0; i < n; i++) scanf("%lld", &b[i]);
+
+        ll cand[2*n];
+        for (int i = 0; i < n; i++) {
+            cand[i] = a[i];
+            cand[i+n] = b[i];
+        }
+
+        qsort(cand, 2*n, sizeof(ll), cmp);
+
+        ll maxEarn = 0;
+
+        for (int i = 0; i < 2*n; i++) {
+            ll price = cand[i];
+            int pos = 0, neg = 0;
+
+            for (int j = 0; j < n; j++) {
+                if (price <= a[j]) pos++;
+                else if (price <= b[j]) neg++;
+            }
+
+            if (neg <= k) {
+                ll earn = price * (ll)(pos + neg);
+                if (earn > maxEarn) maxEarn = earn;
+            }
+        }
+
+        printf("%lld\n", maxEarn);
+    }
+
+    return 0;
+}
 

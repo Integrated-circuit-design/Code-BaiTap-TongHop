@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <float.h>
+
+#define MAXN 60000
+#define INF 1e18
+#define EPS 1e-7
+
+double pos[MAXN], speed[MAXN];
+int n;
+
+int meet_possible(double t) {
+    double left_bound = -INF, right_bound = INF;
+    for (int i = 0; i < n; i++) {
+        double reach_left = pos[i] - speed[i] * t;
+        double reach_right = pos[i] + speed[i] * t;
+        if (reach_left > left_bound) left_bound = reach_left;
+        if (reach_right < right_bound) right_bound = reach_right;
+        if (left_bound > right_bound) return 0;
+    }
+    return 1;
+}
+
+double find_min_time() {
+    double lo = 0.0, hi = 1e9, mid;
+    for (int step = 0; step < 100; step++) {
+        mid = (lo + hi) / 2.0;
+        if (meet_possible(mid))
+            hi = mid;
+        else
+            lo = mid;
+    }
+    return hi;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%lf", &pos[i]);
+    for (int i = 0; i < n; i++) scanf("%lf", &speed[i]);
+    double result = find_min_time();
+    printf("%.12f\n", result);
+    return 0;
+}
 

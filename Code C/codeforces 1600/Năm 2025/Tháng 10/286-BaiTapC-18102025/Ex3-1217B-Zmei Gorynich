@@ -1,59 +1,42 @@
 #include <stdio.h>
-#include <string.h>
-
-#define MAXN 200005
-#define MOD 1000000007
-#define OFFSET MAXN
 
 typedef long long ll;
 
-static int pos[2 * MAXN][2];
-static int cnt[2 * MAXN];
-static int last[2 * MAXN];
-static int seen[2 * MAXN];
+ll min_hits(int n, ll x) {
+    ll d, h;
+    ll max_cut = 0;
+    ll best_diff = -1;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld %lld", &d, &h);
+        if (d >= x) max_cut = x;
+        if (d - h > best_diff)
+            best_diff = d - h;
+        if (d > max_cut)
+            max_cut = d;
+    }
+
+    if (max_cut >= x)
+        return 1;
+    if (best_diff <= 0)
+        return -1;
+
+    ll remain = x - max_cut;
+    ll times = (remain + best_diff - 1) / best_diff;
+    return times + 1;
+}
 
 int main() {
     int t;
     scanf("%d", &t);
 
     while (t--) {
-        char s[MAXN];
-        scanf("%s", s);
-        int n = strlen(s);
-
-        for (int i = 0; i < 2 * MAXN; i++) {
-            if (seen[i]) {
-                cnt[i] = 0;
-                last[i] = 0;
-                pos[i][0] = pos[i][1] = 0;
-                seen[i] = 0;
-            }
-        }
-
-        ll ans = 0;
-        int cur = OFFSET;
-
-        seen[cur] = 1;
-        cnt[cur] = 1;
-        last[cur] = 0;
-
-        for (int i = 0; i < n; i++) {
-            if (s[i] == '1') cur++;
-            else cur--;
-
-            seen[cur] = 1;
-            int num = cnt[cur];
-            ll sumPos = last[cur];
-
-            ll add = ((ll)(i + 2) * (n - i) % MOD) * sumPos % MOD;
-            ans = (ans + add) % MOD;
-
-            cnt[cur]++;
-            last[cur] = (last[cur] + i + 1) % MOD;
-        }
-
-        printf("%lld\n", ans % MOD);
+        int n;
+        ll x;
+        scanf("%d %lld", &n, &x);
+        ll result = min_hits(n, x);
+        printf("%lld\n", result);
     }
+
     return 0;
 }
-

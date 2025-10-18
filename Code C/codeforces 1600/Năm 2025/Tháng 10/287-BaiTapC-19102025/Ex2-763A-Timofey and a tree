@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+typedef struct Node {
+    int v;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+int n, c[MAXN];
+int u[MAXN], v[MAXN];
+
+void addEdge(int a, int b){
+    Node* p = (Node*)malloc(sizeof(Node));
+    p->v = b; p->next = adj[a]; adj[a] = p;
+}
+
+int checkCandidate(int candidate){
+    for(int i = 1; i < n; i++){
+        if(c[u[i]] != c[v[i]]){
+            if(u[i] != candidate && v[i] != candidate) return 0;
+        }
+    }
+    return 1;
+}
+
+int main(){
+    scanf("%d", &n);
+    for(int i = 1; i < n; i++){
+        scanf("%d %d", &u[i], &v[i]);
+        addEdge(u[i], v[i]);
+        addEdge(v[i], u[i]);
+    }
+    for(int i = 1; i <= n; i++){
+        scanf("%d", &c[i]);
+    }
+
+    int candidate1=-1, candidate2=-1;
+    for(int i = 1; i < n; i++){
+        if(c[u[i]] != c[v[i]]){
+            candidate1 = u[i];
+            candidate2 = v[i];
+            break;
+        }
+    }
+
+    if(candidate1==-1){
+        printf("YES\n1\n");
+        return 0;
+    }
+
+    if(checkCandidate(candidate1)) printf("YES\n%d\n", candidate1);
+    else if(checkCandidate(candidate2)) printf("YES\n%d\n", candidate2);
+    else printf("NO\n");
+
+    return 0;
+}
 

@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int m, n;
+    scanf("%d %d", &m, &n);
+
+    double ans = 0.0;
+    double prev = 0.0; // lưu ( (k-1)/m )^n
+    double cur = 0.0;
+    double ratio = 1.0 / m; // tỉ lệ chia mặt xúc xắc
+
+    // Với k = 1..m
+    for (int k = 1; k <= m; ++k) {
+        // Tính (k/m)^n bằng nhân dần
+        cur = 1.0;
+        double frac = (double)k / m;
+        for (int i = 0; i < n; ++i) cur *= frac;
+
+        // P(max = k) = cur - prev
+        double prob = cur - prev;
+
+        ans += k * prob; // Cộng vào kỳ vọng
+
+        prev = cur; // Cập nhật cho lần sau
+    }
+
+    printf("%.12f\n", ans);
+    return 0;
+}
 

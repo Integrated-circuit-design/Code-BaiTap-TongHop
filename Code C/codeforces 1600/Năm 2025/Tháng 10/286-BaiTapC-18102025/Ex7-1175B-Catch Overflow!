@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+#define LIMIT 4294967295ULL
+#define MAX 100000
+
+int main() {
+    int l;
+    scanf("%d", &l);
+
+    unsigned long long mult[100005];
+    int depth = 0;
+    unsigned long long x = 0;
+    mult[0] = 1;
+
+    char cmd[10];
+    while (l--) {
+        scanf("%s", cmd);
+
+        if (cmd[0] == 'a') {
+            x += mult[depth];
+            if (x > LIMIT) {
+                printf("OVERFLOW!!!\n");
+                return 0;
+            }
+        } 
+        else if (cmd[0] == 'f') {
+            unsigned long long n;
+            scanf("%llu", &n);
+
+            if (mult[depth] > LIMIT) mult[depth + 1] = mult[depth];
+            else {
+                unsigned long long t = mult[depth] * n;
+                if (t > LIMIT) t = LIMIT + 1;
+                mult[depth + 1] = t;
+            }
+
+            depth++;
+        } 
+        else if (cmd[0] == 'e') {
+            depth--;
+        }
+    }
+
+    printf("%llu\n", x);
+    return 0;
+}
 

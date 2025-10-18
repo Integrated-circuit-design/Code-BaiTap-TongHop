@@ -1,1 +1,79 @@
+#include <stdio.h>
+
+int minSum(int k) {
+    return k * (k + 1) / 2;
+}
+
+int maxSum(int k, int n) {
+    return k * (2 * n - k + 1) / 2;
+}
+
+void removeNumber(int arr[], int *size, int num) {
+    for (int i = 0; i < *size; i++) {
+        if (arr[i] == num) {
+            for (int j = i; j < *size - 1; j++)
+                arr[j] = arr[j + 1];
+            (*size)--;
+            return;
+        }
+    }
+}
+
+void solveCase(int n, int l, int r, int s) {
+    int k = r - l + 1;
+    int minS = minSum(k);
+    int maxS = maxSum(k, n);
+
+    if (s < minS || s > maxS) {
+        printf("-1\n");
+        return;
+    }
+
+    int remaining = s;
+    int segment[500];
+    int numbers[500];
+    int size = n;
+    for (int i = 0; i < n; i++)
+        numbers[i] = i + 1;
+
+    for (int i = 0; i < k; i++) {
+        int remLen = k - i - 1;
+        int chosen = -1;
+        for (int j = size - 1; j >= 0; j--) {
+            if (numbers[j] <= remaining - minSum(remLen)) {
+                chosen = numbers[j];
+                break;
+            }
+        }
+        if (chosen == -1) chosen = numbers[size - 1];
+        segment[i] = chosen;
+        remaining -= chosen;
+        removeNumber(numbers, &size, chosen);
+    }
+
+    int perm[500];
+    int segIndex = 0;
+    for (int i = 1; i <= n; i++) {
+        if (i >= l && i <= r) {
+            perm[i - 1] = segment[segIndex++];
+        } else {
+            perm[i - 1] = numbers[--size];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%d%c", perm[i], i == n - 1 ? '\n' : ' ');
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, l, r, s;
+        scanf("%d %d %d %d", &n, &l, &r, &s);
+        solveCase(n, l, r, s);
+    }
+    return 0;
+}
 

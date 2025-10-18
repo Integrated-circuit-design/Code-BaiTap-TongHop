@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+#define MOD 1000000007LL
+typedef long long ll;
+
+static inline ll mul(ll a, ll b) {
+    return (a * b) % MOD;
+}
+
+ll modexp(ll base, ll exp) {
+    ll res = 1;
+    while (exp) {
+        if (exp & 1) res = mul(res, base);
+        base = mul(base, base);
+        exp >>= 1;
+    }
+    return res;
+}
+
+static inline ll divmod(ll a, ll b) {
+    return mul(a, modexp(b, MOD - 2));
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        ll l, r, k;
+        scanf("%lld%lld%lld", &l, &r, &k);
+
+        ll m = 9 / k;
+        if (m == 0) {
+            puts("0");
+            continue;
+        }
+
+        ll x = m + 1;
+        ll powL = modexp(x, l);
+        ll powDiff = modexp(x, r - l);
+
+        ll geom = powDiff - 1;
+        if (geom < 0) geom += MOD;
+
+        geom = divmod(geom, x - 1);
+        ll ans = mul(mul(m, powL), geom);
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

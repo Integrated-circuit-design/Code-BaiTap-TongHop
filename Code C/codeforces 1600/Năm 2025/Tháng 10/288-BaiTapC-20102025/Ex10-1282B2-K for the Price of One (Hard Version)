@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+void sortArray(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int tmp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = tmp;
+            }
+        }
+    }
+}
+
+int maxGifts(int n, long long p, int k, int price[]) {
+    long long prefix[200005];
+    prefix[0] = 0;
+
+    for (int i = 1; i <= n; i++) {
+        prefix[i] = prefix[i - 1] + price[i - 1];
+    }
+
+    int best = 0;
+
+    for (int start = 0; start < k; start++) {
+        if (prefix[start] > p)
+            break;
+        int count = start;
+        for (int i = start + k; i <= n; i += k) {
+            if (prefix[i] <= p)
+                count = i;
+            else
+                break;
+        }
+        if (count > best)
+            best = count;
+    }
+
+    return best;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        long long p;
+        scanf("%d %lld %d", &n, &p, &k);
+
+        int price[200005];
+        for (int i = 0; i < n; i++)
+            scanf("%d", &price[i]);
+
+        sortArray(price, n);
+
+        int result = maxGifts(n, p, k, price);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

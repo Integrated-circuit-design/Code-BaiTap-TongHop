@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int abs_val(int x) { return x < 0 ? -x : x; }
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+
+        if (k > abs_val(n - m)) {
+            printf("-1\n");
+            continue;
+        }
+
+        if (n == m) {
+            if (k != 1) { printf("-1\n"); continue; }
+            for (int i = 0; i < n + m; i++)
+                putchar((i % 2) ? '1' : '0');
+            putchar('\n');
+            continue;
+        }
+
+        int zeros = n, ones = m;
+        char s[n + m + 1];
+        int idx = 0;
+        int diff = 0;
+
+        while (zeros > 0 || ones > 0) {
+            if (zeros > ones) {
+                if (diff < k && zeros > 0) {
+                    s[idx++] = '0'; zeros--; diff++;
+                } else if (ones > 0) {
+                    s[idx++] = '1'; ones--; diff--;
+                } else break;
+            } else {
+                if (diff > -k && ones > 0) {
+                    s[idx++] = '1'; ones--; diff--;
+                } else if (zeros > 0) {
+                    s[idx++] = '0'; zeros--; diff++;
+                } else break;
+            }
+        }
+        s[idx] = '\0';
+        printf("%s\n", s);
+    }
+    return 0;
+}
 

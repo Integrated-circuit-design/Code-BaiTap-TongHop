@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 5005
+
+int tmp[MAXN];
+
+long long merge_count(int a[], int l, int m, int r) {
+    int i = l, j = m+1, k = l;
+    long long inv = 0;
+    while (i <= m && j <= r) {
+        if (a[i] <= a[j]) tmp[k++] = a[i++];
+        else {
+            tmp[k++] = a[j++];
+            inv += m - i + 1;
+        }
+    }
+    while (i <= m) tmp[k++] = a[i++];
+    while (j <= r) tmp[k++] = a[j++];
+    for (i = l; i <= r; i++) a[i] = tmp[i];
+    return inv;
+}
+
+long long merge_sort_count(int a[], int l, int r) {
+    if (l >= r) return 0;
+    int m = (l + r)/2;
+    long long inv = merge_sort_count(a, l, m);
+    inv += merge_sort_count(a, m+1, r);
+    inv += merge_count(a, l, m, r);
+    return inv;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, p[MAXN], a[MAXN];
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++)
+            scanf("%d", &p[i]);
+        
+        for (int i = 0; i < n; i++) {
+            int x = p[i];
+            int y = 2*n - x;
+            a[i] = x < y ? x : y;
+        }
+        
+        long long inv = merge_sort_count(a, 0, n-1);
+        printf("%lld\n", inv);
+    }
+    return 0;
+}
 

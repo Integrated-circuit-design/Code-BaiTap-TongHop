@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdbool.h>
+
+#define MAXN 100000
+#define MAXV 1000000
+
+int mark[MAXV + 5];
+int round_id = 1;
+
+bool has_success(int n, int a[]) {
+    round_id++;
+
+    for (int i = 0; i < n; ++i) {
+        int x = a[i];
+        int limit = (int)sqrt(x);
+
+        for (int d = 2; d <= limit; ++d) {
+            if (x % d == 0) {
+                if (mark[d] == round_id) return true;
+                mark[d] = round_id;
+
+                int other = x / d;
+                if (other <= MAXV) {
+                    if (mark[other] == round_id) return true;
+                    mark[other] = round_id;
+                }
+            }
+        }
+
+        if (x > 1) {
+            if (x <= MAXV) {
+                if (mark[x] == round_id) return true;
+                mark[x] = round_id;
+            }
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, a[MAXN];
+        scanf("%d", &n);
+        for (int i = 0; i < n; ++i)
+            scanf("%d", &a[i]);
+
+        if (has_success(n, a))
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+
+    return 0;
+}
 

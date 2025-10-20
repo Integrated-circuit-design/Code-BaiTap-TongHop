@@ -1,1 +1,14 @@
+#include <stdio.h>
+
+int main(void) {
+    long long a[6];
+    for (int i = 0; i < 6; i++)
+        scanf("%lld", &a[i]);
+
+    long long s = a[0] + a[1] + a[2];
+    long long triangles = s * s - a[0] * a[0] - a[2] * a[2] - a[4] * a[4];
+
+    printf("%lld\n", triangles);
+    return 0;
+}
 

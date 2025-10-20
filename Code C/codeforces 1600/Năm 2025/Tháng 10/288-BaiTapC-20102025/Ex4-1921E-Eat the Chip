@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll min(ll a, ll b) { return a < b ? a : b; }
+ll max(ll a, ll b) { return a > b ? a : b; }
+
+int main() {
+    int test;
+    scanf("%d", &test);
+    while (test--) {
+        ll h, w, ax, ay, bx, by;
+        scanf("%lld %lld %lld %lld %lld %lld", &h, &w, &ax, &ay, &bx, &by);
+
+        ll diff = bx - ax;
+
+        if (diff <= 0) {
+            printf("Draw\n");
+            continue;
+        }
+
+        if (diff & 1) {
+            ll stepA = (diff + 1) / 2;
+            ll stepB = diff / 2;
+
+            ll leftA = max(1, ay - stepA);
+            ll rightA = min(w, ay + stepA);
+            ll leftB = max(1, by - stepB);
+            ll rightB = min(w, by + stepB);
+
+            if (leftA <= rightB && leftB <= rightA)
+                printf("Alice\n");
+            else
+                printf("Draw\n");
+        } else {
+            ll stepA = diff / 2;
+            ll stepB = diff / 2;
+
+            ll leftA = max(1, ay - stepA);
+            ll rightA = min(w, ay + stepA);
+            ll leftB = max(1, by - stepB);
+            ll rightB = min(w, by + stepB);
+
+            if (leftA <= rightB && leftB <= rightA)
+                printf("Bob\n");
+            else
+                printf("Draw\n");
+        }
+    }
+    return 0;
+}
 

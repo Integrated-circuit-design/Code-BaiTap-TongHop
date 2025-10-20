@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int a[n];
+    for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+    int left = 0, right = 0;
+    int zeroCount = 0;
+    int bestLen = 0;
+    int bestLeft = 0;
+
+    int zeroPos[n];
+    int zeroNum = 0;
+
+    while(right < n) {
+        if(a[right] == 0) {
+            zeroPos[zeroNum++] = right;
+            zeroCount++;
+        }
+
+        if(zeroCount > k) {
+            left = zeroPos[0] + 1;
+            for(int i = 1; i < zeroNum; i++) zeroPos[i-1] = zeroPos[i];
+            zeroNum--;
+            zeroCount--;
+        }
+
+        if(right - left + 1 > bestLen) {
+            bestLen = right - left + 1;
+            bestLeft = left;
+        }
+
+        right++;
+    }
+
+    int changes = 0;
+    for(int i = bestLeft; i < bestLeft + bestLen; i++) {
+        if(a[i] == 0 && changes < k) {
+            a[i] = 1;
+            changes++;
+        }
+    }
+
+    printf("%d\n", bestLen);
+    for(int i = 0; i < n; i++) {
+        printf("%d%c", a[i], i==n-1?'\n':' ');
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int tests;
+    scanf("%d", &tests);
+
+    for (int case_id = 0; case_id < tests; case_id++) {
+        int n;
+        scanf("%d", &n);
+
+        int fixed_index = 0;
+        for (int pos = 1; pos <= n; pos++) {
+            int value;
+            scanf("%d", &value);
+            if (value == pos) {
+                fixed_index = pos;
+            }
+        }
+
+        printf("%d\n", fixed_index);
+    }
+
+    return 0;
+}
 

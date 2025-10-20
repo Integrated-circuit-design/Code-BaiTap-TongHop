@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+long long lcm(long long x, long long y) {
+    long long a = x, b = y;
+    while (b) {
+        long long tmp = b;
+        b = a % b;
+        a = tmp;
+    }
+    return x / a * y;
+}
+
+int main() {
+    long long n, a, b, p, q;
+    scanf("%lld %lld %lld %lld %lld", &n, &a, &b, &p, &q);
+
+    long long l = lcm(a, b);
+
+    long long redTiles = n / a;
+    long long blueTiles = n / b;
+    long long bothTiles = n / l;
+
+    long long redOnly = redTiles - bothTiles;
+    long long blueOnly = blueTiles - bothTiles;
+    long long bothMax = bothTiles * (p > q ? p : q);
+
+    long long totalChocolate = redOnly * p + blueOnly * q + bothMax;
+
+    printf("%lld\n", totalChocolate);
+
+    return 0;
+}
 

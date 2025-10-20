@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+#define MAXN 100005
+typedef long long ll;
+
+int n;
+ll a[MAXN], ans[MAXN];
+int order[MAXN];
+int leftN[MAXN], rightN[MAXN];
+int active[MAXN];
+ll segSum[MAXN];
+ll maxSum = 0;
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i) scanf("%lld", &a[i]);
+    for (int i = 1; i <= n; ++i) scanf("%d", &order[i]);
+
+    for (int i = 1; i <= n; ++i) {
+        leftN[i] = rightN[i] = i;
+        active[i] = 0;
+        segSum[i] = 0;
+    }
+
+    ll currentMax = 0;
+
+    for (int i = n; i >= 1; --i) {
+        ans[i] = currentMax;
+        int pos = order[i];
+        active[pos] = 1;
+        segSum[pos] = a[pos];
+        leftN[pos] = rightN[pos] = pos;
+
+        if (pos > 1 && active[pos - 1]) {
+            int leftRoot = leftN[pos - 1];
+            int rightRoot = rightN[pos];
+            segSum[leftRoot] += segSum[rightRoot];
+            rightN[leftRoot] = rightRoot;
+            leftN[rightRoot] = leftRoot;
+            segSum[rightRoot] = segSum[leftRoot];
+        }
+
+        if (pos < n && active[pos + 1]) {
+            int leftRoot = leftN[pos];
+            int rightRoot = rightN[pos + 1];
+            segSum[leftRoot] += segSum[rightRoot];
+            rightN[leftRoot] = rightRoot;
+            leftN[rightRoot] = leftRoot;
+            segSum[rightRoot] = segSum[leftRoot];
+        }
+
+        int root = leftN[pos];
+        if (segSum[root] > currentMax)
+            currentMax = segSum[root];
+    }
+
+    for (int i = 1; i <= n; ++i)
+        printf("%lld\n", ans[i]);
+
+    return 0;
+}
 

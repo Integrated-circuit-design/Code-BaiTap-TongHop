@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n];
+        for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        int max_prod = 1;
+        int res_left = 0, res_right = 0;
+
+        int start = 0;
+        while(start < n) {
+            while(start < n && a[start] == 0) start++;
+            if(start >= n) break;
+
+            int end = start;
+            int neg_count = 0;
+            int first_neg = -1, last_neg = -1;
+
+            while(end < n && a[end] != 0) {
+                if(a[end] < 0) {
+                    neg_count++;
+                    if(first_neg == -1) first_neg = end;
+                    last_neg = end;
+                }
+                end++;
+            }
+
+            int left_remove = start;
+            int right_remove = n - end;
+
+            if(neg_count % 2 == 1) {
+                int remove_left_option = first_neg - start + 1;
+                int remove_right_option = end - last_neg;
+                if(remove_left_option <= remove_right_option)
+                    left_remove += remove_left_option;
+                else
+                    right_remove += remove_right_option;
+            }
+
+            if(left_remove + right_remove <= n) {
+                res_left = left_remove;
+                res_right = right_remove;
+            }
+
+            start = end + 1;
+        }
+
+        printf("%d %d\n", res_left, res_right);
+    }
+    return 0;
+}
 

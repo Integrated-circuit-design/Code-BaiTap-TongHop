@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        long long val;
+        long long x = 0;
+        int has_x = 0;
+        int cnt1 = 0, cnt_1 = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &val);
+            if (val == 1) cnt1++;
+            else if (val == -1) cnt_1++;
+            else { x = val; has_x = 1; }
+        }
+
+        long long minSum = -cnt_1;
+        long long maxSum = cnt1;
+
+        long long total = maxSum - minSum + 1;
+        if (has_x) total *= 2;
+
+        printf("%lld\n", total);
+
+        for (long long s = minSum; s <= maxSum; s++) {
+            printf("%lld ", s);
+        }
+
+        if (has_x) {
+            for (long long s = minSum; s <= maxSum; s++) {
+                printf("%lld%c", s + x, (s == maxSum ? '\n' : ' '));
+            }
+        } else {
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
 

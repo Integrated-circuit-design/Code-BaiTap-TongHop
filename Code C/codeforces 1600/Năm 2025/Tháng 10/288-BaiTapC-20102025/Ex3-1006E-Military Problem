@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+int n, q;
+int childCount[MAXN];
+int child[MAXN][64];
+int in[MAXN], sz[MAXN], ord[MAXN], timer;
+
+int cmpInt(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void dfs(int u) {
+    ord[++timer] = u;
+    in[u] = timer;
+    sz[u] = 1;
+
+    for (int i = 0; i < childCount[u]; i++) {
+        int v = child[u][i];
+        dfs(v);
+        sz[u] += sz[v];
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &q);
+
+    for (int i = 2; i <= n; i++) {
+        int p;
+        scanf("%d", &p);
+        child[p][childCount[p]++] = i;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (childCount[i] > 1)
+            qsort(child[i], childCount[i], sizeof(int), cmpInt);
+    }
+
+    dfs(1);
+
+    while (q--) {
+        int u, k;
+        scanf("%d %d", &u, &k);
+
+        int pos = in[u] + k - 1;
+        if (pos <= n && pos < in[u] + sz[u])
+            printf("%d\n", ord[pos]);
+        else
+            printf("-1\n");
+    }
+
+    return 0;
+}
 

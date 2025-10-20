@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s[MAXN];
+char ref[3][MAXN];
+int prefix[3][MAXN];
+
+int min(int a, int b) { return a < b ? a : b; }
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        scanf("%s", s);
+
+        for (int shift = 0; shift < 3; shift++) {
+            for (int i = 0; i < n; i++) {
+                char expected = "RGB"[(i + shift) % 3];
+                ref[shift][i] = expected;
+                prefix[shift][i] = (i > 0 ? prefix[shift][i - 1] : 0) + (s[i] != expected);
+            }
+        }
+
+        int result = k;
+
+        for (int shift = 0; shift < 3; shift++) {
+            for (int i = k - 1; i < n; i++) {
+                int changes = prefix[shift][i] - (i - k >= 0 ? prefix[shift][i - k] : 0);
+                result = min(result, changes);
+            }
+        }
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+#define ll long long
+
+int main() {
+    int n, m;
+    scanf("%d", &n);
+    ll A[300005];
+    for (int k = 0; k < n; k++) scanf("%lld", &A[k]);
+
+    scanf("%d", &m);
+    ll B[300005];
+    for (int k = 0; k < m; k++) scanf("%lld", &B[k]);
+
+    int p1 = 0, p2 = 0;
+    ll s1 = 0, s2 = 0;
+    int parts = 0;
+
+    while (p1 < n && p2 < m) {
+        s1 += A[p1];
+        s2 += B[p2];
+
+        if (s1 == s2) {
+            parts++;
+            p1++;
+            p2++;
+            s1 = 0;
+            s2 = 0;
+        } else if (s1 < s2) {
+            p1++;
+        } else {
+            p2++;
+        }
+    }
+
+    while (p1 < n) s1 += A[p1++];
+    while (p2 < m) s2 += B[p2++];
+
+    if (s1 == s2)
+        printf("%d\n", parts);
+    else
+        printf("-1\n");
+
+    return 0;
+}
 

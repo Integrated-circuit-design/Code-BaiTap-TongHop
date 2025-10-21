@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <math.h>
+
+int gcd(int a, int b) {
+    return b ? gcd(b, a % b) : a;
+}
+
+int find_min_k(int x, int y) {
+    int d = y - x;
+    int ans = 1000000000;
+    int t = d;
+
+    for (int i = 2; i * i <= t; i++) {
+        if (t % i == 0) {
+            int r = x % i;
+            if (r != 0) {
+                int k = i - r;
+                if (k < ans) ans = k;
+            }
+            while (t % i == 0) t /= i;
+        }
+    }
+
+    if (t > 1) {
+        int r = x % t;
+        if (r != 0) {
+            int k = t - r;
+            if (k < ans) ans = k;
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+
+        if (gcd(x, y) > 1) {
+            printf("0\n");
+            continue;
+        }
+
+        if (y - x == 1) {
+            printf("-1\n");
+            continue;
+        }
+
+        int result = find_min_k(x, y);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

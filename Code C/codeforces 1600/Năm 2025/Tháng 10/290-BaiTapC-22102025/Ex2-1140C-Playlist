@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+#define MAXN 300005
+
+typedef struct {
+    int t;
+    int b;
+} Song;
+
+int cmpBeauty(const void *a, const void *b) {
+    return ((Song*)b)->b - ((Song*)a)->b;
+}
+
+int cmpLength(const void *a, const void *b) {
+    ll x = *(ll*)a, y = *(ll*)b;
+    return (x > y) - (x < y);
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    Song a[MAXN];
+    for (int i = 0; i < n; i++)
+        scanf("%d %d", &a[i].t, &a[i].b);
+
+    qsort(a, n, sizeof(Song), cmpBeauty);
+
+    ll lengths[MAXN];
+    int lenCount = 0;
+    ll sum = 0, best = 0;
+
+    for (int i = 0; i < n; i++) {
+        lengths[lenCount++] = a[i].t;
+        sum += a[i].t;
+
+        if (lenCount > k) {
+            qsort(lengths, lenCount, sizeof(ll), cmpLength);
+            sum -= lengths[0];
+            for (int j = 1; j < lenCount; j++)
+                lengths[j-1] = lengths[j];
+            lenCount--;
+        }
+
+        ll now = sum * a[i].b;
+        if (now > best)
+            best = now;
+    }
+
+    printf("%lld\n", best);
+    return 0;
+}
 

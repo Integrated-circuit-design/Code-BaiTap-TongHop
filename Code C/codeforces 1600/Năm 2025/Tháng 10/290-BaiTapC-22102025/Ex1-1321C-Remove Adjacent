@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    char s[105], t[105];
+    scanf("%d %s", &n, s);
+
+    int total = 0;
+
+    for (char c = 'z'; c >= 'a'; c--) {
+        int changed = 1;
+
+        while (changed) {
+            changed = 0;
+            int k = 0;
+
+            for (int i = 0; i < n; i++) {
+                int remove = 0;
+
+                if (s[i] == c) {
+                    if ((i > 0 && s[i - 1] == c - 1) || (i < n - 1 && s[i + 1] == c - 1)) {
+                        remove = 1;
+                        total++;
+                        changed = 1;
+                    }
+                }
+
+                if (!remove)
+                    t[k++] = s[i];
+            }
+
+            t[k] = '\0';
+            strcpy(s, t);
+            n = k;
+        }
+    }
+
+    printf("%d\n", total);
+    return 0;
+}
 

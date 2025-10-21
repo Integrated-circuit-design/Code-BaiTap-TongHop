@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+#define ll long long
+
+char a[MAXN], b[MAXN];
+int used[26], uniq[26];
+int n, k, t, uniqCnt;
+
+ll count_segments(char allowed[26]) {
+    ll total = 0, len = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] == b[i] || allowed[a[i] - 'a']) {
+            len++;
+        } else {
+            total += len * (len + 1) / 2;
+            len = 0;
+        }
+    }
+    total += len * (len + 1) / 2;
+    return total;
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &k);
+        scanf("%s", a);
+        scanf("%s", b);
+
+        memset(used, 0, sizeof(used));
+        uniqCnt = 0;
+
+        for (int i = 0; i < n; i++) {
+            int c = a[i] - 'a';
+            if (!used[c]) {
+                used[c] = 1;
+                uniq[uniqCnt++] = c;
+            }
+        }
+
+        ll ans = 0;
+        int subsetCount = 1 << uniqCnt;
+
+        for (int mask = 0; mask < subsetCount; mask++) {
+            if (__builtin_popcount((unsigned)mask) > k) continue;
+            char allowed[26] = {0};
+            for (int i = 0; i < uniqCnt; i++)
+                if (mask & (1 << i))
+                    allowed[uniq[i]] = 1;
+
+            ll res = count_segments(allowed);
+            if (res > ans) ans = res;
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

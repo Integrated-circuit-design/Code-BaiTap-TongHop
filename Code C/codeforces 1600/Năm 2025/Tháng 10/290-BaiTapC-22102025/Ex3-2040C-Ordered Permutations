@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define ull unsigned long long
+#define MAXN 200005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        ull k;
+        scanf("%d %llu", &n, &k);
+
+        if (n <= 60 && (1ULL << (n - 1)) < k) {
+            printf("-1\n");
+            continue;
+        }
+
+        k--;
+
+        int res[MAXN];
+        int L = MAXN / 2, R = L;
+        res[L] = n;
+
+        for (int i = n - 1; i >= 1; i--) {
+            int bit = (k >> (n - 1 - i)) & 1ULL;
+            if (bit == 0) {
+                L--;
+                res[L] = i;
+            } else {
+                R++;
+                res[R] = i;
+            }
+        }
+
+        for (int i = L; i <= R; i++) {
+            printf("%d", res[i]);
+            if (i < R) printf(" ");
+        }
+        printf("\n");
+    }
+    return 0;
+}
 

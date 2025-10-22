@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 200005
+typedef long long ll;
+
+int cmp_asc(const void *a, const void *b) {
+    ll x = *(ll*)a;
+    ll y = *(ll*)b;
+    if(x > y) return 1;
+    if(x < y) return -1;
+    return 0;
+}
+
+int can_transform(int n, int m, ll a[], ll b[]) {
+    qsort(a, n, sizeof(ll), cmp_asc);
+    qsort(b, m, sizeof(ll), cmp_asc);
+
+    int idx_a = 0;
+    int idx_b = 0;
+    ll temp[MAX];
+
+    while(idx_b < m) {
+        ll target = b[idx_b];
+        ll sum = 0;
+
+        while(idx_a < n && sum < target) {
+            sum += a[idx_a];
+            idx_a++;
+        }
+
+        if(sum != target) return 0;
+
+        idx_b++;
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        ll a[MAX], b[MAX];
+
+        for(int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        for(int i = 0; i < m; i++) scanf("%lld", &b[i]);
+
+        if(can_transform(n, m, a, b))
+            printf("Yes\n");
+        else
+            printf("No\n");
+    }
+
+    return 0;
+}
 

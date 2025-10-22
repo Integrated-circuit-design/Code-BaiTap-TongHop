@@ -1,1 +1,67 @@
+#include <stdio.h>
+
+#define MAX_M 100005
+#define MAX_N 100005
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int limit = (m + 1) / 2;
+        int count[MAX_N] = {0};
+        int answer[MAX_M];
+
+        int day_size[MAX_M];
+        int day_friend[MAX_M][10];
+
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &day_size[i]);
+            for (int j = 0; j < day_size[i]; j++)
+                scanf("%d", &day_friend[i][j]);
+        }
+
+        int possible = 1;
+
+        for (int i = 0; i < m; i++) {
+            int chosen = -1;
+
+            if (day_size[i] == 1) {
+                chosen = day_friend[i][0];
+            } else {
+                int min_count = 1e9;
+                for (int j = 0; j < day_size[i]; j++) {
+                    int f = day_friend[i][j];
+                    if (count[f] < min_count) {
+                        min_count = count[f];
+                        chosen = f;
+                    }
+                }
+            }
+
+            answer[i] = chosen;
+            count[chosen]++;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if (count[i] > limit) {
+                possible = 0;
+                break;
+            }
+        }
+
+        if (!possible) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+            for (int i = 0; i < m; i++)
+                printf("%d%c", answer[i], i == m - 1 ? '\n' : ' ');
+        }
+    }
+
+    return 0;
+}
 

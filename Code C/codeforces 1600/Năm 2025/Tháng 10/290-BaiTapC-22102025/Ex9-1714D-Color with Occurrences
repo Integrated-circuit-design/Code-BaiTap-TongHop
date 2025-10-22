@@ -1,1 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXT 105
+#define MAXS 15
+#define MAXN 15
+#define INF 1000000
+
+char t[MAXT], s[MAXN][MAXS];
+int n, len;
+int dp[MAXT];
+int prevPos[MAXT];
+int usedId[MAXT];
+
+int matchAt(int start, int j) {
+    int ls = strlen(s[j]);
+    if (start + ls > len) return 0;
+    for (int k = 0; k < ls; k++)
+        if (t[start + k] != s[j][k])
+            return 0;
+    return 1;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    while (q--) {
+        scanf("%s", t);
+        len = strlen(t);
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++)
+            scanf("%s", s[i]);
+
+        for (int i = 0; i <= len; i++) dp[i] = INF;
+        dp[0] = 0;
+
+        for (int i = 0; i < len; i++) {
+            if (dp[i] == INF) continue;
+            for (int j = 0; j < n; j++) {
+                int ls = strlen(s[j]);
+                for (int start = i - ls + 1; start <= i; start++) {
+                    if (start < 0) continue;
+                    if (matchAt(start, j)) {
+                        int end = start + ls;
+                        if (end > len) end = len;
+                        if (dp[end] > dp[i] + 1) {
+                            dp[end] = dp[i] + 1;
+                            prevPos[end] = start;
+                            usedId[end] = j;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (dp[len] == INF) {
+            printf("-1\n");
+            continue;
+        }
+
+        int resId[MAXT], resStart[MAXT], cnt = 0;
+        int cur = len;
+        while (cur > 0) {
+            resId[cnt] = usedId[cur] + 1;
+            resStart[cnt] = prevPos[cur] + 1;
+            cur = prevPos[cur];
+            cnt++;
+        }
+
+        printf("%d\n", dp[len]);
+        for (int i = cnt - 1; i >= 0; i--)
+            printf("%d %d\n", resId[i], resStart[i]);
+    }
+    return 0;
+}
 

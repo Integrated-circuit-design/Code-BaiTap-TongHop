@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        int p[n];
+        for(int i = 0; i < n; i++) scanf("%d", &p[i]);
+
+        long long total = 0;
+        int decLen = 1;
+
+        for(int i = 0; i < n; i++) {
+            decLen = 1;
+            for(int j = i + 1; j < n; j++) {
+                if(p[j-1] > p[j]) decLen++;
+                else break;
+            }
+            
+            total += (long long)decLen * (decLen + 1) / 2;
+            total += (long long)decLen * (n - i - decLen);
+        }
+
+        printf("%lld\n", total);
+    }
+
+    return 0;
+}
 

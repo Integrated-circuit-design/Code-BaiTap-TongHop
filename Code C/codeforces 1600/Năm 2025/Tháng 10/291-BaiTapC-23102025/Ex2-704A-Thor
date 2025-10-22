@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 300005
+
+typedef struct {
+    int app;
+    int read;
+} Notification;
+
+Notification *notif[MAX];
+int notifCount = 0;
+int totalUnread = 0;
+int lastRead = 0;
+
+int appUnread[MAX] = {0};
+
+int main() {
+    int n, q;
+    scanf("%d %d", &n, &q);
+
+    for (int i = 0; i < q; i++) {
+        int type;
+        scanf("%d", &type);
+
+        if (type == 1) {
+            int x;
+            scanf("%d", &x);
+            notif[notifCount] = (Notification*)malloc(sizeof(Notification));
+            notif[notifCount]->app = x;
+            notif[notifCount]->read = 0;
+            notifCount++;
+            appUnread[x]++;
+            totalUnread++;
+        }
+        else if (type == 2) {
+            int x;
+            for (int j = 0; j < notifCount; j++) {
+                if (notif[j]->app == x && notif[j]->read == 0) {
+                    notif[j]->read = 1;
+                    totalUnread--;
+                }
+            }
+            appUnread[x] = 0;
+        }
+        else if (type == 3) {
+            int t;
+            scanf("%d", &t);
+            for (; lastRead < t; lastRead++) {
+                if (notif[lastRead]->read == 0) {
+                    notif[lastRead]->read = 1;
+                    appUnread[notif[lastRead]->app]--;
+                    totalUnread--;
+                }
+            }
+        }
+
+        printf("%d\n", totalUnread);
+    }
+
+    for (int i = 0; i < notifCount; i++) {
+        free(notif[i]);
+    }
+
+    return 0;
+}
 

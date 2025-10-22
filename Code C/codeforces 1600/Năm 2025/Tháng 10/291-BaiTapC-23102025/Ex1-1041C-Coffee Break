@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int minute;
+    int index;
+} Coffee;
+
+int cmp(const void *a, const void *b) {
+    Coffee *x = (Coffee *)a;
+    Coffee *y = (Coffee *)b;
+    return x->minute - y->minute;
+}
+
+int main() {
+    int n;
+    long long m, d;
+    scanf("%d %lld %lld", &n, &m, &d);
+
+    Coffee *coffee = (Coffee *)malloc(n * sizeof(Coffee));
+    for(int i = 0; i < n; i++){
+        scanf("%d", &coffee[i].minute);
+        coffee[i].index = i;
+    }
+
+    qsort(coffee, n, sizeof(Coffee), cmp);
+
+    int max_breaks_per_day = (int)((m + d) / (d + 1));
+    if(max_breaks_per_day == 0) max_breaks_per_day = 1;
+    int total_days = (n + max_breaks_per_day - 1) / max_breaks_per_day;
+
+    int *ans = (int *)malloc(n * sizeof(int));
+
+    for(int i = 0; i < n; i++){
+        int day = i / max_breaks_per_day + 1;
+        ans[coffee[i].index] = day;
+    }
+
+    printf("%d\n", total_days);
+    for(int i = 0; i < n; i++){
+        printf("%d ", ans[i]);
+    }
+    printf("\n");
+
+    free(coffee);
+    free(ans);
+    return 0;
+}
 

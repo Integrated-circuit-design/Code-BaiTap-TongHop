@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define MAXN 200000
+
+void read_initial_balances(long long a[], int n) {
+    for (int i = 1; i <= n; i++) {
+        scanf("%lld", &a[i]);
+    }
+}
+
+void process_events(long long a[], int n, int q) {
+    long long last_payout = 0;
+    for (int i = 0; i < q; i++) {
+        int type;
+        scanf("%d", &type);
+        if (type == 1) {
+            int p;
+            long long x;
+            scanf("%d %lld", &p, &x);
+            a[p] = x;
+        } else {
+            long long x;
+            scanf("%lld", &x);
+            if (x > last_payout)
+                last_payout = x;
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (a[i] < last_payout)
+            a[i] = last_payout;
+    }
+}
+
+void print_balances(long long a[], int n) {
+    for (int i = 1; i <= n; i++) {
+        printf("%lld ", a[i]);
+    }
+}
+
+int main() {
+    int n, q;
+    static long long a[MAXN + 5];
+
+    scanf("%d", &n);
+    read_initial_balances(a, n);
+
+    scanf("%d", &q);
+    process_events(a, n, q);
+
+    print_balances(a, n);
+    return 0;
+}
 

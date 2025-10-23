@@ -1,35 +1,48 @@
 #include <stdio.h>
 
-int getXor(int n) {
-    int res;
-    if (n % 4 == 0) res = n;
-    else if (n % 4 == 1) res = 1;
-    else if (n % 4 == 2) res = n + 1;
-    else res = 0;
-    return res;
+#define MAXN 200005
+#define MAXE 400005
+
+int n, head[MAXN], to[MAXE], nxt[MAXE], ecnt = 0;
+int color[MAXN], deg[MAXN], max_deg = 0;
+int q[MAXN];
+
+void add_edge(int u, int v) {
+    to[++ecnt] = v;
+    nxt[ecnt] = head[u];
+    head[u] = ecnt;
+    if (++deg[u] > max_deg) max_deg = deg[u];
 }
 
-int rangeXor(int L, int R) {
-    if (L == 0) return getXor(R);
-    return getXor(R) ^ getXor(L - 1);
+void bfs() {
+    int front = 0, back = 0;
+    q[back++] = 1;
+    color[1] = 1;
+    while (front < back) {
+        int u = q[front++];
+        int used_color = 1;
+        for (int e = head[u]; e; e = nxt[e]) {
+            int v = to[e];
+            if (color[v]) continue;
+            while (used_color == color[u] || used_color == color[q[(front-1)/2]])
+                used_color++;
+            color[v] = used_color++;
+            q[back++] = v;
+        }
+    }
 }
 
 int main() {
-    int t;
-    scanf("%d", &t);
-    for (int tc = 0; tc < t; tc++) {
-        int l, r;
-        scanf("%d %d", &l, &r);
-        int len = r - l + 1, xorArray = 0;
-        for (int i = 0; i < len; i++) {
-            int value;
-            scanf("%d", &value);
-            xorArray ^= value;
-        }
-        int xorOriginal = rangeXor(l, r);
-        int x = xorArray ^ xorOriginal;
-        printf("%d\n", x);
+    scanf("%d", &n);
+    for (int i = 1; i < n; ++i) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        add_edge(x, y);
+        add_edge(y, x);
     }
+    bfs();
+    printf("%d\n", max_deg + 1);
+    for (int i = 1; i <= n; ++i)
+        printf("%d%c", color[i], i == n ? '\n' : ' ');
     return 0;
 }
-

@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+long long count_resistors(long long a, long long b) {
+    long long total = 0;
+    while (1) {
+        if (a == 0 || b == 0) break;
+        long long times;
+        if (a >= b) {
+            times = a / b;
+            a = a % b;
+        } else {
+            times = b / a;
+            b = b % a;
+        }
+        total += times;
+    }
+    return total;
+}
+
+int main() {
+    long long a, b;
+    scanf("%lld %lld", &a, &b);
+    long long result = count_resistors(a, b);
+    printf("%lld\n", result);
+    return 0;
+}
 

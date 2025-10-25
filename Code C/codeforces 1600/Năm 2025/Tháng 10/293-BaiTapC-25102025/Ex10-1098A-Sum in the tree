@@ -1,1 +1,60 @@
+#include <stdio.h>
+#define MAXN 100005
+#define INF 1000000001LL
+
+int n;
+int parent[MAXN];
+long long s[MAXN], a[MAXN];
+long long minChild[MAXN];
+int depth[MAXN];
+int hasChild[MAXN];
+
+int main() {
+    scanf("%d", &n);
+    parent[1] = 0;
+
+    for (int i = 2; i <= n; i++) {
+        scanf("%d", &parent[i]);
+        hasChild[parent[i]] = 1;
+    }
+
+    for (int i = 1; i <= n; i++)
+        scanf("%lld", &s[i]);
+
+    depth[1] = 1;
+    for (int i = 2; i <= n; i++)
+        depth[i] = depth[parent[i]] + 1;
+
+    for (int i = 1; i <= n; i++)
+        minChild[i] = INF;
+
+    for (int i = n; i >= 2; i--) {
+        int p = parent[i];
+        if (s[i] != -1 && s[i] < minChild[p])
+            minChild[p] = s[i];
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (depth[i] % 2 == 0 && s[i] == -1) {
+            if (minChild[i] == INF) s[i] = s[parent[i]];
+            else s[i] = minChild[i];
+        }
+    }
+
+    long long total = 0;
+    for (int i = 1; i <= n; i++) {
+        if (i == 1) a[i] = s[i];
+        else {
+            a[i] = s[i] - s[parent[i]];
+            if (a[i] < 0) {
+                printf("-1\n");
+                return 0;
+            }
+        }
+        total += a[i];
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

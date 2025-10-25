@@ -1,1 +1,85 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int abs_val(int x) { return x < 0 ? -x : x; }
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n;
+        char s[100005];
+        scanf("%d %s", &n, s);
+
+        int freq[26] = {0};
+        for (int i = 0; i < n; i++)
+            freq[s[i] - 'a']++;
+
+        int best_k = 1, best_each = n, min_change = 1000000;
+
+        for (int k = 1; k <= 26; k++) {
+            if (n % k != 0) continue;
+            int each = n / k;
+
+            int count[26];
+            memcpy(count, freq, sizeof(freq));
+            for (int i = 0; i < 25; i++)
+                for (int j = i + 1; j < 26; j++)
+                    if (count[j] > count[i]) {
+                        int tmp = count[i];
+                        count[i] = count[j];
+                        count[j] = tmp;
+                    }
+
+            int diff = 0;
+            for (int i = 0; i < k; i++) diff += abs_val(count[i] - each);
+            for (int i = k; i < 26; i++) diff += count[i];
+            diff /= 2;
+
+            if (diff < min_change) {
+                min_change = diff;
+                best_k = k;
+                best_each = each;
+            }
+        }
+
+        int idx[26];
+        for (int i = 0; i < 26; i++) idx[i] = i;
+        for (int i = 0; i < 25; i++)
+            for (int j = i + 1; j < 26; j++)
+                if (freq[idx[j]] > freq[idx[i]]) {
+                    int t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+                }
+
+        int target[26] = {0};
+        for (int i = 0; i < best_k; i++)
+            target[idx[i]] = best_each;
+
+        int need[26] = {0}, over[26] = {0};
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] < target[i]) need[i] = target[i] - freq[i];
+            else over[i] = freq[i] - target[i];
+        }
+
+        char res[100005];
+        for (int i = 0; i < n; i++) {
+            int c = s[i] - 'a';
+            if (over[c] > 0) {
+                for (int j = 0; j < 26; j++) {
+                    if (need[j] > 0) {
+                        res[i] = 'a' + j;
+                        over[c]--; need[j]--;
+                        goto done;
+                    }
+                }
+            } else res[i] = s[i];
+            done:;
+        }
+        res[n] = '\0';
+
+        printf("%d\n%s\n", min_change, res);
+    }
+    return 0;
+}
 

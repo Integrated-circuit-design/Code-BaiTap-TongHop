@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+int countBits(long long x) {
+    int cnt = 0;
+    while (x > 0) {
+        if (x & 1) cnt++;
+        x >>= 1;
+    }
+    return cnt;
+}
+
+int findK(long long n, long long p) {
+    for (int k = 1; k <= 60; k++) {
+        long long val = n - k * p;
+        if (val <= 0) continue;
+        int bits = countBits(val);
+        if (bits <= k && k <= val)
+            return k;
+    }
+    return -1;
+}
+
+int main() {
+    long long n, p;
+    scanf("%lld %lld", &n, &p);
+    int ans = findK(n, p);
+    printf("%d\n", ans);
+    return 0;
+}
 

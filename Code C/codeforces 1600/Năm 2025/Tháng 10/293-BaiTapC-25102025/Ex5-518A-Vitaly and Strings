@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+void nextString(char *s) {
+    int i = strlen(s) - 1;
+    while (i >= 0) {
+        if (s[i] == 'z') {
+            s[i] = 'a';
+            i--;
+        } else {
+            s[i]++;
+            break;
+        }
+    }
+}
+
+int main() {
+    char s[110], t[110];
+    scanf("%s", s);
+    scanf("%s", t);
+    nextString(s);
+    if (strcmp(s, t) < 0)
+        printf("%s\n", s);
+    else
+        printf("No such string\n");
+    return 0;
+}
 

@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 305
+
+int n;
+int p[MAXN];
+char A[MAXN][MAXN];
+int parent[MAXN];
+
+int find(int x) {
+    return parent[x] == x ? x : (parent[x] = find(parent[x]));
+}
+
+void unite(int a, int b) {
+    a = find(a);
+    b = find(b);
+    if (a != b) parent[b] = a;
+}
+
+int cmp_int(const void *a, const void *b) {
+    return *(int*)a - *(int*)b;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%d", &p[i]);
+    for (int i = 0; i < n; i++) scanf("%s", A[i]);
+    for (int i = 0; i < n; i++) parent[i] = i;
+    for (int i = 0; i < n; i++)
+        for (int j = i + 1; j < n; j++)
+            if (A[i][j] == '1')
+                unite(i, j);
+    int groupVal[MAXN][MAXN], groupIdx[MAXN][MAXN];
+    int countVal[MAXN] = {0}, countIdx[MAXN] = {0};
+    for (int i = 0; i < n; i++) {
+        int root = find(i);
+        groupIdx[root][countIdx[root]++] = i;
+        groupVal[root][countVal[root]++] = p[i];
+    }
+    for (int r = 0; r < n; r++) {
+        if (countIdx[r] == 0) continue;
+        qsort(groupIdx[r], countIdx[r], sizeof(int), cmp_int);
+        qsort(groupVal[r], countVal[r], sizeof(int), cmp_int);
+        for (int i = 0; i < countIdx[r]; i++)
+            p[groupIdx[r][i]] = groupVal[r][i];
+    }
+    for (int i = 0; i < n; i++)
+        printf("%d%c", p[i], i == n - 1 ? '\n' : ' ');
+    return 0;
+}
 

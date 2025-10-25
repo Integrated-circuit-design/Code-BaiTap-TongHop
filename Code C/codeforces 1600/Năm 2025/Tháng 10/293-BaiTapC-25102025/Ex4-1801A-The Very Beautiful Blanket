@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    unsigned long long base[4][4] = {
+        {0, 1, 2, 3},
+        {4, 5, 6, 7},
+        {8, 9, 10, 11},
+        {12, 13, 14, 15}
+    };
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        printf("%d\n", n * m);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                unsigned long long block_row = i / 4;
+                unsigned long long block_col = j / 4;
+                unsigned long long offset = (block_row * (m / 4 + 1) + block_col) * 16ULL;
+                unsigned long long val = base[i % 4][j % 4] + offset;
+                printf("%llu%c", val, j == m - 1 ? '\n' : ' ');
+            }
+        }
+    }
+    return 0;
+}
 

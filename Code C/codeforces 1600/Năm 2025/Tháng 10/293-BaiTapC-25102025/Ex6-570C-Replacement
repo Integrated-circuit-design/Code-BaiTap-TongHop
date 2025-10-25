@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_pair(char a, char b) {
+    return (a == '.' && b == '.');
+}
+
+int update_count(char s[], int n, int x, char new_c, int old_count) {
+    if (x > 1 && is_pair(s[x - 1], s[x])) old_count--;
+    if (x < n && is_pair(s[x], s[x + 1])) old_count--;
+
+    s[x] = new_c;
+
+    if (x > 1 && is_pair(s[x - 1], s[x])) old_count++;
+    if (x < n && is_pair(s[x], s[x + 1])) old_count++;
+
+    return old_count;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    char s[300005];
+    scanf("%s", s + 1);
+
+    int count = 0;
+    for (int i = 1; i < n; i++)
+        if (is_pair(s[i], s[i + 1]))
+            count++;
+
+    for (int i = 0; i < m; i++) {
+        int x;
+        char c;
+        scanf("%d %c", &x, &c);
+
+        if (s[x] != c)
+            count = update_count(s, n, x, c, count);
+
+        printf("%d\n", count);
+    }
+
+    return 0;
+}
 

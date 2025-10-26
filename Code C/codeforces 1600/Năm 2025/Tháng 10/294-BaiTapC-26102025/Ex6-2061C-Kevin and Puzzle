@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define MOD 998244353
+#define MAXN 200005
+
+int t, n;
+int a[MAXN];
+
+int main() {
+    scanf("%d", &t);
+    while(t--) {
+        scanf("%d", &n);
+        for(int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+        long long prevHonest = 1;
+        long long prevLiar = 0;
+        int liarsSoFar = 0;
+
+        for(int i = 1; i <= n; i++) {
+            long long curHonest = 0, curLiar = 0;
+
+            if(liarsSoFar == a[i]) {
+                curHonest = (prevHonest + prevLiar) % MOD;
+            }
+
+            curLiar = prevHonest % MOD;
+
+            liarsSoFar += (curLiar > 0) ? 1 : 0;
+
+            prevHonest = curHonest;
+            prevLiar = curLiar;
+        }
+
+        long long result = (prevHonest + prevLiar) % MOD;
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

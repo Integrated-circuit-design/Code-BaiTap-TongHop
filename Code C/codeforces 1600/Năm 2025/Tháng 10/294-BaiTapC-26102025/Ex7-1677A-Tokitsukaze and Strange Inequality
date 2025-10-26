@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+#define MAXN 5005
+
+int p[MAXN];
+int lessLeft[MAXN];
+int lessRight[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++) scanf("%d", &p[i]);
+
+        long long ans = 0;
+
+        for (int b = 2; b <= n-1; b++) {
+
+            for (int i = b+1; i <= n; i++) {
+                lessRight[i] = 0;
+            }
+            for (int d = b+1; d <= n; d++) {
+                for (int i = b+1; i < d; i++) {
+                    if (p[i] < p[d]) lessRight[d]++;
+                }
+            }
+
+            for (int c = 2; c <= b-1; c++) {
+                lessLeft[c] = 0;
+                for (int a = 1; a < c; a++) {
+                    if (p[a] < p[c]) lessLeft[c]++;
+                }
+            }
+
+            for (int c = 1; c < b; c++) {
+                for (int d = b+1; d <= n; d++) {
+                    if (p[b] > p[d] && p[c] > 0) {
+                        ans += lessLeft[c];
+                    }
+                }
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

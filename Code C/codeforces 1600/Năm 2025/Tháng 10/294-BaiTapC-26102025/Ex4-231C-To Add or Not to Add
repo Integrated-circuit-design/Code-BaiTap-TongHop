@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ll long long
+
+int cmp(const void *a, const void *b) {
+    ll x = *(ll*)a, y = *(ll*)b;
+    return (x > y) - (x < y);
+}
+
+int main() {
+    int n;
+    ll k;
+    scanf("%d %lld", &n, &k);
+    
+    ll *a = (ll*)malloc(n * sizeof(ll));
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+    
+    qsort(a, n, sizeof(ll), cmp);
+    
+    ll *prefix = (ll*)malloc((n+1) * sizeof(ll));
+    prefix[0] = 0;
+    for (int i = 0; i < n; i++) prefix[i+1] = prefix[i] + a[i];
+    
+    int max_count = 0;
+    ll min_number = 0;
+    
+    for (int i = 0; i < n; i++) {
+        int low = 0, high = i, best = i;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            ll needed = (ll)(i - mid + 1) * a[i] - (prefix[i+1] - prefix[mid]);
+            if (needed <= k) {
+                best = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        
+        int count = i - best + 1;
+        if (count > max_count || (count == max_count && a[i] < min_number)) {
+            max_count = count;
+            min_number = a[i];
+        }
+    }
+    
+    printf("%d %lld\n", max_count, min_number);
+    
+    free(a);
+    free(prefix);
+    return 0;
+}
 

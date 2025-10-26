@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAXN 1005
+
+int stack[MAXN];
+int top;
+
+void print_stack() {
+    for (int i = 0; i <= top; i++) {
+        if (i > 0) putchar('.');
+        printf("%d", stack[i]);
+    }
+    putchar('\n');
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int a[MAXN];
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        top = 0;
+        stack[top] = a[0];
+        print_stack();
+
+        for (int i = 1; i < n; i++) {
+            int x = a[i];
+
+            if (x == 1) {
+                stack[++top] = 1;
+            } else {
+                while (top >= 0 && stack[top] != x - 1) top--;
+                stack[top] = x;
+            }
+
+            print_stack();
+        }
+    }
+    return 0;
+}
 

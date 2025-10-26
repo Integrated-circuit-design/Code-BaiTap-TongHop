@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define int64 long long
+
+int cmp_desc(const void *a, const void *b) {
+    int64 x = *(int64*)a;
+    int64 y = *(int64*)b;
+    return (y > x) - (y < x);
+}
+
+int64 calcContribution(int64 *prices, int64 m, int x, int a, int y, int b) {
+    int64 sum = 0;
+    for(int64 i = 1; i <= m; i++) {
+        int64 percent = 0;
+        if(i % a == 0) percent += x;
+        if(i % b == 0) percent += y;
+        sum += prices[i-1] * percent / 100;
+    }
+    return sum;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while(q--) {
+        int n;
+        scanf("%d", &n);
+        int64 *prices = (int64*)malloc(n * sizeof(int64));
+        for(int i = 0; i < n; i++)
+            scanf("%lld", &prices[i]);
+
+        int x, a, y, b;
+        scanf("%d %d", &x, &a);
+        scanf("%d %d", &y, &b);
+
+        int64 k;
+        scanf("%lld", &k);
+
+        qsort(prices, n, sizeof(int64), cmp_desc);
+
+        if(x < y) {
+            int tmp = x; x = y; y = tmp;
+            int tmp2 = a; a = b; b = tmp2;
+        }
+
+        int64 ans = -1;
+        int64 total = 0;
+
+        for(int64 m = 1; m <= n; m++) {
+            total = calcContribution(prices, m, x, a, y, b);
+            if(total >= k) {
+                ans = m;
+                break;
+            }
+        }
+
+        printf("%lld\n", ans);
+        free(prices);
+    }
+
+    return 0;
+}
 

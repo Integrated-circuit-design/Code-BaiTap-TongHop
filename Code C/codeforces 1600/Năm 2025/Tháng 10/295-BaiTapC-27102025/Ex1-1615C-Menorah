@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char a[100005], b[100005];
+        scanf("%s", a);
+        scanf("%s", b);
+
+        int onesA = 0, onesB = 0;
+        int samePos = 0, diffPos = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] == '1') onesA++;
+            if (b[i] == '1') onesB++;
+            if (a[i] == b[i]) samePos++;
+            else diffPos++;
+        }
+
+        int result = -1;
+
+        if (onesA == onesB) {
+            int moves = samePos + diffPos - 1;
+            if (result == -1 || moves < result)
+                result = moves;
+        }
+
+        if (onesA + onesB == n + 1) {
+            int moves = samePos + diffPos;
+            if (result == -1 || moves < result)
+                result = moves;
+        }
+
+        printf("%d\n", result);
+    }
+    return 0;
+}
 

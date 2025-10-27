@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+void build_factorial(long long fact[], int n, long long mod) {
+    fact[0] = 1 % mod;
+    for (int i = 1; i <= n; i++) {
+        fact[i] = (fact[i - 1] * i) % mod;
+    }
+}
+
+int main() {
+    long long n, mod;
+    scanf("%lld %lld", &n, &mod);
+
+    long long fact[n + 1];
+    build_factorial(fact, n, mod);
+
+    long long result = 0;
+
+    for (int len = 1; len <= n; len++) {
+        long long ways = n - len + 1;
+        long long part = (ways * ways) % mod;
+        part = (part * fact[len]) % mod;
+        part = (part * fact[n - len]) % mod;
+        result = (result + part) % mod;
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

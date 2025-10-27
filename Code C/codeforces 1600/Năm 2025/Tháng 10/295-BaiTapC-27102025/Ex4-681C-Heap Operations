@@ -1,1 +1,92 @@
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+
+#define MAX 1000000
+#define INF 1000000009
+
+int a[MAX];
+int nheap = 0;
+char ops[MAX][15];
+int val[MAX];
+int cnt = 0;
+
+void record(const char *s, int x) {
+    strcpy(ops[cnt], s);
+    val[cnt++] = x;
+}
+
+void heap_insert(int x) {
+    a[++nheap] = x;
+    int i = nheap;
+    while (i > 1 && a[i] < a[i / 2]) {
+        int t = a[i]; a[i] = a[i / 2]; a[i / 2] = t;
+        i /= 2;
+    }
+}
+
+void heap_remove() {
+    if (nheap == 0) return;
+    a[1] = a[nheap--];
+    int i = 1;
+    while (1) {
+        int l = i * 2, r = i * 2 + 1, smallest = i;
+        if (l <= nheap && a[l] < a[smallest]) smallest = l;
+        if (r <= nheap && a[r] < a[smallest]) smallest = r;
+        if (smallest == i) break;
+        int t = a[i]; a[i] = a[smallest]; a[smallest] = t;
+        i = smallest;
+    }
+}
+
+int heap_min() {
+    return (nheap == 0 ? INF : a[1]);
+}
+
+int main() {
+    int m;
+    scanf("%d", &m);
+
+    for (int i = 0; i < m; i++) {
+        char cmd[15];
+        int x;
+        scanf("%s", cmd);
+
+        if (strcmp(cmd, "insert") == 0) {
+            scanf("%d", &x);
+            heap_insert(x);
+            record("insert", x);
+        }
+        else if (strcmp(cmd, "getMin") == 0) {
+            scanf("%d", &x);
+            while (nheap > 0 && heap_min() < x) {
+                heap_remove();
+                record("removeMin", 0);
+            }
+            if (nheap == 0 || heap_min() > x) {
+                heap_insert(x);
+                record("insert", x);
+            }
+            record("getMin", x);
+        }
+        else {
+            if (nheap == 0) {
+                heap_insert(0);
+                record("insert", 0);
+            }
+            heap_remove();
+            record("removeMin", 0);
+        }
+    }
+
+    printf("%d\n", cnt);
+    for (int i = 0; i < cnt; i++) {
+        if (strcmp(ops[i], "insert") == 0 || strcmp(ops[i], "getMin") == 0)
+            printf("%s %d\n", ops[i], val[i]);
+        else
+            printf("%s\n", ops[i]);
+    }
+
+    return 0;
+}
 

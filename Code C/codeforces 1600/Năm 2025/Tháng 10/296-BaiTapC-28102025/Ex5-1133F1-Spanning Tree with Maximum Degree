@@ -1,1 +1,60 @@
+#include <stdio.h>
+
+#define MAXN 200005
+#define MAXM 200005
+
+typedef struct {
+    int u, v;
+} Edge;
+
+int n, m;
+Edge edges[MAXM];
+int deg[MAXN];
+int parent[MAXN];
+
+int find(int x) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]);
+}
+
+int unite(int a, int b) {
+    a = find(a);
+    b = find(b);
+    if (a == b) return 0;
+    parent[b] = a;
+    return 1;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) parent[i] = i;
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &edges[i].u, &edges[i].v);
+        deg[edges[i].u]++;
+        deg[edges[i].v]++;
+    }
+
+    int root = 1;
+    for (int i = 2; i <= n; i++)
+        if (deg[i] > deg[root])
+            root = i;
+
+    for (int i = 0; i < m; i++) {
+        int u = edges[i].u, v = edges[i].v;
+        if (u == root || v == root) {
+            if (unite(u, v))
+                printf("%d %d\n", u, v);
+        }
+    }
+
+    for (int i = 0; i < m; i++) {
+        int u = edges[i].u, v = edges[i].v;
+        if (unite(u, v))
+            printf("%d %d\n", u, v);
+    }
+
+    return 0;
+}
 

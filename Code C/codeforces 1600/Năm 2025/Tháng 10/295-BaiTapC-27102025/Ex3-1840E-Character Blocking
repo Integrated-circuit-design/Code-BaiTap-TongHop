@@ -1,1 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 200005
+
+char s1[MAXN], s2[MAXN];
+int unlock_time[MAXN];
+int n, t, q;
+
+int calc_diff(int current_time) {
+    int diff = 0;
+    for (int i = 0; i < n; i++) {
+        if (current_time < unlock_time[i]) continue;
+        if (s1[i] != s2[i]) diff++;
+    }
+    return diff;
+}
+
+void swap_char(int sA, int pA, int sB, int pB) {
+    char *A = (sA == 1 ? s1 : s2);
+    char *B = (sB == 1 ? s1 : s2);
+    char tmp = A[pA];
+    A[pA] = B[pB];
+    B[pB] = tmp;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        scanf("%s %s", s1, s2);
+        scanf("%d %d", &t, &q);
+        n = strlen(s1);
+
+        for (int i = 0; i < n; i++)
+            unlock_time[i] = 0;
+
+        int diff = calc_diff(0);
+
+        for (int cur = 1; cur <= q; cur++) {
+            int type;
+            scanf("%d", &type);
+
+            for (int i = 0; i < n; i++) {
+                if (unlock_time[i] == cur)
+                    unlock_time[i] = 0;
+            }
+
+            if (type == 1) {
+                int pos;
+                scanf("%d", &pos);
+                pos--;
+                unlock_time[pos] = cur + t;
+            } 
+            else if (type == 2) {
+                int sA, pA, sB, pB;
+                scanf("%d %d %d %d", &sA, &pA, &sB, &pB);
+                pA--; pB--;
+                if (cur >= unlock_time[pA] && cur >= unlock_time[pB])
+                    swap_char(sA, pA, sB, pB);
+            } 
+            else if (type == 3) {
+                diff = calc_diff(cur);
+                if (diff == 0)
+                    printf("YES\n");
+                else
+                    printf("NO\n");
+            }
+        }
+    }
+    return 0;
+}
 

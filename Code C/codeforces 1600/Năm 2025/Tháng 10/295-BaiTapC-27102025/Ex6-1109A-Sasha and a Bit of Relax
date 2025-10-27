@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+#define MAXN 300005
+
+typedef struct {
+    uint32_t key;
+    long long even, odd;
+} Item;
+
+int cmp(const void *a, const void *b) {
+    uint32_t x = ((Item*)a)->key, y = ((Item*)b)->key;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+}
+
+int main() {
+    static uint32_t a[MAXN], pref[MAXN];
+    static Item arr[MAXN * 2];
+    int n, sz = 0;
+    long long ans = 0;
+
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++)
+        scanf("%u", &a[i]);
+
+    pref[0] = 0;
+    for (int i = 1; i <= n; i++)
+        pref[i] = pref[i - 1] ^ a[i];
+
+    for (int i = 0; i <= n; i++)
+        arr[i].key = pref[i];
+
+    sz = n + 1;
+    qsort(arr, sz, sizeof(Item), cmp);
+
+    int m = 0;
+    for (int i = 0; i < sz; i++) {
+        if (i == 0 || arr[i].key != arr[i - 1].key)
+            arr[m++] = arr[i];
+    }
+
+    static long long evenCnt[MAXN * 2];
+    static long long oddCnt[MAXN * 2];
+
+    uint32_t key0 = pref[0];
+    int id0 = (int)(bsearch(&key0, arr, m, sizeof(Item), cmp) - arr);
+    evenCnt[id0]++;
+
+    for (int i = 1; i <= n; i++) {
+        uint32_t k = pref[i];
+        int id = (int)(bsearch(&k, arr, m, sizeof(Item), cmp) - arr);
+        if (i % 2 == 0) {
+            ans += evenCnt[id];
+            evenCnt[id]++;
+        } else {
+            ans += oddCnt[id];
+            oddCnt[id]++;
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

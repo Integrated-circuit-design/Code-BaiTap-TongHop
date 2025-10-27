@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+static inline ll absl(ll x) {
+    return x < 0 ? -x : x;
+}
+
+int main(void) {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int m = n * 2;
+        ll arr[m];
+        for (int i = 0; i < m; ++i) scanf("%lld", &arr[i]);
+
+        ll sum0 = 0, sumN1 = 0;
+        for (int i = 0; i < m; ++i) {
+            sum0 += absl(arr[i]);
+            sumN1 += absl(arr[i] + 1LL);
+        }
+
+        ll best = sum0;
+        if (sumN1 < best) best = sumN1;
+
+        if (n == 1) {
+            ll cost = absl(arr[0] - arr[1]);
+            if (cost < best) best = cost;
+        }
+
+        if (n == 2) {
+            ll sum2 = 0;
+            for (int i = 0; i < m; ++i) sum2 += absl(arr[i] - 2LL);
+            if (sum2 < best) best = sum2;
+        }
+
+        if (n % 2 == 0) {
+            for (int i = 0; i < m; ++i) {
+                ll cost = sumN1 - absl(arr[i] + 1LL) + absl(arr[i] - (ll)n);
+                if (cost < best) best = cost;
+            }
+        }
+
+        printf("%lld\n", best);
+    }
+
+    return 0;
+}
 

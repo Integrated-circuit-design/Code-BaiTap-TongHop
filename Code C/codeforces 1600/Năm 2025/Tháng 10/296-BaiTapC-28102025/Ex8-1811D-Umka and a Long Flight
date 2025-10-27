@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define LIM 50
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    long long fib[LIM];
+    fib[0] = fib[1] = 1;
+    for (int i = 2; i < LIM; i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+
+    while (t--) {
+        int n;
+        long long row, col;
+        scanf("%d %lld %lld", &n, &row, &col);
+
+        row--;
+        col--;
+
+        int can_cut = 1;
+
+        for (; n > 1; n--) {
+            long long height = fib[n];
+            long long width  = fib[n + 1];
+
+            if (fib[n - 1] <= col && col < fib[n]) {
+                can_cut = 0;
+                break;
+            }
+
+            if (col >= fib[n]) {
+                col -= fib[n];
+            }
+
+            long long temp = row;
+            row = col;
+            col = temp;
+        }
+
+        if (can_cut)
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+
+    return 0;
+}
 

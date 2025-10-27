@@ -1,1 +1,84 @@
+#include <stdio.h>
+
+#define MAXN 1000
+
+struct Request {
+    int size;
+    int pay;
+    int index;
+};
+
+struct Table {
+    int cap;
+    int index;
+    int used;
+};
+
+int main() {
+    int n, k;
+    struct Request R[MAXN];
+    struct Table T[MAXN];
+    int pairR[MAXN], pairT[MAXN];
+    int total = 0, count = 0;
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &R[i].size, &R[i].pay);
+        R[i].index = i + 1;
+    }
+
+    scanf("%d", &k);
+    for (int i = 0; i < k; i++) {
+        scanf("%d", &T[i].cap);
+        T[i].index = i + 1;
+        T[i].used = 0;
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        int maxPos = i;
+        for (int j = i + 1; j < n; j++) {
+            if (R[j].pay > R[maxPos].pay || 
+               (R[j].pay == R[maxPos].pay && R[j].size < R[maxPos].size))
+                maxPos = j;
+        }
+        struct Request tmp = R[i];
+        R[i] = R[maxPos];
+        R[maxPos] = tmp;
+    }
+
+    for (int i = 0; i < k - 1; i++) {
+        int minPos = i;
+        for (int j = i + 1; j < k; j++) {
+            if (T[j].cap < T[minPos].cap)
+                minPos = j;
+        }
+        struct Table tmp = T[i];
+        T[i] = T[minPos];
+        T[minPos] = tmp;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int best = -1;
+        for (int j = 0; j < k; j++) {
+            if (!T[j].used && T[j].cap >= R[i].size) {
+                best = j;
+                break;
+            }
+        }
+        if (best != -1) {
+            T[best].used = 1;
+            total += R[i].pay;
+            pairR[count] = R[i].index;
+            pairT[count] = T[best].index;
+            count++;
+        }
+    }
+
+    printf("%d %d\n", count, total);
+    for (int i = 0; i < count; i++) {
+        printf("%d %d\n", pairR[i], pairT[i]);
+    }
+
+    return 0;
+}
 

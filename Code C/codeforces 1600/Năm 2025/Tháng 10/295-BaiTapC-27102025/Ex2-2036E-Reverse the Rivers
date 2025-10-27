@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long getnum() {
+    long long x = 0; int c = getchar(), neg = 0;
+    while (c <= ' ') c = getchar();
+    if (c == '-') neg = 1, c = getchar();
+    while (c >= '0' && c <= '9') x = x * 10 + (c - '0'), c = getchar();
+    return neg ? -x : x;
+}
+
+int lower(long long *a, int n, long long x) {
+    int l = 0, r = n;
+    while (l < r) {
+        int mid = (l + r) / 2;
+        if (a[mid] >= x) r = mid;
+        else l = mid + 1;
+    }
+    return l;
+}
+
+int main() {
+    int n = getnum(), k = getnum(), q = getnum();
+
+    long long *a = (long long*)malloc((long long)n * k * sizeof(long long));
+    for (int i = 0; i < n * k; i++) a[i] = getnum();
+
+    long long *b = (long long*)malloc((long long)n * k * sizeof(long long));
+    for (int j = 0; j < k; j++) {
+        long long val = 0;
+        for (int i = 0; i < n; i++) {
+            val |= a[i * k + j];
+            b[j * n + i] = val;
+        }
+    }
+
+    for (int Q = 0; Q < q; Q++) {
+        int m = getnum();
+        int L = 1, R = n;
+        int ok = 1;
+
+        for (int i = 0; i < m; i++) {
+            int r = getnum();
+            char ch; do ch = getchar(); while (ch != '<' && ch != '>');
+            long long c = getnum();
+            long long *col = b + (long long)(r - 1) * n;
+
+            if (ch == '>') {
+                int id = lower(col, n, c + 1);
+                if (id == n) ok = 0;
+                else if (id + 1 > L) L = id + 1;
+            } else {
+                int id = lower(col, n, c);
+                if (id == 0) ok = 0;
+                else if (id < R) R = id;
+            }
+        }
+
+        if (!ok || L > R) printf("-1\n");
+        else printf("%d\n", L);
+    }
+
+    free(a);
+    free(b);
+    return 0;
+}
 

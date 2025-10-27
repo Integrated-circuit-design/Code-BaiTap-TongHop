@@ -1,1 +1,34 @@
+#include <stdio.h>
+#define ll long long
+
+int main() {
+    ll n, k, s;
+    scanf("%lld %lld %lld", &n, &k, &s);
+
+    if (s < k || s > (n - 1) * k) {
+        printf("NO\n");
+        return 0;
+    }
+
+    printf("YES\n");
+
+    ll current = 1;
+    for (ll i = 0; i < k; i++) {
+        ll max_step_this_move = s - (k - 1 - i);
+        if (max_step_this_move > n - 1) {
+            max_step_this_move = n - 1;
+        }
+        s -= max_step_this_move;
+        if (current + max_step_this_move <= n) {
+            current += max_step_this_move;
+        } else {
+            current -= max_step_this_move;
+        }
+        printf("%lld", current);
+        if (i < k - 1) printf(" ");
+    }
+    printf("\n");
+
+    return 0;
+}
 

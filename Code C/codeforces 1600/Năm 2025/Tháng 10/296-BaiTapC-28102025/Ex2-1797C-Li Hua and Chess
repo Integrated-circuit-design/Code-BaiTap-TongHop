@@ -1,57 +1,14 @@
 #include <stdio.h>
-#include <string.h>
-
-#define MAXN 5005
-
-char s[MAXN], c[MAXN];
-char minRight[MAXN];
-int posRight[MAXN];
 
 int main() {
     int t;
     scanf("%d", &t);
 
-    while (t--) {
-        scanf("%s %s", s, c);
-        int n = strlen(s);
-
-        if (strcmp(s, c) < 0) {
-            printf("%s\n", s);
-            continue;
-        }
-
-        minRight[n - 1] = s[n - 1];
-        posRight[n - 1] = n - 1;
-        for (int i = n - 2; i >= 0; i--) {
-            if (s[i + 1] < minRight[i + 1]) {
-                minRight[i] = s[i + 1];
-                posRight[i] = i + 1;
-            } else {
-                minRight[i] = minRight[i + 1];
-                posRight[i] = posRight[i + 1];
-            }
-        }
-
-        int found = 0;
-        for (int i = 0; i < n && !found; i++) {
-            if (minRight[i] < s[i]) {
-                int j = posRight[i];
-                char tmp = s[i];
-                s[i] = s[j];
-                s[j] = tmp;
-
-                if (strcmp(s, c) < 0)
-                    printf("%s\n", s);
-                else
-                    printf("---\n");
-
-                found = 1;
-            }
-        }
-
-        if (!found) printf("---\n");
+    for (int case_id = 1; case_id <= t; ++case_id) {
+        long long n, m, r, c;
+        scanf("%lld %lld %lld %lld", &n, &m, &r, &c);
+        printf("%lld %lld\n", r, c);
     }
 
     return 0;
 }
-

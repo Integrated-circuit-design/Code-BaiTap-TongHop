@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+#define MOD 998244353
+typedef long long ll;
+
+ll fast_pow(ll base, ll exp) {
+    ll res = 1;
+    while (exp > 0) {
+        if (exp & 1)
+            res = (res * base) % MOD;
+        base = (base * base) % MOD;
+        exp >>= 1;
+    }
+    return res;
+}
+
+ll mod_inverse(ll x) {
+    return fast_pow(x, MOD - 2);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    static ll fib[200005];
+    fib[1] = 1;
+    fib[2] = 1;
+
+    for (int i = 3; i <= n; i++) {
+        fib[i] = (fib[i - 1] + fib[i - 2]) % MOD;
+    }
+
+    ll Fn = fib[n];
+    ll pow2n = fast_pow(2, n);
+    ll inv_pow2n = mod_inverse(pow2n);
+    ll result = (Fn * inv_pow2n) % MOD;
+
+    printf("%lld\n", result);
+    return 0;
+}
 

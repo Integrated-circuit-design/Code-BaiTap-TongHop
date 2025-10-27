@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+#define MAXN 200005
+#define MAXV 31
+#define ll long long
+
+int main() {
+    int n, q;
+    ll coins[MAXV] = {0};
+    scanf("%d %d", &n, &q);
+
+    for (int i = 0; i < n; i++) {
+        int a;
+        scanf("%d", &a);
+        int k = 0;
+        while ((1 << k) != a) k++;
+        coins[k]++;
+    }
+
+    while (q--) {
+        ll b;
+        scanf("%lld", &b);
+        ll remain = b;
+        int count = 0;
+
+        for (int i = 30; i >= 0; i--) {
+            if (coins[i] == 0) continue;
+            ll val = 1LL << i;
+            if (remain >= val) {
+                ll use = remain / val;
+                if (use > coins[i]) use = coins[i];
+                remain -= use * val;
+                count += use;
+            }
+        }
+
+        if (remain == 0)
+            printf("%d\n", count);
+        else
+            printf("-1\n");
+    }
+
+    return 0;
+}
 

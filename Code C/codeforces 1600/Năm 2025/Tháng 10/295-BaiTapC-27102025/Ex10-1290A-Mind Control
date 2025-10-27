@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+#define MAXN 4000
+#define INF 1000000009
+#define MAX(a,b) ((a)>(b)?(a):(b))
+#define MIN(a,b) ((a)<(b)?(a):(b))
+
+int solve_case(int n, int m, int k, int a[]) {
+    if (k > m - 1) k = m - 1;
+
+    int free_people = (m - 1) - k;
+    int answer = 0;
+    int offset = n - m;
+
+    for (int i = 0; i <= k; i++) {
+        int worst_case = INF;
+
+        for (int j = 0; j <= free_people; j++) {
+            int left_index = i + j;
+            int right_index = left_index + offset;
+            int current_value = MAX(a[left_index], a[right_index]);
+            worst_case = MIN(worst_case, current_value);
+        }
+
+        answer = MAX(answer, worst_case);
+    }
+
+    return answer;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, k;
+        int a[MAXN];
+
+        scanf("%d %d %d", &n, &m, &k);
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        int result = solve_case(n, m, k, a);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

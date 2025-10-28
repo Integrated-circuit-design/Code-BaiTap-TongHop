@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int getAlternatingLength(const char *str, int len) {
+    int alt = 1;
+    for (int i = 1; i < len; i++) {
+        if (str[i] != str[i - 1])
+            alt++;
+    }
+    return alt;
+}
+
+int main() {
+    int n;
+    char s[100005];
+    scanf("%d", &n);
+    scanf("%s", s);
+    int base = getAlternatingLength(s, n);
+    int result = base + 2;
+    if (result > n)
+        result = n;
+    printf("%d\n", result);
+    return 0;
+}
 

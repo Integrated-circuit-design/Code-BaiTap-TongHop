@@ -1,1 +1,38 @@
+#include <stdio.h>
+#define MAXH 200005
+#define ll long long
+
+int main() {
+    int n;
+    ll k;
+    scanf("%d %lld", &n, &k);
+
+    static int cnt[MAXH] = {0};
+    int h, maxh = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &h);
+        cnt[h]++;
+        if (h > maxh) maxh = h;
+    }
+
+    ll tong = 0;
+    ll ketqua = 0;
+    ll tren = 0;
+
+    for (int i = maxh; i > 0; i--) {
+        tren += cnt[i];
+        tong += tren;
+
+        if (tong > k) {
+            ketqua++;
+            tong = tren;
+        }
+    }
+
+    if (tong > 0) ketqua++;
+
+    printf("%lld\n", ketqua);
+    return 0;
+}
 

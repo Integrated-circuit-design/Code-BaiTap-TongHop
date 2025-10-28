@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <limits.h>
+
+int main() {
+    int n;
+    long long L;
+    long long c[40];
+    scanf("%d %lld", &n, &L);
+    for (int i = 0; i < n; i++) scanf("%lld", &c[i]);
+
+    for (int i = 1; i < n; i++) {
+        if (c[i] > 2 * c[i - 1])
+            c[i] = 2 * c[i - 1];
+    }
+
+    long long result = LLONG_MAX;
+    long long total = 0;
+    long long need = L;
+
+    for (int i = 0; i < n; i++) {
+        long long volume = 1LL << i;
+        long long bottles = need / volume;
+        total += bottles * c[i];
+        need -= bottles * volume;
+        long long maybe = total;
+        if (need > 0) maybe += c[i];
+        if (maybe < result) result = maybe;
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

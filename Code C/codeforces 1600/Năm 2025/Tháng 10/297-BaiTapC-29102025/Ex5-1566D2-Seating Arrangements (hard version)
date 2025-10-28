@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 305
+
+int n, m;
+int val[100005];
+int id[100005];
+int row_of[100005], col_of[100005];
+int used[MAXN][MAXN];
+
+int cmp(const void *a, const void *b) {
+    int i = *(int*)a, j = *(int*)b;
+    if (val[i] != val[j]) return val[i] - val[j];
+    return i - j;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &m);
+        int total = n * m;
+        for (int i = 0; i < total; i++) {
+            scanf("%d", &val[i]);
+            id[i] = i;
+        }
+        qsort(id, total, sizeof(int), cmp);
+        for (int r = 0; r < n; r++) {
+            int start = r * m, end = start + m;
+            int l = start;
+            while (l < end) {
+                int r2 = l;
+                while (r2 + 1 < end && val[id[r2 + 1]] == val[id[l]])
+                    r2++;
+                for (int p = 0; p < (r2 - l + 1) / 2; p++) {
+                    int tmp = id[l + p];
+                    id[l + p] = id[r2 - p];
+                    id[r2 - p] = tmp;
+                }
+                l = r2 + 1;
+            }
+            for (int c = 0; c < m; c++) {
+                int person = id[start + c];
+                row_of[person] = r;
+                col_of[person] = c;
+            }
+        }
+        long long ans = 0;
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                used[i][j] = 0;
+        for (int p = 0; p < total; p++) {
+            int r = row_of[p];
+            int c = col_of[p];
+            int left_occupied = 0;
+            for (int j = 0; j < c; j++)
+                if (used[r][j]) left_occupied++;
+            ans += left_occupied;
+            used[r][c] = 1;
+        }
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

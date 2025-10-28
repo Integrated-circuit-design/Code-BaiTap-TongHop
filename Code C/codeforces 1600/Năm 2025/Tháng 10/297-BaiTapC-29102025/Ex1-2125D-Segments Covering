@@ -1,1 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MOD 998244353
+#define MAXN 200005
+#define MAXM 200005
+typedef long long ll;
+
+typedef struct {
+    int l, r;
+    ll p, q;
+    ll w;
+} Segment;
+
+Segment seg[MAXN];
+ll dp[MAXM + 5];
+ll base_num = 1, base_den = 1;
+int n, m;
+
+ll modpow(ll a, ll b) {
+    ll res = 1;
+    while (b > 0) {
+        if (b & 1) res = res * a % MOD;
+        a = a * a % MOD;
+        b >>= 1;
+    }
+    return res;
+}
+
+int cmpL(const void *A, const void *B) {
+    Segment *a = (Segment*)A;
+    Segment *b = (Segment*)B;
+    if (a->l != b->l) return a->l - b->l;
+    return a->r - b->r;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d %lld %lld", &seg[i].l, &seg[i].r, &seg[i].p, &seg[i].q);
+        ll denom = (seg[i].q - seg[i].p) % MOD;
+        if (denom < 0) denom += MOD;
+        seg[i].w = seg[i].p % MOD * modpow(denom, MOD - 2) % MOD;
+        base_num = base_num * denom % MOD;
+        base_den = base_den * (seg[i].q % MOD) % MOD;
+    }
+
+    ll base = base_num * modpow(base_den, MOD - 2) % MOD;
+    qsort(seg, n, sizeof(Segment), cmpL);
+    return 0;
+}
 

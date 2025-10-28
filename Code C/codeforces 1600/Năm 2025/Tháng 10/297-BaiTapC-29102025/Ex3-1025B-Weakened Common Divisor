@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+ll gcd(ll a, ll b) {
+    while (b) {
+        ll t = a % b;
+        a = b;
+        b = t;
+    }
+    return a;
+}
+
+int valid(ll p, ll *a, ll *b, int n) {
+    for (int i = 0; i < n; i++) {
+        if (a[i] % p != 0 && b[i] % p != 0)
+            return 0;
+    }
+    return 1;
+}
+
+ll get_any_prime_factor(ll x) {
+    if (x % 2 == 0) return 2;
+    for (ll i = 3; i * i <= x; i += 2)
+        if (x % i == 0) return i;
+    return x;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    ll *a = malloc(n * sizeof(ll));
+    ll *b = malloc(n * sizeof(ll));
+
+    for (int i = 0; i < n; i++)
+        scanf("%lld %lld", &a[i], &b[i]);
+
+    ll candidates[4];
+    candidates[0] = a[0];
+    candidates[1] = b[0];
+    candidates[2] = gcd(a[0], b[0]);
+
+    ll list[10];
+    int cnt = 0;
+    for (int i = 0; i < 3; i++) {
+        if (candidates[i] > 1)
+            list[cnt++] = get_any_prime_factor(candidates[i]);
+    }
+
+    for (int i = 0; i < cnt; i++) {
+        if (valid(list[i], a, b, n)) {
+            printf("%lld\n", list[i]);
+            free(a);
+            free(b);
+            return 0;
+        }
+    }
+
+    printf("-1\n");
+
+    free(a);
+    free(b);
+    return 0;
+}
 

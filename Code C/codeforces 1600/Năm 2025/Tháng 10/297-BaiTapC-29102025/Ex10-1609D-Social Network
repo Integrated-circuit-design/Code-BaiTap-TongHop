@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define MAXN 1005
+
+int parent[MAXN];
+int compSize[MAXN];
+
+void initDSU(int n) {
+    for (int i = 1; i <= n; i++) {
+        parent[i] = i;
+        compSize[i] = 1;
+    }
+}
+
+int getRoot(int x) {
+    while (x != parent[x]) x = parent[x];
+    return x;
+}
+
+void merge(int a, int b) {
+    int ra = getRoot(a);
+    int rb = getRoot(b);
+    if (ra == rb) return;
+    if (compSize[ra] < compSize[rb]) {
+        parent[ra] = rb;
+        compSize[rb] += compSize[ra];
+    } else {
+        parent[rb] = ra;
+        compSize[ra] += compSize[rb];
+    }
+}
+
+int main() {
+    int n, d;
+    scanf("%d %d", &n, &d);
+    int x[MAXN], y[MAXN];
+    for (int i = 1; i <= d; i++) scanf("%d %d", &x[i], &y[i]);
+    for (int i = 1; i <= d; i++) {
+        initDSU(n);
+        for (int j = 1; j <= i; j++)
+            merge(x[j], y[j]);
+        int maxFriends = 0;
+        for (int j = 1; j <= n; j++) {
+            int root = getRoot(j);
+            if (compSize[root] > maxFriends)
+                maxFriends = compSize[root];
+        }
+        printf("%d ", maxFriends - 1);
+    }
+    printf("\n");
+    return 0;
+}
 

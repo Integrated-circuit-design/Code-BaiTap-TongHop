@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+#define MAX 2005
+
+char mat[MAX][MAX];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++)
+            scanf("%s", mat[i]);
+
+        int total_ones = 0;
+        int count[MAX] = {0};
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] == '1') {
+                    total_ones++;
+                    int shift = (i - j + n) % n;
+                    count[shift]++;
+                }
+            }
+        }
+
+        int max_on_diag = 0;
+        for (int k = 0; k < n; k++)
+            if (count[k] > max_on_diag)
+                max_on_diag = count[k];
+
+        int result = total_ones + n - 2 * max_on_diag;
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+#define MAXN 100005
+#define MAXK 105
+#define MAXM 200005
+
+typedef struct {
+    int u, v;
+} Edge;
+
+int n, m, k, s;
+int a[MAXN];
+Edge edges[MAXM];
+int deg[MAXN], adj[MAXM];
+int head[MAXN], nxt[MAXM];
+int dist[MAXK][MAXN];
+int q[MAXN];
+
+void addEdge(int u, int v) {
+    static int id = 0;
+    adj[++id] = v;
+    nxt[id] = head[u];
+    head[u] = id;
+}
+
+void multiSourceBFS(int type) {
+    for (int i = 1; i <= n; i++) dist[type][i] = INT_MAX;
+
+    int front = 0, back = 0;
+    for (int i = 1; i <= n; i++) {
+        if (a[i] == type) {
+            dist[type][i] = 0;
+            q[back++] = i;
+        }
+    }
+
+    while (front < back) {
+        int u = q[front++];
+        for (int e = head[u]; e; e = nxt[e]) {
+            int v = adj[e];
+            if (dist[type][v] == INT_MAX) {
+                dist[type][v] = dist[type][u] + 1;
+                q[back++] = v;
+            }
+        }
+    }
+}
+
+long long smallestSum(int d[], int len, int s) {
+    for (int i = 0; i < s; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j < len; j++)
+            if (d[j] < d[minIdx])
+                minIdx = j;
+        int tmp = d[i]; d[i] = d[minIdx]; d[minIdx] = tmp;
+    }
+    long long sum = 0;
+    for (int i = 0; i < s; i++) sum += d[i];
+    return sum;
+}
+
+int main() {
+    scanf("%d %d %d %d", &n, &m, &k, &s);
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+    for (int i = 0, u, v; i < m; i++) {
+        scanf("%d %d", &u, &v);
+        addEdge(u, v);
+        addEdge(v, u);
+    }
+
+    for (int type = 1; type <= k; type++)
+        multiSourceBFS(type);
+
+    static int temp[MAXK];
+    for (int i = 1; i <= n; i++) {
+        for (int type = 1; type <= k; type++)
+            temp[type - 1] = dist[type][i];
+
+        long long ans = smallestSum(temp, k, s);
+        printf("%lld%c", ans, (i == n) ? '\n' : ' ');
+    }
+
+    return 0;
+}
 

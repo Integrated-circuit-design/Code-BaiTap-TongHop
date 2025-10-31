@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+#define MAXN 100005
+#define ALPHA 26
+
+typedef struct {
+    char from, to;
+} Spell;
+
+int parent[ALPHA];
+
+int findRoot(int x) {
+    while (x != parent[x])
+        x = parent[x];
+    return x;
+}
+
+int join(int a, int b) {
+    int ra = findRoot(a);
+    int rb = findRoot(b);
+    if (ra == rb) return 0;
+    parent[rb] = ra;
+    return 1;
+}
+
+int main() {
+    int n;
+    char s1[MAXN], s2[MAXN];
+    Spell spells[ALPHA];
+    int total = 0;
+
+    scanf("%d", &n);
+    scanf("%s", s1);
+    scanf("%s", s2);
+
+    for (int i = 0; i < ALPHA; i++)
+        parent[i] = i;
+
+    for (int i = 0; i < n; i++) {
+        int u = s1[i] - 'a';
+        int v = s2[i] - 'a';
+        if (join(u, v)) {
+            spells[total].from = 'a' + u;
+            spells[total].to   = 'a' + v;
+            total++;
+        }
+    }
+
+    printf("%d\n", total);
+    for (int i = 0; i < total; i++)
+        printf("%c %c\n", spells[i].from, spells[i].to);
+
+    return 0;
+}
 

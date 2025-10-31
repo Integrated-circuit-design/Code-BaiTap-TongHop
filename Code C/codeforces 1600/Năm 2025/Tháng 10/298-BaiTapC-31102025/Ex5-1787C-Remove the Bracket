@@ -1,1 +1,44 @@
+#include <stdio.h>
+#define ll long long
+#define MIN(a,b) ((a)<(b)?(a):(b))
+#define MAX(a,b) ((a)>(b)?(a):(b))
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, s;
+        scanf("%d%d", &n, &s);
+
+        int a[n];
+        for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+        ll dp_low = 0, dp_high = 0;
+
+        int low_prev = MIN(a[1], s);
+        int high_prev = MAX(0, a[1] - s);
+
+        for (int i = 2; i < n; i++) {
+            int low_curr = MIN(a[i], s);
+            int high_curr = MAX(0, a[i] - s);
+
+            ll cost_low_from_low  = dp_low  + (ll)(a[i-1] - low_prev)  * low_curr;
+            ll cost_low_from_high = dp_high + (ll)(a[i-1] - high_prev) * low_curr;
+            ll cost_high_from_low  = dp_low  + (ll)(a[i-1] - low_prev)  * high_curr;
+            ll cost_high_from_high = dp_high + (ll)(a[i-1] - high_prev) * high_curr;
+
+            ll new_low  = MIN(cost_low_from_low,  cost_low_from_high);
+            ll new_high = MIN(cost_high_from_low, cost_high_from_high);
+
+            dp_low = new_low;
+            dp_high = new_high;
+            low_prev = low_curr;
+            high_prev = high_curr;
+        }
+
+        ll ans = MIN(dp_low, dp_high);
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

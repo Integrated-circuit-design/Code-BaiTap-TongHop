@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        long long h;
+        int n;
+        scanf("%lld %d", &h, &n);
+
+        long long prev = h;
+        long long curr;
+        int crystals = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &curr);
+
+            long long gap = prev - curr;
+
+            if (gap >= 3) {
+                crystals++;
+                prev = curr + 1;
+            } else {
+                prev = curr;
+            }
+        }
+
+        if (prev > 2) {
+            crystals++;
+        }
+
+        printf("%d\n", crystals);
+    }
+
+    return 0;
+}
 

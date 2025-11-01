@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    long long capacity, addPerDay;
+    scanf("%lld %lld", &capacity, &addPerDay);
+
+    long long remaining = capacity;
+    long long currentDay = 1;
+
+    while (1) {
+        remaining += addPerDay;
+        if (remaining > capacity) remaining = capacity;
+
+        if (remaining <= currentDay) {
+            break;
+        }
+
+        remaining -= currentDay;
+        currentDay++;
+    }
+
+    printf("%lld\n", currentDay);
+    return 0;
+}
 

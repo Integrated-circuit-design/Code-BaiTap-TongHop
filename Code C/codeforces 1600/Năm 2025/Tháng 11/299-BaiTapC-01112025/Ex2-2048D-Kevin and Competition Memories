@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void *x, const void *y) {
+    int a = *(int*)x, b = *(int*)y;
+    return a - b;
+}
+
+int countLE(int *arr, int n, int key) {
+    int l = 0, r = n;
+    while (l < r) {
+        int mid = (l + r) / 2;
+        if (arr[mid] <= key) l = mid + 1;
+        else r = mid;
+    }
+    return l;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        int *ratings = (int*)malloc(n * sizeof(int));
+        int *problems = (int*)malloc(m * sizeof(int));
+
+        for (int i = 0; i < n; i++) scanf("%d", &ratings[i]);
+        for (int i = 0; i < m; i++) scanf("%d", &problems[i]);
+
+        int kevin = ratings[0];
+
+        qsort(ratings, n, sizeof(int), cmp);
+        qsort(problems, m, sizeof(int), cmp);
+
+        int kevinSolveTotal = countLE(problems, m, kevin);
+
+        long long *answer = (long long*)malloc(m * sizeof(long long));
+
+        for (int k = 1; k <= m; k++) {
+            int contestNum = m / k;
+            long long sum = 0;
+
+            int fullSolved = kevinSolveTotal / k;
+            int rem = kevinSolveTotal % k;
+
+            for (int c = 0; c < contestNum; c++) {
+                int kevinSolved = (c < fullSolved) ? k : (c == fullSolved ? rem : 0);
+
+                int more = 0;
+                for (int i = 0; i < n; i++) {
+                    int solved = countLE(problems + c*k, k, ratings[i]);
+                    if (solved > kevinSolved) more++;
+                }
+                sum += 1 + more;
+            }
+            answer[k-1] = sum;
+        }
+
+        for (int i = 0; i < m; i++) {
+            printf("%lld%c", answer[i], i == m-1 ? '\n' : ' ');
+        }
+
+        free(ratings);
+        free(problems);
+        free(answer);
+    }
+    return 0;
+}
 

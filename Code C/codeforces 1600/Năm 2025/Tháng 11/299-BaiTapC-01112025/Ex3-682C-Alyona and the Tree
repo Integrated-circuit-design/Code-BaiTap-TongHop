@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+typedef long long ll;
+
+int n;
+ll a[MAXN];
+int leavesToRemove = 0;
+
+int parent[MAXN];
+ll costToParent[MAXN];
+int firstChild[MAXN];
+int nextSibling[MAXN];
+int childrenCount[MAXN];
+
+int children[MAXN];
+ll edgeCost[MAXN];
+
+void dfs(int node, ll distFromRoot) {
+    if (childrenCount[node] == 0) {
+        if (distFromRoot > a[node])
+            leavesToRemove++;
+        return;
+    }
+
+    int idx = firstChild[node];
+    while (idx != -1) {
+        int childNode = children[idx];
+        ll cost = edgeCost[idx];
+        dfs(childNode, distFromRoot + cost);
+        idx = nextSibling[idx];
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) scanf("%lld", &a[i]);
+
+    for (int i = 1; i <= n; i++) {
+        firstChild[i] = -1;
+        childrenCount[i] = 0;
+    }
+
+    for (int i = 2; i <= n; i++) {
+        int p;
+        ll c;
+        scanf("%d %lld", &p, &c);
+        parent[i] = p;
+        costToParent[i] = c;
+
+        children[childrenCount[i] + i] = i;
+        edgeCost[childrenCount[i] + i] = c;
+        nextSibling[childrenCount[i] + i] = firstChild[p];
+        firstChild[p] = childrenCount[i] + i;
+        childrenCount[p]++;
+    }
+
+    dfs(1, 0);
+    printf("%d\n", leavesToRemove);
+    return 0;
+}
 

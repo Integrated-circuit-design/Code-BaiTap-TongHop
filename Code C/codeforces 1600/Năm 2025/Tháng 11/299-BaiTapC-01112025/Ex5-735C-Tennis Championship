@@ -1,1 +1,19 @@
+#include <stdio.h>
+#include <stdint.h>
+
+int main() {
+    uint64_t n;
+    scanf("%llu", &n);
+
+    uint64_t games = 0;
+    uint64_t power = 1;
+
+    while (power * 2 <= n) {
+        power *= 2;
+        games++;
+    }
+
+    printf("%llu\n", games);
+    return 0;
+}
 

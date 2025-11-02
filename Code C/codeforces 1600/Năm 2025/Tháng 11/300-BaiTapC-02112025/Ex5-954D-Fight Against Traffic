@@ -1,1 +1,65 @@
+#include <stdio.h>
+
+#define MAXN 1005
+#define MAXM 2005
+
+typedef struct {
+    int u, v;
+} Edge;
+
+Edge edges[MAXM];
+int n, m, s, t;
+int graph[MAXN][MAXN];
+int distS[MAXN], distT[MAXN];
+int queue[MAXN];
+
+void bfs(int start, int dist[]) {
+    int front = 0, back = 0;
+    for (int i = 1; i <= n; ++i)
+        dist[i] = -1;
+
+    dist[start] = 0;
+    queue[back++] = start;
+
+    while (front < back) {
+        int u = queue[front++];
+        for (int v = 1; v <= n; ++v) {
+            if (graph[u][v] && dist[v] == -1) {
+                dist[v] = dist[u] + 1;
+                queue[back++] = v;
+            }
+        }
+    }
+}
+
+int main() {
+    scanf("%d %d %d %d", &n, &m, &s, &t);
+
+    for (int i = 0; i < m; ++i) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        edges[i].u = u;
+        edges[i].v = v;
+        graph[u][v] = graph[v][u] = 1;
+    }
+
+    bfs(s, distS);
+    bfs(t, distT);
+
+    int d = distS[t];
+    long long ans = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = i + 1; j <= n; ++j) {
+            if (graph[i][j]) continue;
+            int new1 = distS[i] + 1 + distT[j];
+            int new2 = distS[j] + 1 + distT[i];
+            if (new1 >= d && new2 >= d)
+                ans++;
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

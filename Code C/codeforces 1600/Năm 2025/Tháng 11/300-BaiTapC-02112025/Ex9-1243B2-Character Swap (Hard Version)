@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 55
+
+char s[MAXN], t[MAXN];
+int a[205], b[205];
+
+int check_even(char s[], char t[], int n) {
+    int freq[26] = {0};
+    for (int i = 0; i < n; i++) {
+        freq[s[i] - 'a']++;
+        freq[t[i] - 'a']++;
+    }
+    for (int i = 0; i < 26; i++)
+        if (freq[i] % 2 != 0)
+            return 0;
+    return 1;
+}
+
+int solve_case(int n) {
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == t[i]) continue;
+        int found = 0;
+        for (int j = i + 1; j < n; j++) {
+            if (s[j] == s[i]) {
+                char tmp = s[j];
+                s[j] = t[i];
+                t[i] = tmp;
+                a[total] = j + 1;
+                b[total] = i + 1;
+                total++;
+                found = 1;
+                break;
+            }
+        }
+        if (found) continue;
+        for (int j = i + 1; j < n; j++) {
+            if (t[j] == s[i]) {
+                char tmp = t[j];
+                t[j] = s[j];
+                s[j] = tmp;
+                a[total] = j + 1;
+                b[total] = j + 1;
+                total++;
+                tmp = s[j];
+                s[j] = t[i];
+                t[i] = tmp;
+                a[total] = j + 1;
+                b[total] = i + 1;
+                total++;
+                break;
+            }
+        }
+    }
+    printf("Yes\n%d\n", total);
+    for (int i = 0; i < total; i++)
+        printf("%d %d\n", a[i], b[i]);
+    return 1;
+}
+
+int main() {
+    int k;
+    scanf("%d", &k);
+    while (k--) {
+        int n;
+        scanf("%d", &n);
+        scanf("%s", s);
+        scanf("%s", t);
+        if (!check_even(s, t, n)) {
+            printf("No\n");
+            continue;
+        }
+        solve_case(n);
+    }
+    return 0;
+}
 

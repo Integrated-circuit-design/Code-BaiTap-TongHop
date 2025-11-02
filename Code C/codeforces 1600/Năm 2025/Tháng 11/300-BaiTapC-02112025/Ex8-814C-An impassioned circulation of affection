@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 1505
+
+char s[MAXN];
+int ans[26][MAXN];
+
+int main() {
+    int n, q;
+    scanf("%d", &n);
+    scanf("%s", s);
+    scanf("%d", &q);
+
+    for (int c = 0; c < 26; ++c) {
+        int l = 0, diff = 0;
+        for (int r = 0; r < n; ++r) {
+            if (s[r] != 'a' + c) diff++;
+            while (diff > n) {
+                if (s[l] != 'a' + c) diff--;
+                l++;
+            }
+            if (ans[c][diff] < r - l + 1)
+                ans[c][diff] = r - l + 1;
+        }
+        for (int i = 1; i <= n; ++i)
+            if (ans[c][i] < ans[c][i - 1])
+                ans[c][i] = ans[c][i - 1];
+    }
+
+    for (int i = 0; i < q; ++i) {
+        int m;
+        char ch;
+        scanf("%d %c", &m, &ch);
+        if (m > n) m = n;
+        printf("%d\n", ans[ch - 'a'][m]);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+
+    long long i;
+    long long sum = 0;
+    int flag = 1;
+
+    for (i = 1; i <= k; i++) {
+        if (sum + i > n) {
+            flag = 0;
+            break;
+        }
+        sum += i;
+    }
+
+    if (flag)
+        printf("Yes\n");
+    else
+        printf("No\n");
+
+    return 0;
+}
 

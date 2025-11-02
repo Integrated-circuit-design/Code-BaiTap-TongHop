@@ -1,1 +1,89 @@
+#include <stdio.h>
+
+typedef long long ll;
+typedef __int128 lll;
+
+void print128(lll x) {
+    if (x == 0) {
+        putchar('0');
+        return;
+    }
+    char buf[50];
+    int p = 0;
+    while (x > 0) {
+        buf[p++] = (x % 10) + '0';
+        x /= 10;
+    }
+    for (int i = p - 1; i >= 0; i--) putchar(buf[i]);
+}
+
+int digit_sum(ll x) {
+    int s = 0;
+    while (x > 0) {
+        s += x % 10;
+        x /= 10;
+    }
+    return s;
+}
+
+lll sum_digits_range(ll a, ll b) {
+    lll res = 0;
+    for (ll i = a; i <= b; i++)
+        res += digit_sum(i);
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        ll k;
+        scanf("%lld", &k);
+
+        ll len = 1;
+        ll count = 9;
+        ll total_digits = 0;
+
+        while (k > (lll)count * len) {
+            k -= (lll)count * len;
+            total_digits += count * len;
+            len++;
+            count *= 10;
+        }
+
+        ll start = 1;
+        for (int i = 1; i < len; i++) start *= 10;
+
+        ll index = (k - 1) / len;
+        ll number = start + index;
+        ll digit_pos = (k - 1) % len;
+
+        lll sum = 0;
+        ll prev_end = start - 1;
+        if (prev_end > 0) {
+            for (ll i = 1; i < start; i *= 10) {
+                ll from = i;
+                ll to = i * 10 - 1;
+                if (to > prev_end) to = prev_end;
+                if (from <= to) sum += sum_digits_range(from, to);
+            }
+        }
+
+        for (ll i = start; i < number; i++) sum += digit_sum(i);
+
+        int digits[20], n = 0;
+        ll tmp = number;
+        while (tmp > 0) {
+            digits[n++] = tmp % 10;
+            tmp /= 10;
+        }
+        for (int i = n - 1; i >= 0 && digit_pos-- >= 0; i--)
+            sum += digits[i];
+
+        print128(sum);
+        putchar('\n');
+    }
+    return 0;
+}
 

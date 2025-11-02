@@ -1,1 +1,87 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 55
+
+int n, m, k;
+char grid[MAX][MAX];
+int used[MAX][MAX];
+int dx[4] = {1, -1, 0, 0};
+int dy[4] = {0, 0, 1, -1};
+
+typedef struct {
+    int x, y;
+} Point;
+
+Point lakeCells[2600][MAX * MAX];
+int lakeSize[2600];
+int lakeCount = 0;
+int tempSize;
+Point tempCells[MAX * MAX];
+int isLake;
+
+int inside(int x, int y) {
+    return x >= 0 && x < n && y >= 0 && y < m;
+}
+
+void dfs(int x, int y, int id) {
+    used[x][y] = id;
+    tempCells[tempSize++] = (Point){x, y};
+    if (x == 0 || x == n - 1 || y == 0 || y == m - 1)
+        isLake = 0;
+    for (int i = 0; i < 4; i++) {
+        int nx = x + dx[i], ny = y + dy[i];
+        if (inside(nx, ny) && !used[nx][ny] && grid[nx][ny] == '.')
+            dfs(nx, ny, id);
+    }
+}
+
+int cmp(const void *a, const void *b) {
+    int i = *(int*)a, j = *(int*)b;
+    return lakeSize[i] - lakeSize[j];
+}
+
+int main() {
+    scanf("%d %d %d", &n, &m, &k);
+    for (int i = 0; i < n; i++)
+        scanf("%s", grid[i]);
+
+    int ids[2600], total = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == '.' && !used[i][j]) {
+                tempSize = 0;
+                isLake = 1;
+                dfs(i, j, ++lakeCount);
+                if (isLake) {
+                    lakeSize[lakeCount] = tempSize;
+                    ids[total++] = lakeCount;
+                    for (int t = 0; t < tempSize; t++)
+                        lakeCells[lakeCount][t] = tempCells[t];
+                }
+            }
+        }
+    }
+
+    qsort(ids, total, sizeof(int), cmp);
+
+    int toFill = total - k;
+    int filled = 0;
+
+    for (int i = 0; i < toFill; i++) {
+        int id = ids[i];
+        filled += lakeSize[id];
+        for (int j = 0; j < lakeSize[id]; j++) {
+            int x = lakeCells[id][j].x;
+            int y = lakeCells[id][j].y;
+            grid[x][y] = '*';
+        }
+    }
+
+    printf("%d\n", filled);
+    for (int i = 0; i < n; i++)
+        puts(grid[i]);
+    return 0;
+}
 

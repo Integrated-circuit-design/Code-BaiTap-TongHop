@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int cmp_ll(const void *a, const void *b) {
+    ll x = *(ll*)a, y = *(ll*)b;
+    return (x > y) - (x < y);
+}
+
+int main() {
+    int n, m;
+    scanf("%d", &n);
+    ll a[n];
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+    scanf("%d", &m);
+    ll b[m];
+    for (int i = 0; i < m; i++) scanf("%lld", &b[i]);
+
+    qsort(a, n, sizeof(ll), cmp_ll);
+    qsort(b, m, sizeof(ll), cmp_ll);
+
+    int total = n + m;
+    ll c[total];
+    for (int i = 0; i < n; i++) c[i] = a[i];
+    for (int i = 0; i < m; i++) c[n + i] = b[i];
+    qsort(c, total, sizeof(ll), cmp_ll);
+
+    ll bestA = 2LL * n;
+    ll bestB = 2LL * m;
+    ll bestDiff = bestA - bestB;
+
+    int iA = 0, iB = 0;
+
+    for (int i = 0; i < total; i++) {
+        ll d = c[i];
+        while (iA < n && a[iA] <= d) iA++;
+        while (iB < m && b[iB] <= d) iB++;
+        ll scoreA = 2LL * iA + 3LL * (n - iA);
+        ll scoreB = 2LL * iB + 3LL * (m - iB);
+        ll diff = scoreA - scoreB;
+        if (diff > bestDiff || (diff == bestDiff && scoreA > bestA)) {
+            bestDiff = diff;
+            bestA = scoreA;
+            bestB = scoreB;
+        }
+    }
+
+    printf("%lld:%lld\n", bestA, bestB);
+    return 0;
+}
 

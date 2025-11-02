@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+#define F(x) ((x) / 2)
+#define C(x) (((x) + 1) / 2)
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long x;
+        long long n, m;
+        scanf("%lld %lld %lld", &x, &n, &m);
+
+        if (n > 64) n = 64;
+        if (m > 64) m = 64;
+
+        long long mn = x;
+        for (int i = 0; i < n; i++) mn = F(mn);
+        for (int i = 0; i < m; i++) mn = C(mn);
+
+        long long mx = x;
+        for (int i = 0; i < m; i++) mx = C(mx);
+        for (int i = 0; i < n; i++) mx = F(mx);
+
+        printf("%lld %lld\n", mn, mx);
+    }
+    return 0;
+}
 

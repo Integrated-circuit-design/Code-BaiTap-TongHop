@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int mood[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &mood[i]);
+    }
+
+    for (int k = 3; k <= n; k++) {
+        if (n % k != 0) continue;
+        int step = n / k;
+
+        int found = 0;
+        for (int offset = 0; offset < step; offset++) {
+            int ok = 1;
+            for (int v = 0; v < k; v++) {
+                int pos = (offset + v * step) % n;
+                if (mood[pos] == 0) {
+                    ok = 0;
+                    break;
+                }
+            }
+            if (ok) {
+                found = 1;
+                break;
+            }
+        }
+
+        if (found) {
+            printf("YES\n");
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

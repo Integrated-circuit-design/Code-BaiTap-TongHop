@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    char s[500005];
+    scanf("%s", s);
+
+    int changes = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        if (s[i] == s[i+1]) {
+            changes++;
+
+            char new_color = 'A';
+            for (int c = 0; c < k; c++) {
+                new_color = 'A' + c;
+                if (new_color != s[i] && (i+2 >= n || new_color != s[i+2])) {
+                    s[i+1] = new_color;
+                    break;
+                }
+            }
+        }
+    }
+
+    printf("%d\n%s\n", changes, s);
+
+    return 0;
+}
 

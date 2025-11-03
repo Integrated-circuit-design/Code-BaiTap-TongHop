@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int ang;
+        scanf("%d", &ang);
+
+        int result = -1;
+
+        int g = 1;
+        for (int i = 1; i <= ang; i++) {
+            if (180 % i == 0 && ang % i == 0) {
+                g = i;
+            }
+        }
+
+        int k = ang / g;
+        int n = 180 / g;
+
+        if (n >= 3) {
+            result = n;
+        }
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

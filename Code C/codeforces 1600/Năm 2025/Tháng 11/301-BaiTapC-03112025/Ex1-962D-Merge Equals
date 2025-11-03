@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+#define MAXN 150000
+
+typedef long long ll;
+
+ll arr[MAXN];
+int pos[MAXN];
+int n;
+
+int main() {
+    scanf("%d", &n);
+    for(int i = 0; i < n; i++)
+        scanf("%lld", &arr[i]);
+
+    int size = n;
+
+    for(int i = 0; i < size; i++) {
+        int j = i + 1;
+        while(j < size) {
+            if(arr[i] == arr[j]) {
+                arr[j] *= 2;
+                for(int k = i; k + 1 < size; k++)
+                    arr[k] = arr[k+1];
+                size--;
+                i = -1;
+                break;
+            }
+            j++;
+        }
+    }
+
+    printf("%d\n", size);
+    for(int i = 0; i < size; i++)
+        printf("%lld%c", arr[i], i == size-1 ? '\n' : ' ');
+
+    return 0;
+}
 

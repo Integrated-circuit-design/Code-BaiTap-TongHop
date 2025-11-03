@@ -1,1 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int n;
+int triples[MAXN][3];
+int count[MAXN];
+int usedTriple[MAXN];
+int p[MAXN];
+int adj[MAXN][3];
+int adjCount[MAXN];
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 0; i < n - 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            scanf("%d", &triples[i][j]);
+            count[triples[i][j]]++;
+        }
+    }
+
+    for (int i = 0; i < n - 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            int x = triples[i][j];
+            adj[x][adjCount[x]++] = i;
+        }
+    }
+
+    int start = 0;
+    for (int i = 1; i <= n; i++) {
+        if (count[i] == 1) {
+            start = i;
+            break;
+        }
+    }
+
+    p[0] = start;
+
+    int firstTriple = adj[start][0];
+    usedTriple[firstTriple] = 1;
+
+    int idx = 1;
+    for (int j = 0; j < 3; j++) {
+        if (triples[firstTriple][j] != start) {
+            p[idx++] = triples[firstTriple][j];
+        }
+    }
+
+    for (int i = 1; i < n - 2; i++) {
+        int last = p[i+1];
+        for (int t = 0; t < adjCount[last]; t++) {
+            int tri = adj[last][t];
+            if (!usedTriple[tri]) {
+                usedTriple[tri] = 1;
+                for (int k = 0; k < 3; k++) {
+                    int x = triples[tri][k];
+                    int found = 0;
+                    for (int m = 0; m <= i+1; m++) {
+                        if (p[m] == x) {
+                            found = 1;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        p[i+2] = x;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (i) printf(" ");
+        printf("%d", p[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
 

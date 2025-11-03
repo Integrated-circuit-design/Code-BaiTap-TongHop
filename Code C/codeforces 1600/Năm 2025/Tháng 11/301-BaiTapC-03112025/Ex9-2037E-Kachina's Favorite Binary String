@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 10005
+
+int query(int l, int r) {
+    printf("? %d %d\n", l, r);
+    fflush(stdout);
+    int res;
+    if(scanf("%d", &res) != 1) exit(0);
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+
+        char s[MAXN];
+        long long total[MAXN];
+        int impossible = 0;
+
+        total[1] = 0;
+        for(int i = 2; i <= n; i++) {
+            total[i] = query(1, i);
+        }
+
+        int zeros = 0, ones = 0;
+        s[1] = '0';
+
+        for(int i = 2; i <= n; i++) {
+            long long cur = total[i];
+            long long prev = total[i - 1];
+
+            if(cur == prev) {
+                s[i] = '0';
+            } else {
+                s[i] = '1';
+            }
+        }
+
+        if(n == 2 && total[2] == 0) {
+            printf("! IMPOSSIBLE\n");
+        } else {
+            printf("! ");
+            for(int i = 1; i <= n; i++) printf("%c", s[i]);
+            printf("\n");
+        }
+        fflush(stdout);
+    }
+
+    return 0;
+}
 

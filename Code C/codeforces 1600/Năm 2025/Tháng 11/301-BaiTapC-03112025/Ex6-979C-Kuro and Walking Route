@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 300005
+
+typedef struct Edge {
+    int to;
+    struct Edge* next;
+} Edge;
+
+Edge* graph[MAXN];
+int n, x, y;
+int visited[MAXN];
+
+void add_edge(int u, int v) {
+    Edge* e = (Edge*)malloc(sizeof(Edge));
+    e->to = v;
+    e->next = graph[u];
+    graph[u] = e;
+}
+
+long long count_subtree(int u, int blocked) {
+    visited[u] = 1;
+    long long cnt = 1;
+    for (Edge* e = graph[u]; e != NULL; e = e->next) {
+        int v = e->to;
+        if (!visited[v] && v != blocked) {
+            cnt += count_subtree(v, blocked);
+        }
+    }
+    return cnt;
+}
+
+int main() {
+    scanf("%d %d %d", &n, &x, &y);
+
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        add_edge(a, b);
+        add_edge(b, a);
+    }
+
+    for (int i = 1; i <= n; i++) visited[i] = 0;
+    long long size_x = count_subtree(x, y);
+
+    for (int i = 1; i <= n; i++) visited[i] = 0;
+    long long size_y = count_subtree(y, x);
+
+    long long total_pairs = (long long)n * (n - 1);
+    long long invalid_pairs = size_x * size_y;
+    printf("%lld\n", total_pairs - invalid_pairs);
+
+    for (int i = 1; i <= n; i++) {
+        Edge* e = graph[i];
+        while (e) {
+            Edge* tmp = e;
+            e = e->next;
+            free(tmp);
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 500005
+
+char s[MAX], t[MAX];
+
+int main() {
+    scanf("%s", s);
+    scanf("%s", t);
+
+    int n = strlen(s), m = strlen(t);
+    int c0 = 0, c1 = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '0') c0++;
+        else c1++;
+    }
+
+    int t0 = 0, t1 = 0;
+    for (int i = 0; i < m; i++) {
+        if (t[i] == '0') t0++;
+        else t1++;
+    }
+
+    if (c0 < t0 || c1 < t1) {
+        for (int i = 0; i < c0; i++) putchar('0');
+        for (int i = 0; i < c1; i++) putchar('1');
+        putchar('\n');
+        return 0;
+    }
+
+    for (int i = 0; i < m; i++) putchar(t[i]);
+    c0 -= t0;
+    c1 -= t1;
+
+    int overlap = 0;
+    for (int len = 1; len < m; len++) {
+        int ok = 1;
+        for (int i = 0; i + len < m; i++) {
+            if (t[i] != t[len + i]) {
+                ok = 0;
+                break;
+            }
+        }
+        if (ok) overlap = m - len;
+    }
+
+    int suf0 = 0, suf1 = 0;
+    for (int i = overlap; i < m; i++) {
+        if (t[i] == '0') suf0++;
+        else suf1++;
+    }
+
+    while (c0 >= suf0 && c1 >= suf1 && (suf0 + suf1 > 0)) {
+        for (int i = overlap; i < m; i++) putchar(t[i]);
+        c0 -= suf0;
+        c1 -= suf1;
+    }
+
+    while (c0--) putchar('0');
+    while (c1--) putchar('1');
+    putchar('\n');
+
+    return 0;
+}
 

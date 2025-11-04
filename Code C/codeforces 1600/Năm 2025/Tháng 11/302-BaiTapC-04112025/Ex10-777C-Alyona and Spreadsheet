@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define MAXN 100005
+#define MAXM 105
+
+int a[MAXN][MAXM];
+int up[MAXN][MAXM];
+int best[MAXN];
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= m; ++j)
+            scanf("%d", &a[i][j]);
+
+    for (int j = 1; j <= m; ++j) {
+        up[1][j] = 1;
+        for (int i = 2; i <= n; ++i) {
+            if (a[i][j] >= a[i - 1][j])
+                up[i][j] = up[i - 1][j] + 1;
+            else
+                up[i][j] = 1;
+        }
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        int max_len = 1;
+        for (int j = 1; j <= m; ++j)
+            if (up[i][j] > max_len)
+                max_len = up[i][j];
+        best[i - max_len + 1] = i;
+    }
+
+    for (int i = 2; i <= n; ++i)
+        if (best[i] < best[i - 1])
+            best[i] = best[i - 1];
+
+    int k;
+    scanf("%d", &k);
+    while (k--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        if (best[l] >= r)
+            printf("Yes\n");
+        else
+            printf("No\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+#define INF 1000000000000000LL
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    ll minRate = -INF;
+    ll maxRate = INF;
+
+    for (int i = 0; i < n; i++) {
+        int delta, div;
+        scanf("%d %d", &delta, &div);
+
+        if (div == 1) {
+            if (minRate < 1900) minRate = 1900;
+        } else {
+            if (maxRate > 1899) maxRate = 1899;
+        }
+
+        if (minRate > maxRate) {
+            printf("Impossible\n");
+            return 0;
+        }
+
+        minRate += delta;
+        maxRate += delta;
+    }
+
+    if (maxRate > INF / 2) {
+        printf("Infinity\n");
+    } else {
+        printf("%lld\n", maxRate);
+    }
+
+    return 0;
+}
 

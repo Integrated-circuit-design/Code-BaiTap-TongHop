@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+#define LIM 200005
+
+int main() {
+    int q, type;
+    double arr[LIM] = {0};
+    double inc[LIM] = {0};
+    int size = 1;
+    double total = 0.0;
+
+    scanf("%d", &q);
+    while (q--) {
+        scanf("%d", &type);
+        if (type == 1) {
+            int a;
+            double x;
+            scanf("%d %lf", &a, &x);
+            inc[a] += x;
+            total += a * x;
+        }
+        else if (type == 2) {
+            double k;
+            scanf("%lf", &k);
+            size++;
+            arr[size] = k;
+            inc[size] = 0;
+            total += k;
+        }
+        else {
+            total -= arr[size] + inc[size];
+            inc[size - 1] += inc[size];
+            size--;
+        }
+        printf("%.6f\n", total / size);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+long long x[100005], y[100005];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++)
+        scanf("%lld %lld", &x[i], &y[i]);
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            long long d1 = llabs(x[i]) + llabs(y[i]);
+            long long d2 = llabs(x[j]) + llabs(y[j]);
+            if (d1 > d2) {
+                long long tx = x[i], ty = y[i];
+                x[i] = x[j]; y[i] = y[j];
+                x[j] = tx;   y[j] = ty;
+            }
+        }
+    }
+
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        if (x[i] != 0) total += 2;
+        if (y[i] != 0) total += 2;
+        total += 2;
+    }
+
+    printf("%d\n", total);
+
+    for (int i = 0; i < n; i++) {
+        long long xi = x[i], yi = y[i];
+
+        if (xi > 0) printf("1 %lld R\n", xi);
+        else if (xi < 0) printf("1 %lld L\n", -xi);
+        if (yi > 0) printf("1 %lld U\n", yi);
+        else if (yi < 0) printf("1 %lld D\n", -yi);
+
+        printf("2\n");
+
+        if (yi > 0) printf("1 %lld D\n", yi);
+        else if (yi < 0) printf("1 %lld U\n", -yi);
+        if (xi > 0) printf("1 %lld L\n", xi);
+        else if (xi < 0) printf("1 %lld R\n", -xi);
+
+        printf("3\n");
+    }
+
+    return 0;
+}
 

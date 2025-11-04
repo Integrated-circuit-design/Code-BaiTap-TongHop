@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int n, d, h;
+    scanf("%d %d %d", &n, &d, &h);
+
+    if (d > 2 * h || d < h || (d == 1 && n > 2)) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int edges = 0;
+    int u, v;
+
+    for (int i = 1; i <= h; i++) {
+        u = i;
+        v = i + 1;
+        printf("%d %d\n", u, v);
+        edges++;
+    }
+
+    int last_used = h + 1;
+    int new_node = last_used + 1;
+
+    if (d > h) {
+        printf("1 %d\n", new_node);
+        edges++;
+        int prev = new_node;
+        new_node++;
+        for (int i = 1; i < d - h; i++) {
+            printf("%d %d\n", prev, new_node);
+            prev = new_node;
+            new_node++;
+            edges++;
+        }
+    }
+
+    int attach_to = (h == 1 ? 1 : 2);
+    while (new_node <= n) {
+        printf("%d %d\n", attach_to, new_node);
+        new_node++;
+        edges++;
+    }
+
+    return 0;
+}
 

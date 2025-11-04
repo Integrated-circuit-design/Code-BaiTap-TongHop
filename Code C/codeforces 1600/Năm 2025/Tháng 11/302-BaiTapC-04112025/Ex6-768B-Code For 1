@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll get_length(ll n) {
+    if (n <= 1) return 1;
+    ll left = get_length(n / 2);
+    return 2 * left + 1;
+}
+
+int main() {
+    ll n, l, r;
+    scanf("%lld %lld %lld", &n, &l, &r);
+
+    ll stack_n[70], stack_l[70], stack_r[70];
+    int top = 0;
+    stack_n[0] = n;
+    stack_l[0] = l;
+    stack_r[0] = r;
+
+    ll result = 0;
+
+    while (top >= 0) {
+        ll x = stack_n[top];
+        ll L = stack_l[top];
+        ll R = stack_r[top];
+        top--;
+
+        if (x == 0 || L > R) continue;
+        if (x == 1) {
+            result += R - L + 1;
+            continue;
+        }
+
+        ll len_left = get_length(x / 2);
+        ll mid = len_left + 1;
+
+        if (R > mid) {
+            top++;
+            stack_n[top] = x / 2;
+            stack_l[top] = (L > mid + 1 ? L - mid - 1 : 1);
+            stack_r[top] = R - mid - 1;
+        }
+
+        if (L <= mid && R >= mid)
+            result += x % 2;
+
+        if (L < mid) {
+            top++;
+            stack_n[top] = x / 2;
+            stack_l[top] = L;
+            stack_r[top] = (R < mid - 1 ? R : mid - 1);
+        }
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

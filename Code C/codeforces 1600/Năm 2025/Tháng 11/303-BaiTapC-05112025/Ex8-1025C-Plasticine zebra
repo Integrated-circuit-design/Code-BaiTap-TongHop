@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[200005];
+    scanf("%s", str);
+
+    int n = strlen(str);
+    char temp[200005];
+    for (int i = 0; i < n; i++) {
+        temp[i] = str[i];
+        temp[n + i] = str[i];
+    }
+    temp[2 * n] = '\0';
+
+    int best = 1, count = 1;
+    for (int i = 1; i < 2 * n; i++) {
+        if (temp[i] != temp[i - 1]) {
+            count++;
+        } else {
+            if (count > best)
+                best = count;
+            count = 1;
+        }
+    }
+
+    if (count > best) best = count;
+    if (best > n) best = n;
+
+    printf("%d\n", best);
+    return 0;
+}
 

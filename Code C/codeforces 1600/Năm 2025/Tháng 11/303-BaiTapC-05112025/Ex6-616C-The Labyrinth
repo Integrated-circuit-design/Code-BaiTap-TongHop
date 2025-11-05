@@ -1,1 +1,86 @@
+#include <stdio.h>
+
+#define MAXN 1000
+
+char grid[MAXN][MAXN + 1];
+int comp[MAXN][MAXN];
+int comp_size[1000000];
+int n, m;
+
+int dx[4] = {1, -1, 0, 0};
+int dy[4] = {0, 0, 1, -1};
+
+int sx[MAXN * MAXN], sy[MAXN * MAXN];
+
+void dfs_stack(int start_x, int start_y, int id) {
+    int top = 0;
+    sx[top] = start_x;
+    sy[top++] = start_y;
+    comp[start_x][start_y] = id;
+    int count = 1;
+
+    while (top > 0) {
+        int x = sx[--top];
+        int y = sy[top];
+
+        for (int k = 0; k < 4; k++) {
+            int nx = x + dx[k];
+            int ny = y + dy[k];
+            if (nx >= 0 && nx < n && ny >= 0 && ny < m &&
+                grid[nx][ny] == '.' && comp[nx][ny] == 0) {
+                comp[nx][ny] = id;
+                sx[top] = nx;
+                sy[top++] = ny;
+                count++;
+            }
+        }
+    }
+    comp_size[id] = count;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) scanf("%s", grid[i]);
+
+    int id = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == '.' && comp[i][j] == 0) {
+                dfs_stack(i, j, ++id);
+            }
+        }
+    }
+
+    static char ans[MAXN][MAXN + 1];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == '.') {
+                ans[i][j] = '.';
+            } else {
+                int total = 1, seen[4], cnt = 0;
+                for (int k = 0; k < 4; k++) {
+                    int nx = i + dx[k], ny = j + dy[k];
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+                    int cid = comp[nx][ny];
+                    if (!cid) continue;
+                    int unique = 1;
+                    for (int z = 0; z < cnt; z++)
+                        if (seen[z] == cid) unique = 0;
+                    if (unique) {
+                        seen[cnt++] = cid;
+                        total += comp_size[cid];
+                    }
+                }
+                ans[i][j] = '0' + (total % 10);
+            }
+        }
+        ans[i][m] = '\0';
+    }
+
+    for (int i = 0; i < n; i++)
+        printf("%s\n", ans[i]);
+
+    return 0;
+}
 

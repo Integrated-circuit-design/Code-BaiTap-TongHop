@@ -1,1 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+int n;
+int head[MAXN], to[2*MAXN], nxt[2*MAXN], deg[MAXN];
+int ec = 0;
+int leafCount[MAXN];
+int result[MAXN];
+
+void addEdge(int u, int v) {
+    to[ec] = v;
+    nxt[ec] = head[u];
+    head[u] = ec++;
+}
+
+int dfs(int u) {
+    int cnt = 0;
+    for (int e = head[u]; e != -1; e = nxt[e]) {
+        int v = to[e];
+        cnt += dfs(v);
+    }
+    if (cnt == 0) cnt = 1;
+    leafCount[u] = cnt;
+    return cnt;
+}
+
+int cmp(const void *a, const void *b) {
+    return *(int*)a - *(int*)b;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) head[i] = -1;
+
+    for (int i = 2, p; i <= n; i++) {
+        scanf("%d", &p);
+        addEdge(p, i);
+        deg[p]++;
+    }
+
+    dfs(1);
+
+    int list[MAXN], m = 0;
+    for (int i = 1; i <= n; i++)
+        list[m++] = leafCount[i];
+
+    qsort(list, m, sizeof(int), cmp);
+
+    int colors = 0;
+    for (int k = 1; k <= n; k++) {
+        while (colors < m && list[colors] <= k) colors++;
+        int val = colors + 1;
+        if (val > n) val = n;
+        result[k] = val;
+    }
+
+    for (int k = 2; k <= n; k++)
+        if (result[k] < result[k-1])
+            result[k] = result[k-1];
+
+    for (int k = 1; k <= n; k++)
+        printf("%d%c", result[k], " \n"[k==n]);
+
+    return 0;
+}
 

@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+long long ucln(long long a, long long b) {
+    return b == 0 ? a : ucln(b, a % b);
+}
+
+int main() {
+    long long l, r, x, y;
+    scanf("%lld %lld %lld %lld", &l, &r, &x, &y);
+
+    if (y % x != 0) {
+        puts("0");
+        return 0;
+    }
+
+    long long t = y / x;
+    long long count = 0;
+
+    for (long long p = 1; p * p <= t; ++p) {
+        if (t % p != 0) continue;
+        long long q = t / p;
+        if (ucln(p, q) != 1) continue;
+        long long a = p * x;
+        long long b = q * x;
+        if (a < l || a > r || b < l || b > r) continue;
+        count += (a == b ? 1 : 2);
+    }
+
+    printf("%lld\n", count);
+    return 0;
+}
 

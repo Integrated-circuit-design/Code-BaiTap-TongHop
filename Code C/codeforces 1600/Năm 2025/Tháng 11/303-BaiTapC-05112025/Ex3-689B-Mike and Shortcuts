@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+#define MAXN 200005
+#define INF 1000000000
+
+int a[MAXN];
+int dist[MAXN];
+int q[MAXN];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i) scanf("%d", &a[i]);
+
+    for (int i = 1; i <= n; ++i) dist[i] = INF;
+
+    int front = 0, back = 0;
+    q[back++] = 1;
+    dist[1] = 0;
+
+    while (front < back) {
+        int u = q[front++];
+        int d = dist[u] + 1;
+
+        if (u > 1 && dist[u - 1] > d) {
+            dist[u - 1] = d;
+            q[back++] = u - 1;
+        }
+        if (u < n && dist[u + 1] > d) {
+            dist[u + 1] = d;
+            q[back++] = u + 1;
+        }
+        if (a[u] != u && dist[a[u]] > d) {
+            dist[a[u]] = d;
+            q[back++] = a[u];
+        }
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        printf("%d", dist[i]);
+        if (i < n) printf(" ");
+    }
+    printf("\n");
+
+    return 0;
+}
 

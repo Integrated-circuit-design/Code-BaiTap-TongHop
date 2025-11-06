@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100005
+
+typedef struct {
+    int skill[MAXN];
+    int cnt;
+} Subject;
+
+int cmp_desc(const void *a, const void *b) {
+    return (*(int*)b) - (*(int*)a);
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    Subject subjects[MAXN] = {0};
+    
+    for (int i = 0; i < n; i++) {
+        int s, r;
+        scanf("%d %d", &s, &r);
+        subjects[s].skill[subjects[s].cnt++] = r;
+    }
+
+    for (int i = 1; i <= m; i++) {
+        if (subjects[i].cnt > 0)
+            qsort(subjects[i].skill, subjects[i].cnt, sizeof(int), cmp_desc);
+    }
+
+    long long prefix[MAXN];
+    long long max_sum = 0;
+
+    for (int i = 1; i <= m; i++) {
+        if (subjects[i].cnt == 0) continue;
+
+        prefix[0] = 0;
+        for (int j = 0; j < subjects[i].cnt; j++) {
+            prefix[j + 1] = prefix[j] + subjects[i].skill[j];
+        }
+
+        for (int k = 1; k <= subjects[i].cnt; k++) {
+            if (prefix[k] > 0)
+                max_sum += prefix[k];
+            else
+                break;
+        }
+    }
+
+    printf("%lld\n", max_sum);
+    return 0;
+}
 

@@ -1,1 +1,23 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+int main() {
+    long long a, b;
+    scanf("%lld %lld", &a, &b);
+
+    if (b >= a) {
+        printf("0\n");
+        return 0;
+    }
+
+    long long total = 0;
+    for (long long i = b + 2; i <= a + 1; i++) {
+        long long x = b * i;
+        total = (total + x) % MOD;
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

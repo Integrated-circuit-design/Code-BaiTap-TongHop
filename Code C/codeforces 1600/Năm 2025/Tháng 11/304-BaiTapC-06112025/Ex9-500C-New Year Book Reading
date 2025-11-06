@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int weight[501];
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &weight[i]);
+    }
+
+    int plan[1001];
+    int freq[501] = {0};
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &plan[i]);
+        freq[plan[i]]++;
+    }
+
+    int order[501];
+    int used[501] = {0};
+    for (int i = 0; i < n; i++) {
+        int maxFreq = -1, book = -1;
+        for (int j = 1; j <= n; j++) {
+            if (!used[j] && freq[j] > maxFreq) {
+                maxFreq = freq[j];
+                book = j;
+            }
+        }
+        order[i] = book;
+        used[book] = 1;
+    }
+
+    int position[501];
+    for (int i = 0; i < n; i++) position[order[i]] = i;
+
+    long long total = 0;
+
+    for (int i = 0; i < m; i++) {
+        int book = plan[i];
+        int pos = position[book];
+        for (int j = 0; j < pos; j++) {
+            total += weight[order[j]];
+        }
+        for (int j = pos; j > 0; j--) {
+            order[j] = order[j - 1];
+            position[order[j]] = j;
+        }
+        order[0] = book;
+        position[book] = 0;
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

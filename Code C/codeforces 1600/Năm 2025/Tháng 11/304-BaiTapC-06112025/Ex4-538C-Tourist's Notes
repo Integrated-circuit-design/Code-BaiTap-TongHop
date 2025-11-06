@@ -1,1 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    long long n, m;
+    scanf("%lld %lld", &n, &m);
+
+    long long day[m], height[m];
+    for (long long i = 0; i < m; i++) {
+        scanf("%lld %lld", &day[i], &height[i]);
+    }
+
+    long long max_possible = 0;
+
+    if (day[0] > 1) {
+        long long h = height[0] + (day[0] - 1);
+        if (h > max_possible) max_possible = h;
+    } else {
+        max_possible = height[0];
+    }
+
+    for (long long i = 1; i < m; i++) {
+        long long d_diff = day[i] - day[i - 1];
+        long long h_diff = llabs(height[i] - height[i - 1]);
+
+        if (h_diff > d_diff) {
+            printf("IMPOSSIBLE\n");
+            return 0;
+        }
+
+        long long local_max = (d_diff + h_diff) / 2 + (height[i] > height[i - 1] ? height[i] : height[i - 1]);
+        if (local_max > max_possible) max_possible = local_max;
+    }
+
+    if (day[m - 1] < n) {
+        long long tail_max = height[m - 1] + (n - day[m - 1]);
+        if (tail_max > max_possible) max_possible = tail_max;
+    }
+
+    printf("%lld\n", max_possible);
+    return 0;
+}
 

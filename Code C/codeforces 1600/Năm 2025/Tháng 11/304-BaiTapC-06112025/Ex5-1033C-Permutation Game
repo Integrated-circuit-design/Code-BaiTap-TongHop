@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+int n;
+int a[MAXN];
+int winner[MAXN];
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+        winner[i] = 2;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        int step = a[i];
+        for (int j = i + step; j <= n; j += step) {
+            if (a[j] > a[i] && winner[j] == 2) {
+                winner[i] = 1;
+                break;
+            }
+        }
+        if (winner[i] == 2) {
+            for (int j = i - step; j >= 1; j -= step) {
+                if (a[j] > a[i] && winner[j] == 2) {
+                    winner[i] = 1;
+                    break;
+                }
+            }
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (winner[i] == 1)
+            putchar('A');
+        else
+            putchar('B');
+    }
+    putchar('\n');
+
+    return 0;
+}
 

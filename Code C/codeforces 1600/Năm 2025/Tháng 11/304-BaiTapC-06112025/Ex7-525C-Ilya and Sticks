@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_LEN 1000005
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int *sticks = (int*)malloc(n * sizeof(int));
+    int freq[MAX_LEN] = {0};
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &sticks[i]);
+        freq[sticks[i]]++;
+    }
+
+    long long total_area = 0;
+    int prev_side = 0;
+
+    for (int length = MAX_LEN - 1; length >= 2; length--) {
+        while (freq[length] >= 2) {
+            freq[length] -= 2;
+            if (prev_side == 0) {
+                prev_side = length;
+            } else {
+                total_area += (long long)prev_side * length;
+                prev_side = 0;
+            }
+        }
+
+        if (freq[length] > 0 && freq[length - 1] > 0) {
+            freq[length]--;
+            freq[length - 1]--;
+            if (prev_side == 0) {
+                prev_side = length - 1;
+            } else {
+                total_area += (long long)prev_side * (length - 1);
+                prev_side = 0;
+            }
+        }
+    }
+
+    printf("%lld\n", total_area);
+
+    free(sticks);
+    return 0;
+}
 

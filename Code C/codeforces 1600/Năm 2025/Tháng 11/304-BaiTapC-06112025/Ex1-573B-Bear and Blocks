@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long h[n];
+    long long maxHeight = 0;
+
+    for(int i = 0; i < n; i++) {
+        scanf("%lld", &h[i]);
+        if(h[i] > maxHeight) maxHeight = h[i];
+    }
+
+    long long operations = 0;
+
+    for(long long level = 1; level <= maxHeight; level++) {
+        int hasBlock = 0;
+        for(int i = 0; i < n; i++) {
+            if(h[i] >= level) {
+                hasBlock = 1;
+                h[i]--;
+            }
+        }
+        if(hasBlock) operations++;
+    }
+
+    printf("%lld\n", operations);
+
+    return 0;
+}
 

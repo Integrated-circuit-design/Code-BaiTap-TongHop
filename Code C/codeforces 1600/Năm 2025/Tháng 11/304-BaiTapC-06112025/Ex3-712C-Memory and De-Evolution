@@ -1,1 +1,14 @@
+#include <stdio.h>
+
+int main() {
+    int x, y;
+    scanf("%d %d", &x, &y);
+
+    int diff = x - y;
+    int seconds = diff / 2 + diff % 2;
+
+    printf("%d\n", seconds);
+
+    return 0;
+}
 

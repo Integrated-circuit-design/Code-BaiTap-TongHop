@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int isPrime(long long x) {
+    if (x < 2) return 0;
+    for (long long i = 2; i * i <= x; i++)
+        if (x % i == 0) return 0;
+    return 1;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    long long mst = n - 1;
+    while (!isPrime(mst)) mst++;
+
+    long long sp = mst;
+    printf("%lld %lld\n", sp, mst);
+
+    for (int i = 2; i <= n - 1; i++)
+        printf("1 %d 1\n", i);
+
+    printf("1 %d %lld\n", n, mst - (n - 2));
+
+    int extra = m - (n - 1);
+    int u = 2, v = 3;
+    while (extra--) {
+        if (v > n) { u++; v = u + 1; }
+        if (v > n) v = n;
+        if (u < v)
+            printf("%d %d %d\n", u, v, 1000000000);
+        v++;
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int x, y;
+} Point;
+
+void swap(int *a, int *b){
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int connect(Point path[], int idx, int x1, int y1, int x2, int y2){
+    int dx = (x2 > x1) ? 1 : (x2 < x1 ? -1 : 0);
+    int dy = (y2 > y1) ? 1 : (y2 < y1 ? -1 : 0);
+
+    while(x1 != x2){
+        path[idx].x = x1; path[idx].y = y1; idx++;
+        x1 += dx;
+    }
+    while(y1 != y2){
+        path[idx].x = x1; path[idx].y = y1; idx++;
+        y1 += dy;
+    }
+    path[idx].x = x2; path[idx].y = y2; idx++;
+    return idx;
+}
+
+int main(){
+    Point A, B, C;
+    scanf("%d %d", &A.x, &A.y);
+    scanf("%d %d", &B.x, &B.y);
+    scanf("%d %d", &C.x, &C.y);
+
+    int xs[3] = {A.x, B.x, C.x};
+    int ys[3] = {A.y, B.y, C.y};
+    for(int i=0;i<2;i++)
+        for(int j=i+1;j<3;j++){
+            if(xs[i]>xs[j]) swap(&xs[i], &xs[j]);
+            if(ys[i]>ys[j]) swap(&ys[i], &ys[j]);
+        }
+
+    int xm = xs[1], ym = ys[1];
+
+    Point path[3000];
+    int cnt = 0;
+    cnt = connect(path, cnt, A.x, A.y, xm, ym);
+    cnt = connect(path, cnt, B.x, B.y, xm, ym);
+    cnt = connect(path, cnt, C.x, C.y, xm, ym);
+
+    Point result[3000];
+    int final_cnt = 0;
+    for(int i=0;i<cnt;i++){
+        int duplicate = 0;
+        for(int j=0;j<final_cnt;j++){
+            if(result[j].x==path[i].x && result[j].y==path[i].y){
+                duplicate = 1;
+                break;
+            }
+        }
+        if(!duplicate){
+            result[final_cnt++] = path[i];
+        }
+    }
+
+    printf("%d\n", final_cnt);
+    for(int i=0;i<final_cnt;i++){
+        printf("%d %d\n", result[i].x, result[i].y);
+    }
+
+    return 0;
+}
 

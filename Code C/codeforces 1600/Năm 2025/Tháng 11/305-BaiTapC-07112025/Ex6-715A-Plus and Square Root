@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long a = 2;
+
+    for (int i = 1; i <= n; i++) {
+        long long k = i + 1;
+        long long b = ((a + k * k - 1) / (k * k)) * k; 
+        while (b * b < a) b += k;
+        long long plus = (b * b - a) / i;
+        printf("%lld\n", plus);
+        a = b;
+    }
+
+    return 0;
+}
 

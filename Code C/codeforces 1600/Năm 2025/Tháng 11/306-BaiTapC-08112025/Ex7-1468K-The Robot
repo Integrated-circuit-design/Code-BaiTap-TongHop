@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[5005];
+        scanf("%s", s);
+        int n = strlen(s);
+
+        int x = 0, y = 0;
+        int obsX = 0, obsY = 0;
+        int found = 0;
+
+        for (int i = 0; i < n && !found; i++) {
+            x = 0; y = 0;
+            int ox = 0, oy = 0;
+
+            for (int j = 0; j <= i; j++) {
+                if (s[j] == 'L') ox--;
+                else if (s[j] == 'R') ox++;
+                else if (s[j] == 'U') oy++;
+                else if (s[j] == 'D') oy--;
+            }
+
+            if (ox == 0 && oy == 0) continue;
+
+            for (int j = 0; j < n; j++) {
+                int nx = x, ny = y;
+                if (s[j] == 'L') nx--;
+                else if (s[j] == 'R') nx++;
+                else if (s[j] == 'U') ny++;
+                else if (s[j] == 'D') ny--;
+
+                if (nx == ox && ny == oy) continue;
+                x = nx; y = ny;
+            }
+
+            if (x == 0 && y == 0) {
+                printf("%d %d\n", ox, oy);
+                found = 1;
+            }
+        }
+
+        if (!found) printf("0 0\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+long long getXor(long long n) {
+    switch (n % 4) {
+        case 0: return n;
+        case 1: return 1;
+        case 2: return n + 1;
+        default: return 0;
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long totalXor = 0;
+    long long num;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &num);
+        totalXor ^= num;
+    }
+
+    long long magicXor = 0;
+
+    for (int i = 1; i <= n; i++) {
+        long long count = n / i;
+        long long remainder = n % i;
+
+        long long temp = 0;
+
+        if (count % 2 == 1)
+            temp ^= getXor(i - 1);
+
+        temp ^= getXor(remainder);
+
+        magicXor ^= temp;
+    }
+
+    long long result = totalXor ^ magicXor;
+
+    printf("%lld\n", result);
+    return 0;
+}
 

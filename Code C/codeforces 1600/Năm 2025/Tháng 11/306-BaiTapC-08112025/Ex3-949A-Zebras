@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int indices[MAXN];
+    int length;
+} Zebra;
+
+Zebra zebras[MAXN];
+int end0[MAXN], end1[MAXN];
+int top0 = 0, top1 = 0, zebra_count = 0;
+
+int main() {
+    static char s[MAXN];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '0') {
+            if (top1 > 0) {
+                int id = end1[--top1];
+                zebras[id].indices[zebras[id].length++] = i + 1;
+                end0[top0++] = id;
+            } else {
+                zebra_count++;
+                zebras[zebra_count].indices[0] = i + 1;
+                zebras[zebra_count].length = 1;
+                end0[top0++] = zebra_count;
+            }
+        } else {
+            if (top0 == 0) {
+                printf("-1\n");
+                return 0;
+            }
+            int id = end0[--top0];
+            zebras[id].indices[zebras[id].length++] = i + 1;
+            end1[top1++] = id;
+        }
+    }
+
+    if (top1 > 0) {
+        printf("-1\n");
+        return 0;
+    }
+
+    printf("%d\n", zebra_count);
+    for (int i = 1; i <= zebra_count; i++) {
+        printf("%d", zebras[i].length);
+        for (int j = 0; j < zebras[i].length; j++)
+            printf(" %d", zebras[i].indices[j]);
+        printf("\n");
+    }
+
+    return 0;
+}
 

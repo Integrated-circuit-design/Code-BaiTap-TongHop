@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define ll long long
+
+int main() {
+    int n, m, k;
+    ll x, s;
+    scanf("%d %d %d", &n, &m, &k);
+    scanf("%lld %lld", &x, &s);
+
+    ll type1_time[200005], type1_cost[200005];
+    ll type2_instant[200005], type2_cost[200005];
+
+    for (int i = 0; i < m; i++) scanf("%lld", &type1_time[i]);
+    for (int i = 0; i < m; i++) scanf("%lld", &type1_cost[i]);
+
+    for (int i = 0; i < k; i++) scanf("%lld", &type2_instant[i]);
+    for (int i = 0; i < k; i++) scanf("%lld", &type2_cost[i]);
+
+    ll answer = n * x;
+
+    type2_instant[k] = 0;
+    type2_cost[k] = 0;
+    k++;
+
+    for (int j = 0; j < k; j++) {
+        if (type2_cost[j] > s) continue;
+        ll remaining_mana = s - type2_cost[j];
+        ll potions_left = n - type2_instant[j];
+        if (potions_left < 0) potions_left = 0;
+
+        ll best_time = x;
+        for (int i = 0; i < m; i++) {
+            if (type1_cost[i] <= remaining_mana) {
+                if (type1_time[i] < best_time) best_time = type1_time[i];
+            }
+        }
+
+        ll total_time = potions_left * best_time;
+        if (total_time < answer) answer = total_time;
+    }
+
+    for (int i = 0; i < m; i++) {
+        if (type1_cost[i] <= s) {
+            ll total_time = n * type1_time[i];
+            if (total_time < answer) answer = total_time;
+        }
+    }
+
+    printf("%lld\n", answer);
+    return 0;
+}
 

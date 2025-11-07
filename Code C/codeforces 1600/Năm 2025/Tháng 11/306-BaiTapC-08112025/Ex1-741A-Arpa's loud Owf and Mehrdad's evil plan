@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int gcd(int a, int b){
+    while(b){
+        int t = a % b;
+        a = b;
+        b = t;
+    }
+    return a;
+}
+
+long long lcm(long long a, long long b){
+    return a / gcd(a,b) * b;
+}
+
+int main(){
+    int n;
+    scanf("%d", &n);
+    int crush[105];
+    for(int i=0;i<n;i++){
+        scanf("%d",&crush[i]);
+        crush[i]--;
+    }
+
+    bool visited[105] = {0};
+    long long ans = 1;
+
+    for(int i=0;i<n;i++){
+        if(!visited[i]){
+            int slow = i, fast = i;
+            do {
+                slow = crush[slow];
+                fast = crush[crush[fast]];
+            } while(slow != fast);
+
+            int start = i;
+            while(start != slow) {
+                start = crush[start];
+                slow = crush[slow];
+            }
+
+            int len = 1;
+            int cur = crush[start];
+            while(cur != start){
+                cur = crush[cur];
+                len++;
+            }
+
+            cur = start;
+            do{
+                visited[cur] = true;
+                cur = crush[cur];
+            } while(cur != start);
+
+            long long need = (len % 2 == 0) ? len/2 : len;
+            ans = lcm(ans, need);
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

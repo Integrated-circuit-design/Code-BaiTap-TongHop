@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    long long U;
+    scanf("%d %lld", &n, &U);
+
+    long long *E = (long long*)malloc(n * sizeof(long long));
+    for (int i = 0; i < n; i++) scanf("%lld", &E[i]);
+
+    double max_eta = -1.0;
+
+    for (int i = 0; i < n-2; i++) {
+        for (int k = i+2; k < n && E[k] - E[i] <= U; k++) {
+            int j = i + 1;
+            double eta = (double)(E[k] - E[j]) / (double)(E[k] - E[i]);
+            if (eta > max_eta) max_eta = eta;
+        }
+    }
+
+    if (max_eta < 0) printf("-1\n");
+    else printf("%.12f\n", max_eta);
+
+    free(E);
+    return 0;
+}
 

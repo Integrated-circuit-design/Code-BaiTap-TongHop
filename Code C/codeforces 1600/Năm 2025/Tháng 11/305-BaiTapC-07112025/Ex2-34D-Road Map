@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+#define MAXN 50005
+
+int n, r1, r2;
+int head[MAXN], to[MAXN * 2], nxt[MAXN * 2], edgeCount = 0;
+int parent[MAXN];
+
+void addEdge(int u, int v) {
+    to[edgeCount] = v;
+    nxt[edgeCount] = head[u];
+    head[u] = edgeCount++;
+}
+
+void dfs(int u, int p) {
+    parent[u] = p;
+    for (int e = head[u]; e != -1; e = nxt[e]) {
+        int v = to[e];
+        if (v == p) continue;
+        dfs(v, u);
+    }
+}
+
+int main() {
+    scanf("%d %d %d", &n, &r1, &r2);
+    for (int i = 1; i <= n; i++) head[i] = -1;
+    for (int i = 1; i <= n; i++) {
+        if (i == r1) continue;
+        int p;
+        scanf("%d", &p);
+        addEdge(i, p);
+        addEdge(p, i);
+    }
+    dfs(r2, 0);
+    for (int i = 1; i <= n; i++) {
+        if (i == r2) continue;
+        printf("%d ", parent[i]);
+    }
+    return 0;
+}
 

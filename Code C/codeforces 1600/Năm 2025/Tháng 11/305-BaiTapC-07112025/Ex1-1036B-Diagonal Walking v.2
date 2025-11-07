@@ -1,1 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+ll absll(ll x) {
+    return x < 0 ? -x : x;
+}
+
+ll max_diagonal(ll n, ll m, ll k) {
+    ll x = absll(n);
+    ll y = absll(m);
+
+    ll lon = (x > y) ? x : y;
+    ll nho = (x < y) ? x : y;
+
+    if (k < lon) return -1;
+
+    ll du = k - lon;
+    if (du % 2 == 0)
+        return nho + du;
+    else
+        return nho + du - 1;
+}
+
+int main(void) {
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        ll n, m, k;
+        scanf("%lld %lld %lld", &n, &m, &k);
+        printf("%lld\n", max_diagonal(n, m, k));
+    }
+
+    return 0;
+}
 

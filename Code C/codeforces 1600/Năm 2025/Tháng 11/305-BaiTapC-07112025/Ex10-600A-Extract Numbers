@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 100005
+
+int isnum(const char *s, int len) {
+    if (len == 0) return 0;
+    for (int i = 0; i < len; i++)
+        if (!isdigit(s[i])) return 0;
+    if (len > 1 && s[0] == '0') return 0;
+    return 1;
+}
+
+int main() {
+    char s[MAX];
+    scanf("%s", s);
+    int n = strlen(s);
+    char num[MAX * 2], other[MAX * 2];
+    int ni = 0, oi = 0;
+    const char *word_start = s;
+    for (int i = 0; i <= n; i++) {
+        if (s[i] == ',' || s[i] == ';' || s[i] == '\0') {
+            int len = &s[i] - word_start;
+            int is_number = isnum(word_start, len);
+            if (is_number) {
+                if (ni) num[ni++] = ',';
+                memcpy(num + ni, word_start, len);
+                ni += len;
+            } else {
+                if (oi) other[oi++] = ',';
+                memcpy(other + oi, word_start, len);
+                oi += len;
+            }
+            word_start = s + i + 1;
+        }
+    }
+    num[ni] = '\0';
+    other[oi] = '\0';
+    if (ni == 0) printf("-\n");
+    else printf("\"%s\"\n", num);
+    if (oi == 0) printf("-\n");
+    else printf("\"%s\"\n", other);
+    return 0;
+}
 

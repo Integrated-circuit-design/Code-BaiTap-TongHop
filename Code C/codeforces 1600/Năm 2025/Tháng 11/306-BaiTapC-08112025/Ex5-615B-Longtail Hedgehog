@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+#define MAXN 100005
+#define MAXM 200005
+
+int n, m;
+int deg[MAXN];
+int dp[MAXN];
+int u_arr[MAXM];
+int v_arr[MAXM];
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &u_arr[i], &v_arr[i]);
+        deg[u_arr[i]]++;
+        deg[v_arr[i]]++;
+    }
+
+    for (int i = 1; i <= n; i++) dp[i] = 1;
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j < m; j++) {
+            int u = u_arr[j], v = v_arr[j];
+            if (u == i && v > i) dp[v] = max(dp[v], dp[i] + 1);
+            else if (v == i && u > i) dp[u] = max(dp[u], dp[i] + 1);
+        }
+    }
+
+    long long ans = 0;
+    for (int i = 1; i <= n; i++) {
+        long long beauty = (long long)dp[i] * deg[i];
+        if (beauty > ans) ans = beauty;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

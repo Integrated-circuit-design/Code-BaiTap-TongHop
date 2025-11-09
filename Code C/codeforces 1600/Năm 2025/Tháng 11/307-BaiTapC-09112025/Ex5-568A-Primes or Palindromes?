@@ -1,1 +1,54 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 2000000
+
+bool check_prime(int n) {
+    if (n < 2) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+    for (int i = 3; i*i <= n; i += 2) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+
+bool check_palindrome(int n) {
+    int digits[10], len = 0;
+    while (n > 0) {
+        digits[len++] = n % 10;
+        n /= 10;
+    }
+    for (int i = 0; i < len/2; i++) {
+        if (digits[i] != digits[len-1-i]) return false;
+    }
+    return true;
+}
+
+int main() {
+    int p, q;
+    if (scanf("%d %d", &p, &q) != 2) return 0;
+
+    int prime_total = 0;
+    int pal_total = 0;
+    int max_n = 0;
+
+    for (int i = 1; i <= MAX; i++) {
+        if (check_prime(i)) prime_total++;
+        if (check_palindrome(i)) pal_total++;
+
+        long long left = (long long)prime_total * q;
+        long long right = (long long)p * pal_total;
+
+        if (left <= right) max_n = i;
+    }
+
+    if (max_n == MAX) {
+        printf("Palindromic tree is better than splay tree\n");
+    } else {
+        printf("%d\n", max_n);
+    }
+
+    return 0;
+}
 

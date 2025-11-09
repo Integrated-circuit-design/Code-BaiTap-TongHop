@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    double k;
+    scanf("%d %lf", &n, &k);
+
+    double energy[10000];
+    double total = 0;
+    double maxEnergy = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lf", &energy[i]);
+        total += energy[i];
+        if (energy[i] > maxEnergy) maxEnergy = energy[i];
+    }
+
+    double low = 0.0, high = maxEnergy;
+    double eps = 1e-7;
+    double efficiency = 1.0 - k / 100.0;
+    double result = 0.0;
+
+    while (high - low > eps) {
+        double mid = (low + high) / 2.0;
+        double surplus = 0.0;
+        double deficit = 0.0;
+
+        for (int i = 0; i < n; i++) {
+            if (energy[i] > mid)
+                surplus += energy[i] - mid;
+            else
+                deficit += mid - energy[i];
+        }
+
+        if (surplus * efficiency >= deficit) {
+            result = mid;
+            low = mid;
+        } else {
+            high = mid;
+        }
+    }
+
+    printf("%.9f\n", result);
+    return 0;
+}
 

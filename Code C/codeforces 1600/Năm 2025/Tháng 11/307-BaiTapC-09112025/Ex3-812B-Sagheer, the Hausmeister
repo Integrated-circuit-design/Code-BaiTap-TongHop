@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 15
+#define MAXM 100
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    char building[MAXN][MAXM + 3];
+    for (int i = 0; i < n; i++) {
+        scanf("%s", building[i]);
+    }
+
+    int topFloor = -1;
+    for (int i = 0; i < n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (building[i][j] == '1') {
+                topFloor = i;
+                break;
+            }
+        }
+    }
+
+    if (topFloor == -1) {
+        printf("0\n");
+        return 0;
+    }
+
+    int totalTime = 0;
+    int pos = 0;
+    for (int floor = n-1; floor >= 0; floor--) {
+        int left = m + 1, right = 0;
+        for (int j = 1; j <= m; j++) {
+            if (building[floor][j] == '1') {
+                if (left == m + 1) left = j;
+                right = j;
+            }
+        }
+
+        if (right == 0) {
+            totalTime++;
+            continue;
+        }
+
+        if (floor == 0) {
+            int timeToLeft = pos + right;
+            int timeToRight = (m + 1 - pos) + (m + 1 - left);
+            totalTime += timeToLeft < timeToRight ? timeToLeft : timeToRight;
+            break;
+        }
+
+        if (pos <= left) {
+            totalTime += 2*right - pos + 1;
+            pos = 0;
+        } else {
+            totalTime += 2*(m + 1 - left) - (m + 1 - pos) + 1;
+            pos = m + 1;
+        }
+    }
+
+    printf("%d\n", totalTime);
+    return 0;
+}
 

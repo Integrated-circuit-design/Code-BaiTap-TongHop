@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int n;
+int perm[105], fav[105];
+int parent[105];
+
+int find(int x) {
+    if (parent[x] != x) parent[x] = find(parent[x]);
+    return parent[x];
+}
+
+void unite(int x, int y) {
+    int px = find(x);
+    int py = find(y);
+    if (px != py) parent[py] = px;
+}
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) scanf("%d", &perm[i]);
+    for (int i = 1; i <= n; i++) scanf("%d", &fav[i]);
+
+    for (int i = 1; i <= n; i++) parent[i] = i;
+
+    for (int i = 1; i <= n; i++) {
+        int d = fav[i];
+        if (i - d >= 1) unite(i, i - d);
+        if (i + d <= n) unite(i, i + d);
+    }
+
+    for (int i = 1; i <= n; i++) {
+        int root = find(i);
+        int orig[105], target[105];
+        int sz = 0;
+
+        for (int j = 1; j <= n; j++) {
+            if (find(j) == root) {
+                orig[sz] = j;
+                target[sz] = perm[j];
+                sz++;
+            }
+        }
+
+        qsort(orig, sz, sizeof(int), compare);
+        qsort(target, sz, sizeof(int), compare);
+
+        int ok = 1;
+        for (int k = 0; k < sz; k++)
+            if (orig[k] != target[k]) ok = 0;
+
+        if (!ok) {
+            printf("NO\n");
+            return 0;
+        }
+    }
+
+    printf("YES\n");
+    return 0;
+}
 

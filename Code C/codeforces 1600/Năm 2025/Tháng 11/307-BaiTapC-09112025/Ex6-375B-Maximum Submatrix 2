@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 5005
+
+int n, m;
+char mat[MAX][MAX];
+int height[MAX][MAX];
+int tmp[MAX];
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)b) - (*(int*)a);
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    
+    for (int i = 0; i < n; i++)
+        scanf("%s", mat[i]);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (mat[i][j] == '1')
+                height[i][j] = (i == 0 ? 1 : height[i-1][j] + 1);
+            else
+                height[i][j] = 0;
+        }
+    }
+
+    long long maxArea = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++)
+            tmp[j] = height[i][j];
+
+        qsort(tmp, m, sizeof(int), cmp);
+
+        for (int j = 0; j < m; j++) {
+            long long area = (long long)tmp[j] * (j + 1);
+            if (area > maxArea)
+                maxArea = area;
+        }
+    }
+
+    printf("%lld\n", maxArea);
+    return 0;
+}
 

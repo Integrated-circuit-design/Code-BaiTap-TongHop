@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, k, x;
+        scanf("%lld %lld %lld", &n, &k, &x);
+
+        long long friends[n];
+        for (long long i = 0; i < n; i++) {
+            scanf("%lld", &friends[i]);
+        }
+
+        long long teleports[k];
+        long long count = 0;
+
+        if (k >= x + 1) {
+            for (long long i = 0; i <= x && count < k; i++) {
+                teleports[count++] = i;
+            }
+        }
+        else if (n == 0) {
+            long long step = x / (k - 1);
+            for (long long i = 0; i < k; i++) {
+                teleports[count++] = i * step;
+            }
+        }
+        else {
+            long long minPos = friends[0], maxPos = friends[0];
+            for (long long i = 1; i < n; i++) {
+                if (friends[i] < minPos) minPos = friends[i];
+                if (friends[i] > maxPos) maxPos = friends[i];
+            }
+
+            long long step = (x + 1) / k;
+            for (long long i = 0; i < k; i++) {
+                teleports[count++] = i * step;
+            }
+        }
+
+        for (long long i = 0; i < count; i++) {
+            printf("%lld", teleports[i]);
+            if (i != count - 1) printf(" ");
+            else printf("\n");
+        }
+    }
+
+    return 0;
+}
 

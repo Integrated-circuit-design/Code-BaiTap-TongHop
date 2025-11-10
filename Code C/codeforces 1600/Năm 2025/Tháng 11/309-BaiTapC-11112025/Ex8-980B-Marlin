@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int maxHotels = 2 * (n - 2);
+    if (k > maxHotels) {
+        printf("NO\n");
+        return 0;
+    }
+
+    printf("YES\n");
+
+    char city[4][100];
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < n; j++)
+            city[i][j] = '.';
+    for (int i = 0; i < 4; i++)
+        city[i][n] = '\0';
+
+    int placed = 0;
+    int left = 1, right = n - 2;
+    while (placed < k && left <= right) {
+        if (placed < k) {
+            city[1][left] = '#';
+            placed++;
+        }
+        if (placed < k && left != right) {
+            city[1][right] = '#';
+            placed++;
+        }
+        left++;
+        right--;
+    }
+
+    left = 1; right = n - 2;
+    while (placed < k && left <= right) {
+        if (placed < k) {
+            city[2][left] = '#';
+            placed++;
+        }
+        if (placed < k && left != right) {
+            city[2][right] = '#';
+            placed++;
+        }
+        left++;
+        right--;
+    }
+
+    for (int i = 0; i < 4; i++)
+        printf("%s\n", city[i]);
+
+    return 0;
+}
 

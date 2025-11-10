@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp_desc(const void *a, const void *b) {
+    return *(int*)b - *(int*)a;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    
+    int digits[n];
+    int sum = 0;
+    int zeroCount = 0;
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &digits[i]);
+        sum += digits[i];
+        if (digits[i] == 0) zeroCount++;
+    }
+    
+    if (zeroCount == 0) {
+        printf("-1\n");
+        return 0;
+    }
+    
+    int mod = sum % 3;
+    
+    if (mod != 0) {
+        int removed = 0;
+        for (int i = 0; i < n; i++) {
+            if (digits[i] % 3 == mod) {
+                digits[i] = -1;
+                removed = 1;
+                break;
+            }
+        }
+        if (!removed) {
+            int count = 0;
+            for (int i = 0; i < n && count < 2; i++) {
+                if (digits[i] % 3 == 3 - mod) {
+                    digits[i] = -1;
+                    count++;
+                }
+            }
+            if (count < 2) {
+                printf("-1\n");
+                return 0;
+            }
+        }
+    }
+    
+    int newDigits[n];
+    int newCount = 0;
+    for (int i = 0; i < n; i++) {
+        if (digits[i] != -1) newDigits[newCount++] = digits[i];
+    }
+    
+    int onlyZero = 1;
+    for (int i = 0; i < newCount; i++) {
+        if (newDigits[i] != 0) {
+            onlyZero = 0;
+            break;
+        }
+    }
+    if (onlyZero) {
+        printf("0\n");
+        return 0;
+    }
+    
+    qsort(newDigits, newCount, sizeof(int), cmp_desc);
+    for (int i = 0; i < newCount; i++) {
+        printf("%d", newDigits[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
 

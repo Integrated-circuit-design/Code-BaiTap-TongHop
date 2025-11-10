@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int sum3(int a, int b, int c) {
+    return a + b + c;
+}
+
+int main() {
+    char ticket[7];
+    scanf("%s", ticket);
+
+    int d[6];
+    for (int i = 0; i < 6; i++) d[i] = ticket[i] - '0';
+
+    int left = sum3(d[0], d[1], d[2]);
+    int right = sum3(d[3], d[4], d[5]);
+
+    if (left == right) {
+        printf("0\n");
+        return 0;
+    }
+
+    int diff = abs(left - right);
+    int ans = 3;
+
+    for (int i = 0; i < 6; i++) {
+        int change = (i < 3 ? d[i] : 9 - d[i]);
+        if (change >= diff) ans = min(ans, 1);
+    }
+
+    for (int i = 0; i < 6; i++) {
+        for (int j = i+1; j < 6; j++) {
+            int change1 = (i < 3 ? d[i] : 9 - d[i]);
+            int change2 = (j < 3 ? d[j] : 9 - d[j]);
+            if (change1 + change2 >= diff) ans = min(ans, 2);
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
 

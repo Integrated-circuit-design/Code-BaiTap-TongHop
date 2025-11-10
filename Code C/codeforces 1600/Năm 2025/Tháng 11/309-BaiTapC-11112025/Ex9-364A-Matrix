@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    long long a;
+    char s[4005];
+    scanf("%lld", &a);
+    scanf("%s", s);
+    int n = strlen(s);
+
+    int totalSegments = n * (n + 1) / 2;
+    int *sums = (int *)malloc(sizeof(int) * totalSegments);
+    int idx = 0;
+
+    for (int i = 0; i < n; i++) {
+        int sum = 0;
+        for (int j = i; j < n; j++) {
+            sum += s[j] - '0';
+            sums[idx++] = sum;
+        }
+    }
+
+    long long ans = 0;
+
+    if (a == 0) {
+        long long zeroCount = 0;
+        for (int i = 0; i < totalSegments; i++)
+            if (sums[i] == 0) zeroCount++;
+
+        ans = zeroCount * (2LL * totalSegments - zeroCount);
+    } else {
+        for (int i = 0; i < totalSegments; i++) {
+            for (int j = 0; j < totalSegments; j++) {
+                if ((long long)sums[i] * sums[j] == a) {
+                    ans++;
+                }
+            }
+        }
+    }
+
+    printf("%lld\n", ans);
+    free(sums);
+    return 0;
+}
 

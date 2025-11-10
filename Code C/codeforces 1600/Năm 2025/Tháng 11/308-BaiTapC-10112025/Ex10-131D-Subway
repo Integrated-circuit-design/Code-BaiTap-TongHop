@@ -1,1 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 3005
+
+typedef struct Node {
+    int val;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+int visited[MAXN];
+int dist[MAXN];
+int parent[MAXN];
+int inCycle[MAXN];
+int n;
+
+void add_edge(int u, int v) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->val = v;
+    node->next = adj[u];
+    adj[u] = node;
+}
+
+int find_cycle(int u, int p) {
+    visited[u] = 1;
+    for (Node* cur = adj[u]; cur; cur = cur->next) {
+        int v = cur->val;
+        if (v == p) continue;
+        if (!visited[v]) {
+            parent[v] = u;
+            if (find_cycle(v, u)) return 1;
+        } else {
+            int x = u;
+            inCycle[x] = 1;
+            while (x != v) {
+                x = parent[x];
+                inCycle[x] = 1;
+            }
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void bfs() {
+    int queue[MAXN], front = 0, back = 0;
+    for (int i = 1; i <= n; i++) {
+        dist[i] = -1;
+        if (inCycle[i]) {
+            dist[i] = 0;
+            queue[back++] = i;
+        }
+    }
+
+    while (front < back) {
+        int u = queue[front++];
+        for (Node* cur = adj[u]; cur; cur = cur->next) {
+            int v = cur->val;
+            if (dist[v] == -1) {
+                dist[v] = dist[u] + 1;
+                queue[back++] = v;
+            }
+        }
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        add_edge(x, y);
+        add_edge(y, x);
+    }
+
+    find_cycle(1, -1);
+    bfs();
+
+    for (int i = 1; i <= n; i++) {
+        printf("%d%c", dist[i], (i == n ? '\n' : ' '));
+    }
+
+    return 0;
+}
 

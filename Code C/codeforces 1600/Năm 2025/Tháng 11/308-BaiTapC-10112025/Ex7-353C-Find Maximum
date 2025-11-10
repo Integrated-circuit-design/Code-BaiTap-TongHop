@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[100005];
+    for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+
+    char s[100005];
+    scanf("%s", s);
+
+    long long max_val = 0;
+    long long sum_prefix = 0;
+
+    int bit[100005];
+    for(int i = 0; i < n; i++) bit[i] = s[i] - '0';
+
+    long long f_m = 0;
+    for(int i = 0; i < n; i++) if(bit[i] == 1) f_m += a[i];
+    max_val = f_m;
+
+    for(int i = 0; i < n; i++) {
+        if(bit[i] == 1) {
+            long long temp = sum_prefix;
+            for(int j = i + 1; j < n; j++) temp += a[j];
+            if(temp > max_val) max_val = temp;
+        }
+        if(bit[i] == 1) sum_prefix += a[i];
+    }
+
+    printf("%lld\n", max_val);
+    return 0;
+}
 

@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int can_add(int a, int b) {
+    while (a > 0 || b > 0) {
+        int digit_a = a % 10;
+        int digit_b = b % 10;
+        if (digit_a != 0 && digit_b != 0) return 0;
+        a /= 10;
+        b /= 10;
+    }
+    return 1;
+}
+
+int main() {
+    int k;
+    scanf("%d", &k);
+    int numbers[105];
+    for (int i = 0; i < k; i++) scanf("%d", &numbers[i]);
+
+    int chosen[105];
+    int count = 0;
+
+    for (int i = 0; i < k; i++) {
+        int valid = 1;
+        for (int j = 0; j < count; j++) {
+            if (!can_add(numbers[i], chosen[j])) {
+                valid = 0;
+                break;
+            }
+        }
+        if (valid) {
+            chosen[count++] = numbers[i];
+        }
+    }
+
+    printf("%d\n", count);
+    for (int i = 0; i < count; i++) printf("%d ", chosen[i]);
+    printf("\n");
+
+    return 0;
+}
 

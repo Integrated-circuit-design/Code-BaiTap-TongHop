@@ -1,1 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXN 100000
+#define MAXLEN 10000
+
+char words[MAXN][MAXLEN];
+int n;
+
+int canFormPalindrome(int freq[]) {
+    int odd = 0;
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] % 2 != 0) odd++;
+    }
+    return odd <= 1;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%s", words[i]);
+    }
+
+    long long total = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int freq[26] = {0};
+            for (int k = 0; words[i][k]; k++) freq[words[i][k]-'a']++;
+            for (int k = 0; words[j][k]; k++) freq[words[j][k]-'a']++;
+
+            if (canFormPalindrome(freq)) total++;
+        }
+    }
+
+    printf("%lld\n", total);
+    return 0;
+}
 

@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1000006
+
+char num[MAX];
+char result[MAX];
+char digits1689[5];
+int len;
+
+int mod7_from_string(char *str) {
+    int m = 0;
+    for (int i = 0; str[i]; i++) {
+        m = (m * 10 + (str[i] - '0')) % 7;
+    }
+    return m;
+}
+
+char perms[24][5] = {
+    "1689","1698","1869","1896","1968","1986",
+    "6189","6198","6819","6891","6918","6981",
+    "8169","8196","8619","8691","8916","8961",
+    "9168","9186","9618","9681","9816","9861"
+};
+
+int main() {
+    scanf("%s", num);
+    len = strlen(num);
+
+    int p = 0;
+    int d = 0;
+
+    for (int i = 0; i < len; i++) {
+        if (num[i] == '1' || num[i] == '6' || num[i] == '8' || num[i] == '9') {
+            digits1689[d++] = num[i];
+        } else {
+            result[p++] = num[i];
+        }
+    }
+    result[p] = '\0';
+
+    int prefix_mod = mod7_from_string(result);
+
+    for (int i = 0; i < 24; i++) {
+        int combined_mod = (prefix_mod * 10000 + mod7_from_string(perms[i])) % 7;
+        if (combined_mod == 0) {
+            printf("%s%s\n", result, perms[i]);
+            return 0;
+        }
+    }
+
+    printf("0\n");
+    return 0;
+}
 

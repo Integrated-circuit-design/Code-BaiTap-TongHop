@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+long long distance2(long long x1, long long y1, long long x2, long long y2) {
+    long long dx = x1 - x2;
+    long long dy = y1 - y2;
+    return dx*dx + dy*dy;
+}
+
+int main() {
+    int n;
+    long long fx1, fy1, fx2, fy2;
+    scanf("%d %lld %lld %lld %lld", &n, &fx1, &fy1, &fx2, &fy2);
+
+    long long flowerX[2000], flowerY[2000];
+    long long dist1[2000], dist2[2000];
+
+    for(int i = 0; i < n; i++) {
+        scanf("%lld %lld", &flowerX[i], &flowerY[i]);
+        dist1[i] = distance2(flowerX[i], flowerY[i], fx1, fy1);
+        dist2[i] = distance2(flowerX[i], flowerY[i], fx2, fy2);
+    }
+
+    long long result = 1LL << 62;
+
+    for(int i = 0; i < n; i++) {
+        long long r1 = dist1[i];
+        long long r2 = 0;
+
+        for(int j = 0; j < n; j++) {
+            if(dist1[j] > r1) {
+                if(dist2[j] > r2) r2 = dist2[j];
+            }
+        }
+
+        long long total = r1 + r2;
+        if(total < result) result = total;
+    }
+
+    long long max2 = 0;
+    for(int i = 0; i < n; i++) if(dist2[i] > max2) max2 = dist2[i];
+    if(max2 < result) result = max2;
+
+    printf("%lld\n", result);
+    return 0;
+}
 

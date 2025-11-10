@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    long long x, y, m;
+    scanf("%lld %lld %lld", &x, &y, &m);
+
+    if (x >= m || y >= m) {
+        printf("0\n");
+        return 0;
+    }
+
+    if (x <= 0 && y <= 0 && m > 0) {
+        printf("-1\n");
+        return 0;
+    }
+
+    long long steps = 0;
+
+    while (x < m && y < m) {
+        if (x < y) {
+            x += y;
+        } else {
+            y += x;
+        }
+        steps++;
+    }
+
+    printf("%lld\n", steps);
+    return 0;
+}
 

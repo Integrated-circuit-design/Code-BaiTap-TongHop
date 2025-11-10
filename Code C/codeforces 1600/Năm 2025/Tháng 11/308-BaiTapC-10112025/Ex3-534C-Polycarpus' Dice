@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long A;
+    scanf("%d %lld", &n, &A);
+
+    int d[200005];
+    long long total = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &d[i]);
+        total += d[i];
+    }
+
+    for (int i = 0; i < n; i++) {
+        long long sum_min = 0, sum_max = 0;
+        for (int j = 0; j < n; j++) {
+            if (j != i) {
+                sum_min += 1;
+                sum_max += d[j];
+            }
+        }
+
+        long long low = A - sum_max;
+        long long high = A - sum_min;
+
+        if (low < 1) low = 1;
+        if (high > d[i]) high = d[i];
+
+        long long possible = 0;
+        if (high >= low) possible = high - low + 1;
+
+        long long impossible = d[i] - possible;
+
+        if (i > 0) printf(" ");
+        printf("%lld", impossible);
+    }
+    printf("\n");
+    return 0;
+}
 

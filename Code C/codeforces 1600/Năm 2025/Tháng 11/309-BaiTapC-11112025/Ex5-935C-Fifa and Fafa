@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+
+double distance(double x1, double y1, double x2, double y2) {
+    double dx = x2 - x1;
+    double dy = y2 - y1;
+    return sqrt(dx*dx + dy*dy);
+}
+
+void compute_wifi(double R, double x1, double y1, double x2, double y2,
+                  double *x_ap, double *y_ap, double *r) {
+    double d = distance(x1, y1, x2, y2);
+
+    if(d >= R || d == 0) {
+        *x_ap = x1;
+        *y_ap = y1;
+        *r = R;
+    } else {
+        *r = (R + d) / 2.0;
+        double ratio = (*r - d) / d;
+        *x_ap = x2 - (x2 - x1) * ratio;
+        *y_ap = y2 - (y2 - y1) * ratio;
+    }
+}
+
+int main() {
+    double R, x1, y1, x2, y2;
+    scanf("%lf %lf %lf %lf %lf", &R, &x1, &y1, &x2, &y2);
+
+    double x_ap, y_ap, r;
+    compute_wifi(R, x1, y1, x2, y2, &x_ap, &y_ap, &r);
+
+    printf("%.10f %.10f %.10f\n", x_ap, y_ap, r);
+
+    return 0;
+}
 

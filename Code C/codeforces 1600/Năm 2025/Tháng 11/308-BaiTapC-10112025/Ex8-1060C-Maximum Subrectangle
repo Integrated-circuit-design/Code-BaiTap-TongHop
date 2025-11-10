@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+typedef long long ll;
+#define MAX 2005
+#define INF 2000000000LL
+
+ll min(ll a, ll b) { return a < b ? a : b; }
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    ll a[MAX], b[MAX];
+    for(int i=0; i<n; i++) scanf("%lld", &a[i]);
+    for(int j=0; j<m; j++) scanf("%lld", &b[j]);
+
+    ll x;
+    scanf("%lld", &x);
+
+    ll sumA[MAX+1], sumB[MAX+1];
+    sumA[0]=0; sumB[0]=0;
+    for(int i=0; i<n; i++) sumA[i+1] = sumA[i] + a[i];
+    for(int j=0; j<m; j++) sumB[j+1] = sumB[j] + b[j];
+
+    ll bestA[MAX+1], bestB[MAX+1];
+    for(int i=1;i<=n;i++) bestA[i]=INF;
+    for(int j=1;j<=m;j++) bestB[j]=INF;
+
+    for(int start=0; start<n; start++) {
+        for(int end=start; end<n; end++) {
+            int len = end-start+1;
+            ll s = sumA[end+1]-sumA[start];
+            if(s < bestA[len]) bestA[len]=s;
+        }
+    }
+
+    for(int start=0; start<m; start++) {
+        for(int end=start; end<m; end++) {
+            int len = end-start+1;
+            ll s = sumB[end+1]-sumB[start];
+            if(s < bestB[len]) bestB[len]=s;
+        }
+    }
+
+    for(int i=2;i<=n;i++) if(bestA[i]>bestA[i-1]) bestA[i]=bestA[i-1];
+    for(int j=2;j<=m;j++) if(bestB[j]>bestB[j-1]) bestB[j]=bestB[j-1];
+
+    ll maxArea=0;
+    for(int h=1;h<=n;h++) {
+        for(int w=1;w<=m;w++) {
+            if(bestA[h]*bestB[w] <= x) {
+                ll area = (ll)h*w;
+                if(area > maxArea) maxArea = area;
+            }
+        }
+    }
+
+    printf("%lld\n", maxArea);
+    return 0;
+}
 

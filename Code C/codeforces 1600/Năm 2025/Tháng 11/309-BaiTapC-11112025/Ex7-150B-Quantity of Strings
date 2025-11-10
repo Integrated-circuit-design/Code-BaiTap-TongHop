@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+#define MOD 1000000007
+
+long long modpow(long long a, long long b) {
+    long long res = 1;
+    while (b > 0) {
+        if (b % 2 == 1) res = res * a % MOD;
+        a = a * a % MOD;
+        b /= 2;
+    }
+    return res;
+}
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int linked[2005];
+    for (int i = 1; i <= n; i++) linked[i] = i;
+
+    for (int start = 1; start + k - 1 <= n; start++) {
+        int l = start, r = start + k - 1;
+        while (l < r) {
+            int min_link = linked[l] < linked[r] ? linked[l] : linked[r];
+            linked[l] = linked[r] = min_link;
+            l++; r--;
+        }
+    }
+
+    int count = 0;
+    for (int i = 1; i <= n; i++) {
+        int is_root = 1;
+        for (int j = 1; j < i; j++)
+            if (linked[j] == linked[i]) { is_root = 0; break; }
+        if (is_root) count++;
+    }
+
+    printf("%lld\n", modpow(m, count));
+
+    return 0;
+}
 

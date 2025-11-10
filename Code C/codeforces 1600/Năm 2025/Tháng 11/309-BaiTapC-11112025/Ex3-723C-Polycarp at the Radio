@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define MAXN 2005
+
+int main() {
+    int n, m;
+    int a[MAXN], cnt[MAXN], target[MAXN], pos[MAXN];
+    int extraPos[MAXN], extraCount = 0;
+
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        cnt[i] = 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] >= 1 && a[i] <= m) cnt[a[i]]++;
+    }
+
+    int base = n / m;
+    int rem = n % m;
+    for (int i = 1; i <= m; i++)
+        target[i] = base + (i <= rem ? 1 : 0);
+
+    extraCount = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] < 1 || a[i] > m || cnt[a[i]] > target[a[i]]) {
+            extraPos[extraCount++] = i;
+            if (a[i] >= 1 && a[i] <= m) cnt[a[i]]--;
+        }
+    }
+
+    int changes = 0;
+    int p = 0;
+    for (int j = 1; j <= m; j++) {
+        while (cnt[j] < target[j]) {
+            int idx = extraPos[p++];
+            a[idx] = j;
+            cnt[j]++;
+            changes++;
+        }
+    }
+
+    int minVal = target[m];
+    for (int i = 1; i <= m; i++)
+        if (cnt[i] < minVal) minVal = cnt[i];
+
+    printf("%d %d\n", minVal, changes);
+    for (int i = 0; i < n; i++)
+        printf("%d%c", a[i], i == n - 1 ? '\n' : ' ');
+
+    return 0;
+}
 

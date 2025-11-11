@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n, s, f;
+    scanf("%d", &n);
+
+    int a[n + 1];
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+    scanf("%d %d", &s, &f);
+
+    int len = f - s;
+    int currentSum = 0;
+
+    for (int i = s; i < f; i++) {
+        int idx = i;
+        if (idx > n) idx -= n;
+        currentSum += a[idx];
+    }
+
+    int maxSum = currentSum;
+    int bestStart = 1;
+
+    for (int t = 2; t <= n; t++) {
+        int outIdx = t + s - 2;
+        if (outIdx > n) outIdx -= n;
+        currentSum -= a[outIdx];
+
+        int inIdx = t + f - 2;
+        if (inIdx > n) inIdx -= n;
+        currentSum += a[inIdx];
+
+        if (currentSum > maxSum) {
+            maxSum = currentSum;
+            bestStart = t;
+        }
+    }
+
+    printf("%d\n", bestStart);
+    return 0;
+}
 

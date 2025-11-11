@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    long long k, a, b;
+    scanf("%lld %lld %lld", &k, &a, &b);
+
+    long long dem = 0;
+
+    if (a <= b) {
+        long long dau = a + ((k - (a % k)) % k);
+        long long cuoi = b - (b % k);
+
+        if (dau <= cuoi) {
+            dem = (cuoi - dau) / k + 1;
+        }
+    }
+
+    printf("%lld\n", dem);
+    return 0;
+}
 

@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+long long n, result = 0;
+
+void generate(long long current, int x, int y) {
+    if (current > n) return;
+    if (current > 0) result++;
+
+    generate(current * 10 + x, x, y);
+    if (x != y) generate(current * 10 + y, x, y);
+}
+
+int main() {
+    scanf("%lld", &n);
+
+    for (int x = 0; x <= 9; x++) {
+        for (int y = x; y <= 9; y++) {
+            generate(0, x, y);
+        }
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

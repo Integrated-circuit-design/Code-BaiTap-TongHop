@@ -1,1 +1,30 @@
+#include <stdio.h>
+
+#define MOD 1000000007LL
+
+long long powmod(long long a, long long b) {
+    long long res = 1;
+    while (b) {
+        if (b & 1) res = res * a % MOD;
+        a = a * a % MOD;
+        b >>= 1;
+    }
+    return res;
+}
+
+int main() {
+    long long x, k;
+    scanf("%lld %lld", &x, &k);
+
+    if (x == 0) { 
+        printf("0\n"); 
+        return 0; 
+    }
+
+    long long result = (powmod(2, k + 1) * (x % MOD)) % MOD;
+    result = (result - powmod(2, k) + 1 + MOD) % MOD;
+
+    printf("%lld\n", result);
+    return 0;
+}
 

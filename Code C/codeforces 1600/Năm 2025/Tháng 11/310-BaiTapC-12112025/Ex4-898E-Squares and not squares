@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+#define INF 1000000000
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    long long a[n];
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+    int half = n / 2;
+    int square_count = 0;
+    
+    long long squares[n];
+    long long nonsquares[n];
+    int sq_idx = 0, nsq_idx = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long x = a[i];
+        long long r = (long long)sqrt((double)x);
+        if (r * r == x) {
+            squares[sq_idx++] = x;
+            square_count++;
+        } else {
+            nonsquares[nsq_idx++] = x;
+        }
+    }
+
+    long long total_moves = 0;
+
+    if (square_count > half) {
+        int need = square_count - half;
+        for (int k = 0; k < need; k++) {
+            long long min_cost = INF;
+            int min_pos = -1;
+            for (int i = 0; i < sq_idx; i++) {
+                long long cost = (squares[i] == 0) ? 2 : 1;
+                if (cost < min_cost) {
+                    min_cost = cost;
+                    min_pos = i;
+                }
+            }
+            total_moves += min_cost;
+            squares[min_pos] = INF;
+        }
+    } else if (square_count < half) {
+        int need = half - square_count;
+        for (int k = 0; k < need; k++) {
+            long long min_cost = INF;
+            int min_pos = -1;
+            for (int i = 0; i < nsq_idx; i++) {
+                long long x = nonsquares[i];
+                long long r = (long long)sqrt((double)x);
+                long long lo = r * r, hi = (r + 1) * (r + 1);
+                long long cost = (x - lo < hi - x) ? x - lo : hi - x;
+                if (cost < min_cost) {
+                    min_cost = cost;
+                    min_pos = i;
+                }
+            }
+            total_moves += min_cost;
+            nonsquares[min_pos] = INF;
+        }
+    }
+
+    printf("%lld\n", total_moves);
+    return 0;
+}
 

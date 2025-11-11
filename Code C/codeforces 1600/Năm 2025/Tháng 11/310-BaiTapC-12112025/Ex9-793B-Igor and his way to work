@@ -1,1 +1,86 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1000
+#define INF 4
+
+char grid[MAX][MAX+1];
+int n, m;
+int sx, sy, tx, ty;
+int dist[MAX][MAX][4];
+
+int dx[4] = {-1,0,1,0};
+int dy[4] = {0,1,0,-1};
+
+typedef struct {
+    int x, y, dir, turns;
+} State;
+
+State queue[MAX*MAX*4];
+int head=0, tail=0;
+
+void push(State s) {
+    queue[tail++] = s;
+}
+
+int inBounds(int x, int y){
+    return x>=0 && x<n && y>=0 && y<m;
+}
+
+int main(){
+    scanf("%d %d", &n, &m);
+    for(int i=0;i<n;i++){
+        scanf("%s", grid[i]);
+        for(int j=0;j<m;j++){
+            if(grid[i][j]=='S'){ sx=i; sy=j; }
+            if(grid[i][j]=='T'){ tx=i; ty=j; }
+        }
+    }
+
+    for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+            for(int d=0;d<4;d++)
+                dist[i][j][d] = INF;
+
+    for(int d=0;d<4;d++){
+        dist[sx][sy][d] = 0;
+        push((State){sx,sy,d,0});
+    }
+
+    while(head<tail){
+        State cur = queue[head++];
+
+        if(cur.turns>2) continue;
+        if(cur.x==tx && cur.y==ty){
+            printf("YES\n");
+            return 0;
+        }
+
+        int nx = cur.x + dx[cur.dir];
+        int ny = cur.y + dy[cur.dir];
+        if(inBounds(nx,ny) && (grid[nx][ny]=='.' || (nx==tx && ny==ty))){
+            if(cur.turns < dist[nx][ny][cur.dir]){
+                dist[nx][ny][cur.dir] = cur.turns;
+                push((State){nx,ny,cur.dir,cur.turns});
+            }
+        }
+
+        for(int nd=0; nd<4; nd++){
+            if(nd==cur.dir) continue;
+            int nt = cur.turns + 1;
+            int nx2 = cur.x + dx[nd];
+            int ny2 = cur.y + dy[nd];
+            if(!inBounds(nx2,ny2)) continue;
+            if(grid[nx2][ny2]=='*') continue;
+            if(nt>2) continue;
+            if(nt<dist[nx2][ny2][nd]){
+                dist[nx2][ny2][nd] = nt;
+                push((State){nx2,ny2,nd,nt});
+            }
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

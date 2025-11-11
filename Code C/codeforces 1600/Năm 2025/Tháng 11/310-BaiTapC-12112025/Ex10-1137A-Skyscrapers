@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+#define MAXN 1005
+
+int n, m;
+int a[MAXN][MAXN];
+int rankRow[MAXN][MAXN], decRow[MAXN][MAXN];
+int rankCol[MAXN][MAXN], decCol[MAXN][MAXN];
+
+int max(int x, int y) { return x > y ? x : y; }
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            scanf("%d", &a[i][j]);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            int cntSmaller = 1, cntLarger = 1;
+            for (int k = 0; k < m; k++) {
+                if (a[i][k] < a[i][j]) cntSmaller++;
+                if (a[i][k] > a[i][j]) cntLarger++;
+            }
+            rankRow[i][j] = cntSmaller;
+            decRow[i][j] = cntLarger;
+        }
+    }
+
+    for (int j = 0; j < m; j++) {
+        for (int i = 0; i < n; i++) {
+            int cntSmaller = 1, cntLarger = 1;
+            for (int k = 0; k < n; k++) {
+                if (a[k][j] < a[i][j]) cntSmaller++;
+                if (a[k][j] > a[i][j]) cntLarger++;
+            }
+            rankCol[i][j] = cntSmaller;
+            decCol[i][j] = cntLarger;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            int ans = max(rankRow[i][j], rankCol[i][j]) + max(decRow[i][j], decCol[i][j]) - 1;
+            printf("%d ", ans);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

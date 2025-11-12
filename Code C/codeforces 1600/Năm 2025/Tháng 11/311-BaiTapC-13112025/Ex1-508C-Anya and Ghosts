@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+int main() {
+    int m, t, r;
+    scanf("%d %d %d", &m, &t, &r);
+
+    int ghosts[305];
+    for (int i = 0; i < m; i++) scanf("%d", &ghosts[i]);
+
+    if (r > t) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int candleTimes[1000];
+    int candleCount = 0;
+
+    for (int i = 0; i < m; i++) {
+        int needed = r;
+        int currentTime = ghosts[i];
+
+        for (int j = 0; j < candleCount; j++) {
+            if (candleTimes[j] + 1 <= currentTime && candleTimes[j] + t >= currentTime)
+                needed--;
+        }
+
+        int pos = currentTime - 1;
+        while (needed > 0 && pos >= currentTime - t) {
+            int canLight = 1;
+            for (int j = 0; j < candleCount; j++)
+                if (candleTimes[j] == pos) canLight = 0;
+
+            if (canLight) {
+                candleTimes[candleCount++] = pos;
+                needed--;
+            }
+            pos--;
+        }
+
+        if (needed > 0) {
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    printf("%d\n", candleCount);
+    return 0;
+}
 

@@ -1,1 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+typedef struct Node {
+    int to;
+    struct Node* next;
+} Node;
+
+Node* g[200005];
+int sz[200005];
+int n, k;
+
+void add_edge(int u, int v) {
+    Node* nu = (Node*)malloc(sizeof(Node));
+    nu->to = v;
+    nu->next = g[u];
+    g[u] = nu;
+}
+
+void dfs(int v, int parent) {
+    sz[v] = 1;
+    Node* p = g[v];
+    while (p) {
+        int u = p->to;
+        if (u != parent) {
+            dfs(u, v);
+            sz[v] += sz[u];
+        }
+        p = p->next;
+    }
+}
+
+ll compute_kawaiiness() {
+    ll limit = (ll)(n - k);
+    ll total = 0;
+
+    for (int v = 1; v <= n; v++) {
+        ll contrib = 1;
+        Node* p = g[v];
+        while (p) {
+            int u = p->to;
+            ll comp_size;
+            if (sz[u] < sz[v]) comp_size = sz[u];
+            else comp_size = n - sz[v];
+            if (comp_size <= limit) contrib += comp_size;
+            p = p->next;
+        }
+        total += contrib;
+    }
+    return total;
+}
+
+void free_tree() {
+    for (int i = 1; i <= n; i++) {
+        Node* p = g[i];
+        while (p) {
+            Node* tmp = p;
+            p = p->next;
+            free(tmp);
+        }
+        g[i] = NULL;
+    }
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        scanf("%d %d", &n, &k);
+
+        for (int i = 1; i <= n; i++) g[i] = NULL;
+
+        for (int i = 0; i < n-1; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            add_edge(u, v);
+            add_edge(v, u);
+        }
+
+        dfs(1, 0);
+
+        ll ans = compute_kawaiiness();
+        printf("%lld\n", ans);
+
+        free_tree();
+    }
+
+    return 0;
+}
 

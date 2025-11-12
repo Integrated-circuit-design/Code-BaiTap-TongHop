@@ -1,1 +1,70 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX 100005
+
+char good[27];
+bool ok[26];
+char pat[MAX];
+char str[MAX];
+
+int main() {
+    scanf("%s", good);
+    for (int i = 0; good[i]; i++) ok[good[i]-'a'] = true;
+
+    scanf("%s", pat);
+    int plen = strlen(pat);
+    
+    int star = -1;
+    for (int i=0;i<plen;i++) {
+        if (pat[i]=='*') { star=i; break; }
+    }
+
+    int q; 
+    scanf("%d", &q);
+    while (q--) {
+        scanf("%s", str);
+        int slen = strlen(str);
+        bool valid = true;
+
+        if (star==-1) {
+            if (plen != slen) valid = false;
+            else {
+                for (int i=0;i<plen;i++) {
+                    if (pat[i]=='?') {
+                        if (!ok[str[i]-'a']) { valid=false; break; }
+                    } else if (pat[i]!=str[i]) { valid=false; break; }
+                }
+            }
+        } else {
+            int pre = star;
+            int suf = plen-star-1;
+            if (slen < plen-1) valid=false;
+            else {
+                for (int i=0;i<pre;i++) {
+                    if (pat[i]=='?') {
+                        if (!ok[str[i]-'a']) { valid=false; break; }
+                    } else if (pat[i]!=str[i]) { valid=false; break; }
+                }
+                for (int i=0;i<suf;i++) {
+                    int pi = plen-1-i;
+                    int si = slen-1-i;
+                    if (pat[pi]=='?') {
+                        if (!ok[str[si]-'a']) { valid=false; break; }
+                    } else if (pat[pi]!=str[si]) { valid=false; break; }
+                }
+                int mid_start = pre;
+                int mid_end = slen - suf;
+                for (int i=mid_start;i<mid_end;i++) {
+                    if (ok[str[i]-'a']) { valid=false; break; }
+                }
+            }
+        }
+
+        puts(valid ? "YES" : "NO");
+    }
+
+    return 0;
+}
 

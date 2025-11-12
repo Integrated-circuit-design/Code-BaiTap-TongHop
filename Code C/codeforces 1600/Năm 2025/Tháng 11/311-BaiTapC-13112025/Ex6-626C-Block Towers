@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+int main() {
+    long long n, m;
+    scanf("%lld %lld", &n, &m);
+
+    long long two_height = 2;
+    long long three_height = 3;
+    long long tallest = 0;
+
+    long long used[2000000];
+    long long idx = 0;
+
+    for(long long i = 0; i < n; i++) {
+        while(1) {
+            int found = 0;
+            for(long long j = 0; j < idx; j++) {
+                if(used[j] == two_height) {
+                    found = 1; break;
+                }
+            }
+            if(!found) break;
+            two_height += 2;
+        }
+        used[idx++] = two_height;
+        if(two_height > tallest) tallest = two_height;
+        two_height += 2;
+    }
+
+    for(long long i = 0; i < m; i++) {
+        while(1) {
+            int found = 0;
+            for(long long j = 0; j < idx; j++) {
+                if(used[j] == three_height) {
+                    found = 1; break;
+                }
+            }
+            if(!found) break;
+            three_height += 3;
+        }
+        used[idx++] = three_height;
+        if(three_height > tallest) tallest = three_height;
+        three_height += 3;
+    }
+
+    printf("%lld\n", tallest);
+
+    return 0;
+}
 

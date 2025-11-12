@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+void compute_square_freq(long long n, int m, long long freq[]) {
+    long long full = n / m;
+    long long rem = n % m;
+    for (int i = 0; i < m; i++) {
+        int sq = (1LL * i * i) % m;
+        long long occur = full + (i < rem ? 1 : 0);
+        freq[sq] += occur;
+    }
+}
+
+int main() {
+    long long n;
+    int m;
+    scanf("%lld %d", &n, &m);
+
+    long long freq[1005] = {0};
+    compute_square_freq(n, m, freq);
+
+    long long ans = 0;
+    for (int i = 0; i < m; i++) {
+        int j = (m - i) % m;
+        for (int k = 0; k < m; k++) {
+            if ((i + k) % m == 0)
+                ans += freq[i] * freq[k];
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

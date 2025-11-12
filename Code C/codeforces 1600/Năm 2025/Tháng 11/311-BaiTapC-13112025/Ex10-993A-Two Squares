@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <math.h>
+
+typedef struct { int x, y; } Point;
+
+void rotate45(Point p, double *rx, double *ry) {
+    *rx = (p.x + p.y) / sqrt(2.0);
+    *ry = (p.y - p.x) / sqrt(2.0);
+}
+
+int pointInRotated(Point p, Point square[4]) {
+    double prx, pry;
+    rotate45(p, &prx, &pry);
+
+    double minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+    for(int i = 0; i < 4; i++) {
+        double rx, ry;
+        rotate45(square[i], &rx, &ry);
+        if(rx < minX) minX = rx; if(rx > maxX) maxX = rx;
+        if(ry < minY) minY = ry; if(ry > maxY) maxY = ry;
+    }
+    return prx >= minX && prx <= maxX && pry >= minY && pry <= maxY;
+}
+
+int pointInAxis(Point p, Point square[4]) {
+    int minX = square[0].x, maxX = square[0].x;
+    int minY = square[0].y, maxY = square[0].y;
+    for(int i = 1; i < 4; i++) {
+        if(square[i].x < minX) minX = square[i].x;
+        if(square[i].x > maxX) maxX = square[i].x;
+        if(square[i].y < minY) minY = square[i].y;
+        if(square[i].y > maxY) maxY = square[i].y;
+    }
+    return p.x >= minX && p.x <= maxX && p.y >= minY && p.y <= maxY;
+}
+
+int intersect(Point a, Point b, Point c, Point d) {
+    int d1 = (b.x-a.x)*(c.y-a.y) - (b.y-a.y)*(c.x-a.x);
+    int d2 = (b.x-a.x)*(d.y-a.y) - (b.y-a.y)*(d.x-a.x);
+    int d3 = (d.x-c.x)*(a.y-c.y) - (d.y-c.y)*(a.x-c.x);
+    int d4 = (d.x-c.x)*(b.y-c.y) - (d.y-c.y)*(b.x-c.x);
+    return (long long)d1*d2 < 0 && (long long)d3*d4 < 0;
+}
+
+int main() {
+    Point A[4], B[4];
+    for(int i=0;i<4;i++) scanf("%d %d",&A[i].x,&A[i].y);
+    for(int i=0;i<4;i++) scanf("%d %d",&B[i].x,&B[i].y);
+
+    for(int i=0;i<4;i++) if(pointInAxis(B[i],A)) { printf("YES\n"); return 0; }
+    for(int i=0;i<4;i++) if(pointInRotated(A[i],B)) { printf("YES\n"); return 0; }
+    for(int i=0;i<4;i++)
+        for(int j=0;j<4;j++)
+            if(intersect(A[i],A[(i+1)%4],B[j],B[(j+1)%4])) { printf("YES\n"); return 0; }
+
+    printf("NO\n");
+    return 0;
+}
 

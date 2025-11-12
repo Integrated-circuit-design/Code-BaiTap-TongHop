@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long gcd(long long a, long long b){
+    if(a < 0) a = -a;
+    if(b < 0) b = -b;
+    while(b){
+        long long r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+int cmp(const void *p, const void *q){
+    long long x = *(long long*)p;
+    long long y = *(long long*)q;
+    if(x < y) return -1;
+    if(x > y) return 1;
+    return 0;
+}
+
+int main(){
+    int n;
+    scanf("%d", &n);
+    long long *a = (long long*)malloc(n * sizeof(long long));
+    for(int i = 0; i < n; ++i){
+        scanf("%lld", &a[i]);
+    }
+
+    qsort(a, n, sizeof(long long), cmp);
+
+    long long leftSum = 0;
+    long long rightSum = 0;
+    for(int i = 0; i < n; ++i) rightSum += a[i];
+
+    long long distanceSum = 0;
+    for(int i = 0; i < n; ++i){
+        rightSum -= a[i];
+        distanceSum += rightSum - leftSum;
+        leftSum += a[i];
+    }
+
+    long long startSum = 0;
+    for(int i = 0; i < n; ++i) startSum += a[i];
+
+    long long numerator = startSum + 2 * distanceSum;
+    long long denominator = n;
+
+    long long g = gcd(numerator, denominator);
+    numerator /= g;
+    denominator /= g;
+
+    printf("%lld %lld\n", numerator, denominator);
+
+    free(a);
+    return 0;
+}
 

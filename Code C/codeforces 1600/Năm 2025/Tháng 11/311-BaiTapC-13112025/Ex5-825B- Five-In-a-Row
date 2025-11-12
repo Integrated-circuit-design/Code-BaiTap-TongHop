@@ -1,1 +1,74 @@
+#include <stdio.h>
+
+char board[10][11];
+
+int check_horizontal(int r, int c) {
+    int cnt = 0;
+    for(int j = 0; j < 10; j++){
+        if(board[r][j] == 'X') cnt++;
+        else cnt = 0;
+        if(cnt >= 5) return 1;
+    }
+    return 0;
+}
+
+int check_vertical(int r, int c) {
+    int cnt = 0;
+    for(int i = 0; i < 10; i++){
+        if(board[i][c] == 'X') cnt++;
+        else cnt = 0;
+        if(cnt >= 5) return 1;
+    }
+    return 0;
+}
+
+int check_diagonal_main(int r, int c) {
+    int start_r = r, start_c = c;
+    while(start_r>0 && start_c>0){ start_r--; start_c--; }
+    int cnt = 0;
+    while(start_r<10 && start_c<10){
+        if(board[start_r][start_c]=='X') cnt++;
+        else cnt=0;
+        if(cnt>=5) return 1;
+        start_r++; start_c++;
+    }
+    return 0;
+}
+
+int check_diagonal_anti(int r, int c) {
+    int start_r = r, start_c = c;
+    while(start_r>0 && start_c<9){ start_r--; start_c++; }
+    int cnt = 0;
+    while(start_r<10 && start_c>=0){
+        if(board[start_r][start_c]=='X') cnt++;
+        else cnt=0;
+        if(cnt>=5) return 1;
+        start_r++; start_c--;
+    }
+    return 0;
+}
+
+int check_win(int r, int c){
+    return check_horizontal(r,c) || check_vertical(r,c)
+        || check_diagonal_main(r,c) || check_diagonal_anti(r,c);
+}
+
+int main(){
+    for(int i=0;i<10;i++) scanf("%s", board[i]);
+
+    for(int i=0;i<10;i++){
+        for(int j=0;j<10;j++){
+            if(board[i][j]=='.'){
+                board[i][j]='X';
+                if(check_win(i,j)){
+                    printf("YES\n");
+                    return 0;
+                }
+                board[i][j]='.';
+            }
+        }
+    }
+    printf("NO\n");
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+
+int isLeapYear(int year) {
+    return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
+}
+
+long long totalDaysUntil(int year) {
+    long long days = 0;
+    for (int i = 1; i < year; i++) {
+        days += isLeapYear(i) ? 366 : 365;
+    }
+    return days;
+}
+
+int main() {
+    int year;
+    scanf("%d", &year);
+
+    int leap = isLeapYear(year);
+    long long days = totalDaysUntil(year);
+    int weekday = days % 7;
+
+    int nextYear = year + 1;
+    while (1) {
+        days += isLeapYear(nextYear - 1) ? 366 : 365;
+        int nextWeekday = days % 7;
+
+        if (nextWeekday == weekday && isLeapYear(nextYear) == leap) {
+            printf("%d\n", nextYear);
+            break;
+        }
+        nextYear++;
+    }
+
+    return 0;
+}
 

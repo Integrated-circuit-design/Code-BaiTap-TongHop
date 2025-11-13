@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    long long k, b;
+} Line;
+
+long long eval(Line l, long long x) {
+    return l.k * x + l.b;
+}
+
+int cmp_y1(const void *a, const void *b, void *px) {
+    long long x1 = *(long long*)px;
+    Line *l1 = (Line*)a;
+    Line *l2 = (Line*)b;
+    long long y1 = eval(*l1, x1);
+    long long y2 = eval(*l2, x1);
+    if (y1 < y2) return -1;
+    if (y1 > y2) return 1;
+    return 0;
+}
+
+int main() {
+    int n;
+    long long x1, x2;
+    scanf("%d %lld %lld", &n, &x1, &x2);
+
+    Line *lines = (Line*)malloc(n * sizeof(Line));
+    for (int i = 0; i < n; i++) {
+        scanf("%lld %lld", &lines[i].k, &lines[i].b);
+    }
+
+    qsort_r(lines, n, sizeof(Line), cmp_y1, &x1);
+
+    long long max_y2 = eval(lines[0], x2);
+    for (int i = 1; i < n; i++) {
+        long long y_at_x2 = eval(lines[i], x2);
+        if (y_at_x2 < max_y2) {
+            printf("Yes\n");
+            free(lines);
+            return 0;
+        }
+        if (y_at_x2 > max_y2) max_y2 = y_at_x2;
+    }
+
+    printf("No\n");
+    free(lines);
+    return 0;
+}
 

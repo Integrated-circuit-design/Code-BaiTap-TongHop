@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    long long pos[3], box[3], faces[6];
+
+    for(int i = 0; i < 3; i++) {
+        scanf("%lld", &pos[i]);
+    }
+
+    for(int i = 0; i < 3; i++) {
+        scanf("%lld", &box[i]);
+    }
+
+    for(int i = 0; i < 6; i++) {
+        scanf("%lld", &faces[i]);
+    }
+
+    long long sum = 0;
+
+    if(pos[0] < 0) sum += faces[4];
+    else if(pos[0] > box[0]) sum += faces[5];
+
+    if(pos[1] < 0) sum += faces[0];
+    else if(pos[1] > box[1]) sum += faces[1];
+
+    if(pos[2] < 0) sum += faces[2];
+    else if(pos[2] > box[2]) sum += faces[3];
+
+    printf("%lld\n", sum);
+
+    return 0;
+}
 

@@ -1,1 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+typedef struct {
+    ll u, v;
+    ll h;
+    int idx;
+} Face;
+
+int cmp(const void *a, const void *b) {
+    Face *fa = (Face*)a;
+    Face *fb = (Face*)b;
+    if (fa->u != fb->u) return (fa->u < fb->u) ? -1 : 1;
+    if (fa->v != fb->v) return (fa->v < fb->v) ? -1 : 1;
+    return 0;
+}
+
+ll min3(ll x, ll y, ll z) {
+    ll mn = x; if (y < mn) mn = y; if (z < mn) mn = z;
+    return mn;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    ll a[n+1][3];
+    for(int i=1;i<=n;i++) scanf("%lld%lld%lld",&a[i][0],&a[i][1],&a[i][2]);
+
+    ll best_r = -1;
+    int ans_k=1, ans_i=1, ans_j=-1;
+
+    for(int i=1;i<=n;i++){
+        ll r = min3(a[i][0],a[i][1],a[i][2]);
+        if(r>best_r){
+            best_r = r;
+            ans_k=1; ans_i=i;
+        }
+    }
+
+    Face faces[3*n];
+    int cnt=0;
+    for(int i=1;i<=n;i++){
+        ll x=a[i][0], y=a[i][1], z=a[i][2];
+
+        faces[cnt].u = (x<y)?x:y;
+        faces[cnt].v = (x<y)?y:x;
+        faces[cnt].h = z;
+        faces[cnt].idx = i;
+        cnt++;
+
+        faces[cnt].u = (x<z)?x:z;
+        faces[cnt].v = (x<z)?z:x;
+        faces[cnt].h = y;
+        faces[cnt].idx = i;
+        cnt++;
+
+        faces[cnt].u = (y<z)?y:z;
+        faces[cnt].v = (y<z)?z:y;
+        faces[cnt].h = x;
+        faces[cnt].idx = i;
+        cnt++;
+    }
+
+    qsort(faces,cnt,sizeof(Face),cmp);
+
+    for(int i=1;i<cnt;i++){
+        if(faces[i].u==faces[i-1].u && faces[i].v==faces[i-1].v && faces[i].idx!=faces[i-1].idx){
+            ll h_sum = faces[i].h + faces[i-1].h;
+            ll r = min3(faces[i].u, faces[i].v, h_sum);
+            if(r>best_r){
+                best_r = r;
+                ans_k=2;
+                ans_i = faces[i-1].idx;
+                ans_j = faces[i].idx;
+            }
+        }
+    }
+
+    if(ans_k==1) printf("1\n%d\n",ans_i);
+    else printf("2\n%d %d\n",ans_i, ans_j);
+
+    return 0;
+}
 

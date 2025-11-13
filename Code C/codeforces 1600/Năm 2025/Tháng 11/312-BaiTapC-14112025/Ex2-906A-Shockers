@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_WORD 100005
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int possible[26];
+    for (int i = 0; i < 26; i++) possible[i] = 1;
+
+    int remaining = 26;
+    int excessive = 0;
+
+    char line[MAX_WORD];
+    for (int i = 0; i < n; i++) {
+        scanf(" %[^\n]", line);
+
+        char type = line[0];
+        char *word = line + 2;
+
+        if (type == '!') {
+            int found[26] = {0};
+            for (int j = 0; word[j]; j++)
+                found[word[j]-'a'] = 1;
+
+            if (remaining == 1) excessive++;
+
+            for (int c = 0; c < 26; c++) {
+                if (possible[c] && !found[c]) {
+                    possible[c] = 0;
+                    remaining--;
+                }
+            }
+        }
+        else if (type == '.') {
+            for (int j = 0; word[j]; j++) {
+                int c = word[j]-'a';
+                if (possible[c]) {
+                    possible[c] = 0;
+                    remaining--;
+                }
+            }
+        }
+        else if (type == '?') {
+            int guess = word[0]-'a';
+            if (i != n-1) {
+                if (remaining == 1) excessive++;
+                if (possible[guess]) {
+                    possible[guess] = 0;
+                    remaining--;
+                }
+            }
+        }
+    }
+
+    printf("%d\n", excessive);
+    return 0;
+}
 

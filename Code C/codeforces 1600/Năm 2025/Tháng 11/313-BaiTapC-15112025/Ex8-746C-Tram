@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long time_to_reach(int start, int end, int s, int t1, int d) {
+    if (d == 1) {
+        if (start <= end) return (long long)(end - start) * t1;
+        else return (long long)(s - start + s + end) * t1;
+    } else {
+        if (start >= end) return (long long)(start - end) * t1;
+        else return (long long)(start + s + s - end) * t1;
+    }
+}
+
+int main() {
+    int s, x1, x2, t1, t2, p, d;
+    scanf("%d %d %d", &s, &x1, &x2);
+    scanf("%d %d", &t1, &t2);
+    scanf("%d %d", &p, &d);
+
+    long long walk = abs(x1 - x2) * (long long)t2;
+
+    long long tram = time_to_reach(p, x1, s, t1, d);
+
+    int dir_after;
+    if (d == 1) dir_after = (p <= x1) ? 1 : -1;
+    else dir_after = (p >= x1) ? -1 : 1;
+
+    if (x1 < x2) {
+        tram += (dir_after == 1) ? (long long)(x2 - x1) * t1 : (long long)(x1 + s + s - x2) * t1;
+    } else {
+        tram += (dir_after == -1) ? (long long)(x1 - x2) * t1 : (long long)(s - x1 + s + x2) * t1;
+    }
+
+    printf("%lld\n", (walk < tram) ? walk : tram);
+    return 0;
+}
 

@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+int days_in_month(int m) {
+    int d[13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+    return d[m];
+}
+
+int main() {
+    char s[100005];
+    fgets(s, sizeof(s), stdin);
+    int n = strlen(s);
+    if (s[n-1] == '\n') s[--n] = 0;
+
+    int count[3][13][32] = {0};
+    int best_dd=0, best_mm=0, best_yyyy=0, best_cnt=0;
+
+    for (char *p = s; *(p+9); p++) {
+        if (p[2] != '-' || p[5] != '-') continue;
+        int valid = 1;
+        for (int i=0;i<10;i++) {
+            if (i==2 || i==5) continue;
+            if (p[i]<'0' || p[i]>'9') { valid=0; break; }
+        }
+        if (!valid) continue;
+
+        int dd = (p[0]-'0')*10 + (p[1]-'0');
+        int mm = (p[3]-'0')*10 + (p[4]-'0');
+        int yyyy = (p[6]-'0')*1000 + (p[7]-'0')*100 + (p[8]-'0')*10 + (p[9]-'0');
+
+        if (yyyy<2013 || yyyy>2015) continue;
+        if (mm<1 || mm>12) continue;
+        if (dd<1 || dd>days_in_month(mm)) continue;
+
+        int yidx = yyyy - 2013;
+        count[yidx][mm][dd]++;
+        if (count[yidx][mm][dd] > best_cnt) {
+            best_cnt = count[yidx][mm][dd];
+            best_dd = dd;
+            best_mm = mm;
+            best_yyyy = yyyy;
+        }
+    }
+
+    printf("%02d-%02d-%04d\n", best_dd, best_mm, best_yyyy);
+    return 0;
+}
 

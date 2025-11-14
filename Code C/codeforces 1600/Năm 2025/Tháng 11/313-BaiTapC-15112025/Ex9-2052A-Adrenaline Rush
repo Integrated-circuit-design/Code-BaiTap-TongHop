@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int final[1000];
+    for (int i = 0; i < n; i++) scanf("%d", &final[i]);
+
+    int race[1000];
+    for (int i = 0; i < n; i++) race[i] = i + 1;
+
+    int overtakesX[500000], overtakesY[500000];
+    int m = 0;
+
+    for (int i = 0; i < n; i++) {
+        int car = final[i];
+
+        int pos;
+        for (pos = 0; pos < n; pos++) if (race[pos] == car) break;
+
+        while (pos > i) {
+            int temp = race[pos-1];
+            race[pos-1] = race[pos];
+            race[pos] = temp;
+
+            overtakesX[m] = car;
+            overtakesY[m] = race[pos];
+            m++;
+
+            pos--;
+        }
+    }
+
+    printf("%d\n", m);
+    for (int i = 0; i < m; i++) {
+        printf("%d %d\n", overtakesX[i], overtakesY[i]);
+    }
+
+    return 0;
+}
 

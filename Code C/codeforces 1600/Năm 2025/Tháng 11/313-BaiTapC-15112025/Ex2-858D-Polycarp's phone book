@@ -1,1 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 70000
+#define LEN 9
+#define HASH_SIZE 7000003
+
+typedef struct Node {
+    unsigned int key;
+    int count;
+    int first;
+    struct Node* next;
+} Node;
+
+Node* hashTable[HASH_SIZE];
+
+unsigned int hash(unsigned int x) {
+    return x % HASH_SIZE;
+}
+
+void insert(unsigned int key, int idx) {
+    unsigned int h = hash(key);
+    Node* cur = hashTable[h];
+    while (cur) {
+        if (cur->key == key) {
+            cur->count++;
+            return;
+        }
+        cur = cur->next;
+    }
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->key = key;
+    newNode->count = 1;
+    newNode->first = idx;
+    newNode->next = hashTable[h];
+    hashTable[h] = newNode;
+}
+
+Node* find(unsigned int key) {
+    unsigned int h = hash(key);
+    Node* cur = hashTable[h];
+    while (cur) {
+        if (cur->key == key) return cur;
+        cur = cur->next;
+    }
+    return NULL;
+}
+
+char phone[MAXN][12];
+char ans[MAXN][12];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++)
+        scanf("%s", phone[i]);
+
+    for (int i = 0; i < n; i++) {
+        for (int l = 1; l <= LEN; l++) {
+            unsigned int val = 0;
+            for (int k = 0; k < l; k++)
+                val = val * 10 + (phone[i][k] - '0');
+            insert(val, i);
+
+            for (int j = l; j < LEN; j++) {
+                val = (val % 100000000) * 10 + (phone[i][j] - '0');
+                insert(val, i);
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        int found = 0;
+        for (int l = 1; l <= LEN && !found; l++) {
+            unsigned int val = 0;
+            for (int k = 0; k < l; k++)
+                val = val * 10 + (phone[i][k] - '0');
+
+            Node* node = find(val);
+            if (node && node->count == 1) {
+                strncpy(ans[i], phone[i], l);
+                ans[i][l] = '\0';
+                found = 1;
+                break;
+            }
+
+            for (int j = l; j < LEN && !found; j++) {
+                val = (val % 100000000) * 10 + (phone[i][j] - '0');
+                node = find(val);
+                if (node && node->count == 1) {
+                    strncpy(ans[i], phone[i] + j - l + 1, l);
+                    ans[i][l] = '\0';
+                    found = 1;
+                    break;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+        printf("%s\n", ans[i]);
+
+    return 0;
+}
 

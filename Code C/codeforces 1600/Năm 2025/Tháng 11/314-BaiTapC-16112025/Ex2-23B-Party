@@ -1,1 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    for(int test=0; test<t; test++) {
+        long long n;
+        scanf("%lld", &n);
+
+        long long result;
+        result = (n >= 3) ? n / 2 : 0;
+
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

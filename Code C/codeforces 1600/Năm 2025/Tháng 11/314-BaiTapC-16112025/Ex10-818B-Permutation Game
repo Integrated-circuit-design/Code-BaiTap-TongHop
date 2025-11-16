@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int l[105];
+    int a[105];
+    int used[105] = {0};
+
+    for (int i = 0; i < m; i++) scanf("%d", &l[i]);
+
+    for (int i = 1; i <= n; i++) a[i] = -1;
+
+    for (int i = 0; i < m - 1; i++) {
+        int cur = l[i];
+        int nxt = l[i + 1];
+
+        int steps = (nxt - cur + n) % n;
+        if (steps == 0) steps = n;
+
+        if (a[cur] != -1 && a[cur] != steps) {
+            printf("-1\n");
+            return 0;
+        }
+
+        int conflict = 0;
+        for (int j = 1; j <= n; j++) {
+            if (a[j] == steps && j != cur) {
+                conflict = 1;
+                break;
+            }
+        }
+        if (conflict) {
+            printf("-1\n");
+            return 0;
+        }
+
+        a[cur] = steps;
+        used[steps] = 1;
+    }
+
+    int ptr = 1;
+    for (int i = 1; i <= n; i++) {
+        if (a[i] == -1) {
+            while (used[ptr]) ptr++;
+            a[i] = ptr;
+            used[ptr] = 1;
+        }
+    }
+
+    for (int i = 1; i <= n; i++) printf("%d ", a[i]);
+    printf("\n");
+
+    return 0;
+}
 

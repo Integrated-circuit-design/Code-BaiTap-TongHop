@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    long long *data;
+    int size;
+    int capacity;
+} List;
+
+void add(List *list, long long value) {
+    if (list->size == list->capacity) {
+        list->capacity *= 2;
+        list->data = (long long*)realloc(list->data, list->capacity * sizeof(long long));
+    }
+    list->data[list->size++] = value;
+}
+
+int main() {
+    long long s, k;
+    scanf("%lld %lld", &s, &k);
+
+    List kbonacci;
+    kbonacci.size = 0;
+    kbonacci.capacity = 16;
+    kbonacci.data = (long long*)malloc(kbonacci.capacity * sizeof(long long));
+
+    for (int i = 1; i < k; i++) add(&kbonacci, 0);
+
+    add(&kbonacci, 1);
+
+    while (1) {
+        long long next = 0;
+        for (int i = kbonacci.size - k; i < kbonacci.size; i++) {
+            next += kbonacci.data[i];
+        }
+        if (next > s) break;
+        add(&kbonacci, next);
+    }
+
+    List result;
+    result.size = 0;
+    result.capacity = 16;
+    result.data = (long long*)malloc(result.capacity * sizeof(long long));
+
+    long long remaining = s;
+    for (int i = kbonacci.size - 1; i >= 0; i--) {
+        if (kbonacci.data[i] <= remaining) {
+            add(&result, kbonacci.data[i]);
+            remaining -= kbonacci.data[i];
+        }
+        if (remaining == 0) break;
+    }
+
+    if (result.size == 1) add(&result, 0);
+
+    printf("%d\n", result.size);
+    for (int i = 0; i < result.size; i++) {
+        printf("%lld ", result.data[i]);
+    }
+    printf("\n");
+
+    free(kbonacci.data);
+    free(result.data);
+
+    return 0;
+}
 

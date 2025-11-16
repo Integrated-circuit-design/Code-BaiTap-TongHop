@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+long long minVal;
+
+void calc(long long a[], int size, char op[], int step) {
+    if (size == 1) {
+        if (a[0] < minVal) minVal = a[0];
+        return;
+    }
+    for (int i = 0; i < size; i++) {
+        for (int j = i+1; j < size; j++) {
+            long long b[4];
+            int idx = 0;
+            for (int k = 0; k < size; k++)
+                if (k != i && k != j) b[idx++] = a[k];
+
+            long long res = (op[step]=='*') ? a[i]*a[j] : a[i]+a[j];
+            b[idx] = res;
+            calc(b, idx+1, op, step+1);
+        }
+    }
+}
+
+int main() {
+    long long nums[4];
+    char ops[3];
+    for (int i=0;i<4;i++) scanf("%lld",&nums[i]);
+    scanf(" %c %c %c",&ops[0],&ops[1],&ops[2]);
+    minVal = 1LL<<60;
+    calc(nums,4,ops,0);
+    printf("%lld\n",minVal);
+    return 0;
+}
 

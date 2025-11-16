@@ -1,1 +1,55 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int matrix[100][100];
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            scanf("%d", &matrix[i][j]);
+
+    int totalScore = 0;
+    int totalChanges = 0;
+
+    for (int col = 0; col < m; col++) {
+        int onesPositions[100];
+        int countOnes = 0;
+
+        for (int row = 0; row < n; row++) {
+            if (matrix[row][col] == 1)
+                onesPositions[countOnes++] = row;
+        }
+
+        if (countOnes == 0) continue;
+
+        int bestScore = 0;
+        int minChanges = countOnes;
+
+        for (int t = 0; t < countOnes; t++) {
+            int startRow = onesPositions[t];
+            int endRow = startRow + k - 1;
+            if (endRow >= n) endRow = n - 1;
+
+            int score = 0;
+            for (int r = startRow; r <= endRow; r++)
+                if (matrix[r][col] == 1) score++;
+
+            int changes = countOnes - score;
+
+            if (score > bestScore) {
+                bestScore = score;
+                minChanges = changes;
+            } else if (score == bestScore && changes < minChanges) {
+                minChanges = changes;
+            }
+        }
+
+        totalScore += bestScore;
+        totalChanges += minChanges;
+    }
+
+    printf("%d %d\n", totalScore, totalChanges);
+    return 0;
+}
 

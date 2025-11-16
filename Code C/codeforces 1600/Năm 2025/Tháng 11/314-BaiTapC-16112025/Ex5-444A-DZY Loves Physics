@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdbool.h>
+
+#define MAXN 505
+#define MAXM 250005
+
+typedef struct {
+    int to;
+    long long c;
+} Adj;
+
+Adj adj[MAXN][MAXN];
+int deg[MAXN];
+long long nodeValue[MAXN];
+bool visited[MAXN];
+int n, m;
+
+double dfs(int u, double D){
+    visited[u] = true;
+    double sum = -D * nodeValue[u];
+    for(int i = 0; i < deg[u]; i++){
+        int v = adj[u][i].to;
+        double w = adj[u][i].c - D*(nodeValue[u]+nodeValue[v]);
+        if(!visited[v]){
+            sum += dfs(v, D) + w;
+        }
+    }
+    return sum;
+}
+
+bool check(double D){
+    for(int i = 1; i <= n; i++) visited[i] = false;
+    double best = -1e100;
+    for(int i = 1; i <= n; i++){
+        if(!visited[i]){
+            double s = dfs(i, D);
+            if(s > best) best = s;
+        }
+    }
+    return best >= 0;
+}
+
+int main(){
+    scanf("%d %d", &n, &m);
+    for(int i = 1; i <= n; i++) scanf("%lld", &nodeValue[i]);
+
+    for(int i = 1; i <= n; i++) deg[i] = 0;
+    for(int i = 0; i < m; i++){
+        int u, v;
+        long long c;
+        scanf("%d %d %lld", &u, &v, &c);
+        adj[u][deg[u]++] = (Adj){v, c};
+        adj[v][deg[v]++] = (Adj){u, c};
+    }
+
+    double left = 0, right = 1e7;
+    for(int iter = 0; iter < 60; iter++){
+        double mid = (left + right)/2.0;
+        if(check(mid)) left = mid;
+        else right = mid;
+    }
+
+    printf("%.12f\n", left);
+    return 0;
+}
 

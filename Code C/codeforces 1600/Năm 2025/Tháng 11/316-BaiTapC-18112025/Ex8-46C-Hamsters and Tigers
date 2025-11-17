@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    char s[1005];
+    scanf("%s", s);
+
+    int totalH = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'H') totalH++;
+    }
+
+    if (totalH == 0 || totalH == n) {
+        printf("0\n");
+        return 0;
+    }
+
+    int prefixT[2005];
+    prefixT[0] = 0;
+    for (int i = 0; i < n; i++) {
+        prefixT[i+1] = prefixT[i] + (s[i] == 'T' ? 1 : 0);
+    }
+    for (int i = 0; i < n; i++) {
+        prefixT[n+i+1] = prefixT[n+i] + (s[i] == 'T' ? 1 : 0);
+    }
+
+    int minSwap = n + 1;
+
+    for (int i = 0; i < n; i++) {
+        int tInWindow = prefixT[i + totalH] - prefixT[i];
+        if (tInWindow < minSwap) minSwap = tInWindow;
+    }
+
+    printf("%d\n", minSwap);
+    return 0;
+}
 

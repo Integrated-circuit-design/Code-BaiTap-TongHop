@@ -1,1 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 1000000007
+
+int main() {
+    char x[105];
+    scanf("%s", x);
+    int n = strlen(x);
+
+    long long complexity = 0;
+    long long current_power = 1;
+
+    for (int i = n - 1; i >= 0; i--) {
+        if (x[i] == '1') {
+            complexity = (complexity + current_power) % MOD;
+        }
+        current_power = (current_power * 4) % MOD;
+    }
+
+    printf("%lld\n", complexity);
+    return 0;
+}
 

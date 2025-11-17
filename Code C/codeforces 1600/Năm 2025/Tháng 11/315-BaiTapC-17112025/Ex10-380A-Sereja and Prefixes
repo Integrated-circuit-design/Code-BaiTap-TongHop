@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+struct Stage {
+    int type;
+    int val;
+    ll len;
+    ll l, c;
+} stages[100005];
+
+ll query[100005], res[100005];
+int m, n;
+
+int get_value(ll k) {
+    int i;
+    for (i = 1; i <= m; i++) {
+        if (stages[i].len >= k) break;
+    }
+
+    if (stages[i].type == 1) return stages[i].val;
+
+    ll prev_len = (i == 1 ? 0 : stages[i-1].len);
+    ll block_len = stages[i].l;
+    ll pos_in_block = (k - prev_len - 1) % block_len + 1;
+    return get_value(pos_in_block);
+}
+
+int main() {
+    scanf("%d", &m);
+    ll total_len = 0;
+
+    for (int i = 1; i <= m; i++) {
+        int t;
+        scanf("%d", &t);
+        stages[i].type = t;
+        if (t == 1) {
+            int x;
+            scanf("%d", &x);
+            stages[i].val = x;
+            total_len++;
+            stages[i].len = total_len;
+        } else {
+            ll l, c;
+            scanf("%lld %lld", &l, &c);
+            stages[i].l = l;
+            stages[i].c = c;
+            total_len += l * c;
+            stages[i].len = total_len;
+        }
+    }
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%lld", &query[i]);
+
+    for (int i = 0; i < n; i++) res[i] = get_value(query[i]);
+
+    for (int i = 0; i < n; i++) printf("%lld ", res[i]);
+    printf("\n");
+    return 0;
+}
 

@@ -1,1 +1,41 @@
+#include <stdio.h>
+#include <limits.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    long long minStolen = LLONG_MAX;
+    long long maxStolen = LLONG_MIN;
+
+    for (long long x = 1; x * x * x <= n; x++) {
+        if (n % x != 0) continue;
+        long long yz = n / x;
+
+        for (long long y = 1; y * y <= yz; y++) {
+            if (yz % y != 0) continue;
+            long long z = yz / y;
+
+            long long A = x + 1;
+            long long B = y + 2;
+            long long C = z + 2;
+
+            long long stolen1 = A * B * C - n;
+            long long stolen2 = A * C * B - n;
+            long long stolen3 = (y+1) * (x+2) * (z+2) - n;
+            long long stolen4 = (y+1) * (z+2) * (x+2) - n;
+            long long stolen5 = (z+1) * (x+2) * (y+2) - n;
+            long long stolen6 = (z+1) * (y+2) * (x+2) - n;
+
+            long long candidates[6] = {stolen1, stolen2, stolen3, stolen4, stolen5, stolen6};
+            for (int i = 0; i < 6; i++) {
+                if (candidates[i] < minStolen) minStolen = candidates[i];
+                if (candidates[i] > maxStolen) maxStolen = candidates[i];
+            }
+        }
+    }
+
+    printf("%lld %lld\n", minStolen, maxStolen);
+    return 0;
+}
 

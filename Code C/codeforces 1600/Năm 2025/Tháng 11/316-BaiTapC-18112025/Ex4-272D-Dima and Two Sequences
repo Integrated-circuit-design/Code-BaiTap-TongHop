@@ -1,1 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+ll calcComb(ll n, ll k, ll mod) {
+    if (k > n) return 0;
+    if (k == 0 || k == n) return 1;
+
+    ll res = 1;
+    for (ll i = 1; i <= k; i++) {
+        res = res * (n - k + i) / i;
+    }
+    return res % mod;
+}
+
+int cmp(const void* p1, const void* p2) {
+    ll a = *(ll*)p1;
+    ll b = *(ll*)p2;
+    return (a < b) ? -1 : (a > b);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    ll a[n], b[n];
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+    for (int i = 0; i < n; i++) scanf("%lld", &b[i]);
+
+    ll m;
+    scanf("%lld", &m);
+
+    ll total[2*n];
+    for (int i = 0; i < n; i++) total[i] = a[i];
+    for (int i = 0; i < n; i++) total[n+i] = b[i];
+
+    qsort(total, 2*n, sizeof(ll), cmp);
+
+    ll ans = 1;
+    int idx = 0;
+
+    while (idx < 2*n) {
+        int next = idx + 1;
+        while (next < 2*n && total[next] == total[idx]) next++;
+
+        ll val = total[idx];
+        ll countA = 0, countB = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] == val) countA++;
+            if (b[i] == val) countB++;
+        }
+
+        ll ways = calcComb(countA + countB, countA, m);
+        ans = (ans * ways) % m;
+
+        idx = next;
+    }
+
+    printf("%lld\n", ans);
+
+    return 0;
+}
 

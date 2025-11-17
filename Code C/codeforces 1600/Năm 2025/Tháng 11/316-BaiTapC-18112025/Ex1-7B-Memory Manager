@@ -1,1 +1,70 @@
+#include <stdio.h>
+
+typedef struct {
+    int start;
+    int size;
+    int alive;
+    int id;
+} Block;
+
+int main() {
+    int t, m;
+    scanf("%d %d", &t, &m);
+
+    Block blocks[105];
+    int blockCount = 0;
+    int nextID = 1;
+
+    for (int op = 0; op < t; op++) {
+        char cmd[20];
+        scanf("%s", cmd);
+
+        if (cmd[0] == 'a') {
+            int n;
+            scanf("%d", &n);
+
+            int pos = 1;
+            for (int i = 0; i < blockCount; i++) {
+                if (!blocks[i].alive) continue;
+
+                if (pos + n - 1 < blocks[i].start) break;
+                pos = blocks[i].start + blocks[i].size;
+            }
+
+            if (pos + n - 1 > m) {
+                printf("NULL\n");
+            } else {
+                blocks[blockCount].start = pos;
+                blocks[blockCount].size = n;
+                blocks[blockCount].alive = 1;
+                blocks[blockCount].id = nextID;
+                printf("%d\n", nextID++);
+                blockCount++;
+            }
+
+        } else if (cmd[0] == 'e') {
+            int x;
+            scanf("%d", &x);
+            int found = 0;
+            for (int i = 0; i < blockCount; i++) {
+                if (blocks[i].alive && blocks[i].id == x) {
+                    blocks[i].alive = 0;
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found) printf("ILLEGAL_ERASE_ARGUMENT\n");
+
+        } else {
+            int pos = 1;
+            for (int i = 0; i < blockCount; i++) {
+                if (!blocks[i].alive) continue;
+                blocks[i].start = pos;
+                pos += blocks[i].size;
+            }
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n + 1];
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int r1, c1, r2, c2;
+    scanf("%d %d %d %d", &r1, &c1, &r2, &c2);
+
+    int moves = 0;
+    int r = r1, c = c1;
+
+    while (r < r2) {
+        r++;
+        if (c > a[r] + 1) c = a[r] + 1;
+        moves++;
+    }
+    while (r > r2) {
+        r--;
+        if (c > a[r] + 1) c = a[r] + 1;
+        moves++;
+    }
+
+    while (c < c2) {
+        c++;
+        moves++;
+    }
+    while (c > c2) {
+        c--;
+        moves++;
+    }
+
+    printf("%d\n", moves);
+    return 0;
+}
 

@@ -1,1 +1,53 @@
+#include <stdio.h>
+
+int main() {
+    int R, C, sx, sy;
+    scanf("%d %d %d %d", &R, &C, &sx, &sy);
+
+    static char moves[100005];
+    scanf("%s", moves);
+
+    int len = 0;
+    while (moves[len]) len++;
+
+    static int result[100005 + 1] = {0};
+    static char grid[250001] = {0};
+
+    int x = sx, y = sy;
+    int idx = (x - 1) * C + (y - 1);
+    grid[idx] = 1;
+    result[0] = 1;
+
+    for (int step = 1; step <= len; step++) {
+        char m = moves[step - 1];
+        int nx = x, ny = y;
+        if (m == 'U') nx--;
+        else if (m == 'D') nx++;
+        else if (m == 'L') ny--;
+        else if (m == 'R') ny++;
+
+        if (nx >= 1 && nx <= R && ny >= 1 && ny <= C) {
+            x = nx;
+            y = ny;
+        }
+
+        idx = (x - 1) * C + (y - 1);
+        if (!grid[idx]) {
+            grid[idx] = 1;
+            result[step]++;
+        }
+    }
+
+    int total = R * C;
+    int visited = 0;
+    for (int i = 0; i < total; i++)
+        if (grid[i]) visited++;
+
+    result[len] += total - visited;
+
+    for (int i = 0; i <= len; i++)
+        printf("%d%c", result[i], (i == len) ? '\n' : ' ');
+
+    return 0;
+}
 

@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[5005];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    int total_unique = 0;
+
+    for (int shift = 0; shift < n; shift++) {
+        char first_char = s[shift];
+
+        int same_first[5005];
+        int count = 0;
+        for (int k = 0; k < n; k++) {
+            if (s[k] == first_char) {
+                same_first[count++] = k;
+            }
+        }
+
+        if (count == 1) {
+            total_unique++;
+            continue;
+        }
+
+        int best = 0;
+
+        for (int d = 1; d < n; d++) {
+            int freq[26] = {0};
+
+            for (int i = 0; i < count; i++) {
+                int pos = (same_first[i] + d) % n;
+                freq[s[pos]-'a']++;
+            }
+
+            int unique = 0;
+            for (int i = 0; i < count; i++) {
+                int pos = (same_first[i] + d) % n;
+                if (freq[s[pos]-'a'] == 1) unique++;
+            }
+
+            if (unique > best) best = unique;
+            if (best == count) break;
+        }
+
+        total_unique += best;
+    }
+
+    double probability = (double)total_unique / n;
+    printf("%.15lf\n", probability);
+
+    return 0;
+}
 

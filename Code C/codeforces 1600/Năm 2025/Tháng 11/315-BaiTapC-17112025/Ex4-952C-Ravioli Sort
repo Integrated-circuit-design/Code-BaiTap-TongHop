@@ -1,1 +1,67 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int arr[10];
+    for (int i = 0; i < n; i++) scanf("%d", &arr[i]);
+
+    int res[10];
+    int size = 0;
+
+    int stack[10];
+    for (int i = 0; i < n; i++) stack[i] = arr[i];
+    int len = n;
+
+    while (len > 0) {
+        int stable;
+        do {
+            stable = 1;
+            for (int i = 0; i < len - 1; i++) {
+                if (stack[i] > stack[i+1] + 1) {
+                    stack[i]--;
+                    stack[i+1]++;
+                    stable = 0;
+                } else if (stack[i+1] > stack[i] + 1) {
+                    stack[i+1]--;
+                    stack[i]++;
+                    stable = 0;
+                }
+            }
+        } while (!stable);
+
+        int maxH = stack[0], pos = 0;
+        for (int i = 1; i < len; i++) {
+            if (stack[i] > maxH) {
+                maxH = stack[i];
+                pos = i;
+            }
+        }
+
+        res[size++] = maxH;
+
+        for (int i = pos; i < len - 1; i++) stack[i] = stack[i+1];
+        len--;
+    }
+
+    int sorted[10];
+    for (int i = 0; i < n; i++) sorted[i] = arr[i];
+    for (int i = 0; i < n - 1; i++)
+        for (int j = i + 1; j < n; j++)
+            if (sorted[i] > sorted[j]) {
+                int t = sorted[i];
+                sorted[i] = sorted[j];
+                sorted[j] = t;
+            }
+
+    int ok = 1;
+    for (int i = 0; i < n; i++)
+        if (res[i] != sorted[i]) ok = 0;
+
+    if (ok) printf("YES\n");
+    else printf("NO\n");
+
+    return 0;
+}
 

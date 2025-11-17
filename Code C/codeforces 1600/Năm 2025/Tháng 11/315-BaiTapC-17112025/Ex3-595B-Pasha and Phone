@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+#define MOD 1000000007LL
+
+long long count_good(int k, int ai, int digit_b) {
+    long long pow10_k = 1, pow10_k_minus1 = 1;
+    for (int i = 0; i < k; i++) pow10_k *= 10;
+    for (int i = 0; i < k - 1; i++) pow10_k_minus1 *= 10;
+
+    long long total_divisible = (pow10_k - 1) / ai + 1;
+
+    long long start = digit_b * pow10_k_minus1;
+    long long end = (digit_b + 1) * pow10_k_minus1 - 1;
+    if (end >= pow10_k) end = pow10_k - 1;
+    long long count_bad = 0;
+    if (start <= end) {
+        count_bad = end / ai - (start + ai - 1) / ai + 1;
+        if (count_bad < 0) count_bad = 0;
+    }
+
+    return (total_divisible - count_bad + MOD) % MOD;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int m = n / k;
+    int a[100005], b[100005];
+
+    for (int i = 0; i < m; i++) scanf("%d", &a[i]);
+    for (int i = 0; i < m; i++) scanf("%d", &b[i]);
+
+    long long ans = 1;
+    for (int i = 0; i < m; i++) {
+        long long cnt = count_good(k, a[i], b[i]);
+        ans = (ans * cnt) % MOD;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

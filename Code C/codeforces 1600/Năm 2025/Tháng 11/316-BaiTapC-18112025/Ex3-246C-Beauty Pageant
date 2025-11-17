@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int beauty[50];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &beauty[i]);
+
+    int day = 0;
+
+    for (int i = 0; i < n && day < k; i += 1) {
+        printf("1 %d\n", beauty[i]);
+        day++;
+    }
+
+    for (int i = 0; day < k; i++) {
+        int j = (i + 1) % n;
+        printf("2 %d %d\n", beauty[i], beauty[j]);
+        day++;
+    }
+
+    return 0;
+}
 

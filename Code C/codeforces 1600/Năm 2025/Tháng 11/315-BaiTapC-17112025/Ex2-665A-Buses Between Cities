@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int a, ta, b, tb;
+    scanf("%d %d", &a, &ta);
+    scanf("%d %d", &b, &tb);
+
+    int hh, mm;
+    scanf("%d:%d", &hh, &mm);
+
+    int start = hh * 60 + mm;
+    int end = start + ta;
+
+    int meet = 0;
+
+    int busB_time = 5 * 60;
+    while (busB_time <= 23 * 60 + 59) {
+        if (busB_time + tb > start && busB_time < end) {
+            meet++;
+        }
+        busB_time += b;
+    }
+
+    printf("%d\n", meet);
+    return 0;
+}
 

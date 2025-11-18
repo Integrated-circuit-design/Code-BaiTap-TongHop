@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    long long w, m, k;
+    scanf("%lld %lld %lld", &w, &m, &k);
+
+    long long count = 0;
+
+    while (w > 0) {
+        long long temp = m;
+        long long digits = 0;
+        while (temp > 0) {
+            temp /= 10;
+            digits++;
+        }
+        if (digits == 0) digits = 1;
+
+        long long limit = 1;
+        for (int i = 0; i < digits; i++) limit *= 10;
+        limit -= 1;
+
+        long long remaining_numbers = limit - m + 1;
+        long long cost = digits * k;
+
+        if (cost > w) break;
+
+        long long take = w / cost;
+        if (take > remaining_numbers) take = remaining_numbers;
+
+        count += take;
+        w -= take * cost;
+        m += take;
+
+        if (take == remaining_numbers) {
+            m = limit + 1;
+        }
+    }
+
+    printf("%lld\n", count);
+    return 0;
+}
 

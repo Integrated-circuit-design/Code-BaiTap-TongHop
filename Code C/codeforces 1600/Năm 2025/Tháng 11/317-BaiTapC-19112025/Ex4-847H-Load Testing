@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    long long a[n], left[n], right[n];
+    
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+    
+    left[0] = 0;
+    for (int i = 1; i < n; i++) {
+        if (a[i] <= a[i-1]) {
+            left[i] = left[i-1] + (a[i-1] - a[i] + 1);
+            a[i] = a[i-1] + 1;
+        } else {
+            left[i] = left[i-1];
+        }
+    }
+
+    long long b[n];
+    for (int i = 0; i < n; i++) b[i] = a[i];
+    
+    right[n-1] = 0;
+    for (int i = n-2; i >= 0; i--) {
+        if (b[i] <= b[i+1]) {
+            right[i] = right[i+1] + (b[i+1] - b[i] + 1);
+            b[i] = b[i+1] + 1;
+        } else {
+            right[i] = right[i+1];
+        }
+    }
+
+    long long ans = 1e18;
+    for (int i = 0; i < n; i++) {
+        long long total = left[i] + right[i];
+        if (total < ans) ans = total;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

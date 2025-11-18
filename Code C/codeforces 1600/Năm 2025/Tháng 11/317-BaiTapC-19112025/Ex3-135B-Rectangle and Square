@@ -1,1 +1,82 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+typedef struct {
+    ll x, y;
+} Point;
+
+Point vec(Point a, Point b) {
+    Point v = {b.x - a.x, b.y - a.y};
+    return v;
+}
+
+ll dot(Point a, Point b) {
+    return a.x*b.x + a.y*b.y;
+}
+
+ll len2(Point a) {
+    return a.x*a.x + a.y*a.y;
+}
+
+int is_square(Point p[4]) {
+    ll d[4];
+    for(int i=0;i<4;i++){
+        Point v = vec(p[i], p[(i+1)%4]);
+        d[i] = len2(v);
+        if(d[i]==0) return 0;
+    }
+    if(d[0]!=d[1] || d[1]!=d[2] || d[2]!=d[3]) return 0;
+    Point diag1 = vec(p[0], p[2]);
+    Point diag2 = vec(p[1], p[3]);
+    return dot(diag1, diag2)==0;
+}
+
+int is_rectangle(Point p[4]) {
+    ll d[4];
+    for(int i=0;i<4;i++){
+        Point v = vec(p[i], p[(i+1)%4]);
+        d[i] = len2(v);
+        if(d[i]==0) return 0;
+    }
+    if(d[0]!=d[2] || d[1]!=d[3]) return 0;
+    Point diag1 = vec(p[0], p[2]);
+    Point diag2 = vec(p[1], p[3]);
+    return len2(diag1) == len2(diag2);
+}
+
+int main() {
+    Point pts[8];
+    for(int i=0;i<8;i++) scanf("%lld %lld",&pts[i].x,&pts[i].y);
+
+    int idx[8] = {0,1,2,3,4,5,6,7};
+
+    for(int a=0;a<8;a++)
+    for(int b=a+1;b<8;b++)
+    for(int c=b+1;c<8;c++)
+    for(int d=c+1;d<8;d++){
+        Point square[4] = {pts[a], pts[b], pts[c], pts[d]};
+        if(!is_square(square)) continue;
+
+        Point rect[4]; int k=0;
+        int rect_idx[4];
+        for(int i=0;i<8;i++){
+            if(i!=a && i!=b && i!=c && i!=d){
+                rect[k] = pts[i];
+                rect_idx[k] = i+1;
+                k++;
+            }
+        }
+
+        if(is_rectangle(rect)){
+            printf("YES\n");
+            printf("%d %d %d %d\n", a+1, b+1, c+1, d+1);
+            printf("%d %d %d %d\n", rect_idx[0], rect_idx[1], rect_idx[2], rect_idx[3]);
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_TABLE 100000
+#define MAX_LEN 200005
+
+char s[MAX_LEN];
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long totalZero = 0, totalOne = 0;
+    long zero[MAX_TABLE];
+    long one[MAX_TABLE];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", s);
+        zero[i] = 0;
+        one[i] = 0;
+
+        for (int j = 0; s[j]; j++) {
+            if (s[j] == '0') zero[i]++;
+            else one[i]++;
+        }
+
+        totalZero += zero[i];
+        totalOne += one[i];
+    }
+
+    long moveCount = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (zero[i] < one[i])
+            moveCount += zero[i];
+        else
+            moveCount += one[i];
+    }
+
+    printf("%ld\n", moveCount);
+
+    return 0;
+}
 

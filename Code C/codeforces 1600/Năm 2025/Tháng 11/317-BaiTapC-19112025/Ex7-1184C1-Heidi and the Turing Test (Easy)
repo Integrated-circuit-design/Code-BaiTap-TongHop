@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int totalPoints = 4 * n + 1;
+    int x[totalPoints], y[totalPoints];
+
+    for (int i = 0; i < totalPoints; i++) {
+        scanf("%d %d", &x[i], &y[i]);
+    }
+
+    int minX = x[0], maxX = x[0], minY = y[0], maxY = y[0];
+    for (int i = 1; i < totalPoints; i++) {
+        if (x[i] < minX) minX = x[i];
+        if (x[i] > maxX) maxX = x[i];
+        if (y[i] < minY) minY = y[i];
+        if (y[i] > maxY) maxY = y[i];
+    }
+
+    int countMinX = 0, countMaxX = 0, countMinY = 0, countMaxY = 0;
+    for (int i = 0; i < totalPoints; i++) {
+        if (x[i] == minX) countMinX++;
+        if (x[i] == maxX) countMaxX++;
+        if (y[i] == minY) countMinY++;
+        if (y[i] == maxY) countMaxY++;
+    }
+
+    for (int i = 0; i < totalPoints; i++) {
+        int onLeft = (x[i] == minX);
+        int onRight = (x[i] == maxX);
+        int onBottom = (y[i] == minY);
+        int onTop = (y[i] == maxY);
+
+        if (!onLeft && !onRight && !onBottom && !onTop) {
+            printf("%d %d\n", x[i], y[i]);
+            break;
+        }
+    }
+
+    return 0;
+}
 

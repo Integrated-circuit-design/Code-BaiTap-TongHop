@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+#define MAXN 100000
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    char sign[MAXN + 1];
+    int a[MAXN + 1];
+
+    for (int i = 1; i <= n; i++) {
+        char s[10];
+        scanf("%s", s);
+        sign[i] = s[0];
+        sscanf(s + 1, "%d", &a[i]);
+    }
+
+    int valid[MAXN + 1] = {0};
+    for (int t = 1; t <= n; t++) {
+        int truth_count = 0;
+        for (int i = 1; i <= n; i++) {
+            if ((sign[i] == '+' && a[i] == t) || (sign[i] == '-' && a[i] != t))
+                truth_count++;
+        }
+        if (truth_count == m) valid[t] = 1;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        int can_be_true = 0;
+        int can_be_lie  = 0;
+
+        for (int t = 1; t <= n; t++) {
+            if (!valid[t]) continue;
+
+            int is_truth;
+            if (sign[i] == '+') is_truth = (a[i] == t);
+            else                is_truth = (a[i] != t);
+
+            if (is_truth) can_be_true = 1;
+            else          can_be_lie  = 1;
+        }
+
+        if (can_be_true && !can_be_lie) printf("Truth\n");
+        else if (!can_be_true && can_be_lie) printf("Lie\n");
+        else printf("Not defined\n");
+    }
+
+    return 0;
+}
 

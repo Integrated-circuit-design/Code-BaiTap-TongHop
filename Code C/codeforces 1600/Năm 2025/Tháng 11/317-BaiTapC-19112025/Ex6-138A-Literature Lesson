@@ -1,1 +1,80 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXL 10005
+#define MAXQ 2505
+
+int is_vowel(char c) {
+    return c=='a'||c=='e'||c=='i'||c=='o'||c=='u';
+}
+
+int get_suffix_index(char *s, int k) {
+    int len = strlen(s);
+    int count = 0;
+    for (int i = len-1; i>=0; i--) {
+        if (is_vowel(s[i])) count++;
+        if (count==k) return i;
+    }
+    return -1;
+}
+
+int same_suffix(char *s1, int i1, char *s2, int i2) {
+    if (i1==-1 || i2==-1) return 0;
+    return strcmp(s1+i1, s2+i2) == 0;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    char line[4][MAXL];
+    int suf_index[4];
+    int poem_scheme = -1;
+
+    for (int q=0; q<n; q++) {
+        for (int i=0; i<4; i++) {
+            scanf("%s", line[i]);
+            suf_index[i] = get_suffix_index(line[i], k);
+        }
+
+        int match_scheme[4] = {0};
+
+        if (suf_index[0]!=-1 && suf_index[1]!=-1 && suf_index[2]!=-1 && suf_index[3]!=-1) {
+            if (same_suffix(line[0],suf_index[0],line[1],suf_index[1]) &&
+                same_suffix(line[2],suf_index[2],line[3],suf_index[3])) match_scheme[0]=1;
+            if (same_suffix(line[0],suf_index[0],line[2],suf_index[2]) &&
+                same_suffix(line[1],suf_index[1],line[3],suf_index[3])) match_scheme[1]=1;
+            if (same_suffix(line[0],suf_index[0],line[3],suf_index[3]) &&
+                same_suffix(line[1],suf_index[1],line[2],suf_index[2])) match_scheme[2]=1;
+            if (same_suffix(line[0],suf_index[0],line[1],suf_index[1]) &&
+                same_suffix(line[1],suf_index[1],line[2],suf_index[2]) &&
+                same_suffix(line[2],suf_index[2],line[3],suf_index[3])) match_scheme[3]=1;
+        }
+
+        int has_valid = 0;
+        for (int i=0;i<4;i++) if (match_scheme[i]) has_valid=1;
+        if (!has_valid) {
+            printf("NO\n");
+            return 0;
+        }
+
+        int this_scheme = -1;
+        for (int i=0;i<3;i++) if (match_scheme[i]) this_scheme=i;
+        if (this_scheme==-1 && match_scheme[3]) this_scheme=3;
+
+        if (this_scheme!=3) {
+            if (poem_scheme==-1) poem_scheme=this_scheme;
+            else if (poem_scheme!=this_scheme) {
+                printf("NO\n");
+                return 0;
+            }
+        }
+    }
+
+    if (poem_scheme==-1) poem_scheme=3;
+
+    const char *ans[]={"aabb","abab","abba","aaaa"};
+    printf("%s\n", ans[poem_scheme]);
+    return 0;
+}
 

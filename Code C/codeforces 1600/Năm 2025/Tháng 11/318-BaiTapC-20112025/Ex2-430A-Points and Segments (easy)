@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int points[105];
+    int color[105];
+    int i = 0;
+
+    while (i < n) {
+        scanf("%d", &points[i]);
+        i++;
+    }
+
+    i = 0;
+    while (i < m) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+        i++;
+    }
+
+    int current_color = 0;
+    i = 0;
+    while (i < n) {
+        color[i] = current_color;
+        if (current_color == 0) current_color = 1;
+        else current_color = 0;
+        i++;
+    }
+
+    i = 0;
+    while (i < n) {
+        printf("%d ", color[i]);
+        i++;
+    }
+
+    return 0;
+}
 

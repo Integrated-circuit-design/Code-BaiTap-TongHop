@@ -1,46 +1,48 @@
 #include <stdio.h>
 
+#define MAXN 100000
+
 int main() {
-    int n;
-    scanf("%d", &n);
+    int n, k;
+    scanf("%d %d", &n, &k);
 
-    long long s[205], d[205];
-    long long start[205], finish[205];
+    int a[MAXN];
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
 
-    for(int i = 0; i < n; i++) {
-        scanf("%lld %lld", &s[i], &d[i]);
+    int segments[MAXN];
+    int segLen = 0;
+
+    segments[segLen++] = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] != a[i-1]) segments[segLen++] = a[i];
     }
 
-    int used[2000] = {0};
-    long long max_day = 0;
+    int count[105] = {0};
 
-    for(int i = 0; i < n; i++) {
-        long long t = s[i];
+    for (int i = 0; i < segLen; i++) {
+        int cur = segments[i];
 
-        while(1) {
-            int free = 1;
-            for(long long j = t; j < t + d[i]; j++) {
-                if(j <= max_day && used[j]) {
-                    free = 0;
-                    break;
-                }
-            }
-            if(free) break;
-            t++;
+        if (i > 0) {
+            int prev = segments[i-1];
+            if (prev != cur) count[cur]++;
         }
-
-        start[i] = t;
-        finish[i] = t + d[i] - 1;
-
-        for(long long j = start[i]; j <= finish[i]; j++) {
-            if(j > max_day) max_day = j;
-            if(j < 2000) used[j] = 1;
+        if (i + 1 < segLen) {
+            int next = segments[i+1];
+            if (next != cur) count[cur]++;
         }
     }
 
-    for(int i = 0; i < n; i++) {
-        printf("%lld %lld\n", start[i], finish[i]);
+    int bestGenre = 1;
+    int bestStress = count[1];
+
+    for (int g = 2; g <= k; g++) {
+        if (count[g] < bestStress) {
+            bestStress = count[g];
+            bestGenre = g;
+        }
     }
+
+    printf("%d\n", bestGenre);
 
     return 0;
 }

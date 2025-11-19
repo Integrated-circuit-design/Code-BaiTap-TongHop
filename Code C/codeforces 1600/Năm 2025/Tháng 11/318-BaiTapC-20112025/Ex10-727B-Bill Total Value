@@ -1,1 +1,97 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_LEN 1200
+
+long long parse_price_segment(const char *s, int len) {
+    long long total_cents = 0;
+    char buffer[32];
+    int buf_index = 0;
+    int has_cents = 0;
+
+    for (int i = len - 1; i >= 0; i--) {
+        if (s[i] == '.' && len - 1 - i == 2) {
+            has_cents = 1;
+            break;
+        }
+    }
+
+    if (has_cents) {
+        int cents = (s[len - 2] - '0') * 10 + (s[len - 1] - '0');
+        for (int i = 0; i < len - 3; i++) {
+            if (isdigit(s[i])) buffer[buf_index++] = s[i];
+        }
+        buffer[buf_index] = '\0';
+        long long dollars = 0;
+        sscanf(buffer, "%lld", &dollars);
+        total_cents = dollars * 100 + cents;
+    } else {
+        for (int i = 0; i < len; i++) {
+            if (isdigit(s[i])) buffer[buf_index++] = s[i];
+        }
+        buffer[buf_index] = '\0';
+        long long dollars = 0;
+        sscanf(buffer, "%lld", &dollars);
+        total_cents = dollars * 100;
+    }
+
+    return total_cents;
+}
+
+void print_total(long long total_cents) {
+    long long dollars = total_cents / 100;
+    int cents = total_cents % 100;
+
+    char str[32];
+    sprintf(str, "%lld", dollars);
+    char formatted[64];
+    int len = strlen(str);
+    int idx = 0, count = 0;
+    for (int i = len - 1; i >= 0; i--) {
+        formatted[idx++] = str[i];
+        count++;
+        if (count == 3 && i > 0) {
+            formatted[idx++] = '.';
+            count = 0;
+        }
+    }
+    formatted[idx] = '\0';
+
+    for (int i = 0; i < idx / 2; i++) {
+        char t = formatted[i];
+        formatted[i] = formatted[idx - 1 - i];
+        formatted[idx - 1 - i] = t;
+    }
+
+    printf("%s", formatted);
+    if (cents > 0) printf(".%02d", cents);
+}
+
+int main() {
+    char s[MAX_LEN];
+    scanf("%s", s);
+    int n = strlen(s);
+    long long total_cents = 0;
+
+    int start = 0;
+    int state = 0;
+    for (int i = 0; i <= n; i++) {
+        if (state == 0) {
+            if (!isalpha(s[i]) || i == n) {
+                start = i;
+                state = 1;
+            }
+        } else {
+            if (isalpha(s[i]) || i == n) {
+                total_cents += parse_price_segment(s + start, i - start);
+                start = i;
+                state = 0;
+            }
+        }
+    }
+
+    print_total(total_cents);
+    return 0;
+}
 

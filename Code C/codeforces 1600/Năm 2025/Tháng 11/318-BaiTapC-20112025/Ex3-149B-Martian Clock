@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <string.h>
+
+int digit_value(char c) {
+    return (c >= '0' && c <= '9') ? (c - '0') : (c - 'A' + 10);
+}
+
+int is_valid_time(const char *str, long long base, long long limit) {
+    long long val = 0;
+    for (int i = 0; str[i]; i++) {
+        int d = digit_value(str[i]);
+        if (d >= base) return 0;
+        if (val > (limit - d) / base) return 0;
+        val = val * base + d;
+    }
+    return val <= limit;
+}
+
+int main() {
+    char input[32];
+    scanf("%31s", input);
+
+    char *h_str = strtok(input, ":");
+    char *m_str = strtok(NULL, ":");
+
+    int max_digit = 0;
+    for (int i = 0; h_str[i]; i++) {
+        int d = digit_value(h_str[i]);
+        if (d > max_digit) max_digit = d;
+    }
+    for (int i = 0; m_str[i]; i++) {
+        int d = digit_value(m_str[i]);
+        if (d > max_digit) max_digit = d;
+    }
+
+    long long base = (max_digit + 1 < 2) ? 2 : max_digit + 1;
+
+    if (strlen(h_str) == 1 && strlen(m_str) == 1) {
+        if (digit_value(h_str[0]) <= 23 && digit_value(m_str[0]) <= 59) {
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    int found = 0;
+    for (long long b = base;; b++) {
+        int valid_h = is_valid_time(h_str, b, 23);
+        int valid_m = is_valid_time(m_str, b, 59);
+
+        if (valid_h && valid_m) {
+            if (found) printf(" ");
+            printf("%lld", b);
+            found = 1;
+        }
+
+        if (!valid_h || !valid_m) break;
+    }
+
+    if (!found) printf("0\n");
+    else printf("\n");
+
+    return 0;
+}
 

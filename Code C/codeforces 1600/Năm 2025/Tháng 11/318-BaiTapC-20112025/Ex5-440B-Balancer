@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long *boxes = (long long*) malloc(n * sizeof(long long));
+    long long total = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &boxes[i]);
+        total += boxes[i];
+    }
+
+    long long target = total / n;
+    long long moves = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        long long diff = boxes[i] - target;
+        boxes[i + 1] += diff;
+        moves += (diff > 0 ? diff : -diff);
+    }
+
+    printf("%lld\n", moves);
+
+    free(boxes);
+    return 0;
+}
 

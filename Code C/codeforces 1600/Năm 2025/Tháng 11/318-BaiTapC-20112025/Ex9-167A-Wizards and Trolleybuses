@@ -1,1 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long k;
+    scanf("%d %lld", &n, &k);
+
+    long long ratings[n];
+    int indices[n];
+    for(int i=0; i<n; i++) {
+        scanf("%lld", &ratings[i]);
+        indices[i] = i+1;
+    }
+
+    int removed[n];
+    int removed_count = 0;
+
+    int changed;
+    do {
+        changed = 0;
+        long long sum_before = 0;
+        int count_before = 0;
+
+        for(int i=0; i<n; i++) {
+            if(ratings[i] == -1) continue;
+
+            long long di = ratings[i]*count_before - sum_before;
+
+            if(di < k) {
+                removed[removed_count++] = indices[i];
+                ratings[i] = -1;
+                changed = 1;
+                break;
+            }
+
+            sum_before += ratings[i];
+            count_before++;
+        }
+    } while(changed);
+
+    for(int i=0; i<removed_count; i++)
+        printf("%d\n", removed[i]);
+
+    return 0;
+}
 

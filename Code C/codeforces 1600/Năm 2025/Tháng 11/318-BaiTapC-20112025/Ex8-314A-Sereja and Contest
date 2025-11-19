@@ -1,48 +1,45 @@
 #include <stdio.h>
 
-#define MAXN 100000
-
 int main() {
-    int n, k;
-    scanf("%d %d", &n, &k);
+    int n;
+    long long k;
+    scanf("%d %lld", &n, &k);
 
-    int a[MAXN];
-    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
-
-    int segments[MAXN];
-    int segLen = 0;
-
-    segments[segLen++] = a[0];
-    for (int i = 1; i < n; i++) {
-        if (a[i] != a[i-1]) segments[segLen++] = a[i];
+    long long ratings[n];
+    int indices[n];
+    for(int i=0; i<n; i++) {
+        scanf("%lld", &ratings[i]);
+        indices[i] = i+1;
     }
 
-    int count[105] = {0};
+    int removed[n];
+    int removed_count = 0;
 
-    for (int i = 0; i < segLen; i++) {
-        int cur = segments[i];
+    int changed;
+    do {
+        changed = 0;
+        long long sum_before = 0;
+        int count_before = 0;
 
-        if (i > 0) {
-            int prev = segments[i-1];
-            if (prev != cur) count[cur]++;
+        for(int i=0; i<n; i++) {
+            if(ratings[i] == -1) continue;
+
+            long long di = ratings[i]*count_before - sum_before;
+
+            if(di < k) {
+                removed[removed_count++] = indices[i];
+                ratings[i] = -1;
+                changed = 1;
+                break;
+            }
+
+            sum_before += ratings[i];
+            count_before++;
         }
-        if (i + 1 < segLen) {
-            int next = segments[i+1];
-            if (next != cur) count[cur]++;
-        }
-    }
+    } while(changed);
 
-    int bestGenre = 1;
-    int bestStress = count[1];
-
-    for (int g = 2; g <= k; g++) {
-        if (count[g] < bestStress) {
-            bestStress = count[g];
-            bestGenre = g;
-        }
-    }
-
-    printf("%d\n", bestGenre);
+    for(int i=0; i<removed_count; i++)
+        printf("%d\n", removed[i]);
 
     return 0;
 }

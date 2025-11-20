@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAX_N 3
+#define MAX_K 5
+
+char model[MAX_N][MAX_N];
+int n, k;
+
+void drawFractal(int step, int x, int y, int size) {
+    if(step == 0) return;
+
+    int block = size / n;
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            if(model[i][j] == '*') {
+                for(int dx = 0; dx < block; dx++) {
+                    for(int dy = 0; dy < block; dy++) {
+                        putchar('*');
+                        if(dy == block - 1) putchar('\n');
+                    }
+                }
+            } else {
+                drawFractal(step - 1, x + i*block, y + j*block, block);
+            }
+        }
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+    for(int i = 0; i < n; i++)
+        scanf("%s", model[i]);
+
+    int size = 1;
+    for(int i = 0; i < k; i++) size *= n;
+
+    for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            int xx = i, yy = j;
+            int tempSize = size;
+            int isBlack = 0;
+            for(int step = 0; step < k; step++) {
+                int block = tempSize / n;
+                int bi = xx / block;
+                int bj = yy / block;
+                if(model[bi][bj] == '*') { isBlack = 1; break; }
+                xx %= block; yy %= block;
+                tempSize = block;
+            }
+            putchar(isBlack ? '*' : '.');
+        }
+        putchar('\n');
+    }
+
+    return 0;
+}
 

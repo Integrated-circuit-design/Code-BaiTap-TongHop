@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <stdint.h>
+
+#define MAXN 100005
+
+typedef struct {
+    uint32_t ip;
+    int used;
+} IPEntry;
+
+IPEntry ip_list[MAXN];
+
+uint32_t ip_to_int(int a,int b,int c,int d){
+    return ((uint32_t)a<<24)|((uint32_t)b<<16)|((uint32_t)c<<8)|d;
+}
+
+uint32_t read_ip(){
+    int a,b,c,d;
+    scanf("%d.%d.%d.%d",&a,&b,&c,&d);
+    return ip_to_int(a,b,c,d);
+}
+
+void print_ip(uint32_t x){
+    printf("%u.%u.%u.%u\n",
+        (x>>24)&255,
+        (x>>16)&255,
+        (x>>8)&255,
+        x&255
+    );
+}
+
+int count_networks(int n, uint32_t mask){
+    int cnt = 0;
+    for(int i=0;i<n;i++) ip_list[i].used = 0;
+
+    for(int i=0;i<n;i++){
+        uint32_t net = ip_list[i].ip & mask;
+        int found = 0;
+        for(int j=0;j<i;j++){
+            if(ip_list[j].used && (ip_list[j].ip & mask)==net){
+                found = 1;
+                break;
+            }
+        }
+        if(!found){
+            ip_list[i].used = 1;
+            cnt++;
+        }
+    }
+    return cnt;
+}
+
+int main(){
+    int n,k;
+    scanf("%d %d",&n,&k);
+
+    for(int i=0;i<n;i++){
+        ip_list[i].ip = read_ip();
+        ip_list[i].used = 0;
+    }
+
+    int found = 0;
+    for(int L=1;L<32;L++){
+        uint32_t mask = (~0u) << (32-L);
+        int nets = count_networks(n, mask);
+        if(nets==k){
+            print_ip(mask);
+            found = 1;
+            break;
+        }
+    }
+
+    if(!found) printf("-1\n");
+
+    return 0;
+}
 

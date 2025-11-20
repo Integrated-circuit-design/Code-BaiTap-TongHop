@@ -1,1 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n;
+    scanf("%d\n", &n);
+
+    static char text[10005];
+    fgets(text, sizeof(text), stdin);
+
+    int messages = 0;
+    char *p = text;
+
+    while (*p) {
+        while (*p == ' ') p++;
+
+        char *start = p;
+        int length = 0;
+
+        while (*p && *p != '.' && *p != '?' && *p != '!') {
+            length++;
+            p++;
+        }
+
+        if (!*p) break;
+
+        length++;
+        p++;
+
+        if (length > n) {
+            printf("Impossible\n");
+            return 0;
+        }
+
+        static int cur_len = 0;
+        if (cur_len == 0) {
+            cur_len = length;
+            messages++;
+        } else {
+            if (cur_len + 1 + length <= n) {
+                cur_len += 1 + length;
+            } else {
+                cur_len = length;
+                messages++;
+            }
+        }
+    }
+
+    printf("%d\n", messages);
+    return 0;
+}
 

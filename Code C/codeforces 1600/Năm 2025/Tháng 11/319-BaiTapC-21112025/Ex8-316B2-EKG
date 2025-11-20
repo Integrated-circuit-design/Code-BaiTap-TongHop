@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+int n, x;
+int a[1005];
+int chain[1005][1005];
+int len[1005];
+int k = 0;
+int positions[100000];
+int pcount = 0;
+
+void dfs(int idx, int sum, int cx, int pos_in_chain) {
+    if (idx == k) {
+        positions[pcount++] = sum + pos_in_chain;
+        return;
+    }
+    if (idx == cx) {
+        dfs(idx + 1, sum, cx, pos_in_chain);
+        return;
+    }
+    dfs(idx + 1, sum + len[idx], cx, pos_in_chain);
+    dfs(idx + 1, sum, cx, pos_in_chain);
+}
+
+int main() {
+    scanf("%d %d", &n, &x);
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+    int used[1005] = {0};
+
+    for (int i = 1; i <= n; i++) {
+        if (!used[i] && a[i] == 0) {
+            int u = i;
+            len[k] = 0;
+            while (u) {
+                chain[k][len[k]++] = u;
+                used[u] = 1;
+                u = 0;
+                for (int j = 1; j <= n; j++)
+                    if (a[j] == chain[k][len[k]-1]) { u = j; break; }
+            }
+            k++;
+        }
+    }
+
+    int cx = -1, pos_in_chain = -1;
+    for (int i = 0; i < k; i++)
+        for (int j = 0; j < len[i]; j++)
+            if (chain[i][j] == x) { cx = i; pos_in_chain = j + 1; break; }
+
+    dfs(0, 0, cx, pos_in_chain);
+
+    for (int i = 0; i < pcount; i++) {
+        for (int j = i + 1; j < pcount; j++)
+            if (positions[i] > positions[j]) {
+                int t = positions[i]; positions[i] = positions[j]; positions[j] = t;
+            }
+    }
+
+    for (int i = 0; i < pcount; i++)
+        printf("%d\n", positions[i]);
+
+    return 0;
+}
 

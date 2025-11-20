@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+typedef struct { long long x, y; } Point;
+
+Point ships[10], bases[10];
+int R, B;
+int match[10];
+int found = 0;
+
+long long orient(Point a, Point b, Point c) {
+    return (b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x);
+}
+
+int isIntersect(Point a, Point b, Point c, Point d) {
+    long long o1 = orient(a,b,c);
+    long long o2 = orient(a,b,d);
+    long long o3 = orient(c,d,a);
+    long long o4 = orient(c,d,b);
+    return ((o1*o2<0) && (o3*o4<0));
+}
+
+int valid() {
+    for(int i=0;i<B;i++)
+        if(match[i] != -1)
+            for(int j=i+1;j<B;j++)
+                if(match[j] != -1)
+                    if(isIntersect(ships[match[i]], bases[i], ships[match[j]], bases[j]))
+                        return 0;
+    return 1;
+}
+
+void assignBase(int idx) {
+    if(found) return;
+    if(idx == B) { 
+        if(valid()) found = 1;
+        return;
+    }
+    for(int t=0; t<R; t++) {
+        int used = 0;
+        for(int k=0;k<B;k++) if(match[k]==t) used=1;
+        if(!used) {
+            match[idx] = t;
+            assignBase(idx+1);
+            match[idx] = -1;
+        }
+    }
+}
+
+int main() {
+    scanf("%d %d",&R,&B);
+    for(int i=0;i<R;i++) scanf("%lld %lld",&ships[i].x,&ships[i].y);
+    for(int i=0;i<B;i++) scanf("%lld %lld",&bases[i].x,&bases[i].y);
+
+    if(R != B) { printf("No"); return 0; }
+
+    for(int i=0;i<B;i++) match[i] = -1;
+
+    assignBase(0);
+
+    printf(found ? "Yes" : "No");
+    return 0;
+}
 

@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+#define MAX_DIGITS 10
+
+int toDigits(long long n, int digits[]) {
+    int len = 0;
+    if (n == 0) {
+        digits[0] = 0;
+        return 1;
+    }
+    while (n > 0) {
+        digits[len++] = n % 10;
+        n /= 10;
+    }
+    return len;
+}
+
+long long reflectFromDigits(int digits[], int len) {
+    long long result = 0;
+    long long mul = 1;
+    for (int i = 0; i < len; i++) {
+        int r = 9 - digits[i];
+        result += r * mul;
+        mul *= 10;
+    }
+    return result;
+}
+
+long long weight(long long n) {
+    int digits[MAX_DIGITS];
+    int len = toDigits(n, digits);
+    long long ref = reflectFromDigits(digits, len);
+    return n * ref;
+}
+
+int main() {
+    long long l, r;
+    scanf("%lld %lld", &l, &r);
+
+    long long maxWeight = 0;
+
+    long long w = weight(l);
+    if (w > maxWeight) maxWeight = w;
+    if (r != l) {
+        w = weight(r);
+        if (w > maxWeight) maxWeight = w;
+    }
+
+    long long p = 1;
+    while (p <= r) {
+        if (p >= l) {
+            w = weight(p);
+            if (w > maxWeight) maxWeight = w;
+        }
+        if (p > r / 10) break;
+        p *= 10;
+    }
+
+    printf("%lld\n", maxWeight);
+    return 0;
+}
 

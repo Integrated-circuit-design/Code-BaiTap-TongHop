@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 105
+
+char w[MAX];
+char forbidden[MAX][MAX];
+int n;
+
+int main() {
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        scanf("%s", forbidden[i]);
+    }
+
+    scanf("%s", w);
+    int len_w = strlen(w);
+
+    char letter;
+    scanf(" %c", &letter);
+
+    int cover[MAX] = {0};
+
+    for(int i = 0; i < n; i++) {
+        int len_f = strlen(forbidden[i]);
+        for(int j = 0; j + len_f <= len_w; j++) {
+            int match = 1;
+            for(int k = 0; k < len_f; k++) {
+                if(tolower(w[j + k]) != tolower(forbidden[i][k])) {
+                    match = 0;
+                    break;
+                }
+            }
+            if(match) {
+                for(int k = j; k < j + len_f; k++) cover[k] = 1;
+            }
+        }
+    }
+
+    for(int i = 0; i < len_w; i++) {
+        if(cover[i] == 0) {
+            putchar(w[i]);
+        } else {
+            if(isupper(w[i])) putchar(toupper(letter));
+            else putchar(letter);
+        }
+    }
+    putchar('\n');
+    return 0;
+}
 

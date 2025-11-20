@@ -1,1 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int cmp(const void *a, const void *b) {
+    ll x = *(ll*)a;
+    ll y = *(ll*)b;
+    return (x > y) - (x < y);
+}
+
+typedef struct {
+    char type;
+    ll length;
+} Command;
+
+int main() {
+    int n;
+    ll m, s, d;
+    scanf("%d %lld %lld %lld", &n, &m, &s, &d);
+
+    ll *obstacles = (ll*)malloc(n * sizeof(ll));
+    for (int i = 0; i < n; i++) scanf("%lld", &obstacles[i]);
+
+    qsort(obstacles, n, sizeof(ll), cmp);
+
+    ll pos = 0;
+    Command commands[400005];
+    int cmd_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        ll left = obstacles[i];
+        ll right = left;
+
+        while (i + 1 < n && obstacles[i + 1] == right + 1) {
+            i++;
+            right = obstacles[i];
+        }
+
+        ll run_to = left - s;
+        if (run_to < pos) {
+            printf("IMPOSSIBLE\n");
+            free(obstacles);
+            return 0;
+        }
+
+        if (run_to > pos) {
+            commands[cmd_count].type = 'R';
+            commands[cmd_count].length = run_to - pos;
+            cmd_count++;
+            pos = run_to;
+        }
+
+        ll jump_len = right - pos + 1;
+        if (jump_len > d) {
+            printf("IMPOSSIBLE\n");
+            free(obstacles);
+            return 0;
+        }
+        commands[cmd_count].type = 'J';
+        commands[cmd_count].length = jump_len;
+        cmd_count++;
+        pos = right + 1;
+    }
+
+    if (pos < m) {
+        commands[cmd_count].type = 'R';
+        commands[cmd_count].length = m - pos;
+        cmd_count++;
+        pos = m;
+    }
+
+    for (int i = 0; i < cmd_count; i++) {
+        if (commands[i].type == 'R') {
+            printf("RUN %lld>\n", commands[i].length);
+        } else {
+            printf("JUMP %lld\n", commands[i].length);
+        }
+    }
+
+    free(obstacles);
+    return 0;
+}
 

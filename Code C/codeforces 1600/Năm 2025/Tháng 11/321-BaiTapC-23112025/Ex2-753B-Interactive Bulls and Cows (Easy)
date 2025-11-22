@@ -1,1 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    char guess[5];
+    char candidate[5];
+    int finished = 0;
+
+    for (int a = 0; a <= 9 && !finished; a++)
+    for (int b = 0; b <= 9 && !finished; b++) if (b != a)
+    for (int c = 0; c <= 9 && !finished; c++) if (c != a && c != b)
+    for (int d = 0; d <= 9 && !finished; d++) if (d != a && d != b && d != c) {
+
+        candidate[0] = a+'0';
+        candidate[1] = b+'0';
+        candidate[2] = c+'0';
+        candidate[3] = d+'0';
+        candidate[4] = '\0';
+
+        printf("%s\n", candidate);
+        fflush(stdout);
+
+        int bulls, cows;
+        if (scanf("%d %d", &bulls, &cows) != 2) return 0;
+        if (bulls == 4 && cows == 0) {
+            finished = 1;
+            break;
+        }
+    }
+
+    return 0;
+}
 

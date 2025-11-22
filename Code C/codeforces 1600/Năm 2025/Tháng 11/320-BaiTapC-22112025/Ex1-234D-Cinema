@@ -1,1 +1,62 @@
+#include <stdio.h>
+
+int main() {
+    int m, k;
+    scanf("%d %d", &m, &k);
+
+    int fav[101] = {0};
+    for (int i = 0; i < k; i++) {
+        int x;
+        scanf("%d", &x);
+        fav[x] = 1;
+    }
+
+    int n;
+    scanf("%d", &n);
+
+    int sure[101], possible[101];
+
+    for (int i = 0; i < n; i++) {
+        char name[15];
+        scanf("%s", name);
+
+        int d;
+        scanf("%d", &d);
+
+        int countSure = 0;
+        int countUnknown = 0;
+
+        for (int j = 0; j < d; j++) {
+            int actor;
+            scanf("%d", &actor);
+            if (actor == 0) countUnknown++;
+            else if (fav[actor]) countSure++;
+        }
+
+        sure[i] = countSure;
+        int maxPossible = countSure + countUnknown;
+        if (maxPossible > k) maxPossible = k;
+        possible[i] = maxPossible;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int sureFavorite = 1;
+        int notFavorite = 0;
+
+        for (int j = 0; j < n; j++) {
+            if (i == j) continue;
+
+            if (possible[j] > sure[i])
+                sureFavorite = 0;
+            if (sure[j] > possible[i])
+                notFavorite = 1;
+        }
+
+        if (sureFavorite) printf("0\n");
+        else if (notFavorite) printf("1\n");
+        else printf("2\n");
+    }
+
+    return 0;
+}
 

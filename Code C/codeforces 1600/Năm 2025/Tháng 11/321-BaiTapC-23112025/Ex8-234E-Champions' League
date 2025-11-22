@@ -1,1 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+    char name[25];
+    int rating;
+} Club;
+
+int compare(const void *p1, const void *p2) {
+    Club *c1 = (Club*)p1;
+    Club *c2 = (Club*)p2;
+    return c2->rating - c1->rating;
+}
+
+unsigned int seed, mul, add, mod;
+
+unsigned int getRandom() {
+    seed = (unsigned long long)seed * mul + add;
+    return seed % mod;
+}
+
+int main() {
+    int total;
+    scanf("%d", &total);
+    scanf("%u %u %u %u", &seed, &mul, &add, &mod);
+
+    Club all[70];
+    for (int i = 0; i < total; i++)
+        scanf("%s %d", all[i].name, &all[i].rating);
+
+    qsort(all, total, sizeof(Club), compare);
+
+    int groupCount = total / 4;
+
+    Club baskets[4][70];
+    int remain[4];
+    for (int i = 0; i < 4; i++) {
+        remain[i] = groupCount;
+        for (int j = 0; j < groupCount; j++)
+            baskets[i][j] = all[i*groupCount + j];
+    }
+
+    Club result[20][4];
+
+    for (int g = 0; g < groupCount; g++) {
+        for (int b = 0; b < 4; b++) {
+            int index = getRandom() % remain[b];
+            result[g][b] = baskets[b][index];
+            for (int t = index; t < remain[b]-1; t++)
+                baskets[b][t] = baskets[b][t+1];
+            remain[b]--;
+        }
+    }
+
+    for (int g = 0; g < groupCount; g++) {
+        printf("Group %c:\n", 'A'+g);
+        for (int t = 0; t < 4; t++)
+            printf("%s\n", result[g][t].name);
+    }
+
+    return 0;
+}
 

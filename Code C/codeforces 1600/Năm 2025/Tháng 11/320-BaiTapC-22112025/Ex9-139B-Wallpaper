@@ -1,1 +1,60 @@
+#include <stdio.h>
+#include <limits.h>
+
+typedef struct {
+    int length;
+    int width;
+    int height;
+} Room;
+
+typedef struct {
+    int rollLength;
+    int rollWidth;
+    int price;
+} Wallpaper;
+
+long long ceil_div(long long a, long long b) {
+    return (a + b - 1) / b;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    Room rooms[500];
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d %d", &rooms[i].length, &rooms[i].width, &rooms[i].height);
+    }
+
+    int m;
+    scanf("%d", &m);
+
+    Wallpaper wallpapers[500];
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d %d", &wallpapers[i].rollLength, &wallpapers[i].rollWidth, &wallpapers[i].price);
+    }
+
+    long long totalCost = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long perimeter = 2LL * (rooms[i].length + rooms[i].width);
+        long long minCost = LLONG_MAX;
+
+        for (int j = 0; j < m; j++) {
+            if (wallpapers[j].rollLength < rooms[i].height) continue;
+
+            long long stripsPerRoll = wallpapers[j].rollLength / rooms[i].height;
+            long long coveragePerRoll = stripsPerRoll * (long long)wallpapers[j].rollWidth;
+            long long rollsNeeded = ceil_div(perimeter, coveragePerRoll);
+            long long cost = rollsNeeded * (long long)wallpapers[j].price;
+
+            if (cost < minCost) minCost = cost;
+        }
+
+        totalCost += minCost;
+    }
+
+    printf("%lld\n", totalCost);
+    return 0;
+}
 

@@ -1,1 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+#define INF 1000000000
+
+typedef long long ll;
+
+int gcd(int a, int b){
+    while(b){ int t=a%b; a=b; b=t; }
+    return a;
+}
+
+typedef struct {
+    int v;
+    int w;
+} Node;
+
+typedef struct {
+    Node *h;
+    int size;
+} Heap;
+
+void push(Heap *heap, int v, int w){
+    heap->h[++heap->size] = (Node){v,w};
+    int i = heap->size;
+    while(i>1 && heap->h[i].w < heap->h[i/2].w){
+        Node tmp = heap->h[i]; heap->h[i]=heap->h[i/2]; heap->h[i/2]=tmp;
+        i/=2;
+    }
+}
+
+Node pop(Heap *heap){
+    Node top = heap->h[1];
+    heap->h[1] = heap->h[heap->size--];
+    int i=1;
+    while(1){
+        int l = i*2, r = i*2+1, smallest=i;
+        if(l<=heap->size && heap->h[l].w<heap->h[smallest].w) smallest=l;
+        if(r<=heap->size && heap->h[r].w<heap->h[smallest].w) smallest=r;
+        if(smallest==i) break;
+        Node tmp = heap->h[i]; heap->h[i]=heap->h[smallest]; heap->h[smallest]=tmp;
+        i = smallest;
+    }
+    return top;
+}
+
+int main(){
+    int n;
+    scanf("%d",&n);
+    int *p = (int*)malloc(sizeof(int)*(n+1));
+    for(int i=1;i<=n;i++) scanf("%d",&p[i]);
+
+    int *visited = (int*)calloc(n+1,sizeof(int));
+    int *minCost = (int*)malloc(sizeof(int)*(n+1));
+    for(int i=1;i<=n;i++) minCost[i] = INF;
+
+    Heap heap; heap.h = (Node*)malloc(sizeof(Node)*(n+5)); heap.size=0;
+
+    minCost[1]=0;
+    push(&heap,1,0);
+    ll total=0;
+    
+    while(heap.size){
+        Node cur = pop(&heap);
+        int u = cur.v;
+        if(visited[u]) continue;
+        visited[u]=1;
+        total += cur.w;
+
+        for(int v=1;v<=n;v++){
+            if(!visited[v]){
+                int g = 0;
+                if(u<v){
+                    g = p[u];
+                    for(int k=u+1;k<=v;k++) g = gcd(g,p[k]);
+                } else {
+                    g = p[v];
+                    for(int k=v+1;k<=u;k++) g = gcd(g,p[k]);
+                }
+                if(g < minCost[v]){
+                    minCost[v] = g;
+                    push(&heap,v,g);
+                }
+            }
+        }
+    }
+
+    printf("%lld\n",total);
+
+    free(p);
+    free(heap.h);
+    free(visited);
+    free(minCost);
+    return 0;
+}
 

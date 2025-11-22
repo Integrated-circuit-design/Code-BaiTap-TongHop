@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+typedef struct {
+    int l;
+    int r;
+    int x;
+} Stairway;
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    Stairway stairs[100005];
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d %d", &stairs[i].l, &stairs[i].r, &stairs[i].x);
+    }
+
+    int queries[105];
+    for (int i = 0; i < k; i++) {
+        scanf("%d", &queries[i]);
+    }
+
+    ll total = 0;
+
+    for (int qi = 0; qi < k; qi++) {
+        int pos = queries[qi];
+
+        for (int si = 0; si < m; si++) {
+            if (pos >= stairs[si].l && pos <= stairs[si].r) {
+                total += (ll)stairs[si].x + (pos - stairs[si].l);
+            }
+        }
+    }
+
+    printf("%lld\n", total);
+
+    return 0;
+}
 

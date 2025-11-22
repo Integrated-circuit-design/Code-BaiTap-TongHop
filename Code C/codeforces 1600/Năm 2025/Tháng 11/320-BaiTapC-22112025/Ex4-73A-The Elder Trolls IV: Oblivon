@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll min(ll a, ll b) { return a < b ? a : b; }
+
+int main() {
+    ll x, y, z, k;
+    scanf("%lld %lld %lld %lld", &x, &y, &z, &k);
+
+    ll partX = 1, partY = 1, partZ = 1;
+    ll cuts = k;
+
+    ll addX = min(x - 1, cuts);
+    partX += addX;
+    cuts -= addX;
+
+    ll addY = min(y - 1, cuts);
+    partY += addY;
+    cuts -= addY;
+
+    ll addZ = min(z - 1, cuts);
+    partZ += addZ;
+    cuts -= addZ;
+
+    ll result = partX * partY * partZ;
+    printf("%lld\n", result);
+
+    return 0;
+}
 

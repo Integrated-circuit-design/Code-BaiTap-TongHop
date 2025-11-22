@@ -1,1 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_M 100
+#define MAX_PEOPLE 200
+
+typedef struct {
+    long long id;
+    long long friends[MAX_PEOPLE];
+    int fcount;
+} Person;
+
+Person people[MAX_PEOPLE];
+int n = 0;
+
+int find_person(long long id){
+    for(int i = 0; i < n; i++)
+        if(people[i].id == id) return i;
+    return -1;
+}
+
+int are_friends(int u, int v){
+    for(int i = 0; i < people[u].fcount; i++)
+        if(people[u].friends[i] == people[v].id)
+            return 1;
+    return 0;
+}
+
+int cmp_id(const void* a, const void* b){
+    long long x = *(long long*)a;
+    long long y = *(long long*)b;
+    return (x < y ? -1 : (x > y ? 1 : 0));
+}
+
+int main(){
+    int m, k;
+    scanf("%d %d", &m, &k);
+
+    long long a[MAX_M], b[MAX_M];
+    long long id_list[MAX_PEOPLE*2];
+    int id_count = 0;
+
+    for(int i = 0; i < m; i++){
+        scanf("%lld %lld", &a[i], &b[i]);
+        id_list[id_count++] = a[i];
+        id_list[id_count++] = b[i];
+    }
+
+    qsort(id_list, id_count, sizeof(long long), cmp_id);
+    int unique_count = 0;
+    for(int i = 0; i < id_count; i++){
+        if(i == 0 || id_list[i] != id_list[i-1])
+            people[unique_count++].id = id_list[i];
+    }
+    n = unique_count;
+
+    for(int i = 0; i < n; i++)
+        people[i].fcount = 0;
+
+    for(int i = 0; i < m; i++){
+        int u = find_person(a[i]);
+        int v = find_person(b[i]);
+        people[u].friends[people[u].fcount++] = people[v].id;
+        people[v].friends[people[v].fcount++] = people[u].id;
+    }
+
+    for(int i = 0; i < n; i++){
+        int suggested[MAX_PEOPLE];
+        int s_count = 0;
+
+        for(int j = 0; j < n; j++){
+            if(i == j) continue;
+            if(are_friends(i,j)) continue;
+
+            int common = 0;
+            for(int fi = 0; fi < people[i].fcount; fi++){
+                for(int fj = 0; fj < people[j].fcount; fj++){
+                    if(people[i].friends[fi] == people[j].friends[fj]){
+                        common++;
+                        break;
+                    }
+                }
+            }
+
+            if(people[i].fcount > 0 && common * 100 >= k * people[i].fcount){
+                suggested[s_count++] = people[j].id;
+            }
+        }
+
+        qsort(suggested, s_count, sizeof(int), cmp_id);
+
+        printf("%lld: %d", people[i].id, s_count);
+        for(int x = 0; x < s_count; x++)
+            printf(" %d", suggested[x]);
+        printf("\n");
+    }
+
+    return 0;
+}
 

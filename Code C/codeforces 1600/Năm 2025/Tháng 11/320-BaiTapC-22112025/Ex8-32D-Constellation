@@ -1,1 +1,56 @@
+#include <stdio.h>
+
+#define MAX 305
+
+char grid[MAX][MAX];
+int n, m;
+long long k;
+
+int isCross(int r, int c, int x) {
+    if (r - x < 1 || r + x > n || c - x < 1 || c + x > m)
+        return 0;
+    if (grid[r - x][c] != '*') return 0;
+    if (grid[r + x][c] != '*') return 0;
+    if (grid[r][c - x] != '*') return 0;
+    if (grid[r][c + x] != '*') return 0;
+    return 1;
+}
+
+int main() {
+    scanf("%d %d %lld", &n, &m, &k);
+    for (int i = 1; i <= n; i++)
+        scanf("%s", grid[i] + 1);
+
+    long long count = 0;
+
+    for (int r = 1; r <= n; r++) {
+        for (int c = 1; c <= m; c++) {
+            if (grid[r][c] != '*') continue;
+
+            int maxRadius = r - 1;
+            if (maxRadius > n - r) maxRadius = n - r;
+            if (maxRadius > c - 1) maxRadius = c - 1;
+            if (maxRadius > m - c) maxRadius = m - c;
+
+            for (int x = 1; x <= maxRadius; x++) {
+                if (isCross(r, c, x)) {
+                    count++;
+                    if (count == k) {
+                        printf("%d %d\n", r, c);
+                        printf("%d %d\n", r - x, c);
+                        printf("%d %d\n", r + x, c);
+                        printf("%d %d\n", r, c - x);
+                        printf("%d %d\n", r, c + x);
+                        return 0;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

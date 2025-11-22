@@ -1,1 +1,27 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+int main() {
+    ll n, m, x;
+    scanf("%lld %lld", &n, &m);
+    scanf("%lld", &x);
+
+    ll count = 0;
+
+    for (ll i = 1; i <= n; i++) {
+        for (ll j = 1; j <= m; j++) {
+            ll layer = i - 1;
+            if (layer > n - i) layer = n - i;
+            ll temp = j - 1;
+            if (temp > m - j) temp = m - j;
+            if (temp < layer) layer = temp;
+
+            if (layer == x - 1) count++;
+        }
+    }
+
+    printf("%lld\n", count);
+    return 0;
+}
 

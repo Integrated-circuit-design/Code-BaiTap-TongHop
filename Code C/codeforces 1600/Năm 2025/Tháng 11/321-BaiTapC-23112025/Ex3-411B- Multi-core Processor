@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    int instr[105][105];
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+            scanf("%d", &instr[i][j]);
+
+    int coreLocked[105] = {0};
+    int cellLocked[105] = {0};
+
+    for (int cycle = 1; cycle <= m; cycle++) {
+        int cellUsage[105] = {0};
+        int cellFirstCore[105] = {0};
+
+        for (int i = 1; i <= n; i++) {
+            if (coreLocked[i]) continue;
+            int c = instr[i][cycle];
+            if (c == 0) continue;
+            if (cellLocked[c]) {
+                coreLocked[i] = cycle;
+                continue;
+            }
+            cellUsage[c]++;
+            if (cellUsage[c] == 1)
+                cellFirstCore[c] = i;
+        }
+
+        for (int c = 1; c <= k; c++) {
+            if (cellUsage[c] > 1) {
+                cellLocked[c] = 1;
+                for (int i = 1; i <= n; i++) {
+                    if (!coreLocked[i] && instr[i][cycle] == c)
+                        coreLocked[i] = cycle;
+                }
+            }
+        }
+    }
+
+    for (int i = 1; i <= n; i++)
+        printf("%d\n", coreLocked[i]);
+
+    return 0;
+}
 

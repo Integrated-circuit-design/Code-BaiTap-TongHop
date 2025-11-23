@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+char s[300005];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%s", s + 1);
+        int n = strlen(s + 1);
+
+        int people = 0;
+        int min_people = 0;
+        int min_pos = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (s[i] == '+') people++;
+            else people--;
+
+            if (people < min_people) {
+                min_people = people;
+                min_pos = i;
+            }
+        }
+
+        if (min_people >= 0) {
+            printf("1 1\n");
+            continue;
+        }
+
+        int pos_plus = -1, pos_minus = -1;
+
+        for (int i = 1; i <= min_pos; i++) {
+            if (s[i] == '+') {
+                pos_plus = i;
+                break;
+            }
+        }
+
+        for (int i = min_pos + 1; i <= n; i++) {
+            if (s[i] == '-') {
+                pos_minus = i;
+                break;
+            }
+        }
+
+        if (pos_plus != -1 && pos_minus != -1) {
+            printf("%d %d\n", pos_plus, pos_minus);
+        } else {
+            printf("-1\n");
+        }
+    }
+    return 0;
+}
 

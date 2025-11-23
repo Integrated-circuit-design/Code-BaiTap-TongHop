@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    int x[505], y[505];
+    for(int i=0;i<n;i++) scanf("%d %d",&x[i],&y[i]);
+
+    int rods[505];
+    for(int i=0;i<m;i++) scanf("%d",&rods[i]);
+
+    int len[505];
+    for(int i=0;i<n;i++){
+        int ni = (i+1)%n;
+        int dx = x[i]-x[ni];
+        int dy = y[i]-y[ni];
+        len[i] = (dx>0?dx:-dx) + (dy>0?dy:-dy);
+    }
+
+    int need[505];
+    for(int i=0;i<n;i++){
+        int prev = (i-1+n)%n;
+        need[i] = len[prev]+len[i];
+    }
+
+    int assign[505];
+    int used[505];
+
+    int success = 0;
+
+    for(int start=0; start<=1 && !success; start++){
+        for(int i=0;i<n;i++) assign[i]=-1;
+        for(int i=0;i<m;i++) used[i]=0;
+
+        int possible = 1;
+        for(int i=start; i<n; i+=2){
+            int found = 0;
+            for(int j=0;j<m;j++){
+                if(!used[j] && rods[j]==need[i]){
+                    assign[i]=j+1;
+                    used[j]=1;
+                    found=1;
+                    break;
+                }
+            }
+            if(!found){
+                possible=0;
+                break;
+            }
+        }
+
+        if(possible){
+            success=1;
+            printf("YES\n");
+            for(int i=0;i<n;i++) printf("%d ", assign[i]);
+            printf("\n");
+            break;
+        }
+    }
+
+    if(!success) printf("NO\n");
+
+    return 0;
+}
 

@@ -1,1 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int k;
+    scanf("%d", &k);
+
+    if (k == 2) {
+        char cube[2][2][2] = {
+            { {'b','b'}, {'w','w'} },
+            { {'b','b'}, {'w','w'} }
+        };
+
+        for (int z = 0; z < 2; z++) {
+            for (int y = 0; y < 2; y++) {
+                for (int x = 0; x < 2; x++) {
+                    putchar(cube[z][y][x]);
+                }
+                putchar('\n');
+            }
+            if (z != 1) putchar('\n');
+        }
+    } else {
+        printf("-1\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[105];
+    scanf("%s", s);
+
+    char stack[105];
+    int top = -1;
+
+    int n = strlen(s);
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '(') {
+            stack[++top] = '(';
+        } else {
+            if (top == -1) {
+                printf("NO\n");
+                return 0;
+            }
+            top--;
+        }
+    }
+
+    if (top == -1) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

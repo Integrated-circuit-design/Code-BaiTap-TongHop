@@ -1,1 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int prices[205];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &prices[i]);
+        }
+
+        long long totalFree = 0;
+        int remaining = n;
+
+        int index = n - 1;
+        while (remaining > 0) {
+            int freeCount = remaining / k;
+            if (freeCount == 0) break;
+
+            for (int i = 0; i < freeCount; i++) {
+                totalFree += prices[index];
+                index--;
+                remaining--;
+            }
+
+            int payCount = k - 1;
+            if (payCount > remaining) payCount = remaining;
+            index -= payCount;
+            remaining -= payCount;
+        }
+
+        printf("%lld\n", totalFree);
+    }
+
+    return 0;
+}
 

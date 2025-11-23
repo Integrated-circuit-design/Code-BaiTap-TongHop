@@ -1,1 +1,128 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN 200005
+#define MAXM 200005
+
+typedef struct {
+    int u, v;
+} Edge;
+
+Edge edges[MAXM];
+int n, m;
+
+int tin[MAXN], low[MAXN], timer;
+int isBridge[MAXM];
+
+void dfs_bridge(int u, int parent, int parentId, int* head, int* next, int* to) {
+    tin[u] = low[u] = ++timer;
+    for (int i = head[u]; i != -1; i = next[i]) {
+        int v = to[i];
+        if (i == parentId) continue;
+        if (!tin[v]) {
+            dfs_bridge(v, u, i, head, next, to);
+            if (low[v] > tin[u]) isBridge[i/2] = 1;
+            if (low[v] < low[u]) low[u] = low[v];
+        } else if (tin[v] < low[u]) {
+            low[u] = tin[v];
+        }
+    }
+}
+
+int par[MAXN];
+int find(int x) {
+    if (par[x] != x) par[x] = find(par[x]);
+    return par[x];
+}
+void unite(int x, int y) {
+    x = find(x); y = find(y);
+    if (x != y) par[y] = x;
+}
+
+typedef struct Node {
+    int to;
+    struct Node* next;
+} Node;
+
+Node* tree[MAXN];
+int depth[MAXN];
+int parent[MAXN];
+
+void addTreeEdge(int u, int v) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->to = v;
+    node->next = tree[u];
+    tree[u] = node;
+}
+
+void dfsTree(int u, int p) {
+    parent[u] = p;
+    for (Node* node = tree[u]; node; node = node->next) {
+        int v = node->to;
+        if (v == p) continue;
+        depth[v] = depth[u] + 1;
+        dfsTree(v, u);
+    }
+}
+
+int countBridge(int u, int v) {
+    int cnt = 0;
+    while (u != v) {
+        if (depth[u] < depth[v]) { int tmp = u; u = v; v = tmp; }
+        u = parent[u];
+        cnt++;
+    }
+    return cnt;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    int head[MAXN], next[MAXM*2], to[MAXM*2];
+    memset(head, -1, sizeof(head));
+    int edgeIdx = 0;
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        edges[i] = (Edge){a, b};
+        to[edgeIdx] = b; next[edgeIdx] = head[a]; head[a] = edgeIdx++;
+        to[edgeIdx] = a; next[edgeIdx] = head[b]; head[b] = edgeIdx++;
+    }
+
+    dfs_bridge(1, -1, -1, head, next, to);
+
+    for (int i = 1; i <= n; i++) par[i] = i;
+
+    for (int i = 0; i < m; i++) {
+        if (!isBridge[i]) {
+            unite(edges[i].u, edges[i].v);
+        }
+    }
+
+    for (int i = 0; i < m; i++) {
+        if (isBridge[i]) {
+            int u = find(edges[i].u);
+            int v = find(edges[i].v);
+            addTreeEdge(u, v);
+            addTreeEdge(v, u);
+        }
+    }
+
+    int root = find(1);
+    depth[root] = 0;
+    dfsTree(root, root);
+
+    int k;
+    scanf("%d", &k);
+    while (k--) {
+        int s, t;
+        scanf("%d %d", &s, &t);
+        int u = find(s);
+        int v = find(t);
+        int ans = countBridge(u, v);
+        printf("%d\n", ans);
+    }
+
+    return 0;
+}
 

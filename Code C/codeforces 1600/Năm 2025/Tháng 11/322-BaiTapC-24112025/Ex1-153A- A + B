@@ -1,1 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100005
+
+int main() {
+    char A[MAX], B[MAX], res[MAX + 5];
+    int lenA, lenB, carry = 0;
+
+    scanf("%s", A);
+    scanf("%s", B);
+
+    lenA = strlen(A);
+    lenB = strlen(B);
+
+    int indexA = lenA - 1;
+    int indexB = lenB - 1;
+    int indexR = 0;
+
+    while (indexA >= 0 || indexB >= 0 || carry) {
+        int numA = (indexA >= 0) ? (A[indexA] - '0') : 0;
+        int numB = (indexB >= 0) ? (B[indexB] - '0') : 0;
+
+        int total = numA + numB + carry;
+        res[indexR++] = (total % 10) + '0';
+        carry = total / 10;
+
+        indexA--;
+        indexB--;
+    }
+
+    for (int i = indexR - 1; i >= 0; i--) {
+        putchar(res[i]);
+    }
+    putchar('\n');
+
+    return 0;
+}
 

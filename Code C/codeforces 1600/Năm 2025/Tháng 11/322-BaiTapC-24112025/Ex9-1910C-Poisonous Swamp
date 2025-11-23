@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        char grid[2][200005];
+        for(int r = 0; r < 2; r++) {
+            scanf("%s", grid[r]);
+        }
+
+        int result = 0;
+
+        for(int col = 0; col < n; col++) {
+            int surviveTop = 0, surviveBottom = 0;
+
+            if(col > 0 && grid[0][col-1] == '*') surviveTop = 1;
+            if(col < n-1 && grid[0][col+1] == '*') surviveTop = 1;
+
+            if(col > 0 && grid[1][col-1] == '*') surviveBottom = 1;
+            if(col < n-1 && grid[1][col+1] == '*') surviveBottom = 1;
+
+            if(surviveTop || surviveBottom) result++;
+        }
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

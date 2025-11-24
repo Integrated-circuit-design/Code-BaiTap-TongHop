@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+int distinguish_bell(int bell_state) {
+    int table[4][2] = {
+        {0, 0},
+        {1, 0},
+        {0, 1},
+        {1, 1}
+    };
+
+    if(bell_state < 0 || bell_state > 3) return -1;
+
+    int q0 = table[bell_state][0];
+    int q1 = table[bell_state][1];
+
+    int index = (q0 << 1) | q1;
+    return index;
+}
+
+int main() {
+    int input;
+
+    printf("Nhap chi so Bell state (0-3): ");
+    scanf("%d", &input);
+
+    int result = distinguish_bell(input);
+
+    if(result == -1) {
+        printf("Trang thai khong hop le.\n");
+    } else {
+        printf("Chi so Bell state: %d\n", result);
+    }
+
+    return 0;
+}
 

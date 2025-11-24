@@ -1,1 +1,24 @@
+#include <stdio.h>
+
+int Solve(int qs[2]) {
+    int state = (qs[0] << 1) | qs[1];
+    int indexMap[4] = {0, 2, 1, 3};
+    return indexMap[state];
+}
+
+int main() {
+    int bell[4][2] = {
+        {0,0},
+        {1,0},
+        {0,1},
+        {1,1}
+    };
+
+    for(int i = 0; i < 4; i++) {
+        int index = Solve(bell[i]);
+        printf("Bell state %d -> Index = %d\n", i, index);
+    }
+
+    return 0;
+}
 

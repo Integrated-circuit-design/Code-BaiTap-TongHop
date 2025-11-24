@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+typedef struct {
+    int start, end;
+} Interval;
+
+int main() {
+    int N, A, B;
+    scanf("%d", &N);
+
+    Interval removed[100];
+    for (int i = 0; i < N; i++) {
+        scanf("%d %d", &removed[i].start, &removed[i].end);
+    }
+
+    int count = 0;
+    for (int i = 1; i <= 1000; i++) {
+        int flag = 0;
+        for (int j = 0; j < N; j++) {
+            if (i >= removed[j].start && i <= removed[j].end) {
+                flag = 1;
+                break;
+            }
+        }
+        if (!flag) count++;
+    }
+
+    printf("%d", count);
+    for (int i = 1; i <= 1000; i++) {
+        int flag = 0;
+        for (int j = 0; j < N; j++) {
+            if (i >= removed[j].start && i <= removed[j].end) {
+                flag = 1;
+                break;
+            }
+        }
+        if (!flag) printf(" %d", i);
+    }
+    printf("\n");
+
+    return 0;
+}
 

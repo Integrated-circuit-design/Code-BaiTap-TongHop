@@ -1,1 +1,16 @@
+#include <stdio.h>
+
+int main() {
+    long long n, m, k;
+    scanf("%lld %lld %lld", &n, &m, &k);
+
+    long long index = k - 1;
+    long long col = index / n;
+    long long row = index % n;
+
+    long long result = row * m + (col + 1);
+
+    printf("%lld\n", result);
+    return 0;
+}
 

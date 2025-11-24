@@ -1,1 +1,50 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k, x, y;
+        scanf("%d %d %d %d", &n, &k, &x, &y);
+
+        int books[200005];
+        long long total = 0;
+        int max_book = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &books[i]);
+            total += books[i];
+            if (books[i] > max_book) max_book = books[i];
+        }
+
+        long long ans = 0;
+
+        if (max_book <= k) {
+            ans = 0;
+        } 
+        else {
+            long long max_after_dist = (total + n - 1) / n;
+            if (max_after_dist <= k) {
+                ans = y;
+            } 
+            else {
+                int largest_index = 0;
+                for (int i = 1; i < n; i++) {
+                    if (books[i] > books[largest_index])
+                        largest_index = i;
+                }
+
+                long long cost_remove = x;
+                long long cost_distribute = y;
+
+                ans = (cost_remove < cost_distribute) ? cost_remove : cost_distribute;
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

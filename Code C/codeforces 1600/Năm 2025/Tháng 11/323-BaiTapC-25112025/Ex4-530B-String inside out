@@ -1,1 +1,26 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[25];
+    scanf("%s", s);
+
+    int len = strlen(s);
+    int half = len / 2;
+
+    char *start = s;
+    char *mid = s + half;
+    char *end = s + len - 1;
+
+    for (char *p = mid - 1; p >= start; p--) {
+        putchar(*p);
+    }
+
+    for (char *p = end; p >= mid; p--) {
+        putchar(*p);
+    }
+
+    putchar('\n');
+    return 0;
+}
 

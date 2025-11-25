@@ -1,1 +1,29 @@
+#include <stdio.h>
+
+int majority_loop(int bits[], int n) {
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        if (bits[i] == 1) count++;
+    }
+    return (count >= 2) ? 1 : 0;
+}
+
+int oracle_majority_loop(int bits[], int y) {
+    int m = majority_loop(bits, 3);
+    return y ^ m;
+}
+
+int main() {
+    int bits[3];
+    int y;
+
+    printf("Nhap 3 bit x0 x1 x2 va bit y (0 hoặc 1): ");
+    scanf("%d %d %d %d", &bits[0], &bits[1], &bits[2], &y);
+
+    int result = oracle_majority_loop(bits, y);
+
+    printf("Ket qua y moi: %d\n", result);
+
+    return 0;
+}
 

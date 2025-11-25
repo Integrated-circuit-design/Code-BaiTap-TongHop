@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+int main() {
+    int n1, n2;
+    scanf("%d", &n1);
+    int a[1000];
+    for (int i = 0; i < n1; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    scanf("%d", &n2);
+    int b[1000];
+    for (int i = 0; i < n2; i++) {
+        scanf("%d", &b[i]);
+    }
+
+    int count = 0;
+
+    for (int i = 0; i < n1; i++) {
+        int ok = 1;
+        for (int j = 0; j < n2; j++) {
+            if (a[i] == b[j]) {
+                ok = 0;
+                break;
+            }
+        }
+        if (ok) {
+            if (count == 0) printf("");
+            count++;
+        }
+    }
+
+    for (int i = 0; i < n2; i++) {
+        int ok = 1;
+        for (int j = 0; j < n1; j++) {
+            if (b[i] == a[j]) {
+                ok = 0;
+                break;
+            }
+        }
+        if (ok) {
+            count++;
+        }
+    }
+
+    printf("%d", count);
+    for (int i = 0; i < n1; i++) {
+        int ok = 1;
+        for (int j = 0; j < n2; j++) {
+            if (a[i] == b[j]) ok = 0;
+        }
+        if (ok) printf(" %d", a[i]);
+    }
+    for (int i = 0; i < n2; i++) {
+        int ok = 1;
+        for (int j = 0; j < n1; j++) {
+            if (b[i] == a[j]) ok = 0;
+        }
+        if (ok) printf(" %d", b[i]);
+    }
+
+    return 0;
+}
 

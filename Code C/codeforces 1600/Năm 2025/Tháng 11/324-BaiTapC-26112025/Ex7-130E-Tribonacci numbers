@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int trib[1001];
+    trib[0] = 0;
+    trib[1] = 0;
+    trib[2] = 1;
+
+    for (int i = 3; i <= n; i++) {
+        trib[i] = (trib[i-1] + trib[i-2] + trib[i-3]) % 26;
+    }
+
+    printf("%d\n", trib[n]);
+
+    return 0;
+}
 

@@ -1,1 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+typedef struct {
+    ll val;
+    int sci;
+    int pos;
+} Problem;
+
+int cmp(const void *a, const void *b){
+    Problem *p1 = (Problem*)a;
+    Problem *p2 = (Problem*)b;
+    if(p1->val != p2->val) return (p1->val < p2->val) ? -1 : 1;
+    return p1->sci - p2->sci;
+}
+
+int main(){
+    int n;
+    scanf("%d", &n);
+
+    int *k = (int*)malloc((n+1)*sizeof(int));
+    ll *a1 = (ll*)malloc((n+1)*sizeof(ll));
+    ll *x = (ll*)malloc((n+1)*sizeof(ll));
+    ll *y = (ll*)malloc((n+1)*sizeof(ll));
+    ll *m = (ll*)malloc((n+1)*sizeof(ll));
+
+    ll total = 0;
+    for(int i=1;i<=n;i++){
+        scanf("%d %lld %lld %lld %lld",&k[i],&a1[i],&x[i],&y[i],&m[i]);
+        total += k[i];
+    }
+
+    Problem *all = (Problem*)malloc(total*sizeof(Problem));
+    ll idx = 0;
+    for(int i=1;i<=n;i++){
+        ll cur = a1[i];
+        for(int j=0;j<k[i];j++){
+            if(j>0) cur = (cur*x[i] + y[i]) % m[i];
+            all[idx].val = cur;
+            all[idx].sci = i;
+            all[idx].pos = j;
+            idx++;
+        }
+    }
+
+    qsort(all, total, sizeof(Problem), cmp);
+
+    ll bad = 0;
+    for(ll i=1;i<total;i++){
+        if(all[i-1].val > all[i].val) bad++;
+    }
+
+    printf("%lld\n", bad);
+
+    if(total <= 200000){
+        for(ll i=0;i<total;i++){
+            printf("%lld %d\n", all[i].val, all[i].sci);
+        }
+    }
+
+    free(k);
+    free(a1);
+    free(x);
+    free(y);
+    free(m);
+    free(all);
+
+    return 0;
+}
 

@@ -1,1 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_TEXT 200000
+#define MAX_WORD 100
+
+const char *kw1[] = {"economy","market","finance","growth","income","money","trade","company","industry","business"};
+const char *kw2[] = {"sport","match","team","player","tournament","score","coach","cup","season","goal"};
+const char *kw3[] = {"politics","government","law","minister","election","policy","parliament","diplomacy","party","conflict"};
+
+void to_lowercase(char *s) {
+    for (int i = 0; s[i]; i++)
+        s[i] = tolower(s[i]);
+}
+
+int is_keyword(const char *word, const char **kw, int n) {
+    for (int i = 0; i < n; i++)
+        if (strcmp(word, kw[i]) == 0)
+            return 1;
+    return 0;
+}
+
+int main() {
+    static char text[MAX_TEXT];
+    char word[MAX_WORD];
+    int id;
+
+    fgets(text, sizeof(text), stdin);
+
+    size_t len = 0;
+    while (fgets(text + len, sizeof(text) - len, stdin))
+        len = strlen(text);
+
+    to_lowercase(text);
+
+    int score1 = 0, score2 = 0, score3 = 0;
+    int i = 0;
+    while (i < len) {
+        int j = 0;
+        while (i < len && (isalnum(text[i]) || text[i]=='_')) {
+            if (j < MAX_WORD-1) word[j++] = text[i];
+            i++;
+        }
+        word[j] = '\0';
+        if (j > 0) {
+            if (is_keyword(word, kw1, 10)) score1++;
+            if (is_keyword(word, kw2, 10)) score2++;
+            if (is_keyword(word, kw3, 10)) score3++;
+        }
+        i++;
+    }
+
+    int best = 1, best_score = score1;
+    if (score2 > best_score) { best = 2; best_score = score2; }
+    if (score3 > best_score) best = 3;
+
+    printf("%d", best);
+    return 0;
+}
 

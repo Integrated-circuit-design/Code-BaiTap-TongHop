@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_LINE 1024
+
+int has_keyword(char *line, char *word) {
+    int len = strlen(word);
+    char *p = line;
+    int cnt = 0;
+
+    while ((p = strstr(p, word)) != NULL) {
+        if ((p == line || !isalpha(p[-1])) &&
+            (!isalpha(p[len])))
+            cnt++;
+        p += len;
+    }
+    return cnt;
+}
+
+int main() {
+    int id;
+    char line[MAX_LINE];
+
+    if (fgets(line, sizeof(line), stdin)) sscanf(line, "%d", &id);
+
+    char *subj1[] = {"market","inflation","price","supply","economy"};
+    char *subj2[] = {"government","policy","president","minister","election"};
+    char *subj3[] = {"trade","export","import","company","contract"};
+
+    int score1=0, score2=0, score3=0;
+
+    while (fgets(line, sizeof(line), stdin)) {
+        for (int i=0;i<5;i++) score1 += has_keyword(line, subj1[i]);
+        for (int i=0;i<5;i++) score2 += has_keyword(line, subj2[i]);
+        for (int i=0;i<5;i++) score3 += has_keyword(line, subj3[i]);
+    }
+
+    int result = 1;
+    int best = score1;
+    if (score2 > best) { result = 2; best = score2; }
+    if (score3 > best) { result = 3; best = score3; }
+
+    printf("%d\n", result);
+    return 0;
+}
 

@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 100000000
+
+int memo[105][105][2];
+int nFoot, nHorse, maxFoot, maxHorse;
+
+int dfs(int f, int h, int last) {
+    if (f == 0 && h == 0) return 1;
+    if (memo[f][h][last] != -1) return memo[f][h][last];
+
+    int res = 0;
+
+    if (last == 0) {
+        for (int k = 1; k <= maxHorse && k <= h; k++) {
+            res = (res + dfs(f, h - k, 1)) % MOD;
+        }
+    } else {
+        for (int k = 1; k <= maxFoot && k <= f; k++) {
+            res = (res + dfs(f - k, h, 0)) % MOD;
+        }
+    }
+
+    memo[f][h][last] = res;
+    return res;
+}
+
+int main() {
+    scanf("%d %d %d %d", &nFoot, &nHorse, &maxFoot, &maxHorse);
+    memset(memo, -1, sizeof(memo));
+
+    int result = 0;
+
+    for (int k = 1; k <= maxFoot && k <= nFoot; k++) {
+        result = (result + dfs(nFoot - k, nHorse, 0)) % MOD;
+    }
+
+    for (int k = 1; k <= maxHorse && k <= nHorse; k++) {
+        result = (result + dfs(nFoot, nHorse - k, 1)) % MOD;
+    }
+
+    printf("%d\n", result);
+    return 0;
+}
 

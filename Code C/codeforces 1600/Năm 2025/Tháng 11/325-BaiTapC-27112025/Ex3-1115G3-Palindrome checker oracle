@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int N;
+    char s[20];
+
+    while (scanf("%d %s", &N, s) == 2) {
+        int left = 0;
+        int right = N - 1;
+        int palindrome = 1;
+
+        while (left < right) {
+            if (s[left] != s[right]) {
+                palindrome = 0;
+                break;
+            }
+            left++;
+            right--;
+        }
+
+        printf("%d\n", palindrome);
+    }
+
+    return 0;
+}
 

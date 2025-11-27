@@ -1,1 +1,36 @@
+#include <stdio.h>
+
+#define MAXN (1 << 17)
+
+unsigned int arr[MAXN];
+
+unsigned int calc(int l, int r, int operation) {
+    if (l == r) return arr[l];
+    unsigned int left = calc(l, (l + r) / 2, 1 - operation);
+    unsigned int right = calc((l + r) / 2 + 1, r, 1 - operation);
+    if (operation)
+        return left | right;
+    else
+        return left ^ right;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    int size = 1 << n;
+
+    for (int i = 0; i < size; i++)
+        scanf("%u", &arr[i]);
+
+    for (int q = 0; q < m; q++) {
+        int p;
+        unsigned int b;
+        scanf("%d %u", &p, &b);
+        arr[p - 1] = b;
+        unsigned int v = calc(0, size - 1, n % 2 == 1 ? 1 : 0); 
+        printf("%u\n", v);
+    }
+
+    return 0;
+}
 

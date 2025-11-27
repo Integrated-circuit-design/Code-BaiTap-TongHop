@@ -1,1 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    long long array[n];
+    long long sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &array[i]);
+        sum += array[i];
+    }
+
+    if (sum % 3 != 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    long long target = sum / 3;
+    long long cumulative = 0;
+    long long first_cut = 0;
+    long long ways = 0;
+
+    for (int index = 0; index < n - 1; index++) {
+        cumulative += array[index];
+
+        if (cumulative == 2 * target) {
+            ways += first_cut;
+        }
+
+        if (cumulative == target) {
+            first_cut++;
+        }
+    }
+
+    printf("%lld\n", ways);
+    return 0;
+}
 

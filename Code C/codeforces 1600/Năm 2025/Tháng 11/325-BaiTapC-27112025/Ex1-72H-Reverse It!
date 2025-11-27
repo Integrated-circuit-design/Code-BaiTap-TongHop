@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[10005];
+    scanf("%s", s);
+
+    int len = strlen(s);
+    int neg = 0, start = 0;
+
+    if (s[0] == '-') {
+        neg = 1;
+        start = 1;
+    }
+
+    while (start < len && s[start] == '0') start++;
+
+    if (start == len) {
+        printf("0");
+        return 0;
+    }
+
+    if (neg) printf("-");
+
+    int end = len - 1;
+    while (end >= start && s[end] == '0') end--;
+
+    for (int i = end; i >= start; i--) {
+        putchar(s[i]);
+    }
+
+    return 0;
+}
 

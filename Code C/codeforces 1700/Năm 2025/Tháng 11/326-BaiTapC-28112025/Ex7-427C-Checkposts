@@ -1,1 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 100000
+#define MAXM 300000
+#define MOD 1000000007
+#define INF 1000000000000000000LL
+
+int n, m;
+long long cost[MAXN+1];
+
+int head[MAXN+1], to[MAXM+1], nxt[MAXM+1], ec;
+
+int idx[MAXN+1], low[MAXN+1], onstack[MAXN+1], s[MAXN+1], top;
+int timer, scc_cnt, scc_id[MAXN+1];
+
+long long scc_min[MAXN+1];
+long long scc_ways[MAXN+1];
+
+void add_edge(int u, int v){
+    to[ec] = v;
+    nxt[ec] = head[u];
+    head[u] = ec++;
+}
+
+void tarjan(int u){
+    idx[u] = low[u] = ++timer;
+    s[++top] = u;
+    onstack[u] = 1;
+
+    for(int e = head[u]; e != -1; e = nxt[e]){
+        int v = to[e];
+        if(!idx[v]){
+            tarjan(v);
+            if(low[v] < low[u]) low[u] = low[v];
+        } else if(onstack[v]){
+            if(idx[v] < low[u]) low[u] = idx[v];
+        }
+    }
+
+    if(low[u] == idx[u]){
+        scc_cnt++;
+        long long minc = INF;
+        int count = 0;
+        int node;
+        do{
+            node = s[top--];
+            onstack[node] = 0;
+            scc_id[node] = scc_cnt;
+            if(cost[node] < minc){
+                minc = cost[node];
+                count = 1;
+            } else if(cost[node] == minc){
+                count++;
+            }
+        } while(node != u);
+        scc_min[scc_cnt] = minc;
+        scc_ways[scc_cnt] = count;
+    }
+}
+
+int main(){
+    scanf("%d", &n);
+    for(int i = 1; i <= n; i++) scanf("%lld", &cost[i]);
+
+    for(int i = 1; i <= n; i++) head[i] = -1;
+    ec = 0;
+    scanf("%d", &m);
+    for(int i = 0; i < m; i++){
+        int u, v;
+        scanf("%d %d", &u, &v);
+        add_edge(u, v);
+    }
+
+    timer = 0;
+    top = 0;
+    scc_cnt = 0;
+    for(int i = 1; i <= n; i++){
+        idx[i] = 0;
+        low[i] = 0;
+        onstack[i] = 0;
+    }
+
+    for(int i = 1; i <= n; i++)
+        if(!idx[i]) tarjan(i);
+
+    long long total_cost = 0;
+    long long total_ways = 1;
+    for(int i = 1; i <= scc_cnt; i++){
+        total_cost += scc_min[i];
+        total_ways = (total_ways * scc_ways[i]) % MOD;
+    }
+
+    printf("%lld %lld\n", total_cost, total_ways);
+    return 0;
+}
 

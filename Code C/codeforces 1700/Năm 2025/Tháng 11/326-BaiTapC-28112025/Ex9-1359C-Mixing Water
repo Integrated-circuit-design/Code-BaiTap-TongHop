@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <math.h>
+
+double abs_diff(double a, double b) {
+    return fabs(a - b);
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int h, c, t;
+        scanf("%d %d %d", &h, &c, &t);
+
+        double temp1 = h;
+        double temp2 = (h + c) / 2.0;
+
+        if (abs_diff(temp1, t) <= abs_diff(temp2, t)) {
+            printf("1\n");
+            continue;
+        }
+
+        int k = 1;
+        int best_cups = 2;
+        double best_diff = abs_diff(temp2, t);
+
+        while (1) {
+            int cups = 2 * k - 1;
+            double temp = (k * h + (k - 1) * c) / (double)cups;
+            double diff = abs_diff(temp, t);
+
+            if (diff < best_diff) {
+                best_diff = diff;
+                best_cups = cups;
+            } else {
+                break;
+            }
+
+            k++;
+        }
+
+        printf("%d\n", best_cups);
+    }
+
+    return 0;
+}
 

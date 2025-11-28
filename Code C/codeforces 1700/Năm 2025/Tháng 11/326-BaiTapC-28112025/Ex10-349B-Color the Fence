@@ -1,1 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int v;
+    scanf("%d", &v);
+
+    int cost[10];
+    for (int i = 1; i <= 9; i++)
+        scanf("%d", &cost[i]);
+
+    int min_cost = cost[1];
+    for (int i = 2; i <= 9; i++)
+        if (cost[i] < min_cost)
+            min_cost = cost[i];
+
+    int n = v / min_cost;
+    if (n == 0) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int number[100000];
+    for (int i = 0; i < n; i++)
+        number[i] = 1;
+
+    v -= n * min_cost;
+
+    for (int i = 0; i < n; i++) {
+        for (int d = 9; d >= 1; d--) {
+            int extra = cost[d] - min_cost;
+            if (extra <= v) {
+                number[i] = d;
+                v -= extra;
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+        printf("%d", number[i]);
+    printf("\n");
+
+    return 0;
+}
 

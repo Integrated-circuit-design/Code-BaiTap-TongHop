@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int max(int a, int b) { return a > b ? a : b; }
+
+int main() {
+    int n, h, l, r;
+    scanf("%d %d %d %d", &n, &h, &l, &r);
+
+    int sleep_time[2005];
+    for(int i = 0; i < n; i++) scanf("%d", &sleep_time[i]);
+
+    int dp_prev[2005] = {0};
+    int dp_curr[2005];
+
+    for(int t = 0; t < h; t++) dp_prev[t] = -1;
+    dp_prev[0] = 0;
+
+    for(int i = 0; i < n; i++) {
+        for(int t = 0; t < h; t++) dp_curr[t] = -1;
+
+        for(int t = 0; t < h; t++) {
+            if(dp_prev[t] == -1) continue;
+
+            int t1 = (t + sleep_time[i] - 1 + h) % h;
+            int good1 = (t1 >= l && t1 <= r) ? 1 : 0;
+            dp_curr[t1] = max(dp_curr[t1], dp_prev[t] + good1);
+
+            int t2 = (t + sleep_time[i]) % h;
+            int good2 = (t2 >= l && t2 <= r) ? 1 : 0;
+            dp_curr[t2] = max(dp_curr[t2], dp_prev[t] + good2);
+        }
+
+        for(int t = 0; t < h; t++) dp_prev[t] = dp_curr[t];
+    }
+
+    int ans = 0;
+    for(int t = 0; t < h; t++) ans = max(ans, dp_prev[t]);
+
+    printf("%d\n", ans);
+    return 0;
+}
 

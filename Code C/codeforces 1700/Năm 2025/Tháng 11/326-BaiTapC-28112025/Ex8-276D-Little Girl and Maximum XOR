@@ -1,1 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    long long l, r;
+    scanf("%lld %lld", &l, &r);
+
+    long long xor_val = l ^ r;
+    long long max_xor = 0;
+
+    for (int i = 63; i >= 0; i--) {
+        if (xor_val & (1LL << i)) {
+            max_xor = (1LL << (i + 1)) - 1;
+            break;
+        }
+    }
+
+    printf("%lld\n", max_xor);
+    return 0;
+}
 

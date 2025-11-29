@@ -1,1 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int a[n + 1];
+        for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+        long long max_value = -1000000000000000000LL;
+
+        for (int i = n; i >= 1; i--) {
+            int limit = i - k;
+            if (limit < 1) limit = 1;
+
+            for (int j = i - 1; j >= limit; j--) {
+                long long val = 1LL * i * j - 1LL * k * (a[i] | a[j]);
+                if (val > max_value) max_value = val;
+            }
+        }
+
+        printf("%lld\n", max_value);
+    }
+
+    return 0;
+}
 

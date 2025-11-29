@@ -1,1 +1,69 @@
+#include <stdio.h>
+
+int can_one_step(long long a, long long b) {
+    if (a == b) return 0;
+    if (a % b == 0 || b % a == 0) return 1;
+    return 0;
+}
+
+int factor_count(long long x) {
+    int cnt = 0;
+    long long i = 2;
+    while (i * i <= x) {
+        if (x % i == 0) {
+            cnt++;
+            x /= i;
+        } else {
+            i++;
+        }
+    }
+    if (x > 1) cnt++;
+    return cnt;
+}
+
+long long find_gcd(long long a, long long b) {
+    while (b) {
+        long long tmp = b;
+        b = a % b;
+        a = tmp;
+    }
+    return a;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b, k;
+        scanf("%lld %lld %lld", &a, &b, &k);
+
+        if (k == 1) {
+            if (can_one_step(a, b))
+                printf("YES\n");
+            else
+                printf("NO\n");
+            continue;
+        }
+
+        int max_moves = factor_count(a) + factor_count(b);
+
+        long long g = find_gcd(a, b);
+        int min_moves;
+        if (a == b) {
+            min_moves = 0;
+        } else if (g == a || g == b) {
+            min_moves = 1;
+        } else {
+            min_moves = 2;
+        }
+
+        if (k >= min_moves && k <= max_moves)
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+
+    return 0;
+}
 

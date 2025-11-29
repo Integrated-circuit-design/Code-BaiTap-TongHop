@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+int a[200005];
+int freq[400010];
+int delta[400010];
+
+int min(int a, int b) { return a < b ? a : b; }
+int max(int a, int b) { return a > b ? a : b; }
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        for(int i = 0; i < n; i++)
+            scanf("%d", &a[i]);
+
+        int pairs = n / 2;
+
+        memset(freq, 0, sizeof(int)*(2*k+5));
+        memset(delta, 0, sizeof(int)*(2*k+5));
+
+        for(int i = 0; i < pairs; i++) {
+            int u = a[i];
+            int v = a[n - i - 1];
+
+            int sum = u + v;
+            freq[sum]++;
+
+            int l = min(u, v) + 1;
+            int r = max(u, v) + k;
+            delta[l]++;
+            delta[r+1]--;
+        }
+
+        for(int i = 1; i <= 2*k+2; i++)
+            delta[i] += delta[i-1];
+
+        int ans = n;
+        for(int x = 2; x <= 2*k; x++) {
+            int zeroCost = freq[x];
+            int oneCost  = delta[x] - zeroCost;
+            int twoCost  = pairs - delta[x];
+            int totalCost = oneCost + 2*twoCost;
+
+            if(totalCost < ans) ans = totalCost;
+        }
+
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

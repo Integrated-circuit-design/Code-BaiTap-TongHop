@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int value;
+    int pos;
+} Sight;
+
+int cmp(const void *a, const void *b) {
+    Sight *x = (Sight*)a;
+    Sight *y = (Sight*)b;
+    return (y->value - x->value);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        Sight sights[n];
+        for(int i = 0; i < n; i++) {
+            scanf("%d", &sights[i].value);
+            sights[i].pos = i;
+        }
+
+        qsort(sights, n, sizeof(Sight), cmp);
+
+        int first = sights[0].value;
+        int second = sights[1].value;
+        int third = sights[2].value;
+
+        int l = sights[0].pos;
+        int r = sights[0].pos;
+        for(int i = 1; i < 3; i++) {
+            if(sights[i].pos < l) l = sights[i].pos;
+            if(sights[i].pos > r) r = sights[i].pos;
+        }
+
+        int result = first + second + third - (r - l);
+        printf("%d\n", result);
+    }
+    return 0;
+}
 

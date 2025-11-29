@@ -1,1 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 2005
+#define MAXA 1000005
+
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        int m = 2 * n;
+        int a[m];
+        for (int i = 0; i < m; i++) scanf("%d", &a[i]);
+
+        qsort(a, m, sizeof(int), cmp);
+
+        int success = 0;
+        int x_start = 0;
+        int u[MAXN], v[MAXN];
+
+        for (int i = 0; i < m - 1 && !success; i++) {
+            int count[MAXA] = {0};
+            for (int j = 0; j < m; j++) count[a[j]]++;
+
+            int x = a[m - 1] + a[i];
+            int currentX = x;
+            int cnt = 0;
+
+            int ok = 1;
+
+            for (int j = 0; j < m; j++) {
+                int biggest = -1;
+                for (int k = MAXA-1; k >= 0; k--) {
+                    if (count[k] > 0) {
+                        biggest = k;
+                        break;
+                    }
+                }
+                if (biggest == -1) break;
+
+                int need = currentX - biggest;
+                if (need < 0 || count[need] == 0 || (need == biggest && count[biggest] < 2)) {
+                    ok = 0;
+                    break;
+                }
+
+                count[biggest]--;
+                count[need]--;
+                u[cnt] = biggest;
+                v[cnt] = need;
+                currentX = biggest;
+                cnt++;
+            }
+
+            if (ok && cnt == n) {
+                success = 1;
+                x_start = x;
+            }
+        }
+
+        if (!success) {
+            printf("NO\n");
+        } else {
+            printf("YES\n");
+            printf("%d\n", x_start);
+            for (int i = 0; i < n; i++)
+                printf("%d %d\n", u[i], v[i]);
+        }
+    }
+
+    return 0;
+}
 

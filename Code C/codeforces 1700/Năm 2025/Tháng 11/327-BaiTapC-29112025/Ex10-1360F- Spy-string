@@ -1,1 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 10
+#define MAXM 10
+
+char a[MAXN][MAXM+1];
+char s[MAXM+1];
+
+int valid(char *t, int n, int m) {
+    for (int i = 0; i < n; i++) {
+        int diff = 0;
+        for (int j = 0; j < m; j++)
+            if (t[j] != a[i][j]) diff++;
+        if (diff > 1) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        for (int i = 0; i < n; i++) scanf("%s", a[i]);
+
+        int found = 0;
+
+        for (int base = 0; base < n && !found; base++) {
+            strcpy(s, a[base]);
+
+            for (int pos = 0; pos < m && !found; pos++) {
+                char original = s[pos];
+                for (char c = 'a'; c <= 'z'; c++) {
+                    s[pos] = c;
+                    if (valid(s, n, m)) {
+                        printf("%s\n", s);
+                        found = 1;
+                        break;
+                    }
+                }
+                s[pos] = original;
+            }
+
+            if (!found && valid(s, n, m)) {
+                printf("%s\n", s);
+                found = 1;
+            }
+        }
+
+        if (!found) printf("-1\n");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+#define MAXM 400005
+
+typedef struct Edge {
+    int to;
+    struct Edge *next;
+} Edge;
+
+Edge *head[MAXN];
+int color[MAXN];
+int u[MAXM], v[MAXM];
+int n, m;
+int impossible = 0;
+
+void add_edge(int from, int to) {
+    Edge *e = (Edge*)malloc(sizeof(Edge));
+    e->to = to;
+    e->next = head[from];
+    head[from] = e;
+}
+
+void dfs(int node, int c) {
+    color[node] = c;
+    for (Edge *e = head[node]; e != NULL; e = e->next) {
+        int next = e->to;
+        if (color[next] == -1) {
+            dfs(next, 1 - c);
+        } else if (color[next] == c) {
+            impossible = 1;
+            return;
+        }
+        if (impossible) return;
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+
+    for(int i=1; i<=n; i++) head[i] = NULL;
+    for(int i=0; i<m; i++){
+        scanf("%d %d", &u[i], &v[i]);
+        add_edge(u[i], v[i]);
+        add_edge(v[i], u[i]);
+    }
+
+    for(int i=1; i<=n; i++) color[i] = -1;
+
+    for(int i=1; i<=n; i++){
+        if(color[i] == -1) dfs(i, 0);
+        if(impossible){
+            printf("NO\n");
+            return 0;
+        }
+    }
+
+    printf("YES\n");
+    for(int i=0;i<m;i++){
+        if(color[u[i]]==0 && color[v[i]]==1) putchar('0');
+        else putchar('1');
+    }
+    putchar('\n');
+
+    return 0;
+}
 

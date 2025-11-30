@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int cmp_ll(const void *a, const void *b) {
+    ll x = *(ll*)a;
+    ll y = *(ll*)b;
+    if (x < y) return -1;
+    else if (x > y) return 1;
+    else return 0;
+}
+
+int lower_bound(ll* arr, int size, ll key) {
+    int l = 0, r = size;
+    while (l < r) {
+        int m = (l + r) / 2;
+        if (arr[m] < key) l = m + 1;
+        else r = m;
+    }
+    return l;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    ll *a = (ll*)malloc(n * sizeof(ll));
+    ll *pref = (ll*)malloc((n + 1) * sizeof(ll));
+    
+    for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+    
+    pref[0] = 0;
+    for (int i = 1; i <= n; i++) pref[i] = pref[i-1] + a[i-1];
+    
+    ll *all = (ll*)malloc((n + 1) * sizeof(ll));
+    for (int i = 0; i <= n; i++) all[i] = pref[i];
+    qsort(all, n+1, sizeof(ll), cmp_ll);
+    
+    int *last = (int*)malloc((n+1) * sizeof(int));
+    for (int i = 0; i <= n; i++) last[i] = -1;
+    
+    ll ans = 0;
+    int L = 0;
+    
+    for (int r = 0; r <= n; r++) {
+        int idx = lower_bound(all, n+1, pref[r]);
+        if (last[idx] >= L) L = last[idx] + 1;
+        if (r > 0) ans += r - L + 1;
+        last[idx] = r;
+    }
+    
+    printf("%lld\n", ans);
+    
+    free(a); free(pref); free(all); free(last);
+    return 0;
+}
 

@@ -1,1 +1,74 @@
+#include <stdio.h>
+
+#define MAXN 200005
+#define MAXM 400005
+
+int head[MAXN], to[MAXM], nxt[MAXM], ec;
+int depth[MAXN];
+int even[MAXN], odd[MAXN];
+
+void add_edge(int u, int v) {
+    to[ec] = v;
+    nxt[ec] = head[u];
+    head[u] = ec++;
+}
+
+void dfs(int u, int parent) {
+    for (int e = head[u]; e != -1; e = nxt[e]) {
+        int v = to[e];
+        if (v != parent) {
+            depth[v] = depth[u] + 1;
+            dfs(v, u);
+        }
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        ec = 0;
+        for (int i = 1; i <= n; i++) {
+            head[i] = -1;
+            depth[i] = 0;
+        }
+
+        for (int i = 0; i < m; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            add_edge(u, v);
+            add_edge(v, u);
+        }
+
+        depth[1] = 0;
+        dfs(1, 0);
+
+        int ce = 0, co = 0;
+        for (int i = 1; i <= n; i++) {
+            if (depth[i] % 2 == 0) even[ce++] = i;
+            else odd[co++] = i;
+        }
+
+        if (ce <= n / 2) {
+            printf("%d\n", ce);
+            for (int i = 0; i < ce; i++) {
+                if (i) printf(" ");
+                printf("%d", even[i]);
+            }
+            printf("\n");
+        } else {
+            printf("%d\n", co);
+            for (int i = 0; i < co; i++) {
+                if (i) printf(" ");
+                printf("%d", odd[i]);
+            }
+            printf("\n");
+        }
+    }
+    return 0;
+}
 

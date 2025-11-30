@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 5000000
+
+unsigned short primePowerCount[MAX + 1];
+unsigned int factorialOmegaSum[MAX + 1];
+
+int main() {
+    for (int i = 2; i <= MAX; i++) {
+        if (primePowerCount[i] == 0) {
+            for (int j = i; j <= MAX; j += i) {
+                int temp = j;
+                while (temp % i == 0) {
+                    primePowerCount[j]++;
+                    temp /= i;
+                }
+            }
+        }
+    }
+
+    factorialOmegaSum[0] = 0;
+    for (int i = 1; i <= MAX; i++) {
+        factorialOmegaSum[i] = factorialOmegaSum[i - 1] + primePowerCount[i];
+    }
+
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        printf("%u\n", factorialOmegaSum[a] - factorialOmegaSum[b]);
+    }
+
+    return 0;
+}
 

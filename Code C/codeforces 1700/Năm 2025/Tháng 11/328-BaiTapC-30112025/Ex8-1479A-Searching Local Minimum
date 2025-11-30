@@ -1,1 +1,30 @@
+#include <stdio.h>
+#include <limits.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int arr[n + 2];
+    arr[0] = arr[n + 1] = INT_MAX;
+
+    for (int i = 1; i <= n; i++) scanf("%d", &arr[i]);
+
+    int left = 1, right = n;
+
+    while (left <= right) {
+        if (arr[left] < arr[left - 1] && arr[left] < arr[left + 1]) {
+            printf("%d\n", left);
+            return 0;
+        }
+        if (arr[right] < arr[right - 1] && arr[right] < arr[right + 1]) {
+            printf("%d\n", right);
+            return 0;
+        }
+        left++;
+        right--;
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define MAX_N 505
+#define INF 1000000000000000LL
+
+long long min_long(long long a, long long b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int n, L, K;
+    int pos[MAX_N], timePerKm[MAX_N];
+    
+    scanf("%d %d %d", &n, &L, &K);
+    
+    for (int i = 1; i <= n; i++) scanf("%d", &pos[i]);
+    for (int i = 1; i <= n; i++) scanf("%d", &timePerKm[i]);
+    
+    n++;
+    pos[n] = L;
+    timePerKm[n] = 0;
+
+    long long dp[MAX_N];
+    long long newDp[MAX_N];
+    
+    for (int r = 0; r <= K; r++) dp[r] = INF;
+    dp[0] = 0;
+
+    for (int i = 1; i < n; i++) {
+        for (int r = 0; r <= K; r++) newDp[r] = INF;
+
+        for (int j = i + 1; j <= n; j++) {
+            int removedBetween = j - i - 1;
+            
+            for (int r = 0; r + removedBetween <= K; r++) {
+                if (dp[r] >= INF) continue;
+                
+                long long cost = (long long)(pos[j] - pos[i]) * timePerKm[i];
+                int newRemoved = r + removedBetween;
+                newDp[newRemoved] = min_long(newDp[newRemoved], dp[r] + cost);
+            }
+        }
+
+        for (int r = 0; r <= K; r++) dp[r] = newDp[r];
+    }
+
+    long long ans = INF;
+    for (int r = 0; r <= K; r++)
+        if (dp[r] < ans) ans = dp[r];
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

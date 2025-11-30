@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, p;
+    scanf("%d %d", &n, &p);
+    char s[n + 1];
+    scanf("%s", s + 1);
+
+    if (p > n / 2) p = n - p + 1;
+
+    int need_change[n + 1];
+    for (int i = 1; i <= n / 2; i++) need_change[i] = 0;
+
+    int left = n + 1, right = 0;
+    long long letter_moves = 0;
+
+    for (int i = 1; i <= n / 2; i++) {
+        int j = n - i + 1;
+        if (s[i] != s[j]) {
+            need_change[i] = 1;
+            left = i < left ? i : left;
+            right = i > right ? i : right;
+
+            int diff = abs(s[i] - s[j]);
+            letter_moves += diff < 26 - diff ? diff : 26 - diff;
+        }
+    }
+
+    if (left > right) {
+        printf("0\n");
+        return 0;
+    }
+
+    long long move1 = abs(p - left) + (right - left);
+    long long move2 = abs(p - right) + (right - left);
+    long long move_cost = move1 < move2 ? move1 : move2;
+
+    printf("%lld\n", letter_moves + move_cost);
+    return 0;
+}
 

@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+
+#define MAXN 200005
+
+char str1[MAXN], str2[MAXN];
+
+uint64_t getHash(char *s, int l, int r) {
+    int len = r - l;
+
+    if (len == 1) return s[l];
+
+    if (len % 2 == 1) {
+        uint64_t h = 0;
+        for (int i = l; i < r; i++) h = h * 31 + s[i];
+        return h;
+    }
+
+    int mid = l + len / 2;
+
+    uint64_t h1 = getHash(s, l, mid);
+    uint64_t h2 = getHash(s, mid, r);
+
+    uint64_t combined1 = (h1 << 32) | h2;
+    uint64_t combined2 = (h2 << 32) | h1;
+
+    return combined1 < combined2 ? combined1 : combined2;
+}
+
+int main() {
+    scanf("%s %s", str1, str2);
+
+    int n = strlen(str1);
+
+    uint64_t hash1 = getHash(str1, 0, n);
+    uint64_t hash2 = getHash(str2, 0, n);
+
+    if (hash1 == hash2) printf("YES\n");
+    else printf("NO\n");
+
+    return 0;
+}
 

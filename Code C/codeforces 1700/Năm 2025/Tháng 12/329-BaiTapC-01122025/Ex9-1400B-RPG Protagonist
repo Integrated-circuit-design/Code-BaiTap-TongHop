@@ -1,1 +1,48 @@
+#include <stdio.h>
+
+long long minll(long long a, long long b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long P, F, S_cnt, W_cnt, S_w, W_w;
+        scanf("%lld %lld", &P, &F);
+        scanf("%lld %lld", &S_cnt, &W_cnt);
+        scanf("%lld %lld", &S_w, &W_w);
+
+        long long max_total = 0;
+
+        for (int order = 0; order < 2; order++) {
+            long long p_cap = P, f_cap = F;
+            long long swords = S_cnt, axes = W_cnt;
+            long long sword = S_w, axe = W_w;
+
+            if (order == 1) {
+                long long tmp;
+                tmp = sword; sword = axe; axe = tmp;
+                tmp = swords; swords = axes; axes = tmp;
+            }
+
+            long long take_s = minll(swords, p_cap / sword);
+            p_cap -= take_s * sword;
+            long long take_w = minll(axes, p_cap / axe);
+            p_cap -= take_w * axe;
+
+            long long take_s_f = minll(swords - take_s, f_cap / sword);
+            f_cap -= take_s_f * sword;
+            long long take_w_f = minll(axes - take_w, f_cap / axe);
+
+            long long total = take_s + take_w + take_s_f + take_w_f;
+            if (total > max_total) max_total = total;
+        }
+
+        printf("%lld\n", max_total);
+    }
+
+    return 0;
+}
 

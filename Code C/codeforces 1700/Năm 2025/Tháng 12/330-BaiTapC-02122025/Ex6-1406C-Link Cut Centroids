@@ -1,1 +1,88 @@
+#include <stdio.h>
+
+#define MAXN 100005
+
+typedef struct {
+    int u, v;
+} Edge;
+
+int n;
+Edge edges[MAXN];
+int adj[MAXN][2];
+int deg[MAXN];
+int subtree[MAXN];
+int parent[MAXN];
+
+void dfs(int u, int p) {
+    subtree[u] = 1;
+    parent[u] = p;
+    for(int i = 0; i < deg[u]; i++) {
+        int v = adj[u][i];
+        if(v != p) {
+            dfs(v, u);
+            subtree[u] += subtree[v];
+        }
+    }
+}
+
+int centroids[2], cntCentroid;
+
+void findCentroids() {
+    cntCentroid = 0;
+    for(int u = 1; u <= n; u++) {
+        int maxComp = 0;
+        for(int i = 0; i < deg[u]; i++) {
+            int v = adj[u][i];
+            if(v != parent[u] && subtree[v] > maxComp)
+                maxComp = subtree[v];
+        }
+        if(n - subtree[u] > maxComp)
+            maxComp = n - subtree[u];
+        if(maxComp * 2 <= n)
+            centroids[cntCentroid++] = u;
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        scanf("%d", &n);
+
+        for(int i = 1; i <= n; i++) deg[i] = 0;
+
+        for(int i = 0; i < n-1; i++) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            edges[i].u = x;
+            edges[i].v = y;
+            if(deg[x] < 2) adj[x][deg[x]++] = y;
+            if(deg[y] < 2) adj[y][deg[y]++] = x;
+        }
+
+        dfs(1, 0);
+        findCentroids();
+
+        if(cntCentroid == 1) {
+            int u = centroids[0];
+            int v = adj[u][0];
+            printf("%d %d\n", u, v);
+            printf("%d %d\n", u, v);
+        } else {
+            int c1 = centroids[0], c2 = centroids[1];
+            int cutu = -1, cutv = -1;
+            for(int i = 0; i < deg[c1]; i++) {
+                int v = adj[c1][i];
+                if(v != c2) {
+                    cutu = c1;
+                    cutv = v;
+                    break;
+                }
+            }
+            printf("%d %d\n", cutu, cutv);
+            printf("%d %d\n", c2, cutv);
+        }
+    }
+    return 0;
+}
 

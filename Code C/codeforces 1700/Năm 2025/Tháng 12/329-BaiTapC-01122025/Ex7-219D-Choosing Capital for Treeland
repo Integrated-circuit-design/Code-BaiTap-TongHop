@@ -1,1 +1,69 @@
+#include <stdio.h>
+
+#define MAXN 200000
+
+int n;
+int tree[MAXN+5][2];
+int child_count[MAXN+5];
+int need[MAXN+5];
+int res[MAXN+5];
+
+typedef struct {
+    int u, v;
+} Edge;
+
+Edge edges[MAXN+5];
+
+int dp[MAXN+5];
+
+void dfs(int u, int parent, int edges_count[], Edge edges_list[]) {
+    for (int i = 0; i < edges_count[u]; i++) {
+        int v = edges_list[edges_count[u]*i + i].v;
+        if (v == parent) continue;
+        dfs(v, u, edges_count, edges_list);
+        dp[u] += dp[v] + (edges_list[edges_count[u]*i + i].u == u ? 0 : 1);
+    }
+}
+
+void reroot(int u, int parent, int edges_count[], Edge edges_list[]) {
+    for (int i = 0; i < edges_count[u]; i++) {
+        int v = edges_list[edges_count[u]*i + i].v;
+        if (v == parent) continue;
+        if (edges_list[edges_count[u]*i + i].u == u)
+            dp[v] = dp[u] + 1;
+        else
+            dp[v] = dp[u] - 1;
+        reroot(v, u, edges_count, edges_list);
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+
+    for (int i = 0; i < n-1; i++) {
+        int s, t;
+        scanf("%d %d", &s, &t);
+        edges[i].u = s;
+        edges[i].v = t;
+        tree[s][child_count[s]++] = i;
+        tree[t][child_count[t]++] = i;
+    }
+
+    dfs(1, 0, child_count, edges);
+    reroot(1, 0, child_count, edges);
+
+    int mn = 1e9, cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        if (dp[i] < mn) mn = dp[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        if (dp[i] == mn) res[cnt++] = i;
+    }
+
+    printf("%d\n", mn);
+    for (int i = 0; i < cnt; i++) printf("%d ", res[i]);
+    printf("\n");
+
+    return 0;
+}
 

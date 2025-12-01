@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    long long n, k;
+    scanf("%lld %lld", &n, &k);
+
+    long long need = n - 1;
+    long long maxSum = (k - 1) * k / 2;
+
+    if (need == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    if (need > maxSum) {
+        printf("-1\n");
+        return 0;
+    }
+
+    long long left = 1, right = k - 1;
+    long long totalSplitters = 0;
+    long long remaining = need;
+
+    while (remaining > 0) {
+        long long i;
+        for (i = k - 1; i >= 1; i--) {
+            if (remaining >= i) break;
+        }
+
+        if (i == 0) {
+            totalSplitters = -1;
+            break;
+        }
+
+        long long count = remaining / i;
+        totalSplitters += count;
+        remaining -= count * i;
+    }
+
+    printf("%lld\n", totalSplitters);
+    return 0;
+}
 

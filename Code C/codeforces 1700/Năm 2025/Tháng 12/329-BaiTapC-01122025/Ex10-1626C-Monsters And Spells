@@ -1,1 +1,52 @@
+#include <stdio.h>
+
+typedef struct {
+    long long appear;
+    long long health;
+} Monster;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        Monster monsters[105];
+
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &monsters[i].appear);
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &monsters[i].health);
+        }
+
+        long long totalMana = 0;
+        long long currentStart = monsters[0].appear - monsters[0].health + 1;
+        long long currentEnd = monsters[0].appear;
+
+        for (int i = 1; i < n; i++) {
+            long long start = monsters[i].appear - monsters[i].health + 1;
+            long long end   = monsters[i].appear;
+
+            if (start <= currentEnd) {
+                if (end > currentEnd) currentEnd = end;
+                if (start < currentStart) currentStart = start;
+            } else {
+                long long len = currentEnd - currentStart + 1;
+                totalMana += len * (len + 1) / 2;
+
+                currentStart = start;
+                currentEnd = end;
+            }
+        }
+
+        long long len = currentEnd - currentStart + 1;
+        totalMana += len * (len + 1) / 2;
+
+        printf("%lld\n", totalMana);
+    }
+
+    return 0;
+}
 

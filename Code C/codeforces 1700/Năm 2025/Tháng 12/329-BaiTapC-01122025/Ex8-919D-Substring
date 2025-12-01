@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 300000
+#define MAXM 300000
+
+typedef struct Edge {
+    int to;
+    struct Edge *next;
+} Edge;
+
+Edge *adj[MAXN+1];
+int indegree[MAXN+1];
+char s[MAXN+1];
+int dp[MAXN+1][26];
+int queue[MAXN+1];
+
+void addEdge(int u, int v, Edge **edges, int *idx) {
+    edges[*idx].to = v;
+    edges[*idx].next = adj[u];
+    adj[u] = &edges[*idx];
+    (*idx)++;
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    scanf("%s", s+1);
+
+    Edge edges[MAXM];
+    int edgeCount = 0;
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        addEdge(u, v, edges, &edgeCount);
+        indegree[v]++;
+    }
+
+    int qs = 0, qe = 0;
+    for (int i = 1; i <= n; i++)
+        if (indegree[i] == 0) queue[qe++] = i;
+
+    int visited = 0;
+
+    while (qs < qe) {
+        int u = queue[qs++];
+        visited++;
+
+        int c = s[u] - 'a';
+        dp[u][c]++;
+
+        for (Edge *e = adj[u]; e != NULL; e = e->next) {
+            int v = e->to;
+            for (int k = 0; k < 26; k++)
+                if (dp[v][k] < dp[u][k])
+                    dp[v][k] = dp[u][k];
+
+            indegree[v]--;
+            if (indegree[v] == 0) queue[qe++] = v;
+        }
+    }
+
+    if (visited < n) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int ans = 0;
+    for (int i = 1; i <= n; i++)
+        for (int k = 0; k < 26; k++)
+            if (dp[i][k] > ans) ans = dp[i][k];
+
+    printf("%d\n", ans);
+    return 0;
+}
 

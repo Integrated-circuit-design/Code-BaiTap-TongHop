@@ -1,1 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int w, h, idx;
+} Env;
+
+int cmp(const void *a, const void *b) {
+    Env *x = (Env*)a;
+    Env *y = (Env*)b;
+    if (x->w != y->w) return x->w - y->w;
+    return y->h - x->h;
+}
+
+int main() {
+    int n, cw, ch;
+    scanf("%d %d %d", &n, &cw, &ch);
+
+    Env e[5005];
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        int w, h;
+        scanf("%d %d", &w, &h);
+        if (w > cw && h > ch) {
+            e[count].w = w;
+            e[count].h = h;
+            e[count].idx = i + 1;
+            count++;
+        }
+    }
+
+    if (count == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    qsort(e, count, sizeof(Env), cmp);
+
+    int dp[5005], prev[5005];
+    int max_len = 0, last = -1;
+
+    for (int i = 0; i < count; i++) {
+        dp[i] = 1;
+        prev[i] = -1;
+        for (int j = 0; j < i; j++) {
+            if (e[j].w < e[i].w && e[j].h < e[i].h && dp[j] + 1 > dp[i]) {
+                dp[i] = dp[j] + 1;
+                prev[i] = j;
+            }
+        }
+        if (dp[i] > max_len) {
+            max_len = dp[i];
+            last = i;
+        }
+    }
+
+    printf("%d\n", max_len);
+
+    int ans[5005], k = 0;
+    while (last != -1) {
+        ans[k++] = e[last].idx;
+        last = prev[last];
+    }
+
+    for (int i = k - 1; i >= 0; i--) printf("%d ", ans[i]);
+    printf("\n");
+
+    return 0;
+}
 

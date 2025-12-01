@@ -1,1 +1,33 @@
+#include <stdio.h>
+#include <math.h>
+
+long long jumps_needed(long long distance, long long m) {
+    return (distance + m - 1) / m;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+
+        long long best = a + b;
+
+        long long max_coord = (a > b) ? a : b;
+        long long m = 1;
+        long long limit = (long long)sqrt(max_coord) + 100;
+
+        while (m <= limit) {
+            long long total = (m - 1) + jumps_needed(a, m) + jumps_needed(b, m);
+            if (total < best) best = total;
+            m++;
+        }
+
+        printf("%lld\n", best);
+    }
+
+    return 0;
+}
 

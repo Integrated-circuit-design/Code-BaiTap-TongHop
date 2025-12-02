@@ -1,1 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200000
+#define MAXGROUP 300000
+
+typedef long long ll;
+
+typedef struct {
+    ll values[20];
+    int count;
+} Group;
+
+int cmp_ll(const void *a, const void *b) {
+    ll x = *(ll*)a;
+    ll y = *(ll*)b;
+    return (x > y) - (x < y);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+
+        ll a[MAXN];
+        for(int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+        Group groups[MAXGROUP] = {0};
+
+        for(int i = 0; i < n; i++) {
+            int g = a[i] >> 2;
+            groups[g].values[groups[g].count++] = a[i];
+        }
+
+        for(int g = 0; g < MAXGROUP; g++) {
+            if(groups[g].count > 0)
+                qsort(groups[g].values, groups[g].count, sizeof(ll), cmp_ll);
+        }
+
+        for(int i = 0; i < n; i++) {
+            int g = a[i] >> 2;
+            printf("%lld ", groups[g].values[0]);
+
+            for(int k = 1; k < groups[g].count; k++)
+                groups[g].values[k-1] = groups[g].values[k];
+            groups[g].count--;
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

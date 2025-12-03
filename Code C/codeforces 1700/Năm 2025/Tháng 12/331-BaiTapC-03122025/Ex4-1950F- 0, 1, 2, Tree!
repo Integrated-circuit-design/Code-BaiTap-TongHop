@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+long long minHeight(long long a, long long b, long long c) {
+    if (a != c - 1) return -1;
+    if (c == 1) return (b == 0 ? 0 : b);
+
+    long long nodes2 = a;
+    long long nodes1 = b;
+    long long height = 1;
+    long long current = 2;
+
+    while (nodes2 + nodes1 > 0) {
+        height++;
+        long long use2 = nodes2 < current ? nodes2 : current;
+        nodes2 -= use2;
+        long long use1 = nodes1 < (current - use2) ? nodes1 : (current - use2);
+        nodes1 -= use1;
+        current = use2 * 2 + use1;
+    }
+    return height;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long a, b, c;
+        scanf("%lld %lld %lld", &a, &b, &c);
+        printf("%lld\n", minHeight(a, b, c));
+    }
+    return 0;
+}
 

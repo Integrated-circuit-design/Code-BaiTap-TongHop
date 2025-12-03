@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long x, y;
+        scanf("%lld %lld", &x, &y);
+
+        long long total = 0;
+        long long upper_b = (y < x - 1) ? y : x - 1;
+
+        for (long long b = 1; b <= upper_b; b++) {
+            long long q_limit = x / (b + 1);
+            if (q_limit == 0) continue;
+            if (q_limit >= b) q_limit = b - 1;
+            total += q_limit;
+        }
+
+        printf("%lld\n", total);
+    }
+
+    return 0;
+}
 

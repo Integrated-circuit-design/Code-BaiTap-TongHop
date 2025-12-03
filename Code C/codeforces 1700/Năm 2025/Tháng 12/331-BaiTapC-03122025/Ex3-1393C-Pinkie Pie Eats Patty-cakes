@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        int freq[100005] = {0};
+        int maxFreq = 0;
+
+        for (int i = 0; i < n; i++) {
+            freq[arr[i]]++;
+            if (freq[arr[i]] > maxFreq) {
+                maxFreq = freq[arr[i]];
+            }
+        }
+
+        if (maxFreq == n) {
+            printf("0\n");
+            continue;
+        }
+
+        int remaining = n - maxFreq;
+        int distance = 0;
+        while ((maxFreq - 1) * (distance + 1) <= remaining) {
+            distance++;
+        }
+
+        printf("%d\n", distance);
+    }
+
+    return 0;
+}
 

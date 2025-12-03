@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        int base[200005];
+        int index[200005];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &base[i]);
+            index[base[i]] = i;
+        }
+
+        int valid = 1;
+
+        for (int s = 1; s < k; s++) {
+            int screen[200005];
+            for (int i = 0; i < n; i++)
+                scanf("%d", &screen[i]);
+
+            int author = screen[0];
+            int pos = index[author];
+
+            for (int i = 0; i < n; i++) {
+                int expected = base[(pos + i) % n];
+                if (expected != screen[i]) {
+                    valid = 0;
+                    break;
+                }
+            }
+        }
+
+        if (valid) printf("YES\n");
+        else printf("NO\n");
+    }
+
+    return 0;
+}
 

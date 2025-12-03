@@ -1,1 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+ll absll(ll x) {
+    return x < 0 ? -x : x;
+}
+
+int is_bad(ll a1, int i1, ll a2, int i2, ll a3, int i3) {
+    ll d12 = absll(a1 - a2) + (i2 - i1);
+    ll d23 = absll(a2 - a3) + (i3 - i2);
+    ll d13 = absll(a1 - a3) + (i3 - i1);
+    return d13 == d12 + d23;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        ll *a = (ll*)malloc((n + 1) * sizeof(ll));
+        for (int i = 1; i <= n; i++) scanf("%lld", &a[i]);
+
+        ll ans = 0;
+
+        for (int l = 1; l <= n; l++) {
+            int r_limit = l + 3;
+            if (r_limit > n) r_limit = n;
+
+            ll temp[4];
+            int len = 0;
+
+            for (int r = l; r <= r_limit; r++) {
+                temp[len++] = a[r];
+
+                if (len <= 2) {
+                    ans++;
+                } else {
+                    int good = 1;
+                    for (int i = 0; i < len - 2 && good; i++) {
+                        for (int j = i + 1; j < len - 1 && good; j++) {
+                            for (int k = j + 1; k < len && good; k++) {
+                                if (is_bad(temp[i], i + l, temp[j], j + l, temp[k], k + l)) {
+                                    good = 0;
+                                }
+                            }
+                        }
+                    }
+                    if (good) ans++;
+                }
+            }
+        }
+
+        printf("%lld\n", ans);
+        free(a);
+    }
+
+    return 0;
+}
 

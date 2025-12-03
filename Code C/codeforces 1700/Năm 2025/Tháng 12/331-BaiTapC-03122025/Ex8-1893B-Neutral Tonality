@@ -1,1 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        ll *a = (ll*)malloc(n * sizeof(ll));
+        ll *b = (ll*)malloc(m * sizeof(ll));
+
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+        ll maxB = 0;
+        for (int i = 0; i < m; i++) {
+            scanf("%lld", &b[i]);
+            if (b[i] > maxB) maxB = b[i];
+        }
+
+        for (int i = 0; i < m-1; i++)
+            for (int j = i+1; j < m; j++)
+                if (b[i] < b[j]) { ll tmp = b[i]; b[i] = b[j]; b[j] = tmp; }
+
+        int ia = 0, ib = 0;
+        while (ia < n || ib < m) {
+            if (ia >= n) {
+                printf("%lld ", b[ib++]);
+            } else if (ib >= m) {
+                printf("%lld ", a[ia++]);
+            } else {
+                if (b[ib] < a[ia]) {
+                    printf("%lld ", b[ib++]);
+                } else {
+                    printf("%lld ", a[ia++]);
+                }
+            }
+        }
+        printf("\n");
+        free(a);
+        free(b);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+int sort_down(const void *x, const void *y) {
+    long long p = *(const long long*)x;
+    long long q = *(const long long*)y;
+    return (q > p) - (q < p);
+}
+
+int main() {
+    int tc;
+    scanf("%d", &tc);
+
+    while (tc--) {
+
+        int n;
+        scanf("%d", &n);
+        int len = 2 * n;
+
+        long long *arr = malloc(len * sizeof(long long));
+
+        for (int i = 0; i < len; i++)
+            scanf("%lld", &arr[i]);
+
+        qsort(arr, len, sizeof(long long), sort_down);
+
+        int good = 1;
+        __int128 prefix = 0;
+
+        for (int step = 0; step < n; step++) {
+
+            int pos = step * 2;
+
+            long long A = arr[pos];
+            long long B = arr[pos + 1];
+
+            if (A != B) {
+                good = 0;
+                break;
+            }
+
+            if (A & 1LL) {
+                good = 0;
+                break;
+            }
+
+            __int128 half = A / 2;
+            int remain = n - step;
+
+            __int128 now = half - prefix;
+
+            if (now <= 0 || now % remain != 0) {
+                good = 0;
+                break;
+            }
+
+            __int128 x = now / remain;
+            if (x <= 0) {
+                good = 0;
+                break;
+            }
+
+            prefix += x;
+        }
+
+        free(arr);
+
+        puts(good ? "YES" : "NO");
+    }
+
+    return 0;
+}
 

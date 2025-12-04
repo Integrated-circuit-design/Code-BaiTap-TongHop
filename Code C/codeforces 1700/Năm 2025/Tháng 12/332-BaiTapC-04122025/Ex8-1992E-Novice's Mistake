@@ -1,1 +1,72 @@
+#include <stdio.h>
+
+int getDigit(int n, int pos) {
+    int rev = 0, tmp = n;
+
+    while (tmp > 0) {
+        rev = rev * 10 + (tmp % 10);
+        tmp /= 10;
+    }
+
+    int len = 0, x = n;
+    while (x > 0) {
+        x /= 10;
+        len++;
+    }
+
+    int k = pos % len;
+    if (k == 0) k = len;
+
+    for (int i = 1; i < k; i++)
+        rev /= 10;
+
+    return rev % 10;
+}
+
+int buildNumber(int n, int L) {
+    int val = 0;
+    for (int i = 1; i <= L; i++) {
+        val = val * 10 + getDigit(n, i);
+    }
+    return val;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int ansA[20000], ansB[20000], cnt = 0;
+
+        int len = 0, tmp = n;
+        while (tmp > 0) { len++; tmp /= 10; }
+
+        for (int a = 1; a <= 10000; a++) {
+            for (int L = 1; L <= 7; L++) {
+
+                int b = a * len - L;
+                if (b < 1) continue;
+                if (b > 10000) continue;
+                if (b > a * n) continue;
+
+                int num = buildNumber(n, L);
+
+                if (num == n * a - b) {
+                    ansA[cnt] = a;
+                    ansB[cnt] = b;
+                    cnt++;
+                }
+            }
+        }
+
+        printf("%d\n", cnt);
+        for (int i = 0; i < cnt; i++) {
+            printf("%d %d\n", ansA[i], ansB[i]);
+        }
+    }
+    return 0;
+}
 

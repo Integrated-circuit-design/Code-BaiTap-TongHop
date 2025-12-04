@@ -1,1 +1,38 @@
+#include <stdio.h>
+
+long long min(long long x, long long y) {
+    return (x < y) ? x : y;
+}
+
+int main() {
+    int n;
+    long long c;
+    scanf("%d %lld", &n, &c);
+
+    long long stairs[n], elev[n];
+    for (int i = 1; i < n; i++) scanf("%lld", &stairs[i]);
+    for (int i = 1; i < n; i++) scanf("%lld", &elev[i]);
+
+    long long best_st = 0;
+    long long best_el = c;
+
+    printf("0 ");
+
+    for (int i = 2; i <= n; i++) {
+        long long nst, nel;
+
+        nst = min(best_st, best_el) + stairs[i - 1];
+
+        long long stayElev = best_el + elev[i - 1];
+        long long switchToElev = best_st + c + elev[i - 1];
+        nel = min(stayElev, switchToElev);
+
+        best_st = nst;
+        best_el = nel;
+
+        printf("%lld ", min(best_st, best_el));
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+long long cmp_ll(const void *x, const void *y) {
+    long long a = *(long long*)x;
+    long long b = *(long long*)y;
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+
+        int n;
+        long long k;
+        scanf("%d %lld", &n, &k);
+
+        long long *arr = (long long*)malloc(sizeof(long long) * n);
+        for (int i = 0; i < n; i++)
+            scanf("%lld", &arr[i]);
+
+        long long *group_mod = (long long*)malloc(sizeof(long long) * n);
+        int *group_count = (int*)calloc(n, sizeof(int));
+
+        int groups = 0;
+
+        for (int i = 0; i < n; i++) {
+            long long m = arr[i] % k;
+            int found = -1;
+
+            for (int g = 0; g < groups; g++) {
+                if (group_mod[g] == m) {
+                    found = g;
+                    break;
+                }
+            }
+
+            if (found == -1) {
+                found = groups;
+                group_mod[groups] = m;
+                groups++;
+            }
+
+            group_count[found]++;
+        }
+
+        long long **bucket = (long long**)malloc(sizeof(long long*) * groups);
+        for (int i = 0; i < groups; i++)
+            bucket[i] = (long long*)malloc(sizeof(long long) * group_count[i]);
+
+        int *pos = (int*)calloc(groups, sizeof(int));
+
+        for (int i = 0; i < n; i++) {
+            long long m = arr[i] % k;
+            int g = 0;
+            while (group_mod[g] != m) g++;
+            bucket[g][pos[g]++] = arr[i];
+        }
+
+        long long answer = 0;
+        int ok = 1;
+
+        for (int g = 0; g < groups; g++) {
+            int len = group_count[g];
+
+            qsort(bucket[g], len, sizeof(long long), cmp_ll);
+
+            int L = 0, R = len - 1;
+
+            while (L < R) {
+                long long low = bucket[g][L];
+                long long high = bucket[g][R];
+
+                if (low % k != high % k) {
+                    ok = 0;
+                    break;
+                }
+
+                answer += (high - low) / k;
+                L++;
+                R--;
+            }
+
+            if (!ok) break;
+        }
+
+        if (!ok) printf("-1\n");
+        else printf("%lld\n", answer);
+
+        for (int i = 0; i < groups; i++)
+            free(bucket[i]);
+        free(bucket);
+        free(group_mod);
+        free(group_count);
+        free(pos);
+        free(arr);
+    }
+
+    return 0;
+}
 

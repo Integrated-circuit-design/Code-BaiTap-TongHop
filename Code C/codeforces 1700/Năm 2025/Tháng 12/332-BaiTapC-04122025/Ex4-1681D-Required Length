@@ -1,1 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef __int128 big;
+
+typedef struct {
+    unsigned long long val;
+    int steps;
+} Node;
+
+int digits(unsigned long long z) {
+    int s = 0;
+    while (z) { s++; z /= 10; }
+    return s;
+}
+
+unsigned long long mul_safe(unsigned long long a, int b) {
+    big r = (big)a * b;
+    if (r > (big)10000000000000000000ULL) return (unsigned long long)-1;
+    return (unsigned long long)r;
+}
+
+int collect(int arr[], unsigned long long v) {
+    int c = 0;
+    int seen[10] = {0};
+    while (v) {
+        int d = v % 10;
+        if (d >= 2 && !seen[d]) {
+            arr[c++] = d;
+            seen[d] = 1;
+        }
+        v /= 10;
+    }
+    return c;
+}
+
+int main() {
+    int need;
+    unsigned long long start;
+
+    scanf("%d %llu", &need, &start);
+
+    if (digits(start) == need) {
+        printf("0\n");
+        return 0;
+    }
+
+    Node q[3000000];
+    int l = 0, r = 0;
+
+    q[r].val = start;
+    q[r].steps = 0;
+    r++;
+
+    while (l < r) {
+        Node now = q[l++];
+
+        if (digits(now.val) == need) {
+            printf("%d\n", now.steps);
+            return 0;
+        }
+
+        int digs[10];
+        int cnt = collect(digs, now.val);
+
+        for (int i = 0; i < cnt; i++) {
+            unsigned long long nxt = mul_safe(now.val, digs[i]);
+            if (nxt == (unsigned long long)-1) continue;
+
+            q[r].val = nxt;
+            q[r].steps = now.steps + 1;
+            r++;
+        }
+    }
+
+    printf("-1\n");
+    return 0;
+}
 

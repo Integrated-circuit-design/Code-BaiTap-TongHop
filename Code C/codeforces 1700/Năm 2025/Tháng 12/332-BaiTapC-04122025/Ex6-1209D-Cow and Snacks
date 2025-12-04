@@ -1,1 +1,66 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int parent[MAXN];
+int size[MAXN];
+
+int comp_nodes[MAXN];
+int comp_edges[MAXN];
+
+int find(int x) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]);
+}
+
+void unite(int a, int b) {
+    a = find(a);
+    b = find(b);
+
+    if (a == b) {
+        comp_edges[a]++;
+        return;
+    }
+
+    if (size[a] < size[b]) {
+        int t = a; a = b; b = t;
+    }
+
+    parent[b] = a;
+    size[a] += size[b];
+
+    comp_nodes[a] += comp_nodes[b];
+    comp_edges[a] += comp_edges[b] + 1;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    for (int i = 1; i <= n; i++) {
+        parent[i] = i;
+        size[i] = 1;
+        comp_nodes[i] = 1;
+        comp_edges[i] = 0;
+    }
+
+    for (int i = 0; i < k; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        unite(x, y);
+    }
+
+    int sad = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (parent[i] == i) {
+            int nodes = comp_nodes[i];
+            int edges = comp_edges[i];
+            if (edges == nodes - 1) sad++;
+        }
+    }
+
+    printf("%d\n", sad);
+    return 0;
+}
 

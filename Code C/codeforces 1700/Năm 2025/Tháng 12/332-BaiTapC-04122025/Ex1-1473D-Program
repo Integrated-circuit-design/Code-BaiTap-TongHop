@@ -1,1 +1,86 @@
+#include <stdio.h>
+
+#define MAXN 200000
+
+typedef struct {
+    int lo, hi;
+} Range;
+
+char s[MAXN + 5];
+
+int pref[MAXN + 5];
+Range P[MAXN + 5];
+
+int suf[MAXN + 5];
+Range S[MAXN + 5];
+
+void build_prefix(int n) {
+    pref[0] = 0;
+    P[0].lo = P[0].hi = 0;
+
+    for (int i = 1; i <= n; i++) {
+        int v = (s[i] == '+') ? 1 : -1;
+        pref[i] = pref[i - 1] + v;
+
+        P[i].lo = P[i - 1].lo;
+        if (pref[i] < P[i].lo)
+            P[i].lo = pref[i];
+
+        P[i].hi = P[i - 1].hi;
+        if (pref[i] > P[i].hi)
+            P[i].hi = pref[i];
+    }
+}
+
+void build_suffix(int n) {
+    suf[n + 1] = 0;
+    S[n + 1].lo = S[n + 1].hi = 0;
+
+    for (int i = n; i >= 1; i--) {
+        int v = (s[i] == '+') ? 1 : -1;
+        suf[i] = suf[i + 1] + v;
+
+        S[i].lo = S[i + 1].lo;
+        if (suf[i] < S[i].lo)
+            S[i].lo = suf[i];
+
+        S[i].hi = S[i + 1].hi;
+        if (suf[i] > S[i].hi)
+            S[i].hi = suf[i];
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        scanf("%s", s + 1);
+
+        build_prefix(n);
+        build_suffix(n);
+
+        while (m--) {
+            int L, R;
+            scanf("%d %d", &L, &R);
+
+            int lo1 = P[L - 1].lo;
+            int hi1 = P[L - 1].hi;
+
+            int offset = pref[L - 1] - pref[R];
+
+            int lo2 = offset + S[R + 1].lo;
+            int hi2 = offset + S[R + 1].hi;
+
+            int lo = (lo1 < lo2 ? lo1 : lo2);
+            int hi = (hi1 > hi2 ? hi1 : hi2);
+
+            printf("%d\n", hi - lo + 1);
+        }
+    }
+
+    return 0;
+}
 

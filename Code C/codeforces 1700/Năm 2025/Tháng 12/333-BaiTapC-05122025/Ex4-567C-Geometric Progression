@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long k;
+    scanf("%d %lld", &n, &k);
+
+    long long a[n];
+    for(int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    long long result = 0;
+
+    for(int i = 0; i < n-2; i++) {
+        long long target2 = a[i] * k;
+        long long target3 = target2 * k;
+
+        for(int j = i+1; j < n-1; j++) {
+            if(a[j] == target2) {
+                for(int l = j+1; l < n; l++) {
+                    if(a[l] == target3) {
+                        result++;
+                    }
+                }
+            }
+        }
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

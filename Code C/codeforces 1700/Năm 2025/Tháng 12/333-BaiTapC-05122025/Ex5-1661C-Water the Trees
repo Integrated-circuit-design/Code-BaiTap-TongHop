@@ -1,1 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        long long h[n];
+        long long maxH = 0;
+
+        for(int i = 0; i < n; i++) {
+            scanf("%lld", &h[i]);
+            if(h[i] > maxH) maxH = h[i];
+        }
+
+        long long oddDays = 0;
+        long long evenDays = 0;
+
+        for(int i = 0; i < n; i++) {
+            long long diff = maxH - h[i];
+            evenDays += diff / 2;
+            oddDays += diff % 2;
+        }
+
+        long long minDays;
+        if(evenDays >= oddDays) {
+            minDays = 2 * evenDays - 1 + (oddDays > 0 ? 1 : 0);
+        } else {
+            minDays = 2 * oddDays;
+        }
+
+        printf("%lld\n", minDays);
+    }
+
+    return 0;
+}
 

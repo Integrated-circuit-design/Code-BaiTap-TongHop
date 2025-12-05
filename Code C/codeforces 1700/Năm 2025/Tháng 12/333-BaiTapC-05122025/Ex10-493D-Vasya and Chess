@@ -1,1 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+
+    const char *winner;
+    long long row = 1, col = 2;
+
+    switch (n % 2) {
+        case 0:
+            winner = "white";
+            break;
+        case 1:
+            winner = "black";
+            break;
+    }
+
+    printf("%s\n", winner);
+    if (n % 2 == 0) {
+        printf("%lld %lld\n", row, col);
+    }
+
+    return 0;
+}
 

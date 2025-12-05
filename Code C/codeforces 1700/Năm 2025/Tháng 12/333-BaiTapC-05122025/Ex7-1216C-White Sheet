@@ -1,1 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int wx1, wy1, wx2, wy2;
+    int bx1, by1, bx2, by2;
+    int cx1, cy1, cx2, cy2;
+
+    scanf("%d %d %d %d", &wx1, &wy1, &wx2, &wy2);
+    scanf("%d %d %d %d", &bx1, &by1, &bx2, &by2);
+    scanf("%d %d %d %d", &cx1, &cy1, &cx2, &cy2);
+
+    int visible_left = !(bx1 <= wx1 && cx1 <= wx1);
+    int visible_right = !(bx2 >= wx2 && cx2 >= wx2);
+    int visible_bottom = !(by1 <= wy1 && cy1 <= wy1);
+    int visible_top = !(by2 >= wy2 && cy2 >= wy2);
+
+    if (visible_left || visible_right || visible_bottom || visible_top) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
 

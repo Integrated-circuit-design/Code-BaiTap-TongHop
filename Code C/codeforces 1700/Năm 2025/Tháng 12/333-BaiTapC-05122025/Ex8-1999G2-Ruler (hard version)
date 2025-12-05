@@ -1,1 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int a = 500, b = 500;
+        printf("? %d %d\n", a, b);
+        fflush(stdout);
+        int measured;
+        scanf("%d", &measured);
+
+        int x;
+
+        if (measured == a * b) {
+            a = 750;
+            printf("? %d %d\n", a, b);
+            fflush(stdout);
+            scanf("%d", &measured);
+
+            if (measured == a * b) x = 999;
+            else x = a - (measured / b) + 1;
+        } else {
+            x = a - (measured / b) + 1;
+        }
+
+        printf("! %d\n", x);
+        fflush(stdout);
+    }
+
+    return 0;
+}
 

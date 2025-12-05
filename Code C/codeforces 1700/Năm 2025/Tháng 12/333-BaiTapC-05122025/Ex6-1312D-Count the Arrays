@@ -1,1 +1,21 @@
+#include <stdio.h>
+
+#define MOD 998244353
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    long long answer = 1;
+    int count = n - 1;
+
+    while (count--) {
+        answer = (answer * m) % MOD;
+        m--;
+    }
+
+    printf("%lld\n", answer);
+
+    return 0;
+}
 

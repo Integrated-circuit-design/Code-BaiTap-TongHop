@@ -1,1 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        int n;
+        scanf("%d", &n);
+        int a[n], b[n];
+        int max_val = 0;
+
+        for(int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            if(a[i] > max_val) max_val = a[i];
+        }
+        for(int i = 0; i < n; i++) {
+            scanf("%d", &b[i]);
+            if(b[i] > max_val) max_val = b[i];
+        }
+
+        int freq_a[max_val + 1];
+        int freq_b[max_val + 1];
+        memset(freq_a, 0, sizeof(freq_a));
+        memset(freq_b, 0, sizeof(freq_b));
+
+        for(int i = 0; i < n; i++) {
+            freq_a[a[i]] = 1;
+            freq_b[b[i]] = 1;
+        }
+
+        int same = 1;
+        for(int i = 1; i <= max_val; i++) {
+            if(freq_a[i] != freq_b[i]) {
+                same = 0;
+                break;
+            }
+        }
+
+        if(!same) {
+            printf("NO\n");
+            continue;
+        }
+
+        int parity_a = 0, parity_b = 0;
+        for(int i = 0; i < n; i++)
+            for(int j = i+1; j < n; j++) {
+                if(a[i] > a[j]) parity_a ^= 1;
+                if(b[i] > b[j]) parity_b ^= 1;
+            }
+
+        if(parity_a == parity_b)
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+    return 0;
+}
 

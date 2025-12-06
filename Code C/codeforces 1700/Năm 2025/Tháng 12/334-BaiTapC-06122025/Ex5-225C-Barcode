@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+#define INF 1000000000
+#define MAXM 1000
+
+int w[MAXM+1], b[MAXM+1];
+int pW[MAXM+1], pB[MAXM+1];
+int dpW[MAXM+1], dpB[MAXM+1];
+
+int min(int a, int b){ return a < b ? a : b; }
+
+int costToWhite(int l, int r){
+    return pB[r] - pB[l-1];
+}
+
+int costToBlack(int l, int r){
+    return pW[r] - pW[l-1];
+}
+
+int main(){
+    int n, m, x, y;
+    scanf("%d %d %d %d", &n, &m, &x, &y);
+
+    char s[MAXM+5];
+
+    for(int j = 1; j <= m; j++)
+        w[j] = 0;
+
+    for(int i = 0; i < n; i++){
+        scanf("%s", s);
+        for(int j = 1; j <= m; j++){
+            if(s[j-1] == '.') w[j]++;
+        }
+    }
+
+    for(int j = 1; j <= m; j++){
+        b[j] = n - w[j];
+        pW[j] = pW[j-1] + w[j];
+        pB[j] = pB[j-1] + b[j];
+    }
+
+    for(int j = 0; j <= m; j++){
+        dpW[j] = dpB[j] = INF;
+    }
+    dpW[0] = dpB[0] = 0;
+
+    for(int j = 1; j <= m; j++){
+        for(int k = x; k <= y; k++){
+            int l = j - k + 1;
+            if(l < 1) break;
+            dpW[j] = min(dpW[j], dpB[l-1] + costToWhite(l, j));
+            dpB[j] = min(dpB[j], dpW[l-1] + costToBlack(l, j));
+        }
+        dpW[j] = dpW[j];
+        dpB[j] = dpB[j];
+    }
+
+    printf("%d\n", min(dpW[m], dpB[m]));
+    return 0;
+}
 

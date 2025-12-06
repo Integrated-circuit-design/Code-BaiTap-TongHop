@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+char str[5005];
+int endFlip[5005];
+
+int check(int n, int k) {
+    int flip = 0;
+    memset(endFlip, 0, sizeof(int) * (n + 3));
+
+    for (int i = 1; i <= n; i++) {
+        if (endFlip[i]) flip ^= 1;
+
+        int current = (str[i] - '0') ^ flip;
+
+        if (current == 0) {
+            if (i + k - 1 > n) return 0;
+            flip ^= 1;
+            endFlip[i + k] ^= 1;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        scanf("%s", str + 1);
+
+        int best = 1;
+        for (int k = n; k >= 1; k--) {
+            if (check(n, k)) {
+                best = k;
+                break;
+            }
+        }
+
+        printf("%d\n", best);
+    }
+
+    return 0;
+}
 

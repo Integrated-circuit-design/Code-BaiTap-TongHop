@@ -1,1 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+typedef struct {
+    ll p;
+    ll q;
+} Node;
+
+int cmp(const void *x, const void *y) {
+    ll a = ((Node*)x)->p;
+    ll b = ((Node*)y)->p;
+    return (a < b ? -1 : a > b);
+}
+
+static inline ll minll(ll a, ll b) { return a < b ? a : b; }
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        ll M;
+        scanf("%d %lld", &n, &M);
+
+        Node *v = malloc(n * sizeof(Node));
+        for (int i = 0; i < n; i++) scanf("%lld", &v[i].p);
+        for (int i = 0; i < n; i++) scanf("%lld", &v[i].q);
+
+        qsort(v, n, sizeof(Node), cmp);
+
+        ll best = 0;
+
+        for (int i = 0; i < n; i++) {
+            ll A = v[i].p;
+            ll CA = v[i].q;
+
+            ll takeA = minll(CA, M / A);
+            ll sumA = takeA * A;
+            if (sumA > best) best = sumA;
+
+            if (i + 1 < n && v[i+1].p == A + 1) {
+                ll B  = v[i+1].p;
+                ll CB = v[i+1].q;
+
+                __int128 total = (__int128)A * CA + (__int128)B * CB;
+                if (total <= M) {
+                    if ((ll)total > best) best = (ll)total;
+                    continue;
+                }
+
+                ll y_max = minll(CB, M / B);
+
+                for (int k = 0; k < 3; k++) {
+                    ll y = y_max - k;
+                    if (y < 0) continue;
+
+                    ll costB = y * B;
+                    if (costB > M) continue;
+
+                    ll leftover = M - costB;
+                    ll x = minll(CA, leftover / A);
+
+                    ll totalSum = costB + x * A;
+                    if (totalSum > best) best = totalSum;
+                }
+            }
+        }
+
+        printf("%lld\n", best);
+        free(v);
+    }
+
+    return 0;
+}
 

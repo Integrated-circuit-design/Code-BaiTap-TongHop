@@ -1,1 +1,74 @@
+#include <stdio.h>
+
+#define MAXN 200000
+
+int p[MAXN + 1];
+int sz[MAXN + 1];
+int L[MAXN + 1], R[MAXN + 1];
+
+int root(int x) {
+    while (x != p[x]) {
+        p[x] = p[p[x]];
+        x = p[x];
+    }
+    return x;
+}
+
+void merge(int a, int b) {
+    a = root(a);
+    b = root(b);
+    if (a == b) return;
+
+    if (sz[a] < sz[b]) {
+        int t = a;
+        a = b;
+        b = t;
+    }
+    p[b] = a;
+    sz[a] += sz[b];
+
+    if (L[b] < L[a]) L[a] = L[b];
+    if (R[b] > R[a]) R[a] = R[b];
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) {
+        p[i] = i;
+        sz[i] = 1;
+        L[i] = R[i] = i;
+    }
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        merge(u, v);
+    }
+
+    int need = 0;
+    int maxReach = 0;
+
+    for (int i = 1; i <= n; i++) {
+        int r = root(i);
+
+        if (R[r] > maxReach)
+            maxReach = R[r];
+
+        if (i < maxReach) {
+            int r2 = root(i + 1);
+            if (r != r2) {
+                need++;
+                merge(r, r2);
+                int newRoot = root(r);
+                if (R[newRoot] > maxReach)
+                    maxReach = R[newRoot];
+            }
+        }
+    }
+
+    printf("%d\n", need);
+    return 0;
+}
 

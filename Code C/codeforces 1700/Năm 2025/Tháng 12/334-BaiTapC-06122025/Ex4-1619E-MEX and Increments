@@ -1,1 +1,68 @@
+#include <stdio.h>
+
+#define MAXN 200000
+
+int freq[MAXN + 5];
+int pool[MAXN + 5];
+int qhead, qtail;
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i <= n; i++) freq[i] = 0;
+
+        for (int i = 0, x; i < n; i++) {
+            scanf("%d", &x);
+            if (x <= n) freq[x]++;
+        }
+
+        long long ops = 0;
+        qhead = qtail = 0;
+
+        for (int i = 0; i < freq[0] - 1; i++)
+            pool[qtail++] = 0;
+
+        if (freq[0] == 0)
+            printf("0 ");
+        else
+            printf("1 ");
+
+        int valid = (freq[0] > 0);
+
+        for (int want = 1; want <= n; want++) {
+
+            if (!valid) {
+                printf("-1 ");
+                continue;
+            }
+
+            if (freq[want - 1] == 0) {
+                if (qhead == qtail) {
+                    valid = 0;
+                    printf("-1 ");
+                    continue;
+                }
+                int oldv = pool[qhead++];
+                ops += (want - 1 - oldv);
+                freq[want - 1] = 1;
+            }
+
+            ops += freq[want];
+
+            for (int i = 0; i < freq[want] - 1; i++)
+                pool[qtail++] = want;
+
+            printf("%lld ", ops);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
 

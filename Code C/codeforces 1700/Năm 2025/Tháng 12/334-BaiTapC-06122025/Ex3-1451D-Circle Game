@@ -1,1 +1,29 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long d, k;
+        scanf("%lld %lld", &d, &k);
+
+        long double limit = (long double)d * d / (2.0L * k * k);
+        long long n = (long long)(sqrtl(limit));
+
+        long long x = (n + 1) * k;
+        long long y = n * k;
+
+        long long dist = x * x + y * y;
+        long long d2 = d * d;
+
+        if (dist <= d2)
+            printf("Ashish\n");
+        else
+            printf("Utkarsh\n");
+    }
+
+    return 0;
+}
 

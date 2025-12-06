@@ -1,1 +1,47 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+struct Problem {
+    int a;
+    int b;
+};
+
+static struct Problem p[200005];
+static int freqA[200005];
+static int freqB[200005];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) {
+            freqA[i] = 0;
+            freqB[i] = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &p[i].a, &p[i].b);
+            freqA[p[i].a]++;
+            freqB[p[i].b]++;
+        }
+
+        ll total = (ll)n * (n - 1) * (n - 2) / 6;
+
+        ll invalid = 0;
+        for (int i = 0; i < n; i++) {
+            ll cA = freqA[p[i].a] - 1;
+            ll cB = freqB[p[i].b] - 1;
+            invalid += cA * cB;
+        }
+
+        printf("%lld\n", total - invalid);
+    }
+
+    return 0;
+}
 

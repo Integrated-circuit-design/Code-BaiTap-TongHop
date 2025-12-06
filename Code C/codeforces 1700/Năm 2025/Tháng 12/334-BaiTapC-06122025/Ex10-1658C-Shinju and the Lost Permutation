@@ -1,1 +1,49 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        int count[n + 1];
+        for (int i = 0; i <= n; i++) {
+            count[i] = 0;
+        }
+
+        int ok = 1;
+
+        for (int i = 0; i < n; i++) {
+            int v = a[i];
+            if (v < 1 || v > n) {
+                ok = 0;
+                break;
+            }
+            count[v]++;
+        }
+
+        if (ok) {
+            for (int x = 1; x <= n; x++) {
+                if (count[x] != 1) {
+                    ok = 0;
+                    break;
+                }
+            }
+        }
+
+        if (ok)
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+
+    return 0;
+}
 

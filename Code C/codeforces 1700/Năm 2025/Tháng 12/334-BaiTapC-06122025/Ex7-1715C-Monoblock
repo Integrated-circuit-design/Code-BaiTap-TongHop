@@ -1,1 +1,68 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+ll block_contribution(int k, int n) {
+    return (ll)k * (ll)(n - k);
+}
+
+struct Data {
+    int n, m;
+    ll arr[200005];
+    ll answer;
+};
+
+void process_update(struct Data *D, int pos, ll new_value) {
+    int n = D->n;
+
+    if (pos > 1) {
+        if (D->arr[pos - 1] != D->arr[pos]) {
+            D->answer -= block_contribution(pos - 1, n);
+        }
+        if (D->arr[pos - 1] != new_value) {
+            D->answer += block_contribution(pos - 1, n);
+        }
+    }
+
+    if (pos < n) {
+        if (D->arr[pos] != D->arr[pos + 1]) {
+            D->answer -= block_contribution(pos, n);
+        }
+        if (new_value != D->arr[pos + 1]) {
+            D->answer += block_contribution(pos, n);
+        }
+    }
+
+    D->arr[pos] = new_value;
+}
+
+int main() {
+    struct Data D;
+
+    scanf("%d %d", &D.n, &D.m);
+
+    for (int i = 1; i <= D.n; i++) {
+        scanf("%lld", &D.arr[i]);
+    }
+
+    D.answer = (ll)D.n * (D.n + 1) / 2;
+
+    for (int i = 1; i < D.n; i++) {
+        if (D.arr[i] != D.arr[i + 1]) {
+            D.answer += block_contribution(i, D.n);
+        }
+    }
+
+    while (D.m--) {
+        int pos;
+        ll new_value;
+        scanf("%d %lld", &pos, &new_value);
+
+        process_update(&D, pos, new_value);
+
+        printf("%lld\n", D.answer);
+    }
+
+    return 0;
+}
 

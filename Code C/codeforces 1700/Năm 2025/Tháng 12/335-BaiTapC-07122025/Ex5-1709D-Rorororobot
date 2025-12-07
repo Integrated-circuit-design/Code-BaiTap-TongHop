@@ -1,1 +1,76 @@
+#include <stdio.h>
+
+#define MAXM 200005
+
+int a[MAXM];
+int lg2v[MAXM];
+int st[19][MAXM];
+
+void build_sparse(int m) {
+    for (int i = 1; i <= m; i++)
+        st[0][i] = a[i];
+
+    int level = 1;
+    while ((1 << level) <= m) {
+        int step = 1 << (level - 1);
+        for (int i = 1; i + (1 << level) - 1 <= m; i++) {
+            int left = st[level - 1][i];
+            int right = st[level - 1][i + step];
+            st[level][i] = (left > right ? left : right);
+        }
+        level++;
+    }
+}
+
+int range_max(int L, int R) {
+    int len = R - L + 1;
+    int p = lg2v[len];
+    int a1 = st[p][L];
+    int a2 = st[p][R - (1 << p) + 1];
+    return (a1 > a2 ? a1 : a2);
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= m; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    lg2v[1] = 0;
+    for (int i = 2; i <= m; i++) {
+        lg2v[i] = lg2v[i >> 1] + 1;
+    }
+
+    build_sparse(m);
+
+    int q;
+    scanf("%d", &q);
+
+    while (q--) {
+        long long xs, ys, xf, yf, k;
+        scanf("%lld %lld %lld %lld %lld", &xs, &ys, &xf, &yf, &k);
+
+        if (((xs > xf ? xs - xf : xf - xs) % k) ||
+            ((ys > yf ? ys - yf : yf - ys) % k)) {
+            puts("NO");
+            continue;
+        }
+
+        int L = (ys < yf ? ys : yf);
+        int R = (ys < yf ? yf : ys);
+
+        int highestWall = range_max(L, R);
+
+        long long diff = n - xs;
+        long long steps = diff / k;
+        long long maxReach = xs + steps * k;
+
+        if (maxReach > highestWall) puts("YES");
+        else puts("NO");
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,63 @@
+#include <stdio.h>
+
+typedef long long ll;
+
+#define MAXN 200000
+
+int parent[MAXN + 5];
+ll diffv[MAXN + 5];
+
+int find(int x) {
+    if (parent[x] == x) return x;
+    int p = parent[x];
+    int root = find(p);
+    diffv[x] += diffv[p];
+    return parent[x] = root;
+}
+
+int unite(int a, int b, ll d) {
+    int ra = find(a);
+    int rb = find(b);
+
+    if (ra == rb) {
+        return (diffv[a] - diffv[b] == d);
+    }
+
+    parent[ra] = rb;
+    diffv[ra] = d - diffv[a] + diffv[b];
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 1; i <= n; i++) {
+            parent[i] = i;
+            diffv[i] = 0;
+        }
+
+        int ok = 1;
+
+        for (int i = 0; i < m; i++) {
+            int a, b;
+            ll d;
+            scanf("%d %d %lld", &a, &b, &d);
+
+            if (ok) {
+                if (!unite(a, b, d)) {
+                    ok = 0;
+                }
+            }
+        }
+
+        puts(ok ? "YES" : "NO");
+    }
+
+    return 0;
+}
 

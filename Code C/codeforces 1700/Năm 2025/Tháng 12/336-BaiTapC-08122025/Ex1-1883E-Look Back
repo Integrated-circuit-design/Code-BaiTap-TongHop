@@ -1,1 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        long long a[n];
+        for (int i = 0; i < n; i++) scanf("%lld", &a[i]);
+
+        int ops = 0;
+
+        for (int i = n - 2; i >= 0; i--) {
+            if (a[i] > a[i + 1]) {
+                long long x = a[i];
+                int count = 0;
+
+                while (x > a[i + 1]) {
+                    x = (x + 1) / 2;
+                    count++;
+                }
+
+                ops += count;
+                a[i] = x;
+            }
+        }
+
+        printf("%d\n", ops);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,65 @@
+#include <stdio.h>
+
+typedef long long LL;
+
+char str[100005];
+LL pref[100005];
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+
+        int n;
+        LL target;
+        scanf("%d %lld", &n, &target);
+        scanf("%s", str);
+
+        pref[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            if (str[i-1] == '0')
+                pref[i] = pref[i-1] + 1;
+            else
+                pref[i] = pref[i-1] - 1;
+        }
+
+        LL cycle = pref[n];
+        LL count = 0;
+
+        if (cycle == 0) {
+
+            int hit = 0;
+            for (int i = 0; i <= n; i++) {
+                if (pref[i] == target) {
+                    hit = 1;
+                    break;
+                }
+            }
+
+            if (hit)
+                printf("-1\n");
+            else
+                printf("0\n");
+        }
+
+        else {
+
+            for (int i = 0; i <= n; i++) {
+
+                LL need = target - pref[i];
+
+                if (need % cycle == 0) {
+                    LL k = need / cycle;
+                    if (k >= 0)
+                        count++;
+                }
+            }
+
+            printf("%lld\n", count);
+        }
+    }
+
+    return 0;
+}
 

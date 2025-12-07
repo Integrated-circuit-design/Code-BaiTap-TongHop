@@ -1,1 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char *s[50005];
+
+int compare(const void *a, const void *b) {
+    char *A = *(char **)a;
+    char *B = *(char **)b;
+
+    int nA = strlen(A);
+    int nB = strlen(B);
+    int i = 0, j = 0, total = nA + nB;
+
+    for (int k = 0; k < total; k++) {
+        char c1 = (i < nA) ? A[i] : B[i - nA];
+        char c2 = (j < nB) ? B[j] : A[j - nB];
+
+        if (c1 < c2) return -1;
+        if (c1 > c2) return 1;
+
+        i++;
+        j++;
+    }
+    return 0;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        s[i] = malloc(55);
+        scanf("%s", s[i]);
+    }
+
+    qsort(s, n, sizeof(char *), compare);
+
+    for (int i = 0; i < n; i++)
+        printf("%s", s[i]);
+
+    return 0;
+}
 

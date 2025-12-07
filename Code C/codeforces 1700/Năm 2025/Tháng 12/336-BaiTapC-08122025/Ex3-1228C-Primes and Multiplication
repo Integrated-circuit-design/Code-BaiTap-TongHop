@@ -1,1 +1,53 @@
+#include <stdio.h>
+#include <stdint.h>
+
+#define MOD 1000000007
+typedef long long ll;
+
+ll power_mod(ll a, ll b) {
+    if (b == 0) return 1;
+    ll half = power_mod(a, b / 2);
+    half = (half * half) % MOD;
+    if (b % 2) half = (half * a) % MOD;
+    return half;
+}
+
+int get_primes(int x, int primes[]) {
+    int idx = 0;
+    for (int i = 2; i * i <= x; ++i) {
+        if (x % i == 0) {
+            primes[idx++] = i;
+            while (x % i == 0) x /= i;
+        }
+    }
+    if (x > 1) primes[idx++] = x;
+    return idx;
+}
+
+ll count_powers(ll n, int p) {
+    ll total = 0;
+    for (ll current = p; current <= n; current *= p) {
+        total += n / current;
+        if (current > n / p) break;
+    }
+    return total;
+}
+
+int main() {
+    int x;
+    ll n;
+    scanf("%d %lld", &x, &n);
+
+    int primes[32];
+    int num_primes = get_primes(x, primes);
+
+    ll result = 1;
+    for (int i = 0; i < num_primes; ++i) {
+        ll exponent = count_powers(n, primes[i]);
+        result = (result * power_mod(primes[i], exponent)) % MOD;
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
 

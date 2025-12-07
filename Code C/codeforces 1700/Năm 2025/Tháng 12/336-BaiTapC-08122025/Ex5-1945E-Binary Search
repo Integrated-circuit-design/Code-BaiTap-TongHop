@@ -1,1 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, x;
+        scanf("%d %d", &n, &x);
+        int a[n+1];
+        for (int i = 1; i <= n; i++)
+            scanf("%d", &a[i]);
+
+        if (a[x] == x) {
+            printf("0\n");
+            continue;
+        }
+
+        int pos = 0;
+        for (int i = 1; i <= n; i++) {
+            if (a[i] == x) {
+                pos = i;
+                break;
+            }
+        }
+
+        printf("1\n");
+        printf("%d %d\n", pos, x);
+    }
+
+    return 0;
+}
 

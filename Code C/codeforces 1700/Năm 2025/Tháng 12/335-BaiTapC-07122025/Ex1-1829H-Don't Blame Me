@@ -1,1 +1,87 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 1000000007LL
+typedef long long ll;
+
+static ll P2[200005];
+static int freq[64];
+static int supcnt[64];
+static ll ways_sup[64];
+static ll exactAND[64];
+
+static inline int bits(int x) { return __builtin_popcount(x); }
+
+void build_supcnt() {
+    for (int s = 0; s < 64; s++) {
+        int count = 0;
+        for (int x = 0; x < 64; x++) {
+            if ((x & s) == s) count += freq[x];
+        }
+        supcnt[s] = count;
+    }
+}
+
+void build_sup_ways() {
+    for (int s = 0; s < 64; s++) {
+        int k = supcnt[s];
+        if (k == 0) ways_sup[s] = 0;
+        else ways_sup[s] = (P2[k] + MOD - 1) % MOD;
+    }
+}
+
+void build_exact() {
+    for (int i = 0; i < 64; i++) exactAND[i] = 0;
+    for (int pc = 6; pc >= 0; pc--) {
+        for (int s = 0; s < 64; s++) {
+            if (bits(s) == pc) {
+                ll v = ways_sup[s];
+                for (int t = 0; t < 64; t++) {
+                    if (t != s && (t & s) == s) {
+                        v = (v - exactAND[t]) % MOD;
+                    }
+                }
+                if (v < 0) v += MOD;
+                exactAND[s] = v;
+            }
+        }
+    }
+}
+
+int main() {
+    P2[0] = 1;
+    for (int i = 1; i < 200005; i++)
+        P2[i] = (P2[i-1] * 2) % MOD;
+
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+
+        memset(freq, 0, sizeof(freq));
+
+        for (int i = 0; i < n; i++) {
+            int v;
+            scanf("%d", &v);
+            freq[v]++;
+        }
+
+        build_supcnt();
+        build_sup_ways();
+        build_exact();
+
+        ll ans = 0;
+        for (int s = 0; s < 64; s++) {
+            if (bits(s) == k) {
+                ans = (ans + exactAND[s]) % MOD;
+            }
+        }
+
+        printf("%lld\n", ans);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
+void generateNumbersAlt(int n) {
+    long long base = 10;
+    long long squares[100];
+
+    for (int i = 0; i < n; i++) {
+        long long x = base + i;
+        squares[i] = x * x;
+    }
+
+    for (int i = 0; i < n; i++) {
+        char s[100], t[100];
+        sprintf(s, "%lld", squares[i]);
+        int len = strlen(s);
+
+        for (int j = 0; j < len; j++) {
+            t[j] = s[(j + len - i) % len];
+        }
+        t[len] = '\0';
+        printf("%s\n", t);
+    }
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        generateNumbersAlt(n);
+    }
+    return 0;
+}
 

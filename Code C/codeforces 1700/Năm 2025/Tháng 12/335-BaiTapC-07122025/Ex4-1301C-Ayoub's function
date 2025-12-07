@@ -1,1 +1,42 @@
+#include <stdio.h>
+
+static inline long long seg(long long L) {
+    return L * (L + 1) / 2;
+}
+
+long long solve_case(long long len, long long ones) {
+    if (ones == 0) return 0;
+
+    long long zeros = len - ones;
+    long long totalSegments = seg(len);
+
+    long long base = zeros / (ones + 1);
+    long long extra = zeros % (ones + 1);
+
+    long long zeroSegments = 0;
+
+    if (extra > 0) {
+        zeroSegments += extra * seg(base + 1);
+    }
+
+    long long remain = (ones + 1) - extra;
+    if (remain > 0) {
+        zeroSegments += remain * seg(base);
+    }
+
+    return totalSegments - zeroSegments;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, m;
+        scanf("%lld %lld", &n, &m);
+        printf("%lld\n", solve_case(n, m));
+    }
+
+    return 0;
+}
 

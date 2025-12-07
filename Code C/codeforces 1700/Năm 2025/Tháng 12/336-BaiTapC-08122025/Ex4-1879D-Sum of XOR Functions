@@ -1,1 +1,38 @@
+#include <stdio.h>
+#define MOD 998244353
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    unsigned int a[n];
+    for(int i = 0; i < n; i++)
+        scanf("%u", &a[i]);
+
+    long long res = 0;
+
+    for(int b = 0; b <= 30; b++) {
+        long long bitContrib = 0;
+
+        for(int i = 0; i < n; i++) {
+            int cnt = 0;
+            unsigned int xorVal = 0;
+
+            for(int j = i; j < n; j++) {
+                xorVal ^= a[j];
+                if ((xorVal >> b) & 1) {
+                    cnt += 1;
+                }
+            }
+
+            bitContrib = (bitContrib + cnt) % MOD;
+        }
+
+        long long pow2 = 1LL << b;
+        res = (res + bitContrib * pow2) % MOD;
+    }
+
+    printf("%lld\n", res);
+    return 0;
+}
 

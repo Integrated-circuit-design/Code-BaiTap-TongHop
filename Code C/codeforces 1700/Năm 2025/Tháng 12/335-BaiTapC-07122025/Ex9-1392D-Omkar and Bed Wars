@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        static char s[200005];
+        scanf("%s", s);
+
+        static int in[200005];
+        for (int i = 0; i < n; i++) in[i] = 0;
+
+        for (int i = 0; i < n; i++) {
+            int nxt = (s[i] == 'L' ? (i - 1 + n) % n : (i + 1) % n);
+            in[nxt]++;
+        }
+
+        int ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (in[i] != 1) continue;
+
+            int a = (i - 1 + n) % n;
+            int b = (i + 1) % n;
+
+            int attacker;
+
+            if (s[a] == 'R') attacker = a;
+            else attacker = b;
+
+            int target = (s[i] == 'L' ? a : b);
+
+            if (target != attacker) ans++;
+        }
+
+        printf("%d\n", ans);
+    }
+    return 0;
+}
 

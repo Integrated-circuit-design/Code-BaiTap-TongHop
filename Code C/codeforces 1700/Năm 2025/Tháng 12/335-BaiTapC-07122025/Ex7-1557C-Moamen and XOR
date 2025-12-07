@@ -1,1 +1,43 @@
+#include <stdio.h>
+
+#define MOD 1000000007LL
+
+long long binpow(long long base, long long exp) {
+    long long res = 1;
+    while (exp > 0) {
+        if (exp & 1) {
+            res = (res * base) % MOD;
+        }
+        base = (base * base) % MOD;
+        exp >>= 1;
+    }
+    return res;
+}
+
+long long solve_one(long long n, long long k) {
+    if (k == 0) {
+        return 1;
+    }
+
+    long long two_pow = binpow(2, n - 1);
+    long long per_bit = (two_pow + 1) % MOD;
+    long long ans = binpow(per_bit, k);
+
+    return ans;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+
+        long long result = solve_one(n, k);
+        printf("%lld\n", result);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1000005
+
+char s[MAX];
+
+int main() {
+    int a, b;
+    scanf("%s", s);
+    scanf("%d %d", &a, &b);
+
+    int n = strlen(s);
+    long long left_mod = 0;
+    long long right_mod = 0;
+    long long pow10 = 1;
+
+    for (int i = n - 1; i >= 0; i--) {
+        right_mod = (right_mod + (s[i] - '0') * pow10) % b;
+        pow10 = (pow10 * 10) % b;
+    }
+
+    left_mod = 0;
+    pow10 = 1;
+    right_mod = 0;
+
+    long long suffix_mod = 0;
+    long long suffix_pow = 1;
+    for (int i = n - 1; i >= 0; i--) {
+        suffix_mod = (suffix_mod + (s[i] - '0') * suffix_pow) % b;
+        suffix_pow = (suffix_pow * 10) % b;
+    }
+
+    long long cur_suffix = suffix_mod;
+    long long cur_pow = 1;
+    for (int i = 0; i < n - 1; i++) {
+        left_mod = (left_mod * 10 + (s[i] - '0')) % a;
+
+        int digit = s[i + 1] - '0';
+        long long remove = (digit * cur_pow) % b;
+        cur_suffix = (cur_suffix - remove + b) % b;
+        cur_pow = (cur_pow * 10) % b;
+
+        if (left_mod == 0 && cur_suffix == 0 && s[i + 1] != '0') {
+            printf("YES\n");
+            for (int j = 0; j <= i; j++) putchar(s[j]);
+            putchar('\n');
+            for (int j = i + 1; j < n; j++) putchar(s[j]);
+            putchar('\n');
+            return 0;
+        }
+    }
+
+    printf("NO\n");
+    return 0;
+}
 

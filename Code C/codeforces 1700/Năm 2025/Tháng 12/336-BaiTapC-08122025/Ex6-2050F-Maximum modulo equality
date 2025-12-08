@@ -1,1 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+ll gcd(ll a, ll b) {
+    while(b) {
+        ll t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+        ll a[n+1];
+        for(int i=1; i<=n; i++) scanf("%lld", &a[i]);
+
+        while(q--) {
+            int l, r;
+            scanf("%d %d", &l, &r);
+
+            if(l == r) {
+                printf("0 ");
+                continue;
+            }
+
+            ll m = llabs(a[l+1] - a[l]);
+            for(int i = l+1; i < r; i++) {
+                ll diff = llabs(a[i+1] - a[i]);
+                m = gcd(m, diff);
+            }
+
+            printf("%lld ", m);
+        }
+        printf("\n");
+    }
+    return 0;
+}
 

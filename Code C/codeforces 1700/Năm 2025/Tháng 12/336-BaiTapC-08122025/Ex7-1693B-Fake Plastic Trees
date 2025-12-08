@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+typedef struct Edge {
+    int to;
+    struct Edge* next;
+} Edge;
+
+Edge* adj[MAXN];
+long long l[MAXN], r[MAXN];
+int t, n;
+
+void add_edge(int u, int v) {
+    Edge* e = (Edge*)malloc(sizeof(Edge));
+    e->to = v;
+    e->next = adj[u];
+    adj[u] = e;
+}
+
+long long dfs(int v, long long *maxval) {
+    long long mx = 0;
+    long long ops = 0;
+
+    for (Edge* e = adj[v]; e != NULL; e = e->next) {
+        long long child_max = 0;
+        ops += dfs(e->to, &child_max);
+        if (child_max > mx) mx = child_max;
+    }
+
+    if (mx < l[v]) {
+        ops += 1;
+        mx = r[v];
+    } else if (mx > r[v]) {
+        mx = r[v];
+    }
+
+    *maxval = mx;
+    return ops;
+}
+
+void free_adj() {
+    for (int i = 1; i <= n; i++) {
+        Edge* e = adj[i];
+        while (e) {
+            Edge* tmp = e;
+            e = e->next;
+            free(tmp);
+        }
+        adj[i] = NULL;
+    }
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        free_adj();
+
+        for (int i = 2; i <= n; i++) {
+            int p;
+            scanf("%d", &p);
+            add_edge(p, i);
+        }
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%lld %lld", &l[i], &r[i]);
+        }
+
+        long long maxval = 0;
+        long long ans = dfs(1, &maxval);
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
 

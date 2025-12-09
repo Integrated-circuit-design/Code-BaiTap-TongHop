@@ -1,1 +1,113 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+
+typedef struct Node {
+    int v;
+    struct Node* next;
+} Node;
+
+Node* adj[MAXN];
+int marked[MAXN];
+int n, k;
+int down[MAXN];
+int up[MAXN];
+int min_f;
+
+void add_edge(int u, int v) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->v = v;
+    node->next = adj[u];
+    adj[u] = node;
+}
+
+void dfs1(int u, int parent) {
+    down[u] = -1;
+    for (int i = 0; i < k; i++)
+        if (marked[i] == u)
+            down[u] = 0;
+
+    Node* p = adj[u];
+    while (p != NULL) {
+        int v = p->v;
+        if (v != parent) {
+            dfs1(v, u);
+            if (down[v] != -1) {
+                if (down[u] == -1 || down[v] + 1 > down[u])
+                    down[u] = down[v] + 1;
+            }
+        }
+        p = p->next;
+    }
+}
+
+void dfs2(int u, int parent) {
+    int first = -1, second = -1;
+    Node* p = adj[u];
+    while (p != NULL) {
+        int v = p->v;
+        if (v != parent) {
+            if (down[v] > first) {
+                second = first;
+                first = down[v];
+            } else if (down[v] > second) {
+                second = down[v];
+            }
+        }
+        p = p->next;
+    }
+
+    p = adj[u];
+    while (p != NULL) {
+        int v = p->v;
+        if (v != parent) {
+            int use = (down[v] == first) ? second : first;
+            if (use == -1 && up[u] == -1) up[v] = -1;
+            else {
+                int up_val = 0;
+                if (use != -1) up_val = use + 2;
+                if (up[u] != -1 && up[u] + 1 > up_val) up_val = up[u] + 1;
+                up[v] = up_val;
+            }
+            dfs2(v, u);
+        }
+        p = p->next;
+    }
+
+    int fi = down[u];
+    if (up[u] != -1 && up[u] > fi) fi = up[u];
+    if (min_f == -1 || fi < min_f) min_f = fi;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d %d", &n, &k);
+
+        for (int i = 1; i <= n; i++) {
+            adj[i] = NULL;
+            down[i] = -1;
+            up[i] = -1;
+        }
+
+        for (int i = 0; i < k; i++) scanf("%d", &marked[i]);
+
+        for (int i = 0; i < n - 1; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            add_edge(u, v);
+            add_edge(v, u);
+        }
+
+        min_f = -1;
+        dfs1(1, -1);
+        if (down[1] != -1) up[1] = 0;
+        dfs2(1, -1);
+
+        printf("%d\n", min_f);
+    }
+    return 0;
+}
 

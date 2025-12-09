@@ -1,1 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define maxn 300005
+
+char s[maxn];
+int left_len[maxn], right_len[maxn];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        scanf("%s", s);
+
+        right_len[n] = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (s[i] == 'R') {
+                if (i == n - 1) right_len[i] = 1;
+                else right_len[i] = 1 + ((s[i + 1] == 'L') ? right_len[i + 2] : 0);
+            } else {
+                right_len[i] = 0;
+            }
+        }
+
+        left_len[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            if (s[i - 1] == 'L') {
+                if (i == 1) left_len[i] = 1;
+                else left_len[i] = 1 + ((s[i - 2] == 'R') ? left_len[i - 2] : 0);
+            } else {
+                left_len[i] = 0;
+            }
+        }
+
+        for (int i = 0; i <= n; i++) {
+            int result = 1 + left_len[i] + right_len[i];
+            printf("%d%c", result, (i == n ? '\n' : ' '));
+        }
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,75 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+typedef struct {
+    int value;
+    long long gain;
+    int left;
+    int right;
+} Result;
+
+int x[MAXN];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &x[i]);
+        }
+
+        Result best;
+        best.gain = -1000000000;
+
+        int visited_count = 0;
+        int visited_numbers[MAXN];
+        for (int i = 0; i < n; i++) {
+            int a = x[i];
+            int seen = 0;
+            for (int j = 0; j < visited_count; j++) {
+                if (visited_numbers[j] == a) {
+                    seen = 1;
+                    break;
+                }
+            }
+            if (seen) continue;
+            visited_numbers[visited_count++] = a;
+
+            long long current = 0, max_gain = -1000000000;
+            int temp_l = 0, l = 0, r = 0;
+
+            for (int j = 0; j < n; j++) {
+                int val = (x[j] == a) ? 1 : -1;
+
+                if (current <= 0) {
+                    current = val;
+                    temp_l = j;
+                } else {
+                    current += val;
+                }
+
+                if (current > max_gain) {
+                    max_gain = current;
+                    l = temp_l;
+                    r = j;
+                }
+            }
+
+            if (max_gain > best.gain) {
+                best.value = a;
+                best.gain = max_gain;
+                best.left = l + 1;
+                best.right = r + 1;
+            }
+        }
+
+        printf("%d %d %d\n", best.value, best.left, best.right);
+    }
+
+    return 0;
+}
 

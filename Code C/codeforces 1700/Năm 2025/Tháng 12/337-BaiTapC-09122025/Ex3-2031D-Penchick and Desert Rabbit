@@ -1,1 +1,58 @@
+#include <stdio.h>
+
+#define MAXN 500000
+#define max(a,b) ((a)>(b)?(a):(b))
+
+int a[MAXN+5];
+int ans[MAXN+5];
+int nxtGreaterLeft[MAXN+5];
+int nxtSmallerRight[MAXN+5];
+int st[MAXN+5];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &a[i]);
+            ans[i] = a[i];
+        }
+
+        int top = 0;
+
+        top = 0;
+        for (int i = 1; i <= n; i++) {
+            while (top > 0 && a[st[top]] <= a[i]) top--;
+            nxtGreaterLeft[i] = (top == 0 ? 0 : st[top]);
+            st[++top] = i;
+        }
+
+        top = 0;
+        for (int i = n; i >= 1; i--) {
+            while (top > 0 && a[st[top]] >= a[i]) top--;
+            nxtSmallerRight[i] = (top == 0 ? 0 : st[top]);
+            st[++top] = i;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            int j = nxtSmallerRight[i];
+            if (j) ans[i] = max(ans[i], ans[j]);
+        }
+
+        for (int i = n; i >= 1; i--) {
+            int j = nxtGreaterLeft[i];
+            if (j) ans[i] = max(ans[i], ans[j]);
+        }
+
+        for (int i = 1; i <= n; i++) {
+            printf("%d%c", ans[i], (i == n ? '\n' : ' '));
+        }
+    }
+
+    return 0;
+}
 

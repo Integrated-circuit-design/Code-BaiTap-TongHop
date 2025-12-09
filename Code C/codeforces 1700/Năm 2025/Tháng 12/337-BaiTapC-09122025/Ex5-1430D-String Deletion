@@ -1,1 +1,44 @@
+#include <stdio.h>
+
+int len[200005];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        char s[200005];
+        scanf("%d %s", &n, s);
+
+        int cnt = 0;
+        for (int i = 0; i < n; ) {
+            int j = i;
+            while (j < n && s[j] == s[i]) j++;
+            len[cnt++] = j - i;
+            i = j;
+        }
+
+        int pos = 0;
+        int result = 0;
+
+        for (int i = 0; i < cnt; i++) {
+            while (pos < cnt && len[pos] == 1) pos++;
+
+            if (len[i] == 1) {
+                if (pos < cnt) {
+                    len[pos]--;
+                    if (len[pos] == 1) pos++;
+                } else {
+                    i++;
+                }
+            }
+            result++;
+        }
+
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
 

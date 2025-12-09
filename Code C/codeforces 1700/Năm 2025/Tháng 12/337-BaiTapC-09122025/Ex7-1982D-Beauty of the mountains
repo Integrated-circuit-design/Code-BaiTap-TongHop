@@ -1,1 +1,69 @@
+#include <stdio.h>
+
+#define N 505
+
+long long h[N][N];
+char tp[N][N];
+long long prefix[N][N];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+
+        int n, m, k;
+        scanf("%d %d %d", &n, &m, &k);
+
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= m; j++)
+                scanf("%lld", &h[i][j]);
+
+        for (int i = 1; i <= n; i++)
+            scanf("%s", tp[i] + 1);
+
+        long long diff = 0;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                int v = (tp[i][j] == '0' ? 1 : -1);
+                diff += h[i][j] * v;
+                prefix[i][j] = v;
+            }
+        }
+
+        for (int i = 1; i <= n; i++) {
+            long long rowSum = 0;
+            for (int j = 1; j <= m; j++) {
+                rowSum += prefix[i][j];
+                prefix[i][j] = prefix[i - 1][j] + rowSum;
+            }
+        }
+
+        int possible = 0;
+
+        for (int i = k; i <= n && !possible; i++) {
+            for (int j = k; j <= m && !possible; j++) {
+                long long S =
+                    prefix[i][j]
+                  - prefix[i - k][j]
+                  - prefix[i][j - k]
+                  + prefix[i - k][j - k];
+
+                if (S != 0) {
+                    possible = 1;
+                }
+            }
+        }
+
+        if (possible) {
+            printf("YES\n");
+        } else {
+            if (diff == 0) printf("YES\n");
+            else printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

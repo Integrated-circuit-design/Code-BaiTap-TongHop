@@ -1,1 +1,64 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+int adj[MAXN][2];
+int deg[MAXN];
+int visited[MAXN];
+int parent[MAXN];
+int inCycle[MAXN];
+int cycleStart = -1, cycleEnd = -1;
+
+int dfs(int u, int p) {
+    visited[u] = 1;
+    parent[u] = p;
+    for(int i = 0; i < deg[u]; i++) {
+        int v = adj[u][i];
+        if(v == p) continue;
+        if(visited[v]) {
+            cycleStart = v;
+            cycleEnd = u;
+            return 1;
+        }
+        if(dfs(v, u)) return 1;
+    }
+    return 0;
+}
+
+void markCycle() {
+    int x = cycleEnd;
+    while(x != cycleStart) {
+        inCycle[x] = 1;
+        x = parent[x];
+    }
+    inCycle[cycleStart] = 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while(t--) {
+        int n, a, b;
+        scanf("%d %d %d", &n, &a, &b);
+
+        for(int i=1; i<=n; i++) {
+            deg[i] = visited[i] = inCycle[i] = 0;
+        }
+        cycleStart = cycleEnd = -1;
+
+        for(int i=0; i<n; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            adj[u][deg[u]++] = v;
+            adj[v][deg[v]++] = u;
+        }
+
+        dfs(1, -1);
+        if(cycleStart != -1) markCycle();
+
+        if(inCycle[b]) printf("YES\n");
+        else printf("NO\n");
+    }
+    return 0;
+}
 

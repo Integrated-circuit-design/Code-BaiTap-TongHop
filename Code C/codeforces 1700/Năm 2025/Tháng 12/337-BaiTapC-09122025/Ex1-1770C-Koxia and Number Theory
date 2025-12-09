@@ -1,1 +1,51 @@
+#include <stdio.h>
+
+long long my_gcd(long long x, long long y) {
+    if (x < y) {
+        long long tmp = x;
+        x = y;
+        y = tmp;
+    }
+    while (y != 0) {
+        long long r = x % y;
+        x = y;
+        y = r;
+    }
+    return x;
+}
+
+long long my_abs(long long v) {
+    if (v < 0) return -v;
+    return v;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        long long arr[105];
+        for (int i = 0; i < n; i++) {
+            scanf("%lld", &arr[i]);
+        }
+
+        long long g = 0;
+
+        for (int i = 1; i < n; i++) {
+            long long d = my_abs(arr[i] - arr[0]);
+            g = my_gcd(g, d);
+        }
+
+        if (g == 1) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
 

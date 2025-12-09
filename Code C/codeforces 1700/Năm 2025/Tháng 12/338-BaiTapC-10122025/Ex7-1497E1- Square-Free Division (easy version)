@@ -1,1 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define MAXN 200005
+#define HASH_SIZE 200003
+
+typedef struct Node {
+    int key;
+    struct Node* next;
+} Node;
+
+void insert(Node** hash, int key) {
+    int idx = key % HASH_SIZE;
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->key = key;
+    node->next = hash[idx];
+    hash[idx] = node;
+}
+
+int exists(Node** hash, int key) {
+    int idx = key % HASH_SIZE;
+    Node* node = hash[idx];
+    while (node) {
+        if (node->key == key) return 1;
+        node = node->next;
+    }
+    return 0;
+}
+
+void clear(Node** hash) {
+    for (int i = 0; i < HASH_SIZE; i++) {
+        Node* node = hash[i];
+        while (node) {
+            Node* tmp = node;
+            node = node->next;
+            free(tmp);
+        }
+        hash[i] = NULL;
+    }
+}
+
+int square_free(int x) {
+    int res = 1;
+    for (int i = 2; i * i <= x; i++) {
+        int cnt = 0;
+        while (x % i == 0) {
+            x /= i;
+            cnt++;
+        }
+        if (cnt % 2 == 1) res *= i;
+    }
+    if (x > 1) res *= x;
+    return res;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        int a[MAXN];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+            a[i] = square_free(a[i]);
+        }
+
+        int segments = 1;
+        Node* hash[HASH_SIZE] = {0};
+        for (int i = 0; i < n; i++) {
+            if (exists(hash, a[i])) {
+                segments++;
+                clear(hash);
+            }
+            insert(hash, a[i]);
+        }
+
+        printf("%d\n", segments);
+        clear(hash);
+    }
+    return 0;
+}
 

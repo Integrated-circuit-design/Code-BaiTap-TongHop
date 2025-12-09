@@ -1,1 +1,103 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define INF 1000000000
+
+int build_c_values(long long a, long long b, long long *out) {
+    int sz = 0;
+    long long r = (long long)sqrt((double)a);
+
+    for (long long d = 1; d <= r; d++) {
+        if (a % d == 0) {
+            out[sz++] = b * d;
+            long long d2 = a / d;
+            if (d2 != d) out[sz++] = b * d2;
+        }
+    }
+    return sz;
+}
+
+int cmp(const void *x, const void *y) {
+    long long a = *(long long*)x;
+    long long b = *(long long*)y;
+    return (a > b) - (a < b);
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    static long long bufferA[200005];
+    static long long bufferB[200005];
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        long long *prevC = NULL;
+        int *prevDP = NULL;
+        int prevCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            long long a, b;
+            scanf("%lld %lld", &a, &b);
+
+            int sz = build_c_values(a, b, bufferA);
+
+            qsort(bufferA, sz, sizeof(long long), cmp);
+
+            int m = 0;
+            for (int k = 0; k < sz; k++)
+                if (m == 0 || bufferA[k] != bufferA[m - 1])
+                    bufferA[m++] = bufferA[k];
+
+            long long *curC = (long long*)malloc(sizeof(long long) * m);
+            int *curDP = (int*)malloc(sizeof(int) * m);
+
+            for (int k = 0; k < m; k++) curC[k] = bufferA[k];
+
+            if (i == 0) {
+                for (int k = 0; k < m; k++) curDP[k] = 1;
+            } else {
+                int bestPrev = prevDP[0];
+                for (int k = 1; k < prevCount; k++)
+                    if (prevDP[k] < bestPrev) bestPrev = prevDP[k];
+
+                int p = 0;
+                for (int k = 0; k < m; k++) {
+                    long long target = curC[k];
+                    while (p < prevCount && prevC[p] < target) p++;
+
+                    int same = INF;
+                    if (p < prevCount && prevC[p] == target)
+                        same = prevDP[p];
+
+                    int cost = bestPrev + 1;
+                    if (same < cost) cost = same;
+
+                    curDP[k] = cost;
+                }
+            }
+
+            free(prevC);
+            free(prevDP);
+
+            prevC = curC;
+            prevDP = curDP;
+            prevCount = m;
+        }
+
+        int res = prevDP[0];
+        for (int i = 1; i < prevCount; i++)
+            if (prevDP[i] < res) res = prevDP[i];
+
+        printf("%d\n", res);
+
+        free(prevC);
+        free(prevDP);
+    }
+
+    return 0;
+}
 

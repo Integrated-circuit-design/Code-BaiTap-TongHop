@@ -1,1 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN 200005
+typedef long long ll;
+
+int n, k;
+ll a[MAXN];
+int g[MAXN][2];
+int deg[MAXN];
+ll totalXOR;
+int foundCount;
+
+ll computeXOR(int u, int parent) {
+    ll xorVal = a[u];
+    for(int i = 0; i < deg[u]; i++) {
+        int v = g[u][i];
+        if(v != parent) {
+            xorVal ^= computeXOR(v, u);
+        }
+    }
+    if(xorVal == totalXOR) foundCount++;
+    return xorVal;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while(t--) {
+        scanf("%d %d", &n, &k);
+        totalXOR = 0;
+        foundCount = 0;
+
+        for(int i = 1; i <= n; i++) {
+            scanf("%lld", &a[i]);
+            totalXOR ^= a[i];
+            deg[i] = 0;
+        }
+
+        for(int i = 0; i < n-1; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            g[u][deg[u]++] = v;
+            g[v][deg[v]++] = u;
+        }
+
+        if(totalXOR == 0) {
+            printf("YES\n");
+            continue;
+        }
+
+        if(k < 3) {
+            printf("NO\n");
+            continue;
+        }
+
+        computeXOR(1, 0);
+
+        if(foundCount >= 2) printf("YES\n");
+        else printf("NO\n");
+    }
+
+    return 0;
+}
 

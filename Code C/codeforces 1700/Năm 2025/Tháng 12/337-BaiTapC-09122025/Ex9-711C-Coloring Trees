@@ -1,1 +1,78 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAXN 105
+#define MAXM 105
+#define MAXK 105
+#define INF (9LL<<60)
+
+long long paint[MAXN][MAXM];
+int fixedColor[MAXN];
+
+long long dpNew[MAXK][MAXM+2];
+long long dpOld[MAXK][MAXM+2];
+
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+
+    for (int i = 1; i <= n; i++)
+        scanf("%d", &fixedColor[i]);
+
+    for (int i = 1; i <= n; i++)
+        for (int c = 1; c <= m; c++)
+            scanf("%lld", &paint[i][c]);
+
+    for (int g = 0; g <= k; g++)
+        for (int col = 1; col <= m+1; col++)
+            dpOld[g][col] = INF;
+
+    dpOld[0][m+1] = 0;
+
+    for (int i = 1; i <= n; i++) {
+
+        for (int g = 0; g <= k; g++)
+            for (int col = 1; col <= m+1; col++)
+                dpNew[g][col] = INF;
+
+        for (int groups = 0; groups <= k; groups++) {
+            for (int last = 1; last <= m+1; last++) {
+
+                long long prevCost = dpOld[groups][last];
+                if (prevCost == INF) continue;
+
+                if (fixedColor[i] != 0) {
+
+                    int col = fixedColor[i];
+                    int ng = groups + (last != col);
+
+                    if (ng <= k && dpNew[ng][col] > prevCost)
+                        dpNew[ng][col] = prevCost;
+                }
+                else {
+                    for (int col = 1; col <= m; col++) {
+
+                        long long newCost = prevCost + paint[i][col];
+                        int ng = groups + (last != col);
+
+                        if (ng <= k && dpNew[ng][col] > newCost)
+                            dpNew[ng][col] = newCost;
+                    }
+                }
+            }
+        }
+
+        for (int g = 0; g <= k; g++)
+            for (int col = 1; col <= m+1; col++)
+                dpOld[g][col] = dpNew[g][col];
+    }
+
+    long long ans = INF;
+    for (int col = 1; col <= m; col++)
+        if (dpOld[k][col] < ans)
+            ans = dpOld[k][col];
+
+    printf("%lld\n", (ans >= INF ? -1 : ans));
+    return 0;
+}
 

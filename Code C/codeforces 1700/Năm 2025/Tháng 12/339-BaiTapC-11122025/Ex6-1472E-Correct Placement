@@ -1,1 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+ll A[200005], B[200005];
+int ID[200005];
+int ANS[200005];
+
+int cmp(const void *x, const void *y) {
+    int i = *(int*)x;
+    int j = *(int*)y;
+    if (A[i] != A[j]) return (A[i] < A[j]) ? -1 : 1;
+    if (B[i] != B[j]) return (B[i] > B[j]) ? -1 : 1;
+    return 0;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            ll h, w;
+            scanf("%lld %lld", &h, &w);
+            if (h < w) {
+                A[i] = h;
+                B[i] = w;
+            } else {
+                A[i] = w;
+                B[i] = h;
+            }
+            ID[i] = i;
+            ANS[i] = -1;
+        }
+
+        qsort(ID, n, sizeof(int), cmp);
+
+        ll smallestB = (ll)4e18;
+        int smallestID = -1;
+
+        int pos = 0;
+        while (pos < n) {
+            int r = pos;
+
+            while (r < n && A[ID[r]] == A[ID[pos]]) r++;
+
+            for (int k = pos; k < r; k++) {
+                int idx = ID[k];
+                if (smallestID != -1 && smallestB < B[idx]) {
+                    ANS[idx] = smallestID + 1;
+                }
+            }
+
+            for (int k = pos; k < r; k++) {
+                int idx = ID[k];
+                if (B[idx] < smallestB) {
+                    smallestB = B[idx];
+                    smallestID = idx;
+                }
+            }
+
+            pos = r;
+        }
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", ANS[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 

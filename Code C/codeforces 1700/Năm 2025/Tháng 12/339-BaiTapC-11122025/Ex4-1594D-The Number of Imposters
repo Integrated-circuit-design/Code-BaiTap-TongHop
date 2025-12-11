@@ -1,1 +1,95 @@
+#include <stdio.h>
+
+#define MAXN 200000
+#define MAXM 500000
+
+typedef struct {
+    int to, w, nxt;
+} Edge;
+
+Edge G[2*MAXM + 5];
+int head[MAXN + 5], tot;
+
+int mark[MAXN + 5];
+int stack_cnt0, stack_cnt1;
+
+void add(int u, int v, int w) {
+    G[++tot].to = v;
+    G[tot].w = w;
+    G[tot].nxt = head[u];
+    head[u] = tot;
+}
+
+int dfs(int u) {
+    if (mark[u] == 1) stack_cnt0++;
+    else stack_cnt1++;
+
+    for (int e = head[u]; e; e = G[e].nxt) {
+        int v = G[e].to;
+        int w = G[e].w;
+
+        int expected = (mark[u] - 1) ^ w;
+        expected += 1;
+
+        if (!mark[v]) {
+            mark[v] = expected;
+            if (!dfs(v)) return 0;
+        } 
+        else {
+            if (mark[v] != expected) return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 1; i <= n; i++) {
+            head[i] = 0;
+            mark[i] = 0;
+        }
+        tot = 0;
+
+        for (int i = 0; i < m; i++) {
+            int a, b;
+            char s[16];
+            scanf("%d %d %s", &a, &b, s);
+
+            int w = (s[0] == 'i');
+
+            add(a, b, w);
+            add(b, a, w);
+        }
+
+        int ans = 0;
+        int ok = 1;
+
+        for (int i = 1; i <= n && ok; i++) {
+            if (!mark[i]) {
+                mark[i] = 1;
+                stack_cnt0 = 0;
+                stack_cnt1 = 0;
+
+                if (!dfs(i)) {
+                    ok = 0;
+                    break;
+                }
+
+                if (stack_cnt0 > stack_cnt1) ans += stack_cnt0;
+                else ans += stack_cnt1;
+            }
+        }
+
+        if (!ok) printf("-1\n");
+        else printf("%d\n", ans);
+    }
+
+    return 0;
+}
 

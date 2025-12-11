@@ -1,1 +1,59 @@
+#include <stdio.h>
+
+#define LIM 200005
+
+int A[LIM], B[LIM];
+int cnt[LIM];
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) cnt[i] = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            scanf("%d %d", &A[i], &B[i]);
+            cnt[A[i]]++;
+            cnt[B[i]]++;
+        }
+
+        int hub = -1;
+        for (int i = 1; i <= n; i++) {
+            if (cnt[i] == n - 1) {
+                hub = i;
+                break;
+            }
+        }
+
+        if (hub == -1) {
+            printf("NO\n");
+            continue;
+        }
+
+        printf("YES\n");
+
+        int flipped = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            int x = A[i], y = B[i];
+            int leaf = -1;
+
+            if (x == hub) leaf = y;
+            if (y == hub) leaf = x;
+
+            if (!flipped) {
+                printf("%d %d\n", hub, leaf);
+                flipped = 1;
+            } else {
+                printf("%d %d\n", leaf, hub);
+            }
+        }
+    }
+
+    return 0;
+}
 

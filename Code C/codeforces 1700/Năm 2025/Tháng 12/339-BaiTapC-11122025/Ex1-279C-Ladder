@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+int a[200005];
+int down_pos[200005];
+int up_pos[200005];
+int pref_down[200005];
+int pref_up[200005];
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+    for (int i = 1; i < n; i++) {
+        if (a[i] > a[i + 1]) down_pos[i] = 1;
+        if (a[i] < a[i + 1]) up_pos[i] = 1;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        pref_down[i] = pref_down[i - 1] | down_pos[i];
+        pref_up[i] = pref_up[i - 1] | up_pos[i];
+    }
+
+    while (m--) {
+        int l, r;
+        scanf("%d %d", &l, &r);
+
+        if (l == r) {
+            printf("Yes\n");
+            continue;
+        }
+
+        int first_down = -1;
+        int lo = l, hi = r - 1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            if (pref_down[mid] - pref_down[l - 1] > 0) {
+                first_down = mid;
+                hi = mid - 1;
+            } else lo = mid + 1;
+        }
+
+        if (first_down == -1) {
+            printf("Yes\n");
+            continue;
+        }
+
+        if (pref_up[r - 1] - pref_up[first_down] > 0)
+            printf("No\n");
+        else
+            printf("Yes\n");
+    }
+
+    return 0;
+}
 

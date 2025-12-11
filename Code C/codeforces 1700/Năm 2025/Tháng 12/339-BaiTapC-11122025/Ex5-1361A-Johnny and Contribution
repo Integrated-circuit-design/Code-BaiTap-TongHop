@@ -1,1 +1,86 @@
+#include <stdio.h>
+
+#define MAXN 500000
+
+int head[MAXN+1], to[1000000+5], nxt[1000000+5], ec;
+int topic[MAXN+1];
+int bucket[MAXN+1][1];
+int used[MAXN+1];
+int startPos[MAXN+2];
+int order[MAXN+1];
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) head[i] = -1;
+    ec = 0;
+
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+
+        to[ec] = b;
+        nxt[ec] = head[a];
+        head[a] = ec++;
+
+        to[ec] = a;
+        nxt[ec] = head[b];
+        head[b] = ec++;
+    }
+
+    for (int i = 1; i <= n; i++)
+        scanf("%d", &topic[i]);
+
+    for (int u = 1; u <= n; u++) {
+        for (int e = head[u]; e != -1; e = nxt[e]) {
+            int v = to[e];
+            if (topic[u] == topic[v]) {
+                printf("-1\n");
+                return 0;
+            }
+        }
+    }
+
+    for (int i = 1; i <= n+1; i++) startPos[i] = 0;
+
+    for (int i = 1; i <= n; i++)
+        startPos[topic[i]]++;
+
+    for (int i = 1; i <= n; i++)
+        startPos[i] += startPos[i-1];
+
+    for (int i = n; i >= 1; i--) {
+        int tp = topic[i];
+        int pos = startPos[tp]--;
+        order[pos] = i;
+    }
+
+    for (int pos = 1; pos <= n; pos++) {
+        int u = order[pos];
+        int want = topic[u];
+        int cnt = 0;
+
+        for (int e = head[u]; e != -1; e = nxt[e]) {
+            int v = to[e];
+            if (topic[v] < want) {
+                if (used[topic[v]] != pos) {
+                    used[topic[v]] = pos;
+                    cnt++;
+                }
+            }
+        }
+
+        if (cnt != want - 1) {
+            printf("-1\n");
+            return 0;
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        printf("%d%c", order[i], (i == n ? '\n' : ' '));
+    }
+
+    return 0;
+}
 

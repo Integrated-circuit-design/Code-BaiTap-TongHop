@@ -1,1 +1,103 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 500000
+
+typedef struct {
+    int to;
+    int next;
+} Edge;
+
+Edge edges[2 * MAXN + 5];
+int head[MAXN + 5], edge_i;
+
+int degree[MAXN + 5];
+int depth[MAXN + 5];
+int leaf_count[MAXN + 5];
+
+int stack_u[MAXN + 5], stack_p[MAXN + 5];
+
+void add_edge(int u, int v) {
+    edges[++edge_i].to = v;
+    edges[edge_i].next = head[u];
+    head[u] = edge_i;
+
+    edges[++edge_i].to = v;
+    edges[edge_i].next = head[u];
+    head[u] = edge_i;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        for (int i = 1; i <= n; i++) {
+            head[i] = 0;
+            degree[i] = 0;
+            depth[i] = 0;
+        }
+        memset(leaf_count, 0, sizeof(int) * (n + 3));
+        edge_i = 0;
+
+        for (int i = 1; i < n; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            edges[++edge_i].to = v;
+            edges[edge_i].next = head[u];
+            head[u] = edge_i;
+
+            edges[++edge_i].to = u;
+            edges[edge_i].next = head[v];
+            head[v] = edge_i;
+
+            degree[u]++;
+            degree[v]++;
+        }
+
+        int top = 0;
+        stack_u[top] = 1;
+        stack_p[top] = 0;
+        depth[1] = 1;
+
+        while (top >= 0) {
+            int u = stack_u[top];
+            int p = stack_p[top];
+            top--;
+
+            for (int e = head[u]; e; e = edges[e].next) {
+                int v = edges[e].to;
+                if (v != p) {
+                    depth[v] = depth[u] + 1;
+                    stack_u[++top] = v;
+                    stack_p[top] = u;
+                }
+            }
+        }
+
+        int total_leaves = 0;
+        int max_depth = 0;
+
+        for (int u = 2; u <= n; u++) {
+            if (degree[u] == 1) {
+                int d = depth[u];
+                leaf_count[d]++;
+                total_leaves++;
+                if (d > max_depth) max_depth = d;
+            }
+        }
+
+        int best = 0;
+        for (int d = 1; d <= max_depth; d++) {
+            if (leaf_count[d] > best) best = leaf_count[d];
+        }
+
+        printf("%d\n", total_leaves - best);
+    }
+
+    return 0;
+}
 

@@ -1,1 +1,105 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    int delta;
+    int last;
+    int pos;
+} Node;
+
+int has[11];
+int m;
+int parentDelta[2005][11];
+int parentLast[2005][11];
+int parentWeight[2005][11];
+char used[2005][11];
+
+Node queue[3000000];
+
+int main() {
+    char s[20];
+    scanf("%s", s);
+
+    for (int i = 0; i < 10; i++)
+        has[i+1] = (s[i] == '1');
+
+    scanf("%d", &m);
+
+    int head = 0, tail = 0;
+
+    queue[tail++] = (Node){0, 0, 1};
+    used[1000][0] = 1;
+
+    Node cur;
+    int foundDelta = -1, foundLast = -1;
+
+    while (head < tail) {
+        cur = queue[head++];
+
+        int pos = cur.pos;
+        int delta = cur.delta;
+        int last = cur.last;
+
+        if (pos > m) {
+            foundDelta = delta;
+            foundLast = last;
+            break;
+        }
+
+        int leftTurn = (pos % 2 == 1);
+
+        for (int w = 1; w <= 10; w++) {
+            if (!has[w] || w == last) continue;
+
+            int nd = delta;
+            if (leftTurn) {
+                if (delta + w <= 0) continue;
+                nd = delta + w;
+            } else {
+                if (delta - w >= 0) continue;
+                nd = delta - w;
+            }
+
+            if (!used[nd + 1000][w]) {
+                used[nd + 1000][w] = 1;
+
+                parentDelta[nd + 1000][w] = delta;
+                parentLast[nd + 1000][w] = last;
+                parentWeight[nd + 1000][w] = w;
+
+                queue[tail++] = (Node){nd, w, pos + 1};
+            }
+        }
+    }
+
+    if (foundDelta == -1) {
+        printf("NO\n");
+        return 0;
+    }
+
+    int res[1005];
+    int pos = m;
+    int cd = foundDelta, cl = foundLast;
+
+    while (pos >= 1) {
+        int w = parentWeight[cd + 1000][cl];
+        res[pos] = w;
+
+        int pd = parentDelta[cd + 1000][cl];
+        int pl = parentLast[cd + 1000][cl];
+
+        cd = pd;
+        cl = pl;
+        pos--;
+    }
+
+    printf("YES\n");
+    for (int i = 1; i <= m; i++) {
+        printf("%d", res[i]);
+        if (i < m) printf(" ");
+    }
+    printf("\n");
+
+    return 0;
+}
 

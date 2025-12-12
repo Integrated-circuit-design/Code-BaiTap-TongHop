@@ -1,1 +1,101 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef long long ll;
+
+int cmp_ll(const void *p, const void *q) {
+    ll a = *(ll*)p, b = *(ll*)q;
+    return (a > b) - (a < b);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    ll *a = malloc(n * sizeof(ll));
+    for (int i = 0; i < n; ++i) scanf("%lld", &a[i]);
+
+    qsort(a, n, sizeof(ll), cmp_ll);
+
+    if (n == 1) {
+        printf("-1\n");
+        return 0;
+    }
+
+    if (n == 2) {
+        ll x = a[0], y = a[1];
+
+        if (x == y) {
+            printf("1\n%lld\n", x);
+            return 0;
+        }
+
+        ll d = y - x;
+
+        int sz = (d % 2 == 0 ? 3 : 2);
+        ll result[3];
+
+        int idx = 0;
+        result[idx++] = x - d;
+        if (d % 2 == 0) result[idx++] = x + d/2;
+        result[idx++] = y + d;
+
+        printf("%d\n", sz);
+        for (int i = 0; i < sz; i++)
+            printf("%lld%c", result[i], i+1==sz?'\n':' ');
+
+        return 0;
+    }
+
+    ll mind = a[1] - a[0];
+    for (int i = 1; i + 1 < n; ++i) {
+        ll d = a[i+1] - a[i];
+        if (d < mind) mind = d;
+    }
+
+    int zeroCnt = 0;
+    for (int i = 0; i + 1 < n; ++i)
+        if (a[i+1] - a[i] == 0) zeroCnt++;
+
+    if (mind == 0) {
+        if (zeroCnt == n-1) {
+            printf("1\n%lld\n", a[0]);
+            return 0;
+        }
+        printf("0\n");
+        return 0;
+    }
+
+    ll large = -1;
+    int largePos = -1;
+    int extraCount = 0;
+
+    for (int i = 0; i + 1 < n; ++i) {
+        ll d = a[i+1] - a[i];
+        if (d == mind) continue;
+
+        if (d == 2 * mind) {
+            extraCount++;
+            large = d;
+            largePos = i;
+        } else {
+            printf("0\n");
+            return 0;
+        }
+    }
+
+    if (extraCount == 0) {
+        printf("2\n%lld %lld\n", a[0] - mind, a[n-1] + mind);
+        return 0;
+    }
+
+    if (extraCount == 1) {
+        ll insertValue = a[largePos] + mind;
+        printf("1\n%lld\n", insertValue);
+        return 0;
+    }
+
+    printf("0\n");
+    return 0;
+}
 

@@ -1,1 +1,66 @@
+#include <stdio.h>
+
+#define MAXN 200005
+
+static int deg[MAXN];
+static char str[MAXN];
+
+long long solve_case() {
+    int n;
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) deg[i] = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        deg[a]++, deg[b]++;
+    }
+
+    scanf("%s", str);
+
+    int leaf0 = 0, leaf1 = 0, leafU = 0;
+    int midU = 0;
+
+    for (int i = 1; i <= n; i++) {
+        char c = str[i - 1];
+
+        if (i != 1 && deg[i] == 1) {
+            if (c == '0') leaf0++;
+            else if (c == '1') leaf1++;
+            else leafU++;
+        } else {
+            if (i != 1 && c == '?') midU++;
+        }
+    }
+
+    char root = str[0];
+    long long ans = 0;
+
+    if (root == '0' || root == '1') {
+        if (root == '0') ans = leaf1;
+        else ans = leaf0;
+        ans += (leafU + 1) / 2;
+    } 
+    else {
+        if (leaf0 != leaf1) {
+            int bigger = (leaf0 > leaf1 ? leaf0 : leaf1);
+            ans = bigger + (leafU / 2);
+        } else {
+            if (midU & 1) ans = leaf0 + (leafU + 1) / 2;
+            else ans = leaf0 + (leafU / 2);
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        printf("%lld\n", solve_case());
+    }
+    return 0;
+}
 

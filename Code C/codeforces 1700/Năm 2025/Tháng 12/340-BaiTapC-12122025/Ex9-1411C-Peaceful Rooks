@@ -1,1 +1,83 @@
+#include <stdio.h>
+
+#define MAXN 100000
+
+int parent[MAXN + 5];
+int has_edge[MAXN + 5];
+int in_degree[MAXN + 5];
+
+int find(int x) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]);
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        for (int i = 1; i <= n; i++) {
+            parent[i] = i;
+            has_edge[i] = 0;
+            in_degree[i] = 0;
+        }
+
+        int edges = 0;
+
+        for (int i = 0; i < m; i++) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+
+            if (x != y) {
+                edges++;
+                has_edge[x] = 1;
+                in_degree[y]++;
+
+                int a = find(x);
+                int b = find(y);
+                if (a != b) parent[a] = b;
+            }
+        }
+
+        int component_cycle_count = 0;
+        static int seen[MAXN + 5];
+        for (int i = 1; i <= n; i++) seen[i] = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (!has_edge[i]) continue;
+
+            int root = find(i);
+
+            if (!seen[root]) {
+                seen[root] = 1;
+
+                int has_cycle = 1;
+                int nodes_with_edge = 0;
+
+                for (int j = 1; j <= n; j++) {
+                    if (find(j) == root && has_edge[j]) {
+                        nodes_with_edge++;
+                        if (in_degree[j] == 0) {
+                            has_cycle = 0;
+                        }
+                    }
+                }
+
+                if (nodes_with_edge > 0 && has_cycle == 1) {
+                    component_cycle_count++;
+                }
+            }
+        }
+
+        int answer = edges + component_cycle_count;
+
+        printf("%d\n", answer);
+    }
+
+    return 0;
+}
 

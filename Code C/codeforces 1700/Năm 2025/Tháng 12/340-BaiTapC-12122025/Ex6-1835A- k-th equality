@@ -1,1 +1,71 @@
+#include <stdio.h>
+
+long long pow10[16];
+
+long long count_b_in_range(long long a,
+                           long long bL, long long bR,
+                           long long cL, long long cR)
+{
+    long long L = cL - a;
+    long long R = cR - a;
+
+    if (L < bL) L = bL;
+    if (R > bR) R = bR;
+
+    if (L > R) return 0;
+    return R - L + 1;
+}
+
+int main() {
+    pow10[0] = 1;
+    for (int i = 1; i < 16; i++)
+        pow10[i] = pow10[i-1] * 10LL;
+
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+
+        int A, B, C;
+        long long k;
+        scanf("%d %d %d %lld", &A, &B, &C, &k);
+
+        long long aL = pow10[A-1], aR = pow10[A] - 1;
+        long long bL = pow10[B-1], bR = pow10[B] - 1;
+        long long cL = pow10[C-1], cR = pow10[C] - 1;
+
+        long long prefix_sum = 0;
+        long long chosenA = -1;
+
+        for (long long a = aL; a <= aR; a++) {
+            long long cnt = count_b_in_range(a, bL, bR, cL, cR);
+
+            if (prefix_sum + cnt >= k) {
+                chosenA = a;
+                k -= prefix_sum;
+                break;
+            }
+            prefix_sum += cnt;
+        }
+
+        if (chosenA == -1) {
+            printf("-1\n");
+            continue;
+        }
+
+        long long a = chosenA;
+
+        long long L = cL - a;
+        long long R = cR - a;
+        if (L < bL) L = bL;
+        if (R > bR) R = bR;
+
+        long long b = L + (k - 1);
+        long long c = a + b;
+
+        printf("%lld + %lld = %lld\n", a, b, c);
+    }
+
+    return 0;
+}
 

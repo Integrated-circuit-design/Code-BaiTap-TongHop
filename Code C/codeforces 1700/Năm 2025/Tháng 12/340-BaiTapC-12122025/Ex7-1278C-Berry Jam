@@ -1,1 +1,61 @@
+#include <stdio.h>
+
+#define BIG 1000000000
+
+int jar[200005];
+int L[100005], R[100005];
+int pos[200005];
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+
+        int n;
+        scanf("%d", &n);
+
+        int total = 2 * n;
+
+        for (int i = 0; i < total; i++)
+            scanf("%d", &jar[i]);
+
+        L[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            int v = jar[i-1];
+            L[i] = L[i-1] + (v == 1 ? 1 : -1);
+        }
+
+        R[0] = 0;
+        for (int j = 1; j <= n; j++) {
+            int v = jar[total - j];
+            R[j] = R[j-1] + (v == 2 ? 1 : -1);
+        }
+
+        int shift = n;
+
+        for (int i = 0; i <= 2 * n; i++)
+            pos[i] = BIG;
+
+        for (int i = 0; i <= n; i++) {
+            int b = L[i] + shift;
+            if (pos[b] > i) pos[b] = i;
+        }
+
+        int best = pos[shift];
+
+        for (int j = 1; j <= n; j++) {
+            int need = -R[j] + shift;
+            if (need >= 0 && need <= 2*n) {
+                if (pos[need] < BIG) {
+                    int used = pos[need] + j;
+                    if (used < best) best = used;
+                }
+            }
+        }
+
+        printf("%d\n", best);
+    }
+    return 0;
+}
 

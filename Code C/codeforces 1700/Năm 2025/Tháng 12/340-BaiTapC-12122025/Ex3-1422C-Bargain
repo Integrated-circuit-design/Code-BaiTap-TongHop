@@ -1,1 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MOD 1000000007LL
+#define MAXN 200000
+
+long long pw[MAXN];
+long long sumPw[MAXN];
+long long sumMulPw[MAXN];
+
+int main() {
+    static char s[MAXN];
+    scanf("%s", s);
+    int n = strlen(s);
+
+    pw[0] = 1;
+    for (int i = 1; i <= n; i++)
+        pw[i] = (pw[i-1] * 10) % MOD;
+
+    sumPw[0] = 1;
+    for (int i = 1; i <= n; i++)
+        sumPw[i] = (sumPw[i-1] + pw[i]) % MOD;
+
+    sumMulPw[0] = 0;
+    for (int i = 1; i <= n; i++)
+        sumMulPw[i] = (sumMulPw[i-1] + i * pw[i]) % MOD;
+
+    long long ans = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long d = s[i] - '0';
+        int L = i;
+        int R = n - i - 1;
+
+        long long left =
+            ((long long)(L + 1) * sumPw[L] % MOD - sumMulPw[L] + MOD) % MOD;
+
+        long long right =
+            ((long long)(R + 1) * sumPw[R] % MOD - sumMulPw[R] + MOD) % MOD;
+
+        ans = (ans + d * ((left + right) % MOD)) % MOD;
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}
 

@@ -1,1 +1,65 @@
+#include <stdio.h>
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        int p[10005];
+        for (int i = 0; i < n; i++) scanf("%d", &p[i]);
+
+        int maxval = n - 1;
+
+        int B = 0;
+        while ((1 << B) <= maxval) B++;
+        if (B == 0) B = 1;
+        B--;
+
+        int bitpos = B;
+
+        for (; bitpos >= 0; bitpos--) {
+            int has0 = 0, has1 = 0;
+            for (int i = 0; i < n; i++) {
+                if ((p[i] >> bitpos) & 1) has1 = 1;
+                else has0 = 1;
+            }
+            if (has0 && has1) break;
+        }
+
+        if (bitpos < 0) {
+            printf("0 1\n");
+            continue;
+        }
+
+        int a[10005], b[10005];
+        int na = 0, nb = 0;
+
+        for (int i = 0; i < n; i++) {
+            if ((p[i] >> bitpos) & 1)
+                a[na++] = i;
+            else
+                b[nb++] = i;
+        }
+
+        int best_i = a[0], best_j = b[0];
+        int best_xor = p[best_i] ^ p[best_j];
+
+        for (int i = 0; i < na; i++) {
+            for (int j = 0; j < nb; j++) {
+                int x = p[a[i]] ^ p[b[j]];
+                if (x > best_xor) {
+                    best_xor = x;
+                    best_i = a[i];
+                    best_j = b[j];
+                }
+            }
+        }
+
+        printf("%d %d\n", best_i, best_j);
+    }
+    return 0;
+}
 

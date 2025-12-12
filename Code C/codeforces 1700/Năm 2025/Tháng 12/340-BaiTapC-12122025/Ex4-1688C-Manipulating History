@@ -1,1 +1,123 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXM 200005
+#define MAXL 200005
+typedef unsigned long long u64;
+
+char *strs[MAXM];
+int len[MAXM];
+int isLHS[MAXM];
+int used[MAXM];
+int cntLen[MAXL], needLen[MAXL];
+
+u64 hsh[MAXM];
+u64 freqH[4*MAXM];
+u64 keyH[4*MAXM];
+int usedH[4*MAXM];
+
+u64 getHash(const char *s) {
+    u64 h = 0;
+    while (*s) {
+        h = h * 131 + (unsigned char)(*s);
+        s++;
+    }
+    return h;
+}
+
+void addFreq(u64 key) {
+    int pos = (key * 11995408973635179863ULL) & (4*MAXM - 1);
+    while (usedH[pos] && keyH[pos] != key) pos = (pos + 1) & (4*MAXM - 1);
+    if (!usedH[pos]) {
+        usedH[pos] = 1;
+        keyH[pos] = key;
+        freqH[pos] = 1;
+    } else {
+        freqH[pos]++;
+    }
+}
+
+u64 getFreq(u64 key) {
+    int pos = (key * 11995408973635179863ULL) & (4*MAXM - 1);
+    while (usedH[pos]) {
+        if (keyH[pos] == key) return freqH[pos];
+        pos = (pos + 1) & (4*MAXM - 1);
+    }
+    return 0;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+        int m = 2*n;
+
+        long long total_sum = 0;
+
+        for (int i = 0; i < m; i++)
+            isLHS[i] = used[i] = 0;
+
+        for (int i = 0; i < 4*MAXM; i++)
+            usedH[i] = freqH[i] = keyH[i] = 0;
+
+        memset(cntLen, 0, sizeof(cntLen));
+        memset(needLen, 0, sizeof(needLen));
+
+        for (int i = 0; i < m; i++) {
+            char buf[MAXL];
+            scanf("%s", buf);
+            int L = strlen(buf);
+            strs[i] = malloc(L+1);
+            strcpy(strs[i], buf);
+            len[i] = L;
+            total_sum += L;
+            cntLen[L]++;
+            hsh[i] = getHash(buf);
+            addFreq(hsh[i]);
+        }
+
+        char final_s[MAXL];
+        scanf("%s", final_s);
+        int Ls = strlen(final_s);
+
+        long long sumLHS = (total_sum - (Ls - 1)) / 2;
+
+        long long need = sumLHS;
+        for (int L = MAXL-1; L >= 1 && need > 0; L--) {
+            if (cntLen[L] == 0) continue;
+            long long k = need / L;
+            if (k > cntLen[L]) k = cntLen[L];
+            needLen[L] = k;
+            need -= k * L;
+        }
+
+        for (int L = 1; L < MAXL; L++) {
+            int take = needLen[L];
+            for (int i = 0; i < m && take > 0; i++) {
+                if (!used[i] && len[i] == L) {
+                    isLHS[i] = 1;
+                    used[i] = 1;
+                    take--;
+                }
+            }
+        }
+
+        int ans = -1;
+        for (int i = 0; i < m; i++) {
+            if (isLHS[i] && getFreq(hsh[i]) == 1) {
+                ans = i;
+                break;
+            }
+        }
+
+        printf("%s\n", strs[ans]);
+
+        for (int i = 0; i < m; i++) free(strs[i]);
+    }
+    return 0;
+}
 
